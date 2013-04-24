@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Overview</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[iostreams.base]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[iostreams.base]"></object>27.5 Iostreams base classes </h2>
+
+<h3>
+<dfn class="label">[iostreams.base.overview]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[iostreams.base.overview]"></object>27.5.1 Overview </h3>
+
+<h3>Header <dfn><code class="header">&lt;ios&gt;</code></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="&lt;ios&gt;"></object> synopsis</h3>
+
+<pre><code class="sh_cpp">#include &lt;iosfwd&gt;
+
+namespace std {
+  typedef <em>implementation-defined</em> streamoff;
+  typedef <em>implementation-defined</em> streamsize;
+  template &lt;class stateT&gt; class fpos;
+
+  class ios_base;
+  template &lt;class charT, class traits = char_traits&lt;charT&gt; &gt;
+    class basic_ios;
+
+  // <a title="std.ios.manip" href="fmtflags.manip.html">27.5.6</a>, manipulators:
+  ios_base&amp; boolalpha  (ios_base&amp; str);
+  ios_base&amp; noboolalpha(ios_base&amp; str);
+
+  ios_base&amp; showbase   (ios_base&amp; str);
+  ios_base&amp; noshowbase (ios_base&amp; str);
+
+  ios_base&amp; showpoint  (ios_base&amp; str);
+  ios_base&amp; noshowpoint(ios_base&amp; str);
+
+  ios_base&amp; showpos    (ios_base&amp; str);
+  ios_base&amp; noshowpos  (ios_base&amp; str);
+
+  ios_base&amp; skipws     (ios_base&amp; str);
+  ios_base&amp; noskipws   (ios_base&amp; str);
+
+  ios_base&amp; uppercase  (ios_base&amp; str);
+  ios_base&amp; nouppercase(ios_base&amp; str);
+
+  ios_base&amp; unitbuf    (ios_base&amp; str);
+  ios_base&amp; nounitbuf  (ios_base&amp; str);
+
+  // <a title="adjustfield.manip" href="adjustfield.manip.html">27.5.6.2</a> adjustfield:
+  ios_base&amp; internal   (ios_base&amp; str);
+  ios_base&amp; left       (ios_base&amp; str);
+  ios_base&amp; right      (ios_base&amp; str);
+
+  // <a title="basefield.manip" href="basefield.manip.html">27.5.6.3</a> basefield:
+  ios_base&amp; dec        (ios_base&amp; str);
+  ios_base&amp; hex        (ios_base&amp; str);
+  ios_base&amp; oct        (ios_base&amp; str);
+
+  // <a title="floatfield.manip" href="floatfield.manip.html">27.5.6.4</a> floatfield:
+  ios_base&amp; fixed      (ios_base&amp; str);
+  ios_base&amp; scientific (ios_base&amp; str);
+  ios_base&amp; hexfloat   (ios_base&amp; str);
+  ios_base&amp; defaultfloat(ios_base&amp; str);
+
+  // <a title="error.reporting" href="error.reporting.html">27.5.6.5</a> error reporting:
+  enum class io_errc {
+     stream = 1
+  };
+
+  template &lt;&gt; struct is_error_code_enum&lt;io_errc&gt; : public true_type { };
+  error_code make_error_code(io_errc e);
+  error_condition make_error_condition(io_errc e);
+  const error_category&amp; iostream_category();
+}</code></pre>
+
+</body>
+</html>
+

@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Increment and decrement</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[expr.pre.incr]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[expr.pre.incr]"></object>5.3.2 Increment and decrement </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The operand of prefix <code class="sh_cpp">++</code> is modified by adding <code class="sh_cpp">1</code>, or set to <code class="sh_cpp">true</code> if it
+is <code class="sh_cpp">bool</code> (this use is deprecated). The operand shall be a modifiable lvalue. The type of the operand shall
+be an arithmetic type or a pointer to a completely-defined object type. The result is the updated operand; it is an
+lvalue, and it is a bit-field if the operand is a bit-field. If <code class="sh_cpp">x</code> is not of type <code class="sh_cpp">bool</code>, the
+expression <code class="sh_cpp">++x</code> is equivalent to <code class="sh_cpp">x+=1</code> <span class="note">[ <em>Note:</em> See the discussions of addition (<a title="expr.add" href="expr.add.html">5.7</a>)
+and assignment operators (<a title="expr.ass" href="expr.ass.html">5.17</a>) for information on conversions. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The operand of prefix <code class="sh_cpp">--</code> is modified by subtracting <code class="sh_cpp">1</code>. The operand shall not be of
+type <code class="sh_cpp">bool</code>. The requirements on the operand of prefix <code class="sh_cpp">--</code> and the properties of its result are
+otherwise the same as those of prefix <code class="sh_cpp">++</code>. <span class="note">[ <em>Note:</em> For postfix increment and decrement, see
+<a title="expr.post.incr" href="expr.post.incr.html">5.2.6</a>. — <em>end note</em> ]</span></p>
+</body>
+</html>
+

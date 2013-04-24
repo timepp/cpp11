@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Conversion functions</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[class.conv.fct]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[class.conv.fct]"></object>12.3.2 Conversion functions </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A member function of a class <code class="sh_cpp">X</code> having no parameters with a name of the form</p>
+
+<dl>
+<dt>
+<dfn><i class="nonterminal">conversion-function-id</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="conversion-function-id"></object>:</dt>
+	<dd>
+<code class="sh_cpp">operator</code> <i class="nonterminal">conversion-type-id</i>
+</dd>
+<dt>
+<dfn><i class="nonterminal">conversion-type-id</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="conversion-type-id"></object>:</dt>
+	<dd>
+<i class="nonterminal">type-specifier-seq</i> <i class="nonterminal">conversion-declarator</i><sub class="opt">opt</sub>
+</dd>
+<dt>
+<dfn><i class="nonterminal">conversion-declarator</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="conversion-declarator"></object>:</dt>
+	<dd>
+<i class="nonterminal">ptr-operator</i> <i class="nonterminal">conversion-declarator</i><sub class="opt">opt</sub>
+</dd>
+</dl>
+
+<p>specifies a conversion from <code class="sh_cpp">X</code> to the type specified by the <i class="nonterminal">conversion-type-id</i>. Such functions
+are called <dfn>conversion function</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="conversion function"></object>s. No return type can be specified. If a conversion function is a member
+function, the type of the conversion function (<a title="dcl.fct" href="dcl.fct.html">8.3.5</a>) is “function taking no parameter returning
+<i class="nonterminal">conversion-type-id</i>”. A conversion function is never used to convert a (possibly cv-qualified) object to the
+(possibly cv-qualified) same object type (or a reference to it), to a (possibly cv-qualified) base class of that type
+(or a reference to it), or to (possibly cv-qualified) void.<sup class="footnote"><a href="#fn119">119</a></sup></p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct X {
+  operator int();
+};
+
+void f(X a) {
+  int i = int(a);
+  i = (int)a;
+  i = a;
+}</code></pre>
+
+<p>In all three cases the value assigned will be converted by <code class="sh_cpp">X::operator int()</code>. — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>A conversion function may be explicit (<a title="dcl.fct.spec" href="dcl.fct.spec.html">7.1.2</a>), in which case it is only considered as a user-defined
+conversion for direct-initialization (<a title="dcl.init" href="dcl.init.html">8.5</a>). Otherwise, user-defined conversions are not restricted to use in
+assignments and initializations.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">class Y { };
+struct Z {
+  explicit operator Y() const;
+};
+
+void h(Z z) {
+  Y y1(z);              // OK: direct-initialization
+  Y y2 = z;             // ill-formed: copy-initialization
+  Y y3 = (Y)z;          // OK: cast notation
+}
+
+void g(X a, X b) {
+  int i = (a) ? 1+a : 0;
+  int j = (a&amp;&amp;b) ? a+b : i;
+  if (a) {
+  }
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>The <i class="nonterminal">conversion-type-id</i> shall not represent a function type nor an array type. The
+<i class="nonterminal">conversion-type-id</i> in a <i class="nonterminal">conversion-function-id</i> is the longest possible sequence of
+<i class="nonterminal">conversion-declarator</i>s.</p>
+
+<div class="note">
+<p>[ <em>Note:</em> This prevents ambiguities between the declarator <code class="sh_cpp">operator *</code> and its expression counterparts.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">&amp;ac.operator int*i; // syntax error:
+                    // parsed as: &amp;(ac.operator int *)i
+                    // not as: &amp;(ac.operator int)*i</code></pre>
+
+<p>The <code class="sh_cpp">*</code> is the pointer declarator and not the multiplication operator. — <em>end example</em> ]</p>
+</div>
+<p> — <em>end note</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>Conversion functions are inherited.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>Conversion functions can be virtual.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>Conversion functions cannot be declared <code class="sh_cpp">static</code>.</p>
+
+
+<div><p class="footnote" id="fn119">119) These conversions are considered as standard conversions for the purposes of overload resolution
+(<a title="over.best.ics" href="over.best.ics.html">13.3.3.1</a>, <a title="over.ics.ref" href="over.ics.ref.html">13.3.3.1.4</a>) and therefore initialization (<a title="dcl.init" href="dcl.init.html">8.5</a>) and explicit casts
+(<a title="expr.static.cast" href="expr.static.cast.html">5.2.9</a>). A conversion to <code class="sh_cpp">void</code> does not invoke any conversion function (<a title="expr.static.cast" href="expr.static.cast.html">5.2.9</a>). Even
+though never directly called to perform a conversion, such conversion functions can be declared and can potentially be
+reached through a call to a virtual conversion function in a base class.</p></div>
+</body>
+</html>
+

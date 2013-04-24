@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Type names</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[dcl.name]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[dcl.name]"></object>8.1 Type names </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>To specify type conversions explicitly, and as an argument of <code class="sh_cpp">sizeof</code>, <code class="sh_cpp">alignof</code>,
+<code class="sh_cpp">new</code>, or <code class="sh_cpp">typeid</code>, the name of a type shall be specified. This can be done with a
+<i class="nonterminal">type-id</i>, which is syntactically a declaration for a variable or function of that type that omits the name of
+the entity.</p>
+
+<dl>
+<dt>
+<dfn><i class="nonterminal">type-id</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="type-id"></object>:</dt>
+	<dd>
+<i class="nonterminal">type-specifier-seq</i> <i class="nonterminal">abstract-declarator</i><sub class="opt">opt</sub>
+</dd>
+<dt>
+<dfn><i class="nonterminal">abstract-declarator</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="abstract-declarator"></object>:</dt>
+	<dd><i class="nonterminal">ptr-abstract-declarator</i></dd>
+	<dd>
+<i class="nonterminal">noptr-abstract-declarator</i><sub class="opt">opt</sub> <i class="nonterminal">parameters-and-qualifiers</i> <i class="nonterminal">trailing-return-type</i>
+</dd>
+	<dd><i class="nonterminal">abstract-pack-declarator</i></dd>
+<dt>
+<dfn><i class="nonterminal">ptr-abstract-declarator</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="ptr-abstract-declarator"></object>:</dt>
+	<dd><i class="nonterminal">noptr-abstract-declarator</i></dd>
+	<dd>
+<i class="nonterminal">ptr-operator</i> <i class="nonterminal">ptr-abstract-declarator</i><sub class="opt">opt</sub>
+</dd>
+<dt>
+<dfn><i class="nonterminal">noptr-abstract-declarator</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="noptr-abstract-declarator"></object>:</dt>
+	<dd>
+<i class="nonterminal">noptr-abstract-declarator</i><sub class="opt">opt</sub> <i class="nonterminal">parameters-and-qualifiers</i>
+</dd>
+	<dd>
+<i class="nonterminal">noptr-abstract-declarator</i><sub class="opt">opt</sub> <code class="sh_cpp">[</code> <i class="nonterminal">constant-expression</i><sub class="opt">opt</sub> <code class="sh_cpp">]</code> <i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub>
+</dd>
+	<dd>
+<code class="sh_cpp">(</code> <i class="nonterminal">ptr-abstract-declarator</i> <code class="sh_cpp">)</code>
+</dd>
+<dt>
+<dfn><i class="nonterminal">abstract-pack-declarator</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="abstract-pack-declarator"></object>:</dt>
+	<dd><i class="nonterminal">noptr-abstract-pack-declarator</i></dd>
+	<dd><i class="nonterminal">ptr-operator abstract-pack-declarator</i></dd>
+<dt>
+<dfn><i class="nonterminal">noptr-abstract-pack-declarator</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="noptr-abstract-pack-declarator"></object>:</dt>
+	<dd>
+<i class="nonterminal">noptr-abstract-pack-declarator</i> <i class="nonterminal">parameters-and-qualifiers</i>
+</dd>
+	<dd>
+<i class="nonterminal">noptr-abstract-pack-declarator</i> <code class="sh_cpp">[</code> <i class="nonterminal">constant-expression</i><sub class="opt">opt</sub> <code class="sh_cpp">]</code> <i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub>
+</dd>
+	<dd><code class="sh_cpp">...</code></dd>
+</dl>
+
+<p>It is possible to identify uniquely the location in the <i class="nonterminal">abstract-declarator</i> where the identifier would
+appear if the construction were a declarator in a declaration. The named type is then the same as the type of the
+hypothetical identifier.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">int                     // int i
+int *                   // int *pi
+int *[3]                // int *p[3]
+int (*)[3]              // int (*p3i)[3]
+int *()                 // int *f()
+int (*)(double)         // int (*pf)(double)</code></pre>
+
+<p>name respectively the types “<code class="sh_cpp">int</code>”, “pointer to <code class="sh_cpp">int</code>”, “array of 3 pointers to
+<code class="sh_cpp">int</code>”, “pointer to array of 3 <code class="sh_cpp">int</code>”, “function of (no parameters) returning pointer to
+<code class="sh_cpp">int</code>”, and “pointer to a function of (<code class="sh_cpp">double</code>) returning <code class="sh_cpp">int</code>”. — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>A type can also be named (often more easily) by using a <i class="nonterminal">typedef</i> (<a title="dcl.typedef" href="dcl.typedef.html">7.1.3</a>).</p>
+</body>
+</html>
+

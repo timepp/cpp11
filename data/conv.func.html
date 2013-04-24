@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Function-to-pointer conversion</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[conv.func]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[conv.func]"></object>4.3 Function-to-pointer conversion </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>An lvalue of function type <code class="sh_cpp">T</code> can be converted to a prvalue of type “pointer to <code class="sh_cpp">T</code>”.
+The result is a pointer to the function.<sup class="footnote"><a href="#fn55">55</a></sup></p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><span class="note">[ <em>Note:</em> See <a title="over.over" href="over.over.html">13.4</a> for additional rules for the case where the function is overloaded. — <em>end note</em> ]</span></p>
+
+
+<div><p class="footnote" id="fn55">55) This conversion never applies to non-static member functions because an lvalue that refers to a
+non-static member function cannot be obtained.</p></div>
+</body>
+</html>
+

@@ -1,0 +1,151 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Storage class specifiers</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[dcl.stc]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[dcl.stc]"></object>7.1.1 Storage class specifiers </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The storage class specifiers are</p>
+
+<dl>
+<dt>
+<i class="nonterminal"><dfn>storage-class-specifier</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="storage-class-specifier"></object></i>:</dt>
+	<dd><code class="sh_cpp">register</code></dd>
+	<dd><code class="sh_cpp">static</code></dd>
+	<dd><code class="sh_cpp">thread_local</code></dd>
+	<dd><code class="sh_cpp">extern</code></dd>
+	<dd><code class="sh_cpp">mutable</code></dd>
+</dl>
+
+<p>At most one <i class="nonterminal">storage-class-specifier</i> shall appear in a given <i class="nonterminal">decl-specifier-seq</i>, except that
+<code class="sh_cpp">thread_local</code> may appear with <code class="sh_cpp">static</code> or <code class="sh_cpp">extern</code>. If <code class="sh_cpp">thread_local</code>
+appears in any declaration of a variable it shall be present in all declarations of that entity. If a
+<i class="nonterminal">storage-class-specifier</i> appears in a <i class="nonterminal">decl-specifier-seq</i>, there can be no <code class="sh_cpp">typedef</code>
+specifier in the same <i class="nonterminal">decl-specifier-seq</i> and the <i class="nonterminal">init-declarator-list</i> of the declaration shall not be
+empty (except for an anonymous union declared in a named namespace or in the global namespace, which shall be declared
+<code class="sh_cpp">static</code> (<a title="class.union" href="class.union.html">9.5</a>)). The <i class="nonterminal">storage-class-specifier</i> applies to the name declared by each
+<i class="nonterminal">init-declarator</i> in the list and not to any names declared by other specifiers. A
+<i class="nonterminal">storage-class-specifier</i> shall not be specified in an explicit specialization (<a title="temp.expl.spec" href="temp.expl.spec.html">14.7.3</a>) or an explicit
+instantiation (<a title="temp.explicit" href="temp.explicit.html">14.7.2</a>) directive.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The <code class="sh_cpp">register</code> specifier shall be applied only to names of variables declared in a block
+(<a title="stmt.block" href="stmt.block.html">6.3</a>) or to function parameters (<a title="dcl.fct.def" href="dcl.fct.def.general.html">8.4</a>). It specifies that the named variable has automatic storage
+duration (<a title="basic.stc.auto" href="basic.stc.auto.html">3.7.3</a>). A variable declared without a <i class="nonterminal">storage-class-specifier</i> at block scope or declared
+as a function parameter has automatic storage duration by default.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>A <code class="sh_cpp">register</code> specifier is a hint to the implementation that the variable so declared will be heavily
+used. <span class="note">[ <em>Note:</em> The hint can be ignored and in most implementations it will be ignored if the address of the variable is
+taken. This use is deprecated (see <a title="depr.register" href="depr.register.html">D.2</a>). — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>The <code class="sh_cpp">thread_local</code> specifier indicates that the named entity has thread storage duration
+(<a title="basic.stc.thread" href="basic.stc.thread.html">3.7.2</a>). It shall be applied only to the names of variables of namespace or block scope and to the names of
+static data members. When <code class="sh_cpp">thread_local</code> is applied to a variable of block scope the
+<i class="nonterminal">storage-class-specifier</i> <code class="sh_cpp">static</code> is implied if it does not appear explicitly.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>The <code class="sh_cpp">static</code> specifier can be applied only to names of variables and functions and to anonymous
+unions (<a title="class.union" href="class.union.html">9.5</a>). There can be no <code class="sh_cpp">static</code> function declarations within a block, nor any
+<code class="sh_cpp">static</code> function parameters. A <code class="sh_cpp">static</code> specifier used in the declaration of a variable declares
+the variable to have static storage duration (<a title="basic.stc.static" href="basic.stc.static.html">3.7.1</a>), unless accompanied by the <code class="sh_cpp">thread_local</code>
+specifier, which declares the variable to have thread storage duration (<a title="basic.stc.thread" href="basic.stc.thread.html">3.7.2</a>). A <code class="sh_cpp">static</code>
+specifier can be used in declarations of class members; <a title="class.static" href="class.static.html">9.4</a> describes its effect. For the linkage of a name
+declared with a static specifier, see <a title="basic.link" href="basic.link.html">3.5</a>.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>The <code class="sh_cpp">extern</code> specifier can be applied only to the names of variables and functions. The
+<code class="sh_cpp">extern</code> specifier cannot be used in the declaration of class members or function parameters. For the linkage
+of a name declared with an <code class="sh_cpp">extern</code> specifier, see <a title="basic.link" href="basic.link.html">3.5</a>. <span class="note">[ <em>Note:</em> The <code class="sh_cpp">extern</code> keyword can
+also be used in <i class="nonterminal">explicit-instantiation</i>s and <i class="nonterminal">linkage-specification</i>s, but it is not a
+<i class="nonterminal">storage-class-specifier</i> in such contexts. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p7" href="#p7">7</a>A name declared in a namespace scope without a <i class="nonterminal">storage-class-specifier</i> has external linkage unless it
+has internal linkage because of a previous declaration and provided it is not declared <code class="sh_cpp">const</code>. Objects
+declared <code class="sh_cpp">const</code> and not explicitly declared <code class="sh_cpp">extern</code> have internal linkage.</p>
+
+<p><a class="anchor" id="p8" href="#p8">8</a>The linkages implied by successive declarations for a given entity shall agree. That is, within a given scope,
+each declaration declaring the same variable name or the same overloading of a function name shall imply the same
+linkage. Each function in a given set of overloaded functions can have a different linkage, however.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">static char* f();       // f() has internal linkage
+char* f()               // f() still has internal linkage
+  { /* … */ }
+
+char* g();              // g() has external linkage
+static char* g()        // error: inconsistent linkage
+  { /* … */ }
+
+void h();
+inline void h();        // external linkage
+
+inline void l();
+void l();               // external linkage
+
+inline void m();
+extern void m();        // external linkage
+
+static void n();
+inline void n();        // internal linkage
+
+static int a;           // a has internal linkage
+int a;                  // error: two definitions
+
+static int b;           // b has internal linkage
+extern int b;           // b still has internal linkage
+
+int c;                  // c has external linkage
+static int c;           // error: inconsistent linkage
+
+extern int d;           // d has external linkage
+static int d;           // error: inconsistent linkage</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p9" href="#p9">9</a>The name of a declared but undefined class can be used in an <code class="sh_cpp">extern</code> declaration. Such a
+declaration can only be used in ways that do not require a complete class type.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct S;
+extern S a;
+extern S f();
+extern void g(S);
+
+void h() {
+  g(a);                 // error: S is incomplete
+  f();                  // error: S is incomplete
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p10" href="#p10">10</a>The <code class="sh_cpp">mutable</code> specifier can be applied only to names of class data members (<a title="class.mem" href="class.mem.html">9.2</a>) and
+cannot be applied to names declared <code class="sh_cpp">const</code> or <code class="sh_cpp">static</code>, and cannot be applied to reference
+members.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">class X {
+  mutable const int* p;     // OK
+  mutable int* const q;     // ill-formed
+};</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p11" href="#p11">11</a>The <code class="sh_cpp">mutable</code> specifier on a class data member nullifies a <code class="sh_cpp">const</code> specifier applied to
+the containing class object and permits modification of the mutable class member even though the rest of the object is
+<code class="sh_cpp">const</code> (<a title="dcl.type.cv" href="dcl.type.cv.html">7.1.6.1</a>).</p>
+
+
+<div><p class="footnote" id="fn92">92) The <code class="sh_cpp">inline</code> keyword has no effect on the linkage of a function.</p></div>
+</body>
+</html>
+

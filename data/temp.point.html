@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Point of instantiation</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[temp.point]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[temp.point]"></object>14.6.4.1 Point of instantiation </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>For a function template specialization, a member function template specialization, or a specialization for a
+member function or static data member of a class template, if the specialization is implicitly instantiated because it
+is referenced from within another template specialization and the context from which it is referenced depends on a
+template parameter, the point of instantiation of the specialization is the point of instantiation of the enclosing
+specialization. Otherwise, the point of instantiation for such a specialization immediately follows the namespace scope
+declaration or definition that refers to the specialization.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>If a function template or member function of a class template is called in a way which uses the definition of a
+default argument of that function template or member function, the point of instantiation of the default argument is the
+point of instantiation of the function template or member function specialization.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>For a class template specialization, a class member template specialization, or a specialization for a class
+member of a class template, if the specialization is implicitly instantiated because it is referenced from within
+another template specialization, if the context from which the specialization is referenced depends on a template
+parameter, and if the specialization is not instantiated previous to the instantiation of the enclosing template, the
+point of instantiation is immediately before the point of instantiation of the enclosing template. Otherwise, the point
+of instantiation for such a specialization immediately precedes the namespace scope declaration or definition that
+refers to the specialization.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>If a virtual function is implicitly instantiated, its point of instantiation is immediately following the point
+of instantiation of its enclosing class template specialization.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>An explicit instantiation definition is an instantiation point for the specialization or specializations
+specified by the explicit instantiation.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>The instantiation context of an expression that depends on the template arguments is the set of declarations
+with external linkage declared prior to the point of instantiation of the template specialization in the same
+translation unit.</p>
+
+<p><a class="anchor" id="p7" href="#p7">7</a>A specialization for a function template, a member function template, or of a member function or static data
+member of a class template may have multiple points of instantiations within a translation unit, and in addition to the
+points of instantiation described above, for any such specialization that has a point of instantiation within the
+translation unit, the end of the translation unit is also considered a point of instantiation. A specialization for a
+class template has at most one point of instantiation within a translation unit. A specialization for any template may
+have points of instantiation in multiple translation units. If two different points of instantiation give a template
+specialization different meanings according to the one definition rule (<a title="basic.def.odr" href="basic.def.odr.html">3.2</a>), the program is ill-formed, no
+diagnostic required.</p>
+</body>
+</html>
+

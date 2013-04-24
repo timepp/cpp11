@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class template basic_stringbuf</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[stringbuf]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[stringbuf]"></object>27.8.2 Class template <code class="sh_cpp"><dfn>basic_stringbuf</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="basic_stringbuf"></object></code> </h3>
+
+<pre><code class="sh_cpp">namespace std {
+  template &lt;class charT, class traits = char_traits&lt;charT&gt;,
+            class Allocator = allocator&lt;charT&gt; &gt;
+  class basic_stringbuf : public basic_streambuf&lt;charT,traits&gt; {
+  public:
+    typedef   charT                       char_type;
+    typedef   typename traits::int_type   int_type;
+    typedef   typename traits::pos_type   pos_type;
+    typedef   typename traits::off_type   off_type;
+    typedef   traits                      traits_type;
+    typedef   Allocator                   allocator_type;
+
+    // <a title="stringbuf.cons" href="stringbuf.cons.html">27.8.2.1</a> Constructors:
+    explicit basic_stringbuf(ios_base::openmode which
+                               = ios_base::in | ios_base::out);
+    explicit basic_stringbuf
+    (const basic_string&lt;charT,traits,Allocator&gt;&amp; str,
+     ios_base::openmode which = ios_base::in | ios_base::out);
+    basic_stringbuf(const basic_stringbuf&amp; rhs) = delete;
+    basic_stringbuf(basic_stringbuf&amp;&amp; rhs);
+
+    // <a title="stringbuf.assign" href="stringbuf.assign.html">27.8.2.2</a> Assign and swap:
+    basic_stringbuf&amp; operator=(const basic_stringbuf&amp; rhs) = delete;
+    basic_stringbuf&amp; operator=(basic_stringbuf&amp;&amp; rhs);
+    void swap(basic_stringbuf&amp; rhs);
+
+    // <a title="stringbuf.members" href="stringbuf.members.html">27.8.2.3</a> Get and set:
+    basic_string&lt;charT,traits,Allocator&gt; str() const;
+    void str(const basic_string&lt;charT,traits,Allocator&gt;&amp; s);
+
+  protected:
+    // <a title="stringbuf.virtuals" href="stringbuf.virtuals.html">27.8.2.4</a> Overridden virtual functions:
+    virtual int_type     underflow();
+    virtual int_type     pbackfail(int_type c = traits::eof());
+    virtual int_type     overflow (int_type c = traits::eof());
+    virtual basic_streambuf&lt;charT,traits&gt;* setbuf(charT*, streamsize);
+
+    virtual pos_type seekoff(off_type off, ios_base::seekdir way,
+                             ios_base::openmode which
+                               = ios_base::in | ios_base::out);
+    virtual pos_type seekpos(pos_type sp,
+                             ios_base::openmode which
+                               = ios_base::in | ios_base::out);
+
+  private:
+    ios_base::openmode mode;   // exposition only
+  };
+
+  template &lt;class charT, class traits, class Allocator&gt;
+  void swap(basic_stringbuf&lt;charT, traits, Allocator&gt;&amp; x,
+            basic_stringbuf&lt;charT, traits, Allocator&gt;&amp; y);
+}</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The class <code class="sh_cpp">basic_stringbuf</code> is derived from <code class="sh_cpp">basic_streambuf</code> to associate possibly the
+input sequence and possibly the output sequence with a sequence of arbitrary characters. The sequence can be initialized
+from, or made available as, an object of class <code class="sh_cpp">basic_string</code>.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>For the sake of exposition, the maintained data is presented here as:</p>
+
+<ul>
+<li>
+<code class="sh_cpp">ios_base::openmode mode</code>, has <code class="sh_cpp">in</code> set if the input sequence can be read, and
+	<code class="sh_cpp">out</code> set if the output sequence can be written.</li>
+</ul>
+</body>
+</html>
+

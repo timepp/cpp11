@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Pragma operator</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[cpp.pragma.op]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[cpp.pragma.op]"></object>16.9 Pragma operator </h2>
+
+<p>A unary operator expression of the form:</p>
+
+<dl><dd>
+<code class="sh_cpp">_Pragma</code> <code class="sh_cpp">(</code> <i class="nonterminal">string-literal</i> <code class="sh_cpp">)</code>
+</dd></dl>
+
+<p>is processed as follows: The string literal is <dfn>destringized</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="destringized"></object> by deleting the <code class="sh_cpp">L</code> prefix, if
+present, deleting the leading and trailing double-quotes, replacing each escape sequence <code class="sh_cpp">\"</code> by a
+double-quote, and replacing each escape sequence <code class="sh_cpp">\\</code> by a single backslash. The resulting sequence of
+characters is processed through translation phase 3 to produce preprocessing tokens that are executed as if they were
+the <i class="nonterminal">pp-tokens</i> in a pragma directive. The original four preprocessing tokens in the unary operator expression
+are removed.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">#pragma listing on "..\listing.dir"</code></pre>
+
+<p>can also be expressed as:</p>
+
+<pre><code class="sh_cpp">_Pragma ( "listing on \"..\\listing.dir\"" )</code></pre>
+
+<p>The latter form is processed in the same way whether it appears literally as shown, or results from macro
+replacement, as in:</p>
+
+<pre><code class="sh_cpp">#define LISTING(x) PRAGMA(listing on #x)
+#define PRAGMA(x) _Pragma(#x)
+LISTING( ..\listing.dir )</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+</body>
+</html>
+

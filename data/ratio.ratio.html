@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class template ratio</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[ratio.ratio]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[ratio.ratio]"></object>20.10.3 Class template <code class="sh_cpp">ratio</code> </h3>
+
+<pre><code class="sh_cpp">namespace std {
+  template &lt;intmax_t N, intmax_t D = 1&gt;
+  class ratio {
+  public:
+     typedef ratio&lt;num, den&gt; type;
+     static constexpr intmax_t num;
+     static constexpr intmax_t den;
+  };
+}</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>If the template argument <code class="sh_cpp">D</code> is zero or the absolute values of either of the template arguments
+<code class="sh_cpp">N</code> and <code class="sh_cpp">D</code> is not representable by type <code class="sh_cpp">intmax_t</code>, the program is ill-formed.
+<span class="note">[ <em>Note:</em> These rules ensure that infinite ratios are avoided and that for any negative input, there exists a representable
+value of its absolute value which is positive. In a two’s complement representation, this excludes the most negative
+value. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The static data members <code class="sh_cpp">num</code> and <code class="sh_cpp">den</code> shall have the following values, where
+<code class="sh_cpp">gcd</code> represents the greatest common divisor of the absolute values of <code class="sh_cpp">N</code> and <code class="sh_cpp">D</code>:</p>
+
+<ul>
+<li>
+<code class="sh_cpp">num</code> shall have the value <code class="sh_cpp">sign(N) * sign(D) * abs(N) / gcd</code>.</li>
+<li>
+<code class="sh_cpp">den</code> shall have the value <code class="sh_cpp">abs(D) / gcd</code>.</li>
+</ul>
+</body>
+</html>
+

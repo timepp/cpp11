@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class template reverse_iterator</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[reverse.iterator]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[reverse.iterator]"></object>24.5.1.1 Class template reverse_iterator </h4>
+
+<pre><code class="sh_cpp">namespace std {
+  template &lt;class Iterator&gt;
+  class reverse_iterator : public
+        iterator&lt;typename iterator_traits&lt;Iterator&gt;::iterator_category,
+                 typename iterator_traits&lt;Iterator&gt;::value_type,
+                 typename iterator_traits&lt;Iterator&gt;::difference_type,
+                 typename iterator_traits&lt;Iterator&gt;::pointer,
+                 typename iterator_traits&lt;Iterator&gt;::reference&gt; {
+  public:
+    typedef Iterator                                            iterator_type;
+    typedef typename iterator_traits&lt;Iterator&gt;::difference_type difference_type;
+    typedef typename iterator_traits&lt;Iterator&gt;::reference       reference;
+    typedef typename iterator_traits&lt;Iterator&gt;::pointer         pointer;
+
+    reverse_iterator();
+    explicit reverse_iterator(Iterator x);
+    template &lt;class U&gt; reverse_iterator(const reverse_iterator&lt;U&gt;&amp; u);
+    template &lt;class U&gt; reverse_iterator&amp; operator=(const reverse_iterator&lt;U&gt;&amp; u);
+
+    Iterator base() const;      // explicit
+    reference operator*() const;
+    pointer   operator-&gt;() const;
+
+    reverse_iterator&amp; operator++();
+    reverse_iterator  operator++(int);
+    reverse_iterator&amp; operator--();
+    reverse_iterator  operator--(int);
+
+    reverse_iterator  operator+ (difference_type n) const;
+    reverse_iterator&amp; operator+=(difference_type n);
+    reverse_iterator  operator- (difference_type n) const;
+    reverse_iterator&amp; operator-=(difference_type n);
+    unspecified operator[](difference_type n) const;
+  protected:
+    Iterator current;
+  private:
+    Iterator deref_tmp;         // exposition only
+  };
+
+  template &lt;class Iterator1, class Iterator2&gt;
+    bool operator==(
+      const reverse_iterator&lt;Iterator1&gt;&amp; x,
+      const reverse_iterator&lt;Iterator2&gt;&amp; y);
+  template &lt;class Iterator1, class Iterator2&gt;
+    bool operator&lt;(
+      const reverse_iterator&lt;Iterator1&gt;&amp; x,
+      const reverse_iterator&lt;Iterator2&gt;&amp; y);
+  template &lt;class Iterator1, class Iterator2&gt;
+    bool operator!=(
+      const reverse_iterator&lt;Iterator1&gt;&amp; x,
+      const reverse_iterator&lt;Iterator2&gt;&amp; y);
+  template &lt;class Iterator1, class Iterator2&gt;
+    bool operator&gt;(
+      const reverse_iterator&lt;Iterator1&gt;&amp; x,
+      const reverse_iterator&lt;Iterator2&gt;&amp; y);
+  template &lt;class Iterator1, class Iterator2&gt;
+    bool operator&gt;=(
+      const reverse_iterator&lt;Iterator1&gt;&amp; x,
+      const reverse_iterator&lt;Iterator2&gt;&amp; y);
+  template &lt;class Iterator1, class Iterator2&gt;
+    bool operator&lt;=(
+      const reverse_iterator&lt;Iterator1&gt;&amp; x,
+      const reverse_iterator&lt;Iterator2&gt;&amp; y);
+  template &lt;class Iterator1, class Iterator2&gt;
+    auto operator-(
+      const reverse_iterator&lt;Iterator1&gt;&amp; x,
+      const reverse_iterator&lt;Iterator2&gt;&amp; y) -&gt; decltype(y.current - x.current);
+  template &lt;class Iterator&gt;
+    reverse_iterator&lt;Iterator&gt; operator+(
+      typename reverse_iterator&lt;Iterator&gt;::difference_type n,
+      const reverse_iterator&lt;Iterator&gt;&amp; x);
+}</code></pre>
+</body>
+</html>
+

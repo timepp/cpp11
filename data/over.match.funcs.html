@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Candidate functions and argument lists</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[over.match.funcs]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[over.match.funcs]"></object>13.3.1 Candidate functions and argument lists </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The subclauses of <a title="over.match.funcs" href="over.match.funcs.html">13.3.1</a> describe the set of candidate functions and the argument list submitted to
+overload resolution in each of the seven contexts in which overload resolution is used. The source transformations and
+constructions defined in these subclauses are only for the purpose of describing the overload resolution process. An
+implementation is not required to use such transformations and constructions.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The set of candidate functions can contain both member and non-member functions to be resolved against the same
+argument list. So that argument and parameter lists are comparable within this heterogeneous set, a member function is
+considered to have an extra parameter, called the <dfn>implicit object parameter</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="implicit object parameter"></object>, which represents the object for
+which the member function has been called. For the purposes of overload resolution, both static and non-static member
+functions have an implicit object parameter, but constructors do not.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>Similarly, when appropriate, the context can construct an argument list that contains an <dfn>implied object
+argument</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="implied object
+argument"></object> to denote the object to be operated on. Since arguments and parameters are associated by position within
+their respective lists, the convention is that the implicit object parameter, if present, is always the first parameter
+and the implied object argument, if present, is always the first argument.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>For non-static member functions, the type of the implicit object parameter is</p>
+
+<ul>
+<li>“lvalue reference to <var>cv</var> <code class="sh_cpp">X</code>” for functions declared without a <i class="nonterminal">ref-qualifier</i> or with
+	the <code class="sh_cpp">&amp;</code> <i class="nonterminal">ref-qualifier</i>
+</li>
+<li>“rvalue reference to <var>cv</var> <code class="sh_cpp">X</code>” for functions declared with the <code class="sh_cpp">&amp;&amp;</code> <i class="nonterminal">ref-qualifier</i>
+</li>
+</ul>
+
+<p>where <code class="sh_cpp">X</code> is the class of which the function is a member and <var>cv</var> is the cv-qualification on the
+member function declaration. <span class="example">[ <em>Example:</em> for a <code class="sh_cpp">const</code> member function of class <code class="sh_cpp">X</code>, the extra
+parameter is assumed to have type “reference to <code class="sh_cpp">const X</code>”. — <em>end example</em> ]</span> For conversion functions, the function
+is considered to be a member of the class of the implied object argument for the purpose of defining the type of the
+implicit object parameter. For non-conversion functions introduced by a <i class="nonterminal">using-declaration</i> into a derived class,
+the function is considered to be a member of the derived class for the purpose of defining the type of the implicit
+object parameter. For static member functions, the implicit object parameter is considered to match any object (since if
+the function is selected, the object is discarded). <span class="note">[ <em>Note:</em> No actual type is established for the implicit object
+parameter of a static member function, and no attempt will be made to determine a conversion sequence for that parameter
+(<a title="over.match.best" href="over.match.best.html">13.3.3</a>). — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>During overload resolution, the implied object argument is indistinguishable from other arguments. The implicit
+object parameter, however, retains its identity since conversions on the corresponding argument shall obey these
+additional rules:</p>
+
+<ul>
+<li>no temporary object can be introduced to hold the argument for the implicit object parameter; and</li>
+<li>no user-defined conversions can be applied to achieve a type match with it.</li>
+</ul>
+
+<p>For non-static member functions declared without a ref-qualifier, an additional rule applies:</p>
+
+<ul>
+<li>even if the implicit object parameter is not <code class="sh_cpp">const</code>-qualified, an rvalue can be bound to the parameter
+as long as in all other respects the argument can be converted to the type of the implicit object parameter. <span class="note">[ <em>Note:</em> The
+fact that such an argument is an rvalue does not affect the ranking of implicit conversion sequences
+(<a title="over.ics.rank" href="over.ics.rank.html">13.3.3.2</a>). — <em>end note</em> ]</span>
+</li>
+</ul>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>Because other than in list-initialization only one user-defined conversion is allowed in an implicit conversion
+sequence, special rules apply when selecting the best user-defined conversion (<a title="over.match.best" href="over.match.best.html">13.3.3</a>,
+<a title="over.best.ics" href="over.best.ics.html">13.3.3.1</a>).</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">class T {
+public:
+  T();
+};
+
+class C : T {
+public:
+  C(int);
+};
+T a = 1;                 // ill-formed: T(C(1)) not tried</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p7" href="#p7">7</a>In each case where a candidate is a function template, candidate function template specializations are
+generated using template argument deduction (<a title="temp.over" href="temp.over.html">14.8.3</a>, <a title="temp.deduct" href="temp.deduct.html">14.8.2</a>). Those candidates are then handled as
+candidate functions in the usual way.<sup class="footnote"><a href="#fn128">128</a></sup> A given name can refer to one or more function templates and also
+to a set of overloaded non-template functions. In such a case, the candidate functions generated from each function
+template are combined with the set of non-template candidate functions.</p>
+
+
+<div><p class="footnote" id="fn128">128) The process of argument deduction fully determines the parameter types of the function template
+specializations, i.e., the parameters of function template specializations contain no template parameter types.
+Therefore the function template specializations can be treated as normal (non-template) functions for the remainder of
+overload resolution.</p></div>
+</body>
+</html>
+

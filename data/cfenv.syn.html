@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Header &lt;cfenv&gt; synopsis</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[cfenv]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[cfenv]"></object>26.3 The floating-point environment </h2>
+
+<h3>
+<dfn class="label">[cfenv.syn]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[cfenv.syn]"></object>26.3.1 Header <dfn><code class="header">&lt;cfenv&gt;</code></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="&lt;cfenv&gt;"></object> synopsis </h3>
+
+<pre><code class="sh_cpp">namespace std {
+  // types
+  typedef object type fenv_t;
+  typedef integer type fexcept_t;
+
+  // functions
+  int feclearexcept(int except);
+  int fegetexceptflag(fexcept_t *pflag, int except);
+  int feraiseexcept(int except);
+  int fesetexceptflag(const fexcept_t *pflag, int except);
+  int fetestexcept(int except);
+
+  int fegetround(void);
+  int fesetround(int mode);
+
+  int fegetenv(fenv_t *penv);
+  int feholdexcept(fenv_t *penv);
+  int fesetenv(const fenv_t *penv);
+  int feupdateenv(const fenv_t *penv);
+}</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The header also defines the macros:</p>
+
+<pre><code class="sh_cpp">FE_ALL_EXCEPT
+FE_DIVBYZERO
+FE_INEXACT
+FE_INVALID
+FE_OVERFLOW
+FE_UNDERFLOW
+
+FE_DOWNWARD
+FE_TONEAREST
+FE_TOWARDZERO
+FE_UPWARD
+
+FE_DFL_ENV</code></pre>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The header defines all functions, types, and macros the same as Clause 7.6 of the C standard.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>The floating-point environment has thread storage duration (<a title="basic.stc.thread" href="basic.stc.thread.html">3.7.2</a>). The initial state for a thread’s
+floating-point environment is the state of the floating-point environment of the thread that constructs the
+corresponding <code class="sh_cpp">std::thread</code> object (<a title="thread.thread.class" href="thread.thread.class.html">30.3.1</a>) at the time it constructed the object. <span class="note">[ <em>Note:</em> That is,
+the child thread gets the floating-point state of the parent thread at the time of the child’s creation. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>A separate floating-point environment shall be maintained for each thread. Each function accesses the
+environment corresponding to its calling thread.</p>
+</body>
+</html>
+

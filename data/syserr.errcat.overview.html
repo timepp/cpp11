@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class error_category overview</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[syserr.errcat]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[syserr.errcat]"></object>19.5.1 Class <code class="sh_cpp"><dfn>error_category</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="error_category"></object></code> </h3>
+
+<h4>
+<dfn class="label">[syserr.errcat.overview]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[syserr.errcat.overview]"></object>19.5.1.1 Class <code class="sh_cpp">error_category</code> overview </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The class <code class="sh_cpp">error_category</code> serves as a base class for types used to identify the source and encoding
+of a particular category of error code. Classes may be derived from <code class="sh_cpp">error_category</code> to support categories of
+errors in addition to those defined in this International Standard. Such classes shall behave as specified in this
+subclause. <span class="note">[ <em>Note:</em> <code class="sh_cpp">error_category</code> objects are passed by reference, and two such objects are equal if they
+have the same address. This means that applications using custom <code class="sh_cpp">error_category</code> types should create a
+single object of each such type. — <em>end note</em> ]</span></p>
+
+<pre><code class="sh_cpp">namespace std {
+  class error_category {
+  public:
+    virtual ~error_category() noexcept;
+    error_category(const error_category&amp;) = delete;
+    error_category&amp; operator=(const error_category&amp;) = delete;
+    virtual const char* name() const noexcept = 0;
+    virtual error_condition default_error_condition(int ev) const noexcept;
+    virtual bool equivalent(int code, const error_condition&amp; condition) const noexcept;
+    virtual bool equivalent(const error_code&amp; code, int condition) const noexcept;
+    virtual string message(int ev) const = 0;
+    
+    bool operator==(const error_category&amp; rhs) const noexcept;
+    bool operator!=(const error_category&amp; rhs) const noexcept;
+    bool operator&lt;(const error_category&amp; rhs) const noexcept;
+  };
+  
+  const error_category&amp; generic_category() noexcept;
+  const error_category&amp; system_category() noexcept;
+
+} // namespace std</code></pre>
+</body>
+</html>
+

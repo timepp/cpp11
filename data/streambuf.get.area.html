@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Get area access</title>
+</head>
+<body>
+<h5>
+<dfn class="label">[streambuf.get.area]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[streambuf.get.area]"></object>27.6.3.3.2 Get area access </h5>
+
+<h6><code class="sh_cpp">char_type* <dfn>eback</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="eback"></object>() const;</code></h6>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Returns:</em> The beginning pointer for the input sequence.</p>
+
+<h6><code class="sh_cpp">char_type* <dfn>gptr</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="gptr"></object>() const;</code></h6>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Returns:</em> The next pointer for the input sequence.</p>
+
+<h6><code class="sh_cpp">char_type* <dfn>egptr</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="egptr"></object>() const;</code></h6>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Returns:</em> The end pointer for the input sequence.</p>
+
+<h6><code class="sh_cpp">void <dfn>gbump</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="gbump"></object>(int n);</code></h6>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><em>Effects:</em> Adds <code class="sh_cpp">n</code> to the next pointer for the input sequence.</p>
+
+<h6><code class="sh_cpp">void <dfn>setg</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="setg"></object>(char_type* gbeg, char_type* gnext, char_type* gend);</code></h6>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><em>Postconditions:</em> <code class="sh_cpp">gbeg == eback()</code>, <code class="sh_cpp">gnext == gptr()</code>, and <code class="sh_cpp">gend ==
+egptr()</code>.</p>
+</body>
+</html>
+

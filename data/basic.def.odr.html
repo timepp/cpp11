@@ -1,0 +1,161 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>One definition rule</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[basic.def.odr]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[basic.def.odr]"></object>3.2 One definition rule </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>No translation unit shall contain more than one definition of any variable, function, class type, enumeration
+type, or template.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>An expression is <dfn>potentially evaluated</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="potentially evaluated"></object> unless it is an unevaluated operand (Clause <a title="expr" href="expr.html">5</a>) or
+a subexpression thereof. A variable whose name appears as a potentially-evaluated expression is <dfn>odr-used</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="odr-used"></object>
+unless it is an object that satisfies the requirements for appearing in a constant expression (<a title="expr.const" href="expr.const.html">5.19</a>) and the
+lvalue-to-rvalue conversion (<a title="conv.lval" href="conv.lval.html">4.1</a>) is immediately applied. <code class="sh_cpp">this</code> is odr-used if it appears as a
+potentially-evaluated expression (including as the result of the implicit transformation in the body of a non-static
+member function (<a title="class.mfct.non-static" href="class.mfct.non-static.html">9.3.1</a>)). A virtual member function is odr-used if it is not pure. A non-overloaded function
+whose name appears as a potentially-evaluated expression or a member of a set of candidate functions, if selected by
+overload resolution when referred to from a potentially-evaluated expression, is odr-used, unless it is a pure virtual
+function and its name is not explicitly qualified. <span class="note">[ <em>Note:</em> This covers calls to named functions (<a title="expr.call" href="expr.call.html">5.2.2</a>),
+operator overloading (Clause <a title="over" href="over.html">13</a>), user-defined conversions (<a title="class.conv.fct" href="class.conv.fct.html">12.3.2</a>), allocation function for
+placement new (<a title="expr.new" href="expr.new.html">5.3.4</a>), as well as non-default initialization (<a title="dcl.init" href="dcl.init.html">8.5</a>). A copy constructor or move
+constructor is odr-used even if the call is actually elided by the implementation. — <em>end note</em> ]</span> An allocation or deallocation
+function for a class is odr-used by a new expression appearing in a potentially-evaluated expression as specified in
+<a title="expr.new" href="expr.new.html">5.3.4</a> and <a title="class.free" href="class.free.html">12.5</a>. A deallocation function for a class is odr-used by a delete expression appearing
+in a potentially-evaluated expression as specified in <a title="expr.delete" href="expr.delete.html">5.3.5</a> and <a title="class.free" href="class.free.html">12.5</a>. A non-placement allocation
+or deallocation function for a class is used by the definition of a constructor of that class. A non-placement
+deallocation function for a class is odr-used by the definition of the destructor of that class, or by being selected by
+the lookup at the point of definition of a virtual destructor (<a title="class.dtor" href="class.dtor.html">12.4</a>).<sup class="footnote"><a href="#fn26">26</a></sup> A copy-assignment
+function for a class is odr-used by an implicitly-defined copy-assignment function for another class as specified in
+<a title="class.copy" href="class.copy.html">12.8</a>. A move-assignment function for a class is odr-used by an implicitly-defined move-assignment function
+for another class as specified in <a title="class.copy" href="class.copy.html">12.8</a>. A default constructor for a class is odr-used by default
+initialization or value initialization as specified in <a title="dcl.init" href="dcl.init.html">8.5</a>. A constructor for a class is odr-used as
+specified in <a title="dcl.init" href="dcl.init.html">8.5</a>. A destructor for a class is odr-used as specified in <a title="class.dtor" href="class.dtor.html">12.4</a>.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>Every program shall contain exactly one definition of every non-inline function or variable that is odr-used in
+that program; no diagnostic required. The definition can appear explicitly in the program, it can be found in the
+standard or a user-defined library, or (when appropriate) it is implicitly defined (see <a title="class.ctor" href="class.ctor.html">12.1</a>, <a title="class.dtor" href="class.dtor.html">12.4</a>
+and <a title="class.copy" href="class.copy.html">12.8</a>). An inline function shall be defined in every translation unit in which it is odr-used.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>Exactly one definition of a class is required in a translation unit if the class is used in a way that requires
+the class type to be complete.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> the following complete translation unit is well-formed, even though it never defines X:</p>
+
+<pre><code class="sh_cpp">struct X;               // declare X as a struct type
+struct X* x1;           // use X in pointer formation
+X* x2;                  // use X in pointer formation</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<div class="note">
+<p>[ <em>Note:</em> The rules for declarations and expressions describe in which contexts complete class types are required. A
+class type <code class="sh_cpp">T</code> must be complete if:</p>
+<ul>
+<li>an object of type <code class="sh_cpp">T</code> is defined (<a title="basic.def" href="basic.def.html">3.1</a>), or</li>
+<li>a non-static class data member of type <code class="sh_cpp">T</code> is declared (<a title="class.mem" href="class.mem.html">9.2</a>), or</li>
+<li>
+<code class="sh_cpp">T</code> is used as the object type or array element type in a <i class="nonterminal">new-expression</i> (<a title="expr.new" href="expr.new.html">5.3.4</a>),
+	or</li>
+<li>an lvalue-to-rvalue conversion is applied to a glvalue referring to an object of type <code class="sh_cpp">T</code>
+	(<a title="conv.lval" href="conv.lval.html">4.1</a>), or</li>
+<li>an expression is converted (either implicitly or explicitly) to type <code class="sh_cpp">T</code> (Clause <a title="conv" href="conv.html">4</a>,
+	<a title="expr.type.conv" href="expr.type.conv.html">5.2.3</a>, <a title="expr.dynamic.cast" href="expr.dynamic.cast.html">5.2.7</a>, <a title="expr.static.cast" href="expr.static.cast.html">5.2.9</a>, <a title="expr.cast" href="expr.cast.html">5.4</a>), or</li>
+<li>an expression that is not a null pointer constant, and has type other than <code class="sh_cpp">void*</code>, is converted to the
+	type pointer to <code class="sh_cpp">T</code> or reference to <code class="sh_cpp">T</code> using an implicit conversion (Clause <a title="conv" href="conv.html">4</a>), a
+	<code class="sh_cpp">dynamic_cast</code> (<a title="expr.dynamic.cast" href="expr.dynamic.cast.html">5.2.7</a>) or a <code class="sh_cpp">static_cast</code> (<a title="expr.static.cast" href="expr.static.cast.html">5.2.9</a>), or</li>
+<li>a class member access operator is applied to an expression of type <code class="sh_cpp">T</code> (<a title="expr.ref " href=".html"></a>), or</li>
+<li>the <code class="sh_cpp">typeid</code> operator (<a title="expr.typeid" href="expr.typeid.html">5.2.8</a>) or the <code class="sh_cpp">sizeof</code> operator (<a title="expr.sizeof" href="expr.sizeof.html">5.3.3</a>) is
+	applied to an operand of type <code class="sh_cpp">T</code>, or</li>
+<li>a function with a return type or argument type of type <code class="sh_cpp">T</code> is defined (<a title="basic.def" href="basic.def.html">3.1</a>) or called
+	(<a title="expr.call" href="expr.call.html">5.2.2</a>), or</li>
+<li>a class with a base class of type <code class="sh_cpp">T</code> is defined (Clause <a title="class.derived" href="class.derived.html">10</a>), or</li>
+<li>an lvalue of type <code class="sh_cpp">T</code> is assigned to (<a title="expr.ass" href="expr.ass.html">5.17</a>), or</li>
+<li>the type <code class="sh_cpp">T</code> is the subject of an <code class="sh_cpp">alignof</code> expression (<a title="expr.alignof" href="expr.alignof.html">5.3.6</a>), or</li>
+<li>an <i class="nonterminal">exception-declaration</i> has type <code class="sh_cpp">T</code>, reference to <code class="sh_cpp">T</code>, or pointer to <code class="sh_cpp">T</code>
+(<a title="except.handle" href="except.handle.html">15.3</a>).</li>
+</ul>
+<p> — <em>end note</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>There can be more than one definition of a class type (Clause <a title="class" href="class.html">9</a>), enumeration type (<a title="dcl.enum" href="dcl.enum.html">7.2</a>),
+inline function with external linkage (<a title="dcl.fct.spec" href="dcl.fct.spec.html">7.1.2</a>), class template (Clause <a title="temp" href="temp.html">14</a>), non-static function
+template (<a title="temp.fct" href="temp.fct.html">14.5.6</a>), static data member of a class template (<a title="temp.static" href="temp.static.html">14.5.1.3</a>), member function of a class
+template (<a title="temp.mem.func" href="temp.mem.func.html">14.5.1.1</a>), or template specialization for which some template parameters are not specified
+(<a title="temp.spec" href="temp.spec.html">14.7</a>, <a title="temp.class.spec" href="temp.class.spec.html">14.5.5</a>) in a program provided that each definition appears in a different translation unit,
+and provided the definitions satisfy the following requirements. Given such an entity named <code class="sh_cpp">D</code> defined in
+more than one translation unit, then</p>
+
+<ul>
+<li>each definition of <code class="sh_cpp">D</code> shall consist of the same sequence of tokens; and</li>
+<li>in each definition of <code class="sh_cpp">D</code>, corresponding names, looked up according to <a title="basic.lookup" href="basic.lookup.html">3.4</a>, shall refer to an
+	entity defined within the definition of <code class="sh_cpp">D</code>, or shall refer to the same entity, after overload resolution
+	(<a title="over.match" href="over.match.html">13.3</a>) and after matching of partial template specialization (<a title="temp.over" href="temp.over.html">14.8.3</a>), except that a name can
+	refer to a <code class="sh_cpp">const</code> object with internal or no linkage if the object has the same literal type in all
+	definitions of <code class="sh_cpp">D</code>, and the object is initialized with a constant expression (<a title="expr.const" href="expr.const.html">5.19</a>), and the value
+	(but not the address) of the object is used, and the object has the same value in all definitions of <code class="sh_cpp">D</code>;
+	and</li>
+<li>in each definition of <code class="sh_cpp">D</code>, corresponding entities shall have the same language linkage; and</li>
+<li>in each definition of <code class="sh_cpp">D</code>, the overloaded operators referred to, the implicit calls to conversion
+	functions, constructors, operator new functions and operator delete functions, shall refer to the same function, or to a
+	function defined within the definition of <code class="sh_cpp">D</code>; and</li>
+<li>in each definition of <code class="sh_cpp">D</code>, a default argument used by an (implicit or explicit) function call is treated
+	as if its token sequence were present in the definition of <code class="sh_cpp">D</code>; that is, the default argument is subject to
+	the three requirements described above (and, if the default argument has sub-expressions with default arguments, this
+	requirement applies recursively).<sup class="footnote"><a href="#fn27">27</a></sup>
+</li>
+<li>if <code class="sh_cpp">D</code> is a class with an implicitly-declared constructor (<a title="class.ctor" href="class.ctor.html">12.1</a>), it is as if the constructor
+	was implicitly defined in every translation unit where it is odr-used, and the implicit definition in every
+	translation unit shall call the same constructor for a base class or a class member of <code class="sh_cpp">D</code>. <div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">//translation unit 1:
+struct X {
+   X(int);
+   X(int, int);
+};
+X::X(int = 0) { }
+class D: public X { };
+D d2;                           // X(int) called by D()</code></pre>
+
+<pre><code class="sh_cpp">//translation unit 2:
+struct X {
+   X(int);
+   X(int, int);
+};
+X::X(int = 0, int = 0) { }
+class D: public X { };          // X(int, int) called by D();
+                                // D()’s implicit definition
+                                // violates the ODR</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+</li>
+</ul>
+
+<p>If <code class="sh_cpp">D</code> is a template and is defined in more than one translation unit, then the preceding requirements
+shall apply both to names from the template’s enclosing scope used in the template definition (<a title="temp.nondep" href="temp.nondep.html">14.6.3</a>), and
+also to dependent names at the point of instantiation (<a title="temp.dep" href="temp.dep.html">14.6.2</a>). If the definitions of <code class="sh_cpp">D</code> satisfy
+all these requirements, then the program shall behave as if there were a single definition of <code class="sh_cpp">D</code>. If the
+definitions of <code class="sh_cpp">D</code> do not satisfy these requirements, then the behavior is undefined.</p>
+
+
+
+
+<div>
+<p class="footnote" id="fn26">26) An implementation is not required to call allocation and deallocation functions from constructors or
+destructors; however, this is a permissible implementation technique.</p>
+<p class="footnote" id="fn27">27) <a title="dcl.fct.default" href="dcl.fct.default.html">8.3.6</a> describes how default argument names are looked up.</p>
+</div>
+</body>
+</html>
+

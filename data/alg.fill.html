@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Fill</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[alg.fill]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[alg.fill]"></object>25.3.6 Fill </h3>
+
+<pre><code class="sh_cpp">template&lt;class ForwardIterator, class T&gt;
+  void <dfn>fill</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="fill"></object>(ForwardIterator first, ForwardIterator last, const T&amp; value);
+
+template&lt;class OutputIterator, class Size, class T&gt;
+  OutputIterator <dfn>fill_n</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="fill_n"></object>(OutputIterator first, Size n, const T&amp; value);</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Requires:</em> The expression <code class="sh_cpp">value</code> shall be writable to the output iterator. The type
+<code class="sh_cpp">Size</code> shall be convertible to an integral type (<a title="conv.integral" href="conv.integral.html">4.7</a>, <a title="class.conv" href="class.conv.html">12.3</a>).</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Effects:</em> The first algorithm assigns <code class="sh_cpp">value</code> through all the iterators in the range <code class="sh_cpp">[first,
+last)</code>. The second algorithm assigns <code class="sh_cpp">value</code> through all the iterators in the range <code class="sh_cpp">[first, first
++ n)</code> if <code class="sh_cpp">n</code> is positive, otherwise it does nothing.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Returns:</em> <code class="sh_cpp">fill_n</code> returns <code class="sh_cpp">first + n</code> for non-negative values of <code class="sh_cpp">n</code> and
+<code class="sh_cpp">first</code> for negative values.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><em>Complexity:</em> Exactly <code class="sh_cpp">last - first</code>, <code class="sh_cpp">n</code>, or 0 assignments, respectively.</p>
+</body>
+</html>
+

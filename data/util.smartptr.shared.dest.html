@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>shared_ptr destructor</title>
+</head>
+<body>
+<h5>
+<dfn class="label">[util.smartptr.shared.dest]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[util.smartptr.shared.dest]"></object>20.7.2.2.2 <code class="sh_cpp">shared_ptr</code> destructor </h5>
+
+<h6><code class="sh_cpp"><dfn>~shared_ptr</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="~shared_ptr"></object>();</code></h6>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Effects:</p>
+
+<ul>
+<li>If <code class="sh_cpp">*this</code> is empty or shares ownership with another <code class="sh_cpp">shared_ptr</code> instance (<code class="sh_cpp">use_count()
+	&gt; 1</code>), there are no side effects.</li>
+<li>Otherwise, if <code class="sh_cpp">*this</code> owns an object <code class="sh_cpp">p</code> and a deleter <code class="sh_cpp">d</code>, <code class="sh_cpp">d(p)</code> is
+	called.</li>
+<li>Otherwise, <code class="sh_cpp">*this</code> owns a pointer <code class="sh_cpp">p</code>, and <code class="sh_cpp">delete p</code> is called.</li>
+</ul>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><span class="note">[ <em>Note:</em> Since the destruction of <code class="sh_cpp">*this</code> decreases the number of instances that share ownership with
+<code class="sh_cpp">*this</code> by one, after <code class="sh_cpp">*this</code> has been destroyed all <code class="sh_cpp">shared_ptr</code> instances that shared
+ownership with <code class="sh_cpp">*this</code> will report a <code class="sh_cpp">use_count()</code> that is one less than its previous
+value. — <em>end note</em> ]</span></p>
+</body>
+</html>
+

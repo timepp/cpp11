@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class template unique_ptr</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[smartptr]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[smartptr]"></object>20.7 Smart pointers </h2>
+
+<h3>
+<dfn class="label">[unique.ptr]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[unique.ptr]"></object>20.7.1 Class template <code class="sh_cpp">unique_ptr</code> </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A <dfn>unique pointer</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="unique pointer"></object> is an object that owns another object and manages that other object through a
+pointer. More precisely, a unique pointer is an object <var>u</var> that stores a pointer to a second object
+<var>p</var> and will dispose of <var>p</var> when <var>u</var> is itself destroyed (e.g., when leaving block scope
+(<a title="stmt.dcl" href="stmt.dcl.html">6.7</a>). In this context, <var>u</var> is said to <dfn>own</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="own"></object> <var>p</var>.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The mechanism by which <var>u</var> disposes of <var>p</var> is known as <var>p</var>’s associated
+<dfn>deleter</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="deleter"></object>, a function object whose correct invocation results in <var>p</var>’s appropriate disposition
+(typically its deletion).</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>Let the notation <var>u</var>.<var>p</var> denote the pointer stored by <var>u</var>, and let
+<var>u</var>.<var>d</var> denote the associated deleter. Upon request, <var>u</var> can <dfn>reset</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="reset"></object> (replace)
+<var>u</var>.<var>p</var> and <var>u</var>.<var>d</var> with another pointer and deleter, but must properly dispose of
+its owned object via the associated deleter before such replacement is considered completed.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>Additionally, <var>u</var> can, upon request, <dfn>transfer ownership</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="transfer ownership"></object> to another unique pointer
+<var>u2</var>. Upon completion of such a transfer, the following postconditions hold:</p>
+
+<ul>
+<li>
+<var>u2</var>.<var>p</var> is equal to the pre-transfer <var>u</var>.<var>p</var>,</li>
+<li>
+<var>u</var>.<var>p</var> is equal to <code class="sh_cpp">nullptr</code>, and</li>
+<li>if the pre-transfer <var>u</var>.<var>d</var> maintained state, such state has been transferred to
+	<var>u2</var>.<var>d</var>.</li>
+</ul>
+
+<p>As in the case of a reset, <var>u2</var> must properly dispose of its pre-transfer owned object via the pre-transfer
+associated deleter before the ownership transfer is considered complete. <span class="note">[ <em>Note:</em> A deleter’s state need never be copied,
+only moved or swapped as ownership is transferred. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>Each object of a type <code class="sh_cpp">U</code> instantiated from the <code class="sh_cpp">unique_ptr</code> template specified in this
+subclause has the strict ownership semantics, specified above, of a unique pointer. In partial satisfaction of these
+semantics, each such <code class="sh_cpp">U</code> is <code class="concept">MoveConstructible</code> and <code class="concept">MoveAssignable</code>, but
+is not <code class="concept">CopyConstructible</code> nor <code class="concept">CopyAssignable</code>. The template parameter <code class="sh_cpp">T</code>
+of <code class="sh_cpp">unique_ptr</code> may be an incomplete type.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a><span class="note">[ <em>Note:</em> The uses of <code class="sh_cpp">unique_ptr</code> include providing exception safety for dynamically allocated memory,
+passing ownership of dynamically allocated memory to a function, and returning dynamically allocated memory from a
+function. — <em>end note</em> ]</span></p>
+
+<pre><code class="sh_cpp">namespace std {
+  template&lt;class T&gt; struct default_delete;
+  template&lt;class T&gt; struct default_delete&lt;T[]&gt;;
+
+  template&lt;class T, class D = default_delete&lt;T&gt;&gt; class unique_ptr;
+  template&lt;class T, class D&gt; class unique_ptr&lt;T[], D&gt;;
+
+  template&lt;class T, class D&gt; void swap(unique_ptr&lt;T, D&gt;&amp; x, unique_ptr&lt;T, D&gt;&amp; y) noexcept;
+
+  template&lt;class T1, class D1, class T2, class D2&gt;
+    bool operator==(const unique_ptr&lt;T1, D1&gt;&amp; x, const unique_ptr&lt;T2, D2&gt;&amp; y);
+  template&lt;class T1, class D1, class T2, class D2&gt;
+    bool operator!=(const unique_ptr&lt;T1, D1&gt;&amp; x, const unique_ptr&lt;T2, D2&gt;&amp; y);
+  template&lt;class T1, class D1, class T2, class D2&gt;
+    bool operator&lt;(const unique_ptr&lt;T1, D1&gt;&amp; x, const unique_ptr&lt;T2, D2&gt;&amp; y);
+  template&lt;class T1, class D1, class T2, class D2&gt;
+    bool operator&lt;=(const unique_ptr&lt;T1, D1&gt;&amp; x, const unique_ptr&lt;T2, D2&gt;&amp; y);
+  template&lt;class T1, class D1, class T2, class D2&gt;
+    bool operator&gt;(const unique_ptr&lt;T1, D1&gt;&amp; x, const unique_ptr&lt;T2, D2&gt;&amp; y);
+  template&lt;class T1, class D1, class T2, class D2&gt;
+    bool operator&gt;=(const unique_ptr&lt;T1, D1&gt;&amp; x, const unique_ptr&lt;T2, D2&gt;&amp; y);
+
+  template &lt;class T, class D&gt;
+    bool operator==(const unique_ptr&lt;T, D&gt;&amp; x, nullptr_t) noexcept;
+  template &lt;class T, class D&gt;
+    bool operator==(nullptr_t, const unique_ptr&lt;T, D&gt;&amp; y) noexcept;
+  template &lt;class T, class D&gt;
+    bool operator!=(const unique_ptr&lt;T, D&gt;&amp; x, nullptr_t) noexcept;
+  template &lt;class T, class D&gt;
+    bool operator!=(nullptr_t, const unique_ptr&lt;T, D&gt;&amp; y) noexcept;
+  template &lt;class T, class D&gt;
+    bool operator&lt;(const unique_ptr&lt;T, D&gt;&amp; x, nullptr_t);
+  template &lt;class T, class D&gt;
+    bool operator&lt;(nullptr_t, const unique_ptr&lt;T, D&gt;&amp; y);
+  template &lt;class T, class D&gt;
+    bool operator&lt;=(const unique_ptr&lt;T, D&gt;&amp; x, nullptr_t);
+  template &lt;class T, class D&gt;
+    bool operator&lt;=(nullptr_t, const unique_ptr&lt;T, D&gt;&amp; y);
+  template &lt;class T, class D&gt;
+    bool operator&gt;(const unique_ptr&lt;T, D&gt;&amp; x, nullptr_t);
+  template &lt;class T, class D&gt;
+    bool operator&gt;(nullptr_t, const unique_ptr&lt;T, D&gt;&amp; y);
+  template &lt;class T, class D&gt;
+      bool operator&gt;=(const unique_ptr&lt;T, D&gt;&amp; x, nullptr_t);
+    template &lt;class T, class D&gt;
+      bool operator&gt;=(nullptr_t, const unique_ptr&lt;T, D&gt;&amp; y);
+}</code></pre>
+</body>
+</html>
+

@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Transform</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[alg.transform]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[alg.transform]"></object>25.3.4 Transform </h3>
+
+<pre><code class="sh_cpp">template&lt;class InputIterator, class OutputIterator,
+         class UnaryOperation&gt;
+  OutputIterator
+    <dfn>transform</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="transform"></object>(InputIterator first, InputIterator last,
+              OutputIterator result, UnaryOperation op);
+
+template&lt;class InputIterator1, class InputIterator2,
+         class OutputIterator, class BinaryOperation&gt;
+  OutputIterator
+    transform(InputIterator1 first1, InputIterator1 last1,
+              InputIterator2 first2, OutputIterator result,
+              BinaryOperation binary_op);</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Effects:</em> Assigns through every iterator <code class="sh_cpp">i</code> in the range <code class="sh_cpp">[result, result + (last1 -
+first1))</code> a new corresponding value equal to <code class="sh_cpp">op(*(first1 + (i - result))</code> or <code class="sh_cpp">binary_op(*(first1
++ (i - result)), *(first2 + (i - result)))</code>.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Requires:</em> <code class="sh_cpp">op</code> and <code class="sh_cpp">binary_op</code> shall not invalidate iterators or subranges, or modify
+elements in the ranges <code class="sh_cpp">[first1, last1]</code>, <code class="sh_cpp">[first2, first2 + (last1 - first1)]</code>, and
+<code class="sh_cpp">[result, result + (last1 - first1)]</code>.<sup class="footnote"><a href="#fn274">274</a></sup></p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Returns:</em> <code class="sh_cpp">result + (last1 - first1)</code>.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><em>Complexity:</em> Exactly <code class="sh_cpp">last1 - first1</code> applications of <code class="sh_cpp">op</code> or
+<code class="sh_cpp">binary_op</code>.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><em>Remarks:</em> <code class="sh_cpp">result</code> may be equal to <code class="sh_cpp">first</code> in case of unary transform, or to
+<code class="sh_cpp">first1</code> or <code class="sh_cpp">first2</code> in case of binary transform.</p>
+
+
+<div><p class="footnote" id="fn274">274) The use of fully closed ranges is intentional.</p></div>
+</body>
+</html>
+

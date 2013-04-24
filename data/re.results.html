@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class template match_results</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[re.results]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[re.results]"></object>28.10 Class template <code class="sh_cpp"><dfn>match_results</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="match_results"></object></code> </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Class template <code class="sh_cpp">match_results</code> denotes a collection of character sequences representing the result
+of a regular expression match. Storage for the collection is allocated and freed as necessary by the member functions of
+class template <code class="sh_cpp">match_results</code>.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The class template <code class="sh_cpp">match_results</code> shall satisfy the requirements of an allocator-aware container
+and of a sequence container, as specified in <a title="sequence.reqmts" href="sequence.reqmts.html">23.2.3</a>, except that only operations defined for const-qualified
+sequence containers are supported.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>A default-constructed <code class="sh_cpp">match_results</code> object has no fully established result state. A match result
+is <dfn>ready</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="ready"></object> when, as a consequence of a completed regular expression match modifying such an object, its result
+state becomes fully established. The effects of calling most member functions from a <code class="sh_cpp">match_results</code> object
+that is not ready are undefined.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>The <code class="sh_cpp">sub_match</code> object stored at index 0 represents sub-expression 0, i.e., the whole match. In this
+case the <code class="sh_cpp">sub_match</code> member <code class="sh_cpp">matched</code> is always true. The <code class="sh_cpp">sub_match</code> object stored at
+index <code class="sh_cpp">n</code> denotes what matched the marked sub-expression <code class="sh_cpp">n</code> within the matched expression. If the
+sub-expression <code class="sh_cpp">n</code> participated in a regular expression match then the <code class="sh_cpp">sub_match</code> member
+<code class="sh_cpp">matched</code> evaluates to true, and members <code class="sh_cpp">first</code> and <code class="sh_cpp">second</code> denote the range of
+characters <code class="sh_cpp">[first,second)</code> which formed that match. Otherwise <code class="sh_cpp">matched</code> is false, and members
+<code class="sh_cpp">first</code> and <code class="sh_cpp">second</code> point to the end of the sequence that was searched. <span class="note">[ <em>Note:</em> The
+<code class="sh_cpp">sub_match</code> objects representing different sub-expressions that did not participate in a regular expression
+match need not be distinct. — <em>end note</em> ]</span></p>
+
+<pre><code class="sh_cpp">namespace std {
+  template &lt;class BidirectionalIterator,
+            class Allocator = allocator&lt;sub_match&lt;BidirectionalIterator&gt; &gt;
+  class match_results {
+  public:
+    typedef sub_match&lt;BidirectionalIterator&gt;                  value_type;
+    typedef const value_type&amp;                                 const_reference;
+    typedef const_reference                                   reference;
+    typedef <var>implementation-defined</var>                            const_iterator;
+    typedef const_iterator                                    iterator;
+    typedef typename
+      iterator_traits&lt;BidirectionalIterator&gt;::difference_type difference_type;
+    typedef typename allocator_traits&lt;Allocator&gt;::size_type   size_type;
+    typedef Allocator                                         allocator_type;
+    typedef typename iterator_traits&lt;BidirectionalIterator&gt;::
+      value_type                                              char_type;
+    typedef basic_string&lt;char_type&gt;                           string_type;
+
+    // <a title="re.results.const" href="re.results.const.html">28.10.1</a>, construct/copy/destroy:
+    explicit match_results(const Allocator&amp; a = Allocator());
+    match_results(const match_results&amp; m);
+    match_results(match_results&amp;&amp; m) noexcept;
+    match_results&amp; operator=(const match_results&amp; m);
+    match_results&amp; operator=(match_results&amp;&amp; m);
+    ~match_results();
+
+    // <a title="re.results.state" href="re.results.state.html">28.10.2</a>, state:
+    bool ready() const;
+
+    // <a title="re.results.size" href="re.results.size.html">28.10.3</a>, size:
+    size_type size() const;
+    size_type max_size() const;
+    bool empty() const;
+
+    // <a title="re.results.acc" href="re.results.acc.html">28.10.4</a>, element access:
+    difference_type length(size_type sub = 0) const;
+    difference_type position(size_type sub = 0) const;
+    string_type str(size_type sub = 0) const;
+    const_reference operator[](size_type n) const;
+
+    const_reference prefix() const;
+    const_reference suffix() const;
+    const_iterator begin() const;
+    const_iterator end() const;
+    const_iterator cbegin() const;
+    const_iterator cend() const;
+
+    // <a title="re.results.form" href="re.results.form.html">28.10.5</a>, format:
+    template &lt;class OutputIter&gt;
+      OutputIter
+      format(OutputIter out,
+             const char_type* fmt_first, const char_type* fmt_last,
+             regex_constants::match_flag_type flags =
+               regex_constants::format_default) const;
+    template &lt;class OutputIter, class ST, class SA&gt;
+      OutputIter
+      format(OutputIter out,
+             const basic_string&lt;char_type, ST, SA&gt;&amp; fmt,
+             regex_constants::match_flag_type flags =
+               regex_constants::format_default) const;
+    template &lt;class ST, class SA&gt;
+     basic_string&lt;char_type, ST, SA&gt;
+     format(const basic_string&lt;char_type, ST, SA&gt;&amp; fmt,
+             regex_constants::match_flag_type flags =
+                regex_constants::format_default) const;
+    string_type
+    format(const char_type* fmt,
+            regex_constants::match_flag_type flags =
+              regex_constants::format_default) const;
+
+    // <a title="re.results.all" href="re.results.all.html">28.10.6</a>, allocator:
+    allocator_type get_allocator() const;
+
+    // <a title="re.results.swap" href="re.results.swap.html">28.10.7</a>, swap:
+    void swap(match_results&amp; that);
+  };
+}</code></pre>
+</body>
+</html>
+

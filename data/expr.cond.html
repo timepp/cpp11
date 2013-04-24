@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Conditional operator</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[expr.cond]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[expr.cond]"></object>5.16 Conditional operator </h2>
+
+<dl>
+<dt>
+<i class="nonterminal"><dfn>conditional-expression</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="conditional-expression"></object></i>:</dt>
+	<dd><i class="nonterminal">logical-or-expression</i></dd>
+	<dd>
+<i class="nonterminal">logical-or-expression</i> <code class="sh_cpp">?</code> <i class="nonterminal">expression</i> <code class="sh_cpp">:</code> <i class="nonterminal">assignment-expression</i>
+</dd>
+</dl>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Conditional expressions group right-to-left. The first expression is contextually converted to
+<code class="sh_cpp">bool</code> (Clause <a title="conv" href="conv.html">4</a>). It is evaluated and if it is <code class="sh_cpp">true</code>, the result of the conditional
+expression is the value of the second expression, otherwise that of the third expression. Only one of the second and
+third expressions is evaluated. Every value computation and side effect associated with the first expression is
+sequenced before every value computation and side effect associated with the second or third expression.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>If either the second or the third operand has type (possibly cv-qualified) <code class="sh_cpp">void</code>, then the
+lvalue-to-rvalue (<a title="conv.lval" href="conv.lval.html">4.1</a>), array-to-pointer (<a title="conv.array" href="conv.array.html">4.2</a>), and function-to-pointer (<a title="conv.func" href="conv.func.html">4.3</a>) standard
+conversions are performed on the second and third operands, and one of the following shall hold:</p>
+<ul>
+<li>The second or the third operand (but not both) is a <i class="nonterminal">throw-expression</i> (<a title="except.throw" href="except.throw.html">15.1</a>); the result is of
+	the type of the other and is a prvalue.</li>
+<li>Both the second and the third operands have type <code class="sh_cpp">void</code>; the result is of type <code class="sh_cpp">void</code> and is a
+	prvalue. <span class="note">[ <em>Note:</em> This includes the case where both operands are <i class="nonterminal">throw-expression</i>s. — <em>end note</em> ]</span>
+</li>
+</ul>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>Otherwise, if the second and third operand have different types and either has (possibly cv-qualified) class
+type, or if both are glvalues of the same value category and the same type except for cv-qualification, an attempt is
+made to convert each of those operands to the type of the other. The process for determining whether an operand
+expression <code class="sh_cpp">E1</code> of type <code class="sh_cpp">T1</code> can be converted to match an operand expression <code class="sh_cpp">E2</code> of
+type <code class="sh_cpp">T2</code> is defined as follows:</p>
+<ul>
+<li>If <code class="sh_cpp">E2</code> is an lvalue: <code class="sh_cpp">E1</code> can be converted to match <code class="sh_cpp">E2</code> if <code class="sh_cpp">E1</code> can be
+	implicitly converted (Clause <a title="conv" href="conv.html">4</a>) to the type “lvalue reference to <code class="sh_cpp">T2</code>”, subject to the
+	constraint that in the conversion the reference must bind directly (<a title="dcl.init.ref" href="dcl.init.ref.html">8.5.3</a>) to an lvalue.</li>
+<li>If <code class="sh_cpp">E2</code> is an xvalue: <code class="sh_cpp">E1</code> can be converted to match <code class="sh_cpp">E2</code> if <code class="sh_cpp">E1</code> can be
+	implicitly converted to the type “rvalue reference to <code class="sh_cpp">T2</code>”, subject to the constraint that the reference
+	must bind directly.</li>
+<li>If <code class="sh_cpp">E2</code> is an rvalue or if neither of the conversions above can be done and at least one of the
+	operands has (possibly cv-qualified) class type:
+	<ul>
+	<li>if <code class="sh_cpp">E1</code> and <code class="sh_cpp">E2</code> have class type, and the underlying class types are the same or one is a
+		base class of the other: <code class="sh_cpp">E1</code> can be converted to match <code class="sh_cpp">E2</code> if the class of
+		<code class="sh_cpp">T2</code> is the same type as, or a base class of, the class of <code class="sh_cpp">T1</code>, and the cv-qualification
+		of <code class="sh_cpp">T2</code> is the same cv-qualification as, or a greater cv-qualification than, the cv-qualification of
+		<code class="sh_cpp">T1</code>. If the conversion is applied, <code class="sh_cpp">E1</code> is changed to a prvalue of type <code class="sh_cpp">T2</code>
+		by copy-initializing a temporary of type <code class="sh_cpp">T2</code> from <code class="sh_cpp">E1</code> and using that temporary as the
+		converted operand.</li>
+	<li>Otherwise (i.e., if <code class="sh_cpp">E1</code> or <code class="sh_cpp">E2</code> has a nonclass type, or if they both have class types but
+		the underlying classes are not either the same or one a base class of the other): <code class="sh_cpp">E1</code> can be
+		converted to match <code class="sh_cpp">E2</code> if <code class="sh_cpp">E1</code> can be implicitly converted to the type that expression
+		<code class="sh_cpp">E2</code> would have if <code class="sh_cpp">E2</code> were converted to a prvalue (or the type it has, if
+		<code class="sh_cpp">E2</code> is a prvalue).</li>
+	</ul>
+	Using this process, it is determined whether the second operand can be converted to match the third operand, and
+	whether the third operand can be converted to match the second operand. If both can be converted, or one can be
+	converted but the conversion is ambiguous, the program is ill-formed. If neither can be converted, the operands are
+	left unchanged and further checking is performed as described below. If exactly one conversion is possible, that
+	conversion is applied to the chosen operand and the converted operand is used in place of the original operand for
+	the remainder of this section.</li>
+</ul>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>If the second and third operands are glvalues of the same value category and have the same type, the result is
+of that type and value category and it is a bit-field if the second or the third operand is a bit-field, or if both are
+bit-fields.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>Otherwise, the result is a prvalue. If the second and third operands do not have the same type, and either has
+(possibly cv-qualified) class type, overload resolution is used to determine the conversions (if any) to be applied to
+the operands (<a title="over.match.oper" href="over.match.oper.html">13.3.1.2</a>, <a title="over.built" href="over.built.html">13.6</a>). If the overload resolution fails, the program is ill-formed.
+Otherwise, the conversions thus determined are applied, and the converted operands are used in place of the original
+operands for the remainder of this section.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>Lvalue-to-rvalue (<a title="conv.lval" href="conv.lval.html">4.1</a>), array-to-pointer (<a title="conv.array" href="conv.array.html">4.2</a>), and function-to-pointer (<a title="conv.func" href="conv.func.html">4.3</a>) standard conversions are
+performed on the second and third operands. After those conversions, one of the following shall hold:</p>
+<ul>
+<li>The second and third operands have the same type; the result is of that type. If the operands have class type, the
+	result is a prvalue temporary of the result type, which is copy-initialized from either the second operand or the
+	third operand depending on the value of the first operand.</li>
+<li>The second and third operands have arithmetic or enumeration type; the usual arithmetic conversions are performed to
+	bring them to a common type, and the result is of that type.</li>
+<li>The second and third operands have pointer type, or one has pointer type and the other is a null pointer constant,
+	or both are null pointer constants, at least one of which is non-integral; pointer conversions (<a title="conv.ptr" href="conv.ptr.html">4.10</a>) and
+	qualification conversions (<a title="conv.qual" href="conv.qual.html">4.4</a>) are performed to bring them to their composite pointer type
+	(<a title="expr.rel" href="expr.rel.html">5.9</a>). The result is of the composite pointer type.</li>
+<li>The second and third operands have pointer to member type, or one has pointer to member type and the other is a null
+	pointer constant; pointer to member conversions (<a title="conv.mem" href="conv.mem.html">4.11</a>) and qualification conversions (<a title="conv.qual" href="conv.qual.html">4.4</a>) are
+	performed to bring them to a common type, whose cv-qualification shall match the cv-qualification of either the
+	second or the third operand. The result is of the common type.</li>
+</ul>
+</body>
+</html>
+

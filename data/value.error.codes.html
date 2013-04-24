@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Value of error codes</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[value.error.codes]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[value.error.codes]"></object>17.6.5.14 Value of error codes </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Certain functions in the C++ standard library report errors via a <code class="sh_cpp">std::error_code</code>
+(<a title="syserr.errcode.overview" href="syserr.errcode.overview.html">19.5.2.1</a>) object. That object’s <code class="sh_cpp">category()</code> member shall return
+<code class="sh_cpp">std::system_category()</code> for errors originating from the operating system, or a reference to an
+implementation-defined <code class="sh_cpp">error_category</code> object for errors originating elsewhere. The implementation shall
+define the possible values of <code class="sh_cpp">value()</code> for each of these error categories. <span class="example">[ <em>Example:</em> For operating systems
+that are based on POSIX, implementations are encouraged to define the <code class="sh_cpp">std::system_category()</code> values as
+identical to the POSIX <code class="sh_cpp">errno</code> values, with additional values as defined by the operating system’s
+documentation. Implementations for operating systems that are not based on POSIX are encouraged to define values
+identical to the operating system’s values. For errors that do not originate from the operating system, the
+implementation may provide enums for the associated values. — <em>end example</em> ]</span></p>
+</body>
+</html>
+

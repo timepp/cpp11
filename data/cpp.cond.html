@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title></title>
+</head>
+<body>
+<h2>
+<dfn class="label">[cpp.cond]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[cpp.cond]"></object>16.1 Conditional inclusion </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The expression that controls conditional inclusion shall be an integral constant expression except that
+identifiers (including those lexically identical to keywords) are interpreted as described below<sup class="footnote"><a href="#fn150">150</a></sup> and it
+may contain unary operator expressions of the form</p>
+
+<dl><dd>
+<code class="sh_cpp">defined</code> <i class="nonterminal">identifier</i>
+</dd></dl>
+
+<p>or</p>
+
+<dl><dd>
+<code class="sh_cpp">defined</code> <code class="sh_cpp">(</code> <i class="nonterminal">identifier</i> <code class="sh_cpp">)</code>
+</dd></dl>
+
+<p>which evaluate to <code class="sh_cpp">1</code> if the identifier is currently defined as a macro name (that is, if it is predefined
+or if it has been the subject of a <code class="sh_cpp">#define</code> preprocessing directive without an intervening
+<code class="sh_cpp">#undef</code> directive with the same subject identifier), <code class="sh_cpp">0</code> if it is not.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>Each preprocessing token that remains (in the list of preprocessing tokens that will become the controlling
+expression) after all macro replacements have occurred shall be in the lexical form of a token (<a title="lex.token" href="lex.token.html">2.7</a>).</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>Preprocessing directives of the forms</p>
+
+<dl>
+<dd>
+<code class="sh_cpp">#</code> <code class="sh_cpp">if</code> <i class="nonterminal">constant-expression</i> <i class="nonterminal">new-line</i> <i class="nonterminal">group</i><sub class="opt">opt</sub>
+</dd>
+<dd>
+<code class="sh_cpp">#</code> <code class="sh_cpp">elif</code> <i class="nonterminal">constant-expression</i> <i class="nonterminal">new-line</i> <i class="nonterminal">group</i><sub class="opt">opt</sub>
+</dd>
+</dl>
+
+<p>check whether the controlling constant expression evaluates to nonzero.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>Prior to evaluation, macro invocations in the list of preprocessing tokens that will become the controlling
+constant expression are replaced (except for those macro names modified by the <code class="sh_cpp">defined</code> unary operator),
+just as in normal text. If the token <code class="sh_cpp">defined</code> is generated as a result of this replacement process or use of
+the <code class="sh_cpp">defined</code> unary operator does not match one of the two specified forms prior to macro replacement, the
+behavior is undefined. After all replacements due to macro expansion and the <code class="sh_cpp">defined</code> unary operator have
+been performed, all remaining identifiers and keywords<sup class="footnote"><a href="#fn151">151</a></sup>, except for <code class="sh_cpp">true</code> and
+<code class="sh_cpp">false</code>, are replaced with the pp-number <code class="sh_cpp">0</code>, and then each preprocessing token is converted into
+a token. The resulting tokens comprise the controlling constant expression which is evaluated according to the rules of
+<a title="expr.const" href="expr.const.html">5.19</a> using arithmetic that has at least the ranges specified in <a title="support.limits" href="support.limits.general.html">18.3</a>. For the purposes of this
+token conversion and evaluation all signed and unsigned integer types act as if they have the same representation as,
+respectively, <code class="sh_cpp">intmax_t</code> or <code class="sh_cpp">uintmax_t</code> (<a title="cstdint" href="cstdint.syn.html">18.4</a>).<sup class="footnote"><a href="#fn152">152</a></sup> This includes
+interpreting character literals, which may involve converting escape sequences into execution character set members.
+Whether the numeric value for these character literals matches the value obtained when an identical character literal
+occurs in an expression (other than within a <code class="sh_cpp">#if</code> or <code class="sh_cpp">#elif</code> directive) is
+implementation-defined.<sup class="footnote"><a href="#fn153">153</a></sup> Also, whether a single-character character literal may have a negative value is
+implementation-defined. Each subexpression with type <code class="sh_cpp">bool</code> is subjected to integral promotion before
+processing continues.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>Preprocessing directives of the forms</p>
+
+<dl>
+<dd>
+<code class="sh_cpp">#</code> <code class="sh_cpp">ifdef</code> <i class="nonterminal">identifier</i> <i class="nonterminal">new-line</i> <i class="nonterminal">group</i><sub class="opt">opt</sub>
+</dd>
+<dd>
+<code class="sh_cpp">#</code> <code class="sh_cpp">ifndef</code> <i class="nonterminal">identifier</i> <i class="nonterminal">new-line</i> <i class="nonterminal">group</i><sub class="opt">opt</sub>
+</dd>
+</dl>
+
+<p>check whether the identifier is or is not currently defined as a macro name. Their conditions are equivalent to
+<code class="sh_cpp">#if</code> <code class="sh_cpp">defined</code> <i class="nonterminal">identifier</i> and <code class="sh_cpp">#if</code> <code class="sh_cpp">!defined</code> <i class="nonterminal">identifier</i>
+respectively.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>Each directive’s condition is checked in order. If it evaluates to false (zero), the group that it controls is
+skipped: directives are processed only through the name that determines the directive in order to keep track of the
+level of nested conditionals; the rest of the directives’ preprocessing tokens are ignored, as are the other
+preprocessing tokens in the group. Only the first group whose control condition evaluates to true (nonzero) is
+processed. If none of the conditions evaluates to true, and there is a <code class="sh_cpp">#else</code> directive, the group
+controlled by the <code class="sh_cpp">#else</code> is processed; lacking a <code class="sh_cpp">#else</code> directive, all the groups until the
+<code class="sh_cpp">#endif</code> are skipped.<sup class="footnote"><a href="#fn154">154</a></sup></p>
+
+
+
+
+
+
+
+
+
+
+<div>
+<p class="footnote" id="fn150">150) Because the controlling constant expression is evaluated during translation phase 4, all identifiers
+either are or are not macro names — there simply are no keywords, enumeration constants, etc.</p>
+<p class="footnote" id="fn151">151) An alternative token (<a title="lex.digraph" href="lex.digraph.html">2.6</a>) is not an identifier, even when its spelling consists entirely
+of letters and underscores. Therefore it is not subject to this replacement.</p>
+<p class="footnote" id="fn152">152) Thus on an implementation where <code class="sh_cpp">std::numeric_limits&lt;int&gt;::max()</code> is
+<code class="sh_cpp">0x7FFF</code> and <code class="sh_cpp">std::numeric_limits&lt;unsigned int&gt;::max()</code> is <code class="sh_cpp">0xFFFF</code>, the
+integer literal <code class="sh_cpp">0x8000</code> is signed and positive within a <code class="sh_cpp">#if</code> expression even though it is
+unsigned in translation phase 7 (<a title="lex.phases" href="lex.phases.html">2.2</a>).</p>
+<div class="footnote" id="fn153">
+<p>153) Thus, the constant expression in the following <code class="sh_cpp">#if</code> directive and <code class="sh_cpp">if</code>
+statement is not guaranteed to evaluate to the same value in these two contexts.</p>
+
+<pre><code class="sh_cpp">#if 'z' - 'a' == 25
+if ('z' - 'a' == 25)</code></pre>
+</div>
+<p class="footnote" id="fn154">154) As indicated by the syntax, a preprocessing token shall not follow a <code class="sh_cpp">#else</code> or
+<code class="sh_cpp">#endif</code> directive before the terminating new-line character. However, comments may appear anywhere in a
+source file, including within a preprocessing directive.</p>
+</div>
+</body>
+</html>
+

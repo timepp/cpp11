@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Deducing template arguments from a function declaration</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[temp.deduct.decl]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[temp.deduct.decl]"></object>14.8.2.5 Deducing template arguments from a function declaration </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>In a declaration whose <i class="nonterminal">declarator-id</i> refers to a specialization of a function template, template
+argument deduction is performed to identify the specialization to which the declaration refers. Specifically, this is
+done for explicit instantiations (<a title="temp.explicit" href="temp.explicit.html">14.7.2</a>), explicit specializations (<a title="temp.expl.spec" href="temp.expl.spec.html">14.7.3</a>), and certain friend
+declarations (<a title="temp.friend" href="temp.friend.html">14.5.4</a>). This is also done to determine whether a deallocation function template specialization
+matches a placement <code class="sh_cpp">operator new</code> (<a title="basic.stc.dynamic.deallocation" href="basic.stc.dynamic.deallocation.html">3.7.4.2</a>, <a title="expr.new" href="expr.new.html">5.3.4</a>). In all these cases, <code class="sh_cpp">P</code>
+is the type of the function template being considered as a potential match and <code class="sh_cpp">A</code> is either the function
+type from the declaration or the type of the deallocation function that would match the placement <code class="sh_cpp">operator
+new</code> as described in <a title="expr.new" href="expr.new.html">5.3.4</a>. The deduction is done as described in <a title="temp.deduct.type" href="temp.deduct.type.html">14.8.2.5</a>.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>If, for the set of function templates so considered, there is either no match or more than one match after
+partial ordering has been considered (<a title="temp.func.order" href="temp.func.order.html">14.5.6.2</a>), deduction fails and, in the declaration cases, the program
+is ill-formed.</p>
+</body>
+</html>
+

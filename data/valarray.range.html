@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>valarray range access</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[valarray.range]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[valarray.range]"></object>26.6.10 <code class="sh_cpp">valarray</code> range access </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>In the <code class="sh_cpp">begin</code> and <code class="sh_cpp">end</code> function templates that follow,
+<code class="sh_cpp"><var>unspecified1</var></code> is a type that meets the requirements of a mutable random access iterator
+(<a title="random.access.iterators" href="random.access.iterators.html">24.2.7</a>) whose <code class="sh_cpp">value_type</code> is the template parameter <code class="sh_cpp">T</code> and whose
+<code class="sh_cpp">reference</code> type is <code class="sh_cpp">T&amp;</code>. <code class="sh_cpp"><var>unspecified2</var></code> is a type that meets the
+requirements of a constant random access iterator (<a title="random.access.iterators" href="random.access.iterators.html">24.2.7</a>) whose <code class="sh_cpp">value_type</code> is the template
+parameter <code class="sh_cpp">T</code> and whose <code class="sh_cpp">reference</code> type is <code class="sh_cpp">const T&amp;</code>.</p>
+
+<h4><code class="sh_cpp">template &lt;class T&gt; <var>unspecified1</var> <dfn>begin</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="begin"></object>(valarray&lt;T&gt;&amp; v);
+template &lt;class T&gt; <var>unspecified2</var> begin(const valarray&lt;T&gt;&amp; v);</code></h4>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Returns:</em> An iterator referencing the first value in the numeric array.</p>
+
+<h4><code class="sh_cpp">template &lt;class T&gt; <var>unspecified1</var> <dfn>end</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="end"></object>(valarray&lt;T&gt;&amp; v);
+template &lt;class T&gt; <var>unspecified2</var> end(const valarray&lt;T&gt;&amp; v);</code></h4>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Returns:</em> An iterator referencing one past the last value in the numeric array.</p>
+</body>
+</html>
+

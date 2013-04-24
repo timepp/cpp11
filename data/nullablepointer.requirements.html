@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>NullablePointer requirements</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[nullablepointer.requirements]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[nullablepointer.requirements]"></object>17.6.3.3 <code class="concept"><dfn>NullablePointer</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="NullablePointer"></object></code> requirements </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A <code class="concept">NullablePointer</code> type is a pointer-like type that supports null values. A type <code class="sh_cpp">P</code>
+meets the requirements of <code class="sh_cpp">NullablePointer</code> if:</p>
+
+<ul>
+<li>
+<code class="sh_cpp">P</code> satisfies the requirements of <code class="concept">EqualityComparable</code>,
+	<code class="concept">DefaultConstructible</code>, <code class="concept">CopyConstructible</code>, <code class="concept">CopyAssignable</code>,
+	and <code class="concept">Destructible</code>,</li>
+<li>lvalues of type <code class="sh_cpp">P</code> are swappable (<a title="swappable.requirements" href="swappable.requirements.html">17.6.3.2</a>),</li>
+<li>the expressions shown in Table <a href="nullablepointer.requirements.html#t25">25</a> are valid and have the indicated semantics, and</li>
+<li>
+<code class="sh_cpp">P</code> satisfies all the other requirements of this subclause.</li>
+</ul>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>A value-initialized object of type <code class="sh_cpp">P</code> produces the null value of the type. The null value shall be
+equivalent only to itself. A default-initialized object of type <code class="sh_cpp">P</code> may have an indeterminate value.
+<span class="note">[ <em>Note:</em> Operations involving indeterminate values may cause undefined behavior. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>An object <code class="sh_cpp">p</code> of type <code class="sh_cpp">P</code> can be contextually converted to <code class="sh_cpp">bool</code> (Clause
+<a title="conv" href="conv.html">4</a>). The effect shall be as if <code class="sh_cpp">p != nullptr</code> had been evaluated in place of <code class="sh_cpp">p</code>.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>No operation which is part of the <code class="concept">NullablePointer</code> requirements shall exit via an
+exception.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>In Table <a href="nullablepointer.requirements.html#t25">25</a>, <code class="sh_cpp">u</code> denotes an identifier, <code class="sh_cpp">t</code> denotes a non-const lvalue of type
+<code class="sh_cpp">P</code>, <code class="sh_cpp">a</code> and <code class="sh_cpp">b</code> denote values of type (possibly <code class="sh_cpp">const</code>) <code class="sh_cpp">P</code>,
+and <code class="sh_cpp">np</code> denotes a value of type (possibly <code class="sh_cpp">const</code>) <code class="sh_cpp">std::nullptr_t</code>.</p>
+
+<table id="t25" class="requirements">
+<caption>Table 25 — <code class="concept">NullablePointer</code> requirements <dfn class="label">[nullablepointer]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[nullablepointer]"></object>
+</caption>
+<thead><tr>
+<th>Expression</th>
+<th>Return type</th>
+<th>Operational semantics</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+<code class="sh_cpp">P u(np);</code><br>
+		<code class="sh_cpp">P u = np;</code>
+</td>
+	<td></td>
+	<td>post: <code class="sh_cpp">u == nullptr</code>
+</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">P(np)</code></td>
+	<td></td>
+	<td>post: <code class="sh_cpp">P(np) == nullptr</code>
+</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">t = np</code></td>
+	<td><code class="sh_cpp">P&amp;</code></td>
+	<td>post: <code class="sh_cpp">t == nullptr</code>
+</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">a != b</code></td>
+	<td>contextually convertible to <code class="sh_cpp">bool</code>
+</td>
+	<td><code class="sh_cpp">!(a == b)</code></td>
+</tr>
+<tr>
+<td>
+<code class="sh_cpp">a == np</code><br>
+		<code class="sh_cpp">np == a</code>
+</td>
+	<td>contextually convertible to <code class="sh_cpp">bool</code>
+</td>
+	<td><code class="sh_cpp">a == P()</code></td>
+</tr>
+<tr>
+<td>
+<code class="sh_cpp">a != np</code><br>
+		<code class="sh_cpp">np != a</code>
+</td>
+	<td>contextually convertible to <code class="sh_cpp">bool</code>
+</td>
+	<td><code class="sh_cpp">!(a == np)</code></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>
+

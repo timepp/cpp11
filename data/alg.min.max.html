@@ -1,0 +1,138 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Minimum and maximum</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[alg.min.max]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[alg.min.max]"></object>25.4.7 Minimum and maximum </h3>
+
+<h4><code class="sh_cpp">template&lt;class T&gt; const T&amp; <dfn>min</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="min"></object>(const T&amp; a, const T&amp; b);
+template&lt;class T, class Compare&gt;
+  const T&amp; min(const T&amp; a, const T&amp; b, Compare comp);</code></h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Requires:</em> Type <code class="sh_cpp">T</code> is <code class="concept">LessThanComparable</code> (Table <a href="utility.arg.requirements.html#t18">18</a>).</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Returns:</em> The smaller value.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Remarks:</em> Returns the first argument when the arguments are equivalent.</p>
+
+<h4><code class="sh_cpp">template&lt;class T&gt;
+  T min(initializer_list&lt;T&gt; t);
+template&lt;class T, class Compare&gt;
+  T min(initializer_list&lt;T&gt; t, Compare comp);</code></h4>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><em>Requires:</em> <code class="sh_cpp">T</code> is <code class="concept">LessThanComparable</code> and <code class="concept">CopyConstructible</code> and
+<code class="sh_cpp">t.size() &gt; 0</code>.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><em>Returns:</em> The smallest value in the <code class="sh_cpp">initializer_list</code>.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a><em>Remarks:</em> Returns a copy of the leftmost argument when several arguments are equivalent to the
+smallest.</p>
+
+<h4><code class="sh_cpp">template&lt;class T&gt; const T&amp; <dfn>max</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="max"></object>(const T&amp; a, const T&amp; b);
+template&lt;class T, class Compare&gt;
+  const T&amp; max(const T&amp; a, const T&amp; b, Compare comp);</code></h4>
+
+<p><a class="anchor" id="p7" href="#p7">7</a><em>Requires:</em> Type <code class="sh_cpp">T</code> is <code class="concept">LessThanComparable</code> (Table <a href="utility.arg.requirements.html#t18">18</a>).</p>
+
+<p><a class="anchor" id="p8" href="#p8">8</a><em>Returns:</em> The larger value.</p>
+
+<p><a class="anchor" id="p9" href="#p9">9</a><em>Remarks:</em> Returns the first argument when the arguments are equivalent.</p>
+
+<h4><code class="sh_cpp">template&lt;class T&gt;
+  T max(initializer_list&lt;T&gt; t);
+template&lt;class T, class Compare&gt;
+  T max(initializer_list&lt;T&gt; t, Compare comp);</code></h4>
+
+<p><a class="anchor" id="p10" href="#p10">10</a><em>Requires:</em> <code class="sh_cpp">T</code> is <code class="concept">LessThanComparable</code> and <code class="sh_cpp">CopyConstructible</code> and <code class="sh_cpp">t.size() &gt; 0</code>.</p>
+
+<p><a class="anchor" id="p11" href="#p11">11</a><em>Returns:</em> The largest value in the <code class="sh_cpp">initializer_list</code>.</p>
+
+<p><a class="anchor" id="p12" href="#p12">12</a><em>Remarks:</em> Returns a copy of the leftmost argument when several arguments are equivalent to the
+largest.</p>
+
+<h4><code class="sh_cpp">template&lt;class T&gt; pair&lt;const T&amp;, const T&amp;&gt; <dfn>minmax</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="minmax"></object>(const T&amp; a, const T&amp; b);
+template&lt;class T, class Compare&gt;
+  pair&lt;const T&amp;, const T&amp;&gt; minmax(const T&amp; a, const T&amp; b, Compare comp);</code></h4>
+
+<p><a class="anchor" id="p13" href="#p13">13</a><em>Requires:</em> Type <code class="sh_cpp">T</code> shall be <code class="concept">LessThanComparable</code> (Table <a href="utility.arg.requirements.html#t18">18</a>).</p>
+
+<p><a class="anchor" id="p14" href="#p14">14</a><em>Returns:</em> <code class="sh_cpp">pair&lt;const T&amp;, const T&amp;&gt;(b, a)</code> if <code class="sh_cpp">b</code> is smaller than
+<code class="sh_cpp">a</code>, and <code class="sh_cpp">pair&lt;const T&amp;, const T&amp;&gt;(a, b)</code> otherwise.</p>
+
+<p><a class="anchor" id="p15" href="#p15">15</a><em>Remarks:</em> Returns <code class="sh_cpp">pair&lt;const T&amp;, const T&amp;&gt;(a, b)</code> when the arguments are
+equivalent.</p>
+
+<p><a class="anchor" id="p16" href="#p16">16</a><em>Complexity:</em> Exactly one comparison.</p>
+
+<h4><code class="sh_cpp">template&lt;class T&gt;
+  pair&lt;T, T&gt; minmax(initializer_list&lt;T&gt; t);
+template&lt;class T, class Compare&gt;
+  pair&lt;T, T&gt; minmax(initializer_list&lt;T&gt; t, Compare comp);</code></h4>
+
+<p><a class="anchor" id="p17" href="#p17">17</a><em>Requires:</em> <code class="sh_cpp">T</code> is <code class="concept">LessThanComparable</code> and <code class="concept">CopyConstructible</code> and
+<code class="sh_cpp">t.size() &gt; 0</code>.</p>
+
+<p><a class="anchor" id="p18" href="#p18">18</a><em>Returns:</em> <code class="sh_cpp">pair&lt;T, T&gt;(x, y)</code> where <code class="sh_cpp">x</code> has the smallest and <code class="sh_cpp">y</code>
+has the largest value in the <code class="sh_cpp">initializer_list</code>.</p>
+
+<p><a class="anchor" id="p19" href="#p19">19</a><em>Remarks:</em> <code class="sh_cpp">x</code> is a copy of the leftmost argument when several arguments are equivalent to the
+smallest. <code class="sh_cpp">y</code> is a copy of the rightmost argument when several arguments are equivalent to the
+largest.</p>
+
+<p><a class="anchor" id="p20" href="#p20">20</a><em>Complexity:</em> At most <code class="sh_cpp">(3/2) * t.size()</code> applications of the corresponding
+predicate.</p>
+
+<h4><code class="sh_cpp">template&lt;class ForwardIterator&gt;
+  ForwardIterator <dfn>min_element</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="min_element"></object>(ForwardIterator first, ForwardIterator last);
+
+template&lt;class ForwardIterator, class Compare&gt;
+  ForwardIterator min_element(ForwardIterator first, ForwardIterator last,
+                              Compare comp);</code></h4>
+
+<p><a class="anchor" id="p21" href="#p21">21</a><em>Returns:</em> The first iterator <code class="sh_cpp">i</code> in the range <code class="sh_cpp">[first, last)</code> such that for any iterator
+<code class="sh_cpp">j</code> in the range <code class="sh_cpp">[first, last)</code> the following corresponding conditions hold: <code class="sh_cpp">!(*j &lt;
+*i)</code> or <code class="sh_cpp">comp(*j, *i) == false</code>. Returns <code class="sh_cpp">last</code> if <code class="sh_cpp">first == last</code>.</p>
+
+<p><a class="anchor" id="p22" href="#p22">22</a><em>Complexity:</em> Exactly <code class="sh_cpp">max((last - first) - 1, 0)</code> applications of the corresponding
+comparisons.</p>
+
+<h4><code class="sh_cpp">template&lt;class ForwardIterator&gt;
+  ForwardIterator <dfn>max_element</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="max_element"></object>(ForwardIterator first, ForwardIterator last);
+template&lt;class ForwardIterator, class Compare&gt;
+  ForwardIterator max_element(ForwardIterator first, ForwardIterator last,
+                              Compare comp);</code></h4>
+
+<p><a class="anchor" id="p23" href="#p23">23</a><em>Returns:</em> The first iterator <code class="sh_cpp">i</code> in the range <code class="sh_cpp">[first, last)</code> such that for any iterator
+<code class="sh_cpp">j</code> in the range <code class="sh_cpp">[first, last)</code> the following corresponding conditions hold: <code class="sh_cpp">!(*i &lt;
+*j)</code> or <code class="sh_cpp">comp(*i, *j) == false</code>. Returns <code class="sh_cpp">last</code> if <code class="sh_cpp">first == last</code>.</p>
+
+<p><a class="anchor" id="p24" href="#p24">24</a><em>Complexity:</em> Exactly <code class="sh_cpp">max((last - first) - 1, 0)</code> applications of the corresponding
+comparisons.</p>
+
+<h4><code class="sh_cpp">template&lt;class ForwardIterator&gt;
+  pair&lt;ForwardIterator, ForwardIterator&gt;
+    <dfn>minmax_element</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="minmax_element"></object>(ForwardIterator first, ForwardIterator last);
+template&lt;class ForwardIterator, class Compare&gt;
+  pair&lt;ForwardIterator, ForwardIterator&gt;
+    minmax_element(ForwardIterator first, ForwardIterator last, Compare comp);</code></h4>
+
+<p><a class="anchor" id="p25" href="#p25">25</a><em>Returns:</em> <code class="sh_cpp">make_pair(first, first)</code> if <code class="sh_cpp">[first, last)</code> is empty, otherwise
+<code class="sh_cpp">make_pair(m, M)</code>, where <code class="sh_cpp">m</code> is the first iterator in <code class="sh_cpp">[first, last)</code> such
+that no iterator in the range refers to a smaller element, and where <code class="sh_cpp">M</code> is the last iterator in
+<code class="sh_cpp">[first, last)</code> such that no iterator in the range refers to a larger element.</p>
+
+<p><a class="anchor" id="p26" href="#p26">26</a><em>Complexity:</em> At most max(⌊3/2(<var>N</var> − 1)⌋, 0) applications of the corresponding predicate, where
+<var>N</var> is <code class="sh_cpp">distance(first, last)</code>.</p>
+</body>
+</html>
+

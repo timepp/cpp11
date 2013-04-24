@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Equality operators</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[expr.eq]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[expr.eq]"></object>5.10 Equality operators </h2>
+
+<dl>
+<dt>
+<i class="nonterminal"><dfn>equality-expression</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="equality-expression"></object></i>:</dt>
+	<dd><i class="nonterminal">relational-expression</i></dd>
+	<dd>
+<i class="nonterminal">equality-expression</i> <code class="sh_cpp">==</code> <i class="nonterminal">relational-expression</i>
+</dd>
+	<dd>
+<i class="nonterminal">equality-expression</i> <code class="sh_cpp">!=</code> <i class="nonterminal">relational-expression</i>
+</dd>
+</dl>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The <code class="sh_cpp">==</code> (equal to) and the <code class="sh_cpp">!=</code> (not equal to) operators have the same semantic
+restrictions, conversions, and result type as the relational operators except for their lower precedence and truth-value
+result. <span class="note">[ <em>Note:</em> <code class="sh_cpp">a&lt;b == c&lt;d</code> is <code class="sh_cpp">true</code> whenever <code class="sh_cpp">a&lt;b</code> and <code class="sh_cpp">c&lt;d</code>
+have the same truth-value. — <em>end note</em> ]</span> Pointers of the same type (after pointer conversions) can be compared for equality.
+Two pointers of the same type compare equal if and only if they are both null, both point to the same function, or both
+represent the same address (<a title="basic.compound" href="basic.compound.html">3.9.2</a>).</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>In addition, pointers to members can be compared, or a pointer to member and a null pointer constant. Pointer
+to member conversions (<a title="conv.mem" href="conv.mem.html">4.11</a>) and qualification conversions (<a title="conv.qual" href="conv.qual.html">4.4</a>) are performed to bring them to a
+common type. If one operand is a null pointer constant, the common type is the type of the other operand. Otherwise, the
+common type is a pointer to member type similar (<a title="conv.qual" href="conv.qual.html">4.4</a>) to the type of one of the operands, with a
+cv-qualification signature (<a title="conv.qual" href="conv.qual.html">4.4</a>) that is the union of the cv-qualification signatures of the operand types.
+<span class="note">[ <em>Note:</em> this implies that any pointer to member can be compared to a null pointer constant. — <em>end note</em> ]</span> If both operands are
+null, they compare equal. Otherwise if only one is null, they compare unequal. Otherwise if either is a pointer to a
+virtual member function, the result is unspecified. Otherwise they compare equal if and only if they would refer to the
+same member of the same most derived object (<a title="intro.object" href="intro.object.html">1.8</a>) or the same subobject if they were dereferenced with a
+hypothetical object of the associated class type.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct B {
+  int f();
+};
+struct L : B { };
+struct R : B { };
+struct D : L, R { };
+
+int (B::*pb)() = &amp;B::f;
+int (L::*pl)() = pb;
+int (R::*pr)() = pb;
+int (D::*pdl)() = pl;
+int (D::*pdr)() = pr;
+bool x = (pdl == pdr);  // false</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>If two operands of type <code class="sh_cpp">std::nullptr_t</code> are compared, the result is <code class="sh_cpp">true</code> if the
+operator is <code class="sh_cpp">==</code>, and <code class="sh_cpp">false</code> otherwise.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>Each of the operators shall yield <code class="sh_cpp">true</code> if the specified relationship is <code class="sh_cpp">true</code> and
+<code class="sh_cpp">false</code> if it is <code class="sh_cpp">false</code>.</p>
+</body>
+</html>
+

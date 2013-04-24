@@ -1,0 +1,175 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Declarators</title>
+</head>
+<body>
+<h1>
+<dfn class="label">[dcl.decl]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[dcl.decl]"></object>8 Declarators </h1>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A declarator declares a single variable, function, or type, within a declaration. The
+<i class="nonterminal">init-declarator-list</i> appearing in a declaration is a comma-separated sequence of declarators, each of which can
+have an initializer.</p>
+
+<dl>
+<dt>
+<dfn><i class="nonterminal">init-declarator-list</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="init-declarator-list"></object>:</dt>
+	<dd><i class="nonterminal">init-declarator</i></dd>
+	<dd>
+<i class="nonterminal">init-declarator-list</i> <code class="sh_cpp">,</code> <i class="nonterminal">init-declarator</i>
+</dd>
+<dt>
+<dfn><i class="nonterminal">init-declarator</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="init-declarator"></object>:</dt>
+	<dd>
+<i class="nonterminal">declarator</i> <i class="nonterminal">initializer</i><sub class="opt">opt</sub>
+</dd>
+</dl>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The three components of a <i class="nonterminal">simple-declaration</i> are the attributes (<a title="dcl.attr" href="dcl.attr.grammar.html">7.6</a>), the specifiers
+(<i class="nonterminal">decl-specifier-seq</i>; <a title="dcl.spec" href="dcl.spec.html">7.1</a>) and the declarators (<i class="nonterminal">init-declarator-list</i>). The specifiers
+indicate the type, storage class or other properties of the entities being declared. The declarators specify the names
+of these entities and (optionally) modify the type of the specifiers with operators such as <code class="sh_cpp">*</code> (pointer to)
+and <code class="sh_cpp">()</code> (function returning). Initial values can also be specified in a declarator; initializers are
+discussed in <a title="dcl.init" href="dcl.init.html">8.5</a> and <a title="class.init" href="class.init.html">12.6</a>.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>Each <i class="nonterminal">init-declarator</i> in a declaration is analyzed separately as if it was in a declaration by
+itself.<sup class="footnote"><a href="#fn100">100</a></sup></p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>Declarators have the syntax</p>
+<dl>
+<dt>
+<dfn><i class="nonterminal">declarator</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="declarator"></object>:</dt>
+	<dd><i class="nonterminal">ptr-declarator</i></dd>
+	<dd>
+<i class="nonterminal">noptr-declarator</i> <i class="nonterminal">parameters-and-qualifiers</i> <i class="nonterminal">trailing-return-type</i>
+</dd>
+<dt>
+<dfn><i class="nonterminal">ptr-declarator</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="ptr-declarator"></object>:</dt>
+	<dd><i class="nonterminal">noptr-declarator</i></dd>
+	<dd>
+<i class="nonterminal">ptr-operator</i> <i class="nonterminal">ptr-declarator</i>
+</dd>
+<dt>
+<dfn><i class="nonterminal">noptr-declarator</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="noptr-declarator"></object>:</dt>
+	<dd>
+<i class="nonterminal">declarator-id</i> <i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub>
+</dd>
+	<dd>
+<i class="nonterminal">noptr-declarator</i> <i class="nonterminal">parameters-and-qualifiers</i>
+</dd>
+	<dd>
+<i class="nonterminal">noptr-declarator</i> <code class="sh_cpp">[</code> <i class="nonterminal">constant-expression</i><sub class="opt">opt</sub> <code class="sh_cpp">]</code> <i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub>
+</dd>
+	<dd>
+<code class="sh_cpp">(</code> <i class="nonterminal">ptr-declarator</i> <code class="sh_cpp">)</code>
+</dd>
+<dt>
+<dfn><i class="nonterminal">parameters-and-qualifiers</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="parameters-and-qualifiers"></object>:</dt>
+	<dd>
+<code class="sh_cpp">(</code> <i class="nonterminal">parameter-declaration-clause</i> <code class="sh_cpp">)</code> <i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub> <i class="nonterminal">cv-qualifier-seq</i><sub class="opt">opt</sub>
+		<i class="nonterminal">ref-qualifier</i><sub class="opt">opt</sub> <i class="nonterminal">exception-specification</i><sub class="opt">opt</sub>
+</dd>
+<dt>
+<dfn><i class="nonterminal">trailing-return-type</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="trailing-return-type"></object>:</dt>
+	<dd>
+<code class="sh_cpp">-&gt;</code> <i class="nonterminal">trailing-type-specifier-seq</i> <i class="nonterminal">abstract-declarator</i><sub class="opt">opt</sub>
+</dd>
+<dt>
+<dfn><i class="nonterminal">ptr-operator</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="ptr-operator"></object>:</dt>
+	<dd>
+<code class="sh_cpp">*</code> <i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub> <i class="nonterminal">cv-qualifier-seq</i><sub class="opt">opt</sub>
+</dd>
+	<dd>
+<code class="sh_cpp">&amp;</code> <i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub>
+</dd>
+	<dd>
+<code class="sh_cpp">&amp;&amp;</code> <i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub>
+</dd>
+	<dd>
+<i class="nonterminal">nested-name-specifier</i> <code class="sh_cpp">*</code> <i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub> <i class="nonterminal">cv-qualifier-seq</i><sub class="opt">opt</sub>
+</dd>
+<dt>
+<dfn><i class="nonterminal">cv-qualifier-seq</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="cv-qualifier-seq"></object>:</dt>
+	<dd>
+<i class="nonterminal">cv-qualifier</i> <i class="nonterminal">cv-qualifier-seq</i><sub class="opt">opt</sub>
+</dd>
+<dt>
+<dfn><i class="nonterminal">cv-qualifier</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="cv-qualifier"></object>:</dt>
+	<dd><code class="sh_cpp">const</code></dd>
+	<dd><code class="sh_cpp">volatile</code></dd>
+<dt>
+<dfn><i class="nonterminal">ref-qualifier</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="ref-qualifier"></object>:</dt>
+	<dd><code class="sh_cpp">&amp;</code></dd>
+	<dd><code class="sh_cpp">&amp;&amp;</code></dd>
+<dt>
+<dfn><i class="nonterminal">declarator-id</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="declarator-id"></object>:</dt>
+	<dd>
+<code class="sh_cpp">...</code><sub class="opt">opt</sub> <i class="nonterminal">id-expression</i>
+</dd>
+	<dd>
+<i class="nonterminal">nested-name-specifier</i><sub class="opt">opt</sub> <i class="nonterminal">class-name</i>
+</dd>
+</dl>
+<p>A <i class="nonterminal">class-name</i> has special meaning in a declaration of the class of that name and when qualified by that name
+using the scope resolution operator <code class="sh_cpp">::</code> (<a title="expr.prim" href="expr.prim.general.html">5.1</a>, <a title="class.ctor" href="class.ctor.html">12.1</a>, <a title="class.dtor" href="class.dtor.html">12.4</a>).</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>The optional <i class="nonterminal">attribute-specifier-seq</i> in a <i class="nonterminal">trailing-return-type</i> appertains to the indicated
+return type. The <i class="nonterminal">type-id</i> in a <i class="nonterminal">trailing-return-type</i> includes the longest possible sequence of
+<i class="nonterminal">abstract-declarator</i>s.</p>
+
+<div class="note">
+<p>[ <em>Note:</em> This resolves the ambiguous binding of array and function declarators.</p>
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">auto f()-&gt;int(*)[4];    // function returning a pointer to array[4] of int
+                        // not function returning array[4] of pointer to int</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+<p> — <em>end note</em> ]</p>
+</div>
+
+
+<div><div class="footnote" id="fn100">
+<p>100) A declaration with several declarators is usually equivalent to the corresponding sequence of
+declarations each with a single declarator. That is</p>
+
+<pre><code class="sh_cpp">T D1, D2, … Dn;</code></pre>
+
+<p>is usually equvalent to</p>
+
+<pre><code class="sh_cpp">T D1; T D2; … T Dn;</code></pre>
+
+<p>where <code class="sh_cpp">T</code> is a <i class="nonterminal">decl-specifier-seq</i> and each <code class="sh_cpp">Di</code> is an <i class="nonterminal">init-declarator</i>. An
+exception occurs when a name introduced by one of the <i class="nonterminal">declarator</i>s hides a type name used by the
+<i class="nonterminal">decl-specifier</i>s, so that when the same <i class="nonterminal">decl-specifier</i>s are used in a subsequent declaration, they do
+not have the same meaning, as in</p>
+
+<pre><code class="sh_cpp">struct S …;
+S S, T; // declare two instances of struct S</code></pre>
+
+<p>which is not equivalent to</p>
+
+<pre><code class="sh_cpp">struct S …;
+S S;
+S T; // error</code></pre>
+
+<p>Another exception occurs when <code class="sh_cpp">T</code> is <code class="sh_cpp">auto</code> (<a title="dcl.spec.auto" href="dcl.spec.auto.html">7.1.6.4</a>), for example:</p>
+
+<pre><code class="sh_cpp">auto i = 1, j = 2.0; // error: deduced types for i and j do not match</code></pre>
+
+<p>as opposed to</p>
+
+<pre><code class="sh_cpp">auto i = 1;   // OK: i deduced to have type int
+auto j = 2.0; // OK: j deduced to have type double</code></pre>
+</div></div>
+</body>
+</html>
+

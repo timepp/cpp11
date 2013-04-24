@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Generate</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[alg.generate]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[alg.generate]"></object>25.3.7 Generate </h3>
+
+<pre><code class="sh_cpp">template&lt;class ForwardIterator, class Generator&gt;
+  void <dfn>generate</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="generate"></object>(ForwardIterator first, ForwardIterator last,
+                Generator gen);
+
+template&lt;class OutputIterator, class Size, class Generator&gt;
+  OutputIterator <dfn>generate_n</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="generate_n"></object>(OutputIterator first, Size n, Generator gen);</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Effects:</em> The first algorithm invokes the function object <code class="sh_cpp">gen</code> and assigns the return value of
+<code class="sh_cpp">gen</code> through all the iterators in the range <code class="sh_cpp">[first, last)</code>. The second algorithm invokes the
+function object <code class="sh_cpp">gen</code> and assigns the return value of <code class="sh_cpp">gen</code> through all the iterators in the range
+<code class="sh_cpp">[first, first + n)</code> if <code class="sh_cpp">n</code> is positive, otherwise it does nothing.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Requires:</em> <code class="sh_cpp">gen</code> takes no arguments, <code class="sh_cpp">Size</code> shall be convertible to an integral type
+(<a title="conv.integral" href="conv.integral.html">4.7</a>, <a title="class.conv" href="class.conv.html">12.3</a>).</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Returns:</em> <code class="sh_cpp">generate_n</code> returns <code class="sh_cpp">first + n</code> for non-negative values of <code class="sh_cpp">n</code> and
+<code class="sh_cpp">first</code> for negative values.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><em>Complexity:</em> Exactly <code class="sh_cpp">last - first</code>, <code class="sh_cpp">n</code>, or 0 invocations of <code class="sh_cpp">gen</code> and
+assignments, respectively.</p>
+</body>
+</html>
+

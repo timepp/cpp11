@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Tuple creation functions</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[tuple.creation]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[tuple.creation]"></object>20.4.2.4 Tuple creation functions </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>In the function descriptions that follow, let <var>i</var> be in the range <code class="sh_cpp">[0, sizeof...(TTypes))</code>
+in order and let <var>T</var><sub><var>i</var></sub> be the <var>i</var><sup>th</sup> type in a template parameter pack
+named <code class="sh_cpp">TTypes</code>; let <var>j</var> be in the range <code class="sh_cpp">[0, sizeof...(UTypes))</code> in order and
+<var>U</var><sub><var>j</var></sub> be the <var>j</var><sup>th</sup> type in a template parameter pack named
+<code class="sh_cpp">UTypes</code>, where indexing is zero-based.</p>
+
+<h5><code class="sh_cpp">template&lt;class... Types&gt;
+  tuple&lt;<var>VTypes</var>...&gt; <dfn>make_tuple</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="make_tuple"></object>(Types&amp;&amp;... t);</code></h5>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>Let <code class="sh_cpp">Ui</code> be <code class="sh_cpp">decay&lt;Ti&gt;::type</code> for each <code class="sh_cpp">Ti</code> in
+<code class="sh_cpp">Types</code>. Then each <code class="sh_cpp">Vi</code> in <code class="sh_cpp">VTypes</code> is <code class="sh_cpp">X&amp;</code> if <code class="sh_cpp">Ui</code> equals
+<code class="sh_cpp">reference_wrapper&lt;X&gt;</code>, otherwise <code class="sh_cpp">Vi</code> is <code class="sh_cpp">Ui</code>.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Returns:</em> <code class="sh_cpp">tuple&lt;VTypes...&gt;(std::forward&lt;Types&gt;(t)...)</code>.</p>
+
+<div class="example">
+<p><a class="anchor" id="p4" href="#p4">4</a>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">int i; float j;
+make_tuple(1, ref(i), cref(j))</code></pre>
+
+<p>creates a tuple of type</p>
+
+<pre><code class="sh_cpp">tuple&lt;int, int&amp;, const float&amp;&gt;</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<h5><code class="sh_cpp">template&lt;class... Types&gt;
+  tuple&lt;Types&amp;&amp;...&gt; <dfn>forward_as_tuple</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="forward_as_tuple"></object>(Types&amp;&amp;... t) noexcept;</code></h5>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><em>Effects:</em> Constructs a tuple of references to the arguments in <code class="sh_cpp">t</code> suitable for forwarding as
+arguments to a function. Because the result may contain references to temporary variables, a program shall ensure that
+the return value of this function does not outlive any of its arguments. (e.g., the program should typically not store
+the result in a named variable).</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a><em>Returns:</em> <code class="sh_cpp">tuple&lt;Types&amp;&amp;...&gt;(std::forward&lt;Types&gt;(t)...)</code></p>
+
+<h5><code class="sh_cpp">template&lt;class... Types&gt;
+  tuple&lt;Types&amp;...&gt; <dfn>tie</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="tie"></object>(Types&amp;... t) noexcept;</code></h5>
+
+<p><a class="anchor" id="p7" href="#p7">7</a><em>Returns:</em> <code class="sh_cpp">tuple&lt;Types&amp;&gt;(t...)</code>. When an argument in <code class="sh_cpp">t</code> is
+<code class="sh_cpp">ignore</code>, assigning any value to the corresponding tuple element has no effect.</p>
+
+<div class="example">
+<p><a class="anchor" id="p8" href="#p8">8</a>[ <em>Example:</em> <code class="sh_cpp">tie</code> functions allow one to create tuples that unpack tuples into variables.
+<code class="sh_cpp">ignore</code> can be used for elements that are not needed:</p>
+
+<pre><code class="sh_cpp">int i; std::string s;
+tie(i, ignore, s) = make_tuple(42, 3.14, "C++");
+// i == 42, s == "C++"</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<h5><code class="sh_cpp">template &lt;class... Tuples&gt;
+  tuple&lt;<var>CTypes</var>...&gt; <dfn>tuple_cat</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="tuple_cat"></object>(Tuples&amp;&amp;... tpls);</code></h5>
+
+<p><a class="anchor" id="p9" href="#p9">9</a>In the following paragraphs, let <var>T</var><sub><var>i</var></sub> be the <var>i</var><sup>th</sup> type in
+<code class="sh_cpp">Tuples</code>, <var>U</var><sub><var>i</var></sub> be <code class="sh_cpp">remove_reference&lt;Ti&gt;::type</code>, and
+<var>tp</var><sub><var>i</var></sub> be the <sub>i</sub><sup>th</sup> parameter in the function parameter pack
+<code class="sh_cpp">tpls</code>, where all indexing is zero-based.</p>
+
+<p><a class="anchor" id="p10" href="#p10">10</a><em>Requires:</em> For all <code class="sh_cpp">i</code>, <var>U</var><sub><var>i</var></sub> shall be the type
+<var>cv</var><sub><var>i</var></sub> <code class="sh_cpp">tuple&lt;<var>Args</var><sub><var>i</var></sub>…&gt;</code>, where
+<var>cv</var><sub><var>i</var></sub> is the (possibly empty) <var>i</var><sup>th</sup> <i class="nonterminal">cv-qualifier-seq</i> and
+<var>Args</var><sub><var>i</var></sub> is the parameter pack representing the element types in
+<var>U</var><sub><var>i</var></sub>. Let <var>A</var><sub><var>i</var><var>k</var></sub> be the
+<var>k</var><sub><var>i</var></sub><sup>th</sup> type in <var>Args</var><sub><var>i</var></sub>. For all
+<var>A</var><sub><var>i</var><var>k</var></sub> the following requirements shall be satisfied: If
+<var>T</var><sub><var>i</var></sub> is deduced as an lvalue reference type, then
+<code class="sh_cpp">is_constructible&lt;<var>A</var><sub><var>i</var><var>k</var></sub>, <var>cv</var><sub><var>i</var></sub>
+<var>A</var><sub><var>i</var><var>k</var></sub>&amp;&gt;::value == true</code>, otherwise
+<code class="sh_cpp">is_constructible&lt;<var>A</var><sub><var>i</var><var>k</var></sub>, <var>cv</var><sub><var>i</var></sub>
+<var>A</var><sub><var>i</var><var>k</var></sub>&amp;&amp;&gt;::value == true</code>.</p>
+
+<p><a class="anchor" id="p11" href="#p11">11</a><em>Remarks:</em> The types in <code class="sh_cpp"><var>Ctypes</var></code> shall be equal to the ordered sequence of the extended
+types <var>Args</var><sub>0</sub><code class="sh_cpp">...</code>, <var>Args</var><sub>1</sub><code class="sh_cpp">...</code>, …
+<var>Args</var><sub><var>n</var>−1</sub><code class="sh_cpp">...</code>, where <var>n</var> is equal to <code class="sh_cpp">sizeof...(Tuples)</code>.
+Let <var>e</var><sub><var>i</var></sub><code class="sh_cpp">...</code> be the <var>i</var><sup>th</sup> ordered sequence of tuple
+elements of the resulting <code class="sh_cpp">tuple</code> object corresponding to the type sequence
+<var>Args</var><sub><var>i</var></sub>.</p>
+
+<p><a class="anchor" id="p12" href="#p12">12</a><em>Returns:</em> A <code class="sh_cpp">tuple</code> object constructed by initializing the
+<var>k</var><sub><var>i</var></sub><sup>th</sup> type element <var>e</var><sub><var>i</var><var>k</var></sub> in
+<var>e</var><sub><var>i</var></sub><code class="sh_cpp">...</code> with
+<code class="sh_cpp">get&lt;<var>k</var><sub><var>i</var></sub>&gt;(std::forward&lt;<var>T</var><sub><var>i</var></sub>&gt;(<var>tp</var><sub><var>i</var></sub>))</code>
+for each valid <var>k</var><sub><var>i</var></sub> and each group <var>e</var><sub><var>i</var></sub> in
+order.</p>
+
+<p><a class="anchor" id="p13" href="#p13">13</a><em>Notes:</em> An implementation may support additional types in the parameter pack <code class="sh_cpp">Tuples</code> that support
+the <code class="sh_cpp">tuple</code>-like protocol, such as <code class="sh_cpp">pair</code> and <code class="sh_cpp">array</code>.</p>
+</body>
+</html>
+

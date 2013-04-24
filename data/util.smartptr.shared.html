@@ -1,0 +1,156 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class template shared_ptr</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[util.smartptr.shared]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[util.smartptr.shared]"></object>20.7.2.2 Class template <code class="sh_cpp"><dfn>shared_ptr</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="shared_ptr"></object></code> </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The <code class="sh_cpp">shared_ptr</code> class template stores a pointer, usually obtained via <code class="sh_cpp">new</code>.
+<code class="sh_cpp">shared_ptr</code> implements semantics of shared ownership; the last remaining owner of the pointer is responsible
+for destroying the object, or otherwise releasing the resources associated with the stored pointer. A
+<code class="sh_cpp">shared_ptr</code> object is <dfn>empty</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="empty"></object> if it does not own a pointer.</p>
+
+<pre><code class="sh_cpp">namespace std {
+  template&lt;class T&gt; class shared_ptr {
+  public:
+    typedef T element_type;
+
+    // <a title="util.smartptr.shared.const" href="util.smartptr.shared.const.html">20.7.2.2.1</a>, constructors:
+    constexpr shared_ptr() noexcept;
+    template&lt;class Y&gt; explicit shared_ptr(Y* p);
+    template&lt;class Y, class D&gt; shared_ptr(Y* p, D d);
+    template&lt;class Y, class D, class A&gt; shared_ptr(Y* p, D d, A a);
+    template &lt;class D&gt; shared_ptr(nullptr_t p, D d)
+    template &lt;class D, class A&gt; shared_ptr(nullptr_t p, D d, A a)
+    template&lt;class Y&gt; shared_ptr(const shared_ptr&lt;Y&gt;&amp; r, T *p) noexcept;
+    shared_ptr(const shared_ptr&amp; r) noexcept;
+    template&lt;class Y&gt; shared_ptr(const shared_ptr&lt;Y&gt;&amp; r) noexcept;
+    shared_ptr(shared_ptr&amp;&amp; r) noexcept;
+    template&lt;class Y&gt; shared_ptr(shared_ptr&lt;Y&gt;&amp;&amp; r) noexcept;
+    template&lt;class Y&gt; explicit shared_ptr(const weak_ptr&lt;Y&gt;&amp; r);
+    template&lt;class Y&gt; shared_ptr(auto_ptr&lt;Y&gt;&amp;&amp; r);
+    template &lt;class Y, class D&gt; shared_ptr(unique_ptr&lt;Y, D&gt;&amp;&amp; r);
+    constexpr shared_ptr(nullptr_t) : shared_ptr() { }
+
+    // <a title="util.smartptr.shared.dest" href="util.smartptr.shared.dest.html">20.7.2.2.2</a>, destructor:
+    ~shared_ptr();
+
+    // <a title="util.smartptr.shared.assign" href="util.smartptr.shared.assign.html">20.7.2.2.3</a>, assignment:
+    shared_ptr&amp; operator=(const shared_ptr&amp; r) noexcept;
+    template&lt;class Y&gt; shared_ptr&amp; operator=(const shared_ptr&lt;Y&gt;&amp; r) noexcept;
+    shared_ptr&amp; operator=(shared_ptr&amp;&amp; r) noexcept;
+    template&lt;class Y&gt; shared_ptr&amp; operator=(shared_ptr&lt;Y&gt;&amp;&amp; r) noexcept;
+    template&lt;class Y&gt; shared_ptr&amp; operator=(auto_ptr&lt;Y&gt;&amp;&amp; r);
+    template &lt;class Y, class D&gt; shared_ptr&amp; operator=(unique_ptr&lt;Y, D&gt;&amp;&amp; r);
+
+    // <a title="util.smartptr.shared.mod" href="util.smartptr.shared.mod.html">20.7.2.2.4</a>, modifiers:
+    void swap(shared_ptr&amp; r) noexcept;
+    void reset() noexcept;
+    template&lt;class Y&gt; void reset(Y* p);
+    template&lt;class Y, class D&gt; void reset(Y* p, D d);
+    template&lt;class Y, class D, class A&gt; void reset(Y* p, D d, A a);
+
+    // <a title="util.smartptr.shared.obs" href="util.smartptr.shared.obs.html">20.7.2.2.5</a>, observers:
+    T* get() const noexcept;
+    T&amp; operator*() const noexcept;
+    T* operator-&gt;() const noexcept;
+    long use_count() const noexcept;
+    bool unique() const noexcept;
+    explicit operator bool() const noexcept;
+    template&lt;class U&gt; bool owner_before(shared_ptr&lt;U&gt; const&amp; b) const;
+    template&lt;class U&gt; bool owner_before(weak_ptr&lt;U&gt; const&amp; b) const;
+  };
+
+  // <a title="util.smartptr.shared.create" href="util.smartptr.shared.create.html">20.7.2.2.6</a>, shared_ptr creation
+  template&lt;class T, class... Args&gt; shared_ptr&lt;T&gt; make_shared(Args&amp;&amp;... args);
+  template&lt;class T, class A, class... Args&gt;
+    shared_ptr&lt;T&gt; allocate_shared(const A&amp; a, Args&amp;&amp;... args);
+
+  // <a title="util.smartptr.shared.cmp" href="util.smartptr.shared.cmp.html">20.7.2.2.7</a>, shared_ptr comparisons:
+  template&lt;class T, class U&gt;
+    bool operator==(const shared_ptr&lt;T&gt;&amp; a, const shared_ptr&lt;U&gt;&amp; b) noexcept;
+  template&lt;class T, class U&gt;
+    bool operator!=(const shared_ptr&lt;T&gt;&amp; a, const shared_ptr&lt;U&gt;&amp; b) noexcept;
+  template&lt;class T, class U&gt;
+    bool operator&lt;(const shared_ptr&lt;T&gt;&amp; a, const shared_ptr&lt;U&gt;&amp; b) noexcept;
+  template&lt;class T, class U&gt;
+    bool operator&gt;(const shared_ptr&lt;T&gt;&amp; a, const shared_ptr&lt;U&gt;&amp; b) noexcept;
+  template&lt;class T, class U&gt;
+    bool operator&lt;=(const shared_ptr&lt;T&gt;&amp; a, const shared_ptr&lt;U&gt;&amp; b) noexcept;
+  template&lt;class T, class U&gt;
+    bool operator&gt;=(const shared_ptr&lt;T&gt;&amp; a, const shared_ptr&lt;U&gt;&amp; b) noexcept;
+
+  template &lt;class T&gt;
+    bool operator==(const shared_ptr&lt;T&gt;&amp; a, nullptr_t) noexcept;
+  template &lt;class T&gt;
+    bool operator==(nullptr_t, const shared_ptr&lt;T&gt;&amp; b) noexcept;
+  template &lt;class T&gt;
+    bool operator!=(const shared_ptr&lt;T&gt;&amp; a, nullptr_t) noexcept;
+  template &lt;class T&gt;
+    bool operator!=(nullptr_t, const shared_ptr&lt;T&gt;&amp; b) noexcept;
+  template &lt;class T&gt;
+    bool operator&lt;(const shared_ptr&lt;T&gt;&amp; a, nullptr_t) noexcept;
+  template &lt;class T&gt;
+    bool operator&lt;(nullptr_t, const shared_ptr&lt;T&gt;&amp; b) noexcept;
+  template &lt;class T&gt;
+    bool operator&lt;=(const shared_ptr&lt;T&gt;&amp; a, nullptr_t) noexcept;
+  template &lt;class T&gt;
+    bool operator&lt;=(nullptr_t, const shared_ptr&lt;T&gt;&amp; b) noexcept;
+  template &lt;class T&gt;
+    bool operator&gt;(const shared_ptr&lt;T&gt;&amp; a, nullptr_t) noexcept;
+  template &lt;class T&gt;
+    bool operator&gt;(nullptr_t, const shared_ptr&lt;T&gt;&amp; b) noexcept;
+  template &lt;class T&gt;
+    bool operator&gt;=(const shared_ptr&lt;T&gt;&amp; a, nullptr_t) noexcept;
+  template &lt;class T&gt;
+    bool operator&gt;=(nullptr_t, const shared_ptr&lt;T&gt;&amp; b) noexcept;
+
+  // <a title="util.smartptr.shared.spec" href="util.smartptr.shared.spec.html">20.7.2.2.8</a>, shared_ptr specialized algorithms:
+  template&lt;class T&gt; void swap(shared_ptr&lt;T&gt;&amp; a, shared_ptr&lt;T&gt;&amp; b) noexcept;
+
+  // <a title="util.smartptr.shared.cast" href="util.smartptr.shared.cast.html">20.7.2.2.9</a>, shared_ptr casts:
+  template&lt;class T, class U&gt;
+    shared_ptr&lt;T&gt; static_pointer_cast(const shared_ptr&lt;U&gt;&amp; r) noexcept;
+  template&lt;class T, class U&gt;
+    shared_ptr&lt;T&gt; dynamic_pointer_cast(const shared_ptr&lt;U&gt;&amp; r) noexcept;
+  template&lt;class T, class U&gt;
+    shared_ptr&lt;T&gt; const_pointer_cast(const shared_ptr&lt;U&gt;&amp; r) noexcept;
+
+  // <a title="util.smartptr.getdeleter" href="util.smartptr.getdeleter.html">20.7.2.2.10</a>, shared_ptr get_deleter:
+  template&lt;class D, class T&gt; D* get_deleter(const shared_ptr&lt;T&gt;&amp; p) noexcept;
+
+  // <a title="util.smartptr.shared.io" href="util.smartptr.shared.io.html">20.7.2.2.11</a>, shared_ptr I/O:
+  template&lt;class E, class T, class Y&gt;
+    basic_ostream&lt;E, T&gt;&amp; operator&lt;&lt; (basic_ostream&lt;E, T&gt;&amp; os, const shared_ptr&lt;Y&gt;&amp; p);
+} // namespace std</code></pre>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>Specializations of <code class="sh_cpp">shared_ptr</code> shall be <code class="concept">CopyConstructible</code>,
+<code class="concept">CopyAssignable</code>, and <code class="concept">LessThanComparable</code>, allowing their use in standard containers.
+Specializations of <code class="sh_cpp">shared_ptr</code> shall be convertible to <code class="sh_cpp">bool</code>, allowing their use in boolean
+expressions and declarations in conditions. The template parameter <code class="sh_cpp">T</code> of <code class="sh_cpp">shared_ptr</code> may be an
+incomplete type.</p>
+
+<div class="example">
+<p><a class="anchor" id="p3" href="#p3">3</a>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">if(shared_ptr&lt;X&gt; px = dynamic_pointer_cast&lt;X&gt;(py)) {
+  // do something with px
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>For purposes of determining the presence of a data race, member functions shall access and modify only the
+<code class="sh_cpp">shared_ptr</code> and <code class="sh_cpp">weak_ptr</code> objects themselves and not objects they refer to. Changes in
+<code class="sh_cpp">use_count()</code> do not reflect modifications that can introduce data races.</p>
+</body>
+</html>
+

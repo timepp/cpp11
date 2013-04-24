@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>type_index members</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[type.index.members]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[type.index.members]"></object>20.13.3 <code class="sh_cpp">type_index</code> members </h3>
+
+<h4><code class="sh_cpp"><dfn>type_index</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="type_index"></object>(const type_info&amp; rhs) noexcept;</code></h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Effects:</em> constructs a <code class="sh_cpp">type_index</code> object, the equivalent of <code class="sh_cpp">target =
+&amp;rhs</code>.</p>
+
+<h4><code class="sh_cpp">bool <dfn>operator==</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator=="></object>(const type_index&amp; rhs) const noexcept;</code></h4>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Returns:</em> <code class="sh_cpp">*target == *rhs.target</code>.</p>
+
+<h4><code class="sh_cpp">bool <dfn>operator!=</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator!="></object>(const type_index&amp; rhs) const noexcept;</code></h4>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Returns:</em> <code class="sh_cpp">*target != *rhs.target</code>.</p>
+
+<h4><code class="sh_cpp">bool <dfn>operator&lt;</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator&lt;"></object>(const type_index&amp; rhs) const noexcept;</code></h4>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><em>Returns:</em> <code class="sh_cpp">target-&gt;before(*rhs.target)</code>.</p>
+
+<h4><code class="sh_cpp">bool <dfn>operator&lt;=</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator&lt;="></object>(const type_index&amp; rhs) const noexcept;</code></h4>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><em>Returns:</em> <code class="sh_cpp">!rhs.target-&gt;before(*target)</code>.</p>
+
+<h4><code class="sh_cpp">bool <dfn>operator&gt;</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator&gt;"></object>(const type_index&amp; rhs) const noexcept;</code></h4>
+
+<p><a class="anchor" id="p6" href="#p6">6</a><em>Returns:</em> <code class="sh_cpp">rhs.target-&gt;before(*target)</code>.</p>
+
+<h4><code class="sh_cpp">bool <dfn>operator&gt;=</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator&gt;="></object>(const type_index&amp; rhs) const noexcept;</code></h4>
+
+<p><a class="anchor" id="p7" href="#p7">7</a><em>Returns:</em> <code class="sh_cpp">!target-&gt;before(*rhs.target)</code>.</p>
+
+<h4><code class="sh_cpp">size_t <dfn>hash_code</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="hash_code"></object>() const;</code></h4>
+
+<p><a class="anchor" id="p8" href="#p8">8</a><em>Returns:</em> <code class="sh_cpp">target-&gt;hash_code()</code>.</p>
+
+<h4><code class="sh_cpp">const char* <dfn>name</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="name"></object>() const;</code></h4>
+
+<p><a class="anchor" id="p9" href="#p9">9</a><em>Returns:</em> <code class="sh_cpp">target-&gt;name()</code>.</p>
+</body>
+</html>
+

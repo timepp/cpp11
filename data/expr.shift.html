@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Shift operators</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[expr.shift]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[expr.shift]"></object>5.8 Shift operators </h2>
+<p><a class="anchor" id="p1" href="#p1">1</a>The shift operators <code class="sh_cpp">&lt;&lt;</code> and <code class="sh_cpp">&gt;&gt;</code> group left-to-right.</p>
+
+<dl>
+<dt>
+<i class="nonterminal"><dfn>shift-expression</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="shift-expression"></object></i>:</dt>
+	<dd><i class="nonterminal">additive-expression</i></dd>
+	<dd>
+<i class="nonterminal">shift-expression</i> <code class="sh_cpp">&lt;&lt;</code> <i class="nonterminal">additive-expression</i>
+</dd>
+	<dd>
+<i class="nonterminal">shift-expression</i> <code class="sh_cpp">&gt;&gt;</code> <i class="nonterminal">additive-expression</i>
+</dd>
+</dl>
+<p>The operands shall be of integral or unscoped enumeration type and integral promotions are performed. The type of the
+result is that of the promoted left operand. The behavior is undefined if the right operand is negative, or greater than
+or equal to the length in bits of the promoted left operand.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The value of <code class="sh_cpp">E1 &lt;&lt; E2</code> is <code class="sh_cpp">E1</code> left-shifted <code class="sh_cpp">E2</code> bit positions;
+vacated bits are zero-filled. If <code class="sh_cpp">E1</code> has an unsigned type, the value of the result is E1 × 2<sup>E2</sup>,
+reduced modulo one more than the maximum value representable in the result type. Otherwise, if <code class="sh_cpp">E1</code> has a
+signed type and non-negative value, and E1 × 2<sup>E2</sup> is representable in the result type, then that is the
+resulting value; otherwise, the behavior is undefined.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>The value of <code class="sh_cpp">E1 &gt;&gt; E2</code> is <code class="sh_cpp">E1</code> right-shifted <code class="sh_cpp">E2</code> bit positions. If
+<code class="sh_cpp">E1</code> has an unsigned type or if <code class="sh_cpp">E1</code> has a signed type and a non-negative value, the value of the
+result is the integral part of the quotient of E1/2<sup>E2</sup>. If <code class="sh_cpp">E1</code> has a signed type and a negative
+value, the resulting value is implementation-defined.</p>
+</body>
+</html>
+

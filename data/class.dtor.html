@@ -1,0 +1,184 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Destructors</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[class.dtor]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[class.dtor]"></object>12.4 Destructors </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A special declarator syntax using an optional <i class="nonterminal">function-specifier</i> (<a title="dcl.fct.spec" href="dcl.fct.spec.html">7.1.2</a>) followed by
+<code class="sh_cpp">~</code> followed by the destructor’s class name followed by an empty parameter list is used to declare the
+destructor in a class definition. In such a declaration, the <code class="sh_cpp">~</code> followed by the destructor’s class name can
+be enclosed in optional parentheses; such parentheses are ignored. A <i class="nonterminal">typedef-name</i> shall not be used as the
+<i class="nonterminal">class-name</i> following the <code class="sh_cpp">~</code> in the declarator for a destructor declaration.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>A destructor is used to destroy objects of its class type. A destructor takes no parameters, and no return type
+can be specified for it (not even <code class="sh_cpp">void</code>). The address of a destructor shall not be taken. A destructor shall
+not be <code class="sh_cpp">static</code>. A destructor can be invoked for a <code class="sh_cpp">const</code>, <code class="sh_cpp">volatile</code> or <code class="sh_cpp">const
+volatile</code> object. A destructor shall not be declared <code class="sh_cpp">const</code>, <code class="sh_cpp">volatile</code> or <code class="sh_cpp">const
+volatile</code> (<a title="class.this" href="class.this.html">9.3.2</a>). <code class="sh_cpp">const</code> and <code class="sh_cpp">volatile</code> semantics (<a title="dcl.type.cv" href="dcl.type.cv.html">7.1.6.1</a>) are not
+applied on an object under destruction. They stop being in effect when the destructor for the most derived object
+(<a title="intro.object" href="intro.object.html">1.8</a>) starts. A destructor shall not be declared with a <i class="nonterminal">ref-qualifier</i>.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>A declaration of a destructor that does not have an <i class="nonterminal">exception-specification</i> is implicitly considered
+to have the same <i class="nonterminal">exception-specification</i> as an implicit declaration (<a title="except.spec" href="except.spec.html">15.4</a>).</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>If a class has no user-declared destructor, a destructor is implicitly declared as defaulted (<a title="dcl.fct.def" href="dcl.fct.def.general.html">8.4</a>).
+An implicitly-declared destructor is an <code class="sh_cpp">inline</code> <code class="sh_cpp">public</code> member of its class.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>A defaulted destructor for a class <code class="sh_cpp">X</code> is defined as deleted if:</p>
+
+<ul>
+<li>
+<code class="sh_cpp">X</code> is a union-like class that has a variant member with a non-trivial destructor,</li>
+<li>any of the non-static data members has class type <code class="sh_cpp">M</code> (or array thereof) and <code class="sh_cpp">M</code> has a deleted
+	destructor or a destructor that is inaccessible from the defaulted destructor,</li>
+<li>any direct or virtual base class has a deleted destructor or a destructor that is inaccessible from the defaulted
+	destructor,</li>
+<li>or, for a virtual destructor, lookup of the non-array deallocation function results in an ambiguity or in a function
+	that is deleted or inaccessible from the defaulted destructor.</li>
+</ul>
+
+<p>A destructor is <dfn>trivial</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="trivial"></object> if it is not user-provided and if:</p>
+
+<ul>
+<li>the destructor is not <code class="sh_cpp">virtual</code>,</li>
+<li>all of the direct base classes of its class have trivial destructors, and</li>
+<li>for all of the non-static data members of its class that are of class type (or array thereof), each such class has a
+	trivial destructor.</li>
+</ul>
+
+<p>Otherwise, the destructor is <dfn>non-trivial</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="non-trivial"></object>.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>A destructor that is defaulted and not defined as deleted is <dfn>implicitly defined</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="implicitly defined"></object> when it is odr-used
+(<a title="basic.def.odr" href="basic.def.odr.html">3.2</a>) to destroy an object of its class type (<a title="basic.stc" href="basic.stc.html">3.7</a>) or when it is explicitly defaulted after its
+first declaration.</p>
+
+<p><a class="anchor" id="p7" href="#p7">7</a>Before the defaulted destructor for a class is implicitly defined, all the non-user-provided destructors for
+its base classes and its non-static data members shall have been implicitly defined.</p>
+
+<p><a class="anchor" id="p8" href="#p8">8</a>After executing the body of the destructor and destroying any automatic objects allocated within the body, a
+destructor for class <code class="sh_cpp">X</code> calls the destructors for <code class="sh_cpp">X</code>’s direct non-variant non-static data
+members, the destructors for <code class="sh_cpp">X</code>’s direct base classes and, if <code class="sh_cpp">X</code> is the type of the most derived
+class (<a title="class.base.init" href="class.base.init.html">12.6.2</a>), its destructor calls the destructors for <code class="sh_cpp">X</code>’s virtual base classes. All
+destructors are called as if they were referenced with a qualified name, that is, ignoring any possible virtual
+overriding destructors in more derived classes. Bases and members are destroyed in the reverse order of the completion
+of their constructor (see <a title="class.base.init" href="class.base.init.html">12.6.2</a>). A <code class="sh_cpp">return</code> statement (<a title="stmt.return" href="stmt.return.html">6.6.3</a>) in a destructor might
+not directly return to the caller; before transferring control to the caller, the destructors for the members and bases
+are called. Destructors for elements of an array are called in reverse order of their construction (see
+<a title="class.init" href="class.init.html">12.6</a>).</p>
+
+<p><a class="anchor" id="p9" href="#p9">9</a>A destructor can be declared <code class="sh_cpp">virtual</code> (<a title="class.virtual" href="class.virtual.html">10.3</a>) or pure <code class="sh_cpp">virtual</code>
+(<a title="class.abstract" href="class.abstract.html">10.4</a>); if any objects of that class or any derived class are created in the program, the destructor shall be
+defined. If a class has a base class with a virtual destructor, its destructor (whether user- or implicitly- declared)
+is virtual.</p>
+
+<p><a class="anchor" id="p10" href="#p10">10</a><span class="note">[ <em>Note:</em> some language constructs have special semantics when used during destruction; see
+<a title="class.cdtor" href="class.cdtor.html">12.7</a>. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p11" href="#p11">11</a>Destructors are invoked implicitly</p>
+
+<ul>
+<li>for constructed objects with static storage duration (<a title="basic.stc.static" href="basic.stc.static.html">3.7.1</a>) at program termination
+	(<a title="basic.start.term" href="basic.start.term.html">3.6.3</a>),</li>
+<li>for constructed objects with thread storage duration (<a title="basic.stc.thread" href="basic.stc.thread.html">3.7.2</a>) at thread exit,</li>
+<li>for constructed objects with automatic storage duration (<a title="basic.stc.auto" href="basic.stc.auto.html">3.7.3</a>) when the block in which an object is
+	created exits (<a title="stmt.dcl" href="stmt.dcl.html">6.7</a>),</li>
+<li>for constructed temporary objects when the lifetime of a temporary object ends (<a title="class.temporary" href="class.temporary.html">12.2</a>),</li>
+<li>for constructed objects allocated by a <i class="nonterminal">new-expression</i> (<a title="expr.new" href="expr.new.html">5.3.4</a>), through use of a
+	<i class="nonterminal">delete-expression</i> (<a title="expr.delete" href="expr.delete.html">5.3.5</a>),</li>
+<li>in several situations due to the handling of exceptions (<a title="except.handle" href="except.handle.html">15.3</a>).</li>
+</ul>
+
+<p>A program is ill-formed if an object of class type or array thereof is declared and the destructor for the class is
+not accessible at the point of the declaration. Destructors can also be invoked explicitly.</p>
+
+<p><a class="anchor" id="p12" href="#p12">12</a>At the point of definition of a virtual destructor (including an implicit definition (<a title="class.copy" href="class.copy.html">12.8</a>)), the
+non-array deallocation function is looked up in the scope of the destructor’s class (<a title="class.member.lookup" href="class.member.lookup.html">10.2</a>), and, if no
+declaration is found, the function is looked up in the global scope. If the result of this lookup is ambiguous or
+inaccessible, or if the lookup selects a placement deallocation function or a function with a deleted definition
+(<a title="dcl.fct.def" href="dcl.fct.def.general.html">8.4</a>), the program is ill-formed. <span class="note">[ <em>Note:</em> This assures that a deallocation function corresponding to the
+dynamic type of an object is available for the <i class="nonterminal">delete-expression</i> (<a title="class.free" href="class.free.html">12.5</a>). — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p13" href="#p13">13</a>In an explicit destructor call, the destructor name appears as a <code class="sh_cpp">~</code> followed by a
+<i class="nonterminal">type-name</i> or <i class="nonterminal">decltype-specifier</i> that denotes the destructor’s class type. The invocation of a
+destructor is subject to the usual rules for member functions (<a title="class.mfct" href="class.mfct.html">9.3</a>), that is, if the object is not of the
+destructor’s class type and not of a class derived from the destructor’s class type, the program has undefined behavior
+(except that invoking <code class="sh_cpp">delete</code> on a null pointer has no effect).</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct B {
+  virtual ~B() { }
+};
+struct D : B {
+  ~D() { }
+};
+
+D D_object;
+typedef B B_alias;
+B* B_ptr = &amp;D_object;
+
+void f() {
+  D_object.B::~B();             // calls B’s destructor
+  B_ptr-&gt;~B();                  // calls D’s destructor
+  B_ptr-&gt;~B_alias();            // calls D’s destructor
+  B_ptr-&gt;B_alias::~B();         // calls B’s destructor
+  B_ptr-&gt;B_alias::~B_alias();   // calls B’s destructor
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><span class="note">[ <em>Note:</em> An explicit destructor call must always be written using a member access operator (<a title="expr.ref " href=".html"></a>) or a
+<i class="nonterminal">qualified-id</i> (<a title="expr.prim" href="expr.prim.general.html">5.1</a>); in particular, the <i class="nonterminal">unary-expression</i> <code class="sh_cpp">~X()</code> in a member
+function is not an explicit destructor call (<a title="expr.unary.op" href="expr.unary.op.html">5.3.1</a>). — <em>end note</em> ]</span></p>
+
+<div class="note">
+<p><a class="anchor" id="p14" href="#p14">14</a>[ <em>Note:</em> explicit calls of destructors are rarely needed. One use of such calls is for objects placed at specific
+addresses using a <i class="nonterminal">new-expression</i> with the placement option. Such use of explicit placement and destruction of
+objects can be necessary to cope with dedicated hardware resources and for writing memory management facilities. For
+example,</p>
+
+<pre><code class="sh_cpp">void* operator new(std::size_t, void* p) { return p; }
+struct X {
+  X(int);
+  ~X();
+};
+void f(X* p);
+
+void g() {                      // rare, specialized use:
+  char* buf = new char[sizeof(X)];
+  X* p = new(buf) X(222);       // use buf[] and initialize
+  f(p);
+  p-&gt;X::~X();                   // cleanup
+}</code></pre>
+<p> — <em>end note</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p15" href="#p15">15</a>Once a destructor is invoked for an object, the object no longer exists; the behavior is undefined if the
+destructor is invoked for an object whose lifetime has ended (<a title="basic.life" href="basic.life.html">3.8</a>). <span class="example">[ <em>Example:</em> if the destructor for an
+automatic object is explicitly invoked, and the block is subsequently left in a manner that would ordinarily invoke
+implicit destruction of the object, the behavior is undefined. — <em>end example</em> ]</span></p>
+
+<div class="note">
+<p><a class="anchor" id="p16" href="#p16">16</a>[ <em>Note:</em> the notation for explicit call of a destructor can be used for any scalar type name (<a title="expr.pseudo" href="expr.pseudo.html">5.2.4</a>).
+Allowing this makes it possible to write code without having to know if a destructor exists for a given type. For
+example,</p>
+
+<pre><code class="sh_cpp">typedef int I;
+I* p;
+p-&gt;I::~I();</code></pre>
+<p> — <em>end note</em> ]</p>
+</div>
+</body>
+</html>
+

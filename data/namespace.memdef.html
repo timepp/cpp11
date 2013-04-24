@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Namespace member definitions</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[namespace.memdef]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[namespace.memdef]"></object>7.3.1.2 Namespace member definitions </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Members (including explicit specializations of templates (<a title="temp.expl.spec" href="temp.expl.spec.html">14.7.3</a>)) of a namespace can be defined
+within that namespace.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">namespace X {
+  void f() { /* … */ }
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>Members of a named namespace can also be defined outside that namespace by explicit qualification
+(<a title="namespace.qual" href="namespace.qual.html">3.4.3.2</a>) of the name being defined, provided that the entity being defined was already declared in the
+namespace and the definition appears after the point of declaration in a namespace that encloses the declaration’s
+namespace.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">namespace Q {
+  namespace V {
+    void f();
+  }
+  void V::f() { /* … */ }       // OK
+  void V::g() { /* … */ }       // error: g() is not yet a member of V
+  namespace V {
+    void g();
+  }
+}
+
+namespace R {
+  void Q::V::g() { /* … */ }    // error: R doesn’t enclose Q
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>Every name first declared in a namespace is a member of that namespace. If a <code class="sh_cpp">friend</code> declaration in
+a non-local class first declares a class or function<sup class="footnote"><a href="#fn98">98</a></sup> the friend class or function is a member of the
+innermost enclosing namespace. The name of the friend is not found by unqualified lookup (<a title="basic.lookup.unqual" href="basic.lookup.unqual.html">3.4.1</a>) or by
+qualified lookup (<a title="basic.lookup.qual" href="basic.lookup.qual.html">3.4.3</a>) until a matching declaration is provided in that namespace scope (either before or
+after the class definition granting friendship). If a friend function is called, its name may be found by the name
+lookup that considers functions from namespaces and classes associated with the types of the function arguments
+(<a title="basic.lookup.argdep" href="basic.lookup.argdep.html">3.4.2</a>). If the name in a <code class="sh_cpp">friend</code> declaration is neither qualified nor a <i class="nonterminal">template-id</i> and
+the declaration is a function or an <i class="nonterminal">elaborated-type-specifier</i>, the lookup to determine whether the entity has
+been previously declared shall not consider any scopes outside the innermost enclosing namespace. <span class="note">[ <em>Note:</em> The other forms
+of <code class="sh_cpp">friend</code> declarations cannot declare a new member of the innermost enclosing namespace and thus follow the
+usual lookup rules. — <em>end note</em> ]</span></p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">// Assume f and g have not yet been defined.
+void h(int);
+template &lt;class T&gt; void f2(T);
+namespace A {
+  class X {
+    friend void f(X);           // A::f(X) is a friend
+    class Y {
+      friend void g();          // A::g is a friend
+      friend void h(int);       // A::h is a friend
+                                // ::h not considered
+      friend void f2&lt;&gt;(int);    // ::f2&lt;&gt;(int) is a friend
+    };
+  };
+
+  // A::f, A::g and A::h are not visible here
+  X x;
+  void g() { f(x); }            // definition of A::g
+  void f(X) { /* … */}          // definition of A::f
+  void h(int) { /* … */ }       // definition of A::h
+  // A::f, A::g and A::h are visible here and known to be friends
+}
+
+using A::x;
+
+void h() {
+  A::f(x);
+  A::X::f(x);                   // error: f is not a member of A::X
+  A::X::Y::g();                 // error: g is not a member of A::X::Y
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+
+<div><p class="footnote" id="fn98">98) this implies that the name of the class or function is unqualified.</p></div>
+</body>
+</html>
+

@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class template moneypunct</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[locale.moneypunct]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[locale.moneypunct]"></object>22.4.6.3 Class template <code class="sh_cpp"><dfn>moneypunct</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="moneypunct"></object></code> </h4>
+
+<pre><code class="sh_cpp">namespace std {
+  class <dfn>money_base</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="money_base"></object> {
+  public:
+    enum part { none, space, symbol, sign, value };
+    struct pattern { char field[4]; };
+  };
+
+  template &lt;class charT, bool International = false&gt;
+  class moneypunct : public locale::facet, public money_base {
+  public:
+    typedef charT char_type;
+    typedef basic_string&lt;charT&gt; string_type;
+
+    explicit moneypunct(size_t refs = 0);
+
+    charT       decimal_point() const;
+    charT       thousands_sep() const;
+    string      grouping()      const;
+    string_type curr_symbol()   const;
+    string_type positive_sign() const;
+    string_type negative_sign() const;
+    int         frac_digits()   const;
+    pattern     pos_format()    const;
+    pattern     neg_format()    const;
+
+    static locale::id id;
+    static const bool intl = International;
+
+  protected:
+    ~moneypunct();
+    virtual charT       do_decimal_point() const;
+    virtual charT       do_thousands_sep() const;
+    virtual string      do_grouping()      const;
+    virtual string_type do_curr_symbol()   const;
+    virtual string_type do_positive_sign() const;
+    virtual string_type do_negative_sign() const;
+    virtual int         do_frac_digits()   const;
+    virtual pattern     do_pos_format()    const;
+    virtual pattern     do_neg_format()    const;
+  };
+}</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The <code class="sh_cpp">moneypunct&lt;&gt;</code> facet defines monetary formatting parameters used by
+money_get&lt;&gt; and <code class="sh_cpp">money_put&lt;&gt;</code>. A monetary format is a sequence of four components,
+specified by a <code class="sh_cpp">pattern</code> value <code class="sh_cpp">p</code>, such that the <code class="sh_cpp">part</code> value
+<code class="sh_cpp">static_cast&lt;part&gt;(p.field[i])</code> determines the <code class="sh_cpp">i</code>th component of the format.<sup class="footnote"><a href="#fn258">258</a></sup> In the <code class="sh_cpp">field</code> member of a <code class="sh_cpp">pattern</code> object, each value <code class="sh_cpp">symbol</code>,
+<code class="sh_cpp">sign</code>, <code class="sh_cpp">value</code>, and either <code class="sh_cpp">space</code> or <code class="sh_cpp">none</code> appears exactly once. The
+value <code class="sh_cpp">none</code>, if present, is not first; the value <code class="sh_cpp">space</code>, if present, is neither first nor
+last.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>Where <code class="sh_cpp">none</code> or <code class="sh_cpp">space</code> appears, white space is permitted in the format, except where
+<code class="sh_cpp">none</code> appears at the end, in which case no white space is permitted. The value <code class="sh_cpp">space</code> indicates
+that at least one space is required at that position. Where <code class="sh_cpp">symbol</code> appears, the sequence of characters
+returned by <code class="sh_cpp">curr_symbol()</code> is permitted, and can be required. Where <code class="sh_cpp">sign</code> appears, the first (if
+any) of the sequence of characters returned by <code class="sh_cpp">positive_sign()</code> or <code class="sh_cpp">negative_sign()</code>
+(respectively as the monetary value is non-negative or negative) is required. Any remaining characters of the sign
+sequence are required after all other format components. Where <code class="sh_cpp">value</code> appears, the absolute numeric monetary
+value is required.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>The format of the numeric monetary value is a decimal number:</p>
+
+<pre><code class="sh_cpp">value ::= units [ decimal-point [ digits ]] |
+  decimal-point digits</code></pre>
+
+<p>if <code class="sh_cpp">frac_digits()</code> returns a positive value, or</p>
+
+<pre><code class="sh_cpp">value ::= units</code></pre>
+
+<p>otherwise. The symbol <code class="sh_cpp">decimal-point</code> indicates the character returned by <code class="sh_cpp">decimal_point()</code>.
+The other symbols are defined as follows:</p>
+
+<pre><code class="sh_cpp">units ::= digits [ thousands-sep units ]
+digits ::= adigit [ digits ]</code></pre>
+
+<p>In the syntax specification, the symbol <code class="sh_cpp">adigit</code> is any of the values <code class="sh_cpp">ct.widen(c)</code> for
+<code class="sh_cpp">c</code> in the range <code class="sh_cpp">'0'</code> through <code class="sh_cpp">'9'</code>, inclusive, and <code class="sh_cpp">ct</code> is a reference of
+type <code class="sh_cpp">const ctype&lt;charT&gt;&amp;</code> obtained as described in the definitions of
+<code class="sh_cpp">money_get&lt;&gt;</code> and <code class="sh_cpp">money_put&lt;&gt;</code>. The symbol <code class="sh_cpp">thousands-sep</code> is
+the character returned by <code class="sh_cpp">thousands_sep()</code>. The space character used is the value <code class="sh_cpp">ct.widen('
+')</code>. White space characters are those characters <code class="sh_cpp">c</code> for which <code class="sh_cpp">ci.is(space,c)</code> returns
+<code class="sh_cpp">true</code>. The number of digits required after the decimal point (if any) is exactly the value returned by
+<code class="sh_cpp">frac_digits()</code>.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>The placement of thousands-separator characters (if any) is determined by the value returned by
+<code class="sh_cpp">grouping()</code>, defined identically as the member <code class="sh_cpp">numpunct&lt;&gt;::do_grouping()</code>.</p>
+
+
+<div><p class="footnote" id="fn258">258) An array of <code class="sh_cpp">char</code>, rather than an array of <code class="sh_cpp">part</code>, is specified for
+<code class="sh_cpp">pattern::field</code> purely for efficiency.</p></div>
+</body>
+</html>
+

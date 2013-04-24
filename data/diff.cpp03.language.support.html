@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Clause 18: language support library</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[diff.cpp03.language.support]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[diff.cpp03.language.support]"></object>C.2.8 Clause 18: language support library </h3>
+
+<h4><a title="new.delete.single" href="new.delete.single.html">18.6.1.1</a></h4>
+
+<p><strong>Change:</strong> Linking <code class="sh_cpp">new</code> and <code class="sh_cpp">delete</code> operators</p>
+
+<p><strong>Rationale:</strong> The two throwing single-object signatures of <code class="sh_cpp">operator new</code> and <code class="sh_cpp">operator delete</code>
+are now specified to form the base functionality for the other operators. This clarifies that replacing just these two
+signatures changes others, even if they are not explicitly changed.</p>
+
+<p><strong>Effect on original feature:</strong> Valid C++ 2003 code that replaces global <code class="sh_cpp">new</code> or <code class="sh_cpp">delete</code> operators may execute
+differently in this International Standard. For example, the following program should write <code class="sh_cpp">"custom
+deallocation"</code> twice, once for the single-object delete and once for the array delete.</p>
+
+<pre><code class="sh_cpp">#include &lt;cstdio&gt;
+#include &lt;cstdlib&gt;
+#include &lt;new&gt;
+
+void* operator new(std::size_t size) throw(std::bad_alloc) {
+  return std::malloc(size);
+}
+
+void operator delete(void* ptr) throw() {
+  std::puts("custom deallocation");
+  std::free(ptr);
+}
+
+int main() {
+  int* i = new int;
+  delete i;                     // single-object delete
+  int* a = new int[3];
+  delete [] a;                  // array delete
+  return 0;
+}</code></pre>
+
+<h4><a title="new.delete.single" href="new.delete.single.html">18.6.1.1</a></h4>
+
+<p><strong>Change:</strong> <code class="sh_cpp">operator new</code> may throw exceptions other than <code class="sh_cpp">std::bad_alloc</code></p>
+
+<a title="" href=".html"></a>
+
+<p><strong>Effect on original feature:</strong> Valid C++ 2003 code that assumes that global <code class="sh_cpp">operator new</code> only throws
+<code class="sh_cpp">std::bad_alloc</code> may execute differently in this International Standard.</p>
+</body> </html>
+

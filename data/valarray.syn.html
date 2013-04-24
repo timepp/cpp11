@@ -1,0 +1,176 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Header &lt;valarray&gt; synopsis</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[numarray]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[numarray]"></object>Annex  Numeric arrays </h2>
+
+<h3>
+<dfn class="label">[valarray.syn]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[valarray.syn]"></object>26.6.1 Header <code class="header">&lt;valarray&gt;</code> synopsis </h3>
+
+<pre><code class="sh_cpp">#include &lt;initializer_list&gt;
+
+namespace std {
+
+  template&lt;class T&gt; class valarray;         // An array of type T
+  class slice;                              // a BLAS-like slice out of an array
+  template&lt;class T&gt; class slice_array;
+  class gslice;                             // a generalized slice out of an array
+  template&lt;class T&gt; class gslice_array;
+  template&lt;class T&gt; class mask_array;       // a masked array
+  template&lt;class T&gt; class indirect_array;   // an indirected array
+
+  template&lt;class T&gt; void swap(valarray&lt;T&gt;&amp;, valarray&lt;T&gt;&amp;) noexcept;
+
+  template&lt;class T&gt; valarray&lt;T&gt; operator* (const valarray&lt;T&gt;&amp;, const valarray&lt;T&gt;&amp;);
+  template&lt;class T&gt; valarray&lt;T&gt; operator* (const valarray&lt;T&gt;&amp;, const T&amp;);
+  template&lt;class T&gt; valarray&lt;T&gt; operator* (const T&amp;, const valarray&lt;T&gt;&amp;);
+
+  template&lt;class T&gt; valarray&lt;T&gt; operator/ (const valarray&lt;T&gt;&amp;, const valarray&lt;T&gt;&amp;);
+  template&lt;class T&gt; valarray&lt;T&gt; operator/ (const valarray&lt;T&gt;&amp;, const T&amp;);
+  template&lt;class T&gt; valarray&lt;T&gt; operator/ (const T&amp;, const valarray&lt;T&gt;&amp;);
+
+  template&lt;class T&gt; valarray&lt;T&gt; operator% (const valarray&lt;T&gt;&amp;, const valarray&lt;T&gt;&amp;);
+  template&lt;class T&gt; valarray&lt;T&gt; operator% (const valarray&lt;T&gt;&amp;, const T&amp;);
+  template&lt;class T&gt; valarray&lt;T&gt; operator% (const T&amp;, const valarray&lt;T&gt;&amp;);
+
+  template&lt;class T&gt; valarray&lt;T&gt; operator+ (const valarray&lt;T&gt;&amp;, const valarray&lt;T&gt;&amp;);
+  template&lt;class T&gt; valarray&lt;T&gt; operator+ (const valarray&lt;T&gt;&amp;, const T&amp;);
+  template&lt;class T&gt; valarray&lt;T&gt; operator+ (const T&amp;, const valarray&lt;T&gt;&amp;);
+
+  template&lt;class T&gt; valarray&lt;T&gt; operator- (const valarray&lt;T&gt;&amp;, const valarray&lt;T&gt;&amp;);
+  template&lt;class T&gt; valarray&lt;T&gt; operator- (const valarray&lt;T&gt;&amp;, const T&amp;);
+  template&lt;class T&gt; valarray&lt;T&gt; operator- (const T&amp;, const valarray&lt;T&gt;&amp;);
+
+  template&lt;class T&gt; valarray&lt;T&gt; operator^ (const valarray&lt;T&gt;&amp;, const valarray&lt;T&gt;&amp;);
+  template&lt;class T&gt; valarray&lt;T&gt; operator^ (const valarray&lt;T&gt;&amp;, const T&amp;);
+  template&lt;class T&gt; valarray&lt;T&gt; operator^ (const T&amp;, const valarray&lt;T&gt;&amp;);
+
+  template&lt;class T&gt; valarray&lt;T&gt; operator&amp; (const valarray&lt;T&gt;&amp;, const valarray&lt;T&gt;&amp;);
+  template&lt;class T&gt; valarray&lt;T&gt; operator&amp; (const valarray&lt;T&gt;&amp;, const T&amp;);
+  template&lt;class T&gt; valarray&lt;T&gt; operator&amp; (const T&amp;, const valarray&lt;T&gt;&amp;);
+
+  template&lt;class T&gt; valarray&lt;T&gt; operator| (const valarray&lt;T&gt;&amp;, const valarray&lt;T&gt;&amp;);
+  template&lt;class T&gt; valarray&lt;T&gt; operator| (const valarray&lt;T&gt;&amp;, const T&amp;);
+  template&lt;class T&gt; valarray&lt;T&gt; operator| (const T&amp;, const valarray&lt;T&gt;&amp;);
+
+  template&lt;class T&gt; valarray&lt;T&gt; operator&lt;&lt;(const valarray&lt;T&gt;&amp;, const valarray&lt;T&gt;&amp;);
+  template&lt;class T&gt; valarray&lt;T&gt; operator&lt;&lt;(const valarray&lt;T&gt;&amp;, const T&amp;);
+  template&lt;class T&gt; valarray&lt;T&gt; operator&lt;&lt;(const T&amp;, const valarray&lt;T&gt;&amp;);
+
+  template&lt;class T&gt; valarray&lt;T&gt; operator&gt;&gt;(const valarray&lt;T&gt;&amp;, const valarray&lt;T&gt;&amp;);
+  template&lt;class T&gt; valarray&lt;T&gt; operator&gt;&gt;(const valarray&lt;T&gt;&amp;, const T&amp;);
+  template&lt;class T&gt; valarray&lt;T&gt; operator&gt;&gt;(const T&amp;, const valarray&lt;T&gt;&amp;);
+
+  template&lt;class T&gt; valarray&lt;bool&gt; operator&amp;&amp;(const valarray&lt;T&gt;&amp;, const valarray&lt;T&gt;&amp;);
+  template&lt;class T&gt; valarray&lt;bool&gt; operator&amp;&amp;(const valarray&lt;T&gt;&amp;, const T&amp;);
+  template&lt;class T&gt; valarray&lt;bool&gt; operator&amp;&amp;(const T&amp;, const valarray&lt;T&gt;&amp;);
+
+  template&lt;class T&gt; valarray&lt;bool&gt; operator||(const valarray&lt;T&gt;&amp;, const valarray&lt;T&gt;&amp;);
+  template&lt;class T&gt; valarray&lt;bool&gt; operator||(const valarray&lt;T&gt;&amp;, const T&amp;);
+  template&lt;class T&gt; valarray&lt;bool&gt; operator||(const T&amp;, const valarray&lt;T&gt;&amp;);
+
+  template&lt;class T&gt;
+    valarray&lt;bool&gt; operator==(const valarray&lt;T&gt;&amp;, const valarray&lt;T&gt;&amp;);
+  template&lt;class T&gt; valarray&lt;bool&gt; operator==(const valarray&lt;T&gt;&amp;, const T&amp;);
+  template&lt;class T&gt; valarray&lt;bool&gt; operator==(const T&amp;, const valarray&lt;T&gt;&amp;);
+  template&lt;class T&gt;
+    valarray&lt;bool&gt; operator!=(const valarray&lt;T&gt;&amp;, const valarray&lt;T&gt;&amp;);
+  template&lt;class T&gt; valarray&lt;bool&gt; operator!=(const valarray&lt;T&gt;&amp;, const T&amp;);
+  template&lt;class T&gt; valarray&lt;bool&gt; operator!=(const T&amp;, const valarray&lt;T&gt;&amp;);
+
+  template&lt;class T&gt;
+    valarray&lt;bool&gt; operator&lt; (const valarray&lt;T&gt;&amp;, const valarray&lt;T&gt;&amp;);
+  template&lt;class T&gt; valarray&lt;bool&gt; operator&lt; (const valarray&lt;T&gt;&amp;, const T&amp;);
+  template&lt;class T&gt; valarray&lt;bool&gt; operator&lt; (const T&amp;, const valarray&lt;T&gt;&amp;);
+  template&lt;class T&gt;
+    valarray&lt;bool&gt; operator&gt; (const valarray&lt;T&gt;&amp;, const valarray&lt;T&gt;&amp;);
+  template&lt;class T&gt; valarray&lt;bool&gt; operator&gt; (const valarray&lt;T&gt;&amp;, const T&amp;);
+  template&lt;class T&gt; valarray&lt;bool&gt; operator&gt; (const T&amp;, const valarray&lt;T&gt;&amp;);
+  template&lt;class T&gt;
+    valarray&lt;bool&gt; operator&lt;=(const valarray&lt;T&gt;&amp;, const valarray&lt;T&gt;&amp;);
+  template&lt;class T&gt; valarray&lt;bool&gt; operator&lt;=(const valarray&lt;T&gt;&amp;, const T&amp;);
+  template&lt;class T&gt; valarray&lt;bool&gt; operator&lt;=(const T&amp;, const valarray&lt;T&gt;&amp;);
+  template&lt;class T&gt;
+    valarray&lt;bool&gt; operator&gt;=(const valarray&lt;T&gt;&amp;, const valarray&lt;T&gt;&amp;);
+  template&lt;class T&gt; valarray&lt;bool&gt; operator&gt;=(const valarray&lt;T&gt;&amp;, const T&amp;);
+  template&lt;class T&gt; valarray&lt;bool&gt; operator&gt;=(const T&amp;, const valarray&lt;T&gt;&amp;);
+
+  template&lt;class T&gt; valarray&lt;T&gt; abs  (const valarray&lt;T&gt;&amp;);
+  template&lt;class T&gt; valarray&lt;T&gt; acos (const valarray&lt;T&gt;&amp;);
+  template&lt;class T&gt; valarray&lt;T&gt; asin (const valarray&lt;T&gt;&amp;);
+  template&lt;class T&gt; valarray&lt;T&gt; atan (const valarray&lt;T&gt;&amp;);
+
+  template&lt;class T&gt; valarray&lt;T&gt; atan2(const valarray&lt;T&gt;&amp;, const valarray&lt;T&gt;&amp;);
+  template&lt;class T&gt; valarray&lt;T&gt; atan2(const valarray&lt;T&gt;&amp;, const T&amp;);
+  template&lt;class T&gt; valarray&lt;T&gt; atan2(const T&amp;, const valarray&lt;T&gt;&amp;);
+
+  template&lt;class T&gt; valarray&lt;T&gt; cos  (const valarray&lt;T&gt;&amp;);
+  template&lt;class T&gt; valarray&lt;T&gt; cosh (const valarray&lt;T&gt;&amp;);
+  template&lt;class T&gt; valarray&lt;T&gt; exp  (const valarray&lt;T&gt;&amp;);
+  template&lt;class T&gt; valarray&lt;T&gt; log  (const valarray&lt;T&gt;&amp;);
+  template&lt;class T&gt; valarray&lt;T&gt; log10(const valarray&lt;T&gt;&amp;);
+
+  template&lt;class T&gt; valarray&lt;T&gt; pow(const valarray&lt;T&gt;&amp;, const valarray&lt;T&gt;&amp;);
+  template&lt;class T&gt; valarray&lt;T&gt; pow(const valarray&lt;T&gt;&amp;, const T&amp;);
+  template&lt;class T&gt; valarray&lt;T&gt; pow(const T&amp;, const valarray&lt;T&gt;&amp;);
+
+  template&lt;class T&gt; valarray&lt;T&gt; sin  (const valarray&lt;T&gt;&amp;);
+  template&lt;class T&gt; valarray&lt;T&gt; sinh (const valarray&lt;T&gt;&amp;);
+  template&lt;class T&gt; valarray&lt;T&gt; sqrt (const valarray&lt;T&gt;&amp;);
+  template&lt;class T&gt; valarray&lt;T&gt; tan  (const valarray&lt;T&gt;&amp;);
+  template&lt;class T&gt; valarray&lt;T&gt; tanh (const valarray&lt;T&gt;&amp;);
+
+  template&lt;class T&gt; <em>unspecified1</em> begin(valarray&lt;T&gt;&amp; v);
+  template&lt;class T&gt; <em>unspecified2</em> begin(const valarray&lt;T&gt;&amp; v);
+  template&lt;class T&gt; <em>unspecified1</em> end(valarray&lt;T&gt;&amp; v);
+  template&lt;class T&gt; <em>unspecified2</em> end(const valarray&lt;T&gt;&amp; v);
+}</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The header <code class="header">&lt;valarray&gt;</code> defines five class templates (<code class="sh_cpp">valarray</code>,
+<code class="sh_cpp">slice_array</code>, <code class="sh_cpp">gslice_array</code>, <code class="sh_cpp">mask_array</code>, and <code class="sh_cpp">indirect_array</code>), two
+classes (<code class="sh_cpp">slice</code> and <code class="sh_cpp">gslice</code>), and a series of related function templates for representing and
+manipulating arrays of values.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The <code class="sh_cpp">valarray</code> array classes are defined to be free of certain forms of aliasing, thus allowing
+operations on these classes to be optimized.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>Any function returning a <code class="sh_cpp">valarray&lt;T&gt;</code> is permitted to return an object of another type,
+provided all the const member functions of <code class="sh_cpp">valarray&lt;T&gt;</code> are also applicable to this type. This
+return type shall not add more than two levels of template nesting over the most deeply nested argument type.<sup class="footnote"><a href="#fn283">283</a></sup></p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>Implementations introducing such replacement types shall provide additional functions and operators as
+follows:</p>
+
+<ul>
+<li>for every function taking a <code class="sh_cpp">const valarray&lt;T&gt;&amp;</code>, identical functions taking the replacement
+	types shall be added;</li>
+<li>for every function taking two <code class="sh_cpp">const valarray&lt;T&gt;&amp;</code> arguments, identical functions taking
+	every combination of <code class="sh_cpp">const valarray&lt;T&gt;&amp;</code> and replacement types shall be added.</li>
+</ul>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>In particular, an implementation shall allow a <code class="sh_cpp">valarray&lt;T&gt;</code> to be constructed from such
+replacement types and shall allow assignments and computed assignments of such types to
+<code class="sh_cpp">valarray&lt;T&gt;</code>, <code class="sh_cpp">slice_array&lt;T&gt;</code>, <code class="sh_cpp">gslice_array&lt;T&gt;</code>,
+<code class="sh_cpp">mask_array&lt;T&gt;</code> and <code class="sh_cpp">indirect_array&lt;T&gt;</code> objects.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>These library functions are permitted to throw a <code class="sh_cpp">bad_alloc</code> (<a title="bad.alloc" href="bad.alloc.html">18.6.2.1</a>) exception if
+there are not sufficient resources available to carry out the operation. Note that the exception is not mandated.</p>
+
+
+<div><p class="footnote" id="fn283">283) Clause <a title="support.limits.general" href="support.limits.general.html">18.3.1</a> recommends a minimum number of recursively nested template instantiations.
+This requirement thus indirectly suggests a minimum allowable complexity for <code class="sh_cpp">valarray</code>
+expressions.</p></div>
+</body>
+</html>
+

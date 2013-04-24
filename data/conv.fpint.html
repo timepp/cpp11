@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Floating-integral conversions</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[conv.fpint]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[conv.fpint]"></object>4.9 Floating-integral conversions </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A prvalue of a floating point type can be converted to a prvalue of an integer type. The conversion truncates;
+that is, the fractional part is discarded. The behavior is undefined if the truncated value cannot be represented in the
+destination type. <span class="note">[ <em>Note:</em> If the destination type is <code class="sh_cpp">bool</code>, see <a title="conv.bool" href="conv.bool.html">4.12</a>. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>A prvalue of an integer type or of an unscoped enumeration type can be converted to a prvalue of a floating
+point type. The result is exact if possible. If the value being converted is in the range of values that can be
+represented but the value cannot be represented exactly, it is an implementation-defined choice of either the next lower
+or higher representable value. <span class="note">[ <em>Note:</em> Loss of precision occurs if the integral value cannot be represented exactly as a
+value of the floating type. — <em>end note</em> ]</span> If the value being converted is outside the range of values that can be represented,
+the behavior is undefined. If the source type is <code class="sh_cpp">bool</code>, the value <code class="sh_cpp">false</code> is converted to zero
+and the value <code class="sh_cpp">true</code> is converted to one.</p>
+</body>
+</html>
+

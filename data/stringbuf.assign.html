@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Assign and swap</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[stringbuf.assign]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[stringbuf.assign]"></object>27.8.2.2 Assign and swap </h4>
+
+<h5><code class="sh_cpp">basic_stringbuf&amp; <dfn>operator=</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator="></object>(basic_stringbuf&amp;&amp; rhs);</code></h5>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Effects:</em> After the move assignment <code class="sh_cpp">*this</code> has the observable state it would have had if it had been
+move constructed from <code class="sh_cpp">rhs</code> (see <a title="stringbuf.cons" href="stringbuf.cons.html">27.8.2.1</a>).</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Returns:</em> <code class="sh_cpp">*this</code>.</p>
+
+<h5><code class="sh_cpp">void <dfn>swap</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="swap"></object>(basic_stringbuf&amp; rhs);</code></h5>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Effects:</em> Exchanges the state of <code class="sh_cpp">*this</code> and <code class="sh_cpp">rhs</code>.</p>
+
+<h5><code class="sh_cpp">template &lt;class charT, class traits, class Allocator&gt;
+void <dfn>swap</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="swap"></object>(basic_stringbuf&lt;charT, traits, Allocator&gt;&amp; x,
+          basic_stringbuf&lt;charT, traits, Allocator&gt;&amp; y);</code></h5>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><em>Effects:</em> <code class="sh_cpp">x.swap(y)</code>.</p>
+</body>
+</html>
+

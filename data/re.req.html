@@ -1,0 +1,153 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Requirements</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[re.req]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[re.req]"></object>28.3 Requirements </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>This subclause defines requirements on classes representing regular expression traits. <span class="note">[ <em>Note:</em> The class template
+<code class="sh_cpp">regex_traits</code>, defined in Clause <a title="re.traits" href="re.traits.html">28.7</a>, satisfies these requirements. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The class template <code class="sh_cpp">basic_regex</code>, defined in Clause <a title="re.regex" href="re.regex.html">28.8</a>, needs a set of related types
+and functions to complete the definition of its semantics. These types and functions are provided as a set of member
+typedefs and functions in the template parameter <code class="sh_cpp">traits</code> used by the <code class="sh_cpp">basic_regex</code> class
+template. This subclause defines the semantics guaranteed by these members.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>To specialize class template <code class="sh_cpp">basic_regex</code> for a character container <code class="sh_cpp">CharT</code> and its
+related regular expression traits class <code class="sh_cpp">Traits</code>, use <code class="sh_cpp">basic_regex&lt;CharT,
+Traits&gt;</code>.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>In Table <a href="re.req.html#t137">137</a> <code class="sh_cpp">X</code> denotes a traits class defining types and functions for the character
+container type <code class="sh_cpp">charT</code>; <code class="sh_cpp">u</code> is an object of type <code class="sh_cpp">X</code>; <code class="sh_cpp">v</code> is an object of
+type <code class="sh_cpp">const X</code>; <code class="sh_cpp">p</code> is a value of type <code class="sh_cpp">const charT*</code>; <code class="sh_cpp">I1</code> and
+<code class="sh_cpp">I2</code> are <code class="concept">Input Iterator</code>s; <code class="sh_cpp">F1</code> and <code class="sh_cpp">F2</code> are forward iterators;
+<code class="sh_cpp">c</code> is a value of type <code class="sh_cpp">const charT</code>; <code class="sh_cpp">s</code> is an object of type
+<code class="sh_cpp">X::string_type</code>; <code class="sh_cpp">cs</code> is an object of type <code class="sh_cpp">const X::string_type</code>; <code class="sh_cpp">b</code> is a
+value of type <code class="sh_cpp">bool</code>; <code class="sh_cpp">I</code> is a value of type <code class="sh_cpp">int</code>; <code class="sh_cpp">cl</code> is an object of
+type <code class="sh_cpp">X::char_class_type</code>, and <code class="sh_cpp">loc</code> is an object of type <code class="sh_cpp">X::locale_type</code>.</p>
+
+<table id="t137" class="requirements">
+<caption>Table 137 — Regular expression traits class requirements</caption>
+<thead><tr>
+<th>Expression</th>
+<th>Return type</th>
+<th>Assertion/note<br>pre-/post-condition</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code class="sh_cpp">X::​char_­type</code></td>
+<td><code class="sh_cpp">charT</code></td>
+	<td>The character container type used in the implementation of class template
+		<code class="sh_cpp">basic_­regex</code>.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">X::​string_­type</code></td>
+	<td><code class="sh_cpp">std​::​basic_string​&lt;charT&gt;</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">X::​locale_­type</code></td>
+<td>A copy constructible type</td>
+	<td>A type that represents the locale used by the traits class.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">X::​char_­class_­type</code></td>
+	<td>A bitmask type (<a title="bitmask.types" href="bitmask.types.html">17.5.2.1.3</a>).</td>
+	<td>A bitmask type representing a particular character classification.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">X::​length​(p)</code></td>
+<td><code class="sh_cpp">std​::​size_t</code></td>
+	<td>Yields the smallest <code class="sh_cpp">i</code> such that <code class="sh_cpp">p[i] == 0</code>. Complexity is linear in
+		<code class="sh_cpp">i</code>.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">v.​translate​(c)</code></td>
+<td><code class="sh_cpp">X::​char_­type</code></td>
+	<td>Returns a character such that for any character <code class="sh_cpp">d</code> that is to be considered equivalent to
+		<code class="sh_cpp">c</code> then <code class="sh_cpp">v.​translate​(c) == v.​translate​(d)</code>.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">v.​translate_­nocase(c)</code></td>
+<td><code class="sh_cpp">X::​char_­type</code></td>
+	<td>For all characters <code class="sh_cpp">C</code> that are to be considered equivalent to <code class="sh_cpp">c</code> when comparisons are to
+		be performed without regard to case, then <code class="sh_cpp">v.​translate_­nocase​(c) ==
+		v.​translate_­nocase​(C)</code>.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">v.​transform​(F1, F2)</code></td>
+<td><code class="sh_cpp">X::​string_­type</code></td>
+	<td>Returns a sort key for the character sequence designated by the iterator range <code class="sh_cpp">[F1,F2)</code> such that if
+		the character sequence <code class="sh_cpp">[G1,G2)</code> sorts before the character sequence <code class="sh_cpp">[H1,H2)</code> then
+		<code class="sh_cpp">v.​transform​(G1, G2) &lt; v.​transform​(H1, H2)</code>.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">v.​transform_­primary​(F1, F2)</code></td>
+<td><code class="sh_cpp">X::​string_­type</code></td>
+	<td>Returns a sort key for the character sequence designated by the iterator range <code class="sh_cpp">[F1,F2)</code> such that if
+		the character sequence <code class="sh_cpp">[G1,G2)</code> sorts before the character sequence <code class="sh_cpp">[H1,H2)</code> when
+		character case is not considered then <code class="sh_cpp">v.​transform_­primary​(G1, G2) &lt;
+		v.​transform_­primary​(H1, H2)</code>.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">v.​lookup_­collate­name​(F1, F2)</code></td>
+	<td><code class="sh_cpp">X::​string_­type</code></td>
+	<td>Returns a sequence of characters that represents the collating element consisting of the character sequence
+		designated by the iterator range <code class="sh_cpp">[F1,F2)</code>. Returns an empty string if the character sequence is not
+		a valid collating element.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">v.​lookup_­classname​(F1, F2, b)</code></td>
+	<td><code class="sh_cpp">X::​char_­class_­type</code></td>
+	<td>Converts the character sequence designated by the iterator range <code class="sh_cpp">[F1,F2)</code> into a value of
+		a bitmask type that can subsequently be passed to <code class="sh_cpp">isctype</code>. Values returned from
+		<code class="sh_cpp">lookup_­classname</code> can be bitwise or’ed together; the resulting value represents membership in
+		either of the corresponding character classes. If <code class="sh_cpp">b</code> is true, the returned bitmask is suitable for
+		matching characters without regard to their case. Returns 0 if the character sequence is not the name of a
+		character class recognized by <code class="sh_cpp">X</code>. The value returned shall be independent of the case of the
+		characters in the sequence.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">v.​isctype​(c, cl)</code></td>
+<td><code class="sh_cpp">bool</code></td>
+	<td>Returns <code class="sh_cpp">true</code> if character <code class="sh_cpp">c</code> is a member of one of the character classes designated by
+		<code class="sh_cpp">cl</code>, <code class="sh_cpp">false</code> otherwise.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">v.​value​(c, I)</code></td>
+<td><code class="sh_cpp">int</code></td>
+	<td>Returns the value represented by the digit <code class="sh_cpp">c</code> in base <code class="sh_cpp">I</code> if the character <code class="sh_cpp">c</code>
+		is a valid digit in base <code class="sh_cpp">I</code>; otherwise returns <code class="sh_cpp">-1</code>. <span class="note">[ <em>Note:</em> The value of <code class="sh_cpp">I</code>
+		will only be 8, 10, or 16. — <em>end note</em> ]</span>
+</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">u.​imbue​(loc)</code></td>
+<td><code class="sh_cpp">X::​locale_­type</code></td>
+	<td>Imbues <code class="sh_cpp">u</code> with the locale <code class="sh_cpp">loc</code> and returns the previous locale used by <code class="sh_cpp">u</code> if
+		any.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">v.​getloc()</code></td>
+<td><code class="sh_cpp">X::​locale_­type</code></td>
+	<td>Returns the current locale used by <code class="sh_cpp">v</code>, if any.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><span class="note">[ <em>Note:</em> Class template <code class="sh_cpp">regex_traits</code> satisfies the requirements for a regular expression traits class
+when it is specialized for <code class="sh_cpp">char</code> or <code class="sh_cpp">wchar_t</code>. This class template is described in the header
+<code class="header">&lt;regex&gt;</code>, and is described in Clause <a title="re.traits" href="re.traits.html">28.7</a>. — <em>end note</em> ]</span></p>
+</body>
+</html>
+

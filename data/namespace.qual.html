@@ -1,0 +1,234 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Namespace members</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[namespace.qual]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[namespace.qual]"></object>3.4.3.2 Namespace members </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>If the <i class="nonterminal">nested-name-specifier</i> of a <i class="nonterminal">qualified-id</i> nominates a namespace, the name specified
+after the <i class="nonterminal">nested-name-specifier</i> is looked up in the scope of the namespace. If a <i class="nonterminal">qualified-id</i> starts
+with <code class="sh_cpp">::</code>, the name after the <code class="sh_cpp">::</code> is looked up in the global namespace. In either case, the names
+in a <i class="nonterminal">template-argument</i> of a <i class="nonterminal">template-id</i> are looked up in the context in which the entire
+<i class="nonterminal">postfix-expression</i> occurs.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>For a namespace <code class="sh_cpp">X</code> and name <code class="sh_cpp">m</code>, the namespace-qualified lookup set
+<var>S</var>(<var>X</var>, <var>m</var>) is defined as follows: Let <var>S′</var>(<var>X</var>, <var>m</var>) be the set
+of all declarations of <code class="sh_cpp">m</code> in <code class="sh_cpp">X</code> and the inline namespace set of <code class="sh_cpp">X</code>
+(<a title="namespace.def" href="namespace.def.html">7.3.1</a>). If <var>S′</var>(<var>X</var>, <var>m</var>) is not empty, <var>S</var>(<var>X</var>, <var>m</var>)
+is <var>S′</var>(<var>X</var>, <var>m</var>); otherwise, <var>S</var>(<var>X</var>, <var>m</var>) is the union of
+<var>S</var>(<var>N</var><sub><var>i</var></sub>, <var>m</var>) for all namespaces <var>N</var><sub><var>i</var></sub>
+nominated by <i class="nonterminal">using-directive</i>s in <code class="sh_cpp">X</code> and its inline namespace set.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>Given <code class="sh_cpp">X::m</code> (where <code class="sh_cpp">X</code> is a user-declared namespace), or given <code class="sh_cpp">::m</code> (where
+<code class="sh_cpp">X</code> is the global namespace), if <var>S</var>(<var>X</var>, <var>m</var>) is the empty set, the program is
+ill-formed. Otherwise, if <var>S</var>(<var>X</var>, <var>m</var>) has exactly one member, or if the context of the
+reference is a <i class="nonterminal">using-declaration</i> (<a title="namespace.udecl" href="namespace.udecl.html">7.3.3</a>), <var>S</var>(<var>X</var>, <var>m</var>) is the required
+set of declarations of <code class="sh_cpp">m</code>. Otherwise if the use of <code class="sh_cpp">m</code> is not one that allows a unique
+declaration to be chosen from <var>S</var>(<var>X</var>, <var>m</var>), the program is ill-formed.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">int x;
+namespace Y {
+  void f(float);
+  void h(int);
+}
+
+namespace Z {
+  void h(double);
+}
+
+namespace A {
+  using namespace Y;
+  void f(int);
+  void g(int);
+  int i;
+}
+
+namespace B {
+  using namespace Z;
+  void f(char);
+  int i;
+}
+
+namespace AB {
+  using namespace A;
+  using namespace B;
+  void g();
+}
+
+void h()
+{
+  AB::g();              // g is declared directly in AB,
+                        // therefore S is { AB::g() } and AB::g() is chosen
+  AB::f(1);             // f is not declared directly in AB so the rules are
+                        // applied recursively to A and B;
+                        // namespace Y is not searched and Y::f(float)
+                        // is not considered;
+                        // S is { A::f(int), B::f(char) } and overload
+                        // resolution chooses A::f(int)
+  AB::f('c');           // as above but resolution chooses B::f(char)
+
+  AB::x++;              // x is not declared directly in AB, and
+                        // is not declared in A or B, so the rules are
+                        // applied recursively to Y and Z,
+                        // S is { } so the program is ill-formed
+  AB::i++;              // i is not declared directly in AB so the rules are
+                        // applied recursively to A and B,
+                        // S is { A::i, B::i } so the use is ambiguous
+                        // and the program is ill-formed
+  AB::h(16.8);          // h is not declared directly in AB and
+                        // not declared directly in A or B so the rules are
+                        // applied recursively to Y and Z,
+                        // S is { Y::h(int), Z::h(double) } and overload
+                        // resolution chooses Z::h(double)
+}</code></pre>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>The same declaration found more than once is not an ambiguity (because it is still a unique declaration). For
+example:</p>
+
+<pre><code class="sh_cpp">namespace A {
+  int a;
+}
+
+namespace B {
+  using namespace A;
+}
+
+namespace C {
+  using namespace A;
+}
+
+namespace BC {
+  using namespace B;
+  using namespace C;
+}
+
+void f()
+{
+  BC::a++;              // OK: S is { A::a, A::a }
+}
+
+namespace D {
+  using A::a;
+}
+
+namespace BD {
+  using namespace B;
+  using namespace D;
+}
+
+void g()
+{
+  BD::a++;              // OK: S is { A::a, A::a }
+}</code></pre>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>Because each referenced namespace is searched at most once, the following is well-defined:</p>
+
+<pre><code class="sh_cpp">namespace B {
+  int b;
+}
+
+namespace A {
+  using namespace B;
+  int a;
+}
+
+namespace B {
+  using namespace A;
+}
+
+void f()
+{
+  A::a++;               // OK: a declared directly in A, S is { A::a }
+  B::a++;               // OK: both A and B searched (once), S is { A::a }
+  A::b++;               // OK: both A and B searched (once), S is { B::b }
+  B::b++;               // OK: b declared directly in B, S is { B::b }
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>During the lookup of a qualified namespace member name, if the lookup finds more than one declaration of the
+member, and if one declaration introduces a class name or enumeration name and the other declarations either introduce
+the same variable, the same enumerator or a set of functions, the non-type name hides the class or enumeration name if
+and only if the declarations are from the same namespace; otherwise (the declarations are from different namespaces),
+the program is ill-formed.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">namespace A {
+  struct x { };
+  int x;
+  int y;
+}
+
+namespace B {
+  struct y { };
+}
+
+namespace C {
+  using namespace A;
+  using namespace B;
+  int i = C::x;         // OK, A::x (of type int)
+  int j = C::y;         // ambiguous, A::y or B::y
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p7" href="#p7">7</a>In a declaration for a namespace member in which the <i class="nonterminal">declarator-id</i> is a <i class="nonterminal">qualified-id</i>, given
+that the <i class="nonterminal">qualified-id</i> for the namespace member has the form</p>
+
+<dl><dd>
+<i class="nonterminal">nested-name-specifier</i> <i class="nonterminal">unqualified-id</i>
+</dd></dl>
+
+<p>the <i class="nonterminal">unqualified-id</i> shall name a member of the namespace designated by the <i class="nonterminal">nested-name-specifier</i>
+or of an element of the inline namespace set (<a title="namespace.def" href="namespace.def.html">7.3.1</a>) of that namespace.</p> 
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">namespace A {
+  namespace B {
+    void f1(int);
+  }
+  using namespace B;
+}
+void A::f1(int) { }     // ill-formed, f1 is not a member of A</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p>However, in such namespace member declarations, the <i class="nonterminal">nested-name-specifier</i> may rely on
+<i class="nonterminal">using-directive</i>s to implicitly provide the initial part of the <i class="nonterminal">nested-name-specifier</i>.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">namespace A {
+  namespace B {
+    void f1(int);
+  }
+}
+
+namespace C {
+  namespace D {
+    void f1(int);
+  }
+}
+
+using namespace A;
+using namespace C::D;
+void B::f1(int) { }     // OK, defines A::B::f1(int)</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+</body>
+</html>
+

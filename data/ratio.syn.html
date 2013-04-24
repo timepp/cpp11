@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Header &lt;ratio&gt; synopsis</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[ratio.syn]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[ratio.syn]"></object>20.10.2 Header <dfn><code class="header">&lt;ratio&gt;</code></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="&lt;ratio&gt;"></object> synopsis </h3>
+
+<pre><code class="sh_cpp">namespace std {
+  // <a title="ratio.ratio" href="ratio.ratio.html">20.10.3</a>, class template ratio
+  template &lt;intmax_t N, intmax_t D = 1&gt; class ratio;
+
+  // <a title="ratio.arithmetic" href="ratio.arithmetic.html">20.10.4</a>, ratio arithmetic
+  template &lt;class R1, class R2&gt; using ratio_add = <em>see below</em>;
+  template &lt;class R1, class R2&gt; using ratio_subtract = <em>see below</em>;
+  template &lt;class R1, class R2&gt; using ratio_multiply = <em>see below</em>;
+  template &lt;class R1, class R2&gt; using ratio_divide = <em>see below</em>;
+
+  // <a title="ratio.comparison" href="ratio.comparison.html">20.10.5</a>, ratio comparison
+  template &lt;class R1, class R2&gt; struct ratio_equal;
+  template &lt;class R1, class R2&gt; struct ratio_not_equal;
+  template &lt;class R1, class R2&gt; struct ratio_less;
+  template &lt;class R1, class R2&gt; struct ratio_less_equal;
+  template &lt;class R1, class R2&gt; struct ratio_greater;
+  template &lt;class R1, class R2&gt; struct ratio_greater_equal;
+
+  // <a title="ratio.si" href="ratio.si.html">20.10.6</a>, convenience SI typedefs
+  typedef ratio&lt;1, 1000000000000000000000000&gt;     yocto;    // see below
+  typedef ratio&lt;1,       1000000000000000000000&gt;  zepto;    // see below
+  typedef ratio&lt;1,           1000000000000000000&gt; atto;
+  typedef ratio&lt;1,              1000000000000000&gt; femto;
+  typedef ratio&lt;1,                 1000000000000&gt; pico;
+  typedef ratio&lt;1,                    1000000000&gt; nano;
+  typedef ratio&lt;1,                       1000000&gt; micro;
+  typedef ratio&lt;1,                          1000&gt; milli;
+  typedef ratio&lt;1,                           100&gt; centi;
+  typedef ratio&lt;1,                            10&gt; deci;
+  typedef ratio&lt;                           10, 1&gt; deca;
+  typedef ratio&lt;                          100, 1&gt; hecto;
+  typedef ratio&lt;                         1000, 1&gt; kilo;
+  typedef ratio&lt;                      1000000, 1&gt; mega;
+  typedef ratio&lt;                   1000000000, 1&gt; giga;
+  typedef ratio&lt;                1000000000000, 1&gt; tera;
+  typedef ratio&lt;             1000000000000000, 1&gt; peta;
+  typedef ratio&lt;         1000000000000000000, 1&gt;  exa;
+  typedef ratio&lt;     1000000000000000000000, 1&gt;   zetta;    // see below
+  typedef ratio&lt;1000000000000000000000000, 1&gt;     yotta;    // see below
+}</code></pre>
+</body>
+</html>
+

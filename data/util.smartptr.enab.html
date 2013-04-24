@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class template enable_shared_from_this</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[util.smartptr.enab]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[util.smartptr.enab]"></object>20.7.2.4 Class template <code class="sh_cpp"><dfn>enable_shared_from_this</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="enable_shared_from_this"></object></code> </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A class <code class="sh_cpp">T</code> can inherit from <code class="sh_cpp">enable_shared_from_this&lt;T&gt;</code> to inherit the
+<code class="sh_cpp">shared_from_this</code> member functions that obtain a <code class="sh_cpp">shared_ptr</code> instance pointing to
+<code class="sh_cpp">*this</code>.</p>
+
+<div class="example">
+<p><a class="anchor" id="p2" href="#p2">2</a>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct X: public enable_shared_from_this&lt;X&gt; {
+};
+
+int main() {
+  shared_ptr&lt;X&gt; p(new X);
+  shared_ptr&lt;X&gt; q = p-&gt;shared_from_this();
+  assert(p == q);
+  assert(!(p &lt; q ) &amp;&amp; !(q &lt; p)); // p and q share ownership
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<pre><code class="sh_cpp">namespace std {
+  template&lt;class T&gt; class enable_shared_from_this {
+  protected:
+     constexpr enable_shared_from_this() noexcept;
+     enable_shared_from_this(enable_shared_from_this const&amp;) noexcept;
+     enable_shared_from_this&amp; operator=(enable_shared_from_this const&amp;) noexcept;
+     ~enable_shared_from_this();
+  public:
+     shared_ptr&lt;T&gt; shared_from_this();
+     shared_ptr&lt;T const&gt; shared_from_this() const;
+  };
+} // namespace std</code></pre>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>The template parameter <code class="sh_cpp">T</code> of <code class="sh_cpp">enable_shared_from_this</code> may be an incomplete type.</p>
+
+<h5><code class="sh_cpp">constexpr <dfn>enable_shared_from_this</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="enable_shared_from_this"></object>() noexcept;
+<dfn>enable_shared_from_this</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="enable_shared_from_this"></object>(const enable_shared_from_this&lt;T&gt;&amp;) noexcept;</code></h5>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><em>Effects:</em> Constructs an <code class="sh_cpp">enable_shared_from_this&lt;T&gt;</code> object.</p>
+
+<h5><code class="sh_cpp">enable_shared_from_this&lt;T&gt;&amp; <dfn>operator=</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator="></object>(const enable_shared_from_this&lt;T&gt;&amp;) noexcept;</code></h5>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><em>Returns:</em> <code class="sh_cpp">*this</code>.</p>
+
+<h6><code class="sh_cpp"><dfn>~enable_shared_from_this</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="~enable_shared_from_this"></object>();</code></h6>
+
+<p><a class="anchor" id="p6" href="#p6">6</a><em>Effects:</em> Destroys <code class="sh_cpp">*this</code>.</p>
+
+<h5><code class="sh_cpp">shared_ptr&lt;T&gt;       <dfn>shared_from_this</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="shared_from_this"></object>();
+shared_ptr&lt;T const&gt; <dfn>shared_from_this</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="shared_from_this"></object>() const;</code></h5>
+
+<p><a class="anchor" id="p7" href="#p7">7</a><em>Requires:</em> <code class="sh_cpp">enable_shared_from_this&lt;T&gt;</code> shall be an accessible base class of
+<code class="sh_cpp">T</code>. <code class="sh_cpp">*this</code> shall be a subobject of an object <code class="sh_cpp">t</code> of type <code class="sh_cpp">T</code>. There shall
+be at least one <code class="sh_cpp">shared_ptr</code> instance <code class="sh_cpp">p</code> that owns <code class="sh_cpp">&amp;t</code>.</p>
+
+<p><a class="anchor" id="p8" href="#p8">8</a><em>Returns:</em> A <code class="sh_cpp">shared_ptr&lt;T&gt;</code> object <code class="sh_cpp">r</code> that shares ownership with
+<code class="sh_cpp">p</code>.</p>
+
+<p><a class="anchor" id="p9" href="#p9">9</a><em>Postconditions:</em> <code class="sh_cpp">r.get() == this</code>.</p>
+
+<div class="note">
+<p><a class="anchor" id="p10" href="#p10">10</a>[ <em>Note:</em> A possible implementation is shown below:</p>
+
+<pre><code class="sh_cpp">template&lt;class T&gt; class enable_shared_from_this {
+private:
+  weak_ptr&lt;T&gt; __weak_this;
+protected:
+  constexpr enable_shared_from_this() : __weak_this() { }
+  enable_shared_from_this(enable_shared_from_this const &amp;) { }
+  enable_shared_from_this&amp; operator=(enable_shared_from_this const &amp;) { return *this; }
+  ~enable_shared_from_this() { }
+public:
+  shared_ptr&lt;T&gt; shared_from_this() { return shared_ptr&lt;T&gt;(__weak_this); }
+  shared_ptr&lt;T const&gt; shared_from_this() const { return shared_ptr&lt;T const&gt;(__weak_this); }
+};</code></pre>
+
+<p><a class="anchor" id="p11" href="#p11">11</a>The <code class="sh_cpp">shared_ptr</code> constructors that create unique pointers can detect the presence of an
+<code class="sh_cpp">enable_shared_from_this</code> base and assign the newly created <code class="sh_cpp">shared_ptr</code> to its
+<code class="sh_cpp">__weak_this</code> member. — <em>end note</em> ]</p>
+</div>
+</body>
+</html>
+

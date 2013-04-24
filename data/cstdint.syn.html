@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Header &lt;cstdint&gt; synopsis</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[cstdint]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[cstdint]"></object>18.4 Integer types </h2>
+
+<h3>
+<dfn class="label">[cstdint.syn]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[cstdint.syn]"></object>18.4.1 Header <dfn><code class="header">&lt;cstdint&gt;</code></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="&lt;cstdint&gt;"></object> synopsis </h3>
+
+<pre><code class="sh_cpp">namespace std {
+  typedef <var>signed integer type</var> <dfn>int8_t</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="int8_t"></object>;   // optional
+  typedef <var>signed integer type</var> <dfn>int16_t</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="int16_t"></object>;  // optional
+  typedef <var>signed integer type</var> <dfn>int32_t</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="int32_t"></object>;  // optional
+  typedef <var>signed integer type</var> <dfn>int64_t</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="int64_t"></object>;  // optional
+  
+  typedef <var>signed integer type</var> <dfn>int_fast8_t</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="int_fast8_t"></object>;
+  typedef <var>signed integer type</var> <dfn>int_fast16_t</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="int_fast16_t"></object>;
+  typedef <var>signed integer type</var> <dfn>int_fast32_t</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="int_fast32_t"></object>;
+  typedef <var>signed integer type</var> <dfn>int_fast64_t</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="int_fast64_t"></object>;
+  
+  typedef <var>signed integer type</var> <dfn>int_least8_t</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="int_least8_t"></object>;
+  typedef <var>signed integer type</var> <dfn>int_least16_t</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="int_least16_t"></object>;
+  typedef <var>signed integer type</var> <dfn>int_least32_t</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="int_least32_t"></object>;
+  typedef <var>signed integer type</var> <dfn>int_least64_t</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="int_least64_t"></object>;
+  
+  typedef <var>signed integer type</var> <dfn>intmax_t</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="intmax_t"></object>;
+  typedef <var>signed integer type</var> <dfn>intptr_t</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="intptr_t"></object>;         // optional
+  
+  typedef <var>unsigned integer type</var> <dfn>uint8_t</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="uint8_t"></object>;        // optional
+  typedef <var>unsigned integer type</var> <dfn>uint16_t</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="uint16_t"></object>;       // optional
+  typedef <var>unsigned integer type</var> <dfn>uint32_t</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="uint32_t"></object>;       // optional
+  typedef <var>unsigned integer type</var> <dfn>uint64_t</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="uint64_t"></object>;       // optional
+  
+  typedef <var>unsigned integer type</var> <dfn>uint_fast8_t</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="uint_fast8_t"></object>;
+  
+  typedef <var>unsigned integer type</var> <dfn>uint_fast16_t</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="uint_fast16_t"></object>;
+  typedef <var>unsigned integer type</var> <dfn>uint_fast32_t</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="uint_fast32_t"></object>;
+  typedef <var>unsigned integer type</var> <dfn>uint_fast64_t</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="uint_fast64_t"></object>;
+  
+  typedef <var>unsigned integer type</var> <dfn>uint_least8_t</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="uint_least8_t"></object>;
+  typedef <var>unsigned integer type</var> <dfn>uint_least16_t</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="uint_least16_t"></object>;
+  typedef <var>unsigned integer type</var> <dfn>uint_least32_t</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="uint_least32_t"></object>;
+  typedef <var>unsigned integer type</var> <dfn>uint_least64_t</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="uint_least64_t"></object>;
+  
+  typedef <var>unsigned integer type</var> <dfn>uintmax_t</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="uintmax_t"></object>;
+  typedef <var>unsigned integer type</var> <dfn>uintptr_t</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="uintptr_t"></object>;      // optional
+} // namespace std</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The header also defines numerous macros of the form:</p>
+
+<pre><code class="sh_cpp">INT_[FAST LEAST]{8 16 32 64}_MIN
+[U]INT_[FAST LEAST]{8 16 32 64}_MAX
+INT{MAX PTR}_MIN
+[U]INT{MAX PTR}_MAX
+{PTRDIFF SIG_ATOMIC WCHAR WINT}{_MAX _MIN}
+SIZE_MAX</code></pre>
+
+<p>plus function macros of the form:</p>
+
+<pre><code class="sh_cpp">[U]INT{8 16 32 64 MAX}_C</code></pre>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The header defines all functions, types, and macros the same as 7.18 in the C standard. <span class="note">[ <em>Note:</em> The macros
+defined by <code class="header">&lt;cstdint&gt;</code> are provided unconditionally. In particular, the symbols
+<code class="sh_cpp">__STDC_LIMIT_MACROS</code> and <code class="sh_cpp">__STDC_CONSTANT_MACROS</code> (mentioned in footnotes 219, 220, and 222 in
+the C standard) play no role in C++. — <em>end note</em> ]</span></p>
+</body>
+</html>
+

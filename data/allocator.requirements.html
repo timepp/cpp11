@@ -1,0 +1,463 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Allocator requirements</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[allocator.requirements]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[allocator.requirements]"></object>17.6.3.5 Allocator requirements </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The library describes a standard set of requirements for <dfn>allocators</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="allocators"></object>, which are class-type objects
+that encapsulate the information about an allocation model. This information includes the knowledge of pointer types,
+the type of their difference, the type of the size of objects in this allocation model, as well as the memory allocation
+and deallocation primitives for it. All of the string types (Clause <a title="strings" href="strings.general.html">21</a>), containers (Clause <a title="containers" href="containers.general.html">23</a>)
+(except array), string buffers and string streams (Clause <a title="input.output" href="input.output.general.html">27</a>), and <code class="sh_cpp">match_results</code> (Clause
+<a title="re" href="re.general.html">28</a>) are parameterized in terms of allocators.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The template struct <code class="sh_cpp">allocator_traits</code> (<a title="allocator.traits" href="allocator.traits.html">20.6.8</a>) supplies a uniform interface to all
+allocator types. Table <a href="allocator.requirements.html#t27">27</a> describes the types manipulated through allocators. Table <a href="allocator.requirements.html#t28">28</a> describes the
+requirements on allocator types and thus on types used to instantiate <code class="sh_cpp">allocator_traits</code>. A requirement is
+optional if the last column of Table <a href="allocator.requirements.html#t28">28</a> specifies a default for a given expression. Within the standard library
+<code class="sh_cpp">allocator_traits</code> template, an optional requirement that is not supplied by an allocator is replaced by the
+specified default expression. A user specialization of <code class="sh_cpp">allocator_traits</code> may provide different defaults and
+may provide defaults for different requirements than the primary template. Within Tables <a href="allocator.requirements.html#t27">27</a> and <a href="allocator.requirements.html#t28">28</a>, the use of <code class="sh_cpp">move</code> and <code class="sh_cpp">forward</code>
+always refers to <code class="sh_cpp">std::move</code> and <code class="sh_cpp">std::forward</code>, respectively.</p>
+
+<table id="t27" class="requirements">
+<caption>Table 27 — Descriptive variable definitions</caption>
+<thead><tr>
+<th>Variable</th>
+<th>Definition</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+<code class="sh_cpp">T</code>, <code class="sh_cpp">U</code>, <code class="sh_cpp">C</code>
+</td>
+	<td>any non-const, non-reference object type</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">V</code></td>
+	<td>a type convertible to <code class="sh_cpp">T</code>
+</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">X</code></td>
+	<td>an Allocator class for type <code class="sh_cpp">T</code>
+</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">Y</code></td>
+	<td>the corresponding Allocator class for type <code class="sh_cpp">U</code>
+</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">XX</code></td>
+	<td>the type <code class="sh_cpp">allocator_traits&lt;X&gt;</code>
+</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">YY</code></td>
+	<td>the type <code class="sh_cpp">allocator_traits&lt;Y&gt;</code>
+</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">t</code></td>
+	<td>a value of type <code class="sh_cpp">const T&amp;</code>
+</td>
+</tr>
+<tr>
+<td>
+<code class="sh_cpp">a</code>, <code class="sh_cpp">a1</code>, <code class="sh_cpp">a2</code>
+</td>
+	<td>values of type <code class="sh_cpp">X&amp;</code>
+</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">a3</code></td>
+	<td>an rvalue of type <code class="sh_cpp">X</code>
+</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">b</code></td>
+	<td>a value of type <code class="sh_cpp">Y</code>
+</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">c</code></td>
+	<td>a dereferenceable pointer of type <code class="sh_cpp">C*</code>
+</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">p</code></td>
+	<td>a value of type <code class="sh_cpp">XX::pointer</code>, obtained by calling <code class="sh_cpp">a1.allocate</code>, where <code class="sh_cpp">a1 ==
+		a</code>
+</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">q</code></td>
+	<td>a value of type <code class="sh_cpp">XX::const_pointer</code> obtained by conversion from a value <code class="sh_cpp">p</code>.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">w</code></td>
+	<td>a value of type <code class="sh_cpp">XX::void_pointer</code> obtained by conversion from a value <code class="sh_cpp">p</code>
+</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">z</code></td>
+	<td>a value of type <code class="sh_cpp">XX::const_void_pointer</code> obtained by conversion from a value <code class="sh_cpp">q</code> or a
+		value <code class="sh_cpp">w</code>
+</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">r</code></td>
+	<td>a value of type <code class="sh_cpp">T&amp;</code> obtained by the expression <code class="sh_cpp">*p</code>.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">s</code></td>
+	<td>a value of type <code class="sh_cpp">const T&amp;</code> obtained by the expression <code class="sh_cpp">*q</code> or by conversion from a
+		value <code class="sh_cpp">r</code>.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">u</code></td>
+	<td>a value of type <code class="sh_cpp">YY::const_pointer</code> obtained by calling <code class="sh_cpp">YY::allocate</code>, or else
+		<code class="sh_cpp">nullptr</code>.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">v</code></td>
+	<td>a value of type <code class="sh_cpp">V</code>
+</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">n</code></td>
+	<td>a value of type <code class="sh_cpp">XX::size_type</code>.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">Args</code></td>
+	<td>a template parameter pack</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">args</code></td>
+	<td>a function parameter pack with the pattern <code class="sh_cpp">Args&amp;&amp;</code>
+</td>
+</tr>
+</tbody>
+</table>
+
+<table id="t28" class="requirements">
+<caption>Table 44 — Allocator requirements</caption>
+<thead><tr>
+<th>Expression</th>
+<th>Return type</th>
+<th>Assertion/note<br>pre-/post-condition</th>
+<th>Default</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code class="sh_cpp">X::​pointer</code></td>
+	<td></td>
+	<td></td>
+	<td><code class="sh_cpp">T*</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">X::​const_­pointer</code></td>
+	<td></td>
+	<td>
+<code class="sh_cpp">X::​pointer</code> is convertible to <code class="sh_cpp">X::​const_­pointer</code>
+</td>
+	<td><code class="sh_cpp">pointer_­traits​&lt;X​::​pointer&gt;​::​rebind​&lt;const T&gt;</code></td>
+</tr>
+<tr>
+<td>
+<code class="sh_cpp">X::​void_­pointer</code><br>
+		<code class="sh_cpp">Y::​void_­pointer</code>
+</td>
+	<td></td>
+	<td>
+<code class="sh_cpp">X::​pointer</code> is convertible to <code class="sh_cpp">X::​void_­pointer</code>.
+		<code class="sh_cpp">X::​void_­pointer</code> and <code class="sh_cpp">Y::​void_­pointer</code> are the same type.</td>
+	<td><code class="sh_cpp">pointer_­traits​&lt;X​::​pointer&gt;​::​rebind​&lt;void&gt;</code></td>
+</tr>
+<tr>
+<td>
+<code class="sh_cpp">X::​const_­void_­pointer</code><br>
+		<code class="sh_cpp">Y::​const_­void_­pointer</code>
+</td>
+	<td></td>
+	<td>
+<code class="sh_cpp">X::​pointer</code>, <code class="sh_cpp">X::​const_­pointer</code>, and
+		<code class="sh_cpp">X::​void_­pointer</code> are convertible to <code class="sh_cpp">X::​const_­void_­pointer</code>.
+		<code class="sh_cpp">X::​const_­void_­pointer</code> and <code class="sh_cpp">Y::​const_­void_­pointer</code> are the
+		same type.</td>
+	<td><code class="sh_cpp">​pointer_­traits​&lt;X​::​pointer&gt;​::​rebind​&lt;const
+		void&gt;</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">X::​value_­type</code></td>
+	<td>Identical to <code class="sh_cpp">T</code>
+</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">X::​size_­type</code></td>
+	<td>unsigned integer type</td>
+	<td>a type that can represent the size of the largest object in the allocation model.</td>
+	<td><code class="sh_cpp">​make_­unsigned​&lt;X::​difference_­type&gt;​::​type</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">X::​difference_­type</code></td>
+	<td>signed integer type</td>
+	<td>a type that can represent the difference between any two pointers in the allocation model.</td>
+	<td><code class="sh_cpp">​pointer_­traits​&lt;X::​pointer&gt;​::​difference_­type</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">typename X​::​template rebind​&lt;U&gt;​::​other</code></td>
+	<td><code class="sh_cpp">Y</code></td>
+	<td>For all <code class="sh_cpp">U</code> (including <code class="sh_cpp">T</code>), <code class="sh_cpp">Y::​template
+		rebind​&lt;T&gt;​::​other</code> is <code class="sh_cpp">X</code>.</td>
+	<td>See <a href="#noteA">Note A</a>, below.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">*p</code></td>
+	<td><code class="sh_cpp">T&amp;</code></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">*q</code></td>
+	<td><code class="sh_cpp">const T&amp;</code></td>
+	<td>
+<code class="sh_cpp">*q</code> refers to the same object as <code class="sh_cpp">*p</code>
+</td>
+	<td></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">p-&gt;m</code></td>
+	<td>type of <code class="sh_cpp">T::m</code>
+</td>
+	<td>pre: <code class="sh_cpp">(*p).m</code> is well-defined.<br>
+		equivalent to <code class="sh_cpp">(*p).m</code>
+</td>
+	<td></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">q-&gt;m</code></td>
+	<td>type of <code class="sh_cpp">T::m</code>
+</td>
+	<td>pre: <code class="sh_cpp">(*q).m</code> is well-defined.<br>
+		equivalent to <code class="sh_cpp">(*q).m</code>
+</td>
+	<td></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">​static_­cast​&lt;X​::​pointer&gt;​(w)</code></td>
+	<td><code class="sh_cpp">X::​pointer</code></td>
+	<td><code class="sh_cpp">​static_­cast​&lt;X::​pointer&gt;​(w) == p</code></td>
+	<td></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">​static_­cast​&lt;X​::​const_­pointer&gt;​(z)</code></td>
+	<td><code class="sh_cpp">X::​const_­pointer</code></td>
+	<td><code class="sh_cpp">​static_­cast​&lt;X​::​const_­pointer&gt;​(z) == q</code></td>
+	<td></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">a.​allocate​(n)</code></td>
+	<td><code class="sh_cpp">X::​pointer</code></td>
+	<td>Memory is allocated for <code class="sh_cpp">n</code> objects of type <code class="sh_cpp">T</code> but objects are not constructed.
+		<code class="sh_cpp">allocate</code> may raise an appropriate exception.<sup class="footnote"><a href="#fn183">183</a></sup> <span class="note">[ <em>Note:</em> If <code class="sh_cpp">n == 0</code>, the
+		return value is unspecified. — <em>end note</em> ]</span>
+</td>
+	<td></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">a.​allocate​(n, u)</code></td>
+	<td><code class="sh_cpp">X::​pointer</code></td>
+	<td>Same as <code class="sh_cpp">a.allocate(n)</code>. The use of <code class="sh_cpp">u</code> is unspecified, but it is intended as an aid to
+		locality.</td>
+	<td><code class="sh_cpp">a.​allocate​(n)</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">a.​deallocate​(p, n)</code></td>
+	<td>(not used)</td>
+	<td>All <code class="sh_cpp">n</code> <code class="sh_cpp">T</code> objects in the area pointed to by <code class="sh_cpp">p</code> shall be destroyed prior to
+		this call. <code class="sh_cpp">n</code> shall match the value passed to <code class="sh_cpp">allocate</code> to obtain this memory. Does not
+		throw exceptions. <span class="note">[ <em>Note:</em> <code class="sh_cpp">p</code> shall not be singular. — <em>end note</em> ]</span>
+</td>
+	<td></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">a.​max_­size()</code></td>
+	<td><code class="sh_cpp">X::​size_­type</code></td>
+	<td>the largest value that can meaningfully be passed to <code class="sh_cpp">X::allocate()</code>
+</td>
+	<td><code class="sh_cpp">​numeric_­limits​&lt;size_­type&gt;​::​max()</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">a1 == a2</code></td>
+	<td><code class="sh_cpp">bool</code></td>
+	<td>returns <code class="sh_cpp">true</code> only if storage allocated from each can be deallocated via the other.
+		<code class="sh_cpp">operator==</code> shall be reflexive, symmetric, and transitive, and shall not exit via an
+		exception.</td>
+	<td></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">a1 != a2</code></td>
+	<td><code class="sh_cpp">bool</code></td>
+	<td>same as <code class="sh_cpp">!(a1 == a2)</code>
+</td>
+	<td></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">a == b</code></td>
+	<td><code class="sh_cpp">bool</code></td>
+	<td>same as <code class="sh_cpp">a == Y::​rebind​&lt;T&gt;​::​other​(b)</code>
+</td>
+	<td></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">a != b</code></td>
+	<td><code class="sh_cpp">bool</code></td>
+	<td>same as <code class="sh_cpp">!(a == b)</code>
+</td>
+	<td></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">X a1(a);</code></td>
+	<td></td>
+	<td>Shall not exit via an exception.<br>
+		post: <code class="sh_cpp">a1 == a</code>
+</td>
+	<td></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">X a(b);</code></td>
+	<td></td>
+	<td>Shall not exit via an exception.<br>
+		post: <code class="sh_cpp">Y(a) == b</code>, <code class="sh_cpp">a == X(b)</code>
+</td>
+	<td></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">X a1​(move​(a));</code></td>
+	<td></td>
+	<td>Shall not exit via an exception.<br>
+		post: <code class="sh_cpp">a1</code> equals the prior value of <code class="sh_cpp">a</code>.</td>
+	<td></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">X a​(move​(b));</code></td>
+	<td></td>
+	<td>Shall not exit via an exception.<br>
+		post: <code class="sh_cpp">a</code> equals the prior value of <code class="sh_cpp">X(b)</code>.</td>
+	<td></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">a.​construct​(c, args)</code></td>
+	<td>(not used)</td>
+	<td>Effect: Constructs an object of type <code class="sh_cpp">C</code> at <code class="sh_cpp">c</code>
+</td>
+	<td><code class="sh_cpp">::​new​((void*)c) C​(forward​&lt;Args&gt;​(args)...)</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">a.​destroy​(c)</code></td>
+	<td>(not used)</td>
+	<td>Effect: Destroys the object at <code class="sh_cpp">c</code>
+</td>
+	<td><code class="sh_cpp">c-&gt;~C()</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">a.​select_­on_­container_­copy_­construction()</code></td>
+	<td><code class="sh_cpp">X</code></td>
+	<td>Typically returns either <code class="sh_cpp">a</code> or <code class="sh_cpp">X()</code>
+</td>
+	<td><code class="sh_cpp">return a;</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">X::​propagate_­on_­container_­copy_­assignment</code></td>
+	<td>Identical to or derived from <code class="sh_cpp">true_type</code> or <code class="sh_cpp">false_type</code>
+</td>
+	<td>
+<code class="sh_cpp">true_type</code> only if an allocator of type <code class="sh_cpp">X</code> should be copied when the client container is
+		copy-assigned.</td>
+	<td><code class="sh_cpp">false_­type</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">X::​propagate_­on_­container_­move_­assignment</code></td>
+	<td>Identical to or derived from <code class="sh_cpp">true_type</code> or <code class="sh_cpp">false_type</code>
+</td>
+	<td>
+<code class="sh_cpp">true_type</code> only if an allocator of type <code class="sh_cpp">X</code> should be moved when the client container is
+		move-assigned.</td>
+	<td><code class="sh_cpp">false_­type</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">X::​propagate_­on_­container_­swap</code></td>
+	<td>Identical to or derived from <code class="sh_cpp">true_type</code> or <code class="sh_cpp">false_type</code>
+</td>
+	<td>
+<code class="sh_cpp">true_type</code> only if an allocator of type <code class="sh_cpp">X</code> should be swapped when the client container
+		is swapped.</td>
+	<td><code class="sh_cpp">false_­type</code></td>
+</tr>
+</tbody>
+</table>
+
+<p id="noteA"><a class="anchor" id="p3" href="#p3">3</a>Note A: The member class template <code class="sh_cpp">rebind</code> in the table above is effectively a typedef
+template. <span class="note">[ <em>Note:</em> In general, if the name <code class="sh_cpp">Allocator</code> is bound to <code class="sh_cpp">SomeAllocator&lt;T&gt;</code>, then
+<code class="sh_cpp">Allocator::rebind&lt;U&gt;::other</code> is the same type as <code class="sh_cpp">SomeAllocator&lt;U&gt;</code>, where
+<code class="sh_cpp">SomeAllocator&lt;T&gt;::value_type</code> is <code class="sh_cpp">T</code> and <code class="sh_cpp">SomeAllocator&lt;U&gt;::value_type</code> is
+<code class="sh_cpp">U</code>. — <em>end note</em> ]</span> If <code class="sh_cpp">Allocator</code> is a class template instantiation of the form <code class="sh_cpp">SomeAllocator&lt;T,
+Args&gt;</code>, where <code class="sh_cpp">Args</code> is zero or more type arguments, and <code class="sh_cpp">Allocator</code> does not supply a
+<code class="sh_cpp">rebind</code> member template, the standard <code class="sh_cpp">allocator_traits</code> template uses <code class="sh_cpp">SomeAllocator&lt;U,
+Args&gt;</code> in place of <code class="sh_cpp">Allocator::rebind&lt;U&gt;::other</code> by default. For allocator types that are not
+template instantiations of the above form, no default is provided.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>The <code class="sh_cpp">X::pointer</code>, <code class="sh_cpp">X::const_pointer</code>, <code class="sh_cpp">X::void_pointer</code>, and
+<code class="sh_cpp">X::const_void_pointer</code> types shall satisfy the requirements of <code class="sh_cpp">NullablePointer</code>
+(<a title="nullablepointer.requirements" href="nullablepointer.requirements.html">17.6.3.3</a>). No constructor, comparison operator, copy operation, move operation, or swap operation on these
+types shall exit via an exception. <code class="sh_cpp">X::pointer</code> and <code class="sh_cpp">X::const_pointer</code> shall also satisfy the
+requirements for a random access iterator (<a title="iterator.requirements" href="iterator.requirements.general.html">24.2</a>).</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>An allocator may constrain the types on which it can be instantiated and the arguments for which its
+<code class="sh_cpp">construct</code> member may be called. If a type cannot be used with a particular allocator, the allocator class
+or the call to <code class="sh_cpp">construct</code> may fail to instantiate.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> the following is an allocator class template supporting the minimal interface that satisfies the
+requirements of Table <a href="allocator.requirements.html#t28">28</a>:</p>
+
+<pre><code class="sh_cpp">template &lt;class Tp&gt;
+struct SimpleAllocator {
+  typedef Tp value_type;
+  SimpleAllocator(ctor args);
+
+  template &lt;class T&gt; SimpleAllocator(const SimpleAllocator&lt;T&gt;&amp; other);
+
+  Tp *allocate(std::size_t n);
+  void deallocate(Tp *p, std::size_t n);
+};</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>If the alignment associated with a specific over-aligned type is not supported by an allocator, instantiation
+of the allocator for that type may fail. The allocator also may silently ignore the requested alignment.
+<span class="note">[ <em>Note:</em> Additionally, the member function <code class="sh_cpp">allocate</code> for that type may fail by throwing an object of type
+<code class="sh_cpp">std::bad_alloc</code>. — <em>end note</em> ]</span></p>
+
+
+<div><p class="footnote" id="fn183">183) It is intended that <code class="sh_cpp">a.allocate</code> be an efficient means of allocating a single object of
+type <code class="sh_cpp">T</code>, even when <code class="sh_cpp">sizeof(T)</code> is small. That is, there is no need for a container to maintain
+its own free list.</p></div>
+</body>
+</html>
+

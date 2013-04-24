@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Assignment and compound assignment operators</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[expr.ass]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[expr.ass]"></object>5.17 Assignment and compound assignment operators </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The assignment operator (<code class="sh_cpp">=</code>) and the compound assignment operators all group right-to-left. All
+require a modifiable lvalue as their left operand and return an lvalue referring to the left operand. The result in all
+cases is a bit-field if the left operand is a bit-field. In all cases, the assignment is sequenced after the value
+computation of the right and left operands, and before the value computation of the assignment expression. With respect
+to an indeterminately-sequenced function call, the operation of a compound assignment is a single evaluation.
+<span class="note">[ <em>Note:</em> Therefore, a function call shall not intervene between the lvalue-to-rvalue conversion and the side effect
+associated with any single compound assignment operator. — <em>end note</em> ]</span></p>
+
+<dl>
+<dt>
+<i class="nonterminal"><dfn>assignment-expression</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="assignment-expression"></object></i>:</dt>
+	<dd><i class="nonterminal">conditional-expression</i></dd>
+	<dd>
+<i class="nonterminal">logical-or-expression</i> <i class="nonterminal">assignment-operator</i> <i class="nonterminal">initializer-clause</i>
+</dd>
+	<dd><i class="nonterminal">throw-expression</i></dd>
+<dt>
+<i class="nonterminal"><dfn>assignment-operator</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="assignment-operator"></object></i>: one of</dt>
+	<dd><pre><code class="sh_cpp">= *= /= %= += -= &gt;&gt;= &lt;&lt;= &amp;= ^= |=</code></pre></dd>
+</dl>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>In simple assignment (<code class="sh_cpp">=</code>), the value of the expression replaces that of the object referred to by
+the left operand.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>If the left operand is not of class type, the expression is implicitly converted (Clause <a title="conv" href="conv.html">4</a>) to the
+cv-unqualified type of the left operand.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>If the left operand is of class type, the class shall be complete. Assignment to objects of a class is defined
+by the copy/move assignment operator (<a title="class.copy" href="class.copy.html">12.8</a>, <a title="over.ass" href="over.ass.html">13.5.3</a>).</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><span class="note">[ <em>Note:</em> For class objects, assignment is not in general the same as initialization (<a title="dcl.init" href="dcl.init.html">8.5</a>,
+<a title="class.ctor" href="class.ctor.html">12.1</a>, <a title="class.init" href="class.init.html">12.6</a>, <a title="class.copy" href="class.copy.html">12.8</a>). — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>When the left operand of an assignment operator denotes a reference to <code class="sh_cpp">T</code>, the operation assigns to
+the object of type <code class="sh_cpp">T</code> denoted by the reference.</p>
+
+<p><a class="anchor" id="p7" href="#p7">7</a>The behavior of an expression of the form <code class="sh_cpp">E1 <var>op</var>= E2</code> is equivalent to <code class="sh_cpp">E1 = E1
+<var>op</var> E2</code> except that <code class="sh_cpp">E1</code> is evaluated only once. In <code class="sh_cpp">+=</code> and <code class="sh_cpp">-=</code>,
+<code class="sh_cpp">E1</code> shall either have arithmetic type or be a pointer to a possibly cv-qualified completely-defined object
+type. In all other cases, <code class="sh_cpp">E1</code> shall have arithmetic type.</p>
+
+<p><a class="anchor" id="p8" href="#p8">8</a>If the value being stored in an object is accessed from another object that overlaps in any way the storage of
+the first object, then the overlap shall be exact and the two objects shall have the same type, otherwise the behavior
+is undefined. <span class="note">[ <em>Note:</em> This restriction applies to the relationship between the left and right sides of the assignment
+operation; it is not a statement about how the target of the assignment may be aliased in general. See
+<a title="basic.lval" href="basic.lval.html">3.10</a>. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p9" href="#p9">9</a>A <i class="nonterminal">braced-init-list</i> may appear on the right-hand side of</p>
+<ul>
+<li>an assignment to a scalar, in which case the initializer list shall have at most a single element. The meaning of
+	<code class="sh_cpp">x={v}</code>, where <code class="sh_cpp">T</code> is the scalar type of the expression <code class="sh_cpp">x</code>, is that of
+	<code class="sh_cpp">x=T(v)</code> except that no narrowing conversion (<a title="dcl.init.list" href="dcl.init.list.html">8.5.4</a>) is allowed. The meaning of
+	<code class="sh_cpp">x={}</code> is <code class="sh_cpp">x=T()</code>.</li>
+<li>an assignment defined by a user-defined assignment operator, in which case the initializer list is passed as the
+	argument to the operator function.</li>
+</ul>
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">complex&lt;double&gt; z;
+z = { 1,2 };            // meaning z.operator=({1,2})
+z += { 1, 2 };          // meaning z.operator+=({1,2})
+int a, b;
+a = b = { 1 };          // meaning a=b=1;
+a = { 1 } = b;          // syntax error</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+</body>
+</html>
+

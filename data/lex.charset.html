@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Character sets</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[lex.charset]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[lex.charset]"></object>2.3 Character sets </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The <dfn>basic source character set</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="basic source character set"></object> consists of 96 characters: the space character, the control
+characters representing horizontal tab, vertical tab, form feed, and new-line, plus the following 91 graphical
+characters:<sup class="footnote"><a href="#fn14">14</a></sup></p>
+
+<pre>a b c d e f g h i j k l m n o p q r s t u v w x y z
+
+A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
+
+0 1 2 3 4 5 6 7 8 9
+
+_ { } [ ] # ( ) &lt; &gt; % : ; . ? * + - / ^ &amp; | ! = , \ " '</pre>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The <i class="nonterminal">universal-character-name</i> construct provides a way to name other characters.</p>
+
+<dl>
+<dt>
+<i class="nonterminal"><dfn>hex-quad</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="hex-quad"></object></i>:</dt>
+<dd>
+<i class="nonterminal">hexadecimal-digit</i> <i class="nonterminal">hexadecimal-digit</i> <i class="nonterminal">hexadecimal-digit</i> <i class="nonterminal">hexadecimal-digit</i>
+</dd>
+<dt>
+<i class="nonterminal"><dfn>universal-character-name</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="universal-character-name"></object></i>:</dt>
+<dd>
+<code class="sh_cpp">\u</code> <i class="nonterminal">hex-quad</i>
+</dd>
+<dd>
+<code class="sh_cpp">\U</code> <i class="nonterminal">hex-quad</i> <i class="nonterminal">hex-quad</i>
+</dd>
+</dl>
+
+<p>The character designated by the universal-character-name <code class="sh_cpp">\UNNNNNNNN</code> is that character whose character
+short name in ISO/IEC 10646 is <code class="sh_cpp">NNNNNNNN</code>; the character designated by the universal-character-name
+<code class="sh_cpp">\uNNNN</code> is that character whose character short name in ISO/IEC 10646 is <code class="sh_cpp">0000NNNN</code>. If the
+hexadecimal value for a universal-character-name corresponds to a surrogate code point (in the range 0xD800–0xDFFF,
+inclusive), the program is ill-formed. Additionally, if the hexadecimal value for a universal-character-name outside the
+<i class="nonterminal">c-char-sequence</i>, <i class="nonterminal">s-char-sequence</i>, or <i class="nonterminal">r-char-sequence</i> of a character or string literal
+corresponds to a control character (in either of the ranges 0x00–0x1F or 0x7F–0x9F, both inclusive) or to a character in
+the basic source character set, the program is ill-formed.<sup class="footnote"><a href="#fn15">15</a></sup></p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>The <dfn>basic execution character set</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="basic execution character set"></object> and the <dfn>basic execution wide-character set</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="basic execution wide-character set"></object> shall each
+contain all the members of the basic source character set, plus control characters representing alert, backspace, and
+carriage return, plus a <dfn>null character</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="null character"></object> (respectively, <dfn>null wide character</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="null wide character"></object>), whose representation
+has all zero bits. For each basic execution character set, the values of the members shall be non-negative and distinct
+from one another. In both the source and execution basic character sets, the value of each character after
+<code class="sh_cpp">0</code> in the above list of decimal digits shall be one greater than the value of the previous. The
+<dfn>execution character set</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="execution character set"></object> and the <dfn>execution wide-character set</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="execution wide-character set"></object> are implementation-defined supersets of the basic execution
+character set and the basic execution wide-character set, respectively. The values of the members of the execution
+character sets and the sets of additional members are locale-specific.</p>
+
+
+
+
+<div>
+<p class="footnote" id="fn14">14) The glyphs for the members of the basic source character set are intended to identify characters from
+the subset of ISO/IEC 10646 which corresponds to the ASCII character set. However, because the mapping from source file
+characters to the source character set (described in translation phase 1) is specified as implementation-defined, an
+implementation is required to document how the basic source characters are represented in source files.</p>
+<p class="footnote" id="fn15">15) A sequence of characters resembling a universal-character-name in an <i class="nonterminal">r-char-sequence</i>
+(<a title="lex.string" href="lex.string.html">2.14.5</a>) does not form a universal-character-name.</p>
+</div>
+</body>
+</html>
+

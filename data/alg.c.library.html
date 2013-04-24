@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>C library algorithms</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[alg.c.library]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[alg.c.library]"></object>25.5 25.5 C library algorithms </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Table <a href="alg.c.library.html#t113">113</a> describes some of the contents of the header <code class="header">&lt;cstdlib&gt;</code>.</p>
+
+<table id="t113" class="header_synopsis">
+<caption>Table 113 — Header <dfn><code class="header">&lt;cstdlib&gt;</code></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="&lt;cstdlib&gt;"></object> synopsis</caption>
+<thead><tr>
+<th>Type</th>
+<th>Name(s)</th>
+</tr></thead>
+<tbody>
+<tr>
+<th>Type:</th>
+<td><code class="sh_cpp">size_t</code></td>
+</tr>
+<tr>
+<th>Functions:</th>
+<td><code class="sh_cpp">bsearch  qsort</code></td>
+</tr>
+</tbody>
+</table>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The contents are the same as the Standard C library header <code class="header">&lt;stdlib.h&gt;</code> with the following
+exceptions:</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>The function signature:</p>
+
+<pre><code class="sh_cpp">bsearch(const void *, const void *, size_t, size_t,
+        int (*)(const void *, const void *));</code></pre>
+
+<p>is replaced by the two declarations:</p>
+
+<pre><code class="sh_cpp">extern "C" void *<dfn>bsearch</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="bsearch"></object>(const void *key, const void *base,
+                         size_t nmemb, size_t size,
+                         int (*compar)(const void *, const void *));
+extern "C++" void *bsearch(const void *key, const void *base,
+                           size_t nmemb, size_t size,
+                           int (*compar)(const void *, const void *));</code></pre>
+
+<p>both of which have the same behavior as the original declaration.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>The function signature:</p>
+
+<pre><code class="sh_cpp">qsort(void *, size_t, size_t,
+        int (*)(const void *, const void *));</code></pre>
+
+<p>is replaced by the two declarations:</p>
+
+<pre><code class="sh_cpp">extern "C" void <dfn>qsort</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="qsort"></object>(void* base, size_t nmemb, size_t size,
+                      int (*compar)(const void*, const void*));
+extern "C++" void qsort(void* base, size_t nmemb, size_t size,
+                        int (*compar)(const void*, const void*));</code></pre>
+
+<p>both of which have the same behavior as the original declaration. The behavior is undefined unless the objects in the
+array pointed to by base are of trivial type.</p>
+
+<p><span class="note">[ <em>Note:</em> Because the function argument <code class="sh_cpp">compar()</code> may throw an exception, <code class="sh_cpp">bsearch()</code> and
+<code class="sh_cpp">qsort()</code> are allowed to propagate the exception (<a title="res.on.exception.handling" href="res.on.exception.handling.html">17.6.5.12</a>). — <em>end note</em> ]</span></p>
+
+<p><span class="seealso">See also:</span> ISO C 7.10.5.</p>
+</body>
+</html>
+

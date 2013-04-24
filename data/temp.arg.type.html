@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Template type arguments</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[temp.arg.type]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[temp.arg.type]"></object>14.3.1 Template type arguments </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A <i class="nonterminal">template-argument</i> for a <i class="nonterminal">template-parameter</i> which is a type shall be a <i class="nonterminal">type-id</i>.</p>
+
+<div class="example">
+<p><a class="anchor" id="p2" href="#p2">2</a>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">template &lt;class T&gt; class X { };
+template &lt;class T&gt; void f(T t) { }
+struct { } unnamed_obj;
+
+void f() {
+  struct A { };
+  enum { e1 };
+  typedef struct { } B;
+  B b;
+  X&lt;A&gt; x1;          // OK
+  X&lt;A*&gt; x2;         // OK
+  X&lt;B&gt; x3;          // OK
+  f(e1);            // OK
+  f(unnamed_obj);   // OK
+  f(b);             // OK
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><span class="note">[ <em>Note:</em> A template type argument may be an incomplete type (<a title="basic.types" href="basic.types.html">3.9</a>). — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>If a declaration acquires a function type through a type dependent on a <i class="nonterminal">template-parameter</i> and this
+causes a declaration that does not use the syntactic form of a function declarator to have function type, the program is
+ill-formed.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">template&lt;class T&gt; struct A {
+  static T t;
+};
+typedef int function();
+A&lt;function&gt; a;          // ill-formed: would declare A&lt;function&gt;::t
+                        // as a static member function</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+</body>
+</html>
+

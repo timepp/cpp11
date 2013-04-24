@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Hash requirements</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[hash.requirements]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[hash.requirements]"></object>17.6.3.4 <code class="concept">Hash</code> requirements </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A type <code class="sh_cpp">H</code> meets the <code class="concept"><dfn>Hash</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="Hash"></object></code> requirements if:</p>
+
+<ul>
+<li>it is a function object type (<a title="function.objects" href="function.objects.html">20.8</a>),</li>
+<li>it satisfies the requirements of <code class="concept">CopyConstructible</code> and <code class="concept">Destructible</code>
+	(<a title="utility.arg.requirements" href="utility.arg.requirements.html">17.6.3.1</a>),</li>
+<li>the expressions shown in Table <a href="hash.requirements.html#t26">26</a> are valid and have the indicated semantics, and</li>
+<li>it satisfies all other requirements in this subclause.</li>
+</ul>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>Given <code class="sh_cpp">Key</code> is an argument type for function objects of type <code class="sh_cpp">H</code>, in Table <a href="hash.requirements.html#t26">26</a>
+<code class="sh_cpp">h</code> is a value of type (possibly <code class="sh_cpp">const</code>) <code class="sh_cpp">H</code>, <code class="sh_cpp">u</code> is an lvalue of type
+<code class="sh_cpp">Key</code>, and <code class="sh_cpp">k</code> is a value of a type convertible to (possibly <code class="sh_cpp">const</code>)
+<code class="sh_cpp">Key</code>.</p>
+
+<table id="t26" class="requirements">
+<caption>Table 26 — <code class="concept">Hash</code> requirements <dfn class="label">[hash]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[hash]"></object>
+</caption>
+<thead><tr>
+<th>Expression</th>
+<th>Return type</th>
+<th>Requirement</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code class="sh_cpp">h(k)</code></td>
+	<td><code class="sh_cpp">size_t</code></td>
+	<td>The value returned shall depend only on the argument <code class="sh_cpp">k</code>. <span class="note">[ <em>Note:</em> Thus all evaluations of the
+		expression <code class="sh_cpp">h(k)</code> with the same value for <code class="sh_cpp">k</code> yield the same result. — <em>end note</em> ]</span> <span class="note">[ <em>Note:</em> For two
+		different values <code class="sh_cpp">t1</code> and <code class="sh_cpp">t2</code>, the probability that <code class="sh_cpp">h(t1)</code> and
+		<code class="sh_cpp">h(t2)</code> compare equal should be very small, approaching <code class="sh_cpp">1.0 /
+		numeric_limits&lt;size_t&gt;::max()</code>. — <em>end note</em> ]</span>
+</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">h(u)</code></td>
+	<td><code class="sh_cpp">size_t</code></td>
+	<td>Shall not modify <code class="sh_cpp">u</code>.</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>
+

@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class template time_point</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[time.point]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[time.point]"></object>20.11.6 Class template <code class="sh_cpp"><dfn>time_point</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="time_point"></object></code> </h3>
+
+<pre><code class="sh_cpp">template &lt;class Clock, class Duration = typename Clock::duration&gt;
+class time_point {
+public:
+  typedef Clock                     clock;
+  typedef Duration                  duration;
+  typedef typename duration::rep    rep;
+  typedef typename duration::period period;
+private:
+  duration d_;  // exposition only
+
+public:
+  // <a title="time.point.cons" href="time.point.cons.html">20.11.6.1</a>, construct:
+  time_point(); // has value epoch
+  explicit time_point(const duration&amp; d); // same as time_point() + d
+  template &lt;class Duration2&gt;
+    time_point(const time_point&lt;clock, Duration2&gt;&amp; t);
+
+  // <a title="time.point.observer" href="time.point.observer.html">20.11.6.2</a>, observer:
+  duration time_since_epoch() const;
+
+  // <a title="time.point.arithmetic" href="time.point.arithmetic.html">20.11.6.3</a>, arithmetic:
+  time_point&amp; operator+=(const duration&amp; d);
+  time_point&amp; operator-=(const duration&amp; d);
+
+  // <a title="time.point.special" href="time.point.special.html">20.11.6.4</a>, special values:
+  static constexpr time_point min();
+  static constexpr time_point max();
+};</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><code class="sh_cpp">Clock</code> shall meet the Clock requirements (<a title="time.clock" href="time.clock.html">20.11.7</a>).</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>If <code class="sh_cpp">Duration</code> is not an instance of duration, the program is ill-formed.</p>
+</body>
+</html>
+

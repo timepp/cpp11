@@ -1,0 +1,122 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Point of declaration</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[basic.scope.pdecl]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[basic.scope.pdecl]"></object>3.3.2 Point of declaration </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The <dfn>point of declaration</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="point of declaration"></object> for a name is immediately after its complete declarator (Clause
+<a title="dcl.decl" href="dcl.decl.html">8</a>) and before its initializer (if any), except as noted below.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">int x = 12;
+{ int x = x; }</code></pre>
+
+<p>Here the second <code class="sh_cpp">x</code> is initialized with its own (indeterminate) value. — <em>end example</em> ]</p>
+</div>
+
+<div class="note">
+<p><a class="anchor" id="p2" href="#p2">2</a>[ <em>Note:</em> a name from an outer scope remains visible up to the point of declaration of the name that hides it.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">const int i = 2;
+{ int i[i]; }</code></pre>
+
+<p>declares a block-scope array of two integers. — <em>end example</em> ]</p>
+</div>
+<p> — <em>end note</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>The point of declaration for a class or class template first declared by a <i class="nonterminal">class-specifier</i> is
+immediately after the <i class="nonterminal">identifier</i> or <i class="nonterminal">simple-template-id</i> (if any) in its <i class="nonterminal">class-head</i> (Clause
+<a title="class" href="class.html">9</a>). The point of declaration for an enumeration is immediately after the <i class="nonterminal">identifier</i> (if any) in
+either its <i class="nonterminal">enum-specifier</i> (<a title="dcl.enum" href="dcl.enum.html">7.2</a>) or its first <i class="nonterminal">opaque-enum-declaration</i> (<a title="dcl.enum" href="dcl.enum.html">7.2</a>),
+whichever comes first. The point of declaration of an alias or alias template immediately follows the <i class="nonterminal">type-id</i>
+to which the alias refers.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>The point of declaration for an enumerator is immediately after its <i class="nonterminal">enumerator-definition</i>.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">const int x = 12;
+{ enum { x = x }; }</code></pre>
+
+<p>Here, the enumerator x is initialized with the value of the constant <code class="sh_cpp">x</code>, namely 12. — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>After the point of declaration of a class member, the member name can be looked up in the scope of its
+class.</p>
+
+<div class="note">
+<p>[ <em>Note:</em> this is true even if the class is an incomplete class. For example,</p>
+<pre><code class="sh_cpp">struct X {
+  enum E { z = 16 };
+  int b[X::z];          // OK
+};</code></pre>
+<p> — <em>end note</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>The point of declaration of a class first declared in an <i class="nonterminal">elaborated-type-specifier</i> is as follows:</p>
+<ul>
+<li>for a declaration of the form
+<dl>
+<dd>
+<i class="nonterminal">class-key</i> <i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub> <i class="nonterminal">identifier</i> <code class="sh_cpp">;</code>
+</dd>
+</dl>
+the identifier is declared to be a class-name in the scope that contains the declaration, otherwise</li>
+<li>for an <i class="nonterminal">elaborated-type-specifier</i> of the form
+<dl>
+<dd>
+<i class="nonterminal">class-key</i> <i class="nonterminal">identifier</i>
+</dd>
+</dl>
+if the <i class="nonterminal">elaborated-type-specifier</i> is used in the <i class="nonterminal">decl-specifier-seq</i> or
+<i class="nonterminal">parameter-declaration-clause</i> of a function defined in namespace scope, the <i class="nonterminal">identifier</i> is declared as a
+<i class="nonterminal">class-name</i> in the namespace that contains the declaration; otherwise, except as a friend declaration, the
+<i class="nonterminal">identifier</i> is declared in the smallest namespace or block scope that contains the declaration. <span class="note">[ <em>Note:</em> These
+rules also apply within templates. — <em>end note</em> ]</span> <span class="note">[ <em>Note:</em> Other forms of <i class="nonterminal">elaborated-type-specifier</i> do not declare a new
+name, and therefore must refer to an existing <i class="nonterminal">type-name</i>. See <a title="basic.lookup.elab" href="basic.lookup.elab.html">3.4.4</a> and
+<a title="dcl.type.elab" href="dcl.type.elab.html">7.1.6.3</a>. — <em>end note</em> ]</span>
+</li>
+</ul>
+
+<p><a class="anchor" id="p7" href="#p7">7</a>The point of declaration for an <i class="nonterminal">injected-class-name</i> (Clause <a title="class" href="class.html">9</a>) is immediately following the
+opening brace of the class definition.</p>
+
+<p><a class="anchor" id="p8" href="#p8">8</a>The point of declaration for a function-local predefined variable (<a title="dcl.fct.def" href="dcl.fct.def.general.html">8.4</a>) is immediately before the
+<i class="nonterminal">function-body</i> of a function definition.</p>
+
+<p><a class="anchor" id="p9" href="#p9">9</a>The point of declaration for a template parameter is immediately after its complete <i class="nonterminal">function-body</i>.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">typedef unsigned char T;
+template&lt;class T
+  = T     // lookup finds the typedef name of unsigned char
+  , T     // lookup finds the template parameter
+    N = 0&gt; struct A { };</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p10" href="#p10">10</a><span class="note">[ <em>Note:</em> Friend declarations refer to functions or classes that are members of the nearest enclosing namespace,
+but they do not introduce new names into that namespace (<a title="namespace.memdef" href="namespace.memdef.html">7.3.1.2</a>). Function declarations at block scope and
+variable declarations with the <code class="sh_cpp">extern</code> specifier at block scope refer to declarations that are members of an
+enclosing namespace, but they do not introduce new names into that scope. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p11" href="#p11">11</a><span class="note">[ <em>Note:</em> For point of instantiation of a template, see <a title="temp.point" href="temp.point.html">14.6.4.1</a>. — <em>end note</em> ]</span></p>
+</body>
+</html>
+

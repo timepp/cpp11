@@ -1,0 +1,156 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Deducing template arguments from a function call</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[temp.deduct.call]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[temp.deduct.call]"></object>14.8.2.1 Deducing template arguments from a function call </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Template argument deduction is done by comparing each function template parameter type (call it <code class="sh_cpp">P</code>)
+with the type of the corresponding argument of the call (call it <code class="sh_cpp">A</code>) as described below. If removing
+references and cv-qualifiers from <code class="sh_cpp">P</code> gives <code class="sh_cpp">std::initializer_list&lt;<var>P</var>′&gt;</code> for some
+<var>P</var>′ and the argument is an initializer list (<a title="dcl.init.list" href="dcl.init.list.html">8.5.4</a>), then deduction is performed instead for each
+element of the initializer list, taking <var>P</var>′ as a function template parameter type and the initializer element
+as its argument. Otherwise, an initializer list argument causes the parameter to be considered a non-deduced context
+(<a title="temp.deduct.type" href="temp.deduct.type.html">14.8.2.5</a>).</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">template&lt;class T&gt; void f(std::initializer_list&lt;T&gt;);
+f({1,2,3});                 // T deduced to int
+f({1,"asdf"});              // error: T deduced to both int and const char*
+
+template&lt;class T&gt; void g(T);
+g({1,2,3});                 // error: no argument deduced for T</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p>For a function parameter pack that occurs at the end of the <i class="nonterminal">parameter-declaration-list</i>, the type
+<code class="sh_cpp">A</code> of each remaining argument of the call is compared with the type <code class="sh_cpp">P</code> of the
+<i class="nonterminal">declarator-id</i> of the function parameter pack. Each comparison deduces template arguments for subsequent
+positions in the template parameter packs expanded by the function parameter pack. For a function parameter pack that
+does not occur at the end of the <i class="nonterminal">parameter-declaration-list</i>, the type of the parameter pack is a non-deduced
+context.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">template&lt;class ... Types&gt; void f(Types&amp; ...);
+template&lt;class T1, class ... Types&gt; void g(T1, Types ...);
+
+void h(int x, float&amp; y) {
+  const int z = x;
+  f(x, y, z);       // Types is deduced to int, float, const int
+  g(x, y, z);       // T1 is deduced to int; Types is deduced to float, int
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>If <code class="sh_cpp">P</code> is not a reference type:</p>
+
+<ul>
+<li>If <code class="sh_cpp">A</code> is an array type, the pointer type produced by the array-to-pointer standard conversion
+	(<a title="conv.array" href="conv.array.html">4.2</a>) is used in place of <code class="sh_cpp">A</code> for type deduction; otherwise,</li>
+<li>If <code class="sh_cpp">A</code> is a function type, the pointer type produced by the function-to-pointer standard conversion
+	(<a title="conv.func" href="conv.func.html">4.3</a>) is used in place of <code class="sh_cpp">A</code> for type deduction; otherwise,</li>
+<li>If <code class="sh_cpp">A</code> is a cv-qualified type, the top level cv-qualifiers of <code class="sh_cpp">A</code>’s type are ignored for type
+	deduction.</li>
+</ul>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>If <code class="sh_cpp">P</code> is a cv-qualified type, the top level cv-qualifiers of <code class="sh_cpp">P</code>’s type are ignored for
+type deduction. If <code class="sh_cpp">P</code> is a reference type, the type referred to by <code class="sh_cpp">P</code> is used for type
+deduction. If <code class="sh_cpp">P</code> is an rvalue reference to a cv-unqualified template parameter and the argument is an
+lvalue, the type “lvalue reference to <code class="sh_cpp">A</code>” is used in place of <code class="sh_cpp">A</code> for type deduction.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">template &lt;class T&gt; int f(T&amp;&amp;);
+template &lt;class T&gt; int g(const T&amp;&amp;);
+int i;
+int n1 = f(i);          // calls f&lt;int&amp;&gt;(int&amp;)
+int n2 = f(0);          // calls f&lt;int&gt;(int&amp;&amp;)
+int n3 = g(i);          // error: would call g&lt;int&gt;(const int&amp;&amp;), which
+                        // would bind an rvalue reference to an lvalue</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>In general, the deduction process attempts to find template argument values that will make the deduced
+<code class="sh_cpp">A</code> identical to <code class="sh_cpp">A</code> (after the type <code class="sh_cpp">A</code> is transformed as described above). However,
+there are three cases that allow a difference:</p>
+
+<ul>
+<li>If the original <code class="sh_cpp">P</code> is a reference type, the deduced <code class="sh_cpp">A</code> (i.e., the type referred to by the
+	reference) can be more cv-qualified than the transformed <code class="sh_cpp">A</code>.</li>
+<li>The transformed <code class="sh_cpp">A</code> can be another pointer or pointer to member type that can be converted to the deduced
+	<code class="sh_cpp">A</code> via a qualification conversion (<a title="conv.qual" href="conv.qual.html">4.4</a>).</li>
+<li>If <code class="sh_cpp">P</code> is a class and <code class="sh_cpp">P</code> has the form <i class="nonterminal">simple-template-id</i>, then the transformed
+	<code class="sh_cpp">A</code> can be a derived class of the deduced <code class="sh_cpp">A</code>. Likewise, if <code class="sh_cpp">P</code> is a pointer to a
+	class of the form <i class="nonterminal">simple-template-id</i>, the transformed <code class="sh_cpp">A</code> can be a pointer to a derived class
+	pointed to by the deduced <code class="sh_cpp">A</code>.</li>
+</ul>
+
+<p><span class="note">[ <em>Note:</em> as specified in <a title="temp.arg.explicit" href="temp.arg.explicit.html">14.8.1</a>, implicit conversions will be performed on a function argument to convert it
+to the type of the corresponding function parameter if the parameter contains no <i class="nonterminal">template-parameter</i>s that
+participate in template argument deduction. Such conversions are also allowed, in addition to the ones described in the
+preceding list. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>These alternatives are considered only if type deduction would otherwise fail. If they yield more than one
+possible deduced <code class="sh_cpp">A</code>, the type deduction fails. <span class="note">[ <em>Note:</em> If a <i class="nonterminal">template-parameter</i> is not used in any of
+the function parameters of a function template, or is used only in a non-deduced context, its corresponding
+<i class="nonterminal">template-argument</i> cannot be deduced from a function call and the <i class="nonterminal">template-argument</i> must be explicitly
+specified. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>When <code class="sh_cpp">P</code> is a function type, pointer to function type, or pointer to member function type:</p>
+
+<ul>
+<li>If the argument is an overload set containing one or more function templates, the parameter is treated as a
+	non-deduced context.</li>
+<li>If the argument is an overload set (not containing function templates), trial argument deduction is attempted using
+	each of the members of the set. If deduction succeeds for only one of the overload set members, that member is used
+	as the argument value for the deduction. If deduction succeeds for more than one member of the overload set the
+	parameter is treated as a non-deduced context.</li>
+</ul>
+
+<div class="example">
+<p><a class="anchor" id="p7" href="#p7">7</a>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">// Only one function of an overload set matches the call so the function
+// parameter is a deduced context.
+template &lt;class T&gt; int f(T (*p)(T));
+int g(int);
+int g(char);
+int i = f(g);       // calls f(int (*)(int))</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<div class="example">
+<p><a class="anchor" id="p8" href="#p8">8</a>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">// Ambiguous deduction causes the second function parameter to be a
+// non-deduced context.
+template &lt;class T&gt; int f(T, T (*p)(T));
+int g(int);
+char g(char);
+int i = f(1, g);    // calls f(int, int (*)(int))</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<div class="example">
+<p><a class="anchor" id="p9" href="#p9">9</a>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">// The overload set contains a template, causing the second function
+// parameter to be a non-deduced context.
+template &lt;class T&gt; int f(T, T (*p)(T));
+char g(char);
+template &lt;class T&gt; T g(T);
+int i = f(1, g);    // calls f(int, int (*)(int))</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+</body>
+</html>
+

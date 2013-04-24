@@ -1,0 +1,169 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class template forward_list overview</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[forwardlist]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[forwardlist]"></object>23.3.4 Class template <code class="sh_cpp"><dfn>forward_list</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="forward_list"></object></code> </h3>
+
+<h4>
+<dfn class="label">[forwardlist.overview]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[forwardlist.overview]"></object>23.3.4.1 Class template <code class="sh_cpp">forward_list</code> overview </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A <code class="sh_cpp">forward_list</code> is a container that supports forward iterators and allows constant time insert and
+erase operations anywhere within the sequence, with storage management handled automatically. Fast random access to list
+elements is not supported. <span class="note">[ <em>Note:</em> It is intended that <code class="sh_cpp">forward_list</code> have zero space or time overhead relative
+to a hand-written C-style singly linked list. Features that would conflict with that goal have been omitted. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>A <code class="sh_cpp">forward_list</code> satisfies all of the requirements of a container (Table <a href="container.requirements.general.html#t96">96</a>), except that
+the <code class="sh_cpp">size()</code> member function is not provided. A <code class="sh_cpp">forward_list</code> also satisfies all of the
+requirements for an allocator-aware container (Table <a href="container.requirements.general.html#t99">99</a>). In addition, a <code class="sh_cpp">forward_list</code> provides the
+<code class="sh_cpp">assign</code> member functions (Table <a href="sequence.reqmts.html#t100">100</a>) and several of the optional container requirements (Table <a href="sequence.reqmts.html#t101">101</a>). Descriptions are provided here only for operations on <code class="sh_cpp">forward_list</code> that are not described in
+that table or for operations where there is additional semantic information.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><span class="note">[ <em>Note:</em> Modifying any list requires access to the element preceding the first element of interest, but in a
+<code class="sh_cpp">forward_list</code> there is no constant-time way to access a preceding element. For this reason, ranges that are
+modified, such as those supplied to <code class="sh_cpp">erase</code> and <code class="sh_cpp">splice</code>, must be open at the
+beginning. — <em>end note</em> ]</span></p>
+
+<pre><code class="sh_cpp">namespace std {
+  template &lt;class T, class Allocator = allocator&lt;T&gt; &gt;
+  class forward_list {
+  public:
+    // types:
+    typedef value_type&amp;            reference;
+    typedef const value_type&amp;      const_reference;
+    typedef <em>implementation-defined</em> iterator;        // See <a title="container.requirements" href="container.requirements.general.html">23.2</a>
+    typedef <em>implementation-defined</em> const_iterator;  // See <a title="container.requirements" href="container.requirements.general.html">23.2</a>
+    typedef <em>implementation-defined</em> size_type;       // See <a title="container.requirements" href="container.requirements.general.html">23.2</a>
+    typedef <em>implementation-defined</em> difference_type; // See <a title="container.requirements" href="container.requirements.general.html">23.2</a>
+    typedef T value_type;
+    typedef Allocator allocator_type;
+    typedef typename allocator_traits&lt;Allocator&gt;::pointer       pointer;
+    typedef typename allocator_traits&lt;Allocator&gt;::const_pointer const_pointer;
+
+    // <a title="forwardlist.cons" href="forwardlist.cons.html">23.3.4.2</a> construct/copy/destroy:
+    explicit forward_list(const Allocator&amp; = Allocator());
+    explicit forward_list(size_type n);
+    forward_list(size_type n, const T&amp; value,
+                 const Allocator&amp; = Allocator());
+    template &lt;class InputIterator&gt;
+      forward_list(InputIterator first, InputIterator last,
+                   const Allocator&amp; = Allocator());
+    forward_list(const forward_list&amp; x);
+    forward_list(forward_list&amp;&amp; x);
+    forward_list(const forward_list&amp; x, const Allocator&amp;);
+    forward_list(forward_list&amp;&amp; x, const Allocator&amp;);
+    forward_list(initializer_list&lt;T&gt;, const Allocator&amp; = Allocator());
+    ~forward_list();
+    forward_list&lt;T, Allocator&gt;&amp; operator=(const forward_list&lt;T, Allocator&gt;&amp; x);
+    forward_list&lt;T, Allocator&gt;&amp; operator=(forward_list&lt;T, Allocator&gt;&amp;&amp; x);
+    forward_list&amp; operator=(initializer_list&lt;T&gt;);
+    template &lt;class InputIterator&gt;
+      void assign(InputIterator first, InputIterator last);
+    void assign(size_type n, const T&amp; t);
+    void assign(initializer_list&lt;T&gt;);
+    allocator_type get_allocator() const noexcept;
+
+    // <a title="deque.cons" href="deque.cons.html">23.3.3.2</a> iterators:
+    iterator before_begin() noexcept;
+    const_iterator before_begin() const noexcept;
+    iterator begin() noexcept;
+    const_iterator begin() const noexcept;
+    iterator end() noexcept;
+    const_iterator end() const noexcept;
+
+    const_iterator cbegin() const noexcept;
+    const_iterator cbefore_begin() const noexcept;
+    const_iterator cend() const noexcept;
+
+    // capacity:
+    bool empty() const noexcept;
+    size_type max_size() const noexcept;
+
+    // <a title="forwardlist.access" href="forwardlist.access.html">23.3.4.4</a> element access:
+    reference front();
+    const_reference front() const;
+
+    // <a title="forwardlist.modifiers" href="forwardlist.modifiers.html">23.3.4.5</a> modifiers:
+    template &lt;class... Args&gt; void emplace_front(Args&amp;&amp;... args);
+    void push_front(const T&amp; x);
+    void push_front(T&amp;&amp; x);
+    void pop_front();
+
+    template &lt;class... Args&gt; iterator emplace_after(const_iterator position, Args&amp;&amp;... args);
+    iterator insert_after(const_iterator position, const T&amp; x);
+    iterator insert_after(const_iterator position, T&amp;&amp; x);
+
+    iterator insert_after(const_iterator position, size_type n, const T&amp; x);
+    template &lt;class InputIterator&gt;
+      iterator insert_after(const_iterator position, InputIterator first, InputIterator last);
+    iterator insert_after(const_iterator position, initializer_list&lt;T&gt; il);
+
+    iterator erase_after(const_iterator position);
+    iterator erase_after(const_iterator position, iterator last);
+    void swap(forward_list&lt;T, Allocator&gt;&amp;);
+
+    void resize(size_type sz);
+    void resize(size_type sz, const value_type&amp; c);
+    void clear() noexcept;
+
+    // <a title="forwardlist.ops" href="forwardlist.ops.html">23.3.4.6</a> forward_list operations:
+    void splice_after(const_iterator position, forward_list&lt;T,Allocator&gt;&amp; x);
+    void splice_after(const_iterator position, forward_list&lt;T, Allocator&gt;&amp;&amp; x);
+    void splice_after(const_iterator position, forward_list&lt;T,Allocator&gt;&amp; x,
+                      const_iterator i);
+    void splice_after(const_iterator position, forward_list&lt;T, Allocator&gt;&amp;&amp; x,
+                      const_iterator i);
+    void splice_after(const_iterator position, forward_list&lt;T,Allocator&gt;&amp; x,
+                      const_iterator first, const_iterator last);
+    void splice_after(const_iterator position, forward_list&lt;T, Allocator&gt;&amp;&amp; x,
+                      const_iterator first, const_iterator last);
+
+    void remove(const T&amp; value);
+    template &lt;class Predicate&gt; void remove_if(Predicate pred);
+
+    void unique();
+    template &lt;class BinaryPredicate&gt; void unique(BinaryPredicate binary_pred);
+
+    void merge(forward_list&lt;T, Allocator&gt;&amp; x);
+    void merge(forward_list&lt;T, Allocator&gt;&amp;&amp; x);
+    template &lt;class Compare&gt; void merge(forward_list&lt;T, Allocator&gt;&amp; x, Compare comp);
+    template &lt;class Compare&gt; void merge(forward_list&lt;T, Allocator&gt;&amp;&amp; x, Compare comp);
+
+    void sort();
+    template &lt;class Compare&gt; void sort(Compare comp);
+
+    void reverse() noexcept;
+  };
+
+  // Comparison operators
+  template &lt;class T, class Allocator&gt;
+    bool operator==(const forward_list&lt;T, Allocator&gt;&amp; x, const forward_list&lt;T, Allocator&gt;&amp; y);
+  template &lt;class T, class Allocator&gt;
+    bool operator&lt; (const forward_list&lt;T, Allocator&gt;&amp; x, const forward_list&lt;T, Allocator&gt;&amp; y);
+  template &lt;class T, class Allocator&gt;
+    bool operator!=(const forward_list&lt;T, Allocator&gt;&amp; x, const forward_list&lt;T, Allocator&gt;&amp; y);
+  template &lt;class T, class Allocator&gt;
+    bool operator&gt; (const forward_list&lt;T, Allocator&gt;&amp; x, const forward_list&lt;T, Allocator&gt;&amp; y);
+  template &lt;class T, class Allocator&gt;
+    bool operator&gt;=(const forward_list&lt;T, Allocator&gt;&amp; x, const forward_list&lt;T, Allocator&gt;&amp; y);
+  template &lt;class T, class Allocator&gt;
+    bool operator&lt;=(const forward_list&lt;T, Allocator&gt;&amp; x, const forward_list&lt;T, Allocator&gt;&amp; y);
+
+  // <a title="forwardlist.spec" href="forwardlist.spec.html">23.3.4.7</a> specialized algorithms:
+  template &lt;class T, class Allocator&gt;
+    void swap(forward_list&lt;T, Allocator&gt;&amp; x, forward_list&lt;T, Allocator&gt;&amp; y);
+}</code></pre>
+
+</body>
+</html>
+

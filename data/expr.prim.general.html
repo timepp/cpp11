@@ -1,0 +1,209 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>General</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[expr.prim]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[expr.prim]"></object>5.1 Primary expressions </h2>
+
+<h3>
+<dfn class="label">[expr.prim.general]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[expr.prim.general]"></object>5.1.1 General </h3>
+
+<dl>
+<dt>
+<i class="nonterminal"><dfn>primary-expression</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="primary-expression"></object></i>:</dt>
+	<dd><i class="nonterminal">literal</i></dd>
+	<dd><code class="sh_cpp">this</code></dd>
+	<dd>
+<code class="sh_cpp">(</code> <i class="nonterminal">expression</i> <code class="sh_cpp">)</code>
+</dd>
+	<dd><i class="nonterminal">id-expression</i></dd>
+	<dd><i class="nonterminal">lambda-expression</i></dd>
+<dt>
+<i class="nonterminal"><dfn>id-expression</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="id-expression"></object></i>:</dt>
+	<dd><i class="nonterminal">unqualified-id</i></dd>
+	<dd><i class="nonterminal">qualified-id</i></dd>
+<dt>
+<i class="nonterminal"><dfn>unqualified-id</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="unqualified-id"></object></i>:</dt>
+	<dd><i class="nonterminal">identifier</i></dd>
+	<dd><i class="nonterminal">operator-function-id</i></dd>
+	<dd><i class="nonterminal">conversion-function-id</i></dd>
+	<dd><i class="nonterminal">literal-operator-id</i></dd>
+	<dd>
+<code class="sh_cpp">~</code> <i class="nonterminal">class-name</i>
+</dd>
+	<dd>
+<code class="sh_cpp">~</code> <i class="nonterminal">decltype-specifier</i>
+</dd>
+	<dd><i class="nonterminal">template-id</i></dd>
+</dl>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A <i class="nonterminal">literal</i> is a primary expression. Its type depends on its form (<a title="lex.literal" href="lex.literal.kinds.html">2.14</a>). A string literal is
+an lvalue; all other literals are prvalues.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The keyword <code class="sh_cpp">this</code> names a pointer to the object for which a non-static member function
+(<a title="class.this" href="class.this.html">9.3.2</a>) is invoked or a non-static data member’s initializer (<a title="class.mem" href="class.mem.html">9.2</a>) is evaluated.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>f a declaration declares a member function or member function template of a class <code class="sh_cpp">X</code>, the
+expression <code class="sh_cpp">this</code> is a prvalue of type “pointer to <i class="nonterminal">cv-qualifier-seq</i> <code class="sh_cpp">X</code>” between the
+optional <i class="nonterminal">cv-qualifer-seq</i> and the end of the <i class="nonterminal">function-definition</i>, <i class="nonterminal">member-declarator</i>, or
+<i class="nonterminal">declarator</i>. It shall not appear before the optional <i class="nonterminal">cv-qualifier-seq</i> and it shall not appear within
+the declaration of a static member function (although its type and value category are defined within a static member
+function as they are within a non-static member function). <span class="note">[ <em>Note:</em> this is because declaration matching does not occur
+until the complete declarator is known. — <em>end note</em> ]</span> Unlike the object expression in other contexts, <code class="sh_cpp">*this</code> is not
+required to be of complete type for purposes of class member access (<a title="expr.ref " href=".html"></a>) outside the member function body.
+<span class="note">[ <em>Note:</em> only class members declared prior to the declaration are visible. — <em>end note</em> ]</span></p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct A {
+  char g();
+  template&lt;class T&gt; auto f(T t) -&gt; decltype(t + g())
+    { return t + g(); }
+};
+template auto A::f(int t) -&gt; decltype(t + g());</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>Otherwise, if a <i class="nonterminal">member-declarator</i> declares a non-static data member (<a title="class.mem" href="class.mem.html">9.2</a>) of a class
+<code class="sh_cpp">X</code>, the expression <code class="sh_cpp">this</code> is a prvalue of type “pointer to <code class="sh_cpp">X</code>” within the optional
+<i class="nonterminal">brace-or-equal-initializer</i>. It shall not appear elsewhere in the <i class="nonterminal">member-declarator</i>.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>The expression <code class="sh_cpp">this</code> shall not appear in any other context.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">class Outer {
+  int a[sizeof(*this)];             // error: not inside a member function
+  unsigned int sz = sizeof(*this);  // OK: in brace-or-equal-initializer
+
+  void f() {
+    int b[sizeof(*this)];           // OK
+
+    struct Inner {
+       int c[sizeof(*this)];        // error: not inside a member function of Inner
+    };
+  }
+};</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>A parenthesized expression is a primary expression whose type and value are identical to those of the enclosed
+expression. The presence of parentheses does not affect whether the expression is an lvalue. The parenthesized
+expression can be used in exactly the same contexts as those where the enclosed expression can be used, and with the
+same meaning, except as otherwise indicated.</p>
+
+<p><a class="anchor" id="p7" href="#p7">7</a>An <i class="nonterminal">id-expression</i> is a restricted form of a <i class="nonterminal">primary-expression</i>. <span class="note">[ <em>Note:</em> an
+<i class="nonterminal">id-expression</i> can appear after <code class="sh_cpp">.</code> and <code class="sh_cpp">-&gt;</code> operators (<a title="expr.ref " href=".html"></a>). — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p8" href="#p8">8</a>An <i class="nonterminal">identifier</i> is an <i class="nonterminal">id-expression</i> provided it has been suitably declared (Clause
+<a title="dcl.dcl" href="dcl.dcl.html">7</a>). <span class="note">[ <em>Note:</em> for <i class="nonterminal">operator-function-id</i>s, see <a title="over.oper" href="over.oper.html">13.5</a>; for <i class="nonterminal">conversion-function-id</i>s, see
+<a title="class.conv.fct" href="class.conv.fct.html">12.3.2</a>; for <i class="nonterminal">literal-operator-id</i>s, see <a title="over.literal" href="over.literal.html">13.5.8</a>; for <i class="nonterminal">template-id</i>s, see
+<a title="temp.names" href="temp.names.html">14.2</a>. A <i class="nonterminal">class-name</i> or <i class="nonterminal">decltype-specifier</i> prefixed by <code class="sh_cpp">~</code> denotes a destructor;
+see <a title="class.dtor" href="class.dtor.html">12.4</a>. Within the definition of a non-static member function, an identifier that names a non-static member
+is transformed to a class member access expression (<a title="class.mfct.non-static" href="class.mfct.non-static.html">9.3.1</a>). — <em>end note</em> ]</span> The type of the expression is the type of
+the identifier. The result is the entity denoted by the identifier. The result is an lvalue if the entity is a function,
+variable, or data member and a prvalue otherwise.</p>
+
+<dl>
+<dt>
+<i class="nonterminal"><dfn>qualified-id</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="qualified-id"></object></i>:</dt>
+	<dd>
+<i class="nonterminal">nested-name-specifier</i> <code class="sh_cpp">template</code><sub class="opt">opt</sub> <i class="nonterminal">unqualified-id</i>
+</dd>
+	<dd>
+<code class="sh_cpp">::</code> <i class="nonterminal">identifier</i>
+</dd>
+	<dd>
+<code class="sh_cpp">::</code> <i class="nonterminal">operator-function-id</i>
+</dd>
+	<dd>
+<code class="sh_cpp">::</code> <i class="nonterminal">literal-operator-id</i>
+</dd>
+	<dd>
+<code class="sh_cpp">::</code> <i class="nonterminal">template-id</i>
+</dd>
+<dt>
+<i class="nonterminal"><dfn>nested-name-specifier</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="nested-name-specifier"></object></i>:</dt>
+	<dd>
+<code class="sh_cpp">::</code><sub class="opt">opt</sub> <i class="nonterminal">type-name</i> <code class="sh_cpp">::</code>
+</dd>
+	<dd>
+<code class="sh_cpp">::</code><sub class="opt">opt</sub> <i class="nonterminal">namespace-name</i> <code class="sh_cpp">::</code>
+</dd>
+	<dd>
+<i class="nonterminal">decltype-specifier</i> <code class="sh_cpp">::</code>
+</dd>
+	<dd>
+<i class="nonterminal">nested-name-specifier</i> <i class="nonterminal">identifier</i> <code class="sh_cpp">::</code>
+</dd>
+	<dd>
+<i class="nonterminal">nested-name-specifier</i> <code class="sh_cpp">template</code><sub class="opt">opt</sub> <i class="nonterminal">simple-template-id</i> <code class="sh_cpp">::</code>
+</dd>
+</dl>
+
+<p>A <i class="nonterminal">nested-name-specifier</i> that denotes a class, optionally followed by the keyword <code class="sh_cpp">template</code>
+(<a title="temp.names" href="temp.names.html">14.2</a>), and then followed by the name of a member of either that class (<a title="class.mem" href="class.mem.html">9.2</a>) or one of its base
+classes (Clause <a title="class.derived" href="class.derived.html">10</a>), is a <i class="nonterminal">qualified-id</i>; <a title="class.qual" href="class.qual.html">3.4.3.1</a> describes name lookup for class members
+that appear in <i class="nonterminal">qualified-id</i>s. The result is the member. The type of the result is the type of the member. The
+result is an lvalue if the member is a static member function or a data member and a prvalue otherwise. <span class="note">[ <em>Note:</em> a class
+member can be referred to using a <i class="nonterminal">qualified-id</i> at any point in its potential scope (<a title="basic.scope.class" href="basic.scope.class.html">3.3.7</a>). — <em>end note</em> ]</span>
+Where <i class="nonterminal">class-name</i> <code class="sh_cpp">::</code> <i class="nonterminal">class-name</i> is used, and the two <i class="nonterminal">class-name</i>s refer to the
+same class, this notation names the constructor (<a title="class.ctor" href="class.ctor.html">12.1</a>). Where <i class="nonterminal">class-name</i> <code class="sh_cpp">::</code>
+<code class="sh_cpp">~</code> <i class="nonterminal">class-name</i> is used, the two <i class="nonterminal">class-name</i>s shall refer to the same class; this notation
+names the destructor (<a title="class.dtor" href="class.dtor.html">12.4</a>). The form <code class="sh_cpp">~</code> <i class="nonterminal">decltype-specifier</i> also denotes the destructor,
+but it shall not be used as the <i class="nonterminal">unqualified-id</i> in a <i class="nonterminal">qualified-id</i>. <span class="note">[ <em>Note:</em> a <i class="nonterminal">typedef-name</i> that
+names a class is a <i class="nonterminal">class-name</i> (<a title="class.name" href="class.name.html">9.1</a>). — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p9" href="#p9">9</a>A <code class="sh_cpp">::</code>, or a <i class="nonterminal">nested-name-specifier</i> that names a namespace (<a title="basic.namespace" href="basic.namespace.html">7.3</a>), in either case
+followed by the name of a member of that namespace (or the name of a member of a namespace made visible by a
+<i class="nonterminal">using-directive</i>) is a <i class="nonterminal">qualified-id</i>; <a title="namespace.qual" href="namespace.qual.html">3.4.3.2</a> describes name lookup for namespace members
+that appear in <i class="nonterminal">qualified-id</i>s. The result is the member. The type of the result is the type of the member. The
+result is an lvalue if the member is a function or a variable and a prvalue otherwise.</p>
+
+<p><a class="anchor" id="p10" href="#p10">10</a>A <i class="nonterminal">nested-name-specifier</i> that denotes an enumeration (<a title="dcl.enum" href="dcl.enum.html">7.2</a>), followed by the name of an
+enumerator of that enumeration, is a <i class="nonterminal">qualified-id</i> that refers to the enumerator. The result is the enumerator.
+The type of the result is the type of the enumeration. The result is a prvalue.</p>
+
+<p><a class="anchor" id="p11" href="#p11">11</a>In a <i class="nonterminal">qualified-id</i>, if the <i class="nonterminal">unqualified-id</i> is a <i class="nonterminal">conversion-function-id</i>, its
+<i class="nonterminal">conversion-type-id</i> shall denote the same type in both the context in which the entire <i class="nonterminal">qualified-id</i>
+occurs and in the context of the class denoted by the <i class="nonterminal">nested-name-specifier</i>.</p>
+
+<p><a class="anchor" id="p12" href="#p12">12</a>An <i class="nonterminal">id-expression</i> that denotes a non-static data member or non-static member function of a class can
+only be used:</p>
+
+<ul>
+<li>as part of a class member access (<a title="expr.ref " href=".html"></a>) in which the object expression refers to the member’s class<sup class="footnote"><a href="#fn61">61</a></sup> or a class derived from that class, or</li>
+<li>to form a pointer to member (<a title="expr.unary.op" href="expr.unary.op.html">5.3.1</a>), or</li>
+<li>in a <i class="nonterminal">mem-initializer</i> for a constructor for that class or for a class derived from that class
+	(<a title="class.base.init" href="class.base.init.html">12.6.2</a>), or</li>
+<li>in a <i class="nonterminal">brace-or-equal-initializer</i> for a non-static data member of that class or of a class derived from that
+	class (<a title="class.base.init" href="class.base.init.html">12.6.2</a>), or</li>
+<li>if that <i class="nonterminal">id-expression</i> denotes a non-static data member and it appears in an unevaluated operand.
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct S {
+  int m;
+};
+int i = sizeof(S::m);       // OK
+int j = sizeof(S::m + 42);  // OK</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+</li>
+</ul>
+
+
+<div><p class="footnote" id="fn61">61) This also applies when the object expression is an implicit <code class="sh_cpp">(*this)</code>
+(<a title="class.mfct.non-static" href="class.mfct.non-static.html">9.3.1</a>).</p></div>
+</body>
+</html>
+

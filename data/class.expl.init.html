@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Explicit initialization</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[class.expl.init]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[class.expl.init]"></object>12.6.1 Explicit initialization </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>An object of class type can be initialized with a parenthesized <i class="nonterminal">expression-list</i>, where the
+<i class="nonterminal">expression-list</i> is construed as an argument list for a constructor that is called to initialize the object.
+Alternatively, a single <i class="nonterminal">assignment-expression</i> can be specified as an <i class="nonterminal">initializer</i> using the
+<code class="sh_cpp">=</code> form of initialization. Either direct-initialization semantics or copy-initialization semantics apply;
+see <a title="dcl.init" href="dcl.init.html">8.5</a>.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct complex {
+  complex();
+  complex(double);
+  complex(double,double);
+};
+
+complex sqrt(complex,complex);
+
+complex a(1);               // initialize by a call of
+                            // complex(double)
+complex b = a;              // initialize by a copy of a
+complex c = complex(1,2);   // construct complex(1,2)
+                            // using complex(double,double)
+                            // copy/move it into c
+complex d = sqrt(b,c);      // call sqrt(complex,complex)
+                            // and copy/move the result into d
+complex e;                  // initialize by a call of
+                            // complex()
+complex f = 3;              // construct complex(3) using
+                            // complex(double)
+                            // copy/move it into f
+complex g = { 1, 2 };       // construct complex(1, 2)
+                            // using complex(double, double)
+                            // and copy/move it into g</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><span class="note">[ <em>Note:</em> overloading of the assignment operator (<a title="over.ass" href="over.ass.html">13.5.3</a>) has no effect on initialization. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>An object of class type can also be initialized by a <i class="nonterminal">braced-init-list</i>. List-initialization semantics
+apply; see <a title="dcl.init" href="dcl.init.html">8.5</a> and <a title="dcl.init.list" href="dcl.init.list.html">8.5.4</a>.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">complex v[6] = { 1, complex(1,2), complex(), 2 };</code></pre>
+
+<p>Here, <code class="sh_cpp">complex::complex(double)</code> is called for the initialization of <code class="sh_cpp">v[0]</code> and
+<code class="sh_cpp">v[3]</code>, <code class="sh_cpp">complex::complex(double, double)</code> is called for the initialization of <code class="sh_cpp">v[1]</code>,
+<code class="sh_cpp">complex::complex()</code> is called for the initialization <code class="sh_cpp">v[2]</code>, <code class="sh_cpp">v[4]</code>, and
+<code class="sh_cpp">v[5]</code>. For another example,</p>
+
+<pre><code class="sh_cpp">struct X {
+  int i;
+  float f;
+  complex c;
+} x = { 99, 88.8, 77.7 };</code></pre>
+
+<p>Here, <code class="sh_cpp">x.i</code> is initialized with 99, <code class="sh_cpp">x.f</code> is initialized with 88.8, and
+<code class="sh_cpp">complex::complex(double)</code> is called for the initialization of <code class="sh_cpp">x.c</code>. — <em>end example</em> ]</p>
+</div>
+
+<p><span class="note">[ <em>Note:</em> Braces can be elided in the <i class="nonterminal">initializer-list</i> for any aggregate, even if the aggregate has members of a
+class type with user-defined type conversions; see <a title="dcl.init.aggr" href="dcl.init.aggr.html">8.5.1</a>. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><span class="note">[ <em>Note:</em> If <code class="sh_cpp">T</code> is a class type with no default constructor, any declaration of an object of type
+<code class="sh_cpp">T</code> (or array thereof) is ill-formed if no <i class="nonterminal">initializer</i> is explicitly specified (see <a title="class.init" href="class.init.html">12.6</a>
+and <a title="dcl.init" href="dcl.init.html">8.5</a>). — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><span class="note">[ <em>Note:</em> the order in which objects with static or thread storage duration are initialized is described in
+<a title="basic.start.init" href="basic.start.init.html">3.6.2</a> and <a title="stmt.dcl" href="stmt.dcl.html">6.7</a>. — <em>end note</em> ]</span></p>
+</body>
+</html>
+

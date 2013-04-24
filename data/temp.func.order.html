@@ -1,0 +1,151 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Partial ordering of function templates</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[temp.func.order]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[temp.func.order]"></object>14.5.6.2 Partial ordering of function templates </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>If a function template is overloaded, the use of a function template specialization might be ambiguous because
+template argument deduction (<a title="temp.deduct" href="temp.deduct.html">14.8.2</a>) may associate the function template specialization with more than one
+function template declaration. <dfn>Partial ordering</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="Partial ordering"></object> of overloaded function template declarations is used in the
+following contexts to select the function template to which a function template specialization refers:</p>
+
+<ul>
+<li>during overload resolution for a call to a function template specialization (<a title="over.match.best" href="over.match.best.html">13.3.3</a>);</li>
+<li>when the address of a function template specialization is taken;</li>
+<li>when a placement operator delete that is a function template specialization is selected to match a placement
+	operator new (<a title="basic.stc.dynamic.deallocation" href="basic.stc.dynamic.deallocation.html">3.7.4.2</a>, <a title="expr.new" href="expr.new.html">5.3.4</a>);</li>
+<li>when a friend function declaration (<a title="temp.friend" href="temp.friend.html">14.5.4</a>), an explicit instantiation (<a title="temp.explicit" href="temp.explicit.html">14.7.2</a>) or an explicit
+	specialization (<a title="temp.expl.spec" href="temp.expl.spec.html">14.7.3</a>) refers to a function template specialization.</li>
+</ul>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>Partial ordering selects which of two function templates is more specialized than the other by transforming
+each template in turn (see next paragraph) and performing template argument deduction using the function type. The
+deduction process determines whether one of the templates is more specialized than the other. If so, the more
+specialized template is the one chosen by the partial ordering process.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>To produce the transformed template, for each type, non-type, or template template parameter (including
+template parameter packs (<a title="temp.variadic" href="temp.variadic.html">14.5.3</a>) thereof) synthesize a unique type, value, or class template respectively
+and substitute it for each occurrence of that parameter in the function type of the template. If only one of the
+function templates is a non-static member, that function template is considered to have a new first parameter inserted
+in its function parameter list. The new parameter is of type “reference to <var>cv</var> <code class="sh_cpp">A</code>”, where
+<var>cv</var> are the cv-qualifiers of the function template (if any) and <code class="sh_cpp">A</code> is the class of which the
+function template is a member. <span class="note">[ <em>Note:</em> This allows a non-static member to be ordered with respect to a nonmember function
+and for the results to be equivalent to the ordering of two equivalent nonmembers. — <em>end note</em> ]</span></p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct A { };
+template&lt;class T&gt; struct B {
+  template&lt;class R&gt; int operator*(R&amp;);              // #1
+};
+
+template&lt;class T, class R&gt; int operator*(T&amp;, R&amp;);   // #2
+
+// The declaration of B::operator* is transformed into the equivalent of
+// template&lt;class R&gt; int operator*(B&lt;A&gt;&amp;, R&amp;);      // #1a
+
+int main() {
+  A a;
+  B&lt;A&gt; b;
+  b * a;                                            // calls #1a
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>Using the transformed function template’s function type, perform type deduction against the other template as
+described in <a title="temp.deduct.partial" href="temp.deduct.partial.html">14.8.2.4</a>.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">template&lt;class T&gt; struct A { A(); };
+
+template&lt;class T&gt; void f(T);
+template&lt;class T&gt; void f(T*);
+template&lt;class T&gt; void f(const T*);
+
+template&lt;class T&gt; void g(T);
+template&lt;class T&gt; void g(T&amp;);
+
+template&lt;class T&gt; void h(const T&amp;);
+template&lt;class T&gt; void h(A&lt;T&gt;&amp;);
+
+void m() {
+  const int *p;
+  f(p);                 // f(const T*) is more specialized than f(T) or f(T*)
+  float x;
+  g(x);                 // Ambiguous: g(T) or g(T&amp;)
+  A&lt;int&gt; z;
+  h(z);                 // overload resolution selects h(A&lt;T&gt;&amp;)
+  const A&lt;int&gt; z2;
+  h(z2);                // h(const T&amp;) is called because h(A&lt;T&gt;&amp;) is not callable
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<div class="note">
+<p><a class="anchor" id="p5" href="#p5">5</a>[ <em>Note:</em> Since partial ordering in a call context considers only parameters for which there are explicit call
+arguments, some parameters are ignored (namely, function parameter packs, parameters with default arguments, and
+ellipsis parameters).</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">template&lt;class T&gt; void f(T);            // #1
+template&lt;class T&gt; void f(T*, int=1);    // #2
+template&lt;class T&gt; void g(T);            // #3
+template&lt;class T&gt; void g(T*, ...);      // #4
+
+int main() {
+  int* ip;
+  f(ip);            // calls #2
+  g(ip);            // calls #4
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">template&lt;class T, class U&gt; struct A { };
+
+template&lt;class T, class U&gt; void f(U, A&lt;U, T&gt;* p = 0);   // #1
+template&lt;class U&gt; void f(U, A&lt;U, U&gt;* p = 0);            // #2
+template&lt;class T&gt; void g(T, T = T());                   // #3
+template&lt;class T, class... U&gt; void g(T, U...);          // #4
+
+void h() {
+  f&lt;int&gt;(42, (A&lt;int, int&gt;*)0);                          // calls #2
+  f&lt;int&gt;(42);                                           // error: ambiguous
+  g(42);                                                // error: ambiguous
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">
+template&lt;class T, class... U&gt; void f(T, U...);           // #1
+template&lt;class T&gt; void f(T);                             // #2
+template&lt;class T, class... U&gt; void g(T*, U...);          // #3
+template&lt;class T&gt; void g(T);                             // #4
+
+void h(int i) {
+  f(&amp;i);                                                 // error: ambiguous
+  g(&amp;i);                                                 // OK: calls #3
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+<p> — <em>end note</em> ]</p>
+</div>
+</body>
+</html>
+

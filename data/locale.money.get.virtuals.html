@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>money_get virtual functions</title>
+</head>
+<body>
+<h5>
+<dfn class="label">[locale.money.get.virtuals]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[locale.money.get.virtuals]"></object>22.4.6.1.2 <code class="sh_cpp">money_get</code> virtual functions </h5>
+
+<pre><code class="sh_cpp">iter_type <dfn>do_get</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="do_get"></object>(iter_type s, iter_type end, bool intl,
+                 ios_base&amp; str, ios_base::iostate&amp; err,
+                 long double&amp; units) const;
+iter_type do_get(iter_type s, iter_type end, bool intl,
+                 ios_base&amp; str, ios_base::iostate&amp; err,
+                 string_type&amp; digits) const;</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Effects:</em> Reads characters from <code class="sh_cpp">s</code> to parse and construct a monetary value according to the format
+specified by a <code class="sh_cpp">moneypunct&lt;charT,Intl&gt;</code> facet reference <code class="sh_cpp">mp</code> and the character mapping
+specified by a <code class="sh_cpp">ctype&lt;charT&gt;</code> facet reference <code class="sh_cpp">ct</code> obtained from the locale returned
+by <code class="sh_cpp">str.getloc()</code>, and <code class="sh_cpp">str.flags()</code>. If a valid sequence is recognized, does not change
+<code class="sh_cpp">err</code>; otherwise, sets <code class="sh_cpp">err</code> to <code class="sh_cpp">(err|str.failbit)</code>, or
+<code class="sh_cpp">(err|str.failbit|str.eofbit)</code> if no more characters are available, and does not change <code class="sh_cpp">units</code> or
+<code class="sh_cpp">digits</code>. Uses the pattern returned by <code class="sh_cpp">mp.neg_format()</code> to parse all values. The result is
+returned as an integral value stored in <code class="sh_cpp">units</code> or as a sequence of digits possibly preceded by a minus sign
+(as produced by <code class="sh_cpp">ct.widen(c)</code> where <code class="sh_cpp">c</code> is <code class="sh_cpp">'-'</code> or in the range from <code class="sh_cpp">'0'</code>
+through <code class="sh_cpp">'9'</code>, inclusive) stored in <code class="sh_cpp">digits</code>. <span class="example">[ <em>Example:</em> The sequence <code class="sh_cpp">$1,056.23</code> in a
+common United States locale would yield, for <code class="sh_cpp">units</code>, <code class="sh_cpp">105623</code>, or, for <code class="sh_cpp">digits</code>,
+<code class="sh_cpp">"105623"</code>. — <em>end example</em> ]</span> If <code class="sh_cpp">mp.grouping()</code> indicates that no thousands separators are permitted, any
+such characters are not read, and parsing is terminated at the point where they first appear. Otherwise, thousands
+separators are optional; if present, they are checked for correct placement only after all format components have been
+read.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>Where <code class="sh_cpp">money_base::space</code> or <code class="sh_cpp">money_base::none</code> appears as the last element in the format
+pattern, no white space is consumed. Otherwise, where <code class="sh_cpp">money_base::space</code> appears in any of the initial
+elements of the format pattern, at least one white space character is required. Where <code class="sh_cpp">money_base::none</code>
+appears in any of the initial elements of the format pattern, white space is allowed but not required. If
+<code class="sh_cpp">(str.flags() &amp; str.showbase)</code> is false, the currency symbol is optional and is consumed only if other
+characters are needed to complete the format; otherwise, the currency symbol is required.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>If the first character (if any) in the string pos returned by <code class="sh_cpp">mp.positive_sign()</code> or the string
+<code class="sh_cpp">neg</code> returned by <code class="sh_cpp">mp.negative_sign()</code> is recognized in the position indicated by
+<code class="sh_cpp">sign</code> in the format pattern, it is consumed and any remaining characters in the string are required after
+all the other format components. <span class="example">[ <em>Example:</em> If <code class="sh_cpp">showbase</code> is off, then for a <code class="sh_cpp">neg</code> value of
+<code class="sh_cpp">"()"</code> and a currency symbol of <code class="sh_cpp">"L"</code>, in <code class="sh_cpp">"(100 L)"</code> the <code class="sh_cpp">"L"</code> is consumed;
+but if <code class="sh_cpp">neg</code> is <code class="sh_cpp">"-"</code>, the <code class="sh_cpp">"L"</code> in <code class="sh_cpp">"-100 L"</code> is not consumed. — <em>end example</em> ]</span> If
+<code class="sh_cpp">pos</code> or <code class="sh_cpp">neg</code> is empty, the sign component is optional, and if no sign is detected, the result is
+given the sign that corresponds to the source of the empty string. Otherwise, the character in the indicated position
+must match the first character of <code class="sh_cpp">pos</code> or <code class="sh_cpp">neg</code>, and the result is given the corresponding sign.
+If the first character of <code class="sh_cpp">pos</code> is equal to the first character of <code class="sh_cpp">neg</code>, or if both strings are
+empty, the result is given a positive sign.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>Digits in the numeric monetary component are extracted and placed in <code class="sh_cpp">digits</code>, or into a character
+buffer <code class="sh_cpp">buf1</code> for conversion to produce a value for <code class="sh_cpp">units</code>, in the order in which they appear,
+preceded by a minus sign if and only if the result is negative. The value <code class="sh_cpp">units</code> is produced as if by<sup class="footnote"><a href="#fn257">257</a></sup></p>
+
+<pre><code class="sh_cpp">for (int i = 0; i &lt; n; ++i)
+  buf2[i] = src[find(atoms, atoms+sizeof(src), buf1[i]) - atoms];
+buf2[n] = 0;
+sscanf(buf2, "%Lf", &amp;units);</code></pre>
+
+<p>where <code class="sh_cpp">n</code> is the number of characters placed in <code class="sh_cpp">buf1</code>, <code class="sh_cpp">buf2</code> is a character
+buffer, and the values <code class="sh_cpp">src</code> and <code class="sh_cpp">atoms</code> are defined as if by</p>
+
+<pre><code class="sh_cpp">static const char src[] = "0123456789-";
+charT atoms[sizeof(src)];
+ct.widen(src, src + sizeof(src) - 1, atoms);</code></pre>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><em>Returns:</em> An iterator pointing immediately beyond the last character recognized as part of a valid monetary
+quantity.</p>
+
+
+<div><p class="footnote" id="fn257">257) The semantics here are different from <code class="sh_cpp">ct.narrow</code>.</p></div>
+</body>
+</html>
+

@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Adaptors for pointers to functions</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[depr.function.pointer.adaptors]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[depr.function.pointer.adaptors]"></object>D.8.2.1 Adaptors for pointers to functions </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>To allow pointers to (unary and binary) functions to work with function adaptors the library provides:</p>
+
+<h5><code class="sh_cpp">template &lt;class Arg, class Result&gt;
+class <dfn>pointer_to_unary_function</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="pointer_to_unary_function"></object> : public unary_function&lt;Arg, Result&gt; {
+public:
+  explicit pointer_to_unary_function(Result (*f)(Arg));
+  Result operator()(Arg x) const;
+};</code></h5>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><code class="sh_cpp">operator()</code> returns <code class="sh_cpp">f(x)</code>.</p>
+
+<h5><code class="sh_cpp">template &lt;class Arg, class Result&gt;
+  pointer_to_unary_function&lt;Arg, Result&gt; <dfn>ptr_fun</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="ptr_fun"></object>(Result (*f)(Arg));</code></h5>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Returns:</em> <code class="sh_cpp">pointer_to_unary_function&lt;Arg, Result&gt;(f)</code>.</p>
+
+<h5><code class="sh_cpp">template &lt;class Arg1, class Arg2, class Result&gt;
+class <dfn>pointer_to_binary_function</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="pointer_to_binary_function"></object> :
+  public binary_function&lt;Arg1,Arg2,Result&gt; {
+public:
+  explicit pointer_to_binary_function(Result (*f)(Arg1, Arg2));
+  Result operator()(Arg1 x, Arg2 y) const;
+};</code></h5>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><code class="sh_cpp">operator()</code> returns <code class="sh_cpp">f(x,y)</code>.</p>
+
+<h5><code class="sh_cpp">template &lt;class Arg1, class Arg2, class Result&gt;
+  pointer_to_binary_function&lt;Arg1,Arg2,Result&gt;
+    <dfn>ptr_fun</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="ptr_fun"></object>(Result (*f)(Arg1, Arg2));</code></h5>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><em>Returns:</em> <code class="sh_cpp">pointer_to_binary_function&lt;Arg1,Arg2,Result&gt;(f)</code>.</p>
+
+<div class="example">
+<p><a class="anchor" id="p6" href="#p6">6</a>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">int compare(const char*, const char*);
+replace_if(v.begin(), v.end(),
+  not1(bind2nd(ptr_fun(compare), "abc")), "def");</code></pre>
+
+<p>replaces each <code class="sh_cpp">abc</code> with <code class="sh_cpp">def</code> in sequence <code class="sh_cpp">v</code>. — <em>end example</em> ]</p>
+</div>
+</body>
+</html>
+

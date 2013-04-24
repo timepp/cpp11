@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Argument substitution</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[cpp.subst]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[cpp.subst]"></object>16.3.1 Argument substitution </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>After the arguments for the invocation of a function-like macro have been identified, argument substitution
+takes place. A parameter in the replacement list, unless preceded by a <code class="sh_cpp">#</code> or <code class="sh_cpp">##</code> preprocessing
+token or followed by a <code class="sh_cpp">##</code> preprocessing token (see below), is replaced by the corresponding argument after
+all macros contained therein have been expanded. Before being substituted, each argument’s preprocessing tokens are
+completely macro replaced as if they formed the rest of the preprocessing file; no other preprocessing tokens are
+available.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>An identifier <code class="sh_cpp">__VA_ARGS__</code> that occurs in the replacement list shall be treated as if it were a
+parameter, and the variable arguments shall form the preprocessing tokens used to replace it.</p>
+</body>
+</html>
+

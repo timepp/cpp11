@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Find end</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[alg.find.end]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[alg.find.end]"></object>25.2.6 Find end </h3>
+
+<pre><code class="sh_cpp">template&lt;class ForwardIterator1, class ForwardIterator2&gt;
+  ForwardIterator1
+    <dfn>find_end</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="find_end"></object>(ForwardIterator1 first1, ForwardIterator1 last1,
+             ForwardIterator2 first2, ForwardIterator2 last2);
+
+template&lt;class ForwardIterator1, class ForwardIterator2,
+         class BinaryPredicate&gt;
+  ForwardIterator1
+    find_end(ForwardIterator1 first1, ForwardIterator1 last1,
+             ForwardIterator2 first2, ForwardIterator2 last2,
+             BinaryPredicate pred);</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Effects:</em> Finds a subsequence of equal values in a sequence.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Returns:</em> The last iterator <code class="sh_cpp">i</code> in the range <code class="sh_cpp">[first1, last1 - (last2 - first2))</code> such
+that for any non-negative integer <code class="sh_cpp">n &lt; (last2 - first2)</code>, the following corresponding conditions hold:
+<code class="sh_cpp">*(i + n) == *(first2 + n)</code>, <code class="sh_cpp">pred(*(i + n), *(first2 + n)) != false</code>. Returns <code class="sh_cpp">last1</code>
+if <code class="sh_cpp">[first2, last2)</code> is empty or if no such iterator is found.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Complexity:</em> At most <code class="sh_cpp">(last2 - first2) * (last1 - first1 - (last2 - first2) + 1)</code>
+applications of the corresponding predicate.</p>
+</body>
+</html>
+

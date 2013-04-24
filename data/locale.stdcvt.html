@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Standard code conversion facets</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[locale.stdcvt]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[locale.stdcvt]"></object>22.5 Standard code conversion facets </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The header <dfn><code class="header">&lt;codecvt&gt;</code></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="&lt;codecvt&gt;"></object> provides code conversion facets for various character
+encodings.</p>
+
+<h3>
+<a class="anchor" id="p2" href="#p2">2</a>Header <code class="header">&lt;codecvt&gt;</code> synopsis</h3>
+
+<pre><code class="sh_cpp">namespace std {
+  enum <dfn>codecvt_mode</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="codecvt_mode"></object> {
+    consume_header = 4,
+    generate_header = 2,
+    little_endian = 1
+  };
+
+  template&lt;class Elem, unsigned long Maxcode = 0x10ffff,
+    codecvt_mode Mode = (codecvt_mode)0&gt;
+  class <dfn>codecvt_utf8</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="codecvt_utf8"></object>
+    : public codecvt&lt;Elem, char, mbstate_t&gt; {
+    // unspecified
+  };
+
+  template&lt;class Elem, unsigned long Maxcode = 0x10ffff,
+    codecvt_mode Mode = (codecvt_mode)0&gt;
+  class <dfn>codecvt_utf16</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="codecvt_utf16"></object>
+    : public codecvt&lt;Elem, char, mbstate_t&gt; {
+    // unspecified
+  };
+
+  template&lt;class Elem, unsigned long Maxcode = 0x10ffff,
+    codecvt_mode Mode = (codecvt_mode)0&gt;
+  class <dfn>codecvt_utf8_utf16</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="codecvt_utf8_utf16"></object>
+    : public codecvt&lt;Elem, char, mbstate_t&gt; {
+    // unspecified
+  };
+}</code></pre>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>For each of the three code conversion facets <code class="sh_cpp">codecvt_utf8</code>, <code class="sh_cpp">codecvt_utf16</code>, and
+<code class="sh_cpp">codecvt_utf8_utf16</code>:</p>
+
+<ul>
+<li>
+<code class="sh_cpp">Elem</code> is the wide-character type, such as <code class="sh_cpp">wchar_t</code>, <code class="sh_cpp">char16_t</code>, or
+	<code class="sh_cpp">char32_t</code>.</li>
+<li>
+<code class="sh_cpp">Maxcode</code> is the largest wide-character code that the facet will read or write without reporting a
+	conversion error.</li>
+<li>If <code class="sh_cpp">(Mode &amp; consume_header)</code>, the facet shall consume an initial header sequence, if present, when
+	reading a multibyte sequence to determine the endianness of the subsequent multibyte sequence to be read.</li>
+<li>If <code class="sh_cpp">(Mode &amp; generate_header)</code>, the facet shall generate an initial header sequence when writing a
+	multibyte sequence to advertise the endianness of the subsequent multibyte sequence to be written.</li>
+<li>If <code class="sh_cpp">(Mode &amp; little_endian)</code>, the facet shall generate a multibyte sequence in little-endian order, as
+	opposed to the default big-endian order.</li>
+</ul>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>For the facet <code class="sh_cpp">codecvt_utf8</code>:</p>
+
+<ul>
+<li>The facet shall convert between UTF-8 multibyte sequences and UCS2 or UCS4 (depending on the size of
+	<code class="sh_cpp">Elem</code>) within the program.</li>
+<li>Endianness shall not affect how multibyte sequences are read or written.</li>
+<li>The multibyte sequences may be written as either a text or a binary file.</li>
+</ul>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>For the facet <code class="sh_cpp">codecvt_utf16</code>:</p>
+
+<ul>
+<li>The facet shall convert between UTF-16 multibyte sequences and UCS2 or UCS4 (depending on the size of
+	<code class="sh_cpp">Elem</code>) within the program.</li>
+<li>Multibyte sequences shall be read or written according to the <code class="sh_cpp">Mode</code> flag, as set out above.</li>
+<li>The multibyte sequences may be written only as a binary file. Attempting to write to a text file produces undefined
+	behavior.</li>
+</ul>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>For the facet <code class="sh_cpp">codecvt_utf8_utf16</code>:</p>
+
+<ul>
+<li>The facet shall convert between UTF-8 multibyte sequences and UTF-16 (one or two 16-bit codes) within the
+	program.</li>
+<li>Endianness shall not affect how multibyte sequences are read or written.</li>
+<li>The multibyte sequences may be written as either a text or a binary file.</li>
+</ul>
+
+<p><span class="seealso">See also:</span> ISO/IEC 10646-1:1993.</p>
+</body>
+</html>
+

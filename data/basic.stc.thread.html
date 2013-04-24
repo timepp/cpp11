@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Thread storage duration</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[basic.stc.thread]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[basic.stc.thread]"></object>3.7.2 Thread storage duration </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>All variables declared with the <code class="sh_cpp">thread_local</code> keyword have <dfn>thread storage duration</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="thread storage duration"></object>. The
+storage for these entities shall last for the duration of the thread in which they are created. There is a distinct
+object or reference per thread, and use of the declared name refers to the entity associated with the current
+thread.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>A variable with thread storage duration shall be initialized before its first odr-use and, if constructed,
+shall be destroyed on thread exit.</p>
+</body>
+</html>
+

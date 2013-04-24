@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>regex_replace</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[re.alg.replace]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[re.alg.replace]"></object>28.11.4 <code class="sh_cpp"><dfn>regex_replace</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="regex_replace"></object></code> </h3>
+
+<h4><code class="sh_cpp">template &lt;class OutputIterator, class BidirectionalIterator,
+    class traits, class charT, class ST, class SA&gt;
+  OutputIterator
+  regex_replace(OutputIterator out,
+                BidirectionalIterator first, BidirectionalIterator last,
+                const basic_regex&lt;charT, traits&gt;&amp; e,
+                const basic_string&lt;charT, ST, SA&gt;&amp; fmt,
+                regex_constants::match_flag_type flags =
+                  regex_constants::match_default);
+template &lt;class OutputIterator, class BidirectionalIterator,
+    class traits, class charT&gt;
+  OutputIterator
+  regex_replace(OutputIterator out,
+                BidirectionalIterator first, BidirectionalIterator last,
+                const basic_regex&lt;charT, traits&gt;&amp; e,
+                const charT* fmt,
+                regex_constants::match_flag_type flags =
+                  regex_constants::match_default);</code></h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Effects:</em> Constructs a <code class="sh_cpp">regex_iterator</code> object <code class="sh_cpp">i</code> as if by
+<code class="sh_cpp">regex_iterator&lt;BidirectionalIterator, charT, traits&gt; i(first, last, e, flags)</code>, and uses
+<code class="sh_cpp">i</code> to enumerate through all of the matches <code class="sh_cpp">m</code> of type
+<code class="sh_cpp">match_results&lt;BidirectionalIterator&gt;</code> that occur within the sequence <code class="sh_cpp">[first,last)</code>.
+If no such matches are found and <code class="sh_cpp">!(flags &amp; regex_constants::format_no_copy)</code> then calls
+<code class="sh_cpp">std::copy(first, last, out)</code>. If any matches are found then, for each such match, if <code class="sh_cpp">!(flags &amp;
+regex_constants::format_no_copy)</code>, calls <code class="sh_cpp">std::copy(m.prefix().first, m.prefix().second, out)</code>, and then
+calls <code class="sh_cpp">m.format(out, fmt, flags)</code> for the first form of the function and <code class="sh_cpp">m.format(out, fmt,
+fmt + char_traits&lt;charT&gt;::length(fmt), flags)</code> for the second.</p>
+
+<p>Finally, if such a match is found and <code class="sh_cpp">!(flags &amp; regex_constants::format_no_copy)</code>, calls
+<code class="sh_cpp">std::copy(last_m.suffix().first, last_m.suffix().second, out)</code> where <code class="sh_cpp">last_m</code> is a copy of the
+last match found. If <code class="sh_cpp">flags &amp; regex_constants::format_first_only</code> is non-zero then only the first match
+found is replaced.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Returns:</em> <code class="sh_cpp">out</code>.</p>
+
+<h4><code class="sh_cpp">template &lt;class traits, class charT, class ST, class SA, class FST, class FSA&gt;
+  basic_string&lt;charT, ST, SA&gt;
+  regex_replace(const basic_string&lt;charT, ST, SA&gt;&amp; s,
+                const basic_regex&lt;charT, traits&gt;&amp; e,
+                const basic_string&lt;charT, FST, FSA&gt;&amp; fmt,
+                regex_constants::match_flag_type flags =
+                  regex_constants::match_default);
+template &lt;class traits, class charT, class ST, class SA&gt;
+  basic_string&lt;charT, ST, SA&gt;
+  regex_replace(const basic_string&lt;charT, ST, SA&gt;&amp; s,
+                const basic_regex&lt;charT, traits&gt;&amp; e,
+                const charT* fmt,
+                regex_constants::match_flag_type flags =
+                  regex_constants::match_default);</code></h4>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Effects:</em> Constructs an empty string <code class="sh_cpp">result</code> of type <code class="sh_cpp">basic_string&lt;charT, ST,
+SA&gt;</code> and calls <code class="sh_cpp">regex_replace(back_inserter(result), s.begin(), s.end(), e, fmt,
+flags)</code>.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><em>Returns:</em> <code class="sh_cpp">result</code>.</p>
+
+<h4><code class="sh_cpp">template &lt;class traits, class charT, class ST, class SA&gt;
+  basic_string&lt;charT&gt;}
+  regex_replace(const charT* s,
+                const basic_regex&lt;charT, traits&gt;&amp; e,
+                const basic_string&lt;charT, ST, SA&gt;&amp; fmt,
+                regex_constants::match_flag_type flags =
+                  regex_constants::match_default);
+template &lt;class traits, class charT&gt;
+  basic_string&lt;charT&gt;
+  regex_replace(const charT* s,
+                const basic_regex&lt;charT, traits&gt;&amp; e,
+                const charT* fmt,
+                regex_constants::match_flag_type flags =
+                  regex_constants::match_default);</code></h4>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><em>Effects:</em> Constructs an empty string <code class="sh_cpp">result</code> of type <code class="sh_cpp">basic_string&lt;charT&gt;</code>
+and calls <code class="sh_cpp">regex_replace(back_inserter(result), s, s + char_traits&lt;charT&gt;::length(s), e, fmt,
+flags)</code>.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a><em>Returns:</em> <code class="sh_cpp">result</code>.</p>
+</body>
+</html>
+

@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Swappable requirements</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[swappable.requirements]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[swappable.requirements]"></object>17.6.3.2 <code class="concept">Swappable</code> requirements </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>This subclause provides definitions for swappable types and expressions. In these definitions, let
+<code class="sh_cpp">t</code> denote an expression of type <code class="sh_cpp">T</code>, and let <code class="sh_cpp">u</code> denote an expression of type
+<code class="sh_cpp">U</code>.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>An object <code class="sh_cpp">t</code> is <dfn>swappable with</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="swappable with"></object> an object <code class="sh_cpp">u</code> if and only if:</p>
+
+<ul>
+<li>the expressions <code class="sh_cpp">swap(t, u)</code> and <code class="sh_cpp">swap(u, t)</code> are valid when evaluated in the context
+	described below, and</li>
+<li>these expressions have the following effects:
+	<ul>
+	<li>the object referred to by <code class="sh_cpp">t</code> has the value originally held by <code class="sh_cpp">u</code> and</li>
+	<li>the object referred to by <code class="sh_cpp">u</code> has the value originally held by <code class="sh_cpp">t</code>.</li>
+	</ul>
+</li>
+</ul>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>The context in which <code class="sh_cpp">swap(t, u)</code> and <code class="sh_cpp">swap(u, t)</code> are evaluated shall ensure that a
+binary non-member function named “<code class="sh_cpp">swap</code>” is selected via overload resolution (<a title="over.match" href="over.match.html">13.3</a>) on a
+candidate set that includes:</p>
+
+<ul>
+<li>the two <code class="sh_cpp">swap</code> function templates defined in <code class="header">&lt;utility&gt;</code> (<a title="utility" href="utility.html">20.2</a>) and</li>
+<li>the lookup set produced by argument-dependent lookup (<a title="basic.lookup.argdep" href="basic.lookup.argdep.html">3.4.2</a>).</li>
+</ul>
+
+<p><span class="note">[ <em>Note:</em> If <code class="sh_cpp">T</code> and <code class="sh_cpp">U</code> are both fundamental types or arrays of fundamental types and the
+declarations from the header <code class="header">&lt;utility&gt;</code> are in scope, the overall lookup set described above is
+equivalent to that of the qualified name lookup applied to the expression <code class="sh_cpp">std::swap(t, u)</code> or
+<code class="sh_cpp">std::swap(u, t)</code> as appropriate. — <em>end note</em> ]</span></p>
+
+<p><span class="note">[ <em>Note:</em> It is unspecified whether a library component that has a swappable requirement includes the header
+<code class="header">&lt;utility&gt;</code> to ensure an appropriate evaluation context. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>An rvalue or lvalue <code class="sh_cpp">t</code> is <dfn>swappable</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="swappable"></object> if and only if <code class="sh_cpp">t</code> is swappable with any
+rvalue or lvalue, respectively, of type <code class="sh_cpp">T</code>.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>A type <code class="sh_cpp">X</code> satisfying any of the iterator requirements (<a title="iterator.requirements" href="iterator.requirements.general.html">24.2</a>) is
+<code class="concept"><dfn>ValueSwappable</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="ValueSwappable"></object></code> if, for any dereferenceable object <code class="sh_cpp">x</code> of type <code class="sh_cpp">X</code>,
+<code class="sh_cpp">*x</code> is swappable.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> User code can ensure that the evaluation of <code class="sh_cpp">swap</code> calls is performed in an appropriate context
+under the various conditions as follows:</p>
+
+<pre><code class="sh_cpp">#include &lt;utility&gt;
+
+// Requires: std::forward&lt;T&gt;(t) shall be swappable with std::forward&lt;U&gt;(u).
+template &lt;class T, class U&gt;
+void value_swap(T&amp;&amp; t, U&amp;&amp; u) {
+  using std::swap;
+  swap(std::forward&lt;T&gt;(t), std::forward&lt;U&gt;(u)); // OK: uses “swappable with” conditions
+                                                // for rvalues and lvalues
+}
+
+// Requires: lvalues of T shall be swappable.
+template &lt;class T&gt;
+void lv_swap(T&amp; t1 T&amp; t2) {
+  using std::swap;
+  swap(t1, t2);                                 // OK: uses swappable conditions for
+}                                               // lvalues of type T
+
+namespace N {
+  struct A { int m; };
+  struct Proxy { A *a; };
+  Proxy proxy(A&amp; a) { return Proxy{&amp;a}; }
+    void swap(A&amp; x, Proxy p) {
+      std::swap(x.m, p.a-&gt;m);                   // OK: uses context equivalent to swappable
+                                                // conditions for fundamental types
+    }
+    void swap(Proxy p, A&amp; x) { swap(x, p); }    // satisfy symmetry contraint
+}
+
+int main() {
+  int i = 1, j = 2;
+  lv_swap(i, j);
+  assert(i == 2 &amp;&amp; j == 1);
+
+  N::A a1 = { 5 }, a2 = { -5 };
+    value_swap(a1, proxy(a2));
+    assert(a1.m == -5 &amp;&amp; a2.m == 5);
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+</body>
+</html>
+

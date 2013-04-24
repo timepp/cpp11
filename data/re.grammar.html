@@ -1,0 +1,162 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Modified ECMAScript regular expression grammar</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[re.grammar]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[re.grammar]"></object>28.13 Modified ECMAScript regular expression grammar </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The regular expression grammar recognized by <code class="sh_cpp">basic_regex</code> objects constructed with the
+<code class="sh_cpp">ECMAScript</code> flag is that specified by <cite>ECMA-262</cite>, except as specified below.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>Objects of type specialization of <code class="sh_cpp">basic_regex</code> store within themselves a default-constructed
+instance of their <code class="sh_cpp">traits</code> template parameter, henceforth referred to as <code class="sh_cpp">traits_inst</code>. This
+<code class="sh_cpp">traits_inst</code> object is used to support localization of the regular expression; <code class="sh_cpp">basic_regex</code>
+member functions shall not call any locale dependent C or C++ API, including the formatted string input
+functions. Instead they shall call the appropriate <code class="sh_cpp">traits</code> member function to achieve the required
+effect.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>The following productions within the ECMAScript grammar are modified as follows:</p>
+
+<pre><code class="sh_cpp">ClassAtom ::
+  -
+  ClassAtomNoDash
+  ClassAtomExClass
+  ClassAtomCollatingElement
+  ClassAtomEquivalence</code></pre>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>The following new productions are then added:</p>
+
+<pre><code class="sh_cpp">ClassAtomExClass ::
+  [: ClassName :]
+
+ClassAtomCollatingElement ::
+  [. ClassName .]
+
+ClassAtomEquivalence ::
+  [= ClassName =]
+
+ClassName ::
+  ClassNameCharacter
+  ClassNameCharacter ClassName
+
+ClassNameCharacter ::
+  SourceCharacter but not one of "." "=" ":"</code></pre>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>The productions <code class="sh_cpp">ClassAtomExClass</code>, <code class="sh_cpp">ClassAtomCollatingElement</code> and
+<code class="sh_cpp">ClassAtomEquivalence</code> provide functionality equivalent to that of the same features in regular expressions
+in POSIX.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>The regular expression grammar may be modified by any <code class="sh_cpp">regex_constants::syntax_option_type</code> flags
+specified when constructing an object of type specialization of <code class="sh_cpp">basic_regex</code> according to the rules in
+Table <a href="re.synopt.html#t138">138</a>.</p>
+
+<p><a class="anchor" id="p7" href="#p7">7</a>A <code class="sh_cpp">ClassName</code> production, when used in <code class="sh_cpp">ClassAtomExClass</code>, is not valid if
+<code class="sh_cpp">traits_inst.lookup_classname</code> returns zero for that name. The names recognized as valid
+<code class="sh_cpp">ClassName</code>s are determined by the type of the <code class="sh_cpp">traits</code> class, but at least the following names
+shall be recognized: <code class="sh_cpp">alnum</code>, <code class="sh_cpp">alpha</code>, <code class="sh_cpp">blank</code>, <code class="sh_cpp">cntrl</code>, <code class="sh_cpp">digit</code>,
+<code class="sh_cpp">graph</code>, <code class="sh_cpp">lower</code>, <code class="sh_cpp">print</code>, <code class="sh_cpp">punct</code>, <code class="sh_cpp">space</code>, <code class="sh_cpp">upper</code>,
+<code class="sh_cpp">xdigit</code>, <code class="sh_cpp">d</code>, <code class="sh_cpp">s</code>, <code class="sh_cpp">w</code>. In addition the following expressions shall be
+equivalent:</p>
+
+<ul>
+<li>
+<code class="sh_cpp">\d</code> and <code class="sh_cpp">[[:digit:]]</code>
+</li>
+<li>
+<code class="sh_cpp">\D</code> and <code class="sh_cpp">[^[:digit:]]</code>
+</li>
+<li>
+<code class="sh_cpp">\s</code> and <code class="sh_cpp">[[:space:]]</code>
+</li>
+<li>
+<code class="sh_cpp">\S</code> and <code class="sh_cpp">[^[:space:]]</code>
+</li>
+<li>
+<code class="sh_cpp">\w</code> and <code class="sh_cpp">[_[:alnum:]]</code>
+</li>
+<li>
+<code class="sh_cpp">\W</code> and <code class="sh_cpp">[^_[:alnum:]]</code>
+</li>
+</ul>
+
+<p><a class="anchor" id="p8" href="#p8">8</a>A <code class="sh_cpp">ClassName</code> production when used in a <code class="sh_cpp">ClassAtomCollatingElement</code> production is not
+valid if the value returned by <code class="sh_cpp">traits_inst.lookup_collatename</code> for that name is an empty string.</p>
+
+<p><a class="anchor" id="p9" href="#p9">9</a>The results from multiple calls to <code class="sh_cpp">traits_inst.lookup_classname</code> can be bitwise or’ed together and
+subsequently passed to <code class="sh_cpp">traits_inst.isctype</code>.</p>
+
+<p><a class="anchor" id="p10" href="#p10">10</a>A <code class="sh_cpp">ClassName</code> production when used in a <code class="sh_cpp">ClassAtomEquivalence</code> production is not valid
+if the value returned by <code class="sh_cpp">traits_inst.lookup_collatename</code> for that name is an empty string or if the value
+returned by <code class="sh_cpp">traits_inst.transform_primary</code> for the result of the call to
+<code class="sh_cpp">traits_inst.lookup_collatename</code> is an empty string.</p>
+
+<p><a class="anchor" id="p11" href="#p11">11</a>When the sequence of characters being transformed to a finite state machine contains an invalid class name the
+translator shall throw an exception object of type <code class="sh_cpp">regex_error</code>.</p>
+
+<p><a class="anchor" id="p12" href="#p12">12</a>If the <var>CV</var> of a <var>UnicodeEscapeSequence</var> is greater than the largest value that can be held
+in an object of type <code class="sh_cpp">charT</code> the translator shall throw an exception object of type <code class="sh_cpp">regex_error</code>.
+<span class="note">[ <em>Note:</em> This means that values of the form <code class="sh_cpp">"uxxxx"</code> that do not fit in a character are invalid. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p13" href="#p13">13</a>Where the regular expression grammar requires the conversion of a sequence of characters to an integral value,
+this is accomplished by calling <code class="sh_cpp">traits_inst.value</code>.</p>
+
+<p><a class="anchor" id="p14" href="#p14">14</a>The behavior of the internal finite state machine representation when used to match a sequence of characters
+is as described in <cite>ECMA-262</cite>. The behavior is modified according to any <code class="sh_cpp">match_flag_type</code> flags
+<a title="re.matchflag" href="re.matchflag.html">28.5.2</a> specified when using the regular expression object in one of the regular expression algorithms
+<a title="re.alg" href="re.except.html">28.11</a>. The behavior is also localized by interaction with the <code class="sh_cpp">traits</code> class template parameter as
+follows:</p>
+
+<ul>
+<li>During matching of a regular expression finite state machine against a sequence of characters, two characters
+	<code class="sh_cpp">c</code> and <code class="sh_cpp">d</code> are compared using the following rules:
+	<ol>
+	<li>if <code class="sh_cpp">(flags() &amp; regex_constants::icase)</code> the two characters are equal if
+		<code class="sh_cpp">traits_inst.translate_nocase(c) == traits_inst.translate_nocase(d)</code>;</li>
+	<li>otherwise, if <code class="sh_cpp">flags() &amp; regex_constants::collate</code> the two characters are equal if
+		<code class="sh_cpp">traits_inst.translate(c) == traits_inst.translate(d)</code>;</li>
+	<li>otherwise, the two characters are equal if <code class="sh_cpp">c == d</code>.</li>
+	</ol>
+</li>
+<li>During matching of a regular expression finite state machine against a sequence of characters, comparison of a
+	collating element range <code class="sh_cpp">c1-c2</code> against a character <code class="sh_cpp">c</code> is conducted as follows: if
+	<code class="sh_cpp">flags() &amp; regex_constants::collate</code> is false then the character <code class="sh_cpp">c</code> is matched if
+	<code class="sh_cpp">c1 &lt;= c &amp;&amp; c &lt;= c2</code>, otherwise <code class="sh_cpp">c</code> is matched in accordance with the following
+	algorithm:
+
+<pre><code class="sh_cpp">string_type str1 = string_type(1,
+  flags() &amp; icase ?
+    traits_inst.translate_nocase(c1) : traits_inst.translate(c1);
+string_type str2 = string_type(1,
+  flags() &amp; icase ?
+    traits_inst.translate_nocase(c2) : traits_inst.translate(c2);
+string_type str = string_type(1,
+  flags() &amp; icase ?
+    traits_inst.translate_nocase(c) : traits_inst.translate(c);
+return traits_inst.transform(str1.begin(), str1.end())
+      &lt;= traits_inst.transform(str.begin(), str.end())
+    &amp;&amp; traits_inst.transform(str.begin(), str.end())
+      &lt;= traits_inst.transform(str2.begin(), str2.end());</code></pre>
+</li>
+
+<li>During matching of a regular expression finite state machine against a sequence of characters, testing whether a
+	collating element is a member of a primary equivalence class is conducted by first converting the collating element
+	and the equivalence class to sort keys using <code class="sh_cpp">traits::transform_primary</code>, and then comparing the sort
+	keys for equality.</li>
+<li>During matching of a regular expression finite state machine against a sequence of characters, a character
+	<code class="sh_cpp">c</code> is a member of a character class designated by an iterator range <code class="sh_cpp">[first,last)</code> if
+	<code class="sh_cpp">traits_inst.isctype(c, traits_inst.lookup_classname(first, last, flags() &amp; icase))</code> is
+	<code class="sh_cpp">true</code>.</li>
+</ul>
+</body>
+</html>
+

@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Iteration statements</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[stmt.iter]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[stmt.iter]"></object>6.5 Iteration statements </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Iteration statements specify looping.</p>
+
+<dl>
+<dt>
+<i class="nonterminal"><dfn>iteration-statement</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="iteration-statement"></object></i>:</dt>
+	<dd>
+<code class="sh_cpp">while</code> <code class="sh_cpp">(</code> <i class="nonterminal">condition</i> <code class="sh_cpp">)</code> <i class="nonterminal">statement</i>
+</dd>
+	<dd>
+<code class="sh_cpp">do</code> <i class="nonterminal">statement</i> <code class="sh_cpp">while</code> <code class="sh_cpp">(</code> <i class="nonterminal">expression</i> <code class="sh_cpp">)</code> <code class="sh_cpp">;</code>
+</dd>
+	<dd>
+<code class="sh_cpp">for</code> <code class="sh_cpp">(</code> <i class="nonterminal">for-init-statement</i> <i class="nonterminal">condition</i><sub class="opt">opt</sub> <code class="sh_cpp">;</code> <i class="nonterminal">expression</i><sub class="opt">opt</sub> <code class="sh_cpp">)</code> <i class="nonterminal">statement</i>
+</dd>
+	<dd>
+<code class="sh_cpp">for</code> <code class="sh_cpp">(</code> <i class="nonterminal">for-range-declaration</i> <code class="sh_cpp">:</code> <i class="nonterminal">for-range-initializer</i> <code class="sh_cpp">)</code> <i class="nonterminal">statement</i>
+</dd>
+<dt>
+<i class="nonterminal"><dfn>for-init-statement</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="for-init-statement"></object></i>:</dt>
+	<dd><i class="nonterminal">expression-statement</i></dd>
+	<dd><i class="nonterminal">simple-declaration</i></dd>
+<dt>
+<i class="nonterminal"><dfn>for-range-declaration</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="for-range-declaration"></object></i>:</dt>
+	<dd>
+<i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub> <i class="nonterminal">decl-specifier-seq</i> <i class="nonterminal">declarator</i>
+</dd>
+<dt>
+<i class="nonterminal"><dfn>for-range-initializer</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="for-range-initializer"></object></i>:</dt>
+	<dd><i class="nonterminal">expression</i></dd>
+	<dd><i class="nonterminal">braced-init-list</i></dd>
+</dl>
+
+<p>See <a title="dcl.meaning" href="dcl.meaning.html">8.3</a> for the optional <i class="nonterminal">attribute-specifier-seq</i> in a <i class="nonterminal">for-range-declaration</i>. <span class="note">[ <em>Note:</em> A
+<i class="nonterminal">for-init-statement</i> ends with a semicolon. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The substatement in an <i class="nonterminal">iteration-statement</i> implicitly defines a block scope (<a title="basic.scope" href="basic.scope.declarative.html">3.3</a>) which is
+entered and exited each time through the loop.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>If the substatement in an <i class="nonterminal">iteration-statement</i> is a single statement and not a <i class="nonterminal">compound-statement</i>,
+it is as if it was rewritten to be a <i class="nonterminal">compound-statement</i> containing the original statement.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">while (--x &gt;= 0)
+  int i;</code></pre>
+
+<p>can be equivalently rewritten as</p>
+
+<pre><code class="sh_cpp">while (--x &gt;= 0) {
+  int i;
+}</code></pre>
+
+<p>Thus after the <code class="sh_cpp">while</code> statement, <code class="sh_cpp">i</code> is no longer in scope. — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><span class="note">[ <em>Note:</em> The requirements on conditions in iteration statements are described in <a title="stmt.select" href="stmt.select.html">6.4</a>. — <em>end note</em> ]</span></p>
+</body>
+</html>
+

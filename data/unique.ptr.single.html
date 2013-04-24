@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>unique_ptr for single objects</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[unique.ptr.single]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[unique.ptr.single]"></object>20.7.1.2 <code class="sh_cpp">unique_ptr</code> for single objects </h4>
+
+<pre><code class="sh_cpp">namespace std {
+  template &lt;class T, class D = default_delete&lt;T&gt;&gt; class unique_ptr {
+  public:
+    typedef <em>see below</em> pointer;
+    typedef T element_type;
+    typedef D deleter_type;
+
+    // <a title="unique.ptr.single.ctor" href="unique.ptr.single.ctor.html">20.7.1.2.1</a>, constructors
+    constexpr unique_ptr() noexcept;
+    explicit unique_ptr(pointer p) noexcept;
+    unique_ptr(pointer p, <em>see below</em> d1) noexcept;
+    unique_ptr(pointer p, <em>see below</em> d2) noexcept;
+    unique_ptr(unique_ptr&amp;&amp; u) noexcept;
+    constexpr unique_ptr(nullptr_t) noexcept
+      : unique_ptr() { }
+    template &lt;class U, class E&gt;
+      unique_ptr(unique_ptr&lt;U, E&gt;&amp;&amp; u) noexcept;
+    template &lt;class U&gt;
+      explicit unique_ptr(auto_ptr&lt;U&gt;&amp; u) noexcept;
+    template &lt;class U&gt;
+      unique_ptr(auto_ptr&lt;U&gt;&amp;&amp; u);
+
+    // <a title="unique.ptr.single.dtor" href="unique.ptr.single.dtor.html">20.7.1.2.2</a>, destructor
+    ~unique_ptr();
+
+    // <a title="unique.ptr.single.asgn" href="unique.ptr.single.asgn.html">20.7.1.2.3</a>, assignment
+    unique_ptr&amp; operator=(unique_ptr&amp;&amp; u) noexcept;
+    template &lt;class U, class E&gt; unique_ptr&amp; operator=(unique_ptr&lt;U, E&gt;&amp;&amp; u) noexcept;
+    unique_ptr&amp; operator=(nullptr_t) noexcept;
+
+    // <a title="unique.ptr.single.observers" href="unique.ptr.single.observers.html">20.7.1.2.4</a>, observers
+    typename add_lvalue_reference&lt;T&gt;::type operator*() const;
+    pointer operator-&gt;() const noexcept;
+    pointer get() const noexcept;
+    deleter_type&amp; get_deleter() noexcept;
+    const deleter_type&amp; get_deleter() const noexcept;
+    explicit operator bool() const noexcept;
+
+    // <a title="unique.ptr.single.modifiers" href="unique.ptr.single.modifiers.html">20.7.1.2.5</a>, modifiers
+    pointer release() noexcept;
+    void reset(pointer p = pointer()) noexcept;
+    void swap(unique_ptr&amp; u) noexcept;
+
+    // disable copy from lvalue
+    unique_ptr(const unique_ptr&amp;) = delete;
+    unique_ptr&amp; operator=(const unique_ptr&amp;) = delete;
+  };
+}</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The default type for the template parameter <code class="sh_cpp">D</code> is <code class="sh_cpp">default_delete</code>. A client-supplied
+template argument <code class="sh_cpp">D</code> shall be a function object type (<a title="function.objects" href="function.objects.html">20.8</a>), lvalue-reference to function, or
+lvalue-reference to function object type for which, given a value <code class="sh_cpp">d</code> of type <code class="sh_cpp">D</code> and a value
+<code class="sh_cpp">ptr</code> of type <code class="sh_cpp">unique_ptr&lt;T, D&gt;::pointer</code>, the expression <code class="sh_cpp">d(ptr)</code> is valid
+and has the effect of disposing of the pointer as appropriate for that deleter.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>If the deleter’s type <code class="sh_cpp">D</code> is not a reference type, <code class="sh_cpp">D</code> shall satisfy the requirements of
+<code class="concept">Destructible</code> (Table <a href="utility.arg.requirements.html#t24">24</a>).</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>If the type <code class="sh_cpp">remove_reference&lt;D&gt;::type::pointer</code> exists, then
+<code class="sh_cpp">unique_ptr&lt;T, D&gt;::pointer</code> shall be a synonym for
+<code class="sh_cpp">remove_reference&lt;D&gt;::type::pointer</code>. Otherwise <code class="sh_cpp">unique_ptr&lt;T,
+D&gt;::pointer</code> shall be a synonym for <code class="sh_cpp">T*</code>. The type <code class="sh_cpp">unique_ptr&lt;T,
+D&gt;::pointer</code> shall satisfy the requirements of <code class="concept">NullablePointer</code> (<a title="nullablepointer.requirements" href="nullablepointer.requirements.html">17.6.3.3</a>).</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><span class="example">[ <em>Example:</em> Given an allocator type <code class="sh_cpp">X</code> (<a title="allocator.requirements" href="allocator.requirements.html">17.6.3.5</a>) and letting <code class="sh_cpp">A</code> be a synonym for
+<code class="sh_cpp">allocator_traits&lt;X&gt;</code>, the types <code class="sh_cpp">A::pointer</code>, <code class="sh_cpp">A::const_pointer</code>,
+<code class="sh_cpp">A::void_pointer</code>, and <code class="sh_cpp">A::const_void_pointer</code> may be used as <code class="sh_cpp">unique_ptr&lt;T,
+D&gt;::pointer</code>. — <em>end example</em> ]</span></p>
+</body>
+</html>
+

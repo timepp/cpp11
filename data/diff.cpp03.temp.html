@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Clause 14: templates</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[diff.cpp03.temp]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[diff.cpp03.temp]"></object>C.2.6 Clause 14: templates </h3>
+
+<h4><a title="temp.param" href="temp.param.html">14.1</a></h4>
+
+<p><strong>Change:</strong> Remove <code class="sh_cpp">export</code></p>
+
+<p><strong>Rationale:</strong> No implementation consensus.</p>
+
+<p><strong>Effect on original feature:</strong> A valid C++ 2003 declaration containing <code class="sh_cpp">export</code> is ill-formed in this International
+Standard.</p>
+
+<h4><a title="temp.arg" href="temp.arg.html">14.3</a></h4>
+
+<p><strong>Change:</strong> Remove whitespace requirement for nested closing template right angle brackets</p>
+
+<p><strong>Rationale:</strong> Considered a persistent but minor annoyance. Template aliases representing nonclass types
+would exacerbate whitespace issues.</p>
+
+<p><strong>Effect on original feature:</strong> Change to semantics of well-defined expression. A valid C++ 2003 expression containing a right angle bracked
+(<code class="sh_cpp">&gt;</code>) followed immediately by another right angle bracket may now be treated as closing two templates. For
+example, the following code is valid in C++ 2003 because <code class="sh_cpp">&gt;&gt;</code> is a right-shift operator, but invalid in
+this International Standard because <code class="sh_cpp">&gt;&gt;</code> closes two templates.</p>
+
+<pre><code class="sh_cpp">template &lt;class T&gt; struct X { };
+template &lt;int N&gt; struct Y { };
+X&lt; Y&lt; 1 &gt;&gt; 2 &gt; &gt; x;</code></pre>
+
+<h4><a title="temp.dep.candidate" href="temp.dep.candidate.html">14.6.4.2</a></h4>
+
+<p><strong>Change:</strong> Allow dependent calls of functions with internal linkage</p>
+
+<p><strong>Rationale:</strong> Overly constrained, simplify overload resolution rules.</p>
+
+<p><strong>Effect on original feature:</strong> A valid C++ 2003 program could get a different result than this International Standard.</p>
+</body>
+</html>
+

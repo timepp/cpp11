@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>In general</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[iterator.requirements]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[iterator.requirements]"></object>24.2 Iterator requirements </h2>
+
+<h3>
+<dfn class="label">[iterator.requirements.general]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[iterator.requirements.general]"></object>24.2.1 In general </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Iterators are a generalization of pointers that allow a C++ program to work with different data structures
+(containers) in a uniform manner. To be able to construct template algorithms that work correctly and efficiently on
+different types of data structures, the library formalizes not just the interfaces but also the semantics and complexity
+assumptions of iterators. All input iterators <code class="sh_cpp">i</code> support the expression <code class="sh_cpp">*i</code>, resulting in a
+value of some object type <code class="sh_cpp">T</code>, called the <dfn>value type</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="value type"></object> of the iterator. All output iterators support
+the expression <code class="sh_cpp">*i = o</code> where <code class="sh_cpp">o</code> is a value of some type that is in the set of types that are
+<dfn>writable</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="writable"></object> to the particular iterator type of <code class="sh_cpp">i</code>. All iterators <code class="sh_cpp">i</code> for which the
+expression <code class="sh_cpp">(*i).m</code> is well-defined, support the expression <code class="sh_cpp">i-&gt;m</code> with the same semantics as
+<code class="sh_cpp">(*i).m</code>. For every iterator type <code class="sh_cpp">X</code> for which equality is defined, there is a corresponding
+signed integer type called the <dfn>difference type</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="difference type"></object> of the iterator.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>Since iterators are an abstraction of pointers, their semantics is a generalization of most of the semantics of
+pointers in C++. This ensures that every function template that takes iterators works as well with regular pointers.
+This International Standard defines five categories of iterators, according to the operations defined on them:
+<dfn>input iterators</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="input iterators"></object>, <dfn>output iterators</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="output iterators"></object>, <dfn>forward iterators</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="forward iterators"></object>, <dfn>bidirectional
+iterators</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="bidirectional
+iterators"></object> and <dfn>random access iterators</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="random access iterators"></object>, as shown in Table <a href="iterator.requirements.general.html#t105">105</a>.</p>
+
+<table id="t105" class="bordered">
+<caption>Table 105 — Relations among iterator categories</caption>
+<tr>
+<td rowspan="2">Random Access</td>
+	<td rowspan="2">→</td>
+	<td rowspan="2">Bidirectional</td>
+	<td rowspan="2">→</td>
+	<td rowspan="2">Forward</td>
+	<td>→</td>
+	<td>Input</td>
+</tr>
+<tr>
+<td>→</td>
+	<td>Output</td>
+</tr>
+</table>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>Forward iterators satisfy all the requirements of input iterators and can be used whenever an input iterator is
+specified; Bidirectional iterators also satisfy all the requirements of forward iterators and can be used whenever a
+forward iterator is specified; Random access iterators also satisfy all the requirements of bidirectional iterators and
+can be used whenever a bidirectional iterator is specified.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>Iterators that further satisfy the requirements of output iterators are called <dfn>mutable iterators</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="mutable iterators"></object>.
+Nonmutable iterators are referred to as <dfn>constant iterators</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="constant iterators"></object>.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>Just as a regular pointer to an array guarantees that there is a pointer value pointing past the last element
+of the array, so for any iterator type there is an iterator value that points past the last element of a corresponding
+sequence. These values are called <dfn>past-the-end</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="past-the-end"></object> values. Values of an iterator <code class="sh_cpp">i</code> for which the
+expression <code class="sh_cpp">*i</code> is defined are called <dfn>dereferenceable</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="dereferenceable"></object>. The library never assumes that past-the-end
+values are dereferenceable. Iterators can also have singular values that are not associated with any sequence.
+<span class="example">[ <em>Example:</em> After the declaration of an uninitialized pointer <code class="sh_cpp">x</code> (as with <code class="sh_cpp">int* x;</code>), <code class="sh_cpp">x</code>
+must always be assumed to have a singular value of a pointer. — <em>end example</em> ]</span> Results of most expressions are undefined for
+singular values; the only exceptions are destroying an iterator that holds a singular value, the assignment of a
+non-singular value to an iterator that holds a singular value, and, for iterators that satisfy the
+<code class="concept">DefaultConstructible</code> requirements, using a value-initialized iterator as the source of a copy or move
+operation. <span class="note">[ <em>Note:</em> This guarantee is not offered for default initialization, although the distinction only matters for
+types with trivial default constructors such as pointers or aggregates holding pointers. — <em>end note</em> ]</span> In these cases the
+singular value is overwritten the same way as any other value. Dereferenceable values are always non-singular.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>An iterator <code class="sh_cpp">j</code> is called <dfn>reachable</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="reachable"></object> from an iterator <code class="sh_cpp">i</code> if and only if there
+is a finite sequence of applications of the expression <code class="sh_cpp">++i</code> that makes <code class="sh_cpp">i == j</code>. If
+<code class="sh_cpp">j</code> is reachable from <code class="sh_cpp">i</code>, they refer to elements of the same sequence.</p>
+
+<p><a class="anchor" id="p7" href="#p7">7</a>Most of the library’s algorithmic templates that operate on data structures have interfaces that use ranges. A
+<dfn>range</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="range"></object> is a pair of iterators that designate the beginning and end of the computation. A range <code class="sh_cpp">[i,
+i)</code> is an empty range; in general, a range <code class="sh_cpp">[i, j)</code> refers to the elements in the data structure
+starting with the element pointed to by <code class="sh_cpp">i</code> and up to but not including the one element pointed to by
+<code class="sh_cpp">j</code>. Range <code class="sh_cpp">[i, j)</code> is valid if and only if <code class="sh_cpp">j</code> is reachable from <code class="sh_cpp">i</code>. The
+result of the application of functions in the library to invalid ranges is undefined.</p>
+
+<p><a class="anchor" id="p8" href="#p8">8</a>All the categories of iterators require only those functions that are realizable for a given category in
+constant time (amortized). Therefore, requirement tables for the iterators do not have a complexity column.</p>
+
+<p><a class="anchor" id="p9" href="#p9">9</a>Destruction of an iterator may invalidate pointers and references previously obtained from that iterator.</p>
+
+<p><a class="anchor" id="p10" href="#p10">10</a>An <dfn>invalid iterator</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="invalid iterator"></object> is an iterator that may be singular.<sup class="footnote"><a href="#fn270">270</a></sup></p>
+
+<p><a class="anchor" id="p11" href="#p11">11</a>In the following sections, <code class="sh_cpp">a</code> and <code class="sh_cpp">b</code> denote values of type <code class="sh_cpp">X</code> or
+<code class="sh_cpp">const X</code>, <code class="sh_cpp">difference_type</code> and <code class="sh_cpp">reference</code> refer to the types
+<code class="sh_cpp">iterator_traits&lt;X&gt;::difference_type</code> and <code class="sh_cpp">iterator_traits&lt;X&gt;::reference</code>,
+respectively, <code class="sh_cpp">n</code> denotes a value of <code class="sh_cpp">difference_type</code>, <code class="sh_cpp">u</code>, <code class="sh_cpp">tmp</code>, and
+<code class="sh_cpp">m</code> denote identifiers, <code class="sh_cpp">r</code> denotes a value of <code class="sh_cpp">X&amp;</code>, <code class="sh_cpp">t</code> denotes a value
+of value type <code class="sh_cpp">T</code>, <code class="sh_cpp">o</code> denotes a value of some type that is writable to the output iterator.
+<span class="note">[ <em>Note:</em> For an iterator type <code class="sh_cpp">X</code> there must be an instantiation of <code class="sh_cpp">iterator_traits&lt;X&gt;</code>
+(<a title="iterator.traits" href="iterator.traits.html">24.4.1</a>). — <em>end note</em> ]</span></p>
+
+
+<div><p class="footnote" id="fn270">270) This definition applies to pointers, since pointers are iterators. The effect of dereferencing an
+iterator that has been invalidated is undefined.</p></div>
+</body>
+</html>
+

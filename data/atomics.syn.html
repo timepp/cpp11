@@ -1,0 +1,187 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Header &lt;atomic&gt; synopsis</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[atomics.syn]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[atomics.syn]"></object>29.2 Header <code class="header">&lt;atomic&gt;</code> synopsis </h2>
+
+<pre><code class="sh_cpp">namespace std {
+  // <a title="atomics.order" href="atomics.order.html">29.3</a>, order and consistency
+  enum memory_order;
+  template &lt;class T&gt;
+    T kill_dependency(T y) noexcept;
+
+  // <a title="atomics.lockfree" href="atomics.lockfree.html">29.4</a>, lock-free property
+  #define ATOMIC_BOOL_LOCK_FREE <em>unspecified</em>
+  #define ATOMIC_CHAR_LOCK_FREE <em>unspecified</em>
+  #define ATOMIC_CHAR16_T_LOCK_FREE <em>unspecified</em>
+  #define ATOMIC_CHAR32_T_LOCK_FREE <em>unspecified</em>
+  #define ATOMIC_WCHAR_T_LOCK_FREE <em>unspecified</em>
+  #define ATOMIC_SHORT_LOCK_FREE <em>unspecified</em>
+  #define ATOMIC_INT_LOCK_FREE <em>unspecified</em>
+  #define ATOMIC_LONG_LOCK_FREE <em>unspecified</em>
+  #define ATOMIC_LLONG_LOCK_FREE <em>unspecified</em>
+  #define ATOMIC_POINTER_LOCK_FREE <em>unspecified</em>
+
+  // <a title="atomics.types.generic" href="atomics.types.generic.html">29.5</a>, generic types
+  template&lt;class T&gt; struct atomic;
+  template&lt;&gt; struct atomic&lt;<var>integral</var>&gt;;
+  template&lt;class T&gt; struct atomic&lt;T*&gt;;
+
+  // <a title="atomics.types.operations.general" href="atomics.types.operations.general.html">29.6.1</a>, general operations on atomic types
+  // In the following declarations, <var>atomic-type</var> is either
+  // atomic&lt;T&gt; or a named base class for T from
+  // Table <a href="atomics.types.generic.html#t145">145</a> or inferred from Table <a href="atomics.types.generic.html#t146">146</a> or from bool.
+  // If it is atomic&lt;T&gt;, then the declaration is a template
+  // declaration prefixed with template &lt;class T&gt;.
+
+  bool atomic_is_lock_free(const volatile <var>atomic-type</var>*) noexcept;
+  bool atomic_is_lock_free(const <var>atomic-type</var>*) noexcept;
+  void atomic_init(volatile <var>atomic-type</var>*, T) noexcept;
+  void atomic_init(<var>atomic-type</var>*, T) noexcept;
+  void atomic_store(volatile <var>atomic-type</var>*, T) noexcept;
+  void atomic_store(<var>atomic-type</var>*, T) noexcept;
+  void atomic_store_explicit(volatile <var>atomic-type</var>*, T, memory_order) noexcept;
+  void atomic_store_explicit(<var>atomic-type</var>*, T, memory_order) noexcept;
+  T atomic_load(const volatile <var>atomic-type</var>*) noexcept;
+  T atomic_load(const <var>atomic-type</var>*) noexcept;
+  T atomic_load_explicit(const volatile <var>atomic-type</var>*, memory_order) noexcept;
+  T atomic_load_explicit(const <var>atomic-type</var>*, memory_order) noexcept;
+  bool atomic_exchange(volatile <var>atomic-type</var>*, T) noexcept;
+  bool atomic_exchange(<var>atomic-type</var>*, T) noexcept;
+  bool atomic_exchange_explicit(volatile <var>atomic-type</var>*, T, memory_order) noexcept;
+  bool atomic_exchange_explicit(<var>atomic-type</var>*, T, memory_order) noexcept;
+  bool atomic_compare_exchange_weak(volatile <var>atomic-type</var>*, T*, T) noexcept;
+  bool atomic_compare_exchange_weak(<var>atomic-type</var>*, T*, T) noexcept;
+  bool atomic_compare_exchange_strong(volatile <var>atomic-type</var>*, T*, T) noexcept;
+  bool atomic_compare_exchange_strong(<var>atomic-type</var>*, T*, T) noexcept;
+  bool atomic_compare_exchange_weak_explicit(volatile <var>atomic-type</var>*, T*, T,
+    memory_order, memory_order) noexcept;
+  bool atomic_compare_exchange_weak_explicit(<var>atomic-type</var>*, T*, T,
+    memory_order, memory_order) noexcept;
+  bool atomic_compare)exchange_strong_explicit(volatile <var>atomic-type</var>*, T*, T,
+    memory_order, memory_order) noexcept;
+  bool atomic_compare_exchange_strong_explicit(<var>atomic-type</var>*, T*, T,
+    memory_order, memory_order) noexcept;
+
+  // <a title="atomics.types.operations.templ" href="atomics.types.operations.templ.html">29.6.2</a>, templated operations on atomic types
+  template &lt;class T&gt;
+    T atomic_fetch_add(volatile atomic&lt;T&gt;*, T) noexcept;
+  template &lt;class T&gt;
+    T atomic_fetch_add(atomic&lt;T&gt;*, T) noexcept;
+  template &lt;class T&gt;
+    T atomic_fetch_add_explicit(volatile atomic&lt;T&gt;*, T, memory_order) noexcept;
+  template &lt;class T&gt;
+    T atomic_fetch_add_explicit(atomic&lt;T&gt;*, T, memory_order) noexcept;
+  template &lt;class T&gt;
+    T atomic_fetch_sub(volatile atomic&lt;T&gt;*, T) noexcept;
+  template &lt;class T&gt;
+    T atomic_fetch_sub(atomic&lt;T&gt;*, T) noexcept;
+  template &lt;class T&gt;
+    T atomic_fetch_sub_explicit(volatile atomic&lt;T&gt;*, T, memory_order) noexcept;
+  template &lt;class T&gt;
+    T atomic_fetch_sub_explicit(atomic&lt;T&gt;*, T, memory_order) noexcept;
+  template &lt;class T&gt;
+    T atomic_fetch_and(volatile atomic&lt;T&gt;*, T) noexcept;
+  template &lt;class T&gt;
+    T atomic_fetch_and(atomic&lt;T&gt;*, T) noexcept;
+  template &lt;class T&gt;
+    T atomic_fetch_and_explicit(volatile atomic&lt;T&gt;*, T, memory_order) noexcept;
+  template &lt;class T&gt;
+    T atomic_fetch_and_explicit(atomic&lt;T&gt;*, T, memory_order) noexcept;
+  template &lt;class T&gt;
+    T atomic_fetch_or(volatile atomic&lt;T&gt;*, T) noexcept;
+  template &lt;class T&gt;
+    T atomic_fetch_or(atomic&lt;T&gt;*, T) noexcept;
+  template &lt;class T&gt;
+    T atomic_fetch_or_explicit(volatile atomic&lt;T&gt;*, T, memory_order) noexcept;
+  template &lt;class T&gt;
+    T atomic_fetch_or_explicit(atomic&lt;T&gt;*, T, memory_order) noexcept;
+  template &lt;class T&gt;
+    T atomic_fetch_xor(volatile atomic&lt;T&gt;*, T) noexcept;
+  template &lt;class T&gt;
+    T atomic_fetch_xor(atomic&lt;T&gt;*, T) noexcept;
+  template &lt;class T&gt;
+    T atomic_fetch_xor_explicit(volatile atomic&lt;T&gt;*, T, memory_order) noexcept;
+  template &lt;class T&gt;
+    T atomic_fetch_xor_explicit(atomic&lt;T&gt;*, T, memory_order) noexcept;
+
+  // <a title="atomics.types.operations.arith" href="atomics.types.operations.arith.html">29.6.3</a>, arithmetic operations on atomic types
+  // In the following declarations, <var>atomic-integral</var> is either
+  // atomic&lt;T&gt; or a named base class for T from
+  // table ref="145"/&gt; or inferred from Table <a href="atomics.types.generic.html#t146">146</a>.
+  // If it is atomic&lt;T&gt;, then the declaration is a template
+  // specialization declaration prefixed with template &lt;&gt;.
+  <var>integral</var> atomic_fetch_add(volatile <var>atomic-integral</var>*, <var>integral</var>) noexcept;
+  <var>integral</var> atomic_fetch_add(<var>atomic-integral</var>*, <var>integral</var>) noexcept;
+  <var>integral</var> atomic_fetch_add_explicit(volatile <var>atomic-integral</var>*, <var>integral</var>, memory_order) noexcept;
+  <var>integral</var> atomic_fetch_add_explicit(<var>atomic-integral</var>*, <var>integral</var>, memory_order) noexcept;
+  <var>integral</var> atomic_fetch_sub(volatile <var>atomic-integral</var>*, <var>integral</var>) noexcept;
+  <var>integral</var> atomic_fetch_sub(<var>atomic-integral</var>*, <var>integral</var>) noexcept;
+  <var>integral</var> atomic_fetch_sub_explicit(volatile <var>atomic-integral</var>*, <var>integral</var>, memory_order) noexcept;
+  <var>integral</var> atomic_fetch_sub_explicit(<var>atomic-integral</var>*, <var>integral</var>, memory_order) noexcept;
+  <var>integral</var> atomic_fetch_and(volatile <var>atomic-integral</var>*, <var>integral</var>) noexcept;
+  <var>integral</var> atomic_fetch_and(<var>atomic-integral</var>*, <var>integral</var>) noexcept;
+  <var>integral</var> atomic_fetch_and_explicit(volatile <var>atomic-integral</var>*, <var>integral</var>, memory_order) noexcept;
+  <var>integral</var> atomic_fetch_and_explicit(<var>atomic-integral</var>*, <var>integral</var>, memory_order) noexcept;
+  <var>integral</var> atomic_fetch_or(volatile <var>atomic-integral</var>*, <var>integral</var>) noexcept;
+  <var>integral</var> atomic_fetch_or(<var>atomic-integral</var>*, <var>integral</var>) noexcept;
+  <var>integral</var> atomic_fetch_or_explicit(volatile <var>atomic-integral</var>*, <var>integral</var>, memory_order) noexcept;
+  <var>integral</var> atomic_fetch_or_explicit(<var>atomic-integral</var>*, <var>integral</var>, memory_order) noexcept;
+  <var>integral</var> atomic_fetch_xor(volatile <var>atomic-integral</var>*, <var>integral</var>) noexcept;
+  <var>integral</var> atomic_fetch_xor(<var>atomic-integral</var>*, <var>integral</var>) noexcept;
+  <var>integral</var> atomic_fetch_xor_explicit(volatile <var>atomic-integral</var>*, <var>integral</var>, memory_order) noexcept;
+  <var>integral</var> atomic_fetch_xor_explicit(<var>atomic-integral</var>*, <var>integral</var>, memory_order) noexcept;
+
+  // <a title="atomics.types.operations.pointer" href="atomics.types.operations.pointer.html">29.6.4</a>, partial specializations for pointers
+
+  template &lt;class T&gt;
+    T* atomic_fetch_add(volatile atomic&lt;T*&gt;*, ptrdiff_t) noexcept;
+  template &lt;class T&gt;
+    T* atomic_fetch_add(atomic&lt;T*&gt;*, ptrdiff_t) noexcept;
+  template &lt;class T&gt;
+    T* atomic_fetch_add_explicit(volatile atomic&lt;T*&gt;*, ptrdiff_t, memory_order) noexcept;
+  template &lt;class T&gt;
+    T* atomic_fetch_add_explicit(atomic&lt;T*&gt;*, ptrdiff_t, memory_order) noexcept;
+  template &lt;class T&gt;
+    T* atomic_fetch_sub(volatile atomic&lt;T*&gt;*, ptrdiff_t) noexcept;
+  template &lt;class T&gt;
+    T* atomic_fetch_sub(atomic&lt;T*&gt;*, ptrdiff_t) noexcept;
+  template &lt;class T&gt;
+    T* atomic_fetch_sub_explicit(volatile atomic&lt;T*&gt;*, ptrdiff_t, memory_order) noexcept;
+  template &lt;class T&gt;
+    T* atomic_fetch_sub_explicit(atomic&lt;T*&gt;*, ptrdiff_t, memory_order) noexcept;
+
+  // <a title="atomics.types.operations.req" href="atomics.types.operations.req.html">29.6.5</a>, initialization
+  #define ATOMIC_VAR_INIT(value) <em>see below</em>
+
+  // <a title="atomics.flag" href="atomics.flag.html">29.7</a>, flag type and operations
+  struct atomic_flag;
+  bool atomic_flag_test_and_set(volatile atomic_flag*) noexcept;
+  bool atomic_flag_test_and_set(atomic_flag*) noexcept;
+  bool atomic_flag_test_and_set_explicit(volatile atomic_flag*, memory_order) noexcept;
+  bool atomic_flag_test_and_set_explicit(atomic_flag*, memory_order) noexcept;
+  void atomic_flag_clear(volatile atomic_flag*) noexcept;
+  void atomic_flag_clear(atomic_flag*) noexcept;
+  void atomic_flag_clear_explicit(volatile atomic_flag*, memory_order) noexcept;
+  void atomic_flag_clear_explicit(atomic_flag*, memory_order) noexcept;
+  #define ATOMIC_FLAG_INIT <em>see below</em>
+
+  // <a title="atomics.fences" href="atomics.fences.html">29.8</a>, fences
+  extern "C" void atomic_thread_fence(memory_order) noexcept;
+  extern "C" void atomic_signal_fence(memory_order) noexcept;
+}</code></pre>
+
+</body>
+</html>
+

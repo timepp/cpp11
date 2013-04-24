@@ -1,0 +1,330 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Unformatted input functions</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[istream.unformatted]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[istream.unformatted]"></object>27.7.2.3 Unformatted input functions </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Each unformatted input function begins execution by constructing an object of class <code class="sh_cpp">sentry</code> with
+the default argument <code class="sh_cpp">noskipws</code> (second) argument <code class="sh_cpp">true</code>. If the <code class="sh_cpp">sentry</code> object
+returns <code class="sh_cpp">true</code>, when converted to a value of type <code class="sh_cpp">bool</code>, the function endeavors to obtain the
+requested input. Otherwise, if the sentry constructor exits by throwing an exception or if the sentry object returns
+false, when converted to a value of type <code class="sh_cpp">bool</code>, the function returns without attempting to obtain any input.
+In either case the number of extracted characters is set to 0; unformatted input functions taking a character array of
+non-zero size as an argument shall also store a null character (using <code class="sh_cpp">charT()</code>) in the first location of the
+array. If an exception is thrown during input then <code class="sh_cpp">ios::badbit</code> is turned on<sup class="footnote"><a href="#fn319">319</a></sup> in
+<code class="sh_cpp">*this</code>’s error state. (Exceptions thrown from <code class="sh_cpp">basic_ios&lt;&gt;::clear()</code> are not caught
+or rethrown.) If <code class="sh_cpp">(exceptions()&amp;badbit) != 0</code> then the exception is rethrown. It also counts the number
+of characters extracted. If no exception has been thrown it ends by storing the count in a member object and returning
+the value specified. In any event the <code class="sh_cpp">sentry</code> object is destroyed before leaving the unformatted input
+function.</p>
+
+<h5><code class="sh_cpp">streamsize <dfn>gcount</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="gcount"></object>() const;</code></h5>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Effects:</em> None. This member function does not behave as an unformatted input function (as described in
+<a title="istream.unformatted" href="istream.unformatted.html">27.7.2.3</a>, paragraph 1).</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Returns:</em> The number of characters extracted by the last unformatted input member function called for the
+object.</p>
+
+<h5><code class="sh_cpp">int_type <dfn>get</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="get"></object>();</code></h5>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><em>Effects:</em> Behaves as an unformatted input function (as described in <a title="istream.unformatted" href="istream.unformatted.html">27.7.2.3</a>, paragraph 1). After
+constructing a sentry object, extracts a character <code class="sh_cpp">c</code>, if one is available. Otherwise, the function calls
+<code class="sh_cpp">setstate(failbit)</code>, which may throw <code class="sh_cpp">ios_base::failure</code> (<a title="iostate.flags" href="iostate.flags.html">27.5.5.4</a>).</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><em>Returns:</em> <code class="sh_cpp">c</code> if available, otherwise <code class="sh_cpp">traits::eof()</code>.</p>
+
+<h5><code class="sh_cpp">basic_istream&lt;charT,traits&gt;&amp; <dfn>get</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="get"></object>(char_type&amp; c);</code></h5>
+
+<p><a class="anchor" id="p6" href="#p6">6</a><em>Effects:</em> Behaves as an unformatted input function (as described in <a title="istream.unformatted" href="istream.unformatted.html">27.7.2.3</a>, paragraph 1). After
+constructing a sentry object, extracts a character, if one is available, and assigns it to <code class="sh_cpp">c</code>.<sup class="footnote"><a href="#fn320">320</a></sup> Otherwise, the function calls <code class="sh_cpp">setstate(failbit)</code> (which may throw <code class="sh_cpp">ios_base::failure</code>
+(<a title="iostate.flags" href="iostate.flags.html">27.5.5.4</a>)).</p>
+
+<p><a class="anchor" id="p7" href="#p7">7</a><em>Returns:</em> <code class="sh_cpp">*this</code>.</p>
+
+<h5><code class="sh_cpp">basic_istream&lt;charT,traits&gt;&amp; <dfn>get</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="get"></object>(char_type* s, streamsize n,
+                                 char_type delim);</code></h5>
+
+<p><a class="anchor" id="p8" href="#p8">8</a><em>Effects:</em> Behaves as an unformatted input function (as described in <a title="istream.unformatted" href="istream.unformatted.html">27.7.2.3</a>, paragraph 1). After
+constructing a sentry object, extracts characters and stores them into successive locations of an array whose first
+element is designated by <code class="sh_cpp">s</code>.<sup class="footnote"><a href="#fn321">321</a></sup> Characters are extracted and stored until any of the following
+occurs:</p>
+
+<ul>
+<li>
+<code class="sh_cpp">n</code> is less than one or <code class="sh_cpp">n - 1</code> characters are stored;</li>
+<li>end-of-file occurs on the input sequence (in which case the function calls <code class="sh_cpp">setstate(eofbit)</code>);</li>
+<li>
+<code class="sh_cpp">traits::eq(c, delim)</code> for the next available input character <code class="sh_cpp">c</code> (in which case
+	<code class="sh_cpp">c</code> is not extracted).</li>
+</ul>
+
+<p><a class="anchor" id="p9" href="#p9">9</a>If the function stores no characters, it calls <code class="sh_cpp">setstate(failbit)</code> (which may throw
+<code class="sh_cpp">ios_base::failure</code> (<a title="iostate.flags" href="iostate.flags.html">27.5.5.4</a>)). In any case, if <code class="sh_cpp">n</code> is greater than zero it then
+stores a null character into the next successive location of the array.</p>
+
+<p><a class="anchor" id="p10" href="#p10">10</a><em>Returns:</em> <code class="sh_cpp">*this</code>.</p>
+
+<h5><code class="sh_cpp">basic_istream&lt;charT,traits&gt;&amp; <dfn>get</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="get"></object>(char_type* s, streamsize n)</code></h5>
+
+<p><a class="anchor" id="p11" href="#p11">11</a><em>Effects:</em> Calls <code class="sh_cpp">get(s,n,widen('\n'))</code>.</p>
+
+<p><a class="anchor" id="p12" href="#p12">12</a><em>Returns:</em> Value returned by the call.</p>
+
+<h5><code class="sh_cpp">basic_istream&lt;charT,traits&gt;&amp; <dfn>get</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="get"></object>(basic_streambuf&lt;char_type,traits&gt;&amp; sb,
+                                 char_type delim);</code></h5>
+
+<p><a class="anchor" id="p13" href="#p13">13</a><em>Effects:</em> Behaves as an unformatted input function (as described in <a title="istream.unformatted" href="istream.unformatted.html">27.7.2.3</a>, paragraph 1). After
+constructing a sentry object, extracts characters and inserts them in the output sequence controlled by <code class="sh_cpp">sb</code>.
+Characters are extracted and inserted until any of the following occurs:</p>
+
+<ul>
+<li>end-of-file occurs on the input sequence;</li>
+<li>inserting in the output sequence fails (in which case the character to be inserted is not extracted);</li>
+<li>
+<code class="sh_cpp">traits::eq(c, delim)</code> for the next available input character <code class="sh_cpp">c</code> (in which case
+	<code class="sh_cpp">c</code> is not extracted);</li>
+<li>an exception occurs (in which case, the exception is caught but not rethrown).</li>
+</ul>
+
+<p><a class="anchor" id="p14" href="#p14">14</a>If the function inserts no characters, it calls <code class="sh_cpp">setstate(failbit)</code>, which may throw
+<code class="sh_cpp">ios_base::failure</code> (<a title="iostate.flags" href="iostate.flags.html">27.5.5.4</a>).</p>
+
+<p><a class="anchor" id="p15" href="#p15">15</a><em>Returns:</em> <code class="sh_cpp">*this</code>.</p>
+
+<h5><code class="sh_cpp">basic_istream&lt;charT,traits&gt;&amp; <dfn>get</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="get"></object>(basic_streambuf&lt;char_type,traits&gt;&amp; sb);</code></h5>
+
+<p><a class="anchor" id="p16" href="#p16">16</a><em>Effects:</em> Calls <code class="sh_cpp">get(sb, widen('\n'))</code>.</p>
+
+<p><a class="anchor" id="p17" href="#p17">17</a><em>Returns:</em> Value returned by the call.</p>
+
+<h5><code class="sh_cpp">basic_istream&lt;charT,traits&gt;&amp; <dfn>getline</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="getline"></object>(char_type* s, streamsize n,
+                                     char_type delim);</code></h5>
+
+<p><a class="anchor" id="p18" href="#p18">18</a><em>Effects:</em> Behaves as an unformatted input function (as described in <a title="istream.unformatted" href="istream.unformatted.html">27.7.2.3</a>, paragraph 1). After
+constructing a sentry object, extracts characters and stores them into successive locations of an array whose first
+element is designated by <code class="sh_cpp">s</code>.<sup class="footnote"><a href="#fn322">322</a></sup> Characters are extracted and stored until one of the
+following occurs:</p>
+
+<ol>
+<li>end-of-file occurs on the input sequence (in which case the function calls <code class="sh_cpp">setstate(eofbit)</code>);</li>
+<li>
+<code class="sh_cpp">traits::eq(c, delim)</code> for the next available input character <code class="sh_cpp">c</code> (in which case the input
+	character is extracted but not stored);<sup class="footnote"><a href="#fn323">323</a></sup>
+</li>
+<li>
+<code class="sh_cpp">n</code> is less than one or <code class="sh_cpp">n - 1</code> characters are stored (in which case the function calls
+	<code class="sh_cpp">setstate(failbit)</code>).</li>
+</ol>
+
+<p><a class="anchor" id="p19" href="#p19">19</a>These conditions are tested in the order shown.<sup class="footnote"><a href="#fn324">324</a></sup></p>
+
+<p><a class="anchor" id="p20" href="#p20">20</a>If the function extracts no characters, it calls <code class="sh_cpp">setstate(failbit)</code> (which may throw
+<code class="sh_cpp">ios_base::failure</code> (<a title="iostate.flags" href="iostate.flags.html">27.5.5.4</a>)).<sup class="footnote"><a href="#fn325">325</a></sup></p>
+
+<p><a class="anchor" id="p21" href="#p21">21</a>In any case, if <code class="sh_cpp">n</code> is greater than zero, it then stores a null character (using
+<code class="sh_cpp">charT()</code>) into the next successive location of the array.</p>
+
+<p><a class="anchor" id="p22" href="#p22">22</a><em>Returns:</em> <code class="sh_cpp">*this</code>.</p>
+
+<div class="example">
+<p><a class="anchor" id="p23" href="#p23">23</a>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">#include &lt;iostream&gt;
+
+int main() {
+  using namespace std;
+  const int line_buffer_size = 100;
+
+  char buffer[line_buffer_size];
+  int line_number = 0;
+  while (cin.getline(buffer, line_buffer_size, '\n') || cin.gcount()) {
+    int count = cin.gcount();
+    if (cin.eof())
+      cout &lt;&lt; "Partial final line";     // cin.fail() is false
+    else if (cin.fail()) {
+      cout &lt;&lt; "Partial long line";
+      cin.clear(cin.rdstate() &amp; ~ios_base::failbit);
+    } else {
+      count--;                          // Don’t include newline in count
+      cout &lt;&lt; "Line " &lt;&lt; ++line_number;
+    }
+    cout &lt;&lt; " (" &lt;&lt; count &lt;&lt; " chars): " &lt;&lt; buffer &lt;&lt; endl;
+  }
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<h5><code class="sh_cpp">basic_istream&lt;charT,traits&gt;&amp; <dfn>getline</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="getline"></object>(char_type* s, streamsize n);</code></h5>
+
+<p><a class="anchor" id="p24" href="#p24">24</a><em>Returns:</em> <code class="sh_cpp">getline(s,n,widen('\n'))</code>.</p>
+
+<h5><code class="sh_cpp">basic_istream&lt;charT,traits&gt;&amp;
+    <dfn>ignore</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="ignore"></object>(streamsize n = 1, int_type delim = traits::eof());</code></h5>
+
+<p><a class="anchor" id="p25" href="#p25">25</a><em>Effects:</em> Behaves as an unformatted input function (as described in <a title="istream.unformatted" href="istream.unformatted.html">27.7.2.3</a>, paragraph 1). After
+constructing a sentry object, extracts characters and discards them. Characters are extracted until any of the following
+occurs:</p>
+
+<ul>
+<li>if <code class="sh_cpp">n != numeric_limits&lt;streamsize&gt;::max()</code> (<a title="limits" href="limits.numeric.html">18.3.2</a>), <code class="sh_cpp">n</code> characters
+	are extracted</li>
+<li>end-of-file occurs on the input sequence (in which case the function calls <code class="sh_cpp">setstate(eofbit)</code>, which may
+	throw <code class="sh_cpp">ios_base::failure</code> (<a title="iostate.flags" href="iostate.flags.html">27.5.5.4</a>));</li>
+<li>
+<code class="sh_cpp">traits::eq_int_type(traits::to_int_type(c), delim)</code> for the next available input character
+	<code class="sh_cpp">c</code> (in which case <code class="sh_cpp">c</code> is extracted).</li>
+</ul>
+
+<p><a class="anchor" id="p26" href="#p26">26</a><em>Remarks:</em> The last condition will never occur if <code class="sh_cpp">traits::eq_int_type(delim,
+traits::eof())</code>.</p>
+
+<p><a class="anchor" id="p27" href="#p27">27</a><em>Returns:</em> <code class="sh_cpp">*this</code>.</p>
+
+<h5><code class="sh_cpp">int_type <dfn>peek</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="peek"></object>();</code></h5>
+
+<p><a class="anchor" id="p28" href="#p28">28</a><em>Effects:</em> Behaves as an unformatted input function (as described in <a title="istream.unformatted" href="istream.unformatted.html">27.7.2.3</a>, paragraph 1). After
+constructing a sentry object, reads but does not extract the current input character.</p>
+
+<p><a class="anchor" id="p29" href="#p29">29</a><em>Returns:</em> <code class="sh_cpp">traits::eof()</code> if <code class="sh_cpp">good()</code> is <code class="sh_cpp">false</code>. Otherwise, returns
+<code class="sh_cpp">rdbuf()-&gt;sgetc()</code>.</p>
+
+<h5><code class="sh_cpp">basic_istream&lt;charT,traits&gt;&amp; <dfn>read</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="read"></object>(char_type* s, streamsize n);</code></h5>
+
+<p><a class="anchor" id="p30" href="#p30">30</a><em>Effects:</em> Behaves as an unformatted input function (as described in <a title="istream.unformatted" href="istream.unformatted.html">27.7.2.3</a>, paragraph 1). After
+constructing a sentry object, if <code class="sh_cpp">!good()</code> calls <code class="sh_cpp">setstate(failbit)</code> which may throw an exception,
+and return. Otherwise extracts characters and stores them into successive locations of an array whose first element is
+designated by <code class="sh_cpp">s</code>.<sup class="footnote"><a href="#fn326">326</a></sup> Characters are extracted and stored until either of the following
+occurs:</p>
+
+<ul>
+<li>
+<code class="sh_cpp">n</code> characters are stored;</li>
+<li>end-of-file occurs on the input sequence (in which case the function calls <code class="sh_cpp">setstate(failbit|eofbit)</code>,
+	which may throw <code class="sh_cpp">ios_base::failure</code> (<a title="iostate.flags" href="iostate.flags.html">27.5.5.4</a>)).</li>
+</ul>
+
+<p><a class="anchor" id="p31" href="#p31">31</a><em>Returns:</em> <code class="sh_cpp">*this</code>.</p>
+
+<h5><code class="sh_cpp">streamsize <dfn>readsome</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="readsome"></object>(char_type* s, streamsize n);</code></h5>
+
+<p><a class="anchor" id="p32" href="#p32">32</a><em>Effects:</em> Behaves as an unformatted input function (as described in <a title="istream.unformatted" href="istream.unformatted.html">27.7.2.3</a>, paragraph 1). After
+constructing a sentry object, if <code class="sh_cpp">!good()</code> calls <code class="sh_cpp">setstate(failbit)</code> which may throw an exception,
+and return. Otherwise extracts characters and stores them into successive locations of an array whose first element is
+designated by <code class="sh_cpp">s</code>. If <code class="sh_cpp">rdbuf()-&gt;in_avail() == -1</code>, calls <code class="sh_cpp">setstate(eofbit)</code> (which
+may throw <code class="sh_cpp">ios_base::failure</code> (<a title="iostate.flags" href="iostate.flags.html">27.5.5.4</a>)), and extracts no characters;</p>
+
+<ul>
+<li>If <code class="sh_cpp">rdbuf()-&gt;in_avail() == 0</code>, extracts no characters</li>
+<li>If <code class="sh_cpp">rdbuf()-&gt;in_avail() &gt; 0</code>, extracts <code class="sh_cpp">min(rdbuf()-&gt;in_avail(),n))</code>.</li>
+</ul>
+
+<p><a class="anchor" id="p33" href="#p33">33</a><em>Returns:</em> The number of characters extracted.</p>
+
+<h5><code class="sh_cpp">basic_istream&lt;charT,traits&gt;&amp; <dfn>putback</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="putback"></object>(char_type c);</code></h5>
+
+<p><a class="anchor" id="p34" href="#p34">34</a><em>Effects:</em> Behaves as an unformatted input function (as described in <a title="istream.unformatted" href="istream.unformatted.html">27.7.2.3</a>, paragraph 1), except
+that the function first clears <code class="sh_cpp">eofbit</code>. After constructing a sentry object, if <code class="sh_cpp">!good()</code> calls
+<code class="sh_cpp">setstate(failbit)</code> which may throw an exception, and return. If <code class="sh_cpp">rdbuf()</code> is not null, calls
+<code class="sh_cpp">rdbuf-&gt;sputbackc()</code>. If <code class="sh_cpp">rdbuf()</code> is null, or if <code class="sh_cpp">sputbackc()</code> returns
+<code class="sh_cpp">traits::eof()</code>, calls <code class="sh_cpp">setstate(badbit)</code> (which may throw <code class="sh_cpp">ios_base::failure</code>
+(<a title="iostate.flags" href="iostate.flags.html">27.5.5.4</a>)). <span class="note">[ <em>Note:</em> This function extracts no characters, so the value returned by the next call to
+<code class="sh_cpp">gcount()</code> is 0. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p35" href="#p35">35</a><em>Returns:</em> <code class="sh_cpp">*this</code>.</p>
+
+<h5><code class="sh_cpp">basic_istream&lt;charT,traits&gt;&amp; <dfn>unget</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="unget"></object>();</code></h5>
+
+<p><a class="anchor" id="p36" href="#p36">36</a><em>Effects:</em> Behaves as an unformatted input function (as described in <a title="istream.unformatted" href="istream.unformatted.html">27.7.2.3</a>, paragraph 1), except
+that the function first clears <code class="sh_cpp">eofbit</code>. After constructing a sentry object, if <code class="sh_cpp">!good()</code> calls
+<code class="sh_cpp">setstate(failbit)</code> which may throw an exception, and return. If <code class="sh_cpp">rdbuf()</code> is not null, calls
+<code class="sh_cpp">rdbuf()-&gt;sungetc()</code>. If <code class="sh_cpp">rdbuf()</code> is null, or if <code class="sh_cpp">sungetc()</code> returns
+<code class="sh_cpp">traits::eof()</code>, calls <code class="sh_cpp">setstate(badbit)</code> (which may throw <code class="sh_cpp">ios_base::failure</code>
+(<a title="iostate.flags" href="iostate.flags.html">27.5.5.4</a>)). <span class="note">[ <em>Note:</em> This function extracts no characters, so the value returned by the next call to
+<code class="sh_cpp">gcount()</code> is 0. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p37" href="#p37">37</a><em>Returns:</em> <code class="sh_cpp">*this</code>.</p>
+
+<h5><code class="sh_cpp">int <dfn>sync</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="sync"></object>();</code></h5>
+
+<p><a class="anchor" id="p38" href="#p38">38</a><em>Effects:</em> Behaves as an unformatted input function (as described in <a title="istream.unformatted" href="istream.unformatted.html">27.7.2.3</a>, paragraph 1), except
+that it does not count the number of characters extracted and does not affect the value returned by subsequent calls to
+<code class="sh_cpp">gcount()</code>. After constructing a sentry object, if <code class="sh_cpp">rdbuf()</code> is a null pointer, returns −1.
+Otherwise, calls <code class="sh_cpp">rdbuf()-&gt;pubsync()</code> and, if that function returns −1 calls <code class="sh_cpp">setstate(badbit)</code>
+(which may throw <code class="sh_cpp">ios_base::failure</code> (<a title="iostate.flags" href="iostate.flags.html">27.5.5.4</a>), and returns −1. Otherwise, returns
+zero.</p>
+
+<h5><code class="sh_cpp">pos_type <dfn>tellg</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="tellg"></object>();</code></h5>
+
+<p><a class="anchor" id="p39" href="#p39">39</a><em>Effects:</em> Behaves as an unformatted input function (as described in <a title="istream.unformatted" href="istream.unformatted.html">27.7.2.3</a>, paragraph 1), except
+that it does not count the number of characters extracted and does not affect the value returned by subsequent calls to
+<code class="sh_cpp">gcount()</code>.</p>
+
+<p><a class="anchor" id="p40" href="#p40">40</a><em>Returns:</em> After constructing a sentry object, if <code class="sh_cpp">fail() != false</code>, returns
+<code class="sh_cpp">pos_type(-1)</code> to indicate failure. Otherwise, returns <code class="sh_cpp">rdbuf()-&gt;pubseekoff(0, cur,
+in)</code>.</p>
+
+<h5><code class="sh_cpp">basic_istream&lt;charT,traits&gt;&amp; <dfn>seekg</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="seekg"></object>(pos_type pos);</code></h5>
+
+<p><a class="anchor" id="p41" href="#p41">41</a><em>Effects:</em> Behaves as an unformatted input function (as described in <a title="istream.unformatted" href="istream.unformatted.html">27.7.2.3</a>, paragraph 1), except
+that the function first clears <code class="sh_cpp">eofbit</code>, it does not count the number of characters extracted, and it does
+not affect the value returned by subsequent calls to <code class="sh_cpp">gcount()</code>. After constructing a sentry object, if
+<code class="sh_cpp">fail() != true</code>, executes <code class="sh_cpp">rdbuf()-&gt;pubseekpos(pos, ios_base::in)</code>. In case of failure, the
+function calls <code class="sh_cpp">setstate(failbit)</code> (which may throw <code class="sh_cpp">ios_base::failure</code>).</p>
+
+<p><a class="anchor" id="p42" href="#p42">42</a><em>Returns:</em> <code class="sh_cpp">*this</code>.</p>
+
+<h5><code class="sh_cpp">basic_istream&lt;charT,traits&gt;&amp; <dfn>seekg</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="seekg"></object>(off_type off, ios_base::seekdir dir);</code></h5>
+
+<p><a class="anchor" id="p43" href="#p43">43</a><em>Effects:</em> Behaves as an unformatted input function (as described in <a title="istream.unformatted" href="istream.unformatted.html">27.7.2.3</a>, paragraph 1), except
+that it does not count the number of characters extracted and does not affect the value returned by subsequent calls to
+<code class="sh_cpp">gcount()</code>. After constructing a sentry object, if <code class="sh_cpp">fail() != true</code>, executes
+<code class="sh_cpp">rdbuf()-&gt;pubseekoff(off, dir, ios_base::in)</code>. In case of failure, the function calls
+<code class="sh_cpp">setstate(failbit)</code> (which may throw <code class="sh_cpp">ios_base::failure</code>).</p>
+
+<p><a class="anchor" id="p44" href="#p44">44</a><em>Returns:</em> <code class="sh_cpp">*this</code>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div>
+<p class="footnote" id="fn319">319) This is done without causing an <code class="sh_cpp">ios::failure</code> to be thrown.</p>
+<p class="footnote" id="fn320">320) Note that this function is not overloaded on types <code class="sh_cpp">signed char</code> and <code class="sh_cpp">unsigned
+char</code>.</p>
+<p class="footnote" id="fn321">321) Note that this function is not overloaded on types <code class="sh_cpp">signed char</code> and <code class="sh_cpp">unsigned
+char</code>.</p>
+<p class="footnote" id="fn322">322) Note that this function is not overloaded on types <code class="sh_cpp">signed char</code> and <code class="sh_cpp">unsigned
+char</code>.</p>
+<p class="footnote" id="fn323">323) Since the final input character is “extracted”, it is counted in the <code class="sh_cpp">gcount()</code>, even
+though it is not stored.</p>
+<p class="footnote" id="fn324">324) This allows an input line which exactly fills the buffer, without setting <code class="sh_cpp">failbit</code>. This
+is different behavior than the historical AT&amp;T implementation.</p>
+<p class="footnote" id="fn325">325) This implies an empty input line will not cause <code class="sh_cpp">failbit</code> to be set.</p>
+<p class="footnote" id="fn326">326) Note that this function is not overloaded on types <code class="sh_cpp">signed char</code> and <code class="sh_cpp">unsigned
+char</code>.</p>
+</div>
+</body>
+</html>
+

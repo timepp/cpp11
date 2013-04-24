@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class template weak_ptr</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[util.smartptr.weak]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[util.smartptr.weak]"></object>20.7.2.3 Class template <code class="sh_cpp"><dfn>weak_ptr</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="weak_ptr"></object></code> </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The <code class="sh_cpp">weak_ptr</code> class template stores a weak reference to an object that is already managed by a
+<code class="sh_cpp">shared_ptr</code>. To access the object, a <code class="sh_cpp">weak_ptr</code> can be converted to a <code class="sh_cpp">shared_ptr</code>
+using the member function <code class="sh_cpp">lock</code>.</p>
+
+<pre><code class="sh_cpp">namespace std {
+  template&lt;class T&gt; class weak_ptr {
+  public:
+    typedef T element_type;
+
+    // <a title="util.smartptr.weak.const" href="util.smartptr.weak.const.html">20.7.2.3.1</a>, constructors
+    constexpr weak_ptr() noexcept;
+    template&lt;class Y&gt; weak_ptr(shared_ptr&lt;Y&gt; const&amp; r) noexcept;
+    weak_ptr(weak_ptr const&amp; r) noexcept;
+    template&lt;class Y&gt; weak_ptr(weak_ptr&lt;Y&gt; const&amp; r) noexcept;
+
+    // <a title="util.smartptr.weak.dest" href="util.smartptr.weak.dest.html">20.7.2.3.2</a>, destructor
+    ~weak_ptr();
+
+    // <a title="util.smartptr.weak.assign" href="util.smartptr.weak.assign.html">20.7.2.3.3</a>, assignment
+    weak_ptr&amp; operator=(weak_ptr const&amp; r) noexcept;
+    template&lt;class Y&gt; weak_ptr&amp; operator=(weak_ptr&lt;Y&gt; const&amp; r) noexcept;
+    template&lt;class Y&gt; weak_ptr&amp; operator=(shared_ptr&lt;Y&gt; const&amp; r) noexcept;
+
+    // <a title="util.smartptr.weak.mod" href="util.smartptr.weak.mod.html">20.7.2.3.4</a>, modifiers
+    void swap(weak_ptr&amp; r) noexcept;
+    void reset() noexcept;
+
+    // <a title="util.smartptr.weak.obs" href="util.smartptr.weak.obs.html">20.7.2.3.5</a>, observers
+    long use_count() const noexcept;
+    bool expired() const noexcept;
+    shared_ptr&lt;T&gt; lock() const noexcept;
+    template&lt;class U&gt; bool owner_before(shared_ptr&lt;U&gt; const&amp; b);
+    template&lt;class U&gt; bool owner_before(weak_ptr&lt;U&gt; const&amp; b);
+  };
+
+  // <a title="util.smartptr.weak.spec" href="util.smartptr.weak.spec.html">20.7.2.3.6</a>, specialized algorithms
+  template&lt;class T&gt; void swap(weak_ptr&lt;T&gt;&amp; a, weak_ptr&lt;T&gt;&amp; b) noexcept;
+} // namespace std</code></pre>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>Specializations of <code class="sh_cpp">weak_ptr</code> shall be <code class="concept">CopyConstructible</code> and
+<code class="concept">CopyAssignable</code>, allowing their use in standard containers. The template parameter <code class="sh_cpp">T</code> of
+<code class="sh_cpp">weak_ptr</code> may be an incomplete type.</p>
+</body>
+</html>
+

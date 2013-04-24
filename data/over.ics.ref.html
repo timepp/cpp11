@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Reference binding</title>
+</head>
+<body>
+<h5>
+<dfn class="label">[over.ics.ref]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[over.ics.ref]"></object>13.3.3.1.4 Reference binding </h5>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>When a parameter of reference type binds directly (<a title="dcl.init.ref" href="dcl.init.ref.html">8.5.3</a>) to an argument expression, the implicit
+conversion sequence is the identity conversion, unless the argument expression has a type that is a derived class of the
+parameter type, in which case the implicit conversion sequence is a derived-to-base Conversion
+(<a title="over.best.ics" href="over.best.ics.html">13.3.3.1</a>).</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct A {};
+struct B : public A {} b;
+int f(A&amp;);
+int f(B&amp;);
+int i = f(b);           // calls f(B&amp;), an exact match, rather than
+                        // f(A&amp;), a conversion</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p>If the parameter binds directly to the result of applying a conversion function to the argument expression, the
+implicit conversion sequence is a user-defined conversion sequence (<a title="over.ics.user" href="over.ics.user.html">13.3.3.1.2</a>), with the second standard
+conversion sequence either an identity conversion or, if the conversion function returns an entity of a type that is a
+derived class of the parameter type, a derived-to-base Conversion.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>When a parameter of reference type is not bound directly to an argument expression, the conversion sequence is
+the one required to convert the argument expression to the underlying type of the reference according to
+<a title="over.best.ics" href="over.best.ics.html">13.3.3.1</a>. Conceptually, this conversion sequence corresponds to copy-initializing a temporary of the
+underlying type with the argument expression. Any difference in top-level cv-qualification is subsumed by the
+initialization itself and does not constitute a conversion.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>Except for an implicit object parameter, for which see <a title="over.match.funcs" href="over.match.funcs.html">13.3.1</a>, a standard conversion sequence cannot
+be formed if it requires binding an lvalue reference other than a reference to a non-volatile <code class="sh_cpp">const</code> type to
+an rvalue or binding an rvalue reference to an lvalue other than a function lvalue. <span class="note">[ <em>Note:</em> This means, for example, that
+a candidate function cannot be a viable function if it has a non-const lvalue reference parameter (other than the
+implicit object parameter) and the corresponding argument is a temporary or would require one to be created to
+initialize the lvalue reference (see <a title="dcl.init.ref" href="dcl.init.ref.html">8.5.3</a>). — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>Other restrictions on binding a reference to a particular argument that are not based on the types of the
+reference and the argument do not affect the formation of a standard conversion sequence, however. <span class="example">[ <em>Example:</em> a function
+with an “lvalue reference to <code class="sh_cpp">int</code>” parameter can be a viable candidate even if the corresponding argument is
+an <code class="sh_cpp">int</code> bit-field. The formation of implicit conversion sequences treats the <code class="sh_cpp">int</code> bit-field as
+an <code class="sh_cpp">int</code> lvalue and finds an exact match with the parameter. If the function is selected by overload
+resolution, the call will nonetheless be ill-formed because of the prohibition on binding a non-<code class="sh_cpp">const</code>
+lvalue reference to a bit-field (<a title="dcl.init.ref" href="dcl.init.ref.html">8.5.3</a>). — <em>end example</em> ]</span></p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>The binding of a reference to an expression that is <em>reference-compatible with added qualification</em>
+influences the rank of a standard conversion; see <a title="over.ics.rank" href="over.ics.rank.html">13.3.3.2</a> and <a title="dcl.init.ref" href="dcl.init.ref.html">8.5.3</a>.</p>
+</body>
+</html>
+

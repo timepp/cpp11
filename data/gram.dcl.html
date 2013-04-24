@@ -1,0 +1,395 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Declarations</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[gram.dcl]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[gram.dcl]"></object>A.6 Declarations </h2>
+
+<dl>
+<dt>
+<i class="nonterminal">declaration-seq</i>:</dt>
+	<dd><i class="nonterminal">declaration</i></dd>
+	<dd>
+<i class="nonterminal">declaration-seq</i> <i class="nonterminal">declaration</i>
+</dd>
+<dt>
+<i class="nonterminal">declaration</i>:</dt>
+	<dd><i class="nonterminal">block-declaration</i></dd>
+	<dd><i class="nonterminal">function-definition</i></dd>
+	<dd><i class="nonterminal">template-declaration</i></dd>
+	<dd><i class="nonterminal">explicit-instantiation</i></dd>
+	<dd><i class="nonterminal">explicit-specialization</i></dd>
+	<dd><i class="nonterminal">linkage-specification</i></dd>
+	<dd><i class="nonterminal">namespace-definition</i></dd>
+	<dd><i class="nonterminal">empty-declaration</i></dd>
+	<dd><i class="nonterminal">attribute-declaration</i></dd>
+<dt>
+<i class="nonterminal">block-declaration</i>:</dt>
+	<dd><i class="nonterminal">simple-declaration</i></dd>
+	<dd><i class="nonterminal">asm-definition</i></dd>
+	<dd><i class="nonterminal">namespace-alias-definition</i></dd>
+	<dd><i class="nonterminal">using-declaration</i></dd>
+	<dd><i class="nonterminal">using-directive</i></dd>
+	<dd><i class="nonterminal">static_assert-declaration</i></dd>
+	<dd><i class="nonterminal">alias-declaration</i></dd>
+	<dd><i class="nonterminal">opaque-enum-declaration</i></dd>
+<dt>
+<i class="nonterminal">alias-declaration</i>:</dt>
+	<dd>
+<code class="sh_cpp">using</code> <i class="nonterminal">identifier</i> <i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub> <code class="sh_cpp">=</code> <i class="nonterminal">type-id</i> <code class="sh_cpp">;</code>
+</dd>
+<dt>
+<i class="nonterminal">simple-declaration</i>:</dt>
+	<dd>
+<i class="nonterminal">decl-specifier-seq</i><sub class="opt">opt</sub> <i class="nonterminal">init-declarator-list</i><sub class="opt">opt</sub> <code class="sh_cpp">;</code>
+</dd>
+	<dd>
+<i class="nonterminal">attribute-specifier-seq</i> <i class="nonterminal">decl-specifier-seq</i> <i class="nonterminal">init-declarator-list</i> <code class="sh_cpp">;</code>
+</dd>
+<dt>
+<i class="nonterminal">static_assert-declaration</i>:</dt>
+	<dd>
+<code class="sh_cpp">static_assert</code> <code class="sh_cpp">(</code> <i class="nonterminal">constant-expression</i> <code class="sh_cpp">,</code> <i class="nonterminal">string-literal</i>
+		<code class="sh_cpp">)</code> <code class="sh_cpp">;</code>
+</dd>
+<dt>
+<i class="nonterminal">empty-declaration</i>:</dt>
+	<dd><code class="sh_cpp">;</code></dd>
+<dt>
+<i class="nonterminal">attribute-declaration</i>:</dt>
+	<dd>
+<i class="nonterminal">attribute-specifier-seq</i> <code class="sh_cpp">;</code>
+</dd>
+<dt>
+<i class="nonterminal">decl-specifier</i>:</dt>
+	<dd><i class="nonterminal">storage-class-specifier</i></dd>
+	<dd><i class="nonterminal">type-specifier</i></dd>
+	<dd><i class="nonterminal">function-specifier</i></dd>
+	<dd><code class="sh_cpp">friend</code></dd>
+	<dd><code class="sh_cpp">typedef</code></dd>
+	<dd><code class="sh_cpp">constexpr</code></dd>
+<dt>
+<i class="nonterminal">decl-specifier-seq</i>:</dt>
+	<dd>
+<i class="nonterminal">decl-specifier</i> <i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub>
+</dd>
+	<dd>
+<i class="nonterminal">decl-specifier</i> <i class="nonterminal">decl-specifier-seq</i>
+</dd>
+<dt>
+<i class="nonterminal">storage-class-specifier</i>:</dt>
+	<dd><code class="sh_cpp">register</code></dd>
+	<dd><code class="sh_cpp">static</code></dd>
+	<dd><code class="sh_cpp">thread_local</code></dd>
+	<dd><code class="sh_cpp">extern</code></dd>
+	<dd><code class="sh_cpp">mutable</code></dd>
+<dt>
+<i class="nonterminal">function-specifier</i>:</dt>
+	<dd><code class="sh_cpp">inline</code></dd>
+	<dd><code class="sh_cpp">virtual</code></dd>
+	<dd><code class="sh_cpp">explicit</code></dd>
+<dt>
+<i class="nonterminal">typedef-name</i>:</dt>
+	<dd><i class="nonterminal">identifier</i></dd>
+<dt>
+<i class="nonterminal">type-specifier</i>:</dt>
+	<dd><i class="nonterminal">trailing-type-specifier</i></dd>
+	<dd><i class="nonterminal">class-specifier</i></dd>
+	<dd><i class="nonterminal">enum-specifier</i></dd>
+<dt>
+<i class="nonterminal">trailing-type-specifier</i>:</dt>
+	<dd><i class="nonterminal">simple-type-specifier</i></dd>
+	<dd><i class="nonterminal">elaborated-type-specifier</i></dd>
+	<dd><i class="nonterminal">typename-specifier</i></dd>
+	<dd><i class="nonterminal">cv-qualifier</i></dd>
+<dt>
+<i class="nonterminal">type-specifier-seq</i>:</dt>
+	<dd>
+<i class="nonterminal">type-specifier</i> <i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub>
+</dd>
+	<dd>
+<i class="nonterminal">type-specifier</i> <i class="nonterminal">type-specifier-seq</i>
+</dd>
+<dt>
+<i class="nonterminal">trailing-type-specifier-seq</i>:</dt>
+	<dd>
+<i class="nonterminal">trailing-type-specifier</i> <i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub>
+</dd>
+	<dd>
+<i class="nonterminal">trailing-type-specifier</i> <i class="nonterminal">trailing-type-specifier-seq</i>
+</dd>
+<dt>
+<i class="nonterminal">simple-type-specifier</i>:</dt>
+	<dd>
+<i class="nonterminal">nested-name-specifier</i><sub class="opt">opt</sub> <i class="nonterminal">type-name</i>
+</dd>
+	<dd>
+<i class="nonterminal">nested-name-specifier</i> <code class="sh_cpp">template</code> <i class="nonterminal">simple-template-id</i>
+</dd>
+	<dd><code class="sh_cpp">char</code></dd>
+	<dd><code class="sh_cpp">char16_t</code></dd>
+	<dd><code class="sh_cpp">char32_t</code></dd>
+	<dd><code class="sh_cpp">wchar_t</code></dd>
+	<dd><code class="sh_cpp">bool</code></dd>
+	<dd><code class="sh_cpp">short</code></dd>
+	<dd><code class="sh_cpp">int</code></dd>
+	<dd><code class="sh_cpp">long</code></dd>
+	<dd><code class="sh_cpp">signed</code></dd>
+	<dd><code class="sh_cpp">unsigned</code></dd>
+	<dd><code class="sh_cpp">float</code></dd>
+	<dd><code class="sh_cpp">double</code></dd>
+	<dd><code class="sh_cpp">void</code></dd>
+	<dd><code class="sh_cpp">auto</code></dd>
+	<dd><i class="nonterminal">decltype-specifier</i></dd>
+<dt>
+<i class="nonterminal">type-name</i>:</dt>
+	<dd><i class="nonterminal">class-name</i></dd>
+	<dd><i class="nonterminal">enum-name</i></dd>
+	<dd><i class="nonterminal">typedef-name</i></dd>
+	<dd><i class="nonterminal">simple-template-id</i></dd>
+<dt>
+<i class="nonterminal">decltype-specifier</i>:</dt>
+	<dd>
+<code class="sh_cpp">decltype</code> <code class="sh_cpp">(</code> <i class="nonterminal">expression</i> <code class="sh_cpp">)</code>
+</dd>
+<dt>
+<i class="nonterminal">elaborated-type-specifier</i>:</dt>
+	<dd>
+<i class="nonterminal">class-key</i> <i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub> <i class="nonterminal">nested-name-specifier</i><sub class="opt">opt</sub>
+		<i class="nonterminal">identifier</i>
+</dd>
+	<dd>
+<i class="nonterminal">class-key</i> <i class="nonterminal">nested-name-specifier</i><sub class="opt">opt</sub> <code class="sh_cpp">template</code><sub class="opt">opt</sub>
+		<i class="nonterminal">simple-template-id</i>
+</dd>
+	<dd>
+<code class="sh_cpp">enum</code> <i class="nonterminal">nested-name-specifier</i><sub class="opt">opt</sub> <i class="nonterminal">identifier</i>
+</dd>
+<dt>
+<i class="nonterminal">enum-name</i>:</dt>
+	<dd><i class="nonterminal">identifier</i></dd>
+<dt>
+<i class="nonterminal">enum-specifier</i>:</dt>
+	<dd>
+<i class="nonterminal">enum-head</i> <code class="sh_cpp">{</code> <i class="nonterminal">enumerator-list</i><sub class="opt">opt</sub> <code class="sh_cpp">}</code>
+</dd>
+	<dd>
+<i class="nonterminal">enum-head</i> <code class="sh_cpp">{</code> <i class="nonterminal">enumerator-list</i> <code class="sh_cpp">,</code> <code class="sh_cpp">}</code>
+</dd>
+<dt>
+<i class="nonterminal">enum-head</i>:</dt>
+	<dd>
+<i class="nonterminal">enum-key</i> <i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub> <i class="nonterminal">identifier</i><sub class="opt">opt</sub>
+		<i class="nonterminal">enum-base</i><sub class="opt">opt</sub>
+</dd>
+	<dd>
+<i class="nonterminal">enum-key</i> <i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub> <i class="nonterminal">nested-name-specifier</i>
+		<i class="nonterminal">identifier</i>
+</dd>
+	<dd>
+<i class="nonterminal">enum-base</i><sub class="opt">opt</sub>
+</dd>
+<dt>
+<i class="nonterminal">opaque-enum-declaration</i>:</dt>
+	<dd>
+<i class="nonterminal">enum-key</i> <i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub> <i class="nonterminal">identifier</i> <i class="nonterminal">enum-base</i><sub class="opt">opt</sub>
+		<code class="sh_cpp">;</code>
+</dd>
+<dt>
+<i class="nonterminal">enum-key</i>:</dt>
+	<dd><code class="sh_cpp">enum</code></dd>
+	<dd>
+<code class="sh_cpp">enum</code> <code class="sh_cpp">class</code>
+</dd>
+	<dd>
+<code class="sh_cpp">enum</code> <code class="sh_cpp">struct</code>
+</dd>
+<dt>
+<i class="nonterminal">enum-base</i>:</dt>
+	<dd>
+<code class="sh_cpp">:</code> <i class="nonterminal">type-specifier-seq</i>
+</dd>
+<dt>
+<i class="nonterminal">enumerator-list</i>:</dt>
+	<dd><i class="nonterminal">enumerator-definition</i></dd>
+	<dd>
+<i class="nonterminal">enumerator-list</i> <code class="sh_cpp">,</code> <i class="nonterminal">enumerator-definition</i>
+</dd>
+<dt>
+<i class="nonterminal">enumerator-definition</i>:</dt>
+	<dd><i class="nonterminal">enumerator</i></dd>
+	<dd>
+<i class="nonterminal">enumerator</i> <code class="sh_cpp">=</code> <i class="nonterminal">constant-expression</i>
+</dd>
+<dt>
+<i class="nonterminal">enumerator</i>:</dt>
+	<dd><i class="nonterminal">identifier</i></dd>
+<dt>
+<i class="nonterminal">namespace-name</i>:</dt>
+	<dd><i class="nonterminal">original-namespace-name</i></dd>
+	<dd><i class="nonterminal">namespace-alias</i></dd>
+<dt>
+<i class="nonterminal">original-namespace-name</i>:</dt>
+	<dd><i class="nonterminal">identifier</i></dd>
+<dt>
+<i class="nonterminal">namespace-definition</i>:</dt>
+	<dd><i class="nonterminal">named-namespace-definition</i></dd>
+	<dd><i class="nonterminal">unnamed-namespace-definition</i></dd>
+<dt>
+<i class="nonterminal">named-namespace-definition</i>:</dt>
+	<dd><i class="nonterminal">original-namespace-definition</i></dd>
+	<dd><i class="nonterminal">extension-namespace-definition</i></dd>
+<dt>
+<i class="nonterminal">original-namespace-definition</i>:</dt>
+	<dd>
+<code class="sh_cpp">inline</code><sub class="opt">opt</sub> <code class="sh_cpp">namespace</code> <i class="nonterminal">identifier</i> <code class="sh_cpp">{</code> <i class="nonterminal">namespace-body</i>
+		<code class="sh_cpp">}</code>
+</dd>
+<dt>
+<i class="nonterminal">extension-namespace-definition</i>:</dt>
+	<dd>
+<code class="sh_cpp">inline</code><sub class="opt">opt</sub> <code class="sh_cpp">namespace</code> <i class="nonterminal">original-namespace-name</i> <code class="sh_cpp">{</code>
+		<i class="nonterminal">namespace-body</i> <code class="sh_cpp">}</code>
+</dd>
+<dt>
+<i class="nonterminal">unnamed-namespace-definition</i>:</dt>
+	<dd>
+<code class="sh_cpp">inline</code><sub class="opt">opt</sub> <code class="sh_cpp">namespace</code> <code class="sh_cpp">{</code> <i class="nonterminal">namespace-body</i> <code class="sh_cpp">}</code>
+</dd>
+<dt>
+<i class="nonterminal">namespace-body</i>:</dt>
+	<dd>
+<i class="nonterminal">declaration-seq</i><sub class="opt">opt</sub>
+</dd>
+<dt>
+<i class="nonterminal">namespace-alias</i>:</dt>
+	<dd><i class="nonterminal">identifier</i></dd>
+<dt>
+<i class="nonterminal">namespace-alias-definition</i>:</dt>
+	<dd>
+<code class="sh_cpp">namespace</code> <i class="nonterminal">identifier</i> <code class="sh_cpp">=</code> <i class="nonterminal">qualified-namespace-specifier</i>
+		<code class="sh_cpp">;</code>
+</dd>
+<dt>
+<i class="nonterminal">qualified-namespace-specifier</i>:</dt>
+	<dd>
+<i class="nonterminal">nested-name-specifier</i><sub class="opt">opt</sub> <i class="nonterminal">namespace-name</i>
+</dd>
+<dt>
+<i class="nonterminal">using-declaration</i>:</dt>
+	<dd>
+<code class="sh_cpp">using</code> <code class="sh_cpp">typename</code><sub class="opt">opt</sub> <i class="nonterminal">nested-name-specifier</i> <i class="nonterminal">unqualified-id</i>
+		<code class="sh_cpp">;</code>
+</dd>
+	<dd>
+<code class="sh_cpp">using</code> <code class="sh_cpp">::</code> <i class="nonterminal">unqualified-id</i> <code class="sh_cpp">;</code>
+</dd>
+<dt>
+<i class="nonterminal">using-directive</i>:</dt>
+	<dd>
+<i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub> <code class="sh_cpp">using</code> <code class="sh_cpp">namespace</code>
+		<i class="nonterminal">nested-name-specifier</i><sub class="opt">opt</sub> <i class="nonterminal">namespace-name</i> <code class="sh_cpp">;</code>
+</dd>
+<dt>
+<i class="nonterminal">asm-definition</i>:</dt>
+	<dd>
+<code class="sh_cpp">asm</code> <code class="sh_cpp">(</code> <i class="nonterminal">string-literal</i> <code class="sh_cpp">)</code> <code class="sh_cpp">;</code>
+</dd>
+<dt>
+<i class="nonterminal">linkage-specification</i>:</dt>
+	<dd>
+<code class="sh_cpp">extern</code> <i class="nonterminal">string-literal</i> <code class="sh_cpp">{</code> <i class="nonterminal">declaration-seq</i><sub class="opt">opt</sub> <code class="sh_cpp">}</code>
+</dd>
+	<dd>
+<code class="sh_cpp">extern</code> <i class="nonterminal">string-literal</i> <i class="nonterminal">declaration</i>
+</dd>
+<dt>
+<i class="nonterminal">attribute-specifier-seq</i>:</dt>
+	<dd>
+<i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub> <i class="nonterminal">attribute-specifier</i>
+</dd>
+<dt>
+<i class="nonterminal">attribute-specifier</i>:</dt>
+	<dd>
+<code class="sh_cpp">[</code> <code class="sh_cpp">[</code> <i class="nonterminal">attribute-list</i> <code class="sh_cpp">]</code> <code class="sh_cpp">]</code>
+</dd>
+	<dd><i class="nonterminal">alignment-specifier</i></dd>
+<dt>
+<i class="nonterminal">alignment-specifier</i>:</dt>
+	<dd>
+<code class="sh_cpp"><code class="sh_cpp">alignas</code> (</code> <i class="nonterminal">type-id</i> <code class="sh_cpp">...</code><sub class="opt">opt</sub> <code class="sh_cpp">)</code>
+</dd>
+	<dd>
+<code class="sh_cpp">alignas</code> <code class="sh_cpp">(</code> <i class="nonterminal">alignment-expression</i> <code class="sh_cpp">...</code><sub class="opt">opt</sub>
+		<code class="sh_cpp">)</code>
+</dd>
+<dt>
+<i class="nonterminal">attribute-list</i>:</dt>
+	<dd>
+<i class="nonterminal">attribute</i><sub class="opt">opt</sub>
+</dd>
+	<dd>
+<i class="nonterminal">attribute-list</i> <code class="sh_cpp">,</code> <i class="nonterminal">attribute</i><sub class="opt">opt</sub>
+</dd>
+	<dd>
+<i class="nonterminal">attribute</i> <code class="sh_cpp">...</code>
+</dd>
+	<dd>
+<i class="nonterminal">attribute-list</i> <code class="sh_cpp">,</code> <i class="nonterminal">attribute</i> <code class="sh_cpp">...</code>
+</dd>
+<dt>
+<i class="nonterminal">attribute</i>:</dt>
+	<dd>
+<i class="nonterminal">attribute-token</i> <i class="nonterminal">attribute-argument-clause</i><sub class="opt">opt</sub>
+</dd>
+<dt>
+<i class="nonterminal">attribute-token</i>:</dt>
+	<dd><i class="nonterminal">identifier</i></dd>
+	<dd><i class="nonterminal">attribute-scoped-token</i></dd>
+<dt>
+<i class="nonterminal">attribute-scoped-token</i>:</dt>
+	<dd>
+<i class="nonterminal">attribute-namespace</i> <code class="sh_cpp">::</code> <i class="nonterminal">identifier</i>
+</dd>
+<dt>
+<i class="nonterminal">attribute-namespace</i>:</dt>
+	<dd><i class="nonterminal">identifier</i></dd>
+<dt>
+<i class="nonterminal">attribute-argument-clause</i>:</dt>
+	<dd>
+<code class="sh_cpp">(</code> <i class="nonterminal">balanced-token-seq</i> <code class="sh_cpp">)</code>
+</dd>
+<dt>
+<i class="nonterminal">balanced-token-seq</i>:</dt>
+	<dd>
+<i class="nonterminal">balanced-token</i><sub class="opt">opt</sub>
+</dd>
+	<dd>
+<i class="nonterminal">balanced-token-seq</i> <i class="nonterminal">balanced-token</i>
+</dd>
+<dt>
+<i class="nonterminal">balanced-token</i>:</dt>
+	<dd>
+<code class="sh_cpp">(</code> <i class="nonterminal">balanced-token-seq</i> <code class="sh_cpp">)</code>
+</dd>
+	<dd>
+<code class="sh_cpp">[</code> <i class="nonterminal">balanced-token-seq</i> <code class="sh_cpp">]</code>
+</dd>
+	<dd>
+<code class="sh_cpp">{</code> <i class="nonterminal">balanced-token-seq</i> <code class="sh_cpp">}</code>
+</dd>
+	<dd>any <i class="nonterminal">token</i> other than a parenthesis, a bracket, or a brace</dd>
+</dl>
+</body>
+</html>
+

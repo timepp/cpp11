@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>function modifiers</title>
+</head>
+<body>
+<h5>
+<dfn class="label">[func.wrap.func.mod]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[func.wrap.func.mod]"></object>20.8.11.2.2 <code class="sh_cpp">function</code> modifiers </h5>
+
+<h6><code class="sh_cpp">void <dfn>swap</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="swap"></object>(function&amp; other) noexcept;</code></h6>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Effects:</em> interchanges the targets of <code class="sh_cpp">*this</code> and <code class="sh_cpp">other</code>.</p>
+
+<h6><code class="sh_cpp">template&lt;class F, class A&gt;
+  void <dfn>assign</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="assign"></object>(F&amp;&amp; f, const A&amp; a);</code></h6>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Effects:</em> <code class="sh_cpp">function(allocator_arg, a, std::forward&lt;F&gt;(f)).swap(*this)</code>.</p>
+</body>
+</html>
+

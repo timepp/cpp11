@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Pointers</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[dcl.ptr]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[dcl.ptr]"></object>8.3.1 Pointers </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>In a declaration <code class="sh_cpp">T</code> <code class="sh_cpp">D</code> where <code class="sh_cpp">D</code> has the form</p>
+
+<dl><dd>
+<code class="sh_cpp">*</code> <i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub> <i class="nonterminal">cv-qualifier-seq</i><sub class="opt">opt</sub> <code class="sh_cpp">D1</code>
+</dd></dl>
+
+<p>and the type of the identifier in the declaration <code class="sh_cpp">T D1</code> is “<i class="nonterminal">derived-declarator-type-list</i>
+<code class="sh_cpp">T</code>”, then the type of the identifier of <code class="sh_cpp">D</code> is “<i class="nonterminal">derived-declarator-type-list</i>
+<i class="nonterminal">cv-qualifier-seq</i> pointer to <code class="sh_cpp">T</code>”. The <i class="nonterminal">cv-qualifier</i>s apply to the pointer and not to the
+object pointed to. Similarly, the optional <i class="nonterminal">attribute-specifier-seq</i> (<a title="dcl.attr.grammar" href="dcl.attr.grammar.html">7.6.1</a>) appertains to the pointer
+and not to the object pointed to.</p>
+
+<div class="example">
+<p><a class="anchor" id="p2" href="#p2">2</a>[ <em>Example:</em> the declarations</p>
+
+<pre><code class="sh_cpp">const int ci = 10, *pc = &amp;ci, *const cpc = pc, **ppc;
+int i, *p, *const cp = &amp;i;</code></pre>
+
+<p>declare <code class="sh_cpp">ci</code>, a constant integer; <code class="sh_cpp">pc</code>, a pointer to a constant integer; <code class="sh_cpp">cpc</code>, a
+constant pointer to a constant integer; <code class="sh_cpp">ppc</code>, a pointer to a pointer to a constant integer; <code class="sh_cpp">i</code>,
+an integer; <code class="sh_cpp">p</code>, a pointer to integer; and <code class="sh_cpp">cp</code>, a constant pointer to integer. The value of
+<code class="sh_cpp">ci</code>, <code class="sh_cpp">cpc</code>, and <code class="sh_cpp">cp</code> cannot be changed after initialization. The value of
+<code class="sh_cpp">pc</code> can be changed, and so can the object pointed to by <code class="sh_cpp">cp</code>. Examples of some correct operations
+are</p>
+
+<pre><code class="sh_cpp">i = ci;
+*cp = ci;
+pc++;
+pc = cpc;
+pc = p;
+ppc = &amp;pc;</code></pre>
+
+<p>Examples of ill-formed operations are</p>
+
+<pre><code class="sh_cpp">ci = 1;                 // error
+ci++;                   // error
+*pc = 2;                // error
+cp = &amp;ci;               // error
+cpc++;                  // error
+p = pc;                 // error
+ppc = &amp;p;               // error</code></pre>
+
+<p>Each is unacceptable because it would either change the value of an object declared <code class="sh_cpp">const</code> or allow it to
+be changed through a cv-unqualified pointer later, for example:</p>
+
+<pre><code class="sh_cpp">*ppc = &amp;ci;             // OK, but would make p point to ci…
+                        // …because of previous error
+*p = 5;                 // clobber ci</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>See also <code class="sh_cpp">5.17</code> and <code class="sh_cpp">8.5</code>.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><span class="note">[ <em>Note:</em> There are no pointers to references; see <code class="sh_cpp">8.3.2</code>. Since the address of a bit-field
+(<a title="class.bit" href="class.bit.html">9.6</a>) cannot be taken, a pointer can never point to a bit-field. — <em>end note</em> ]</span></p>
+</body>
+</html>
+

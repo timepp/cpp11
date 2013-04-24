@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Inner product</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[inner.product]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[inner.product]"></object>26.7.3 Inner product </h3>
+
+<pre><code class="sh_cpp">template &lt;class InputIterator1, class InputIterator2, class T&gt;
+  T <dfn>inner_product</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="inner_product"></object>(InputIterator1 first1, InputIterator1 last1,
+                  InputIterator2 first2, T init);
+template &lt;class InputIterator1, class InputIterator2, class T,
+    class BinaryOperation1, class BinaryOperation2&gt;
+  T inner_product(InputIterator1 first1, InputIterator1 last1,
+                  InputIterator2 first2, T init,
+                  BinaryOperation1 binary_op1,
+                  BinaryOperation2 binary_op2);</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Effects:</em> Computes its result by initializing the accumulator <code class="sh_cpp">acc</code> with the initial value
+<code class="sh_cpp">init</code> and then modifying it with <code class="sh_cpp">acc = acc + (*i1) * (*i2)</code> or <code class="sh_cpp">acc = binary_op1(acc,
+binary_op2(*i1, *i2))</code> for every iterator <code class="sh_cpp">i1</code> in the range [<code class="sh_cpp">first</code>, <code class="sh_cpp">last</code>) and
+iterator <code class="sh_cpp">i2</code> in the range [<code class="sh_cpp">first2</code>, <code class="sh_cpp">first2 + (last - first)</code>) in
+order.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Requires:</em> <code class="sh_cpp">T</code> shall meet the requirements of <code class="concept">CopyConstructible</code> (Table <a href="utility.arg.requirements.html#t21">21</a>) and <code class="concept">CopyAssignable</code> (Table <a href="utility.arg.requirements.html#t23">23</a>) types. In the ranges [<code class="sh_cpp">first</code>,
+<code class="sh_cpp">last</code>] and [<code class="sh_cpp">first2</code>, <code class="sh_cpp">first2 + (last - first)</code>] <code class="sh_cpp">binary_op1</code> and
+<code class="sh_cpp">binary_op2</code> shall neither modify elements nor invalidate iterators or subranges.<sup class="footnote"><a href="#fn293">293</a></sup></p>
+
+
+<div><p class="footnote" id="fn293">293) The use of fully closed ranges is intentional.</p></div>
+</body>
+</html>
+

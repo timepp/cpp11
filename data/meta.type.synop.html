@@ -1,0 +1,147 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Header &lt;type_traits&gt; synopsis</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[meta.type.synop]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[meta.type.synop]"></object>20.9.2 Header <dfn><code class="header">&lt;type_traits&gt;</code></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="&lt;type_traits&gt;"></object> synopsis </h3>
+
+<pre><code class="sh_cpp">namespace std {
+  // <a title="meta.help" href="meta.help.html">20.9.3</a>, helper class:
+  template &lt;class T, T v&gt; struct integral_constant;
+  typedef integral_constant&lt;bool, true&gt; true_type;
+  typedef integral_constant&lt;bool, false&gt; false_type;
+
+  // <a title="meta.unary.cat" href="meta.unary.cat.html">20.9.4.1</a>, primary type categories:
+  template &lt;class T&gt; struct is_void;
+  template &lt;class T&gt; struct is_integral;
+  template &lt;class T&gt; struct is_floating_point;
+  template &lt;class T&gt; struct is_array;
+  template &lt;class T&gt; struct is_pointer;
+  template &lt;class T&gt; struct is_lvalue_reference;
+  template &lt;class T&gt; struct is_rvalue_reference;
+  template &lt;class T&gt; struct is_member_object_pointer;
+  template &lt;class T&gt; struct is_member_function_pointer;
+  template &lt;class T&gt; struct is_enum;
+  template &lt;class T&gt; struct is_union;
+  template &lt;class T&gt; struct is_class;
+  template &lt;class T&gt; struct is_function;
+
+  // <a title="meta.unary.comp" href="meta.unary.comp.html">20.9.4.2</a>, composite type categories:
+  template &lt;class T&gt; struct is_reference;
+  template &lt;class T&gt; struct is_arithmetic;
+  template &lt;class T&gt; struct is_fundamental;
+  template &lt;class T&gt; struct is_object;
+  template &lt;class T&gt; struct is_scalar;
+  template &lt;class T&gt; struct is_compound;
+  template &lt;class T&gt; struct is_member_pointer;
+
+  // <a title="meta.unary.prop" href="meta.unary.prop.html">20.9.4.3</a>, type properties:
+  template &lt;class T&gt; struct is_const;
+  template &lt;class T&gt; struct is_volatile;
+  template &lt;class T&gt; struct is_trivial;
+  template &lt;class T&gt; struct is_trivially_copyable;
+  template &lt;class T&gt; struct is_standard_layout;
+  template &lt;class T&gt; struct is_pod;
+  template &lt;class T&gt; struct is_literal_type;
+  template &lt;class T&gt; struct is_empty;
+  template &lt;class T&gt; struct is_polymorphic;
+  template &lt;class T&gt; struct is_abstract;
+
+  template &lt;class T&gt; struct is_signed;
+  template &lt;class T&gt; struct is_unsigned;
+
+  template &lt;class T, class... Args&gt; struct is_constructible;
+  template &lt;class T&gt; struct is_default_constructible;
+  template &lt;class T&gt; struct is_copy_constructible;
+  template &lt;class T&gt; struct is_move_constructible;
+
+  template &lt;class T, class U&gt; struct is_assignable;
+  template &lt;class T&gt; struct is_copy_assignable;
+  template &lt;class T&gt; struct is_move_assignable;
+
+  template &lt;class T&gt; struct is_destructible;
+
+  template &lt;class T, class... Args&gt; struct is_trivially_constructible;
+  template &lt;class T&gt; struct is_trivially_default_constructible;
+  template &lt;class T&gt; struct is_trivially_copy_constructible;
+  template &lt;class T&gt; struct is_trivially_move_constructible;
+
+  template &lt;class T, class U&gt; struct is_trivially_assignable;
+  template &lt;class T&gt; struct is_trivially_copy_assignable;
+  template &lt;class T&gt; struct is_trivially_move_assignable;
+  template &lt;class T&gt; struct is_trivially_destructible;
+
+  template &lt;class T, class... Args&gt; struct is_nothrow_constructible;
+  template &lt;class T&gt; struct is_nothrow_default_constructible;
+  template &lt;class T&gt; struct is_nothrow_copy_constructible;
+  template &lt;class T&gt; struct is_nothrow_move_constructible;
+
+  template &lt;class T, class U&gt; struct is_nothrow_assignable;
+  template &lt;class T&gt; struct is_nothrow_copy_assignable;
+  template &lt;class T&gt; struct is_nothrow_move_assignable;
+
+  template &lt;class T&gt; struct is_nothrow_destructible;
+  template &lt;class T&gt; struct has_virtual_destructor;
+
+  // <a title="meta.unary.prop.query" href="meta.unary.prop.query.html">20.9.5</a>, type property queries:
+  template &lt;class T&gt; struct alignment_of;
+  template &lt;class T&gt; struct rank;
+  template &lt;class T, unsigned I = 0&gt; struct extent;
+
+  // <a title="meta.rel" href="meta.rel.html">20.9.6</a>, type relations:
+  template &lt;class T, class U&gt; struct is_same;
+  template &lt;class Base, class Derived&gt; struct is_base_of;
+  template &lt;class From, class To&gt; struct is_convertible;
+  template &lt;class From, class To&gt; struct is_explicitly_convertible;
+
+  // <a title="meta.trans.cv" href="meta.trans.cv.html">20.9.7.1</a>, const-volatile modifications:
+  template &lt;class T&gt; struct remove_const;
+  template &lt;class T&gt; struct remove_volatile;
+  template &lt;class T&gt; struct remove_cv;
+  template &lt;class T&gt; struct add_const;
+  template &lt;class T&gt; struct add_volatile;
+  template &lt;class T&gt; struct add_cv;
+
+  // <a title="meta.trans.ref" href="meta.trans.ref.html">20.9.7.2</a>, reference modifications:
+  template &lt;class T&gt; struct remove_reference;
+  template &lt;class T&gt; struct add_lvalue_reference;
+  template &lt;class T&gt; struct add_rvalue_reference;
+
+  // <a title="meta.trans.sign" href="meta.trans.sign.html">20.9.7.3</a>, sign modifications:
+  template &lt;class T&gt; struct make_signed;
+  template &lt;class T&gt; struct make_unsigned;
+
+  // <a title="meta.trans.arr" href="meta.trans.arr.html">20.9.7.4</a>, array modifications:
+  template &lt;class T&gt; struct remove_extent;
+  template &lt;class T&gt; struct remove_all_extents;
+
+  // <a title="meta.trans.ptr" href="meta.trans.ptr.html">20.9.7.5</a>, pointer modifications:
+  template &lt;class T&gt; struct remove_pointer;
+  template &lt;class T&gt; struct add_pointer;
+
+  // <a title="meta.trans.other" href="meta.trans.other.html">20.9.7.6</a>, other transformations:
+  template &lt;std::size_t Len, std::size_t Align&gt; struct aligned_storage;
+  template &lt;class T&gt; struct decay;
+  template &lt;bool, class T = void&gt; struct enable_if;
+  template &lt;bool, class T, class F&gt; struct conditional;
+  template &lt;class... T&gt; struct common_type;
+  template &lt;class T&gt; struct underlying_type;
+  template &lt;class&gt; class result_of; // undefined
+  template &lt;class F, class... ArgTypes&gt; class result_of&lt;F(ArgTypes...)&gt;;
+} // namespace std</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The behavior of a program that adds specializations for any of the class templates defined in this subclause is
+undefined unless otherwise specified.</p>
+</body>
+</html>
+

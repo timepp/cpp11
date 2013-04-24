@@ -1,0 +1,164 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Scope of macro definitions</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[cpp.scope]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[cpp.scope]"></object>16.3.5 Scope of macro definitions </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A macro definition lasts (independent of block structure) until a corresponding <code class="sh_cpp">#undef</code> directive
+is encountered or (if none is encountered) until the end of the translation unit. Macro definitions have no significance
+after translation phase 4.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>A preprocessing directive of the form</p>
+
+<dl><dd>
+<code class="sh_cpp">#</code> <code class="sh_cpp">undef</code> <i class="nonterminal">identifier</i> <i class="nonterminal">new-line</i>
+</dd></dl>
+
+<p>causes the specified identifier no longer to be defined as a macro name. It is ignored if the specified identifier is
+not currently defined as a macro name.</p>
+
+<div class="note">
+<p><a class="anchor" id="p3" href="#p3">3</a>[ <em>Note:</em> The simplest use of this facility is to define a “manifest constant”, as in</p>
+
+<pre><code class="sh_cpp">#define TABSIZE 100
+int table[TABSIZE];</code></pre>
+<p> — <em>end note</em> ]</p>
+</div>
+
+<div class="note">
+<p><a class="anchor" id="p4" href="#p4">4</a>[ <em>Note:</em> The following defines a function-like macro whose value is the maximum of its arguments. It has the advantages
+of working for any compatible types of the arguments and of generating in-line code without the overhead of function
+calling. It has the disadvantages of evaluating one or the other of its arguments a second time (including side effects)
+and generating more code than a function if invoked several times. It also cannot have its address taken, as it has
+none.</p>
+
+<pre><code class="sh_cpp">#define max(a, b) ((a) &gt; (b) ? (a) : (b))</code></pre>
+
+<p>The parentheses ensure that the arguments and the resulting expression are bound properly.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>To illustrate the rules for redefinition and reexamination, the sequence</p>
+
+<pre><code class="sh_cpp">#define x       3
+#define f(a)    f(x * (a))
+#undef  x
+#define x       2
+#define g       f
+#define z       z[0]
+#define h       g(~
+#define m(a)    a(w)
+#define w       0,1
+#define t(a)    a
+#define p()     int
+#define q(x)    x
+#define r(x,y)  x ## y
+#define str(x)  # x
+
+f(y+1) + f(f(z)) % t(t(g)(0) + t)(1);
+g(x+(3,4)-w) | h 5) &amp; m
+    (f)^m(m);
+p() i[q()] = { q(1), r(2,3), r(4,), r(,5), r(,) };
+char c[2][6] = { str(hello), str() };</code></pre>
+
+<p>results in</p>
+
+<pre><code class="sh_cpp">f(2 * (y+1)) + f(2 * (f(2 * (z[0])))) % f(2 * (0)) + t(1);
+f(2 * (2+(3,4)-0,1)) | f(2 * (~5)) &amp; f(2 * (0,1))^m(0,1);
+int i[] = { 1, 23, 4, 5, };
+char c[2][6] = { "hello", "" };</code></pre>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>To illustrate the rules for creating character string literals and concatenating tokens, the sequence</p>
+
+<pre><code class="sh_cpp">#define str(s)      # s
+#define xstr(s)     str(s)
+#define debug(s, t) printf("x" # s "= %d, x" # t "= %s", \
+               x ## s, x ## t)
+#define INCFILE(n)  vers ## n
+#define glue(a, b)  a ## b
+#define xglue(a, b) glue(a, b)
+#define HIGHLOW     "hello"
+#define LOW         LOW ", world"
+
+debug(1, 2);
+fputs(str(strncmp("abc\0d", "abc", '\4')    // this goes away
+    == 0) str(: @\n), s);
+#include xstr(INCFILE(2).h)
+glue(HIGH, LOW);
+xglue(HIGH, LOW)</code></pre>
+
+<p>results in</p>
+
+<pre><code class="sh_cpp">printf("x" "1" "= %d, x" "2" "= %s", x1, x2);
+fputs("strncmp(\"abc\\0d\", \"abc\", '\\4') == 0" ": @\n", s);
+#include "vers2.h"    (after macro replacement, before file access)
+"hello";
+"hello" ", world"</code></pre>
+
+<p>or, after concatenation of the character string literals,</p>
+
+<pre><code class="sh_cpp">printf("x1= %d, x2= %s", x1, x2);
+fputs("strncmp(\"abc\\0d\", \"abc\", '\\4') == 0: @\n", s);
+#include "vers2.h"    (after macro replacement, before file access)
+"hello";
+"hello, world"</code></pre>
+
+<p>Space around the <code class="sh_cpp">#</code> and <code class="sh_cpp">##</code> tokens in the macro definition is optional.</p>
+
+<p><a class="anchor" id="p7" href="#p7">7</a>To illustrate the rules for placemarker preprocessing tokens, the sequence</p>
+
+<pre><code class="sh_cpp">#define t(x,y,z) x ## y ## z
+int j[] = { t(1,2,3), t(,4,5), t(6,,7), t(8,9,),
+  t(10,,), t(,11,), t(,,12), t(,,) };</code></pre>
+
+<p>results in</p>
+
+<pre><code class="sh_cpp">int j[] = { 123, 45, 67, 89,
+  10, 11, 12, };</code></pre>
+
+<p><a class="anchor" id="p8" href="#p8">8</a>To demonstrate the redefinition rules, the following sequence is valid.</p>
+
+<pre><code class="sh_cpp">#define OBJ_LIKE      (1-1)
+#define OBJ_LIKE      /* white space */ (1-1) /* other */
+#define FUNC_LIKE(a)  ( a )
+#define FUNC_LIKE( a )(    /* note the white space */ \
+                a /* other stuff on this line
+                */ )</code></pre>
+
+<p>But the following redefinitions are invalid:</p>
+
+<pre><code class="sh_cpp">#define OBJ_LIKE    (0)     // different token sequence
+#define OBJ_LIKE    (1 - 1) // different white space
+#define FUNC_LIKE(b) ( a )  // different parameter usage
+#define FUNC_LIKE(b) ( b )  // different parameter spelling</code></pre>
+
+<p><a class="anchor" id="p9" href="#p9">9</a>Finally, to show the variable argument list macro facilities:</p>
+
+<pre><code class="sh_cpp">#define debug(...) fprintf(stderr, __VA_ARGS__)
+#define showlist(...) puts(#__VA_ARGS__)
+#define report(test, ...) ((test) ? puts(#test) : printf(__VA_ARGS__))
+debug("Flag");
+debug("X = %d\n", x);
+showlist(The first, second, and third items.);
+report(x&gt;y, "x is %d but y is %d", x, y);</code></pre>
+
+<p>results in</p>
+
+<pre><code class="sh_cpp">fprintf(stderr, "Flag" );
+fprintf(stderr, "X = %d\n", x );
+puts( "The first, second, and third items." );
+((x&gt;y) ? puts("x&gt;y") : printf("x is %d but y is %d", x, y));</code></pre>
+<p> — <em>end note</em> ]</p>
+</div>
+</body>
+</html>
+

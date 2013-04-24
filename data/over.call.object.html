@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Call to object of class type</title>
+</head>
+<body>
+<h5>
+<dfn class="label">[over.call.object]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[over.call.object]"></object>13.3.1.1.2 Call to object of class type </h5>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>If the <i class="nonterminal">primary-expression</i> <code class="sh_cpp">E</code> in the function call syntax evaluates to a class object of
+type “<var>cv</var> <code class="sh_cpp">T</code>”, then the set of candidate functions includes at least the function call operators
+of <code class="sh_cpp">T</code>. The function call operators of <code class="sh_cpp">T</code> are obtained by ordinary lookup of the name
+<code class="sh_cpp">operator()</code> in the context of <code class="sh_cpp">(E).operator()</code>.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>In addition, for each non-explicit conversion function declared in <code class="sh_cpp">T</code> of the form</p>
+
+<dl><dd>
+<code class="sh_cpp">operator</code> <i class="nonterminal">conversion-type-id</i> <code class="sh_cpp">(</code> <code class="sh_cpp">)</code> <i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub> <i class="nonterminal">cv-qualifier</i> <code class="sh_cpp">;</code>
+</dd></dl>
+
+<p>where <i class="nonterminal">cv-qualifier</i> is the same cv-qualification as, or a greater cv-qualification than, <var>cv</var>, and
+where <i class="nonterminal">conversion-type-id</i> denotes the type “pointer to function of (<code class="sh_cpp">P1</code>,… ,<code class="sh_cpp">Pn</code>)
+returning <code class="sh_cpp">R</code>”, or the type “reference to pointer to function of (<code class="sh_cpp">P1</code>,… ,<code class="sh_cpp">Pn</code>)
+returning <code class="sh_cpp">R</code>”, or the type “reference to function of (<code class="sh_cpp">P1</code>,… ,<code class="sh_cpp">Pn</code>) returning
+<code class="sh_cpp">R</code>”, a <dfn>surrogate call function</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="surrogate call function"></object> with the unique name <var>call-function</var> and having the
+form</p>
+
+<pre><code class="sh_cpp">R <var>call-function</var> (<var>conversion-type-id</var> F, P1 a1, …, Pn an) { return F (a1, …, an); }</code></pre>
+
+<p>is also considered as a candidate function. Similarly, surrogate call functions are added to the set of candidate
+functions for each non-explicit conversion function declared in a base class of <code class="sh_cpp">T</code> provided the function is
+not hidden within <code class="sh_cpp">T</code> by another intervening declaration.<sup class="footnote"><a href="#fn131">131</a></sup></p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>If such a surrogate call function is selected by overload resolution, the corresponding conversion function
+will be called to convert <code class="sh_cpp">E</code> to the appropriate function pointer or reference, and the function will then be
+invoked with the arguments of the call. If the conversion function cannot be called (e.g., because of an ambiguity), the
+program is ill-formed.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>The argument list submitted to overload resolution consists of the argument expressions present in the function
+call syntax preceded by the implied object argument <code class="sh_cpp">(E)</code>. <span class="note">[ <em>Note:</em> When comparing the call against the function
+call operators, the implied object argument is compared against the implicit object parameter of the function call
+operator. When comparing the call against a surrogate call function, the implied object argument is compared against the
+first parameter of the surrogate call function. The conversion function from which the surrogate call function was
+derived will be used in the conversion sequence for that parameter since it converts the implied object argument to the
+appropriate function pointer or reference required by that first parameter. — <em>end note</em> ]</span></p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">int f1(int);
+int f2(float);
+typedef int (*fp1)(int);
+typedef int (*fp2)(float);
+struct A {
+  operator fp1() { return f1; }
+  operator fp2() { return f2; }
+} a;
+int i = a(1);       // calls f1 via pointer returned from
+                    // conversion function</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+
+<div><p class="footnote" id="fn131">131) Note that this construction can yield candidate call functions that cannot be differentiated one from
+the other by overload resolution because they have identical declarations or differ only in their return type. The call
+will be ambiguous if overload resolution cannot select a match to the call that is uniquely better than such
+undifferentiable functions.</p></div>
+</body>
+</html>
+

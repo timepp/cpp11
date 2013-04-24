@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Base</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[depr.function.objects]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[depr.function.objects]"></object>D.8 Function objects </h2>
+
+<h3>
+<dfn class="label">[depr.base]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[depr.base]"></object>D.8.1 Base </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The class templates <code class="sh_cpp"><dfn>unary_function</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="unary_function"></object></code> and <code class="sh_cpp"><dfn>binary_function</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="binary_function"></object></code> are
+deprecated. A program shall not declare specializations of these templates.</p>
+
+<pre><code class="sh_cpp">namespace std {
+  template &lt;class Arg, class Result&gt;
+  struct unary_function {
+    typedef Arg argument_type;
+    typedef Result result_type;
+  };
+}
+
+namespace std {
+  template &lt;class Arg1, class Arg2, class Result&gt;
+  struct binary_function {
+    typedef Arg1 first_argument_type;
+    typedef Arg2 second_argument_type;
+    typedef Result result_type;
+  };
+}</code></pre>
+</body>
+</html>
+

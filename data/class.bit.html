@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Bit-fields</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[class.bit]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[class.bit]"></object>9.6 Bit-fields </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A <i class="nonterminal">member-declarator</i> of the form</p>
+
+<dl><dd>
+<i class="nonterminal">identifier</i><sub class="opt">opt</sub> <i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub> <code class="sh_cpp">:</code> <i class="nonterminal">constant-expression</i>
+</dd></dl>
+
+<p>specifies a bit-field; its length is set off from the bit-field name by a colon. The optional
+<i class="nonterminal">attribute-specifier-seq</i> appertains to the entity being declared. The bit-field attribute is not part of the type of
+the class member. The <i class="nonterminal">constant-expression</i> shall be an integral constant expression with a value greater than or
+equal to zero. The value of the integral constant expression may be larger than the number of bits in the object
+representation (<a title="basic.types" href="basic.types.html">3.9</a>) of the bit-field’s type; in such cases the extra bits are used as padding bits and do
+not participate in the value representation (<a title="basic.types" href="basic.types.html">3.9</a>) of the bit-field. Allocation of bit-fields within a class
+object is implementation-defined. Alignment of bit-fields is implementation-defined. Bit-fields are packed into some
+addressable allocation unit. <span class="note">[ <em>Note:</em> Bit-fields straddle allocation units on some machines and not on others. Bit-fields
+are assigned right-to-left on some machines, left-to-right on others. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>A declaration for a bit-field that omits the <i class="nonterminal">identifier</i> declares an <dfn>unnamed bit-field</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="unnamed bit-field"></object>.
+Unnamed bit-fields are not members and cannot be initialized. <span class="note">[ <em>Note:</em> An unnamed bit-field is useful for padding to
+conform to externally-imposed layouts. — <em>end note</em> ]</span> As a special case, an unnamed bit-field with a width of zero specifies
+alignment of the next bit-field at an allocation unit boundary. Only when declaring an unnamed bit-field may the value
+of the <i class="nonterminal">constant-expression</i> be equal to zero.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>A bit-field shall not be a static member. A bit-field shall have integral or enumeration type
+(<a title="basic.fundamental" href="basic.fundamental.html">3.9.1</a>). It is implementation-defined whether a plain (neither explicitly signed nor unsigned)
+<code class="sh_cpp">char</code>, <code class="sh_cpp">short</code>, <code class="sh_cpp">int</code>, <code class="sh_cpp">long</code>, or <code class="sh_cpp">long long</code> bit-field is
+signed or unsigned. A <code class="sh_cpp">bool</code> value can successfully be stored in a bit-field of any nonzero size. The
+address-of operator <code class="sh_cpp">&amp;</code> shall not be applied to a bit-field, so there are no pointers to bit-fields. A
+non-const reference shall not be bound to a bit-field (<a title="dcl.init.ref" href="dcl.init.ref.html">8.5.3</a>). <span class="note">[ <em>Note:</em> If the initializer for a reference of
+type <code class="sh_cpp">const T&amp;</code> is an lvalue that refers to a bit-field, the reference is bound to a temporary
+initialized to hold the value of the bit-field; the reference is not bound to the bit-field directly. See
+<a title="dcl.init.ref" href="dcl.init.ref.html">8.5.3</a>. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>If the value <code class="sh_cpp">true</code> or <code class="sh_cpp">false</code> is stored into a bit-field of type <code class="sh_cpp">bool</code> of
+any size (including a one bit bit-field), the original <code class="sh_cpp">bool</code> value and the value of the bit-field shall
+compare equal. If the value of an enumerator is stored into a bit-field of the same enumeration type and the number of
+bits in the bit-field is large enough to hold all the values of that enumeration type (<a title="dcl.enum" href="dcl.enum.html">7.2</a>), the original
+enumerator value and the value of the bit-field shall compare equal.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">enum BOOL { FALSE=0, TRUE=1 };
+struct A {
+  BOOL b:1;
+};
+A a;
+void f() {
+  a.b = TRUE;
+  if (a.b == TRUE)      // yields true
+    { /* … */ }
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+</body>
+</html>
+

@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Member functions</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[member.functions]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[member.functions]"></object>17.6.5.5 Member functions </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>It is unspecified whether any member functions in the C++ standard library are defined as <code class="sh_cpp">inline</code>
+(<a title="dcl.fct.spec" href="dcl.fct.spec.html">7.1.2</a>).</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>An implementation may declare additional non-virtual member function signatures within a class:</p>
+
+<ul>
+<li>by adding arguments with default values to a member function signature;<sup class="footnote"><a href="#fn190">190</a></sup> <span class="note">[ <em>Note:</em> An implementation may
+	not add arguments with default values to virtual, global, or non-member functions. — <em>end note</em> ]</span>
+</li>
+<li>by replacing a member function signature with default values by two or more member function signatures with
+	equivalent behavior; and</li>
+<li>by adding a member function signature for a member function name.</li>
+</ul>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>A call to a member function signature described in the C++ standard library behaves as if the implementation
+declares no additional member function signatures.<sup class="footnote"><a href="#fn191">191</a></sup></p>
+
+
+
+
+<div>
+<p class="footnote" id="fn190">190) Hence, the address of a member function of a class in the C++ standard library has an unspecified
+type.</p>
+<p class="footnote" id="fn191">191) A valid C++ program always calls the expected library member function, or one with equivalent
+behavior. An implementation may also define additional member functions that would otherwise not be called by a valid
+C++ program.</p>
+</div>
+</body>
+</html>
+

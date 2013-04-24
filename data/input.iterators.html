@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Input iterators</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[input.iterators]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[input.iterators]"></object>24.2.3 Input iterators </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A class or a pointer type <code class="sh_cpp">X</code> satisfies the requirements of an input iterator for the value type
+<code class="sh_cpp">T</code> if <code class="sh_cpp">X</code> satisfies the <code class="concept">Iterator</code> (<a title="iterator.iterators" href="iterator.iterators.html">24.2.2</a>) and
+<code class="concept">EqualityComparable</code> (Table <a href="utility.arg.requirements.html#t17">17</a>) requirements and the expressions in Table <a href="input.iterators.html#t107">107</a> are
+valid and have the indicated semantics.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>In Table <a href="input.iterators.html#t107">107</a>, the term <dfn>the domain of <code class="sh_cpp">==</code></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="the domain of =="></object> is used in the ordinary mathematical
+sense to denote the set of values over which <code class="sh_cpp">==</code> is (required to be) defined. This set can change over time.
+Each algorithm places additional requirements on the domain of <code class="sh_cpp">==</code> for the iterator values it uses. These
+requirements can be inferred from the uses that algorithm makes of <code class="sh_cpp">==</code> and <code class="sh_cpp">!=</code>. <span class="example">[ <em>Example:</em> the
+call <code class="sh_cpp">find(a, b, x)</code> is defined only if the value of <code class="sh_cpp">a</code> has the property <var>p</var> defined as
+follows: <code class="sh_cpp">b</code> has property <var>p</var> and a value <code class="sh_cpp">i</code> has property <var>p</var> if
+<code class="sh_cpp">(*i==x)</code> or if <code class="sh_cpp">(*i!=x</code> and <code class="sh_cpp">++i</code> has property
+<var>p</var><code class="sh_cpp">)</code>. — <em>end example</em> ]</span></p>
+
+<table id="t107" class="requirements">
+<caption>Table 107 — Input iterator requirements (in addition to <code class="concept">Iterator</code>)</caption>
+<thead><tr>
+<th>Expression</th>
+<th>Return type</th>
+<th>Operational semantics</th>
+	<th>Assertion/note<br>pre-/post-condition</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code class="sh_cpp">a != b</code></td>
+<td>contextually convertible to <code class="sh_cpp">bool</code>
+</td>
+<td><code class="sh_cpp">!(a == b)</code></td>
+	<td>pre: <code class="sh_cpp">(a, b)</code> is in the domain of <code class="sh_cpp">==</code>.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">*a</code></td>
+<td>convertible to <code class="sh_cpp">T</code>
+</td>
+<td></td>
+	<td>pre: <code class="sh_cpp">a</code> is dereferenceable. The expression <code class="sh_cpp">(void)*a, *a</code> is equivalent to
+		<code class="sh_cpp">*a</code>. If <code class="sh_cpp">a == b</code> and <code class="sh_cpp">(a, b)</code> is in the domain of <code class="sh_cpp">==</code>
+		then <code class="sh_cpp">*a</code> is equivalent to <code class="sh_cpp">*b</code>.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">a-&gt;m</code></td>
+<td><code class="sh_cpp">(*a).m</code></td>
+<td></td>
+	<td>pre: <code class="sh_cpp">a</code> is dereferenceable.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">++r</code></td>
+<td><code class="sh_cpp">X&amp;</code></td>
+<td></td>
+	<td>
+<p>pre: <code class="sh_cpp">r</code> is dereferenceable.</p>
+	<p>post: <code class="sh_cpp">r</code> is dereferenceable or <code class="sh_cpp">r</code> is past-the-end.</p>
+	<p>post: any copies of the previous value of <code class="sh_cpp">r</code> are no longer required either to be dereferenceable or
+		to be in the domain of <code class="sh_cpp">==</code>.</p>
+</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">(void)r++</code></td>
+<td></td>
+<td></td>
+	<td>equivalent to <code class="sh_cpp">(void)++r</code>
+</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">*r++</code></td>
+<td>convertible to <code class="sh_cpp">T</code>
+</td>
+<td><code class="sh_cpp">{ T tmp = *r; ++r; return tmp; }</code></td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><span class="note">[ <em>Note:</em> For input iterators, <code class="sh_cpp">a == b</code> does not imply <code class="sh_cpp">++a == ++b</code>. (Equality does not
+guarantee the substitution property or referential transparency.) Algorithms on input iterators should never attempt to
+pass through the same iterator twice. They should be <em>single pass</em> algorithms. Value type <code class="sh_cpp">T</code> is not
+required to be a <code class="concept">CopyAssignable</code> type (Table <a href="utility.arg.requirements.html#t23">23</a>). These algorithms can be used with istreams
+as the source of the input data through the <code class="sh_cpp">istream_iterator</code> class template. — <em>end note</em> ]</span></p>
+</body>
+</html>
+

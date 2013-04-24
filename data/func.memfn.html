@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Function template mem_fn</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[func.memfn]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[func.memfn]"></object>20.8.10 Function template <code class="sh_cpp"><dfn>mem_fn</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="mem_fn"></object></code> </h3>
+
+<pre><code class="sh_cpp">template&lt;class R, class T&gt;
+  <em>unspecified</em> mem_fn(R T::* pm);
+template&lt;class R, class T, class... Args&gt;
+  <em>unspecified</em> mem_fn(R (T::* pm)(Args...));
+template&lt;class R, class T, class... Args&gt;
+  <em>unspecified</em> mem_fn(R (T::* pm)(Args...) const);
+template&lt;class R, class T, class... Args&gt;
+  <em>unspecified</em> mem_fn(R (T::* pm)(Args...) volatile);
+template&lt;class R, class T, class... Args&gt;
+  <em>unspecified</em> mem_fn(R (T::* pm)(Args...) const volatile);
+template&lt;class R, class T, class... Args&gt;
+  <em>unspecified</em> mem_fn(R (T::* pm)(Args...) &amp;);
+template&lt;class R, class T, class... Args&gt;
+  <em>unspecified</em> mem_fn(R (T::* pm)(Args...) const &amp;);
+template&lt;class R, class T, class... Args&gt;
+  <em>unspecified</em> mem_fn(R (T::* pm)(Args...) volatile &amp;);
+template&lt;class R, class T, class... Args&gt;
+  <em>unspecified</em> mem_fn(R (T::* pm)(Args...) const volatile &amp;);
+template&lt;class R, class T, class... Args&gt;
+  <em>unspecified</em> mem_fn(R (T::* pm)(Args...) &amp;&amp;);
+template&lt;class R, class T, class... Args&gt;
+  <em>unspecified</em> mem_fn(R (T::* pm)(Args...) const &amp;&amp;);
+template&lt;class R, class T, class... Args&gt;
+  <em>unspecified</em> mem_fn(R (T::* pm)(Args...) volatile &amp;&amp;);
+template&lt;class R, class T, class... Args&gt;
+  <em>unspecified</em> mem_fn(R (T::* pm)(Args...) const volatile &amp;&amp;);</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Returns:</em> A simple call wrapper (<a title="func.def" href="func.def.html">20.8.1</a>) <code class="sh_cpp">fn</code> such that the expression <code class="sh_cpp">fn(t, a2, …,
+aN)</code> is equivalent to <code class="sh_cpp">INVOKE(pm, t, a2, …, aN)</code> (<a title="func.require" href="func.require.html">20.8.2</a>). <code class="sh_cpp">fn</code> shall have a
+nested type <code class="sh_cpp">result_type</code> that is a synonym for the return type of <code class="sh_cpp">pm</code> when <code class="sh_cpp">pm</code> is a
+pointer to member function.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The simple call wrapper shall define two nested types named <code class="sh_cpp">argument_type</code> and
+<code class="sh_cpp">result_type</code> as synonyms for <var>cv</var> <code class="sh_cpp">T*</code> and <code class="sh_cpp">Ret</code>, respectively, when
+<code class="sh_cpp">pm</code> is a pointer to member function with cv-qualifier <var>cv</var> and taking no arguments, where
+<code class="sh_cpp">Ret</code> is <code class="sh_cpp">pm</code>’s return type.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>The simple call wrapper shall define three nested types named <code class="sh_cpp">first_argument_type</code>,
+<code class="sh_cpp">second_argument_type</code>, and <code class="sh_cpp">result_type</code> as synonyms for <var>cv</var> <code class="sh_cpp">T*</code>,
+<code class="sh_cpp">T1</code>, and <code class="sh_cpp">Ret</code>, respectively, when <code class="sh_cpp">pm</code> is a pointer to member function with
+cv-qualifier <var>cv</var> and taking one argument of type <code class="sh_cpp">T1</code>, where <code class="sh_cpp">Ret</code> is <code class="sh_cpp">pm</code>’s
+return type.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><em>Throws:</em> Nothing.</p>
+</body>
+</html>
+

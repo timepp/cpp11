@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Implementation-defined error_type</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[re.err]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[re.err]"></object>28.5.3 Implementation-defined <code class="sh_cpp"><dfn>error_type</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="error_type"></object></code> </h3>
+
+<pre><code class="sh_cpp">namespace std {
+  namespace regex_constants {
+    typedef <var>T3</var> error_type;
+    static constexpr error_type error_collate = <em>unspecified</em>;
+    static constexpr error_type error_ctype = <em>unspecified</em>;
+    static constexpr error_type error_escape = <em>unspecified</em>;
+    static constexpr error_type error_backref = <em>unspecified</em>;
+    static constexpr error_type error_brack = <em>unspecified</em>;
+    static constexpr error_type error_paren = <em>unspecified</em>;
+    static constexpr error_type error_brace = <em>unspecified</em>;
+    static constexpr error_type error_badbrace = <em>unspecified</em>;
+    static constexpr error_type error_range = <em>unspecified</em>;
+    static constexpr error_type error_space = <em>unspecified</em>;
+    static constexpr error_type error_badrepeat = <em>unspecified</em>;
+    static constexpr error_type error_complexity = <em>unspecified</em>;
+    static constexpr error_type error_stack = <em>unspecified</em>;
+  }
+}</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The type <code class="sh_cpp">error_type</code> is an implementation-defined enumerated type (<a title="enumerated.types" href="enumerated.types.html">17.5.2.1.2</a>). Values
+of type <code class="sh_cpp">error_type</code> represent the error conditions described in Table <a href="re.err.html#t140">140</a>:</p>
+
+<table id="t140" class="bordered hruled padded">
+<caption>Table 140 — <code class="sh_cpp">error_type</code> values in the C locale</caption>
+<thead> <tr>
+<th>Value</th>
+<th>Error condition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code class="sh_cpp"><dfn>error_collate</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="error_collate"></object></code></td>
+	<td>The expression contained an invalid collating element name.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>error_ctype</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="error_ctype"></object></code></td>
+	<td>The expression contained an invalid character class name.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>error_escape</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="error_escape"></object></code></td>
+	<td>The expression contained an invalid escaped character, or a trailing escape.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>error_backref</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="error_backref"></object></code></td>
+	<td>The expression contained an invalid back reference.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>error_brack</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="error_brack"></object></code></td>
+	<td>The expression contained mismatched <code class="sh_cpp">[</code> and <code class="sh_cpp">]</code>.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>error_paren</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="error_paren"></object></code></td>
+	<td>The expression contained mismatched <code class="sh_cpp">(</code> and <code class="sh_cpp">)</code>.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>error_brace</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="error_brace"></object></code></td>
+	<td>The expression contained mismatched <code class="sh_cpp">{</code> and <code class="sh_cpp">}</code>
+</td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>error_badbrace</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="error_badbrace"></object></code></td>
+	<td>The expression contained an invalid range in a <code class="sh_cpp">{}</code> expression.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>error_range</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="error_range"></object></code></td>
+	<td>The expression contained an invalid character range, such as <code class="sh_cpp">[b-a]</code> in most encodings.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>error_space</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="error_space"></object></code></td>
+	<td>There was insufficient memory to convert the expression into a finite state machine.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>error_badrepeat</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="error_badrepeat"></object></code></td>
+	<td>One of <code class="sh_cpp">*?+{</code> was not preceded by a valid regular expression.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>error_complexity</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="error_complexity"></object></code></td>
+	<td>The complexity of an attempted match against a regular expression exceeded a pre-set level.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>error_stack</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="error_stack"></object></code></td>
+	<td>There was insufficient memory to determine whether the regular expression could match the specified character
+		sequence.</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>
+

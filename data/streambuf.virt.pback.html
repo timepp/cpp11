@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Putback</title>
+</head>
+<body>
+<h5>
+<dfn class="label">[streambuf.virt.pback]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[streambuf.virt.pback]"></object>27.6.3.4.4 Putback </h5>
+
+<pre><code class="sh_cpp">int_type <dfn>pbackfail</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="pbackfail"></object>(int_type c = traits::eof());</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Remarks:</em> The public functions of <code class="sh_cpp">basic_streambuf</code> call this virtual function only when
+<code class="sh_cpp">gptr()</code> is null, <code class="sh_cpp">gptr() == eback()</code>, or
+<code class="sh_cpp">traits::eq(traits::to_char_type(c),gptr()[-1])</code> returns <code class="sh_cpp">false</code>. Other calls shall also satisfy
+that constraint.</p>
+
+<p>The <dfn>pending sequence</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="pending sequence"></object> is defined as for <code class="sh_cpp">underflow()</code>, with the modifications that</p>
+
+<ul>
+<li>If <code class="sh_cpp">traits::eq_int_type(c,traits::eof())</code> returns <code class="sh_cpp">true</code>, then the input sequence is backed up
+	one character before the pending sequence is determined.</li>
+<li>If <code class="sh_cpp">traits::eq_int_type(c,traits::eof())</code> return <code class="sh_cpp">false</code>, then <code class="sh_cpp">c</code> is prepended.
+	Whether the input sequence is backed up or modified in any other way is unspecified.</li>
+</ul>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Postconditions:</em> On return, the constraints of <code class="sh_cpp">gptr()</code>, <code class="sh_cpp">eback()</code>, and
+<code class="sh_cpp">pptr()</code> are the same as for <code class="sh_cpp">underflow()</code>.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Returns:</em> <code class="sh_cpp">traits::eof()</code> to indicate failure. Failure may occur because the input sequence could not
+be backed up, or if for some other reason the pointers could not be set consistent with the constraints.
+<code class="sh_cpp">pbackfail()</code> is called only when put back has really failed.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>Returns some value other than <code class="sh_cpp">traits::eof()</code> to indicate success.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><em>Default behavior:</em> Returns <code class="sh_cpp">traits::eof()</code>.</p>
+</body>
+</html>
+

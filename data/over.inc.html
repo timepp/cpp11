@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Increment and decrement</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[over.inc]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[over.inc]"></object>13.5.7 Increment and decrement </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The user-defined function called <code class="sh_cpp">operator++</code> implements the prefix and postfix <code class="sh_cpp">++</code>
+operator. If this function is a member function with no parameters, or a non-member function with one parameter of class
+or enumeration type, it defines the prefix increment operator <code class="sh_cpp">++</code> for objects of that type. If the function
+is a member function with one parameter (which shall be of type <code class="sh_cpp">int</code>) or a non-member function with two
+parameters (the second of which shall be of type <code class="sh_cpp">int</code>), it defines the postfix increment operator
+<code class="sh_cpp">++</code> for objects of that type. When the postfix increment is called as a result of using the <code class="sh_cpp">++</code>
+operator, the <code class="sh_cpp">int</code> argument will have value zero.<sup class="footnote"><a href="#fn139">139</a></sup></p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct X {
+  X&amp;   operator++();        // prefix ++a
+  X    operator++(int);     // postfix a++
+};
+
+struct Y { };
+Y&amp;   operator++(Y&amp;);        // prefix ++b
+Y    operator++(Y&amp;, int);   // postfix b++
+
+void f(X a, Y b) {
+  ++a;                      // a.operator++();
+  a++;                      // a.operator++(0);
+  ++b;                      // operator++(b);
+  b++;                      // operator++(b, 0);
+
+  a.operator++();           // explicit call: like ++a;
+  a.operator++(0);          // explicit call: like a++;
+  operator++(b);            // explicit call: like ++b;
+  operator++(b, 0);         // explicit call: like b++;
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The prefix and postfix decrement operators <code class="sh_cpp">--</code> are handled analogously.</p>
+
+
+<div><p class="footnote" id="fn139">139) Calling <code class="sh_cpp">operator++</code> explicitly, as in expressions like <code class="sh_cpp">a.operator++(2)</code>, has
+no special properties: The argument to <code class="sh_cpp">operator++</code> is <code class="sh_cpp">2</code>.</p></div>
+</body>
+</html>
+

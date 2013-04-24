@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Member classes of class templates</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[temp.mem.class]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[temp.mem.class]"></object>14.5.1.2 Member classes of class templates </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A class member of a class template may be defined outside the class template definition in which it is
+declared.</p>
+
+<div class="note">
+<p>[ <em>Note:</em> The class member must be defined before its first use that requires an instantiation (<a title="temp.inst" href="temp.inst.html">14.7.1</a>). For
+example,</p>
+
+<pre><code class="sh_cpp">template&lt;class T&gt; struct A {
+  class B;
+};
+A&lt;int&gt;::B* b1;                  // OK: requires A to be defined but not A::B
+template&lt;class T&gt; class A&lt;T&gt;::B { };
+A&lt;int&gt;::B b2;                   // OK: requires A::B to be defined</code></pre>
+<p> — <em>end note</em> ]</p>
+</div>
+</body>
+</html>
+

@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Exceptions</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[thread.req.exception]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[thread.req.exception]"></object>30.2.2 Exceptions </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Some functions described in this Clause are specified to throw exceptions of type <code class="sh_cpp">system_error</code>
+(<a title="syserr.syserr" href="syserr.syserr.overview.html">19.5.6</a>). Such exceptions shall be thrown if any of the function’s error conditions is detected or a call to
+an operating system or other underlying API results in an error that prevents the library function from meeting its
+specifications. Failure to allocate storage shall be reported as described in <a title="res.on.exception.handling" href="res.on.exception.handling.html">17.6.5.12</a>.</p>
+
+<p><span class="example">[ <em>Example:</em> Consider a function in this clause that is specified to throw exceptions of type <code class="sh_cpp">system_error</code>
+and specifies error conditions that include <code class="sh_cpp">operation_not_permitted</code> for a thread that does not have the
+privilege to perform the operation. Assume that, during the execution of this function, an <code class="sh_cpp">errno</code> of
+<code class="sh_cpp">EPERM</code> is reported by a POSIX API call used by the implementation. Since POSIX specifies an
+<code class="sh_cpp">errno</code> of <code class="sh_cpp">EPERM</code> when “the caller does not have the privilege to perform the operation”, the
+implementation maps <code class="sh_cpp">EPERM</code> to an <code class="sh_cpp">error_condition</code> of <code class="sh_cpp">operation_not_permitted</code>
+(<a title="syserr" href="syserr.html">19.5</a>) and an exception of type <code class="sh_cpp">system_error</code> is thrown. — <em>end example</em> ]</span></p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The <code class="sh_cpp">error_code</code> reported by such an exception’s <code class="sh_cpp">code()</code> member function shall compare
+equal to one of the conditions specified in the function’s error condition element.</p>
+</body>
+</html>
+

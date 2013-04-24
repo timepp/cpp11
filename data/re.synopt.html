@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Bitmask type syntax_option_type</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[re.synopt]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[re.synopt]"></object>28.5.1 Bitmask type <code class="sh_cpp"><dfn>syntax_option_type</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="syntax_option_type"></object></code> </h3>
+
+<pre><code class="sh_cpp">namespace std {
+  namespace regex_constants {
+    typedef <var>T1</var> syntax_option_type;
+    static constexpr syntax_option_type icase = <em>unspecified</em>;
+    static constexpr syntax_option_type nosubs = <em>unspecified</em>;
+    static constexpr syntax_option_type optimize = <em>unspecified</em>;
+    static constexpr syntax_option_type collate = <em>unspecified</em>;
+    static constexpr syntax_option_type ECMAScript = <em>unspecified</em>;
+    static constexpr syntax_option_type basic = <em>unspecified</em>;
+    static constexpr syntax_option_type extended = <em>unspecified</em>;
+    static constexpr syntax_option_type awk = <em>unspecified</em>;
+    static constexpr syntax_option_type grep = <em>unspecified</em>;
+    static constexpr syntax_option_type egrep = <em>unspecified</em>;
+  }
+}</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The type <code class="sh_cpp">syntax_option_type</code> is an implementation-defined bitmask type (<a title="bitmask.types" href="bitmask.types.html">17.5.2.1.3</a>).
+Setting its elements has the effects listed in Table <a href="re.synopt.html#t138">138</a>. A valid value of type <code class="sh_cpp">syntax_option_type</code>
+shall have exactly one of the elements <code class="sh_cpp">ECMAScript</code>, <code class="sh_cpp">basic</code>, <code class="sh_cpp">extended</code>,
+<code class="sh_cpp">awk</code>, <code class="sh_cpp">grep</code>, <code class="sh_cpp">egrep</code>, set.</p>
+
+<table id="t138" class="bordered hruled padded">
+<caption>Table 138 — <code class="sh_cpp">syntax_option_type</code> effects</caption>
+<thead><tr>
+<th>Element</th>
+<th>Effect(s) if set</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code class="sh_cpp"><dfn>icase</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="icase"></object></code></td>
+	<td>Specifies that matching of regular expressions against a character container sequence shall be performed without
+		regard to case.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>nosubs</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="nosubs"></object></code></td>
+	<td>Specifies that when a regular expression is matched against a character container sequence, no sub-expression
+		matches shall be stored in the supplied <code class="sh_cpp">match_results</code> structure.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>optimize</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="optimize"></object></code></td>
+	<td>Specifies that the regular expression engine should pay more attention to the speed with which regular
+		expressions are matched, and less to the speed with which regular expression objects are constructed. Otherwise
+		it has no detectable effect on the program output.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>collate</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="collate"></object></code></td>
+	<td>Specifies that character ranges of the form <code class="sh_cpp">"[a-b]"</code> shall be locale sensitive.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>ECMAScript</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="ECMAScript"></object></code></td>
+	<td>Specifies that the grammar recognized by the regular expression engine shall be that used by ECMAScript in
+		ECMA-262, as modified in <a title="re.grammar" href="re.grammar.html">28.13</a>.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>basic</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="basic"></object></code></td>
+	<td>Specifies that the grammar recognized by the regular expression engine shall be that used by basic regular
+		expressions in POSIX, <cite>Base Definitions and Headers</cite>, Section 9, Regular Expressions.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>extended</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="extended"></object></code></td>
+	<td>Specifies that the grammar recognized by the regular expression engine shall be that used by extended regular
+		expressions in POSIX, <cite>Base Definitions and Headers</cite>, Section 9, Regular Expressions.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>awk</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="awk"></object></code></td>
+	<td>Specifies that the grammar recognized by the regular expression engine shall be that used by the utility
+		<code class="sh_cpp">awk</code> in POSIX.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>grep</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="grep"></object></code></td>
+	<td>Specifies that the grammar recognized by the regular expression engine shall be that used by the utility
+		<code class="sh_cpp">grep</code> in POSIX.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>egrep</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="egrep"></object></code></td>
+	<td>Specifies that the grammar recognized by the regular expression engine shall be that used by the utility
+		<code class="sh_cpp">grep</code> when given the <code class="sh_cpp">-E</code> option in POSIX.</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>
+

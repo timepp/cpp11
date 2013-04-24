@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Header &lt;unordered_set&gt; synopsis</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[unord.set.syn]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[unord.set.syn]"></object>23.5.3 Header <dfn><code class="header">&lt;unordered_set&gt;</code></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="&lt;unordered_set&gt;"></object> synopsis </h3>
+
+<pre><code class="sh_cpp">#include &lt;initializer_list&gt;
+
+namespace std {
+
+  // <a title="unord.set" href="unord.set.overview.html">23.5.6</a>, class template unordered_set:
+  template &lt;class Key,
+            class Hash = hash&lt;Key&gt;,
+            class Pred = std::equal_to&lt;Key&gt;,
+            class Alloc = std::allocator&lt;Key&gt; &gt;
+    class unordered_set;
+
+  // <a title="unord.multiset" href="unord.multiset.overview.html">23.5.7</a>, class template unordered_multiset:
+  template &lt;class Key,
+            class Hash = hash&lt;Key&gt;,
+            class Pred = std::equal_to&lt;Key&gt;,
+            class Alloc = std::allocator&lt;Key&gt; &gt;
+    class unordered_multiset;
+
+  template &lt;class Key, class Hash, class Pred, class Alloc&gt;
+    void swap(unordered_set&lt;Key, Hash, Pred, Alloc&gt;&amp; x,
+              unordered_set&lt;Key, Hash, Pred, Alloc&gt;&amp; y);
+
+  template &lt;class Key, class Hash, class Pred, class Alloc&gt;
+    void swap(unordered_multiset&lt;Key, Hash, Pred, Alloc&gt;&amp; x,
+              unordered_multiset&lt;Key, Hash, Pred, Alloc&gt;&amp; y);
+
+  template &lt;class Key, class Hash, class Pred, class Alloc&gt;
+    bool operator==(const unordered_set&lt;Key, Hash, Pred, Alloc&gt;&amp; a,
+                    const unordered_set&lt;Key, Hash, Pred, Alloc&gt;&amp; b);
+  template &lt;class Key, class Hash, class Pred, class Alloc&gt;
+    bool operator!=(const unordered_set&lt;Key, Hash, Pred, Alloc&gt;&amp; a,
+                    const unordered_set&lt;Key, Hash, Pred, Alloc&gt;&amp; b);
+  template &lt;class Key, class Hash, class Pred, class Alloc&gt;
+    bool operator==(const unordered_multiset&lt;Key, Hash, Pred, Alloc&gt;&amp; a,
+                    const unordered_multiset&lt;Key, Hash, Pred, Alloc&gt;&amp; b);
+  template &lt;class Key, class Hash, class Pred, class Alloc&gt;
+    bool operator!=(const unordered_multiset&lt;Key, Hash, Pred, Alloc&gt;&amp; a,
+                    const unordered_multiset&lt;Key, Hash, Pred, Alloc&gt;&amp; b);
+} // namespace std</code></pre>
+</body>
+</html>
+

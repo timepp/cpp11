@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Clause 3: basic concepts</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[diff.basic]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[diff.basic]"></object>C.1.2 Clause <a title="basic" href="basic.html">3</a>: basic concepts </h3>
+
+<h4><a title="basic.def" href="basic.def.html">3.1</a></h4>
+
+<p><strong>Change:</strong> C++ does not have “tentative definitions” as in C E.g., at file scope,</p>
+
+<pre><code class="sh_cpp">int i;
+int i;</code></pre>
+
+<p>is valid in C, invalid in C++. This makes it impossible to define mutually referential file-local static objects,
+if initializers are restricted to the syntactic forms of C. For example,</p>
+
+<pre><code class="sh_cpp">struct X { int i; struct X *next; };
+
+static struct X a;
+static struct X b = { 0, &amp;a };
+static struct X a = { 1, &amp;b };</code></pre>
+
+<p><strong>Rationale:</strong> This avoids having different initialization rules for fundamental types and user-defined
+types.</p>
+
+<p><strong>Effect on original feature:</strong> Deletion of semantically well-defined feature.</p>
+
+<p><strong>Difficulty of converting:</strong> Semantic transformation.</p>
+
+<p><strong>Rationale:</strong> In C++, the initializer for one of a set of mutually-referential file-local static objects must invoke
+a function call to achieve the initialization.</p>
+
+<p><strong>How widely used:</strong> Seldom.</p>
+
+
+<h4><a title="basic.scope" href="basic.scope.declarative.html">3.3</a></h4>
+
+<p><strong>Change:</strong> A <code class="sh_cpp">struct</code> is a scope in C++, not in C</p>
+
+<p><strong>Rationale:</strong> Class scope is crucial to C++, and a struct is a class.</p>
+
+<p><strong>Effect on original feature:</strong> Change to semantics of well-defined feature.</p>
+
+<p><strong>Difficulty of converting:</strong> Semantic transformation.</p>
+
+<p><strong>How widely used:</strong> C programs use <code class="sh_cpp">struct</code> extremely frequently, but the change is only noticeable when
+<code class="sh_cpp">struct</code>, enumeration, or enumerator names are referred to outside the <code class="sh_cpp">struct</code>. The latter is
+probably rare.</p>
+
+
+<h4>
+<a title="basic.link" href="basic.link.html">3.5</a> [also <a title="dcl.type" href="dcl.type.html">7.1.6</a>]</h4>
+
+<p><strong>Change:</strong> A name of file scope that is explicitly declared <code class="sh_cpp">const</code>, and not explicitly declared
+<code class="sh_cpp">extern</code>, has internal linkage, while in C it would have external linkage</p>
+
+<p><strong>Rationale:</strong> Because <code class="sh_cpp">const</code> objects can be used as compile-time values in C++, this feature urges
+programmers to provide explicit initializer values for each <code class="sh_cpp">const</code>. This feature allows the user to put
+<code class="sh_cpp">const</code> objects in header files that are included in many compilation units.</p>
+
+<p><strong>Effect on original feature:</strong> Change to semantics of well-defined feature.</p>
+
+<p><strong>Difficulty of converting:</strong> Semantic transformation</p>
+
+<p><strong>How widely used:</strong> Seldom</p>
+
+
+<h4><a title="basic.start" href="basic.start.main.html">3.6</a></h4>
+
+<p><strong>Change:</strong> <code class="sh_cpp">main</code> cannot be called recursively and cannot have its address taken</p>
+
+<p><strong>Rationale:</strong> The main function may require special actions.</p>
+
+<p><strong>Effect on original feature:</strong> Deletion of semantically well-defined feature</p>
+
+<p><strong>Difficulty of converting:</strong> Trivial: create an intermediary function such as <code class="sh_cpp">mymain(argc,
+argv)</code>.</p>
+
+<p><strong>How widely used:</strong> Seldom</p>
+
+
+<h4><a title="basic.types" href="basic.types.html">3.9</a></h4>
+
+<p><strong>Change:</strong> C allows “compatible types” in several places, C++ does not For example, otherwise-identical struct types
+with different tag names are “compatible” in C but are distinctly different types in C++.</p>
+
+<p><strong>Rationale:</strong> Stricter type checking is essential for C++.</p>
+
+<p><strong>Effect on original feature:</strong> Deletion of semantically well-defined feature.</p>
+
+<p><strong>Difficulty of converting:</strong> Semantic transformation. The ”typesafe linkage” mechanism will find many, but not all, of such
+problems. Those problems not found by typesafe linkage will continue to function properly, according to the ”layout
+compatibility rules” of this International Standard.</p>
+
+<p><strong>How widely used:</strong> Common.</p>
+
+</body>
+</html>
+

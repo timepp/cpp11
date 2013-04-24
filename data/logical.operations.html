@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Logical operations</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[logical.operations]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[logical.operations]"></object>20.8.6 Logical operations </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The library provides basic function object classes for all of the logical operators in the language
+(<a title="expr.log.and" href="expr.log.and.html">5.14</a>, <a title="expr.log.or" href="expr.log.or.html">5.15</a>, <a title="expr.unary.op" href="expr.unary.op.html">5.3.1</a>).</p>
+
+<h4><code class="sh_cpp">template &lt;class T&gt; struct <dfn>logical_and</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="logical_and"></object> {
+  bool operator()(const T&amp; x, const T&amp; y) const;
+  typedef T first_argument_type;
+  typedef T second_argument_type;
+  typedef bool result_type;
+};</code></h4>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><code class="sh_cpp">operator()</code> returns <code class="sh_cpp">x &amp;&amp; y</code>.</p>
+
+<h4><code class="sh_cpp">template &lt;class T&gt; struct <dfn>logical_or</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="logical_or"></object> {
+  bool operator()(const T&amp; x, const T&amp; y) const;
+  typedef T first_argument_type;
+  typedef T second_argument_type;
+  typedef bool result_type;
+};</code></h4>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><code class="sh_cpp">operator()</code> returns <code class="sh_cpp">x || y</code>.</p>
+
+<h4><code class="sh_cpp">template &lt;class T&gt; struct <dfn>logical_not</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="logical_not"></object> {
+  bool operator()(const T&amp; x) const;
+  typedef T argument_type;
+  typedef bool result_type;
+};</code></h4>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><code class="sh_cpp">operator()</code> returns <code class="sh_cpp">!x</code>.</p>
+</body>
+</html>
+

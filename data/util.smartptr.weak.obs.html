@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>weak_ptr observers</title>
+</head>
+<body>
+<h5>
+<dfn class="label">[util.smartptr.weak.obs]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[util.smartptr.weak.obs]"></object>20.7.2.3.5 <code class="sh_cpp">weak_ptr</code> observers </h5>
+
+<h6><code class="sh_cpp">long <dfn>use_count</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="use_count"></object>() const noexcept;</code></h6>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Returns:</em> <code class="sh_cpp">0</code> if <code class="sh_cpp">*this</code> is empty; otherwise, the number of <code class="sh_cpp">shared_ptr</code>
+instances that share ownership with <code class="sh_cpp">*this</code>.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><span class="note">[ <em>Note:</em> <code class="sh_cpp">use_count()</code> is not necessarily efficient. — <em>end note</em> ]</span></p>
+
+<h6><code class="sh_cpp">bool <dfn>expired</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="expired"></object>() const noexcept;</code></h6>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Returns:</em> <code class="sh_cpp">use_count() == 0</code>.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><span class="note">[ <em>Note:</em> <code class="sh_cpp">expired()</code> may be faster than <code class="sh_cpp">use_count()</code>. — <em>end note</em> ]</span></p>
+
+<h6><code class="sh_cpp">shared_ptr&lt;T&gt; <dfn>lock</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="lock"></object>() const noexcept;</code></h6>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><em>Returns:</em> <code class="sh_cpp">expired() ? shared_ptr&lt;T&gt;() : shared_ptr&lt;T&gt;(*this)</code>.</p>
+
+<h6><code class="sh_cpp">template&lt;class U&gt; bool <dfn>owner_before</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="owner_before"></object>(shared_ptr&lt;U&gt; const&amp; b);
+template&lt;class U&gt; bool owner_before(weak_ptr&lt;U&gt; const&amp; b);</code></h6>
+
+<p><a class="anchor" id="p6" href="#p6">6</a><em>Returns:</em> An unspecified value such that</p>
+<ul>
+<li>
+<code class="sh_cpp">x.owner_before(y)</code> defines a strict weak ordering as defined in <a title="alg.sorting" href="alg.sorting.html">25.4</a>;</li>
+<li>under the equivalence relation defined by <code class="sh_cpp">owner_before</code>, <code class="sh_cpp">!a.owner_before(b) &amp;&amp;
+	!b.owner_before(a)</code>, two <code class="sh_cpp">shared_ptr</code> or <code class="sh_cpp">weak_ptr</code> instances are equivalent if and
+	only if they share ownership or are both empty.</li>
+</ul>
+</body>
+</html>
+

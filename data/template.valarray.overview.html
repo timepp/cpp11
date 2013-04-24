@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class template valarray overview</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[template.valarray]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[template.valarray]"></object>26.6.2 Class template <code class="sh_cpp"><dfn>valarray</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="valarray"></object></code> </h3>
+
+<h4>
+<dfn class="label">[template.valarray.overview]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[template.valarray.overview]"></object>26.6.2.1 Class template <code class="sh_cpp">valarray</code> overview </h4>
+
+<pre><code class="sh_cpp">namespace std {
+  template&lt;class T&gt; class valarray {
+  public:
+    typedef T value_type;
+
+    // <a title="valarray.cons" href="valarray.cons.html">26.6.2.2</a> construct/destroy:
+    valarray();
+    explicit valarray(size_t);
+    valarray(const T&amp;, size_t);
+    valarray(const T*, size_t);
+    valarray(const valarray&amp;);
+    valarray(valarray&amp;&amp;) noexcept;
+    valarray(const slice_array&lt;T&gt;&amp;);
+    valarray(const gslice_array&lt;T&gt;&amp;);
+    valarray(const mask_array&lt;T&gt;&amp;);
+    valarray(const indirect_array&lt;T&gt;&amp;);
+    valarray(initializer_list&lt;T&gt;);
+    ~valarray();
+
+    // <a title="valarray.assign" href="valarray.assign.html">26.6.2.3</a> assignment:
+    valarray&lt;T&gt;&amp; operator=(const valarray&lt;T&gt;&amp;);
+    valarray&lt;T&gt;&amp; operator=(valarray&lt;T&gt;&amp;&amp;) noexcept;
+    valarray&amp; operator=(initializer_list&lt;T&gt;);
+    valarray&lt;T&gt;&amp; operator=(const T&amp;);
+    valarray&lt;T&gt;&amp; operator=(const slice_array&lt;T&gt;&amp;);
+    valarray&lt;T&gt;&amp; operator=(const gslice_array&lt;T&gt;&amp;);
+    valarray&lt;T&gt;&amp; operator=(const mask_array&lt;T&gt;&amp;);
+    valarray&lt;T&gt;&amp; operator=(const indirect_array&lt;T&gt;&amp;);
+
+    // <a title="valarray.access" href="valarray.access.html">26.6.2.4</a> element access:
+    const T&amp;          operator[](size_t) const;
+    T&amp;                operator[](size_t);
+
+    // <a title="valarray.sub" href="valarray.sub.html">26.6.2.5</a> subset operations:
+    valarray&lt;T&gt;       operator[](slice) const;
+    slice_array&lt;T&gt;    operator[](slice);
+    valarray&lt;T&gt;       operator[](const gslice&amp;) const;
+    gslice_array&lt;T&gt;   operator[](const gslice&amp;);
+    valarray&lt;T&gt;       operator[](const valarray&lt;bool&gt;&amp;) const;
+    mask_array&lt;T&gt;     operator[](const valarray&lt;bool&gt;&amp;);
+    valarray&lt;T&gt;       operator[](const valarray&lt;size_t&gt;&amp;) const;
+    indirect_array&lt;T&gt; operator[](const valarray&lt;size_t&gt;&amp;);
+
+    // <a title="valarray.unary" href="valarray.unary.html">26.6.2.6</a> unary operators:
+    valarray&lt;T&gt; operator+() const;
+    valarray&lt;T&gt; operator-() const;
+    valarray&lt;T&gt; operator~() const;
+    valarray&lt;bool&gt; operator!() const;
+
+    // <a title="valarray.cassign" href="valarray.cassign.html">26.6.2.7</a> computed assignment:
+    valarray&lt;T&gt;&amp; operator*= (const T&amp;);
+    valarray&lt;T&gt;&amp; operator/= (const T&amp;);
+    valarray&lt;T&gt;&amp; operator%= (const T&amp;);
+    valarray&lt;T&gt;&amp; operator+= (const T&amp;);
+    valarray&lt;T&gt;&amp; operator-= (const T&amp;);
+    valarray&lt;T&gt;&amp; operator^= (const T&amp;);
+    valarray&lt;T&gt;&amp; operator&amp;= (const T&amp;);
+    valarray&lt;T&gt;&amp; operator|= (const T&amp;);
+    valarray&lt;T&gt;&amp; operator&lt;&lt;=(const T&amp;);
+    valarray&lt;T&gt;&amp; operator&gt;&gt;=(const T&amp;);
+
+    valarray&lt;T&gt;&amp; operator*= (const valarray&lt;T&gt;&amp;);
+    valarray&lt;T&gt;&amp; operator/= (const valarray&lt;T&gt;&amp;);
+    valarray&lt;T&gt;&amp; operator%= (const valarray&lt;T&gt;&amp;);
+    valarray&lt;T&gt;&amp; operator+= (const valarray&lt;T&gt;&amp;);
+    valarray&lt;T&gt;&amp; operator-= (const valarray&lt;T&gt;&amp;);
+    valarray&lt;T&gt;&amp; operator^= (const valarray&lt;T&gt;&amp;);
+    valarray&lt;T&gt;&amp; operator|= (const valarray&lt;T&gt;&amp;);
+    valarray&lt;T&gt;&amp; operator&amp;= (const valarray&lt;T&gt;&amp;);
+    valarray&lt;T&gt;&amp; operator&lt;&lt;=(const valarray&lt;T&gt;&amp;);
+    valarray&lt;T&gt;&amp; operator&gt;&gt;=(const valarray&lt;T&gt;&amp;);
+
+    // <a title="valarray.members" href="valarray.members.html">26.6.2.8</a> member functions:
+    void swap(valarray&amp;) noexcept;
+
+    size_t size() const;
+
+    T sum() const;
+    T min() const;
+    T max() const;
+
+    valarray&lt;T&gt; shift (int) const;
+    valarray&lt;T&gt; cshift(int) const;
+    valarray&lt;T&gt; apply(T func(T)) const;
+    valarray&lt;T&gt; apply(T func(const T&amp;)) const;
+    void resize(size_t sz, T c = T());
+  };
+}</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The class template <code class="sh_cpp">valarray&lt;T&gt;</code> is a one-dimensional smart array, with elements
+numbered sequentially from zero. It is a representation of the mathematical concept of an ordered set of values. The
+illusion of higher dimensionality may be produced by the familiar idiom of computed indices, together with the powerful
+subsetting capabilities provided by the generalized subscript operators.<sup class="footnote"><a href="#fn284">284</a></sup></p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>An implementation is permitted to qualify any of the functions declared in <code class="header">&lt;valarray&gt;</code> as
+<code class="sh_cpp">inline</code>.</p>
+
+
+<div><p class="footnote" id="fn284">284) The intent is to specify an array template that has the minimum functionality necessary to address
+aliasing ambiguities and the proliferation of temporaries. Thus, the <code class="sh_cpp">valarray</code> template is neither a matrix
+class nor a field class. However, it is a very useful building block for designing such classes.</p></div>
+</body>
+</html>
+

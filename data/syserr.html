@@ -1,0 +1,148 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>System error support</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[syserr]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[syserr]"></object>19.5 System error support </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>This subclause describes components that the standard library and C++ programs may use to report error
+conditions originating from the operating system or other low-level application program interfaces.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>Components described in this subclause shall not change the value of <code class="sh_cpp">errno</code> (<a title="errno" href="errno.html">19.4</a>).
+Implementations should leave the error states provided by other libraries unchanged.</p>
+
+<h3>Header <dfn><code class="header">&lt;system_error&gt;</code></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="&lt;system_error&gt;"></object> synopsis</h3>
+
+<pre><code class="sh_cpp">namespace std {
+  class error_category;
+  class error_code;
+  class error_condition;
+  class system_error;
+
+  template &lt;class T&gt;
+  struct is_error_code_enum : public false_type {};
+
+  template &lt;class T&gt;
+  struct is_error_condition_enum : public false_type {};
+
+  enum class errc {
+    address_family_not_supported,       // EAFNOSUPPORT
+    address_in_use,                     // EADDRINUSE
+    address_not_available,              // EADDRNOTAVAIL
+    already_connected,                  // EISCONN
+    argument_list_too_long,             // E2BIG
+    argument_out_of_domain,             // EDOM
+    bad_address,                        // EFAULT
+    bad_file_descriptor,                // EBADF
+    bad_message,                        // EBADMSG
+    broken_pipe,                        // EPIPE
+    connection_aborted,                 // ECONNABORTED
+    connection_already_in_progress,     // EALREADY
+    connection_refused,                 // ECONNREFUSED
+    connection_reset,                   // ECONNRESET
+    cross_device_link,                  // EXDEV
+    destination_address_required,       // EDESTADDRREQ
+    device_or_resource_busy,            // EBUSY
+    directory_not_empty,                // ENOTEMPTY
+    executable_format_error,            // ENOEXEC
+    file_exists,                        // EEXIST
+    file_too_large,                     // EFBIG
+    filename_too_long,                  // ENAMETOOLONG
+    function_not_supported,             // ENOSYS
+    host_unreachable,                   // EHOSTUNREACH
+    identifier_removed,                 // EIDRM
+    illegal_byte_sequence,              // EILSEQ
+    inappropriate_io_control_operation, // ENOTTY
+    interrupted,                        // EINTR
+    invalid_argument,                   // EINVAL
+    invalid_seek,                       // ESPIPE
+    io_error,                           // EIO
+    is_a_directory,                     // EISDIR
+    message_size,                       // EMSGSIZE
+    network_down,                       // ENETDOWN
+    network_reset,                      // ENETRESET
+    network_unreachable,                // ENETUNREACH
+    no_buffer_space,                    // ENOBUFS
+    no_child_process,                   // ECHILD
+    no_link,                            // ENOLINK
+    no_lock_available,                  // ENOLCK
+    no_message_available,               // ENODATA
+    no_message,                         // ENOMSG
+    no_protocol_option,                 // ENOPROTOOPT
+    no_space_on_device,                 // ENOSPC
+    no_stream_resources,                // ENOSR
+    no_such_device_or_address,          // ENXIO
+    no_such_device,                     // ENODEV
+    no_such_file_or_directory,          // ENOENT
+    no_such_process,                    // ESRCH
+    not_a_directory,                    // ENOTDIR
+    not_a_socket,                       // ENOTSOCK
+    not_a_stream,                       // ENOSTR
+    not_connected,                      // ENOTCONN
+    not_enough_memory,                  // ENOMEM
+    not_supported,                      // ENOTSUP
+    operation_canceled,                 // ECANCELED
+    operation_in_progress,              // EINPROGRESS
+    operation_not_permitted,            // EPERM
+    operation_not_supported,            // EOPNOTSUPP
+    operation_would_block,              // EWOULDBLOCK
+    owner_dead,                         // EOWNERDEAD
+    permission_denied,                  // EACCES
+    protocol_error,                     // EPROTO
+    protocol_not_supported,             // EPROTONOSUPPORT
+    read_only_file_system,              // EROFS
+    resource_deadlock_would_occur,      // EDEADLK
+    resource_unavailable_try_again,     // EAGAIN
+    result_out_of_range,                // ERANGE
+    state_not_recoverable,              // ENOTRECOVERABLE
+    stream_timeout,                     // ETIME
+    text_file_busy,                     // ETXTBSY
+    timed_out,                          // ETIMEDOUT
+    too_many_files_open_in_system,      // ENFILE
+    too_many_files_open,                // EMFILE
+    too_many_links,                     // EMLINK
+    too_many_symbolic_link_levels,      // ELOOP
+    value_too_large,                    // EOVERFLOW
+    wrong_protocol_type,                // EPROTOTYPE
+  };
+
+  template &lt;&gt; struct is_error_condition_enum&lt;errc&gt; : true_type { }
+
+  error_code make_error_code(errc e) noexcept;
+  error_condition make_error_condition(errc e) noexcept;
+
+  // <a title="syserr.compare" href="syserr.compare.html">19.5.4</a> Comparison operators:
+  bool operator==(const error_code&amp; lhs, const error_code&amp; rhs) noexcept;
+  bool operator==(const error_code&amp; lhs, const error_condition&amp; rhs) noexcept;
+  bool operator==(const error_condition&amp; lhs, const error_code&amp; rhs) noexcept;
+  bool operator==(const error_condition&amp; lhs, const error_condition&amp; rhs) noexcept;
+  bool operator!=(const error_code&amp; lhs, const error_code&amp; rhs) noexcept;
+  bool operator!=(const error_code&amp; lhs, const error_condition&amp; rhs) noexcept;
+  bool operator!=(const error_condition&amp; lhs, const error_code&amp; rhs) noexcept;
+  bool operator!=(const error_condition&amp; lhs, const error_condition&amp; rhs) noexcept;
+
+  // <a title="syserr.hash" href="syserr.hash.html">19.5.5</a> Hash support
+  template &lt;class T&gt; struct hash;
+  template &lt;&gt; struct hash&lt;error_code&gt;;
+} // namespace std</code></pre>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>The value of each <code class="sh_cpp">enum errc</code> constant shall be the same as the value of the
+<code class="header">&lt;cerrno&gt;</code> macro shown in the above synopsis. Whether or not the <code class="header">&lt;system_error&gt;</code>
+implementation exposes the <code class="header">&lt;cerrno&gt;</code> macros is unspecified.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>The <code class="sh_cpp">is_error_code_enum</code> and <code class="sh_cpp">is_error_condition_enum</code> may be specialized for
+user-defined types to indicate that such types are eligible for <code class="sh_cpp">class error_code</code> and <code class="sh_cpp">class
+error_condition</code> automatic conversions, respectively.</p>
+</body>
+</html>
+

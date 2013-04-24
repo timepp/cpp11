@@ -1,0 +1,151 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Expressions</title>
+</head>
+<body>
+<h1>
+<dfn class="label">[expr]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[expr]"></object>5 Expressions </h1>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><span class="note">[ <em>Note:</em> Clause <a title="expr" href="expr.html">5</a> defines the syntax, order of evaluation, and meaning of expressions.<sup class="footnote"><a href="#fn58">58</a></sup> An
+expression is a sequence of operators and operands that specifies a computation. An expression can result in a value and
+can cause side effects. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><span class="note">[ <em>Note:</em> Operators can be overloaded, that is, given meaning when applied to expressions of class type (Clause
+<a title="class" href="class.html">9</a>) or enumeration type (<a title="dcl.enum" href="dcl.enum.html">7.2</a>). Uses of overloaded operators are transformed into function calls as
+described in <a title="over.oper" href="over.oper.html">13.5</a>. Overloaded operators obey the rules for syntax specified in Clause <a title="expr" href="expr.html">5</a>, but the
+requirements of operand type, value category, and evaluation order are replaced by the rules for function call.
+Relations between operators, such as <code class="sh_cpp">++a</code> meaning <code class="sh_cpp">a+=1</code>, are not guaranteed for overloaded
+operators (<a title="over.oper" href="over.oper.html">13.5</a>), and are not guaranteed for operands of type <code class="sh_cpp">bool</code>. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>Clause <a title="expr" href="expr.html">5</a> defines the effects of operators when applied to types for which they have not been
+overloaded. Operator overloading shall not modify the rules for the <dfn>built-in operators</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="built-in operators"></object>, that is, for
+operators applied to types for which they are defined by this Standard. However, these built-in operators participate in
+overload resolution, and as part of that process user-defined conversions will be considered where necessary to convert
+the operands to types appropriate for the built-in operator. If a built-in operator is selected, such conversions will
+be applied to the operands before the operation is considered further according to the rules in Clause <a title="expr" href="expr.html">5</a>; see
+<a title="over.match.oper" href="over.match.oper.html">13.3.1.2</a>, <a title="over.built" href="over.built.html">13.6</a>.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>If during the evaluation of an expression, the result is not mathematically defined or not in the range of
+representable values for its type, the behavior is undefined. <span class="note">[ <em>Note:</em> most existing implementations of C++ ignore integer
+overflows. Treatment of division by zero, forming a remainder using a zero divisor, and all floating point exceptions
+vary among machines, and is usually adjustable by a library function. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>If an expression initially has the type “reference to <code class="sh_cpp">T</code>” (<a title="dcl.ref" href="dcl.ref.html">8.3.2</a>, <a title="dcl.init.ref" href="dcl.init.ref.html">8.5.3</a>), the
+type is adjusted to <code class="sh_cpp">T</code> prior to any further analysis. The expression designates the object or function
+denoted by the reference, and the expression is an lvalue or an xvalue, depending on the expression.</p>
+
+<div class="note">
+<p><a class="anchor" id="p6" href="#p6">6</a>[ <em>Note:</em> An expression is an xvalue if it is:</p>
+<ul>
+<li>the result of calling a function, whether implicitly or explicitly, whose return type is an rvalue reference to
+	object type,</li>
+<li>a cast to an rvalue reference to object type,</li>
+<li>a class member access expression designating a non-static data member of non-reference type in which the object
+	expression is an xvalue, or</li>
+<li>a <code class="sh_cpp">.*</code> pointer-to-member expression in which the first operand is an xvalue and the second operand is a
+	pointer to data member.</li>
+</ul>
+<p>In general, the effect of this rule is that named rvalue references are treated as lvalues and unnamed rvalue
+references to objects are treated as xvalues; rvalue references to functions are treated as lvalues whether named or
+not. — <em>end note</em> ]</p>
+</div>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct A {
+  int m;
+};
+A&amp;&amp; operator+(A, A);
+A&amp;&amp; f();
+
+A a;
+A&amp;&amp; ar = static_cast&lt;A&amp;&amp;&gt;(a);</code></pre>
+
+<p>The expressions <code class="sh_cpp">f()</code>, <code class="sh_cpp">f().m</code>, <code class="sh_cpp">static_cast&lt;A&amp;&amp;&gt;(a)</code>, and <code class="sh_cpp">a +
+a</code> are xvalues. The expression <code class="sh_cpp">ar</code> is an lvalue. — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p7" href="#p7">7</a>In some contexts, <dfn>unevaluated operands</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="unevaluated operands"></object> appear (<a title="expr.typeid" href="expr.typeid.html">5.2.8</a>, <a title="expr.sizeof" href="expr.sizeof.html">5.3.3</a>, <a title="expr.unary.noexcept" href="expr.unary.noexcept.html">5.3.7</a>,
+<a title="dcl.type.simple" href="dcl.type.simple.html">7.1.6.2</a>). An unevaluated operand is not evaluated. <span class="note">[ <em>Note:</em> In an unevaluated operand, a non-static class member
+may be named (<a title="expr.prim" href="expr.prim.general.html">5.1</a>) and naming of objects or functions does not, by itself, require that a definition be
+provided (<a title="basic.def.odr" href="basic.def.odr.html">3.2</a>). — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p8" href="#p8">8</a>Whenever a glvalue expression appears as an operand of an operator that expects a prvalue for that operand, the
+lvalue-to-rvalue (<a title="conv.lval" href="conv.lval.html">4.1</a>), array-to-pointer (<a title="conv.array" href="conv.array.html">4.2</a>), or function-to-pointer (<a title="conv.func" href="conv.func.html">4.3</a>) standard
+conversions are applied to convert the expression to a prvalue. <span class="note">[ <em>Note:</em> because cv-qualifiers are removed from the type of
+an expression of non-class type when the expression is converted to a prvalue, an lvalue expression of type <code class="sh_cpp">const
+int</code> can, for example, be used where a prvalue expression of type <code class="sh_cpp">int</code> is required. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p9" href="#p9">9</a>Many binary operators that expect operands of arithmetic or enumeration type cause conversions and yield
+result types in a similar way. The purpose is to yield a common type, which is also the type of the result. This pattern
+is called the <dfn>usual arithmetic conversions</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="usual arithmetic conversions"></object>, which are defined as follows:</p>
+<ul>
+<li>If either operand is of scoped enumeration type (<a title="dcl.enum" href="dcl.enum.html">7.2</a>), no conversions are performed; if the other operand
+	does not have the same type, the expression is ill-formed.</li>
+<li>If either operand is of type <code class="sh_cpp">long double</code>, the other shall be converted to <code class="sh_cpp">long
+	double</code>.</li>
+<li>Otherwise, if either operand is <code class="sh_cpp">double</code>, the other shall be converted to <code class="sh_cpp">double</code>.</li>
+<li>Otherwise, if either operand is <code class="sh_cpp">float</code>, the other shall be converted to <code class="sh_cpp">float</code>.</li>
+<li>Otherwise, the integral promotions (<a title="conv.prom" href="conv.prom.html">4.5</a>) shall be performed on both operands.<sup class="footnote"><a href="#fn59">59</a></sup> Then the
+	following rules shall be applied to the promoted operands:
+	<ul>
+	<li>If both operands have the same type, no further conversion is needed.</li>
+	<li>Otherwise, if both operands have signed integer types or both have unsigned integer types, the operand with the
+		type of lesser integer conversion rank shall be converted to the type of the operand with greater rank.</li>
+	<li>Otherwise, if the operand that has unsigned integer type has rank greater than or equal to the rank of the type
+		of the other operand, the operand with signed integer type shall be converted to the type of the operand with
+		unsigned integer type.</li>
+	<li>Otherwise, if the type of the operand with signed integer type can represent all of the values of the type of
+		the operand with unsigned integer type, the operand with unsigned integer type shall be converted to the type
+		of the operand with signed integer type.</li>
+	<li>Otherwise, both operands shall be converted to the unsigned integer type corresponding to the type of the
+		operand with signed integer type.</li>
+	</ul>
+</li>
+</ul>
+
+<p><a class="anchor" id="p10" href="#p10">10</a>In some contexts, an expression only appears for its side effects. Such an expression is called a
+<dfn>discarded-value expression</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="discarded-value expression"></object>. The expression is evaluated and its value is discarded. The array-to-pointer
+(<a title="conv.array" href="conv.array.html">4.2</a>) and function-to-pointer (<a title="conv.func" href="conv.func.html">4.3</a>) standard conversions are not applied. The lvalue-to-rvalue
+conversion (<a title="conv.lval" href="conv.lval.html">4.1</a>) is applied only if the expression is an lvalue of volatile-qualified type and it has one of
+the following forms:</p>
+
+<ul>
+<li>
+<i class="nonterminal">id-expression</i> (<a title="expr.prim.general" href="expr.prim.general.html">5.1.1</a>),</li>
+<li>subscripting (<a title="expr.sub" href="expr.sub.html">5.2.1</a>),</li>
+<li>class member access (<a title="expr.ref " href=".html"></a>),</li>
+<li>indirection (<a title="expr.unary.op" href="expr.unary.op.html">5.3.1</a>),</li>
+<li>pointer-to-member operation (<a title="expr.mptr.oper" href="expr.mptr.oper.html">5.5</a>),</li>
+<li>conditional expression (<a title="expr.cond" href="expr.cond.html">5.16</a>) where both the second and the third operands are one of the above, or</li>
+<li>comma expression (<a title="expr.comma" href="expr.comma.html">5.18</a>) where the right operand is one of the above.</li>
+</ul>
+
+<p><a class="anchor" id="p11" href="#p11">11</a>The values of the floating operands and the results of floating expressions may be represented in greater
+precision and range than that required by the type; the types are not changed thereby.<sup class="footnote"><a href="#fn60">60</a></sup></p>
+
+
+
+
+
+
+<div>
+<p class="footnote" id="fn58">58) The precedence of operators is not directly specified, but it can be derived from the
+syntax.</p>
+<p class="footnote" id="fn59">59) As a consequence, operands of type <code class="sh_cpp">bool</code>, <code class="sh_cpp">char16_t</code>, <code class="sh_cpp">char32_t</code>,
+<code class="sh_cpp">wchar_t</code>, or an enumerated type are converted to some integral type.</p>
+<p class="footnote" id="fn60">60) The cast and assignment operators must still perform their specific conversions as described in
+<a title="expr.cast" href="expr.cast.html">5.4</a>, <a title="expr.static.cast" href="expr.static.cast.html">5.2.9</a> and <a title="expr.ass" href="expr.ass.html">5.17</a>.</p>
+</div>
+</body>
+</html>
+

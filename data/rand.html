@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Random number generation</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[rand]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[rand]"></object>26.5 Random number generation </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>This subclause defines a facility for generating (pseudo-)random numbers.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>In addition to a few utilities, four categories of entities are described: <dfn>uniform random number
+generators</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="uniform random number
+generators"></object>, <dfn>random number engines</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="random number engines"></object>, <dfn>random number engine adaptors</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="random number engine adaptors"></object>, and <dfn>random number
+distributions</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="random number
+distributions"></object>. These categorizations are applicable to types that satisfy the corresponding requirements, to
+objects instantiated from such types, and to templates producing such types when instantiated. <span class="note">[ <em>Note:</em> These entities are
+specified in such a way as to permit the binding of any uniform random number generator object <code class="sh_cpp">e</code> as the
+argument to any random number distribution object <code class="sh_cpp">d</code>, thus producing a zero-argument function object such as
+given by <code class="sh_cpp">bind(d,e)</code>. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>Each of the entities specified via this subclause has an associated arithmetic type (<a title="basic.fundamental" href="basic.fundamental.html">3.9.1</a>)
+identified as <code class="sh_cpp">result_type</code>. With <code class="sh_cpp">T</code> as the <code class="sh_cpp">result_type</code> thus associated with such an
+entity, that entity is characterized:</p>
+
+<ol class="lettered">
+<li>as <dfn>boolean</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="boolean"></object> or equivalently as <dfn>boolean-valued</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="boolean-valued"></object>, if <code class="sh_cpp">T</code> is <code class="sh_cpp">bool</code>;</li>
+<li>otherwise as <dfn>integral</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="integral"></object> or equivalently as <dfn>integer-valued</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="integer-valued"></object>, if
+	<code class="sh_cpp">numeric_limits&lt;T&gt;::is_integer</code> is <code class="sh_cpp">true</code>;</li>
+<li>otherwise as <dfn>floating</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="floating"></object> or equivalently as <dfn>real-valued</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="real-valued"></object>.</li>
+</ol>
+
+<p>If integer-valued, an entity may optionally be further characterized as <dfn>signed</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="signed"></object> or <dfn>unsigned</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="unsigned"></object>,
+according to <code class="sh_cpp">numeric_limits&lt;T&gt;::is_signed</code>.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>Unless otherwise specified, all descriptions of calculations in this subclause use mathematical real
+numbers.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>Throughout this subclause, the operators <code class="sh_cpp">bitand</code>, <code class="sh_cpp">bitor</code>, and <code class="sh_cpp">xor</code> denote
+the respective conventional bitwise operations. Further:</p>
+
+<ol class="lettered">
+<li>the operator <code class="sh_cpp">rshift</code> denotes a bitwise right shift with zero-valued bits appearing in the high bits of
+	the result, and</li>
+<li>the operator <code class="sh_cpp">lshift</code> <var>w</var> denotes a bitwise left shift with zero-valued bits appearing in the
+	low bits of the result, and whose result is always taken modulo 2<sup><var>w</var></sup>.</li>
+</ol>
+</body>
+</html>
+

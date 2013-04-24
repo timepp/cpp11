@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>In general</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[tuple]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[tuple]"></object>20.4 Tuples </h2>
+
+<h3>
+<dfn class="label">[tuple.general]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[tuple.general]"></object>20.4.1 In general </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>This subclause describes the tuple library that provides a tuple type as the class template <code class="sh_cpp">tuple</code>
+that can be instantiated with any number of arguments. Each template argument specifies the type of an element in the
+<code class="sh_cpp">tuple</code>. Consequently, tuples are heterogeneous, fixed-size collections of values. An instantiation of
+<code class="sh_cpp">tuple</code> with two arguments is similar to an instantiation of <code class="sh_cpp">pair</code> with the same two arguments.
+See <a title="pairs" href="pairs.general.html">20.3</a>.</p>
+
+<h4>Header <dfn><code class="header">&lt;tuple&gt;</code></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="&lt;tuple&gt;"></object> synopsis</h4>
+
+<pre><code class="sh_cpp">namespace std {
+  // <a title="tuple.tuple" href="tuple.tuple.html">20.4.2</a>, class template tuple:
+  template &lt;class... Types&gt; class tuple;
+
+  // <a title="tuple.creation" href="tuple.creation.html">20.4.2.4</a>, tuple creation functions:
+  const <em>unspecified</em> ignore;
+
+  template &lt;class... Types&gt;
+    tuple&lt;<var>VTypes</var>...&gt; make_tuple(Types&amp;&amp;...);
+  template &lt;class... Types&gt;
+    tuple&lt;<var>Types</var>...&gt; forward_as_tuple(Types&amp;&amp;...) noexcept;
+
+  template&lt;class... Types&gt;
+    tuple&lt;Types&amp;...&gt; tie(Types&amp;...) noexcept;
+
+  template &lt;class... Tuples&gt;
+    tuple&lt;<var>Ctypes</var>...&gt; tuple_cat(Tuples&amp;&amp;...);
+
+  // <a title="tuple.helper" href="tuple.helper.html">20.4.2.5</a>, tuple helper classes:
+  template &lt;class T&gt; class tuple_size;  // undefined
+  template &lt;class T&gt; class tuple_size&lt;const T&gt;;
+  template &lt;class T&gt; class tuple_size&lt;volatile T&gt;;
+  template &lt;class T&gt; class tuple_size&lt;const volatile T&gt;;
+
+  template &lt;class... Types&gt; class tuple_size&lt;tuple&lt;Types...&gt; &gt;;
+
+  template &lt;size_t I, class T&gt; class tuple_element;     // undefined
+  template &lt;size_t I, class T&gt; class tuple_element&lt;I, const T&gt;;
+  template &lt;size_t I, class T&gt; class tuple_element&lt;I, volatile T&gt;;
+  template &lt;size_t I, class T&gt; class tuple_element&lt;I, const volatile T&gt;;
+
+  template &lt;size_t I, class... Types&gt; class tuple_element&lt;I, tuple&lt;Types...&gt; &gt;;
+
+  // <a title="tuple.elem" href="tuple.elem.html">20.4.2.6</a>, element access:
+  template &lt;size_t I, class... Types&gt;
+    typename tuple_element&lt;I, tuple&lt;Types...&gt; &gt;::type&amp; get(tuple&lt;Types...&gt;&amp;) noexcept;
+  template &lt;size_t I, class ... types&gt;
+    typename tuple_element&lt;I, tuple&lt;Types...&gt; &gt;::type&amp;&amp; get(tuple&lt;Types...&gt;&amp;&amp;) noexcept;
+  template &lt;size_t I, class... types&gt;
+    typename tuple_element&lt;I, tuple&lt;Types...&gt; &gt;::type const&amp; get(const tuple&lt;Types...&gt;&amp;) noexcept;
+
+  // <a title="tuple.rel" href="tuple.rel.html">20.4.2.7</a>, relational operators:
+  template&lt;class... TTypes, class... UTypes&gt;
+    bool operator==(const tuple&lt;TTypes...&gt;&amp;, const tuple&lt;UTypes...&gt;&amp;);
+  template&lt;class... TTypes, class... UTypes&gt;
+    bool operator&lt;(const tuple&lt;TTypes...&gt;&amp;, const tuple&lt;UTypes...&gt;&amp;);
+  template&lt;class... TTypes, class... UTypes&gt;
+    bool operator!=(const tuple&lt;TTypes...&gt;&amp;, const tuple&lt;UTypes...&gt;&amp;);
+  template&lt;class... TTypes, class... UTypes&gt;
+    bool operator&gt;(const tuple&lt;TTypes...&gt;&amp;, const tuple&lt;UTypes...&gt;&amp;);
+  template&lt;class... TTypes, class... UTypes&gt;
+    bool operator&lt;=(const tuple&lt;TTypes...&gt;&amp;, const tuple&lt;UTypes...&gt;&amp;);
+  template&lt;class... TTypes, class... UTypes&gt;
+    bool operator&gt;=(const tuple&lt;TTypes...&gt;&amp;, const tuple&lt;UTypes...&gt;&amp;);
+
+  // <a title="tuple.traits" href="tuple.traits.html">20.4.2.8</a>, allocator-related traits
+  template &lt;class... Types, class Alloc&gt;
+    struct uses_allocator&lt;tuple&lt;Types...&gt;, Alloc&gt;;
+
+  // <a title="tuple.special" href="tuple.special.html">20.4.2.9</a>, specialized algorithms:
+  template &lt;class... Types&gt;
+    void swap(tuple&lt;Types...&gt;&amp; x, tuple&lt;Types...&gt;&amp; y) noexcept(<em>see below</em>);
+}</code></pre>
+</body>
+</html>
+

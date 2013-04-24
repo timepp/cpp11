@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Constructors and destructors</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[except.ctor]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[except.ctor]"></object>15.2 Constructors and destructors </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>As control passes from a <i class="nonterminal">throw-expression</i> to a handler, destructors are invoked for all automatic
+objects constructed since the try block was entered. The automatic objects are destroyed in the reverse order of the
+completion of their construction.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>An object of any storage duration whose initialization or destruction is terminated by an exception will have
+destructors executed for all of its fully constructed subobjects (excluding the variant members of a union-like class),
+that is, for subobjects for which the principal constructor (<a title="class.base.init" href="class.base.init.html">12.6.2</a>) has completed execution and the
+destructor has not yet begun execution. Similarly, if the non-delegating constructor for an object has completed
+execution and a delegating constructor for that object exits with an exception, the object's destructor will be invoked.
+If the object was allocated in a <i class="nonterminal">new-expression</i>, the matching deallocation function (<a title="basic.stc.dynamic.deallocation" href="basic.stc.dynamic.deallocation.html">3.7.4.2</a>,
+<a title="expr.new" href="expr.new.html">5.3.4</a>, <a title="class.free" href="class.free.html">12.5</a>), if any, is called to free the storage occupied by the object.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>The process of calling destructors for automatic objects constructed on the path from a try block to a
+<i class="nonterminal">throw-expression</i> is called “stack unwinding”. If a destructor called during stack unwinding exits with an
+exception, <code class="sh_cpp">std::terminate</code> is called (<a title="except.terminate" href="except.terminate.html">15.5.1</a>). <span class="note">[ <em>Note:</em> So destructors should generally catch
+exceptions and not let them propagate out of the destructor. — <em>end note</em> ]</span></p>
+</body>
+</html>
+

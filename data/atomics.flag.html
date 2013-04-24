@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Flag type and operations</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[atomics.flag]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[atomics.flag]"></object>29.7 Flag type and operations </h2>
+
+<pre><code class="sh_cpp">namespace std {
+  typedef struct <dfn>atomic_flag</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="atomic_flag"></object> {
+    bool test_and_set(memory_order = memory_order_seq_cst) volatile noexcept;
+    bool test_and_set(memory_order = memory_order_seq_cst) noexcept;
+    void clear(memory_order = memory_order_seq_cst) volatile noexcept;
+    void clear(memory_order = memory_order_seq_cst) noexcept;
+
+    atomic_flag() noexcept = default;
+    atomic_flag(const atomic_flag&amp;) = delete;
+    atomic_flag&amp; operator=(const atomic_flag&amp;) = delete;
+    atomic_flag&amp; operator=(const atomic_flag&amp;) volatile = delete;
+  } atomic_flag;
+
+  bool atomic_flag_test_and_set(volatile atomic_flag*) noexcept;
+  bool atomic_flag_test_and_set(atomic_flag*) noexcept;
+  bool atomic_flag_test_and_set_explicit(volatile atomic_flag*, memory_order) noexcept;
+  bool atomic_flag_test_and_set_explicit(atomic_flag*, memory_order) noexcept;
+  void atomic_flag_clear(volatile atomic_flag*) noexcept;
+  void atomic_flag_clear(atomic_flag*) noexcept;
+  void atomic_flag_clear_explicit(volatile atomic_flag*, memory_order) noexcept;
+  void atomic_flag_clear_explicit(atomic_flag*, memory_order) noexcept;
+
+  #define ATOMIC_FLAG_INIT <em>see below</em>
+}</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The <code class="sh_cpp">atomic_flag</code> type provides the classic test-and-set functionality. It has two states, set and
+clear.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>Operations on an object of type <code class="sh_cpp">atomic_flag</code> shall be lock-free. <span class="note">[ <em>Note:</em> Hence the operations should
+also be address-free. No other type requires lock-free operations, so the <code class="sh_cpp">atomic_flag</code> type is the minimum
+hardware-implemented type needed to conform to this International standard. The remaining types can be emulated with
+<code class="sh_cpp">atomic_flag</code>, though with less than ideal properties. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>The <code class="sh_cpp">atomic_flag</code> type shall have standard layout. It shall have a trivial default constructor, a
+deleted copy constructor, a deleted copy assignment operator, and a trivial destructor.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>The macro <code class="sh_cpp"><dfn>ATOMIC_FLAG_INIT</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="ATOMIC_FLAG_INIT"></object></code> shall be defined in such a way that it can be used to
+initialize an object of type <code class="sh_cpp">atomic_flag</code> to the clear state. For a static-duration object, that
+initialization shall be static. It is unspecified whether an unitialized <code class="sh_cpp">atomic_flag</code> object has an initial
+state of set or clear.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">atomic_flag guard = ATOMIC_FLAG_INIT;</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<h3><code class="sh_cpp">bool <dfn>atomic_flag_test_and_set</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="atomic_flag_test_and_set"></object>(volatile atomic_flag *object) noexcept;
+bool atomic_flag_test_and_set(atomic_flag *object) noexcept;
+bool <dfn>atomic_flag_test_and_set_explicit</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="atomic_flag_test_and_set_explicit"></object>(volatile atomic_flag *object, memory_order order) noexcept;
+bool atomic_flag_test_and_set_explicit(atomic_flag *object, memory_order order) noexcept;
+bool atomic_flag::<dfn>test_and_set</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="test_and_set"></object>(memory_order order = memory_order_seq_cst) volatile noexcept;
+bool atomic_flag::test_and_set(memory_order order = memory_order_seq_cst) noexcept;</code></h3>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><em>Effects:</em> Atomically sets the value pointed to by <code class="sh_cpp">object</code> or by <code class="sh_cpp">this</code> to true. Memory is
+affected according to the value of <code class="sh_cpp">order</code>. These operations are atomic read-modify-write operations
+(<a title="intro.multithread" href="intro.multithread.html">1.10</a>).</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a><em>Returns:</em> Atomically, the value of the object immediately before the effects.</p>
+
+<h3><code class="sh_cpp">void <dfn>atomic_flag_clear</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="atomic_flag_clear"></object>(volatile atomic_flag *object) noexcept;
+void atomic_flag_clear(atomic_flag *object) noexcept;
+void <dfn>atomic_flag_clear_explicit</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="atomic_flag_clear_explicit"></object>(volatile atomic_flag *object, memory_order order) noexcept;
+void atomic_flag_clear_explicit(atomic_flag *object, memory_order order) noexcept;
+void atomic_flag::<dfn>clear</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="clear"></object>(memory_order order = memory_order_seq_cst) volatile noexcept;
+void atomic_flag::clear(memory_order order = memory_order_seq_cst) noexcept;</code></h3>
+
+<p><a class="anchor" id="p7" href="#p7">7</a><em>Requires:</em> The <code class="sh_cpp">order</code> argument shall not be <code class="sh_cpp">memory_order_acquire</code> or
+<code class="sh_cpp">memory_order_acq_rel</code>.</p>
+
+<p><a class="anchor" id="p8" href="#p8">8</a><em>Effects:</em> Atomically sets the value pointed to by <code class="sh_cpp">object</code> or by <code class="sh_cpp">this</code> to false. Memory
+is affected according to the value of <code class="sh_cpp">order</code>.</p>
+</body>
+</html>
+

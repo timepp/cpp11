@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Declaration statement</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[stmt.dcl]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[stmt.dcl]"></object>6.7 Declaration statement </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A declaration statement introduces one or more new identifiers into a block; it has the form</p>
+
+<dl>
+<dt>
+<i class="nonterminal"><dfn>declaration-statement</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="declaration-statement"></object></i>:</dt>
+	<dd><i class="nonterminal">block-declaration</i></dd>
+</dl>
+
+<p>If an identifier introduced by a declaration was previously declared in an outer block, the outer declaration is
+hidden for the remainder of the block, after which it resumes its force.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>Variables with automatic storage duration (<a title="basic.stc.auto" href="basic.stc.auto.html">3.7.3</a>) are initialized each time their
+<i class="nonterminal">declaration-statement</i> is executed. Variables with automatic storage duration declared in the block are
+destroyed on exit from the block (<a title="stmt.jump" href="stmt.jump.html">6.6</a>).</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>It is possible to transfer into a block, but not in a way that bypasses declarations with initialization. A
+program that jumps<sup class="footnote"><a href="#fn90">90</a></sup> from a point where a variable with automatic storage duration is not in scope to a
+point where it is in scope is ill-formed unless the variable has scalar type, class type with a trivial default
+constructor and a trivial destructor, a cv-qualified version of one of these types, or an array of one of the preceding
+types and is declared without an initializer (<a title="dcl.init" href="dcl.init.html">8.5</a>).</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">void f() {
+  // …
+  goto lx;              // ill-formed: jump into scope of a
+  // …
+ly:
+  X a = 1;
+  // …
+lx:
+  goto ly;              // OK, jump implies destructor
+                        // call for a followed by construction
+                        // again immediately following label ly
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>The zero-initialization (<a title="dcl.init" href="dcl.init.html">8.5</a>) of all block-scope variables with static storage duration
+(<a title="basic.stc.static" href="basic.stc.static.html">3.7.1</a>) or thread storage duration (<a title="basic.stc.thread" href="basic.stc.thread.html">3.7.2</a>) is performed before any other initialization takes
+place. Constant initialization (<a title="basic.start.init" href="basic.start.init.html">3.6.2</a>) of a block-scope entity with static storage duration, if applicable,
+is performed before its block is first entered. An implementation is permitted to perform early initialization of other
+block-scope variables with static or thread storage duration under the same conditions that an implementation is
+permitted to statically initialize an object a variable with static or thread storage duration in namespace scope
+(<a title="basic.start.init" href="basic.start.init.html">3.6.2</a>). Otherwise such a variable is initialized the first time control passes through its declaration; such
+a variable is considered initialized upon the completion of its initialization. If the initialization exits by throwing
+an exception, the initialization is not complete, so it will be tried again the next time control enters the
+declaration. If control enters the declaration concurrently while the variable is being initialized, the concurrent
+execution shall wait for completion of the initialization.<sup class="footnote"><a href="#fn91">91</a></sup> If control re-enters the declaration
+recursively while the variable is being initialized, the behavior is undefined.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">int foo(int i) {
+  static int s = foo(2*i);  // recursive call — undefined
+  return i+1;
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>The destructor for a block-scope object with static or thread storage duration will be executed if and only if
+it was constructed. <span class="note">[ <em>Note:</em> <a title="basic.start.term" href="basic.start.term.html">3.6.3</a> describes the order in which block-scope objects with static and thread
+storage duration are destroyed. — <em>end note</em> ]</span></p>
+
+
+
+
+<div>
+<p class="footnote" id="fn90">90) The transfer from the condition of a <code class="sh_cpp">switch</code> statement to a <code class="sh_cpp">case</code> label is
+considered a jump in this respect.</p>
+<p class="footnote" id="fn91">91) The implementation must not introduce any deadlock around execution of the initializer.</p>
+</div>
+</body>
+</html>
+

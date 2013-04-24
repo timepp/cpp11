@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>queue definition</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[queue]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[queue]"></object>23.6.3 Class template <code class="sh_cpp"><dfn>queue</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="queue"></object></code> </h3>
+
+<h4>
+<dfn class="label">[queue.defn]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[queue.defn]"></object>23.6.3.1 <code class="sh_cpp">queue</code> definition </h4>
+
+<pre><code class="sh_cpp">namespace std {
+  template &lt;class T, class Container = deque&lt;T&gt; &gt;
+  class queue {
+  public:
+    typedef typename Container::value_type      value_type;
+    typedef typename Container::reference       reference;
+    typedef typename Container::const_reference const_reference;
+    typedef typename Container::size_type       size_type;
+    typedef          Container                  container_type;
+  protected:
+    Container c;
+
+  public:
+    explicit queue(const Container&amp;);
+    explicit queue(Container&amp;&amp; = Container());
+    template &lt;class Alloc&gt; explicit queue(const Alloc&amp;);
+    template &lt;class Alloc&gt; queue(const Container&amp;, const Alloc&amp;);
+    template &lt;class Alloc&gt; queue(Container&amp;&amp;, const Alloc&amp;);
+    template &lt;class Alloc&gt; queue(const queue&amp;, const Alloc&amp;);
+    template &lt;class Alloc&gt; queue(queue&amp;&amp;, const Alloc&amp;);
+
+    bool            empty() const   { return c.empty(); }
+    size_type       size() const    { return c.size(); }
+    reference       front()         { return c.front(); }
+    const_reference front() const   { return c.front(); }
+    reference       back()          { return c.back(); }
+    const_reference back() const    { return c.back(); }
+    void push(const value_type&amp; x)  { c.push_back(x); }
+    void push(value_type&amp;&amp; x)       { c.push_back(std::move(x)); }
+    template &lt;class... Args&gt; void emplace(Args&amp;&amp;... args)
+      { c.emplace_back(std::forward&lt;Args&gt;(args)...); }
+    void pop()                      { c.pop_front(); }
+    void swap(queue&amp; q) noexcept(noexcept(swap(c, q.c)))
+      { using std::swap; swap(c, q.c); }
+  };
+
+  template &lt;class T, class Container&gt;
+    bool operator==(const queue&lt;T, Container&gt;&amp; x, const queue&lt;T, Container&gt;&amp; y);
+  template &lt;class T, class Container&gt;
+    bool operator&lt; (const queue&lt;T, Container&gt;&amp; x, const queue&lt;T, Container&gt;&amp; y);
+  template &lt;class T, class Container&gt;
+    bool operator!=(const queue&lt;T, Container&gt;&amp; x, const queue&lt;T, Container&gt;&amp; y);
+  template &lt;class T, class Container&gt;
+    bool operator&gt; (const queue&lt;T, Container&gt;&amp; x, const queue&lt;T, Container&gt;&amp; y);
+  template &lt;class T, class Container&gt;
+    bool operator&gt;=(const queue&lt;T, Container&gt;&amp; x, const queue&lt;T, Container&gt;&amp; y);
+  template &lt;class T, class Container&gt;
+    bool operator&lt;=(const queue&lt;T, Container&gt;&amp; x, const queue&lt;T, Container&gt;&amp; y);
+
+  template &lt;class T, class Container&gt;
+    void swap(queue&lt;T, Container&gt;&amp; x, queue&lt;T, Container&gt;&amp; y) noexcept(noexcept(x.swap(y)));
+
+  template &lt;class T, class Container, class Alloc&gt;
+    struct uses_allocator&lt;queue&lt;T, Container&gt;, Alloc&gt;
+      : uses_allocator&lt;Container, Alloc&gt;::type { };
+}</code></pre>
+</body>
+</html>
+

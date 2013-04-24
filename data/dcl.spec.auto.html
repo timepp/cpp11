@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>auto specifier</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[dcl.spec.auto]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[dcl.spec.auto]"></object>7.1.6.4 <code class="sh_cpp">auto</code> specifier </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The <code class="sh_cpp">auto</code> <i class="nonterminal">type-specifier</i> signifies that the type of a variable being declared shall be
+deduced from its initializer or that a function declarator shall include a <i class="nonterminal">trailing-return-type</i>.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The <code class="sh_cpp">auto</code> <i class="nonterminal">type-specifier</i> may appear with a function declarator with a
+<i class="nonterminal">trailing-return-type</i> (<a title="dcl.fct" href="dcl.fct.html">8.3.5</a>) in any context where such a declarator is valid.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>Otherwise, the type of the variable is deduced from its initializer. The name of the variable being declared
+shall not appear in the initializer expression. This use of <code class="sh_cpp">auto</code> is allowed when declaring variables in a
+block (<a title="stmt.block" href="stmt.block.html">6.3</a>), in namespace scope (<a title="basic.scope.namespace" href="basic.scope.namespace.html">3.3.6</a>), and in a <i class="nonterminal">for-init-statement</i> (<a title="stmt.for" href="stmt.for.html">6.5.3</a>).
+<code class="sh_cpp">auto</code> shall appear as one of the <i class="nonterminal">decl-specifier</i>s in the <i class="nonterminal">decl-specifier-seq</i> and the
+<i class="nonterminal">decl-specifier-seq</i> shall be followed by one or more <i class="nonterminal">init-declarator</i>s, each of which shall have a
+non-empty <i class="nonterminal">initializer</i>.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">auto x = 5;                 // OK: x has type int
+const auto *v = &amp;x, u = 6;  // OK: v has type const int*, u has type const int
+static auto y = 0.0;        // OK: y has type double
+auto int r;                 // error: auto is not a storage-class-specifier</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>The <code class="sh_cpp">auto</code> <i class="nonterminal">type-specifier</i> can also be used in declaring a variable in the
+<i class="nonterminal">condition</i> of a selection statement (<a title="stmt.select" href="stmt.select.html">6.4</a>) or an iteration statement (<a title="stmt.iter" href="stmt.iter.html">6.5</a>), in the
+<i class="nonterminal">type-specifier-seq</i> in the <i class="nonterminal">new-type-id</i> or <i class="nonterminal">type-id</i> of a <i class="nonterminal">new-expression</i>
+(<a title="expr.new" href="expr.new.html">5.3.4</a>), in a <i class="nonterminal">for-range-declaration</i>, and in declaring a static data member with a
+<i class="nonterminal">brace-or-equal-initializer</i> that appears within the <i class="nonterminal">member-specification</i> of a class definition
+(<a title="class.static.data" href="class.static.data.html">9.4.2</a>).</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>A program that uses <code class="sh_cpp">auto</code> in a context not explicitly allowed in this section is ill-formed.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>Once the type of a <i class="nonterminal">declarator-id</i> has been determined according to <a title="dcl.meaning" href="dcl.meaning.html">8.3</a>, the type of the
+declared variable using the <i class="nonterminal">declarator-id</i> is determined from the type of its initializer using the rules for
+template argument deduction. Let <code class="sh_cpp">T</code> be the type that has been determined for a variable identifier
+<code class="sh_cpp">d</code>. Obtain <code class="sh_cpp">P</code> from <code class="sh_cpp">T</code> by replacing the occurrences of <code class="sh_cpp">auto</code> with either
+a new invented type template parameter <code class="sh_cpp">U</code> or, if the initializer is a <i class="nonterminal">braced-init-list</i>
+(<a title="dcl.init.list" href="dcl.init.list.html">8.5.4</a>), with <code class="sh_cpp">std::initializer_list&lt;U&gt;</code>. The type deduced for the variable <code class="sh_cpp">d</code>
+is then the deduced <code class="sh_cpp">A</code> determined using the rules of template argument deduction from a function call
+(<a title="temp.deduct.call" href="temp.deduct.call.html">14.8.2.1</a>), where <code class="sh_cpp">P</code> is a function template parameter type and the initializer for <code class="sh_cpp">d</code>
+is the corresponding argument. If the deduction fails, the declaration is ill-formed.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">auto x1 = { 1, 2 };     // decltype(x1) is std::initializer_list&lt;int&gt;
+auto x2 = { 1, 2.0 };   // error: cannot deduce element type</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p7" href="#p7">7</a>If the list of declarators contains more than one declarator, the type of each declared variable is determined
+as described above. If the type deduced for the template parameter <code class="sh_cpp">U</code> is not the same in each deduction, the
+program is ill-formed.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">const auto &amp;i = expr;</code></pre>
+
+<p>The type of <code class="sh_cpp">i</code> is the deduced type of the parameter <code class="sh_cpp">u</code> in the call <code class="sh_cpp">f(expr)</code> of
+the following invented function template:</p>
+
+<pre><code class="sh_cpp">template &lt;class U&gt; void f(const U&amp; u);</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+</body>
+</html>
+

@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>basic_ios constructors</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[basic.ios.cons]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[basic.ios.cons]"></object>27.5.5.2 <code class="sh_cpp">basic_ios</code> constructors </h4>
+
+<h5><code class="sh_cpp">explicit <dfn>basic_ios</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="basic_ios"></object>(basic_streambuf&lt;charT,traits&gt;* sb);</code></h5>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Effects:</em> Constructs an object of class <code class="sh_cpp">basic_ios</code>, assigning initial values to its member objects
+by calling <code class="sh_cpp">init(sb)</code>.</p>
+
+<h5><code class="sh_cpp"><dfn>basic_ios</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="basic_ios"></object>();</code></h5>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Effects:</em> Constructs an object of class <code class="sh_cpp">basic_ios</code> (<a title="ios.base.cons" href="ios.base.cons.html">27.5.3.7</a>) leaving its member objects
+uninitialized. The object shall be initialized by calling <code class="sh_cpp">basic_ios::init</code> before its first use or before it
+is destroyed, whichever comes first; otherwise the behavior is undefined.</p>
+
+<h5><code class="sh_cpp"><dfn>~basic_ios</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="~basic_ios"></object>();</code></h5>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Remarks:</em> The destructor does not destroy <code class="sh_cpp">rdbuf()</code>.</p>
+
+<h5><code class="sh_cpp">void <dfn>init</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="init"></object>(basic_streambuf&lt;charT,traits&gt;* sb);</code></h5>
+
+<p><em>Postconditions:</em> The postconditions of this function are indicated in Table <a href="ios.overview.html#t128">128</a>.</p>
+
+<table id="t128" class="bordered headed">
+<caption>Table 128 — <code class="sh_cpp">basic_ios::init()</code> effects</caption>
+<thead><tr>
+<th>Element</th>
+<th>Value</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code class="sh_cpp"><dfn>rdbuf</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="rdbuf"></object>()</code></td>
+	<td><code class="sh_cpp">sb</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>tie</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="tie"></object>()</code></td>
+	<td><code class="sh_cpp">0</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>rdstate</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="rdstate"></object>()</code></td>
+	<td>
+<code class="sh_cpp">goodbit</code> if <code class="sh_cpp">sb</code> is not a null pointer, otherwise <code class="sh_cpp">badbit</code>.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>exceptions</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="exceptions"></object>()</code></td>
+	<td><code class="sh_cpp">goodbit</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>flags</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="flags"></object>()</code></td>
+	<td><code class="sh_cpp">skipws | dec</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>width</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="width"></object>()</code></td>
+	<td><code class="sh_cpp">0</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>precision</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="precision"></object>()</code></td>
+	<td><code class="sh_cpp">6</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>fill</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="fill"></object>()</code></td>
+	<td><code class="sh_cpp">widen(' ');</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>getloc</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="getloc"></object>()</code></td>
+	<td>a copy of the value returned by <code class="sh_cpp">locale()</code>
+</td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>iarray</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="iarray"></object></code></td>
+	<td>a null pointer</td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>parray</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="parray"></object></code></td>
+	<td>a null pointer</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>
+

@@ -1,0 +1,317 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Initializing bases and members</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[class.base.init]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[class.base.init]"></object>12.6.2 Initializing bases and members </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>In the definition of a constructor for a class, initializers for direct and virtual base subobjects and
+non-static data members can be specified by a <i class="nonterminal">ctor-initializer</i>, which has the form</p>
+
+<dl>
+<dt>
+<dfn><i class="nonterminal">ctor-initializer</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="ctor-initializer"></object>:</dt>
+	<dd>
+<code class="sh_cpp">:</code> <i class="nonterminal">mem-initializer-list</i>
+</dd>
+<dt>
+<dfn><i class="nonterminal">mem-initializer-list</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="mem-initializer-list"></object>:</dt>
+	<dd>
+<i class="nonterminal">mem-initializer</i> <code class="sh_cpp">...</code><sub class="opt">opt</sub>
+</dd>
+	<dd>
+<i class="nonterminal">mem-initializer</i> <code class="sh_cpp">,</code> <i class="nonterminal">mem-initializer-list</i> <code class="sh_cpp">...</code><sub class="opt">opt</sub>
+</dd>
+<dt>
+<dfn><i class="nonterminal">mem-initializer</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="mem-initializer"></object>:</dt>
+	<dd>
+<i class="nonterminal">mem-initializer-id</i> <code class="sh_cpp">(</code> <i class="nonterminal">expression-list</i><sub class="opt">opt</sub> <code class="sh_cpp">)</code>
+</dd>
+	<dd>
+<i class="nonterminal">mem-initializer-id</i> <i class="nonterminal">braced-init-list</i>
+</dd>
+<dt>
+<dfn><i class="nonterminal">mem-initializer-id</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="mem-initializer-id"></object>:</dt>
+	<dd><i class="nonterminal">class-or-decltype</i></dd>
+	<dd><i class="nonterminal">identifier</i></dd>
+</dl>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>In a <i class="nonterminal">mem-initializer-id</i> an initial unqualified <i class="nonterminal">identifier</i> is looked up in the scope of the
+constructor’s class and, if not found in that scope, it is looked up in the scope containing the constructor’s
+definition. <span class="note">[ <em>Note:</em> If the constructor's class contains a member with the same name as a direct or virtual base class of
+the class, a <i class="nonterminal">mem-initializer-id</i> naming the member or base class and composed of a single identifier refers to
+the class member. A <i class="nonterminal">mem-initializer-id</i> for the hidden base class may be specified using a qualified
+name. — <em>end note</em> ]</span> Unless the <i class="nonterminal">mem-initializer-id</i> names the constructor’s class, a non-static data member of the
+constructor’s class, or a direct or virtual base of that class, the <i class="nonterminal">mem-initializer</i> is ill-formed.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>A <i class="nonterminal">mem-initializer-list</i> can initialize a base class using any <i class="nonterminal">class-or-decltype</i> that denotes
+that base class type.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct A { A(); };
+typedef A global_A;
+struct B { };
+struct C: public A, public B { C(); };
+C::C(): global_A() { }      // mem-initializer for base A</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>If a <i class="nonterminal">mem-initializer-id</i> is ambiguous because it designates both a direct non-virtual base class and an
+inherited virtual base class, the <i class="nonterminal">mem-initializer</i> is ill-formed.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct A { A(); };
+struct B: public virtual A { };
+struct C: public A, public B { C(); };
+C::C(): A() { }             // ill-formed: which A?</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>A <i class="nonterminal">ctor-initializer</i> may initialize a variant member of the
+constructor’s class. If a <i class="nonterminal">ctor-initializer</i> specifies more than one <i class="nonterminal">mem-initializer</i> for the same member
+or for the same base class, the <i class="nonterminal">ctor-initializer</i> is ill-formed.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>A <i class="nonterminal">mem-initializer-list</i> can delegate to another constructor of the constructor’s class using any
+<i class="nonterminal">class-or-decltype</i> that denotes the constructor’s class itself. If a <i class="nonterminal">mem-initializer-id</i> designates the
+constructor’s class, it shall be the only <i class="nonterminal">mem-initializer</i>; the constructor is a <dfn>delegating
+constructor</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="delegating
+constructor"></object>, and the constructor selected by the <i class="nonterminal">mem-initializer</i> is the <dfn>target constructor</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="target constructor"></object>.
+The <dfn>principal constructor</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="principal constructor"></object> is the first constructor invoked in the construction of an object (that is, not a
+target constructor for that object’s construction). The target constructor is selected by overload resolution. Once the
+target constructor returns, the body of the delegating constructor is executed. If a constructor delegates to itself
+directly or indirectly, the program is ill-formed; no diagnostic is required.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct C {
+  C( int ) { }                  // #1: non-delegating constructor
+  C(): C(42) { }                // #2: delegates to #1
+  C( char c ) : C(42.0) { }     // #3: ill-formed due to recursion with #4
+  C( double d ) : C('a') { }    // #4: ill-formed due to recursion with #3
+};</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p7" href="#p7">7</a>The <i class="nonterminal">expression-list</i> or <i class="nonterminal">braced-init-list</i> in a <i class="nonterminal">mem-initializer</i> is used to initialize
+the designated subobject (or, in the case of a delegating constructor, the complete class object) according to the
+initialization rules of <a title="dcl.init" href="dcl.init.html">8.5</a> for direct-initialization.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct B1 { B1(int); /* … */ };
+struct B2 { B2(int); /* … */ };
+struct D : B1, B2 {
+  D(int);
+  B1 b;
+  const int c;
+};
+
+D::D(int a) : B2(a+1), B1(a+2), c(a+3), b(a+4)
+  { /* … */ }
+D d(10);</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p>The initialization performed by each <i class="nonterminal">mem-initializer</i> constitutes a full-expression. Any expression in a
+<i class="nonterminal">mem-initializer</i> is evaluated as part of the full-expression that performs the initialization. A
+<i class="nonterminal">mem-initializer</i> where the <i class="nonterminal">mem-initializer-id</i> denotes a virtual base class is ignored during execution
+of a constructor of any class that is not the most derived class.</p>
+
+<p><a class="anchor" id="p8" href="#p8">8</a>In a non-delegating constructor, if a given non-static data member or base class is not designated by a
+<i class="nonterminal">mem-initializer-id</i> (including the case where there is no <i class="nonterminal">mem-initializer-list</i> because the constructor
+has no <i class="nonterminal">ctor-initializer</i>) and the entity is not a virtual base class of an abstract class (<a title="class.abstract" href="class.abstract.html">10.4</a>),
+then</p>
+
+<ul>
+<li>if the entity is a non-static data member that has a <i class="nonterminal">brace-or-equal-initializer</i>, the entity is initialized
+	as specified in <a title="dcl.init" href="dcl.init.html">8.5</a>;</li>
+<li>otherwise, if the entity is a variant member (<a title="class.union" href="class.union.html">9.5</a>), no initialization is performed;</li>
+<li>otherwise, the entity is default-initialized (<a title="dcl.init" href="dcl.init.html">8.5</a>).</li>
+</ul>
+
+<p><span class="note">[ <em>Note:</em> An abstract class (<a title="class.abstract" href="class.abstract.html">10.4</a>) is never a most derived class, thus its constructors never initialize
+virtual base classes, therefore the corresponding <i class="nonterminal">mem-initializer</i>s may be omitted. — <em>end note</em> ]</span> An attempt to
+initialize more than one non-static data member of a union renders the program ill-formed. After the call to a
+constructor for class <code class="sh_cpp">X</code> has completed, if a member of <code class="sh_cpp">X</code> is neither initialized nor given a
+value during execution of the <i class="nonterminal">compound-statement</i> of the body of the constructor, the member has indeterminate
+value.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct A {
+  A();
+};
+struct B {
+  B(int);
+};
+
+struct C {
+  C() { }           // initializes members as follows:
+  A a;                  // OK: calls A::A()
+  const B b;            // error: B has no default constructor
+  int i;                // OK: i has indeterminate value
+  int j = 5;            // OK: j has the value 5
+};</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p9" href="#p9">9</a>If a given non-static data member has both a <i class="nonterminal">brace-or-equal-initializer</i> and a
+<i class="nonterminal">mem-initializer</i>, the initialization specified by the <i class="nonterminal">mem-initializer</i> is performed, and the non-static
+data member’s <i class="nonterminal">brace-or-equal-initializer</i> is ignored.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> Given</p>
+
+<pre><code class="sh_cpp">struct A {
+  int i = /* some integer expression with side effects */;
+  A(int arg) : i(arg) { }
+  // …
+};</code></pre>
+
+<p>the <code class="sh_cpp">A(int)</code> constructor will simply initialize <code class="sh_cpp">i</code> to the value of <code class="sh_cpp">arg</code>, and the
+side effects in <code class="sh_cpp">i</code>’s <i class="nonterminal">brace-or-equal-initializer</i> will not take place. — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p10" href="#p10">10</a>In a non-delegating constructor, initialization proceeds in the following order:</p>
+
+<ul>
+<li>First, and only for the constructor of the most derived class (<a title="intro.object" href="intro.object.html">1.8</a>), virtual base classes are initialized
+	in the order they appear on a depth-first left-to-right traversal of the directed acyclic graph of base classes,
+	where “left-to-right” is the order of appearance of the base classes in the derived class
+	<i class="nonterminal">base-specifier-list</i>.</li>
+<li>Then, direct base classes are initialized in declaration order as they appear in the <i class="nonterminal">base-specifier-list</i>
+	(regardless of the order of the <i class="nonterminal">mem-initializer</i>s).</li>
+<li>Then, non-static data members are initialized in the order they were declared in the class definition (again
+	regardless of the order of the <i class="nonterminal">mem-initializer</i>s).</li>
+<li>Finally, the <i class="nonterminal">compound-statement</i> of the constructor body is executed.</li>
+</ul>
+
+<p><span class="note">[ <em>Note:</em> The declaration order is mandated to ensure that base and member subobjects are destroyed in the reverse order
+of initialization. — <em>end note</em> ]</span></p>
+
+<div class="example">
+<p><a class="anchor" id="p11" href="#p11">11</a>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct V {
+  V();
+  V(int);
+};
+
+struct A : virtual V {
+  A();
+  A(int);
+};
+
+struct B : virtual V {
+  B();
+  B(int);
+};
+
+struct C : A, B, virtual V {
+  C();
+  C(int);
+};
+
+A::A(int i) : V(i) { /* … */ }
+B::B(int i) { /* … */ }
+C::C(int i) { /* … */ }
+
+V v(1);                 // use V(int)
+A a(2);                 // use V(int)
+B b(3);                 // use V()
+C c(4);                 // use V()</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p12" href="#p12">12</a>Names in the <i class="nonterminal">expression-list</i> or <i class="nonterminal">braced-init-list</i> of a <i class="nonterminal">mem-initializer</i> are evaluated
+in the scope of the constructor for which the <i class="nonterminal">mem-initializer</i> is specified.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">class X {
+  int a;
+  int b;
+  int i;
+  int j;
+public:
+  const int&amp; r;
+  X(int i): r(a), b(i), i(i), j(this-&gt;i) { }
+};</code></pre>
+
+<p>initializes <code class="sh_cpp">X::r</code> to refer to <code class="sh_cpp">X::a</code>, initializes <code class="sh_cpp">X::b</code> with the value of the
+constructor parameter <code class="sh_cpp">i</code>, initializes <code class="sh_cpp">X::i</code> with the value of the constructor parameter
+<code class="sh_cpp">i</code>, and initializes <code class="sh_cpp">X::j</code> with the value of <code class="sh_cpp">X::i</code>; this takes place each time an
+object of class <code class="sh_cpp">X</code> is created. — <em>end example</em> ]</p>
+</div>
+
+<p><span class="note">[ <em>Note:</em> Because the <i class="nonterminal">mem-initializer</i> are evaluated in the scope of the constructor, the <code class="sh_cpp">this</code>
+pointer can be used in the <i class="nonterminal">expression-list</i> of a <i class="nonterminal">mem-initializer</i> to refer to the object being
+initialized. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p13" href="#p13">13</a>Member functions (including virtual member functions, <a title="class.virtual" href="class.virtual.html">10.3</a>) can be called for an object under
+construction. Similarly, an object under construction can be the operand of the <code class="sh_cpp">typeid</code> operator
+(<a title="expr.typeid" href="expr.typeid.html">5.2.8</a>) or of a <code class="sh_cpp">dynamic_cast</code> (<a title="expr.dynamic.cast" href="expr.dynamic.cast.html">5.2.7</a>). However, if these operations are performed in a
+<i class="nonterminal">ctor-initializer</i> (or in a function called directly or indirectly from a <i class="nonterminal">ctor-initializer</i>) before all
+the <i class="nonterminal">mem-initializer</i>s for base classes have completed, the result of the operation is undefined.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">class A {
+public:
+  A(int);
+};
+
+class B : public A {
+  int j;
+public:
+  int f();
+  B() : A(f()),     // undefined: calls member function
+                    // but base A not yet initialized
+  j(f()) { }        // well-defined: bases are all initialized
+};
+
+class C {
+public:
+  C(int);
+};
+
+class D : public B, C {
+  int i;
+public:
+  D() : C(f()),     // undefined: calls member function
+                    // but base C not yet initialized
+  i(f()) { }        // well-defined: bases are all initialized
+};</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p14" href="#p14">14</a><span class="note">[ <em>Note:</em> <a title="class.cdtor" href="class.cdtor.html">12.7</a> describes the result of virtual function calls, <code class="sh_cpp">typeid</code> and
+<code class="sh_cpp">dynamic_cast</code>s during construction for the well-defined cases; that is, describes the <em>polymorphic
+behavior</em> of an object under construction. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p15" href="#p15">15</a>A <i class="nonterminal">mem-initializer</i> followed by an ellipsis is a pack expansion (<a title="temp.variadic" href="temp.variadic.html">14.5.3</a>) that initializes
+the base classes specified by a pack expansion in the <i class="nonterminal">base-specifier-list</i> for the class.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">template&lt;class... Mixins&gt;
+class X : public Mixins... {
+public:
+  X(const Mixins&amp;... mixins) : Mixins(mixins)... { }
+};</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+</body>
+</html>
+

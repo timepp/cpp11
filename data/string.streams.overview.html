@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Overview</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[string.streams]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[string.streams]"></object>27.8 String-based streams </h2>
+
+<h3>
+<dfn class="label">[string.streams.overview]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[string.streams.overview]"></object>27.8.1 Overview </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The header <dfn><code class="header">&lt;sstream&gt;</code></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="&lt;sstream&gt;"></object> defines four class templates and eight types that associate
+stream buffers with objects of class <code class="sh_cpp">basic_string</code>, as described in <a title="string.classes" href="string.classes.html">21.3</a>.</p>
+
+<h3>Header <code class="header">&lt;sstream&gt;</code> synopsis</h3>
+
+<pre><code class="sh_cpp">namespace std {
+  template &lt;class charT, class traits = char_traits&lt;charT&gt;,
+            class Allocator = allocator&lt;charT&gt; &gt;
+    class basic_stringbuf;
+
+  typedef basic_stringbuf&lt;char&gt;     stringbuf;
+  typedef basic_stringbuf&lt;wchar_t&gt; wstringbuf;
+
+  template &lt;class charT, class traits = char_traits&lt;charT&gt;,
+            class Allocator = allocator&lt;charT&gt; &gt;
+    class basic_istringstream;
+
+  typedef basic_istringstream&lt;char&gt;     istringstream;
+  typedef basic_istringstream&lt;wchar_t&gt; wistringstream;
+
+  template &lt;class charT, class traits = char_traits&lt;charT&gt;,
+            class Allocator = allocator&lt;charT&gt; &gt;
+    class basic_ostringstream;
+  typedef basic_ostringstream&lt;char&gt;     ostringstream;
+  typedef basic_ostringstream&lt;wchar_t&gt; wostringstream;
+
+  template &lt;class charT, class traits = char_traits&lt;charT&gt;,
+            class Allocator = allocator&lt;charT&gt; &gt;
+    class basic_stringstream;
+  typedef basic_stringstream&lt;char&gt;     stringstream;
+  typedef basic_stringstream&lt;wchar_t&gt; wstringstream;
+}</code></pre>
+
+</body>
+</html>
+

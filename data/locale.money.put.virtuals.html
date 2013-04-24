@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>money_put virtual functions</title>
+</head>
+<body>
+<h5>
+<dfn class="label">[locale.money.put.virtuals]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[locale.money.put.virtuals]"></object>22.4.6.2.2 <code class="sh_cpp">money_put</code> virtual functions </h5>
+
+<pre><code class="sh_cpp">iter_type <dfn>do_put</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="do_put"></object>(iter_type s, bool intl, ios_base&amp; str,
+                 char_type fill, long double units) const;
+iter_type do_put(iter_type s, bool intl, ios_base&amp; str,
+                 char_type fill, const string_type&amp; digits) const;</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Effects:</em> Writes characters to <code class="sh_cpp">s</code> according to the format specified by a
+<code class="sh_cpp">moneypunct&lt;charT,Intl&gt;</code> facet reference <code class="sh_cpp">mp</code> and the character mapping specified by a
+<code class="sh_cpp">ctype&lt;charT&gt;</code> facet reference <code class="sh_cpp">ct</code> obtained from the locale returned by
+<code class="sh_cpp">str.getloc()</code>, and <code class="sh_cpp">str.flags()</code>. The argument <code class="sh_cpp">units</code> is transformed into a sequence
+of wide characters as if by</p>
+
+<pre><code class="sh_cpp">ct.widen(buf1, buf1 + sprintf(buf1, "%.0Lf", units), buf2)</code></pre>
+
+<p>for character buffers <code class="sh_cpp">buf1</code> and <code class="sh_cpp">buf2</code>. If the first character in <code class="sh_cpp">digits</code> or
+<code class="sh_cpp">buf2</code> is equal to <code class="sh_cpp">ct.widen('-')</code>, then the pattern used for formatting is the result of
+<code class="sh_cpp">mp.neg_format()</code>; otherwise the pattern is the result of <code class="sh_cpp">mp.pos_format()</code>. Digit characters are
+written, interspersed with any thousands separators and decimal point specified by the format, in the order they appear
+(after the optional leading minus sign) in <code class="sh_cpp">digits</code> or <code class="sh_cpp">buf2</code>. In <code class="sh_cpp">digits</code>, only the
+optional leading minus sign and the immediately subsequent digit characters (as classified according to <code class="sh_cpp">ct</code>)
+are used; any trailing characters (including digits appearing after a non-digit character) are ignored. Calls
+<code class="sh_cpp">str.width(0)</code>.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Remarks:</em> The currency symbol is generated if and only if <code class="sh_cpp">(str.flags() &amp; str.showbase)</code> is
+nonzero. If the number of characters generated for the specified format is less than the value returned by
+<code class="sh_cpp">str.width()</code> on entry to the function, then copies of <code class="sh_cpp">fill</code> are inserted as necessary to pad to
+the specified width. For the value <code class="sh_cpp">af</code> equal to <code class="sh_cpp">(str.flags() &amp; str.adjustfield)</code>, if
+<code class="sh_cpp">(af == str.internal)</code> is true, the fill characters are placed where <code class="sh_cpp">none</code> or <code class="sh_cpp">space</code>
+appears in the formatting pattern; otherwise if <code class="sh_cpp">(af == str.left)</code> is true, they are placed after the other
+characters; otherwise, they are placed before the other characters. <span class="note">[ <em>Note:</em> It is possible, with some combinations of
+format patterns and flag values, to produce output that cannot be parsed using
+<code class="sh_cpp">num_get&lt;&gt;::get</code>. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Returns:</em> An iterator pointing immediately after the last character produced.</p>
+</body>
+</html>
+

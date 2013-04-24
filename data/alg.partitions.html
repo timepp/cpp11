@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Partitions</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[alg.partitions]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[alg.partitions]"></object>25.3.13 Partitions </h3>
+
+<h4><code class="sh_cpp">template &lt;class InputIterator, class Predicate&gt;
+  bool <dfn>is_partitioned</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_partitioned"></object>(InputIterator first, InputIterator last,
+                      Predicate pred);</code></h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Requires:</em> <code class="sh_cpp">InputIterator</code>’s value type shall be convertible to <code class="sh_cpp">Predicate</code>’s argument
+type.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Returns:</em> <code class="sh_cpp">true</code> if <code class="sh_cpp">[first, last)</code> is empty or if <code class="sh_cpp">[first, last)</code> is
+partitioned by <code class="sh_cpp">pred</code>, i.e. if all elements that satisfy <code class="sh_cpp">pred</code> appear before those that do
+not.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Complexity:</em> Linear. At most <code class="sh_cpp">last - first</code> applications of <code class="sh_cpp">pred</code>.</p>
+
+<h4><code class="sh_cpp">template&lt;class ForwardIterator, class Predicate&gt;
+  ForwardIterator
+    <dfn>partition</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="partition"></object>(ForwardIterator first,
+              ForwardIterator last, Predicate pred);</code></h4>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><em>Effects:</em> Places all the elements in the range <code class="sh_cpp">[first, last)</code> that satisfy <code class="sh_cpp">pred</code> before
+all the elements that do not satisfy it.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><em>Returns:</em> An iterator <code class="sh_cpp">i</code> such that for any iterator <code class="sh_cpp">j</code> in the range <code class="sh_cpp">[first,
+i)</code> <code class="sh_cpp">pred(*j) != false</code>, and for any iterator <code class="sh_cpp">k</code> in the range <code class="sh_cpp">[i, last)</code>,
+<code class="sh_cpp">pred(*k) == false</code>.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a><em>Requires:</em> <code class="sh_cpp">ForwardIterator</code> shall satisfy the requirements of <code class="concept">ValueSwappable</code>
+(<a title="swappable.requirements" href="swappable.requirements.html">17.6.3.2</a>).</p>
+
+<p><a class="anchor" id="p7" href="#p7">7</a><em>Complexity:</em> If <code class="sh_cpp">ForwardIterator</code> meets the requirements for a BidirectionalIterator, at most
+<code class="sh_cpp">(last - first) / 2</code> swaps are done; otherwise at most <code class="sh_cpp">last - first</code> swaps are done. Exactly
+<code class="sh_cpp">last - first</code> applications of the predicate are done.</p>
+
+<h4><code class="sh_cpp">template&lt;class BidirectionalIterator, class Predicate&gt;
+  BidirectionalIterator
+    <dfn>stable_partition</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="stable_partition"></object>(BidirectionalIterator first,
+                     BidirectionalIterator last, Predicate pred);</code></h4>
+
+<p><a class="anchor" id="p8" href="#p8">8</a><em>Effects:</em> Places all the elements in the range <code class="sh_cpp">[first, last)</code> that satisfy <code class="sh_cpp">pred</code> before
+all the elements that do not satisfy it.</p>
+
+<p><a class="anchor" id="p9" href="#p9">9</a><em>Returns:</em> An iterator <code class="sh_cpp">i</code> such that for any iterator <code class="sh_cpp">j</code> in the range <code class="sh_cpp">[first,
+i)</code>, <code class="sh_cpp">pred(*j) != false</code>, and for any iterator <code class="sh_cpp">k</code> in the range <code class="sh_cpp">[i, last)</code>,
+<code class="sh_cpp">pred(*k) == false</code>. The relative order of the elements in both groups is preserved.</p>
+
+<p><a class="anchor" id="p10" href="#p10">10</a><em>Requires:</em> <code class="sh_cpp">BidirectionalIterator</code> shall satisfy the requirements of
+<code class="concept">ValueSwappable</code> (<a title="swappable.requirements" href="swappable.requirements.html">17.6.3.2</a>). The type of <code class="sh_cpp">*first</code> shall satisfy the requirements of
+<code class="concept">MoveConstructible</code> (Table <a href="utility.arg.requirements.html#t20">20</a>) and of <code class="concept">MoveAssignable</code> (Table <a href="utility.arg.requirements.html#t22">22</a>).</p>
+
+<p><a class="anchor" id="p11" href="#p11">11</a><em>Complexity:</em> At most <code class="sh_cpp">(last - first) * log(last - first)</code> swaps, but only linear number of swaps if
+there is enough extra memory. Exactly <code class="sh_cpp">last - first</code> applications of the predicate.</p>
+
+<h4><code class="sh_cpp">template &lt;class InputIterator, class OutputIterator1,
+          class OutputIterator2, class Predicate&gt;
+  pair&lt;OutputIterator1, OutputIterator2&gt;
+    <dfn>partition_copy</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="partition_copy"></object>(InputIterator first, InputIterator last,
+                   OutputIterator1 out_true, OutputIterator2 out_false,
+                   Predicate pred);</code></h4>
+
+<p><a class="anchor" id="p12" href="#p12">12</a><em>Requires:</em> <code class="sh_cpp">InputIterator</code>’s value type shall be <code class="concept">Assignable</code>, and shall be
+writable to the <code class="sh_cpp">out_true</code> and <code class="sh_cpp">out_false</code> <code class="sh_cpp">OutputIterator</code>s, and shall be convertible
+to <code class="sh_cpp">Predicate</code>’s argument type. The input range shall not overlap with either of the output
+ranges.</p>
+
+<p><a class="anchor" id="p13" href="#p13">13</a><em>Effects:</em> For each iterator <code class="sh_cpp">i</code> in <code class="sh_cpp">[first, last)</code>, copies <code class="sh_cpp">*i</code> to the output
+range beginning with <code class="sh_cpp">out_true</code> if <code class="sh_cpp">pred(*i)</code> is <code class="sh_cpp">true</code>, or to the output range
+beginning with <code class="sh_cpp">out_false</code> otherwise.</p>
+
+<p><a class="anchor" id="p14" href="#p14">14</a><em>Returns:</em> A pair <code class="sh_cpp">p</code> such that <code class="sh_cpp">p.first</code> is the end of the output range beginning at
+<code class="sh_cpp">out_true</code> and <code class="sh_cpp">p.second</code> is the end of the output range beginning at
+<code class="sh_cpp">out_false</code>.</p>
+
+<p><a class="anchor" id="p15" href="#p15">15</a><em>Complexity:</em> Exactly <code class="sh_cpp">last - first</code> applications of <code class="sh_cpp">pred</code>.</p>
+
+<h4><code class="sh_cpp">template&lt;class ForwardIterator, class Predicate&gt;
+  ForwardIterator <dfn>partition_point</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="partition_point"></object>(ForwardIterator first,
+                                  ForwardIterator last,
+                                  Predicate pred);</code></h4>
+
+<p><a class="anchor" id="p16" href="#p16">16</a><em>Requires:</em> <code class="sh_cpp">ForwardIterator</code>’s value type shall be convertible to <code class="sh_cpp">Predicate</code>’s argument
+type. <code class="sh_cpp">[first, last)</code> shall be partitioned by <code class="sh_cpp">pred</code>, i.e. all elements that satisfy
+<code class="sh_cpp">pred</code> shall appear before those that do not.</p>
+
+<p><a class="anchor" id="p17" href="#p17">17</a><em>Returns:</em> An iterator <code class="sh_cpp">mid</code> such that <code class="sh_cpp">all_of(first, mid, pred)</code> and <code class="sh_cpp">none_of(mid,
+last, pred)</code> are both true.</p>
+
+<p><a class="anchor" id="p18" href="#p18">18</a><em>Complexity:</em> <var>O</var>(log(<code class="sh_cpp">last</code> − <code class="sh_cpp">first</code>)) applications of
+<code class="sh_cpp">pred</code>.</p>
+</body>
+</html>
+

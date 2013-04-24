@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Block scope</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[basic.scope.local]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[basic.scope.local]"></object>3.3.3 Block scope </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A name declared in a block (<a title="stmt.block" href="stmt.block.html">6.3</a>) is local to that block; it has <dfn>block scope</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="block scope"></object>. Its
+potential scope begins at its point of declaration (<a title="basic.scope.pdecl" href="basic.scope.pdecl.html">3.3.2</a>) and ends at the end of its block. A variable
+declared at block scope is a <dfn>local variable</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="local variable"></object>.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The potential scope of a function parameter name (including one appearing in a <i class="nonterminal">lambda-declarator</i>) or
+of a function-local predefined variable in a function definition (<a title="dcl.fct.def" href="dcl.fct.def.general.html">8.4</a>) begins at its point of declaration. If
+the function has a <i class="nonterminal">function-try-block</i> the potential scope of a parameter or of a function-local predefined
+variable ends at the end of the last associated handler, otherwise it ends at the end of the outermost block of the
+function definition. A parameter name shall not be redeclared in the outermost block of the function definition nor in
+the outermost block of any handler associated with a <i class="nonterminal">function-try-block</i>.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>The name declared in an <i class="nonterminal">exception-declaration</i> is local to the handler and shall not be redeclared in
+the outermost block of the handler.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>Names declared in the <i class="nonterminal">for-init-statement</i>, the <i class="nonterminal">for-range-declaration</i>, and in the
+<i class="nonterminal">condition</i> of <code class="sh_cpp">if</code>, <code class="sh_cpp">while</code>, <code class="sh_cpp">for</code>, and <code class="sh_cpp">switch</code> statements are
+local to the <code class="sh_cpp">if</code>, <code class="sh_cpp">while</code>, <code class="sh_cpp">for</code>, or <code class="sh_cpp">switch</code> statement (including the
+controlled statement), and shall not be redeclared in a subsequent condition of that statement nor in the outermost
+block (or, for the <code class="sh_cpp">if</code> statement, any of the outermost blocks) of the controlled statement; see
+<a title="stmt.select" href="stmt.select.html">6.4</a>.</p>
+</body>
+</html>
+

@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Call to named function</title>
+</head>
+<body>
+<h5>
+<dfn class="label">[over.call.func]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[over.call.func]"></object>13.3.1.1.1 Call to named function </h5>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Of interest in <a title="over.call.func" href="over.call.func.html">13.3.1.1.1</a> are only those function calls in which the <i class="nonterminal">postfix-expression</i>
+ultimately contains a name that denotes one or more functions that might be called. Such a <i class="nonterminal">postfix-expression</i>,
+perhaps nested arbitrarily deep in parentheses, has one of the following forms:</p>
+
+<dl>
+<dt>
+<dfn><i class="nonterminal">postfix-expression</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="postfix-expression"></object>:</dt>
+	<dd>
+<i class="nonterminal">postfix-expression</i> <code class="sh_cpp">.</code> <i class="nonterminal">id-expression</i>
+</dd>
+	<dd>
+<i class="nonterminal">postfix-expression</i> <code class="sh_cpp">-&gt;</code> <i class="nonterminal">id-expression</i>
+</dd>
+	<dd><i class="nonterminal">primary-expression</i></dd>
+</dl>
+
+<p>These represent two syntactic subcategories of function calls: qualified function calls and unqualified function
+calls.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>In qualified function calls, the name to be resolved is an <i class="nonterminal">id-expression</i> and is preceded by an
+<code class="sh_cpp">-&gt;</code> or <code class="sh_cpp">.</code> operator. Since the construct <code class="sh_cpp">A-&gt;B</code> is generally equivalent to
+<code class="sh_cpp">(*A).B</code>, the rest of Clause <a title="over" href="over.html">13</a> assumes, without loss of generality, that all member function
+calls have been normalized to the form that uses an object and the <code class="sh_cpp">.</code> operator. Furthermore, Clause
+<a title="over" href="over.html">13</a> assumes that the <i class="nonterminal">postfix-expression</i> that is the left operand of the <code class="sh_cpp">.</code> operator has
+type “<var>cv</var> <code class="sh_cpp">T</code>” where <code class="sh_cpp">T</code> denotes a class.<sup class="footnote"><a href="#fn129">129</a></sup> Under this assumption, the
+<i class="nonterminal">id-expression</i> in the call is looked up as a member function of <code class="sh_cpp">T</code> following the rules for looking
+up names in classes (<a title="class.member.lookup" href="class.member.lookup.html">10.2</a>). The function declarations found by that lookup constitute the set of candidate
+functions. The argument list is the <i class="nonterminal">expression-list</i> in the call augmented by the addition of the left operand
+of the <code class="sh_cpp">.</code> operator in the normalized member function call as the implied object argument
+(<a title="over.match.funcs" href="over.match.funcs.html">13.3.1</a>).</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>In unqualified function calls, the name is not qualified by an <code class="sh_cpp">-&gt;</code> or <code class="sh_cpp">.</code> operator
+and has the more general form of a <i class="nonterminal">primary-expression</i>. The name is looked up in the context of the function
+call following the normal rules for name lookup in function calls (<a title="basic.lookup" href="basic.lookup.html">3.4</a>). The function declarations found by
+that lookup constitute the set of candidate functions. Because of the rules for name lookup, the set of candidate
+functions consists (1) entirely of non-member functions or (2) entirely of member functions of some class
+<code class="sh_cpp">T</code>. In case (1), the argument list is the same as the <i class="nonterminal">expression-list</i> in the call. In case (2), the
+argument list is the <i class="nonterminal">expression-list</i> in the call augmented by the addition of an implied object argument as in
+a qualified function call. If the keyword <code class="sh_cpp">this</code> (<a title="class.this" href="class.this.html">9.3.2</a>) is in scope and refers to class
+<code class="sh_cpp">T</code>, or a derived class of <code class="sh_cpp">T</code>, then the implied object argument is <code class="sh_cpp">(*this)</code>. If the
+keyword <code class="sh_cpp">this</code> is not in scope or refers to another class, then a contrived object of type <code class="sh_cpp">T</code>
+becomes the implied object argument.<sup class="footnote"><a href="#fn130">130</a></sup> If the argument list is augmented by a contrived object and overload
+resolution selects one of the non-static member functions of <code class="sh_cpp">T</code>, the call is ill-formed.</p>
+
+
+
+
+<div>
+<p class="footnote" id="fn129">129) Note that cv-qualifiers on the type of objects are significant in overload resolution for both glvalue
+and class prvalue objects.</p>
+<p class="footnote" id="fn130">130) An implied object argument must be contrived to correspond to the implicit object parameter attributed
+to member functions during overload resolution. It is not used in the call to the selected function. Since the member
+functions all have the same implicit object parameter, the contrived object will not be the cause to select or reject a
+function.</p>
+</div>
+</body>
+</html>
+

@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Unnamed namespaces</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[namespace.unnamed]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[namespace.unnamed]"></object>7.3.1.1 Unnamed namespaces </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>An <i class="nonterminal">unnamed-namespace-definition</i> behaves as if it were replaced by</p>
+
+<pre><code class="sh_cpp">inline<sub class="opt">opt</sub> namespace <var>unique</var> { /* empty body */ }
+using namespace <var>unique</var>;
+namespace <var>unique</var> { <i class="nonterminal">namespace-body</i> }</code></pre>
+
+<p>where <code class="sh_cpp">inline</code> appears if and only if it appears in the <i class="nonterminal">unnamed-namespace-definition</i>, all
+occurrences of <var>unique</var> in a translation unit are replaced by the same identifier, and this identifier differs
+from all other identifiers in the entire program.<sup class="footnote"><a href="#fn97">97</a></sup></p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">namespace { int i; }    // <var>unique</var>::i
+void f() { i++; }       // <var>unique</var>::i++
+
+namespace A {
+  namespace {
+    int i;              // A::<var>unique</var>::i
+    int j;              // A::<var>unique</var>::j
+  }
+  void g() { i++; }     // A::<var>unique</var>::i++
+}
+
+using namespace A;
+void h() {
+  i++;                  // error: <var>unique</var>::i or A::<var>unique</var>::i
+  A::i++;               // A::<var>unique</var>::i
+  j++;                  // A::<var>unique</var>::j
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+
+<div><p class="footnote" id="fn97">97) Although entities in an unnamed namespace might have external linkage, they are effectively qualified
+by a name unique to their translation unit and therefore can never be seen from any other translation unit.</p></div>
+</body>
+</html>
+

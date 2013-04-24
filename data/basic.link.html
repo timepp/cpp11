@@ -1,0 +1,181 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Program and linkage</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[basic.link]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[basic.link]"></object>3.5 Program and linkage </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A <dfn>program</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="program"></object> consists of one or more <em>translation units</em> (Clause <a title="lex" href="lex.separate.html">2</a>) linked together.
+A translation unit consists of a sequence of declarations.</p>
+
+<dl>
+<dt>
+<i class="nonterminal"><dfn>translation-unit</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="translation-unit"></object></i>:</dt>
+<dd>
+<i class="nonterminal">declaration-seq</i><sub class="opt">opt</sub>
+</dd>
+</dl>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>A name is said to have <dfn>linkage</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="linkage"></object> when it might denote the same object, reference, function, type,
+template, namespace or value as a name introduced by a declaration in another scope:</p>
+<ul>
+<li>When a name has <dfn>external linkage</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="external linkage"></object>, the entity it denotes can be referred to by names from scopes of other
+	translation units or from other scopes of the same translation unit.</li>
+<li>When a name has <dfn>internal linkage</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="internal linkage"></object>, the entity it denotes can be referred to by names from other scopes in
+	the same translation unit.</li>
+<li>When a name has <dfn>no linkage</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="no linkage"></object>, the entity it denotes cannot be referred to by names from other scopes.</li>
+</ul>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>A name having namespace scope (<a title="basic.scope.namespace" href="basic.scope.namespace.html">3.3.6</a>) has internal linkage if it is the name of</p>
+<ul>
+<li>a variable, function or function template that is explicitly declared <code class="sh_cpp">static</code>; or,</li>
+<li>a variable that is explicitly declared <code class="sh_cpp">const</code> or <code class="sh_cpp">constexpr</code> and neither explicitly declared
+	<code class="sh_cpp">extern</code> nor previously declared to have external linkage; or</li>
+<li>a data member of an anonymous union.</li>
+</ul>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>An unnamed namespace or a namespace declared directly or indirectly within an unnamed namespace has internal
+linkage. All other namespaces have external linkage. A name having namespace scope that has not been given internal
+linkage above has the same linkage as the enclosing namespace if it is the name of</p>
+<ul>
+<li>a variable; or</li>
+<li>a function; or</li>
+<li>a named class (Clause <a title="class" href="class.html">9</a>), or an unnamed class defined in a typedef declaration in which the class has the
+	typedef name for linkage purposes (<a title="dcl.typedef" href="dcl.typedef.html">7.1.3</a>); or</li>
+<li>a named enumeration (<a title="dcl.enum" href="dcl.enum.html">7.2</a>), or an unnamed enumeration defined in a typedef declaration in which the
+	enumeration has the typedef name for linkage purposes (<a title="dcl.typedef" href="dcl.typedef.html">7.1.3</a>); or</li>
+<li>an enumerator belonging to an enumeration with linkage; or</li>
+<li>a template.</li>
+</ul>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>In addition, a member function, static data member, a named class or enumeration of class scope, or an unnamed
+class or enumeration defined in a class-scope typedef declaration such that the class or enumeration has the typedef
+name for linkage purposes (<a title="dcl.typedef" href="dcl.typedef.html">7.1.3</a>), has external linkage if the name of the class has external linkage.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>The name of a function declared in block scope and the name of a variable declared by a block scope
+<code class="sh_cpp">extern</code> declaration have linkage. If there is a visible declaration of an entity with linkage having the
+same name and type, ignoring entities declared outside the innermost enclosing namespace scope, the block scope
+declaration declares that same entity and receives the linkage of the previous declaration. If there is more than one
+such matching entity, the program is ill-formed. Otherwise, if no matching entity is found, the block scope entity
+receives external linkage.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">static void f();
+static int i = 0;       // #1
+void g() {
+  extern void f();      // internal linkage
+  int i;                // #2 i has no linkage
+  {
+    extern void f();    // internal linkage
+    extern int i;       // #3 external linkage
+  }
+}</code></pre>
+
+<p>There are three objects named <code class="sh_cpp">i</code> in this program. The object with internal linkage introduced by the
+declaration in global scope (line <code class="sh_cpp">#1</code>), the object with automatic storage duration and no linkage introduced
+by the declaration on line <code class="sh_cpp">#2</code>, and the object with static storage duration and external linkage introduced
+by the declaration on line <code class="sh_cpp">#3</code>. — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p7" href="#p7">7</a>When a block scope declaration of an entity with linkage is not found to refer to some other declaration, then
+that entity is a member of the innermost enclosing namespace. However such a declaration does not introduce the member
+name in its namespace scope.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">namespace X {
+  void p() {
+    q();                // error: q not yet declared
+    extern void q();    // q is a member of namespace X
+  }
+
+  void middle() {
+    q();                // error: q not yet declared
+  }
+
+  void q() { /* … */ }  // definition of X::q
+}
+
+void q() { /* … */ }    // some other, unrelated q</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p8" href="#p8">8</a>Names not covered by these rules have no linkage. Moreover, except as noted, a name declared at block scope
+(<a title="basic.scope.local" href="basic.scope.local.html">3.3.3</a>) has no linkage. A type is said to have linkage if and only if:</p>
+<ul>
+<li>it is a class or enumeration type that is named (or has a name for linkage purposes (<a title="dcl.typedef" href="dcl.typedef.html">7.1.3</a>)) and the name
+	has linkage; or</li>
+<li>it is an unnamed class or enumeration member of a class with linkage; or</li>
+<li>it is a specialization of a class template (<a title="temp" href="temp.html">14</a>)<sup class="footnote"><a href="#fn33">33</a></sup>; or</li>
+<li>it is a fundamental type (<a title="basic.fundamental" href="basic.fundamental.html">3.9.1</a>); or</li>
+<li>it is a compound type (<a title="basic.compound" href="basic.compound.html">3.9.2</a>) other than a class or enumeration, compounded exclusively from types that
+	have linkage; or</li>
+<li>it is a cv-qualified (<a title="basic.type.qualifier" href="basic.type.qualifier.html">3.9.3</a>) version of a type that has linkage.</li>
+</ul>
+<p>A type without linkage shall not be used as the type of a variable or function with external linkage unless</p>
+<ul>
+<li>the entity has C language linkage (<a title="dcl.link" href="dcl.link.html">7.5</a>), or</li>
+<li>the entity is declared within an unnamed namespace (<a title="namespace.def" href="namespace.def.html">7.3.1</a>), or</li>
+<li>the entity is not odr-used (<a title="basic.def.odr" href="basic.def.odr.html">3.2</a>) or is defined in the same translation unit.</li>
+</ul>
+<p><span class="note">[ <em>Note:</em> in other words, a type without linkage contains a class or enumeration that cannot be named outside its
+translation unit. An entity with external linkage declared using such a type could not correspond to any other entity in
+another translation unit of the program and thus must be defined in the translation unit if it is odr-used. Also note
+that classes with linkage may contain members whose types do not have linkage, and that typedef names are ignored in the
+determination of whether a type has linkage. — <em>end note</em> ]</span></p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">template &lt;class T&gt; struct B {
+  void g(T) { }
+  void h(T);
+  friend void i(B, T) { }
+};
+
+void f() {
+  struct A { int x; };  // no linkage
+  A a = { 1 };
+  B&lt;A&gt; ba;              // declares B&lt;A&gt;::g(A) and B&lt;A&gt;::h(A)
+  ba.g(a);              // OK
+  ba.h(a);              // error: B&lt;A&gt;::h(A) not defined in the translation unit
+  i(ba, a);             // OK
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p9" href="#p9">9</a>Two names that are the same (Clause <a title="basic" href="basic.html">3</a>) and that are declared in different scopes shall denote the
+same variable, function, type, enumerator, template or namespace if</p>
+<ul>
+<li>both names have external linkage or else both names have internal linkage and are declared in the same translation
+	unit; and</li>
+<li>both names refer to members of the same namespace or to members, not by inheritance, of the same class; and</li>
+<li>when both names denote functions, the parameter-type-lists of the functions (<a title="dcl.fct" href="dcl.fct.html">8.3.5</a>) are identical;
+	and</li>
+<li>when both names denote function templates, the signatures (<a title="temp.over.link" href="temp.over.link.html">14.5.6.1</a>) are the same.</li>
+</ul>
+
+<p><a class="anchor" id="p10" href="#p10">10</a>After all adjustments of types (during which typedefs (<a title="dcl.typedef" href="dcl.typedef.html">7.1.3</a>) are replaced by their definitions),
+the types specified by all declarations referring to a given variable or function shall be identical, except that
+declarations for an array object can specify array types that differ by the presence or absence of a major array bound
+(<a title="dcl.array" href="dcl.array.html">8.3.4</a>). A violation of this rule on type identity does not require a diagnostic.</p>
+
+<p><a class="anchor" id="p11" href="#p11">11</a><span class="note">[ <em>Note:</em> Linkage to non-C++ declarations can be achieved using a <i class="nonterminal">linkage-specification</i> (<a title="dcl.link" href="dcl.link.html">7.5</a>). — <em>end note</em> ]</span></p>
+
+
+
+<div><p class="footnote" id="fn33">33) A class template always has external linkage, and the requirements of <a title="temp.arg.type" href="temp.arg.type.html">14.3.1</a> and
+<a title="temp.arg.nontype" href="temp.arg.nontype.html">14.3.2</a> ensure that the template arguments will also have appropriate linkage.</p></div>
+</body>
+</html>
+

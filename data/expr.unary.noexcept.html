@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>noexcept operator</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[expr.unary.noexcept]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[expr.unary.noexcept]"></object>5.3.7 <code class="sh_cpp">noexcept</code> operator </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The <code class="sh_cpp">noexcept</code> operator determines whether the evaluation of its operand, which is an unevaluated
+operand (Clause <a title="expr" href="expr.html">5</a>), can throw an exception (<a title="except.throw" href="except.throw.html">15.1</a>).</p>
+
+<dl>
+<dt>
+<i class="nonterminal"><dfn>noexcept-expression</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="noexcept-expression"></object></i>:</dt>
+	<dd>
+<code class="sh_cpp">noexcept</code> <code class="sh_cpp">(</code> <i class="nonterminal">expression</i> <code class="sh_cpp">)</code>
+</dd>
+</dl>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The result of the <code class="sh_cpp">noexcept</code> operator is a constant of type <code class="sh_cpp">bool</code> and is an rvalue.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>The result of the <code class="sh_cpp">noexcept</code> operator is <code class="sh_cpp">false</code> if in a potentially-evaluated context
+the <i class="nonterminal">expression</i> would contain</p>
+<ul>
+<li>a potentially evaluated call<sup class="footnote"><a href="#fn81">81</a></sup> to a function, member function, function pointer, or member function
+	pointer that does not have a non-throwing <i class="nonterminal">exception-specification</i> (<a title="except.spec" href="except.spec.html">15.4</a>), unless the call is a
+	constant expression (<a title="expr.const" href="expr.const.html">5.19</a>),</li>
+<li>a potentially evaluated <i class="nonterminal">throw-expression</i> (<a title="except.throw" href="except.throw.html">15.1</a>),</li>
+<li>a potentially evaluated <code class="sh_cpp">dynamic_cast</code> expression <code class="sh_cpp">dynamic_cast&lt;T&gt;(v)</code>, where
+	<code class="sh_cpp">T</code> is a reference type, that requires a run-time check (<a title="expr.dynamic.cast" href="expr.dynamic.cast.html">5.2.7</a>), or</li>
+<li>a potentially evaluated <code class="sh_cpp">typeid</code> expression (<a title="expr.typeid" href="expr.typeid.html">5.2.8</a>) applied to a glvalue expression whose type
+	is a polymorphic class type (<a title="class.virtual" href="class.virtual.html">10.3</a>).</li>
+</ul>
+<p>Otherwise, the result is <code class="sh_cpp">true</code>.</p>
+
+
+<div><p class="footnote" id="fn81">81) This includes implicit calls such as the call to an allocation function in a
+<i class="nonterminal">new-expression</i>.</p></div>
+</body>
+</html>
+

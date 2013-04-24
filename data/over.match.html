@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Overload resolution</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[over.match]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[over.match]"></object>13.3 Overload resolution </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Overload resolution is a mechanism for selecting the best function to call given a list of expressions that are
+to be the arguments of the call and a set of <dfn>candidate functions</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="candidate functions"></object> that can be called based on the context of
+the call. The selection criteria for the best function are the number of arguments, how well the arguments match the
+parameter-type-list of the candidate function, how well (for non-static member functions) the object matches the
+implicit object parameter, and certain other properties of the candidate function. <span class="note">[ <em>Note:</em> The function selected by
+overload resolution is not guaranteed to be appropriate for the context. Other restrictions, such as the accessibility
+of the function, can make its use in the calling context ill-formed. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>Overload resolution selects the function to call in seven distinct contexts within the language:</p>
+
+<ul>
+<li>invocation of a function named in the function call syntax (<a title="over.call.func" href="over.call.func.html">13.3.1.1.1</a>);</li>
+<li>invocation of a function call operator, a pointer-to-function conversion function, a
+	reference-to-pointer-to-function conversion function, or a reference-to-function conversion function on a class
+	object named in the function call syntax (<a title="over.call.object" href="over.call.object.html">13.3.1.1.2</a>);</li>
+<li>invocation of the operator referenced in an expression (<a title="over.match.oper" href="over.match.oper.html">13.3.1.2</a>);</li>
+<li>invocation of a constructor for direct-initialization (<a title="dcl.init" href="dcl.init.html">8.5</a>) of a class object (<a title="over.match.ctor" href="over.match.ctor.html">13.3.1.3</a>);</li>
+<li>invocation of a user-defined conversion for copy-initialization (<a title="dcl.init" href="dcl.init.html">8.5</a>) of a class object
+	(<a title="over.match.copy" href="over.match.copy.html">13.3.1.4</a>);</li>
+<li>invocation of a conversion function for initialization of an object of a nonclass type from an expression of class
+	type (<a title="over.match.conv" href="over.match.conv.html">13.3.1.5</a>); and</li>
+<li>invocation of a conversion function for conversion to a glvalue or class prvalue to which a reference
+	(<a title="dcl.init.ref" href="dcl.init.ref.html">8.5.3</a>) will be directly bound (<a title="over.match.ref " href=".html"></a>).</li>
+</ul>
+
+<p>Each of these contexts defines the set of candidate functions and the list of arguments in its own unique way. But,
+once the candidate functions and argument lists have been identified, the selection of the best function is the same in
+all cases:</p>
+
+<ul>
+<li>First, a subset of the candidate functions (those that have the proper number of arguments and meet certain other
+	conditions) is selected to form a set of viable functions (<a title="over.match.viable" href="over.match.viable.html">13.3.2</a>).</li>
+<li>Then the best viable function is selected based on the implicit conversion sequences (<a title="over.best.ics" href="over.best.ics.html">13.3.3.1</a>) needed to
+	match each argument to the corresponding parameter of each viable function.</li>
+</ul>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>If a best viable function exists and is unique, overload resolution succeeds and produces it as the result.
+Otherwise overload resolution fails and the invocation is ill-formed. When overload resolution succeeds, and the best
+viable function is not accessible (Clause <a title="class.access" href="class.access.html">11</a>) in the context in which it is used, the program is
+ill-formed.</p>
+</body>
+</html>
+

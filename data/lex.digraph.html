@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Alternative tokens</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[lex.digraph]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[lex.digraph]"></object>2.6 Alternative tokens </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Alternative token representations are provided for some operators and punctuators.<sup class="footnote"><a href="#fn16">16</a></sup></p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>In all respects of the language, each alternative token behaves the same, respectively, as its primary token,
+except for its spelling.<sup class="footnote"><a href="#fn17">17</a></sup> The set of alternative tokens is defined in Table <a href="lex.digraph.html#t2">2</a>.</p>
+
+<table id="t2" class="centered headed bordered pair-ruled">
+<caption>Table 2 — Alternative tokens</caption>
+<thead>
+<tr>
+<th>Alternative</th>
+<th>Primary</th>
+<th>Alternative</th>
+<th>Primary</th>
+<th>Alternative</th>
+<th>Primary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code class="sh_cpp">&lt;%</code></td>
+<td><code class="sh_cpp">{</code></td>
+<td><code class="sh_cpp">and</code></td>
+<td><code class="sh_cpp">&amp;&amp;</code></td>
+<td><code class="sh_cpp">and_eq</code></td>
+<td><code class="sh_cpp">&amp;=</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">%&gt;</code></td>
+<td><code class="sh_cpp">}</code></td>
+<td><code class="sh_cpp">bitor</code></td>
+<td><code class="sh_cpp">|</code></td>
+<td><code class="sh_cpp">or_eq</code></td>
+<td><code class="sh_cpp">|=</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">&lt;:</code></td>
+<td><code class="sh_cpp">[</code></td>
+<td><code class="sh_cpp">or</code></td>
+<td><code class="sh_cpp">||</code></td>
+<td><code class="sh_cpp">xor_eq</code></td>
+<td><code class="sh_cpp">^=</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">:&gt;</code></td>
+<td><code class="sh_cpp">]</code></td>
+<td><code class="sh_cpp">xor</code></td>
+<td><code class="sh_cpp">^</code></td>
+<td><code class="sh_cpp">not</code></td>
+<td><code class="sh_cpp">!</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">%:</code></td>
+<td><code class="sh_cpp">#</code></td>
+<td><code class="sh_cpp">compl</code></td>
+<td><code class="sh_cpp">~</code></td>
+<td><code class="sh_cpp">not_eq</code></td>
+<td><code class="sh_cpp">!=</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">%:%:</code></td>
+<td><code class="sh_cpp">##</code></td>
+<td><code class="sh_cpp">bitand</code></td>
+<td><code class="sh_cpp">&amp;</code></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+<div>
+<p class="footnote" id="fn16">16) These include “digraphs” and additional reserved words. The term “digraph” (token consisting of two
+characters) is not perfectly descriptive, since one of the alternative preprocessing-tokens is <code class="sh_cpp">%:%:</code> and of
+course several primary tokens contain two characters. Nonetheless, those alternative tokens that aren’t lexical keywords
+are colloquially known as “digraphs”.</p>
+<p class="footnote" id="fn17">17) Thus the “stringized” values (<a title="cpp.stringize" href="cpp.stringize.html">16.3.2</a>) of <code class="sh_cpp">[</code> and <code class="sh_cpp">&lt;:</code> will be
+different, maintaining the source spelling, but the tokens can otherwise be freely interchanged.</p>
+</div>
+</body>
+</html>
+

@@ -1,0 +1,163 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Constructors</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[class.ctor]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[class.ctor]"></object>12.1 Constructors </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Constructors do not have names. A special declarator syntax is used to declare or define the constructor. The
+syntax uses:</p>
+
+<ul>
+<li>an optional <i class="nonterminal">decl-specifier-seq</i> in which each <i class="nonterminal">decl-specifier</i> is either a
+	<i class="nonterminal">function-specifier</i> or <code class="sh_cpp">constexpr</code>,</li>
+<li>the constructor’s class name, and</li>
+<li>a parameter list</li>
+</ul>
+
+<p>in that order. In such a declaration, optional parentheses around the constructor class name are ignored.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct S {
+  S();                  // declares the constructor
+};
+
+S::S() { }              // defines the constructor</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>A constructor is used to initialize objects of its class type. Because constructors do not have names, they are
+never found during name lookup; however an explicit type conversion using the functional notation (<a title="expr.type.conv" href="expr.type.conv.html">5.2.3</a>)
+will cause a constructor to be called to initialize an object. <span class="note">[ <em>Note:</em> For initialization of objects of class type see
+<a title="class.init" href="class.init.html">12.6</a>. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>A <i class="nonterminal">typedef-name</i> shall not be used as the <i class="nonterminal">class-name</i> in the <i class="nonterminal">declarator-id</i> for a
+constructor declaration.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>A constructor shall not be <code class="sh_cpp">virtual</code> (<a title="class.virtual" href="class.virtual.html">10.3</a>) or <code class="sh_cpp">static</code> (<a title="class.static" href="class.static.html">9.4</a>). A
+constructor can be invoked for a <code class="sh_cpp">const</code>, <code class="sh_cpp">volatile</code> or <code class="sh_cpp">const volatile</code> object. A
+constructor shall not be declared <code class="sh_cpp">const</code>, <code class="sh_cpp">volatile</code>, or <code class="sh_cpp">const volatile</code>
+(<a title="class.this" href="class.this.html">9.3.2</a>). <code class="sh_cpp">const</code> and <code class="sh_cpp">volatile</code> semantics (<a title="dcl.type.cv" href="dcl.type.cv.html">7.1.6.1</a>) are not applied on an
+object under construction. They come into effect when the constructor for the most derived object (<a title="intro.object" href="intro.object.html">1.8</a>) ends.
+A constructor shall not be declared with a <i class="nonterminal">ref-qualifier</i>.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>A <dfn>default constructor</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="default constructor"></object> for a class <code class="sh_cpp">X</code> is a constructor of class <code class="sh_cpp">X</code> that can
+be called without an argument. If there is no user-declared constructor for class <code class="sh_cpp">X</code>, a constructor having
+no parameters is implicitly declared as defaulted (<a title="dcl.fct.def" href="dcl.fct.def.general.html">8.4</a>). An implicitly-declared default constructor is an
+<code class="sh_cpp">inline</code> <code class="sh_cpp">public</code> member of its class. A defaulted default constructor for class <code class="sh_cpp">X</code> is
+defined as deleted if:</p>
+
+<ul>
+<li>
+<code class="sh_cpp">X</code> is a union-like class that has a variant member with a non-trivial default constructor,</li>
+<li>any non-static data member with no <i class="nonterminal">brace-or-equal-initializer</i> is of reference type,</li>
+<li>any non-variant non-static data member of const-qualified type (or array thereof) with no
+	<i class="nonterminal">brace-or-equal-initializer</i> does not have a user-provided default constructor, or</li>
+<li>
+<code class="sh_cpp">X</code> is a union and all of its variant members are of const-qualified type (or array thereof),</li>
+<li>
+<code class="sh_cpp">X</code> is a non-union class and all members of any anonymous union member are of const-qualified type (or
+	array thereof),</li>
+<li>any direct or virtual base class, or non-static data member with no <i class="nonterminal">brace-or-equal-initializer</i>, has class
+	type <code class="sh_cpp">M</code> (or array thereof) and either <code class="sh_cpp">M</code> has no default constructor or overload resolution
+	(<a title="over.match" href="over.match.html">13.3</a>) as applied to <code class="sh_cpp">M</code>’s default constructor, results in an ambiguity or in a function that
+	is deleted or inaccessible from the defaulted default constructor, or</li>
+<li>any direct or virtual base class or non-static data member has a type with a destructor that is deleted or
+	inaccessible from the defaulted default constructor.</li>
+</ul>
+
+<p>A default constructor is <dfn>trivial</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="trivial"></object> if it is not user-provided and if:</p>
+
+<ul>
+<li>its class has no virtual functions (<a title="class.virtual" href="class.virtual.html">10.3</a>) and no virtual base classes (<a title="class.mi" href="class.mi.html">10.1</a>), and</li>
+<li>no non-static data member of its class has a <i class="nonterminal">brace-or-equal-initializer</i>, and</li>
+<li>all the direct base classes of its class have trivial default constructors, and</li>
+<li>for all the non-static data members of its class that are of class type (or array thereof), each such class has a
+	trivial default constructor.</li>
+</ul>
+
+<p>Otherwise, the default constructor is <dfn>non-trivial</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="non-trivial"></object>.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>A default constructor that is defaulted and not defined as deleted is <dfn>implicitly defined</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="implicitly defined"></object> when it is
+odr-used (<a title="basic.def.odr" href="basic.def.odr.html">3.2</a>) to create an object of its class type (<a title="intro.object" href="intro.object.html">1.8</a>) or when it is explicitly defaulted after
+its first declaration. The implicitly-defined default constructor performs the set of initializations of the class that
+would be performed by a user-written default constructor for that class with no <i class="nonterminal">ctor-initializer</i>
+(<a title="class.base.init" href="class.base.init.html">12.6.2</a>) and an empty <i class="nonterminal">compound-statement</i>. If that user-written default constructor would be
+ill-formed, the program is ill-formed. If that user-written default constructor would satisfy the requirements of a
+constexpr constructor (<a title="dcl.constexpr" href="dcl.constexpr.html">7.1.5</a>), the implicitly-defined default constructor is constexpr. Before the defaulted
+default constructor for a class is implicitly defined, all the non-user-provided default constructors for its base
+classes and its non-static data members shall have been implicitly defined. <span class="note">[ <em>Note:</em> An implicitly-declared default
+constructor has an <i class="nonterminal">exception-specification</i> (<a title="except.spec" href="except.spec.html">15.4</a>). An explicitly-defaulted definition might have an
+implicit <i class="nonterminal">exception-specification</i>, see <a title="dcl.fct.def" href="dcl.fct.def.general.html">8.4</a>. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p7" href="#p7">7</a>Default constructors are called implicitly to create class objects of static, thread, or automatic storage
+duration (<a title="basic.stc.static" href="basic.stc.static.html">3.7.1</a>, <a title="basic.stc.thread" href="basic.stc.thread.html">3.7.2</a>, <a title="basic.stc.auto" href="basic.stc.auto.html">3.7.3</a>) defined without an initializer (<a title="dcl.init" href="dcl.init.html">8.5</a>), are
+called to create class objects of dynamic storage duration (<a title="basic.stc.dynamic" href="basic.stc.dynamic.html">3.7.4</a>) created by a <i class="nonterminal">new-expression</i> in
+which the <i class="nonterminal">new-initializer</i> is omitted (<a title="expr.new" href="expr.new.html">5.3.4</a>), or are called when the explicit type conversion syntax
+(<a title="expr.type.conv" href="expr.type.conv.html">5.2.3</a>) is used. A program is ill-formed if the default constructor for an object is implicitly used and the
+constructor is not accessible (Clause <a title="class.access" href="class.access.html">11</a>).</p>
+
+<p><a class="anchor" id="p8" href="#p8">8</a><span class="note">[ <em>Note:</em> <a title="class.base.init" href="class.base.init.html">12.6.2</a> describes the order in which constructors for base classes and non-static data members
+are called and describes how arguments can be specified for the calls to these constructors. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p9" href="#p9">9</a>A copy constructor (<a title="class.copy" href="class.copy.html">12.8</a>) is used to copy objects of class type. A move constructor
+(<a title="class.copy" href="class.copy.html">12.8</a>) is used to move the contents of objects of class type.</p>
+
+<p><a class="anchor" id="p10" href="#p10">10</a>No return type (not even <code class="sh_cpp">void</code>) shall be specified for a constructor. A <code class="sh_cpp">return</code>
+statement in the body of a constructor shall not specify a return value. The address of a constructor shall not be
+taken.</p>
+
+<p><a class="anchor" id="p11" href="#p11">11</a>A functional notation type conversion (<a title="expr.type.conv" href="expr.type.conv.html">5.2.3</a>) can be used to create new objects of its type.
+<span class="note">[ <em>Note:</em> The syntax looks like an explicit call of the constructor. — <em>end note</em> ]</span></p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">complex zz = complex(1,2.3);
+cprint( complex(7.8,1.2) );</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p12" href="#p12">12</a>An object created in this way is unnamed. <span class="note">[ <em>Note:</em> <a title="class.temporary" href="class.temporary.html">12.2</a> describes the lifetime of temporary
+objects. — <em>end note</em> ]</span> <span class="note">[ <em>Note:</em> Explicit constructor calls do not yield lvalues, see <a title="basic.lval" href="basic.lval.html">3.10</a>. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p13" href="#p13">13</a><span class="note">[ <em>Note:</em> some language constructs have special semantics when used during construction; see <a title="class.base.init" href="class.base.init.html">12.6.2</a> and
+<a title="class.cdtor" href="class.cdtor.html">12.7</a>. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p14" href="#p14">14</a>During the construction of a <code class="sh_cpp">const</code> object, if the value of the object or any of its subobjects is
+accessed through an lvalue a glvalue that is not obtained, directly or indirectly, from the constructor’s
+<code class="sh_cpp">this</code> pointer, the value of the object or subobject thus obtained is unspecified.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct C;
+void no_opt(C*);
+
+struct C {
+  int c;
+  C() : c(0) { no_opt(this); }
+};
+
+const C cobj;
+
+void no_opt(C* cptr) {
+  int i = cobj.c * 100;     // value of cobj.c is unspecified
+  cptr-&gt;c = 1;
+  cout &lt;&lt; cobj.c * 100      // value of cobj.c is unspecified
+       &lt;&lt; '\n';
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+</body>
+</html>
+

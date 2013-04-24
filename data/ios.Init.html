@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class ios_base::Init</title>
+</head>
+<body>
+<h5>
+<dfn class="label">[ios::Init]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[ios::Init]"></object>27.5.3.1.6 Class <code class="sh_cpp">ios_base::<dfn>Init</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="Init"></object></code> </h5>
+
+<pre><code class="sh_cpp">namespace std {
+  class ios_base::Init {
+  public:
+    Init();
+    ~Init();
+  private:
+    static int init_cnt;    // exposition only
+  };
+}</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The class <code class="sh_cpp">Init</code> describes an object whose construction ensures the construction of the eight
+objects declared in <code class="header">&lt;iostream&gt;</code> (<a title="iostream.objects" href="iostream.objects.overview.html">27.4</a>) that associate file stream buffers with the standard C
+streams provided for by the functions declared in <code class="header">&lt;cstdio&gt;</code> (<a title="c.files" href="c.files.html">27.9.2</a>).</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>For the sake of exposition, the maintained data is presented here as:</p>
+
+<ul>
+<li>
+<code class="sh_cpp">static int init_cnt</code>, counts the number of constructor and destructor calls for class <code class="sh_cpp">Init</code>,
+	initialized to zero.</li>
+</ul>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Effects:</em> Constructs an object of class <code class="sh_cpp">Init</code>. Constructs and initializes the objects
+<code class="sh_cpp">cin</code>, <code class="sh_cpp">cout</code>, <code class="sh_cpp">cerr</code>, <code class="sh_cpp">clog</code>, <code class="sh_cpp">wcin</code>, <code class="sh_cpp">wcout</code>,
+<code class="sh_cpp">wcerr</code>, and <code class="sh_cpp">wclog</code> if they have not already been constructed and initialized.</p>
+
+<h6><code class="sh_cpp"><dfn>~Init</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="~Init"></object>();</code></h6>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><em>Effects:</em> Destroys an object of class <code class="sh_cpp">Init</code>. If there are no other instances of the class still in
+existence, calls <code class="sh_cpp">cout.flush()</code>, <code class="sh_cpp">cerr.flush()</code>, <code class="sh_cpp">clog.flush()</code>,
+<code class="sh_cpp">wcout.flush()</code>, <code class="sh_cpp">wcerr.flush()</code>, <code class="sh_cpp">wclog.flush()</code>.</p>
+</body>
+</html>
+

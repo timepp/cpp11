@@ -1,0 +1,174 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Order and consistency</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[atomics.order]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[atomics.order]"></object>29.3 Order and consistency </h2>
+
+<h3><code class="sh_cpp">namespace std {
+  typedef enum <dfn>memory_order</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="memory_order"></object> {
+    memory_order_relaxed, memory_order_consume, memory_order_acquire,
+    memory_order_release, memory_order_acq_rel, memory_order_seq_cst
+  } memory_order;
+}</code></h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The enumeration <code class="sh_cpp">memory_order</code> specifies the detailed regular (non-atomic) memory synchronization
+order as defined in <a title="intro.multithread" href="intro.multithread.html">1.10</a> and may provide for operation ordering. Its enumerated values and their meanings are
+as follows:</p>
+
+<ul>
+<li>
+<code class="sh_cpp"><dfn>memory_order_relaxed</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="memory_order_relaxed"></object></code>: no operation orders memory.</li>
+<li>
+<code class="sh_cpp"><dfn>memory_order_release</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="memory_order_release"></object></code>, <code class="sh_cpp"><dfn>memory_order_acq_rel</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="memory_order_acq_rel"></object></code>, and
+	<code class="sh_cpp"><dfn>memory_order_seq_cst</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="memory_order_seq_cst"></object></code>: a store operation performs a release operation on the affected memory
+	location.</li>
+<li>
+<code class="sh_cpp"><dfn>memory_order_consume</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="memory_order_consume"></object></code>: a load operation performs a consume operation on the affected memory
+	location.</li>
+<li>
+<code class="sh_cpp"><dfn>memory_order_acquire</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="memory_order_acquire"></object></code>, <code class="sh_cpp"><dfn>memory_order_acq_rel</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="memory_order_acq_rel"></object></code>, and
+	<code class="sh_cpp"><dfn>memory_order_seq_cst</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="memory_order_seq_cst"></object></code>: a load operation performs an acquire operation on the affected memory
+	location.</li>
+</ul>
+
+<p><span class="note">[ <em>Note:</em> Atomic operations specifying <code class="sh_cpp">memory_order_relaxed</code> are relaxed with respect to memory ordering.
+Implementations must still guarantee that any given atomic access to a particular atomic object be indivisible with
+respect to all other atomic accesses to that object. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>An atomic operation <var>A</var> that performs a release operation on an atomic object <var>M</var>
+synchronizes with an atomic operation <var>B</var> that performs an acquire operation on <var>M</var> and takes its
+value from any side effect in the release sequence headed by <var>A</var>.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>There shall be a single total order <var>S</var> on all <code class="sh_cpp">memory_order_seq_cst</code> operations,
+consistent with the “happens before” order and modification orders for all affected locations, such that each
+<code class="sh_cpp">memory_order_seq_cst</code> operation <var>B</var> that loads a value from an atomic object <var>M</var> observes
+one of the following values:</p>
+
+<ul>
+<li>the result of the last modification <var>A</var> of <var>M</var> that precedes <var>B</var> in <var>S</var>, if it
+	exists, or</li>
+<li>if <var>A</var> exists, the result of some modification of <var>M</var> in the visible sequence of side effects with
+	respect to <var>B</var> that is not <code class="sh_cpp">memory_order_seq_cst</code> and that does not happen before <var>A</var>,
+	or</li>
+<li>if <var>A</var> does not exist, the result of some modification of <var>M</var> in the visible sequence of side
+	effects with respect to <var>B</var> that is not <code class="sh_cpp">memory_order_seq_cst</code>.</li>
+</ul>
+
+<p><span class="note">[ <em>Note:</em> Although it is not explicitly required that <var>S</var> include locks, it can always be extended to an order
+that does include lock and unlock operations, since the ordering between those is already included in the “happens
+before” ordering. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>For an atomic operation <var>B</var> that reads the value of an atomic object <var>M</var>, if there is a
+<code class="sh_cpp">memory_order_seq_cst</code> fence <var>X</var> sequenced before <var>B</var>, then <var>B</var> observes either
+the last <code class="sh_cpp">memory_order_seq_cst</code> modification of <var>M</var> preceding <var>X</var> in the total order
+<var>S</var> or a later modification of <var>M</var> in its modification order.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>For atomic operations <var>A</var> and <var>B</var> on an atomic object <var>M</var>, where <var>A</var>
+modifies <var>M</var> and <var>B</var> takes its value, if there is a <code class="sh_cpp">memory_order_seq_cst</code> fence
+<var>X</var> such that <var>A</var> is sequenced before <var>X</var> and <var>B</var> follows <var>X</var> in
+<var>S</var>, then <var>B</var> observes either the effects of <var>A</var> or a later modification of <var>M</var> in
+its modification order.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>For atomic operations <var>A</var> and <var>B</var> on an atomic object <var>M</var>, where <var>A</var>
+modifies <var>M</var> and <var>B</var> takes its value, if there are <code class="sh_cpp">memory_order_seq_cst</code> fences
+<var>X</var> and <var>Y</var> such that <var>A</var> is sequenced before <var>X</var>, <var>Y</var> is sequenced before
+<var>B</var>, and <var>X</var> precedes <var>Y</var> in <var>S</var>, then <var>B</var> observes either the effects of
+<var>A</var> or a later modification of <var>M</var> in its modification order.</p>
+
+<p><a class="anchor" id="p7" href="#p7">7</a>For atomic operations <var>A</var> and <var>B</var> on an atomic object <var>M</var>, if there are
+<code class="sh_cpp">memory_order_seq_cst</code> fences <var>X</var> and <var>Y</var> such that <var>A</var> is sequenced before
+<var>X</var>, <var>Y</var> is sequenced before <var>B</var>, and <var>X</var> precedes <var>Y</var> in <var>S</var>,
+then <var>B</var> occurs later than <var>A</var> in the modification order of <var>M</var>.</p>
+
+<p><a class="anchor" id="p8" href="#p8">8</a><span class="note">[ <em>Note:</em> <code class="sh_cpp">memory_order_seq_cst</code> ensures sequential consistency only for a program that is free of data
+races and uses exclusively <code class="sh_cpp">memory_order_seq_cst</code> operations. Any use of weaker ordering will invalidate this
+guarantee unless extreme care is used. In particular, <code class="sh_cpp">memory_order_seq_cst</code> fences ensure a total order only
+for the fences themselves. Fences cannot, in general, be used to restore sequential consistency for atomic operations
+with weaker ordering specifications. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p9" href="#p9">9</a>An atomic store shall only store a value that has been computed from constants and program input values by a
+finite sequence of program evaluations, such that each evaluation observes the values of variables as computed by the
+last prior assignment in the sequence. The ordering of evaluations in this sequence shall be such that:</p>
+
+<ul>
+<li>if an evaluation <var>B</var> observes a value computed by <var>A</var> in a different thread, then <var>B</var>
+	does not happen before <var>A</var>, and</li>
+<li>if an evaluation <var>A</var> is included in the sequence, then every evaluation that assigns to the same variable
+	and happens before <var>A</var> is included.</li>
+</ul>
+
+<div class="note">
+<p><a class="anchor" id="p10" href="#p10">10</a>[ <em>Note:</em> The second requirement disallows “out-of-thin-air” or “speculative” stores of atomics when relaxed
+atomics are used. Since unordered operations are involved, evaluations may appear in this sequence out of thread order.
+For example, with <code class="sh_cpp">x</code> and <code class="sh_cpp">y</code> initially zero,</p>
+
+<pre><code class="sh_cpp">// Thread 1:
+r1 = y.load(memory_order_relaxed);
+x.store(r1, memory_order_relaxed);
+
+// Thread 2:
+r2 = x.load(memory_order_relaxed);
+y.store(42, memory_order_relaxed);</code></pre>
+
+<p>is allowed to produce <code class="sh_cpp">r1 = r2 = 42</code>. The sequence of evaluations justifying this consists of:</p>
+
+<pre><code class="sh_cpp">y.store(42, memory_order_relaxed);
+r1 = y.load(memory_order_relaxed);
+x.store(r1, memory_order_relaxed);
+r2 = x.load(memory_order_relaxed);</code></pre>
+
+<p>On the other hand,</p>
+
+<pre><code class="sh_cpp">// Thread 1:
+r1 = y.load(memory_order_relaxed);
+x.store(r1, memory_order_relaxed);
+
+// Thread 2:
+r2 = x.load(memory_order_relaxed);
+y.store(r2, memory_order_relaxed);</code></pre>
+
+<p>may not produce <code class="sh_cpp">r1 = r2 = 42</code>, since there is no sequence of evaluations that results in the computation
+of 42. In the absence of “relaxed” operations and read-modify-write operations with weaker than
+<code class="sh_cpp">memory_order_acq_rel</code> ordering, the second requirement has no impact. — <em>end note</em> ]</p>
+</div>
+
+<div class="note">
+<p><a class="anchor" id="p11" href="#p11">11</a>[ <em>Note:</em> The requirements do allow <code class="sh_cpp">r1 == r2 == 42</code> in the following example, with <code class="sh_cpp">x</code> and
+<code class="sh_cpp">y</code> initially zero:</p>
+
+<pre><code class="sh_cpp">// Thread 1:
+r1 = x.load(memory_order_relaxed);
+if (r1 == 42) y.store(r1, memory_order_relaxed);
+
+// Thread 2:
+r2 = y.load(memory_order_relaxed);
+if (r2 == 42) x.store(42, memory_order_relaxed);</code></pre>
+
+<p>However, implementations should not allow such behavior. — <em>end note</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p12" href="#p12">12</a>Atomic read-modify-write operations shall always read the last value (in the modification order) written
+before the write associated with the read-modify-write operation.</p>
+
+<p><a class="anchor" id="p13" href="#p13">13</a>Implementations should make atomic stores visible to atomic loads within a reasonable amount of time.</p>
+
+<h3><code class="sh_cpp">template &lt;class T&gt;
+  T <dfn>kill_dependency</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="kill_dependency"></object>(T y) noexcept;</code></h3>
+
+<p><a class="anchor" id="p14" href="#p14">14</a><em>Effects:</em> The argument does not carry a dependency to the return value (<a title="intro.multithread" href="intro.multithread.html">1.10</a>).</p>
+
+<p><a class="anchor" id="p15" href="#p15">15</a><em>Returns:</em> <code class="sh_cpp">y</code>.</p>
+</body>
+</html>
+

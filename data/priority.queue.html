@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class template priority_queue</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[priority.queue]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[priority.queue]"></object>23.6.4 Class template <code class="sh_cpp"><dfn>priority_queue</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="priority_queue"></object></code> </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Any sequence container with random access iterator and supporting operations <code class="sh_cpp">front()</code>,
+<code class="sh_cpp">push_back()</code> and <code class="sh_cpp">pop_back()</code> can be used to instantiate <code class="sh_cpp">priority_queue</code>. In
+particular, <code class="sh_cpp">vector</code> (<a title="vector" href="vector.overview.html">23.3.6</a>) and <code class="sh_cpp">deque</code> (<a title="deque" href="deque.overview.html">23.3.3</a>) can be used.
+Instantiating <code class="sh_cpp">priority_queue</code> also involves supplying a function or function object for making priority
+comparisons; the library assumes that the function or function object defines a strict weak ordering
+(<a title="alg.sorting" href="alg.sorting.html">25.4</a>).</p>
+
+<pre><code class="sh_cpp">namespace std {
+  template &lt;class T, class Container = vector&lt;T&gt;,
+    class Compare = less&lt;typename Container::value_type&gt; &gt;
+  class priority_queue {
+  public:
+    typedef typename Container::value_type      value_type;
+    typedef typename Container::reference       reference;
+    typedef typename Container::const_reference const_reference;
+    typedef typename Container::size_type       size_type;
+    typedef          Container                  container_type;
+  protected:
+    Container c;
+    Compare comp;
+
+  public:
+    priority_queue(const Compare&amp; x, const Container&amp;);
+    explicit priority_queue(const Compare&amp; x = Compare(), Container&amp;&amp; = Container());
+    template &lt;class InputIterator&gt;
+      priority_queue(InputIterator first, InputIterator last,
+                     const Compare&amp; x, const Container&amp;);
+    template &lt;class InputIterator&gt;
+      priority_queue(InputIterator first, InputIterator last,
+                     const Compare&amp; x = Compare(), Container&amp;&amp; = Container());
+    template &lt;class Alloc&gt; explicit priority_queue(const Alloc&amp;);
+    template &lt;class Alloc&gt; priority_queue(const Compare&amp;, const Alloc&amp;);
+    template &lt;class Alloc&gt; priority_queue(const Compare&amp;,
+      const Container&amp;, const Alloc&amp;);
+    template &lt;class Alloc&gt; priority_queue(const Compare&amp;,
+        Container&amp;&amp;, const Alloc&amp;);
+    template &lt;class Alloc&gt; priority_queue(const priority_queue&amp;, const Alloc&amp;);
+    template &lt;class Alloc&gt; priority_queue(priority_queue&amp;&amp;, const Alloc&amp;);
+
+    bool      empty() const       { return c.empty(); }
+    size_type size()  const       { return c.size(); }
+    const_reference   top() const { return c.front(); }
+    void push(const value_type&amp; x);
+    void push(value_type&amp;&amp; x);
+    template &lt;class... Args&gt; void emplace(Args&amp;&amp;... args);
+    void pop();
+    void swap(priority_queue&amp; q) noexcept(
+         noexcept(swap(c, q.c)) &amp;&amp; noexcept(swap(comp, q.comp)))
+      { using std::swap; swap(c, q.c); swap(comp, q.comp); }
+  };
+  // no equality is provided
+  template &lt;class T, class Container, class Compare&gt;
+     void swap(priority_queue&lt;T, Container, Compare&gt;&amp; x,
+               priority_queue&lt;T, Container, Compare&gt;&amp; y) noexcept(noexcept(x.swap(y)));
+
+  template &lt;class T, class Container, class Compare, class Alloc&gt;
+    struct uses_allocator&lt;priority_queue&lt;T, Container, Compare&gt;, Alloc&gt;
+      : uses_allocator&lt;Container, Alloc&gt;::type { };
+}</code></pre>
+</body>
+</html>
+

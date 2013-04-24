@@ -1,0 +1,163 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>unique_ptr constructors</title>
+</head>
+<body>
+<h5>
+<dfn class="label">[unique.ptr.single.ctor]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[unique.ptr.single.ctor]"></object>20.7.1.2.1 <code class="sh_cpp">unique_ptr</code> constructors </h5>
+
+<h6><code class="sh_cpp">constexpr <dfn>unique_ptr</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="unique_ptr"></object>() noexcept;</code></h6>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Requires:</em> <code class="sh_cpp">D</code> shall satisfy the requirements of <code class="concept">DefaultConstructible</code> (Table <a href="utility.arg.requirements.html#t19">19</a>), and that construction shall not throw an exception.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Effects:</em> Constructs a <code class="sh_cpp">unique_ptr</code> object that owns nothing, value-initializing the stored pointer
+and the stored deleter.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Postconditions:</em> <code class="sh_cpp">get() == nullptr</code>. <code class="sh_cpp">get_deleter()</code> returns a reference to the stored
+deleter.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><em>Remarks:</em> If this constructor is instantiated with a pointer type or reference type for the template argument
+<code class="sh_cpp">D</code>, the program is ill-formed.</p>
+
+<h6><code class="sh_cpp">explicit <dfn>unique_ptr</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="unique_ptr"></object>(pointer p) noexcept;</code></h6>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><em>Requires:</em> <code class="sh_cpp">D</code> shall satisfy the requirements of <code class="concept">DefaultConstructible</code> (Table <a href="utility.arg.requirements.html#t19">19</a>), and that construction shall not throw an exception.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a><em>Effects:</em> Constructs a <code class="sh_cpp">unique_ptr</code> which owns <code class="sh_cpp">p</code>, initializing the stored pointer with
+<code class="sh_cpp">p</code> and value-initializing the stored deleter.</p>
+
+<p><a class="anchor" id="p7" href="#p7">7</a><em>Postconditions:</em> <code class="sh_cpp">get() == p</code>. <code class="sh_cpp">get_deleter()</code> returns a reference to the stored
+deleter.</p>
+
+<p><a class="anchor" id="p8" href="#p8">8</a><em>Remarks:</em> If this constructor is instantiated with a pointer type or reference type for the template argument
+<code class="sh_cpp">D</code>, the program is ill-formed.</p>
+
+<h6><code class="sh_cpp"><dfn>unique_ptr</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="unique_ptr"></object>(pointer p, <em>see below</em> d1) noexcept;
+<dfn>unique_ptr</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="unique_ptr"></object>(pointer p, <em>see below</em> d2) noexcept;</code></h6>
+
+<p><a class="anchor" id="p9" href="#p9">9</a>The signature of these constructors depends upon whether <code class="sh_cpp">D</code> is a reference type. If <code class="sh_cpp">D</code>
+is non-reference type <code class="sh_cpp">A</code>, then the signatures are:</p>
+
+<pre><code class="sh_cpp">unique_ptr(pointer p, const A&amp; d);
+unique_ptr(pointer p, A&amp;&amp; d);</code></pre>
+
+<p><a class="anchor" id="p10" href="#p10">10</a>If <code class="sh_cpp">D</code> is an lvalue-reference type <code class="sh_cpp">A&amp;</code>, then the signatures are:</p>
+
+<pre><code class="sh_cpp">unique_ptr(pointer p, A&amp; d);
+unique_ptr(pointer p, A&amp;&amp; d);</code></pre>
+
+<p><a class="anchor" id="p11" href="#p11">11</a>If <code class="sh_cpp">D</code> is an lvalue-reference type <code class="sh_cpp">const A&amp;</code>, then the signatures are:</p>
+
+<pre><code class="sh_cpp">unique_ptr(pointer p, const A&amp; d);
+unique_ptr(pointer p, const A&amp;&amp; d);</code></pre>
+
+<p><a class="anchor" id="p12" href="#p12">12</a><em>Requires:</em> </p>
+
+<ul>
+<li>If <code class="sh_cpp">D</code> is not an lvalue-reference type then
+	<ul>
+	<li>If d is an lvalue or <code class="sh_cpp">const</code> rvalue then the first constructor of this pair will be selected.
+		<code class="sh_cpp">D</code> shall satisfy the requirements of <code class="concept">CopyConstructible</code> (Table <a href="utility.arg.requirements.html#t21">21</a>), and
+		the copy constructor of <code class="sh_cpp">D</code> shall not throw an exception. This <code class="sh_cpp">unique_ptr</code> will hold a
+		copy of <code class="sh_cpp">d</code>.</li>
+	<li>Otherwise, <code class="sh_cpp">d</code> is a non-const rvalue and the second constructor of this pair will be selected.
+		<code class="sh_cpp">D</code> shall satisfy the requirements of <code class="concept">MoveConstructible</code> (Table <a href="utility.arg.requirements.html#t20">20</a>), and
+		the move constructor of <code class="sh_cpp">D</code> shall not throw an exception. This <code class="sh_cpp">unique_ptr</code> will hold a
+		value move constructed from <code class="sh_cpp">d</code>.</li>
+	</ul>
+</li>
+<li>Otherwise <code class="sh_cpp">D</code> is an lvalue-reference type. <code class="sh_cpp">d</code> shall be reference-compatible with one of the
+	constructors. If <code class="sh_cpp">d</code> is an rvalue, it will bind to the second constructor of this pair and the program is
+	ill-formed. <span class="note">[ <em>Note:</em> The diagnostic could be implemented using a <code class="sh_cpp">static_assert</code> which assures that
+	<code class="sh_cpp">D</code> is not a reference type. — <em>end note</em> ]</span> Else <code class="sh_cpp">d</code> is an lvalue and will bind to the first
+	constructor of this pair. The type which <code class="sh_cpp">D</code> references need not be <code class="concept">CopyConstructible</code>
+	nor <code class="concept">MoveConstructible</code>. This <code class="sh_cpp">unique_ptr</code> will hold a <code class="sh_cpp">D</code> which refers to
+	the lvalue <code class="sh_cpp">d</code>. <span class="note">[ <em>Note:</em> <code class="sh_cpp">D</code> may not be an rvalue-reference type. — <em>end note</em> ]</span>
+</li>
+</ul>
+
+<p><a class="anchor" id="p13" href="#p13">13</a><em>Effects:</em> Constructs a <code class="sh_cpp">unique_ptr</code> object which owns <code class="sh_cpp">p</code>, initializing the stored
+pointer with <code class="sh_cpp">p</code> and initializing the deleter as described above.</p>
+
+<p><a class="anchor" id="p14" href="#p14">14</a><em>Postconditions:</em> <code class="sh_cpp">get() == p</code>. <code class="sh_cpp">get_deleter()</code> returns a reference to the stored deleter.
+If <code class="sh_cpp">D</code> is a reference type then <code class="sh_cpp">get_deleter()</code> returns a reference to the lvalue
+<code class="sh_cpp">d</code>.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">D d;
+unique_ptr&lt;int, D&gt; p1(new int, D());        // D must be MoveConstructible
+unique_ptr&lt;int, D&gt; p2(new int, d);          // D must be Copyconstructible
+unique_ptr&lt;int, D&amp;&gt; p3(new int, d);         // p3 holds a reference to d
+unique_ptr&lt;int, const D&amp;&gt; p4(new int, D()); // error: rvalue deleter object combined
+                                            // with reference deleter type</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<h6><code class="sh_cpp"><dfn>unique_ptr</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="unique_ptr"></object>(unique_ptr&amp;&amp; u) noexcept;</code></h6>
+
+<p><a class="anchor" id="p15" href="#p15">15</a><em>Requires:</em> If <code class="sh_cpp">D</code> is not a reference type, <code class="sh_cpp">D</code> shall satisfy the requirements of
+<code class="concept">MoveConstructible</code> (Table <a href="utility.arg.requirements.html#t20">20</a>). Construction of the deleter from an rvalue of type
+<code class="sh_cpp">D</code> shall not throw an exception.</p>
+
+<p><a class="anchor" id="p16" href="#p16">16</a><em>Effects:</em> Constructs a <code class="sh_cpp">unique_ptr</code> by transferring ownership from <code class="sh_cpp">u</code> to
+<code class="sh_cpp">*this</code>. If <code class="sh_cpp">D</code> is a reference type, this deleter is copy constructed from <code class="sh_cpp">u</code>’s
+deleter; otherwise, this deleter is move constructed from <code class="sh_cpp">u</code>’s deleter. <span class="note">[ <em>Note:</em> The deleter constructor can be
+implemented with <code class="sh_cpp">std::forward&lt;D&gt;</code>. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p17" href="#p17">17</a><em>Postconditions:</em> <code class="sh_cpp">get()</code> yields the value <code class="sh_cpp">u.get()</code> yielded before the construction.
+<code class="sh_cpp">get_deleter()</code> returns a reference to the stored deleter that was constructed from
+<code class="sh_cpp">u.get_deleter()</code>. If <code class="sh_cpp">D</code> is a reference type then <code class="sh_cpp">get_deleter()</code> and
+<code class="sh_cpp">u.get_deleter()</code> both reference the same lvalue deleter.</p>
+
+<h6><code class="sh_cpp">template &lt;class U, class E&gt; <dfn>unique_ptr</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="unique_ptr"></object>(unique_ptr&lt;U, E&gt;&amp;&amp; u) noexcept;</code></h6>
+
+<p><a class="anchor" id="p18" href="#p18">18</a><em>Requires:</em> If E is not a reference type, construction of the deleter from an rvalue of type <code class="sh_cpp">E</code>
+shall be well formed and shall not throw an exception. Otherwise, <code class="sh_cpp">E</code> is a reference type and construction of
+the deleter from an lvalue of type <code class="sh_cpp">E</code> shall be well formed and shall not throw an exception.</p>
+
+<p><a class="anchor" id="p19" href="#p19">19</a><em>Remarks:</em> This constructor shall not participate in overload resolution unless:</p>
+
+<ul>
+<li>
+<code class="sh_cpp">unique_ptr&lt;U, E&gt;::pointer</code> is implicitly convertible to <code class="sh_cpp">pointer</code>,</li>
+<li>
+<code class="sh_cpp">U</code> is not an array type, and</li>
+<li>either <code class="sh_cpp">D</code> is a reference type and <code class="sh_cpp">E</code> is the same type as <code class="sh_cpp">D</code>, or <code class="sh_cpp">D</code>
+	is not a reference type and <code class="sh_cpp">E</code> is implicitly convertible to <code class="sh_cpp">D</code>.</li>
+</ul>
+
+<p><a class="anchor" id="p20" href="#p20">20</a><em>Effects:</em> Constructs a <code class="sh_cpp">unique_ptr</code> by transferring ownership from <code class="sh_cpp">u</code> to
+<code class="sh_cpp">*this</code>. If <code class="sh_cpp">E</code> is a reference type, this deleter is copy constructed from <code class="sh_cpp">u</code>’s
+deleter; otherwise, this deleter is move constructed from <code class="sh_cpp">u</code>’s deleter. <span class="note">[ <em>Note:</em> The deleter constructor can be
+implemented with <code class="sh_cpp">std::forward&lt;E&gt;</code>. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p21" href="#p21">21</a><em>Postconditions:</em> <code class="sh_cpp">get()</code> yields the value <code class="sh_cpp">u.get()</code> yielded before the construction.
+<code class="sh_cpp">get_deleter()</code> returns a reference to the stored deleter that was constructed from
+<code class="sh_cpp">u.get_deleter()</code>.</p>
+
+<h6><code class="sh_cpp">template &lt;class U&gt;
+  <dfn>unique_ptr</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="unique_ptr"></object>(auto_ptr&lt;U&gt;&amp;&amp; u) noexcept;</code></h6>
+
+<p><a class="anchor" id="p22" href="#p22">22</a><em>Effects:</em> Constructs a <code class="sh_cpp">unique_ptr</code> object, initializing the stored pointer with
+<code class="sh_cpp">u.release()</code> and value-initializing the stored deleter.</p>
+
+<p><a class="anchor" id="p23" href="#p23">23</a><em>Postconditions:</em> <code class="sh_cpp">get()</code> yields the value <code class="sh_cpp">u.get()</code> yielded before the construction.
+<code class="sh_cpp">u.get() == nullptr</code>. <code class="sh_cpp">get_deleter()</code> returns a reference to the stored
+deleter.</p>
+
+<p><a class="anchor" id="p24" href="#p24">24</a><em>Remarks:</em> This constructor shall not participate in overload resolution unless <code class="sh_cpp">U*</code> is implictly
+convertible to <code class="sh_cpp">T*</code> and <code class="sh_cpp">D</code> is the same type as
+<code class="sh_cpp">default_delete&lt;T&gt;</code>.</p>
+</body>
+</html>
+

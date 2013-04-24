@@ -1,0 +1,307 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Simple type specifiers</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[dcl.type.simple]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[dcl.type.simple]"></object>7.1.6.2 Simple type specifiers </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The simple type specifiers are</p>
+
+<dl>
+<dt>
+<i class="nonterminal"><dfn>simple-type-specifier</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="simple-type-specifier"></object></i>:</dt>
+	<dd>
+<i class="nonterminal">nested-name-specifier</i><sub class="opt">opt</sub> <i class="nonterminal">type-name</i>
+</dd>
+	<dd>
+<i class="nonterminal">nested-name-specifier</i> <code class="sh_cpp">template</code> <i class="nonterminal">simple-template-id</i>
+</dd>
+	<dd><code class="sh_cpp">char</code></dd>
+	<dd><code class="sh_cpp">char16_t</code></dd>
+	<dd><code class="sh_cpp">char32_t</code></dd>
+	<dd><code class="sh_cpp">wchar_t</code></dd>
+	<dd><code class="sh_cpp">bool</code></dd>
+	<dd>
+<code class="sh_cpp">shor</code>t</dd>
+	<dd><code class="sh_cpp">int</code></dd>
+	<dd><code class="sh_cpp">long</code></dd>
+	<dd><code class="sh_cpp">signed</code></dd>
+	<dd><code class="sh_cpp">unsigned</code></dd>
+	<dd><code class="sh_cpp">float</code></dd>
+	<dd><code class="sh_cpp">double</code></dd>
+	<dd><code class="sh_cpp">void</code></dd>
+	<dd><code class="sh_cpp">auto</code></dd>
+	<dd><i class="nonterminal">decltype-specifier</i></dd>
+<dt>
+<i class="nonterminal"><dfn>type-name</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="type-name"></object></i>:</dt>
+	<dd><i class="nonterminal">class-name</i></dd>
+	<dd><i class="nonterminal">enum-name</i></dd>
+	<dd><i class="nonterminal">typedef-name</i></dd>
+	<dd><i class="nonterminal">simple-template-id</i></dd>
+<dt>
+<i class="nonterminal"><dfn>decltype-specifier</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="decltype-specifier"></object></i>:</dt>
+	<dd>
+<code class="sh_cpp">decltype</code> <code class="sh_cpp">(</code> <i class="nonterminal">expression</i> <code class="sh_cpp">)</code>
+</dd>
+</dl>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The <code class="sh_cpp">auto</code> specifier is a placeholder for a type to be deduced (<a title="dcl.spec.auto" href="dcl.spec.auto.html">7.1.6.4</a>). The other
+<i class="nonterminal">simple-type-specifier</i>s specify either a previously-declared user-defined type or one of the fundamental types
+(<a title="basic.fundamental" href="basic.fundamental.html">3.9.1</a>). Table <a href="dcl.type.simple.html#t10">10</a> summarizes the valid combinations of <i class="nonterminal">simple-type-specifier</i>s and the types
+they specify.</p>
+
+<table id="t10" class="headed bordered">
+<caption>Table 10 — <i class="nonterminal">simple-type-specifier</i>s and the types they specify</caption>
+<thead>
+<tr>
+<th>Specifier(s)</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><i class="nonterminal">type-name</i></td>
+<td>the type named</td>
+</tr>
+<tr>
+<td><i class="nonterminal">simple-template-id</i></td>
+<td>the type as defined in <a title="temp.names" href="temp.names.html">14.2</a>
+</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">char</code></td>
+<td>“<code class="sh_cpp">char</code>”</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">unsigned char</code></td>
+<td>“<code class="sh_cpp">unsigned char</code>”</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">signed char</code></td>
+<td>“<code class="sh_cpp">signed char</code>”</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">char16_t</code></td>
+<td>“<code class="sh_cpp">char16_t</code>”</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">char32_t</code></td>
+<td>“<code class="sh_cpp">char32_t</code>”</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">bool</code></td>
+<td>“<code class="sh_cpp">bool</code>”</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">unsigned</code></td>
+<td>“<code class="sh_cpp">unsigned int</code>”</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">unsigned int</code></td>
+<td>“<code class="sh_cpp">unsigned int</code>”</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">signed</code></td>
+<td>“<code class="sh_cpp">int</code>”</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">signed int</code></td>
+<td>“<code class="sh_cpp">int</code>”</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">int</code></td>
+<td>“<code class="sh_cpp">int</code>”</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">unsigned short int</code></td>
+<td>“<code class="sh_cpp">unsigned short int</code>”</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">unsigned short</code></td>
+<td>“<code class="sh_cpp">unsigned short int</code>”</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">unsigned long int</code></td>
+<td>“<code class="sh_cpp">unsigned long int</code>”</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">unsigned long</code></td>
+<td>“<code class="sh_cpp">unsigned long int</code>”</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">unsigned long long int</code></td>
+<td>“<code class="sh_cpp">unsigned long long int</code>”</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">unsigned long long</code></td>
+<td>“<code class="sh_cpp">unsigned long long int</code>”</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">signed long int</code></td>
+<td>“<code class="sh_cpp">long int</code>”</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">signed long</code></td>
+<td>“<code class="sh_cpp">long int</code>”</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">signed long long int</code></td>
+<td>“<code class="sh_cpp">long long int</code>”</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">signed long long</code></td>
+<td>“<code class="sh_cpp">long long int</code>”</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">long long int</code></td>
+<td>“<code class="sh_cpp">long long int</code>”</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">long long</code></td>
+<td>“<code class="sh_cpp">long long int</code>”</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">long int</code></td>
+<td>“<code class="sh_cpp">long int</code>”</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">long</code></td>
+<td>“<code class="sh_cpp">long int</code>”</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">signed short int</code></td>
+<td>“<code class="sh_cpp">short int</code>”</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">signed short</code></td>
+<td>“<code class="sh_cpp">short int</code>”</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">short int</code></td>
+<td>“<code class="sh_cpp">short int</code>”</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">short</code></td>
+<td>“<code class="sh_cpp">short int</code>”</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">wchar_t</code></td>
+<td>“<code class="sh_cpp">wchar_t</code>”</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">float</code></td>
+<td>“<code class="sh_cpp">float</code>”</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">double</code></td>
+<td>“<code class="sh_cpp">double</code>”</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">long double</code></td>
+<td>“<code class="sh_cpp">long double</code>”</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">void</code></td>
+<td>“<code class="sh_cpp">void</code>”</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">auto</code></td>
+<td>placeholder for a type to be deduced</td>
+</tr>
+<tr>
+<td>
+<code class="sh_cpp">decltype(</code><i class="nonterminal">expression</i><code class="sh_cpp">)</code>
+</td>
+<td>the type as defined below</td>
+</tr>
+</tbody>
+</table>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>When multiple <i class="nonterminal">simple-type-specifier</i>s are allowed, they can be freely intermixed with other
+<i class="nonterminal">decl-specifier</i>s in any order. <span class="note">[ <em>Note:</em> It is implementation-defined whether objects of <code class="sh_cpp">char</code> type and
+certain bit-fields (<a title="class.bit" href="class.bit.html">9.6</a>) are represented as signed or unsigned quantities. The <code class="sh_cpp">signed</code> specifier
+forces <code class="sh_cpp">char</code> objects and bit-fields to be signed; it is redundant in other contexts. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>The type denoted by <code class="sh_cpp">decltype(e)</code> is defined as follows:</p>
+
+<ul>
+<li>if <code class="sh_cpp">e</code> is an unparenthesized <i class="nonterminal">id-expression</i> or an unparenthesized class member access
+	(<a title="expr.ref " href=".html"></a>), <code class="sh_cpp">decltype(e)</code> is the type of the entity named by <code class="sh_cpp">e</code>. If there is no such
+	entity, or if <code class="sh_cpp">e</code> names a set of overloaded functions, the program is ill-formed;</li>
+<li>otherwise, if <code class="sh_cpp">e</code> an xvalue, <code class="sh_cpp">decltype(e)</code> is <code class="sh_cpp">T&amp;&amp;</code>, where <code class="sh_cpp">T</code>
+	is the type of <code class="sh_cpp">e</code>;</li>
+<li>otherwise, if <code class="sh_cpp">e</code> is an lvalue, <code class="sh_cpp">decltype(e)</code> is <code class="sh_cpp">T&amp;</code>, where <code class="sh_cpp">T</code> is
+	the type of <code class="sh_cpp">e</code>;</li>
+<li>otherwise, <code class="sh_cpp">decltype(e)</code> is the type of <code class="sh_cpp">e</code>.</li>
+</ul>
+
+<p>The operand of the <code class="sh_cpp">decltype</code> specifier is an unevaluated operand (Clause <a title="expr" href="expr.html">5</a>).</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">const int&amp;&amp; foo();
+int i;
+struct A { double x; };
+const A* a = new A();
+decltype(foo()) x1 = i;     // type is const int&amp;&amp;
+decltype(i) x2;             // type is int
+decltype(a-&gt;x) x3;          // type is double
+decltype((a-&gt;x)) x4 = x3;   // type is const double&amp;</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<div class="note">
+<p><a class="anchor" id="p5" href="#p5">5</a>[ <em>Note:</em> in the case where the operand of a <i class="nonterminal">decltype-specifier</i> is a function call and the return type of
+the function is a class type, a special rule (<a title="expr.call" href="expr.call.html">5.2.2</a>) ensures that the return type is not required to be
+complete (as it would be if the call appeared in a sub-expression or outside of a <i class="nonterminal">decltype-specifier</i>). In this
+context, the common purpose of writing the expression is merely to refer to its type. In that sense, a
+<i class="nonterminal">decltype-specifier</i> is analogous to a use of a <i class="nonterminal">typedef-name</i>, so the usual reasons for requiring a
+complete type do not apply. In particular, it is not necessary to allocate storage for a temporary object or to enforce
+the semantic constraints associated with invoking the type’s destructor.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">template&lt;class T&gt; struct A { ~A() = delete; };
+template&lt;class T&gt; auto h()
+  -&gt; A&lt;T&gt;;
+template&lt;class T&gt; auto i(T)     // identity
+  -&gt; T;
+template&lt;class T&gt; auto f(T)     // #1
+  -&gt; decltype(i(h&lt;T&gt;()));       // forces completion of A&lt;T&gt; and implicitly uses
+                                // A&lt;T&gt;::~A() for the temporary introduced by the
+                                // use of h(). (A temporary is not introduced
+                                // as a result of the use of i().)
+template&lt;class T&gt; auto f(T)     // #2
+  -&gt; void;
+auto g() -&gt; void {
+  f(42);                        // OK: calls #2. (#1 is not a viable candidate: type
+                                // deduction fails (<a title="temp.deduct" href="temp.deduct.html">14.8.2</a>) because A&lt;int&gt;::~A()
+                                // is implicitly used in its decltype-specifier)
+}
+template&lt;class T&gt; auto q(T)
+  -&gt; decltype(h&lt;T&gt;());          // does not force completion of A&lt;T&gt;; A&lt;T&gt;::~A() is
+                                // not implicitly used within the context of this decltype-specifier
+void r() {
+    q(42);                      // Error: deduction against q succeeds, so overload resolution
+                                // selects the specialization “q(T) -&gt; decltype(h&lt;T&gt;()) [with T=int]”.
+                                // The return type is A&lt;int&gt;, so a temporary is introduced and its
+                                // destructor is used, so the program is ill-formed.
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+<p> — <em>end note</em> ]</p>
+</div>
+
+</body>
+</html>
+

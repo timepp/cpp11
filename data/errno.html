@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Error numbers</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[errno]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[errno]"></object>19.4 Error numbers </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The header <dfn><code class="header">&lt;cerrno&gt;</code></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="&lt;cerrno&gt;"></object> is described in Table <a href="errno.html#t43">43</a>. Its contents are the same as
+the POSIX header <code class="header">&lt;errno.h&gt;</code>, except that <code class="sh_cpp">errno</code> shall be defined as a macro. <span class="note">[ <em>Note:</em> The intent
+is to remain in close alignment with the POSIX standard. — <em>end note</em> ]</span> A separate <code class="sh_cpp">errno</code> value shall be provided
+for each thread.</p>
+
+<table id="t43" class="header_synopsis">
+<caption>Table 43 — Header <code class="header">&lt;cerrno&gt;</code> synopsis</caption>
+<thead><tr>
+<th>Type</th>
+<th>Name(s)</th>
+</tr></thead>
+<tbody>
+<tr>
+<th>Macros:</th>
+<td><pre><code class="sh_cpp">E2BIG           EIO             ENOTDIR
+EACCES          EISCONN         ENOTEMPTY
+EADDRINUSE      EISDIR          ENOTRECOVERABLE
+EADDRNOTAVAIL   ELOOP           ENOTSOCK
+EAFNOSUPPORT    EMFILE          ENOTSUP
+EAGAIN          EMLINK          ENOTTY
+EALREADY        EMSGSIZE        ENXIO
+EBADF           ENAMETOOLONG    EOPNOTSUPP
+EBADMSG         ENETDOWN        EOVERFLOW
+EBUSY           ENETRESET       EOWNERDEAD
+ECANCELED       ENETUNREACH     EPERM
+ECHILD          ENFILE          EPIPE
+ECONNABORTED    ENOBUFS         EPROTO
+ECONNREFUSED    ENODATA         EPROTONOSUPPORT
+ECONNRESET      ENODEV          EPROTOTYPE
+EDEADLK         ENOENT          ERANGE
+EDESTADDRREQ    ENOEXEC         EROFS
+EDOM            ENOLCK          ESPIPE
+EEXIST          ENOLINK         ESRCH
+EFAULT          ENOMEM          ETIME
+EFBIG           ENOMSG          ETIMEDOUT
+EHOSTUNREACH    ENOPROTOOPT     ETXTBSY
+EIDRM           ENOSPC          EWOULDBLOCK
+EILSEQ          ENOSR           EXDEV
+EINPROGRESS     ENOSTR          errno
+EINTR           ENOSYS
+EINVAL          ENOTCONN</code></pre></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>
+

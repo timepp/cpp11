@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class template back_insert_iterator</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[back.insert.iterator]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[back.insert.iterator]"></object>24.5.2.1 Class template <code class="sh_cpp"><dfn>back_insert_iterator</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="back_insert_iterator"></object></code> </h4>
+
+<pre><code class="sh_cpp">namespace std {
+  template &lt;class Container&gt;
+  class back_insert_iterator :
+    public iterator&lt;output_iterator_tag,void,void,void,void&gt; {
+  protected:
+    Container* container;
+
+  public:
+    typedef Container container_type;
+    explicit back_insert_iterator(Container&amp; x);
+    back_insert_iterator&lt;Container&gt;&amp;
+      operator=(const typename Container::value_type&amp; value);
+    back_insert_iterator&lt;Container&gt;&amp;
+      operator=(typename Container::value_type&amp;&amp; value);
+
+    back_insert_iterator&lt;Container&gt;&amp; operator*();
+    back_insert_iterator&lt;Container&gt;&amp; operator++();
+    back_insert_iterator&lt;Container&gt; operator++(int);
+  };
+
+  template &lt;class Container&gt;
+    back_insert_iterator&lt;Container&gt; back_inserter(Container&amp; x);
+}</code></pre>
+</body>
+</html>
+

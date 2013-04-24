@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class template poisson_distribution</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[rand.dist.pois]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[rand.dist.pois]"></object>26.5.8.4 Poisson distributions </h4>
+
+<h5>
+<dfn class="label">[rand.dist.pois.poisson]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[rand.dist.pois.poisson]"></object>26.5.8.4.1 Class template <code class="sh_cpp"><dfn>poisson_distribution</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="poisson_distribution"></object></code> </h5>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A <code class="sh_cpp">poisson_distribution</code> random number distribution produces integer values <var>i</var> ≤ 0
+distributed according to the discrete probability function <span class="math"><var>P</var>(<var>i</var> | μ) =
+<var>e</var><sup>−<var>μ</var></sup><var>μ</var><sup><var>i</var></sup> / <var>i</var>!</span>. The distribution
+parameter <var>μ</var> is also known as this distribution’s <dfn>mean</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="mean"></object>.</p>
+
+<pre><code class="sh_cpp">template&lt;class IntType = int&gt;
+  class poisson_distribution
+{
+public:
+  // types
+  typedef IntType result_type;
+  typedef <em>unspecified</em> param_type;
+
+  // constructors and reset functions
+  explicit poisson_distribution(double mean = 1.0);
+  explicit poisson_distribution(const param_type&amp; parm);
+  void reset();
+
+  // generating functions
+  template&lt;class URNG&gt;
+    result_type operator()(URNG&amp; g);
+  template&lt;class URNG&gt;
+    result_type operator()(URNG&amp; g, const param_type&amp; parm);
+
+  // property functions
+  double mean() const;
+  param_type param() const;
+  void param(const param_type&amp; parm);
+  result_type min() const;
+  result_type max() const;
+};</code></pre>
+
+<h6><code class="sh_cpp">explicit <dfn>poisson_distribution</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="poisson_distribution"></object>(double mean = 1.0);</code></h6>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Requires:</em> 0 &lt; <code class="sh_cpp">mean</code>.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Effects:</em> Constructs a <code class="sh_cpp">poisson_distribution</code> object; <code class="sh_cpp">mean</code> corresponds to the parameter
+of the distribution.</p>
+
+<h6><code class="sh_cpp">double <dfn>mean</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="mean"></object>() const;</code></h6>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><em>Returns:</em> The value of the <code class="sh_cpp">mean</code> parameter with which the object was constructed.</p>
+</body>
+</html>
+

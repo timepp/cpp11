@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Mutual exclusion</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[thread.mutex]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[thread.mutex]"></object>30.4 Mutual exclusion </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>This section provides mechanisms for mutual exclusion: mutexes, locks, and call once. These mechanisms ease the
+production of race-free programs (<a title="intro.multithread" href="intro.multithread.html">1.10</a>).</p>
+
+<h3>Header <code class="header">&lt;mutex&gt;</code> synopsis</h3>
+
+<pre><code class="sh_cpp">namespace std {
+  class mutex;
+  class recursive_mutex;
+  class timed_mutex;
+  class recursive_timed_mutex;
+
+  struct defer_lock_t { };
+  struct try_to_lock_t { };
+  struct adopt_lock_t { };
+
+  constexpr defer_lock_t defer_lock { };
+  constexpr try_to_lock_t try_to_lock { };
+  constexpr adopt_lock_t adopt_lock { };
+
+  template &lt;class Mutex&gt; class lock_guard;
+  template &lt;class Mutex&gt; class unique_lock;
+  template &lt;class Mutex&gt;
+    void swap(unique_lock&lt;Mutex&gt;&amp; x, unique_lock&lt;Mutex&gt;&amp; y) noexcept;
+
+  template &lt;class L1, class L2, class... L3&gt; int try_lock(L1&amp;, L2&amp;, L3&amp;...);
+  template &lt;class L1, class L2, class... L3&gt; void lock(L1&amp;, L2&amp;, L3&amp;...);
+
+  struct once_flag {
+    constexpr once_flag() noexcept;
+
+    once_flag(const once_flag&amp;) = delete;
+    once_flag&amp; operator=(const once_flag&amp;) = delete;
+  };
+
+  template&lt;class Callable, class ...Args&gt;
+    void call_once(once_flag&amp; flag, Callable func, Args&amp;&amp;... args);
+}</code></pre>
+</body>
+</html>
+

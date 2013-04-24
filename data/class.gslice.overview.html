@@ -1,0 +1,218 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>The gslice class overview</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[class.gslice]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[class.gslice]"></object>26.6.6 The <code class="sh_cpp"><dfn>gslice</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="gslice"></object></code> class </h3>
+
+<h4>
+<dfn class="label">[class.gslice.overview]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[class.gslice.overview]"></object>26.6.6.1 The <code class="sh_cpp">gslice</code> class overview </h4>
+
+<pre><code class="sh_cpp">namespace std {
+  class gslice {
+  public:
+    gslice();
+    gslice(size_t s, const valarray&lt;size_t&gt;&amp; l, const valarray&lt;size_t&gt;&amp; d);
+
+    size_t           start() const;
+    valarray&lt;size_t&gt; size() const;
+    valarray&lt;size_t&gt; stride() const;
+  };
+}</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>This class represents a generalized slice out of an array. A <code class="sh_cpp">gslice</code> is defined by a starting
+offset (<var>s</var>), a set of lengths (<var>l</var><sub><var>j</var></sub>), and a set of strides
+(<var>d</var><sub><var>j</var></sub>). The number of lengths shall equal the number of strides.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>A <code class="sh_cpp">gslice</code> represents a mapping from a set of indices (<var>i</var><sub><var>j</var></sub>), equal
+in number to the number of strides, to a single index <var>k</var>. It is useful for building multidimensional array
+classes using the <code class="sh_cpp">valarray</code> template, which is one-dimensional. The set of one-dimensional index values
+specified by a <code class="sh_cpp">gslice</code> are <span class="math"><var>k</var> = <var>s</var> + ∑<sub><var>j</var></sub>
+<var>i</var><sub><var>j</var></sub> <var>d</var><sub><var>j</var></sub></span> where the multidimensional indices
+<var>i</var><sub><var>j</var></sub> range in value from 0 to <var>l</var><sub><var>i</var><var>j</var></sub> − 1.</p>
+
+<div class="example">
+<p><a class="anchor" id="p3" href="#p3">3</a>[ <em>Example:</em> The <code class="sh_cpp">gslice</code> specification</p>
+
+<pre><code class="sh_cpp">start = 3
+length = {2, 4, 3}
+stride = {19, 4, 1}</code></pre>
+
+<p>yields the sequence of one-dimensional indices <span class="math"><var>k</var> = 3 + (0, 1) × 19 + (0, 1, 2, 3) × 4 +
+(0, 1, 2) × 1</span> which are ordered as shown in the following table:</p>
+
+<table class="right-aligned">
+<thead>
+<tr>
+<th>(<var>i</var><sub>0</sub>,</th>
+<th>
+<var>i</var><sub>1</sub>,</th>
+<th>
+<var>i</var><sub>2</sub>,</th>
+<th>
+<var>k</var>)=</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(0,</td>
+<td>0,</td>
+<td>0,</td>
+<td>3),</td>
+</tr>
+<tr>
+<td>(0,</td>
+<td>0,</td>
+<td>1,</td>
+<td>4),</td>
+</tr>
+<tr>
+<td>(0,</td>
+<td>0,</td>
+<td>2,</td>
+<td>5),</td>
+</tr>
+<tr>
+<td>(0,</td>
+<td>1,</td>
+<td>0,</td>
+<td>7),</td>
+</tr>
+<tr>
+<td>(0,</td>
+<td>1,</td>
+<td>1,</td>
+<td>8),</td>
+</tr>
+<tr>
+<td>(0,</td>
+<td>1,</td>
+<td>2,</td>
+<td>9),</td>
+</tr>
+<tr>
+<td>(0,</td>
+<td>2,</td>
+<td>0,</td>
+<td>11),</td>
+</tr>
+<tr>
+<td>(0,</td>
+<td>2,</td>
+<td>1,</td>
+<td>12),</td>
+</tr>
+<tr>
+<td>(0,</td>
+<td>2,</td>
+<td>2,</td>
+<td>13),</td>
+</tr>
+<tr>
+<td>(0,</td>
+<td>3,</td>
+<td>0,</td>
+<td>15),</td>
+</tr>
+<tr>
+<td>(0,</td>
+<td>3,</td>
+<td>1,</td>
+<td>16),</td>
+</tr>
+<tr>
+<td>(0,</td>
+<td>3,</td>
+<td>2,</td>
+<td>17),</td>
+</tr>
+<tr>
+<td>(1,</td>
+<td>0,</td>
+<td>0,</td>
+<td>22),</td>
+</tr>
+<tr>
+<td>(1,</td>
+<td>0,</td>
+<td>1,</td>
+<td>23),</td>
+</tr>
+<tr><td colspan="4">…</td></tr>
+<tr>
+<td>(1,</td>
+<td>3,</td>
+<td>2,</td>
+<td>36)</td>
+</tr>
+</tbody>
+</table>
+
+<p>That is, the highest-ordered index turns fastest. — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>It is possible to have degenerate generalized slices in which an address is repeated.</p>
+
+<div class="example">
+<p><a class="anchor" id="p5" href="#p5">5</a>[ <em>Example:</em> If the stride parameters in the previous example are changed to {1, 1, 1}, the first few elements of
+the resulting sequence of indices will be</p>
+
+<table class="right-aligned">
+<tbody>
+<tr>
+<td>(0,</td>
+<td>0,</td>
+<td>0,</td>
+<td>3),</td>
+</tr>
+<tr>
+<td>(0,</td>
+<td>0,</td>
+<td>1,</td>
+<td>4),</td>
+</tr>
+<tr>
+<td>(0,</td>
+<td>0,</td>
+<td>2,</td>
+<td>5),</td>
+</tr>
+<tr>
+<td>(0,</td>
+<td>1,</td>
+<td>0,</td>
+<td>4),</td>
+</tr>
+<tr>
+<td>(0,</td>
+<td>1,</td>
+<td>1,</td>
+<td>5),</td>
+</tr>
+<tr>
+<td>(0,</td>
+<td>1,</td>
+<td>2,</td>
+<td>6),</td>
+</tr>
+<tr><td colspan="4">…</td></tr>
+</tbody>
+</table>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>If a degenerate slice is used as the argument to the non-const version of <code class="sh_cpp">operator[](const
+gslice&amp;)</code>, the resulting behavior is undefined.</p>
+</body>
+</html>
+

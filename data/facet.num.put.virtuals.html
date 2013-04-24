@@ -1,0 +1,308 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>num_put virtual functions</title>
+</head>
+<body>
+<h5>
+<dfn class="label">[facet.num.put.virtuals]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[facet.num.put.virtuals]"></object>22.4.2.2.2 <code class="sh_cpp">num_put</code> virtual functions </h5>
+
+<h6><code class="sh_cpp">iter_type <dfn>do_put</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="do_put"></object>(iter_type out, ios_base&amp; str, char_type fill,
+  long val) const;
+iter_type do_put(iter_type out, ios_base&amp; str, char_type fill,
+  long long val) const;
+iter_type do_put(iter_type out, ios_base&amp; str, char_type fill,
+  unsigned long val) const;
+iter_type do_put(iter_type out, ios_base&amp; str, char_type fill,
+  unsigned long long val) const;
+iter_type do_put(iter_type out, ios_base&amp; str, char_type fill,
+  double val) const;
+iter_type do_put(iter_type out, ios_base&amp; str, char_type fill,
+  long double val) const;
+iter_type do_put(iter_type out, ios_base&amp; str, char_type fill,
+  const void* val) const;</code></h6>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Effects:</em> Writes characters to the sequence <code class="sh_cpp">out</code>, formatting <code class="sh_cpp">val</code> as desired. In the
+following description, a local variable initialized with</p>
+
+<pre><code class="sh_cpp">locale loc = str.getloc();</code></pre>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The details of this operation occur in several stages:</p>
+
+<ul>
+<li>Stage 1: Determine a printf conversion specifier <code class="sh_cpp">spec</code> and determining the characters that would be
+	printed by <code class="sh_cpp">printf</code> (<a title="c.files" href="c.files.html">27.9.2</a>) given this conversion specifier for
+
+<pre><code class="sh_cpp">printf(spec, val)</code></pre>
+
+assuming that the current locale is the <code class="sh_cpp">"C"</code> locale.</li>
+
+<li>Stage 2: Adjust the representation by converting each <code class="sh_cpp">char</code> determined by stage 1 to a
+	<code class="sh_cpp">charT</code> using a conversion and values returned by members of <code class="sh_cpp">use_facet&lt; numpunct&lt;charT&gt;
+	&gt;(str.getloc())</code>
+</li>
+<li>Stage 3: Determine where padding is required.</li>
+<li>Stage 4: Insert the sequence into the <code class="sh_cpp">out</code>.</li>
+</ul>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>Detailed descriptions of each stage follow.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><em>Returns:</em> <code class="sh_cpp">out</code>.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><strong>Stage 1:</strong> The first action of stage 1 is to determine a conversion specifier. The tables that
+describe this determination use the following local variables</p>
+
+<pre><code class="sh_cpp">fmtflags flags = str.flags();
+fmtflags basefield =  (flags &amp; (ios_base::basefield));
+fmtflags uppercase =  (flags &amp; (ios_base::uppercase));
+fmtflags floatfield = (flags &amp; (ios_base::floatfield));
+fmtflags showpos =    (flags &amp; (ios_base::showpos));
+fmtflags showbase =   (flags &amp; (ios_base::showbase));</code></pre>
+
+<p>All tables used in describing stage 1 are ordered. That is, the first line whose condition is true applies. A line
+without a condition is the default behavior when none of the earlier lines apply.</p>
+
+<p>For conversion from an integral type other than a character type, the function determines the integral conversion
+specifier as indicated in Table <a href="facet.num.put.virtuals.html#t87">87</a>.</p>
+
+<table id="t87" class="bordered hruled padded">
+<caption>Table 87 — Integer conversions</caption>
+<thead><tr>
+<th>State</th>
+<th>
+<code class="sh_cpp">stdio</code> equivalent</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code class="sh_cpp">basefield == ios_base::oct</code></td>
+<td><code class="sh_cpp">%o</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">(basefield == ios_base::hex) &amp;&amp; !uppercase</code></td>
+<td><code class="sh_cpp">%x</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">(basefield == ios_base::hex)</code></td>
+<td><code class="sh_cpp">%X</code></td>
+</tr>
+<tr>
+<td>for a signed integral type</td>
+<td><code class="sh_cpp">%d</code></td>
+</tr>
+<tr>
+<td>for an unsigned integral type</td>
+<td><code class="sh_cpp">%u</code></td>
+</tr>
+</tbody>
+</table>
+
+<p>For conversion from a floating-point type, the function determines the floating-point conversion specifier as
+indicated in Table <a href="facet.num.put.virtuals.html#t88">88</a>.</p>
+
+<table id="t88" class="bordered hruled padded">
+<caption>Table 88 — Floating-point conversions</caption>
+<thead><tr>
+<th>State</th>
+<th>
+<code class="sh_cpp">stdio</code> equivalent</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code class="sh_cpp">floatfield == ios_base::fixed</code></td>
+	<td><code class="sh_cpp">%f</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">floatfield == ios_base::scientific &amp;&amp; !uppercase</code></td>
+	<td><code class="sh_cpp">%e</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">floatfield == ios_base::scientific</code></td>
+	<td><code class="sh_cpp">%E</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">floatfield == (ios_base::fixed | ios_base::scientific) &amp;&amp; !uppercase</code></td>
+	<td><code class="sh_cpp">%a</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">floatfield == (ios_base::fixed | ios_base::scientific)</code></td>
+	<td><code class="sh_cpp">%A</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">!uppercase</code></td>
+	<td><code class="sh_cpp">%g</code></td>
+</tr>
+<tr>
+<td><em>otherwise</em></td>
+	<td><code class="sh_cpp">%G</code></td>
+</tr>
+</tbody>
+</table>
+
+<p>For conversions from an integral or floating-point type a length modifier is added to the conversion specifier as
+indicated in Table <a href="facet.num.put.virtuals.html#t89">89</a>.</p>
+
+<table id="t89" class="bordered hruled padded">
+<caption>Table 89 — Length modifier</caption>
+<thead><tr>
+<th>Type</th>
+<th>Length modifier</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code class="sh_cpp">long</code></td>
+<td><code class="sh_cpp">l</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">long long</code></td>
+<td><code class="sh_cpp">ll</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">unsigned long</code></td>
+<td><code class="sh_cpp">l</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">unsigned long long</code></td>
+<td><code class="sh_cpp">ll</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">long double</code></td>
+<td><code class="sh_cpp">L</code></td>
+</tr>
+<tr>
+<td><em>otherwise</em></td>
+<td><em>none</em></td>
+</tr>
+</tbody>
+</table>
+
+<p>The conversion specifier has the following optional additional qualifiers prepended as indicated in Table <a href="facet.num.put.virtuals.html#t90">90</a>.</p>
+
+<table id="t90" class="bordered hruled padded">
+<caption>Table 90 — Numeric conversions</caption>
+<thead><tr>
+<th>Type(s)</th>
+<th>State</th>
+<th>
+<code class="sh_cpp">stdio</code> equivalent</th>
+</tr></thead>
+<tbody>
+<tr>
+<td rowspan="2">an integral type</td>
+	<td><code class="sh_cpp">flags &amp; showpos</code></td>
+<td><code class="sh_cpp">+</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">flags &amp; showbase</code></td>
+<td><code class="sh_cpp">#</code></td>
+</tr>
+<tr>
+<td rowspan="2">a floating-point type</td>
+	<td><code class="sh_cpp">flags &amp; showpos</code></td>
+<td><code class="sh_cpp">+</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">flags &amp; showpoint</code></td>
+<td><code class="sh_cpp">#</code></td>
+</tr>
+</tbody>
+</table>
+
+<p>For conversion from a floating-point type, if <code class="sh_cpp">floatfield != (ios_base::fixed | ios_base::scientific)</code>,
+<code class="sh_cpp">str.precision()</code> is specified as precision in the conversion specification. Otherwise, no precision is
+specified.</p>
+
+<p>For conversion from <code class="sh_cpp">void*</code> the specifier is <code class="sh_cpp">%p</code>.</p>
+
+<p>The representations at the end of stage 1 consists of the <code class="sh_cpp">char</code>’s that would be printed by a call of
+<code class="sh_cpp">printf(s, val)</code> where <code class="sh_cpp">s</code> is the conversion specifier determined above.</p>
+
+<p><strong>Stage 2:</strong> Any character <code class="sh_cpp">c</code> other than a decimal point (<code class="sh_cpp">.</code>) is converted to a
+<code class="sh_cpp">charT</code> via <code class="sh_cpp">use_facet&lt;ctype&lt;charT&gt; &gt;(loc).widen(c)</code></p>
+
+<p>A local variable <code class="sh_cpp">punct</code> is initialized via</p>
+
+<pre><code class="sh_cpp">const numpunct&lt;charT&gt;&amp; punct = use_facet&lt; numpunct&lt;charT&gt; &gt;(str.getloc());</code></pre>
+
+<p>For arithmetic types, <code class="sh_cpp">punct.thousands_sep()</code> characters are inserted into the sequence as determined by
+the value returned by <code class="sh_cpp">punct.do_grouping()</code> using the method described in <a title="facet.numpunct.virtuals" href="facet.numpunct.virtuals.html">22.4.3.1.2</a></p>
+
+<p>Decimal point characters (<code class="sh_cpp">.</code>) are replaced by <code class="sh_cpp">punct.decimal_point()</code></p>
+
+<p><strong>Stage 3:</strong> A local variable is initialized as</p>
+
+<pre><code class="sh_cpp">fmtflags adjustfield = (flags &amp; (ios_base::adjustfield));</code></pre>
+
+<p>The location of any padding<sup class="footnote"><a href="#fn249">249</a></sup> is determined according to Table <a href="facet.num.put.virtuals.html#t91">91</a>.</p>
+
+<table id="t91" class="bordered hruled padded">
+<caption>Table 91 — Fill padding</caption>
+<thead><tr>
+<th>State</th>
+<th>Location</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code class="sh_cpp">adjustfield == ios_base::left</code></td>
+	<td>pad after</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">adjustfield == ios_base::right</code></td>
+	<td>pad before</td>
+</tr>
+<tr>
+<td>
+<code class="sh_cpp">adjustfield == internal</code> and a sign occurs in the representation</td>
+	<td>pad after the sign</td>
+</tr>
+<tr>
+<td>
+<code class="sh_cpp">adjustfield == internal</code> and representation after stage 1 began with <code class="sh_cpp">0x</code> or
+		<code class="sh_cpp">0X</code>
+</td>
+	<td>pad after <code class="sh_cpp">x</code> or <code class="sh_cpp">X</code>
+</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">otherwise</code></td>
+	<td>pad before</td>
+</tr>
+</tbody>
+</table>
+
+<p>If <code class="sh_cpp">str.width()</code> is nonzero and the number of <code class="sh_cpp">charT</code>’s in the sequence after stage 2 is less
+than <code class="sh_cpp">str.width()</code>, then enough fill characters are added to the sequence at the position indicated for
+padding to bring the length of the sequence to <code class="sh_cpp">str.width()</code>.</p>
+
+<p><code class="sh_cpp">str.width(0)</code> is called.</p>
+
+<p><strong>Stage 4:</strong> The sequence of <code class="sh_cpp">charT</code>’s at the end of stage 3 are output via</p>
+
+<pre><code class="sh_cpp">*out++ = c</code></pre>
+
+<h6><code class="sh_cpp">iter_type <dfn>do_put</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="do_put"></object>(iter_type out, ios_base&amp; str, char_type fill,
+                 bool val) const;</code></h6>
+
+<p><a class="anchor" id="p6" href="#p6">6</a><em>Returns:</em> If <code class="sh_cpp">(str.flags() &amp; ios_base::boolalpha) == 0</code> returns <code class="sh_cpp">do_put(out, str, fill,
+(int)val)</code>, otherwise obtains a string <code class="sh_cpp">s</code> as if by</p>
+
+<pre><code class="sh_cpp">string_type s =
+  val ? use_facet&lt;ctype&lt;charT&gt; &gt;(loc).truename()
+    : use_facet&lt;ctype&lt;charT&gt; &gt;(loc).falsename();</code></pre>
+
+<p>and then inserts each character <code class="sh_cpp">c</code> of <code class="sh_cpp">s</code> into <code class="sh_cpp">out</code> via <code class="sh_cpp">*out++ = c</code>
+and returns <code class="sh_cpp">out</code>.</p>
+
+
+<div><p class="footnote" id="fn249">249) The conversion specification <code class="sh_cpp">#o</code> generates a leading <code class="sh_cpp">0</code> which is <em>not</em>
+a padding character.</p></div>
+</body>
+</html>
+

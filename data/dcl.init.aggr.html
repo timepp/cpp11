@@ -1,0 +1,241 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Aggregates</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[dcl.init.aggr]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[dcl.init.aggr]"></object>8.5.1 Aggregates </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>An <dfn>aggregate</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="aggregate"></object> is an array or a class (Clause <a title="class" href="class.html">9</a>) with no user-provided constructors
+(<a title="class.ctor" href="class.ctor.html">12.1</a>), no <i class="nonterminal">brace-or-equal-initializer</i>s for non-static data members (<a title="class.mem" href="class.mem.html">9.2</a>), no private or
+protected non-static data members (Clause <a title="class.access" href="class.access.html">11</a>), no base classes (Clause <a title="class.derived" href="class.derived.html">10</a>), and no virtual
+functions (<a title="class.virtual" href="class.virtual.html">10.3</a>).</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>When an aggregate is initialized by an initializer list, as specified in <a title="dcl.init.list" href="dcl.init.list.html">8.5.4</a>, the elements of the
+initializer list are taken as initializers for the members of the aggregate, in increasing subscript or member order.
+Each member is copy-initialized from the corresponding <i class="nonterminal">initializer-clause</i>. If the <i class="nonterminal">initializer-clause</i>
+is an expression and a narrowing conversion (<a title="dcl.init.list" href="dcl.init.list.html">8.5.4</a>) is required to convert the expression, the program is
+ill-formed. <span class="note">[ <em>Note:</em> If an <i class="nonterminal">initializer-clause</i> is itself an initializer list, the member is list-initialized,
+which will result in a recursive application of the rules in this section if the member is an aggregate. — <em>end note</em> ]</span></p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct A {
+  int x;
+  struct B {
+    int i;
+    int j;
+  } b;
+} a = { 1, { 2, 3 } };</code></pre>
+
+<p>initializes <code class="sh_cpp">a.x</code> with 1, <code class="sh_cpp">a.b.i</code> with 2, <code class="sh_cpp">a.b.j</code> with 3. — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>An aggregate that is a class can also be initialized with a single expression not enclosed in braces, as
+described in <a title="dcl.init" href="dcl.init.html">8.5</a>.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>An array of unknown size initialized with a brace-enclosed <i class="nonterminal">initializer-list</i> containing <code class="sh_cpp">n</code>
+<i class="nonterminal">initializer-clause</i>s, where <code class="sh_cpp">n</code> shall be greater than zero, is defined as having <code class="sh_cpp">n</code>
+elements (<a title="dcl.array" href="dcl.array.html">8.3.4</a>).</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">int x[] = { 1, 3, 5 };</code></pre>
+
+<p>declares and initializes <code class="sh_cpp">x</code> as a one-dimensional array that has three elements since no size was
+specified and there are three initializers. — <em>end example</em> ]</p>
+</div>
+
+<p>An empty initializer list <code class="sh_cpp">{}</code> shall not be used as the <i class="nonterminal">initializer-clause</i> for an array of
+unknown bound.<sup class="footnote"><a href="#fn107">107</a></sup></p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>Static data members and anonymous bit fields are not considered members of the class for purposes of aggregate
+initialization.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct A {
+  int i;
+  static int s;
+  int j;
+  int :17;
+  int k;
+} a = { 1, 2, 3 };</code></pre>
+
+<p>Here, the second initializer 2 initializes <code class="sh_cpp">a.j</code> and not the static data member <code class="sh_cpp">A::s</code>, and the
+third initializer 3 initializes <code class="sh_cpp">a.k</code> and not the anonymous bit field before it. — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>An <i class="nonterminal">initializer-list</i> is ill-formed if the number of <i class="nonterminal">initializer-clause</i>s exceeds the number of
+members or elements to initialize.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">char cv[4] = { 'a', 's', 'd', 'f', 0 }; // error</code></pre>
+
+<p>is ill-formed. — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p7" href="#p7">7</a>If there are fewer <i class="nonterminal">initializer-clause</i>s in the list than there are members in the aggregate, then each
+member not explicitly initialized shall be initialized from an empty initializer list (<a title="dcl.init.list" href="dcl.init.list.html">8.5.4</a>).</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct S { int a; const char* b; int c; };
+S ss = { 1, "asdf" };</code></pre>
+
+<p>initializes <code class="sh_cpp">ss.a</code> with 1, <code class="sh_cpp">ss.b</code> with <code class="sh_cpp">"asdf"</code>, and <code class="sh_cpp">ss.c</code> with the
+value of an expression of the form <code class="sh_cpp">int()</code>, that is, <code class="sh_cpp">0</code>. — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p8" href="#p8">8</a>If an aggregate class <code class="sh_cpp">C</code> contains a subaggregate member <code class="sh_cpp">m</code> that has no members for
+purposes of aggregate initialization, the <i class="nonterminal">initializer-clause</i> for <code class="sh_cpp">m</code> shall not be omitted from an
+<i class="nonterminal">initializer-list</i> for an object of type <code class="sh_cpp">C</code> unless the <i class="nonterminal">initializer-clause</i>s for all members
+of <code class="sh_cpp">C</code> following <code class="sh_cpp">m</code> are also omitted.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct S { } s;
+struct A {
+  S s1;
+  int i1;
+  S s2;
+  int i2;
+  S s3;
+  int i3;
+} a = {
+  { },      // Required initialization
+  0,
+  s,        // Required initialization
+  0
+};          // Initialization not required for A::s3 because A::i3 is also not initialized</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p9" href="#p9">9</a>If an incomplete or empty <i class="nonterminal">initializer-list</i> leaves a member of reference type uninitialized, the
+program is ill-formed.</p>
+
+<p><a class="anchor" id="p10" href="#p10">10</a>When initializing a multi-dimensional array, the <i class="nonterminal">initializer-clause</i>s initialize the elements with the
+last (rightmost) index of the array varying the fastest (<a title="dcl.array" href="dcl.array.html">8.3.4</a>).</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">int x[2][2] = { 3, 1, 4, 2 };</code></pre>
+
+<p>initializes <code class="sh_cpp">x[0][0]</code> to <code class="sh_cpp">3</code>, <code class="sh_cpp">x[0][1]</code> to <code class="sh_cpp">1</code>, <code class="sh_cpp">x[1][0]</code> to
+<code class="sh_cpp">4</code>, and <code class="sh_cpp">x[1][1]</code> to <code class="sh_cpp">2</code>. On the other hand,</p>
+
+<pre><code class="sh_cpp">float y[4][3] = {
+  { 1 }, { 2 }, { 3 }, { 4 }
+};</code></pre>
+
+<p>initializes the first column of <code class="sh_cpp">y</code> (regarded as a two-dimensional array) and leaves the rest
+zero. — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p11" href="#p11">11</a>In a declaration of the form</p>
+
+<pre><code class="sh_cpp">T x = { a };</code></pre>
+
+<p>braces can be elided in an <i class="nonterminal">initializer-list</i> as follows.<sup class="footnote"><a href="#fn108">108</a></sup> If the <i class="nonterminal">initializer-list</i>
+begins with a left brace, then the succeeding comma-separated list of <i class="nonterminal">initializer-clause</i>s initializes the
+members of a subaggregate; it is erroneous for there to be more <i class="nonterminal">initializer-clause</i>s than members. If, however,
+the <i class="nonterminal">initializer-list</i> for a subaggregate does not begin with a left brace, then only enough
+<i class="nonterminal">initializer-clause</i>s from the list are taken to initialize the members of the subaggregate; any remaining
+<i class="nonterminal">initializer-clause</i>s are left to initialize the next member of the aggregate of which the current subaggregate
+is a member.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">float y[4][3] = {
+  { 1, 3, 5 },
+  { 2, 4, 6 },
+  { 3, 5, 7 },
+};</code></pre>
+
+<p>is a completely-braced initialization: 1, 3, and 5 initialize the first row of the array <code class="sh_cpp">y[0]</code>, namely
+<code class="sh_cpp">y[0][0]</code>, <code class="sh_cpp">y[0][1]</code>, and <code class="sh_cpp">y[0][2]</code>. Likewise the next two lines initialize
+<code class="sh_cpp">y[1]</code> and <code class="sh_cpp">y[2]</code>. The initializer ends early and therefore <code class="sh_cpp">y[3]</code>’s elements are
+initialized as if explicitly initialized with an expression of the form <code class="sh_cpp">float()</code>, that is, are initialized
+with <code class="sh_cpp">0.0</code>. In the following example, braces in the <i class="nonterminal">initializer-list</i> are elided; however the
+<i class="nonterminal">initializer-list</i> has the same effect as the completely-braced <i class="nonterminal">initializer-list</i> of the above
+example,</p>
+
+<pre><code class="sh_cpp">float y[4][3] = {
+  1, 3, 5, 2, 4, 6, 3, 5, 7
+};</code></pre>
+
+<p>The initializer for <code class="sh_cpp">y</code> begins with a left brace, but the one for <code class="sh_cpp">y[0]</code> does not, therefore
+three elements from the list are used. Likewise the next three are taken successively for <code class="sh_cpp">y[1]</code> and
+<code class="sh_cpp">y[2]</code>. — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p12" href="#p12">12</a>All implicit type conversions (Clause <a title="conv" href="conv.html">4</a>) are considered when initializing the aggregate member with
+an <i class="nonterminal">assignment-expression</i>. If the <i class="nonterminal">assignment-expression</i> can initialize a member, the member is
+initialized. Otherwise, if the member is itself a subaggregate, brace elision is assumed and the
+<i class="nonterminal">assignment-expression</i> is considered for the initialization of the first member of the subaggregate. <span class="note">[ <em>Note:</em> As
+specified above, brace elision cannot apply to subaggregates with no members for purposes of aggregate initialization;
+an <i class="nonterminal">initializer-clause</i> for the entire subobject is required. — <em>end note</em> ]</span></p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct A {
+  int i;
+  operator int();
+};
+struct B {
+  A a1, a2;
+  int z;
+};
+
+A a;
+B b = { 4, a, a };</code></pre>
+
+<p>Braces are elided around the <i class="nonterminal">initializer-clause</i> for <code class="sh_cpp">b.a1.i</code>. <code class="sh_cpp">b.a1.i</code> is initialized
+with 4, <code class="sh_cpp">b.a2</code> is initialized with <code class="sh_cpp">a</code>, <code class="sh_cpp">b.z</code> is initialized with whatever
+<code class="sh_cpp">a.operator int()</code> returns. — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p13" href="#p13">13</a><span class="note">[ <em>Note:</em> An aggregate array or an aggregate class may contain members of a class type with a user-provided
+constructor (<a title="class.ctor" href="class.ctor.html">12.1</a>). Initialization of these aggregate objects is described in <a title="class.expl.init" href="class.expl.init.html">12.6.1</a>. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p14" href="#p14">14</a><span class="note">[ <em>Note:</em> Whether the initialization of aggregates with static storage duration is static or dynamic is specified
+in <a title="basic.start.init" href="basic.start.init.html">3.6.2</a> and <a title="stmt.dcl" href="stmt.dcl.html">6.7</a>. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p15" href="#p15">15</a>When a union is initialized with a brace-enclosed initializer, the braces shall only contain an
+<i class="nonterminal">initializer-clause</i> for the first non-static data member of the union.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">union u { int a; const char* b; };
+u a = { 1 };
+u b = a;
+u c = 1;                // error
+u d = { 0, "asdf" };    // error
+u e = { "asdf" };       // error</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p16" href="#p16">16</a><span class="note">[ <em>Note:</em> As described above, the braces around the <i class="nonterminal">initializer-clause</i> for a union member can be omitted
+if the union is a member of another aggregate. — <em>end note</em> ]</span></p>
+
+
+
+
+<div>
+<p class="footnote" id="fn107">107) The syntax provides for empty <i class="nonterminal">initializer-list</i>s, but nonetheless C++ does not have zero
+length arrays.</p>
+<p class="footnote" id="fn108">108) Braces cannot be elided in other uses of list-initialization.</p>
+</div>
+</body>
+</html>
+

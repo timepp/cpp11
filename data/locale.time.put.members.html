@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>time_put members</title>
+</head>
+<body>
+<h5>
+<dfn class="label">[locale.time.put.members]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[locale.time.put.members]"></object>22.4.5.3.1 <code class="sh_cpp">time_put</code> members </h5>
+
+<pre><code class="sh_cpp">iter_type <dfn>put</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="put"></object>(iter_type s, ios_base&amp; str, char_type fill, const tm* t,
+              const charT* pattern, const charT* pat_end) const;
+iter_type put(iter_type s, ios_base&amp; str, char_type fill, const tm* t,
+              char format, char modifier = 0) const;</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Effects:</em> The first form steps through the sequence from <code class="sh_cpp">pattern</code> to <code class="sh_cpp">pat_end</code>,
+identifying characters that are part of a format sequence. Each character that is not part of a format sequence is
+written to <code class="sh_cpp">s</code> immediately, and each format sequence, as it is identified, results in a call to
+<code class="sh_cpp">do_put</code>; thus, format elements and other characters are interleaved in the output in the order in which they
+appear in the pattern. Format sequences are identified by converting each character <code class="sh_cpp">c</code> to a
+<code class="sh_cpp">char</code> value as if by <code class="sh_cpp">ct.narrow(c,0)</code>, where <code class="sh_cpp">ct</code> is a reference to
+<code class="sh_cpp">ctype&lt;charT&gt;</code> obtained from <code class="sh_cpp">str.getloc()</code>. The first character of each sequence is
+equal to <code class="sh_cpp">'%'</code>, followed by an optional modifier character <code class="sh_cpp">mod</code><sup class="footnote"><a href="#fn254">254</a></sup> and a format
+specifier character <code class="sh_cpp">spec</code> as defined for the function <code class="sh_cpp">strftime</code>. If no modifier character is
+present, <code class="sh_cpp">mod</code> is zero. For each valid format sequence identified, calls <code class="sh_cpp">do_put(s, str, fill, t, spec,
+mod)</code>.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The second form calls <code class="sh_cpp">do_put(s, str, fill, t, format, modifier)</code>.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><span class="note">[ <em>Note:</em> The <code class="sh_cpp">fill</code> argument may be used in the implementation-defined formats or by derivations. A
+space character is a reasonable default for this argument. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><em>Returns:</em> An iterator pointing immediately after the last character produced.</p>
+
+
+<div><p class="footnote" id="fn254">254) Although the C programming language defines no modifiers, most vendors do.</p></div>
+</body>
+</html>
+

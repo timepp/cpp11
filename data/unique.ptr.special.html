@@ -1,0 +1,112 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>unique_ptr specialized algorithms</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[unique.ptr.special]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[unique.ptr.special]"></object>20.7.1.4 <code class="sh_cpp">unique_ptr</code> specialized algorithms </h4>
+
+<h5><code class="sh_cpp">template &lt;class T, class D&gt; void <dfn>swap</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="swap"></object>(unique_ptr&lt;T, D&gt;&amp; x, unique_ptr&lt;T, D&gt;&amp; y) noexcept;</code></h5>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Effects:</em> Calls <code class="sh_cpp">x.swap(y)</code>.</p>
+
+<h5><code class="sh_cpp">template &lt;class T1, class D1, class T2, class D2&gt;
+  bool <dfn>operator==</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator=="></object>(const unique_ptr&lt;T1, D1&gt;&amp; x, const unique_ptr&lt;T2, D2&gt;&amp; y);</code></h5>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Returns:</em> <code class="sh_cpp">x.get() == y.get()</code>.</p>
+
+<h5><code class="sh_cpp">template &lt;class T1, class D1, class T2, class D2&gt;
+  bool <dfn>operator!=</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator!="></object>(const unique_ptr&lt;T1, D1&gt;&amp; x, const unique_ptr&lt;T2, D2&gt;&amp; y);</code></h5>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Returns:</em> <code class="sh_cpp">x.get() != y.get()</code>.</p>
+
+<h5><code class="sh_cpp">template &lt;class T1, class D1, class T2, class D2&gt;
+  bool <dfn>operator&lt;</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator&lt;"></object>(const unique_ptr&lt;T1, D1&gt;&amp; x, const unique_ptr&lt;T2, D2&gt;&amp; y);</code></h5>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><em>Requires:</em> Let <code class="sh_cpp">CT</code> be <code class="sh_cpp">common_type&lt;unique_ptr&lt;T1, D1&gt;::pointer, unique_ptr&lt;T2,
+D2&gt;::pointer&gt;::type</code>. Then the specialization <code class="sh_cpp">less&lt;CT&gt;</code> shall be a function object type
+(<a title="function.objects" href="function.objects.html">20.8</a>) that induces a strict weak ordering (<a title="alg.sorting" href="alg.sorting.html">25.4</a>) on the pointer values.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><em>Returns:</em> <code class="sh_cpp">less&lt;CT&gt;()(x.get(), y.get())</code>.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a><em>Remarks:</em> If <code class="sh_cpp">unique_ptr&lt;T1, D1&gt;::pointer</code> is not implicitly convertible to <code class="sh_cpp">CT</code> or
+<code class="sh_cpp">unique_ptr&lt;T2, D2&gt;::pointer</code> is not implicitly convertible to <code class="sh_cpp">CT</code>, the program is
+ill-formed.</p>
+
+<h5><code class="sh_cpp">template &lt;class T1, class D1, class T2, class D2&gt;
+  bool <dfn>operator&lt;=</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator&lt;="></object>(const unique_ptr&lt;T1, D1&gt;&amp; x, const unique_ptr&lt;T2, D2&gt;&amp; y);</code></h5>
+
+<p><a class="anchor" id="p7" href="#p7">7</a><em>Returns:</em> <code class="sh_cpp">!(y &lt; x)</code>.</p>
+
+<h5><code class="sh_cpp">template &lt;class T1, class D1, class T2, class D2&gt;
+  bool <dfn>operator&gt;</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator&gt;"></object>(const unique_ptr&lt;T1, D1&gt;&amp; x, const unique_ptr&lt;T2, D2&gt;&amp; y);</code></h5>
+
+<p><a class="anchor" id="p8" href="#p8">8</a><em>Returns:</em> <code class="sh_cpp">y &lt; x</code>.</p>
+
+<h5><code class="sh_cpp">template &lt;class T1, class D1, class T2, class D2&gt;
+  bool <dfn>operator&gt;=</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator&gt;="></object>(const unique_ptr&lt;T1, D1&gt;&amp; x, const unique_ptr&lt;T2, D2&gt;&amp; y);</code></h5>
+
+<p><a class="anchor" id="p9" href="#p9">9</a><em>Returns:</em> <code class="sh_cpp">!(x &lt; y)</code>.</p>
+
+<h5><code class="sh_cpp">template &lt;class T, class D&gt;
+  bool <dfn>operator==</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator=="></object>(const unique_ptr&lt;T, D&gt;&amp; x, nullptr_t) noexcept;
+template &lt;class T, class D&gt;
+  bool operator==(nullptr_t, const unique_ptr&lt;T, D&gt;&amp; x) noexcept;</code></h5>
+
+<p><a class="anchor" id="p10" href="#p10">10</a><em>Returns:</em> <code class="sh_cpp">!x</code>.</p>
+
+<h5><code class="sh_cpp">template &lt;class T, class D&gt;
+  bool <dfn>operator!=</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator!="></object>(const unique_ptr&lt;T, D&gt;&amp; x, nullptr_t) noexcept;
+template &lt;class T, class D&gt;
+  bool operator!=(nullptr_t, const unique_ptr&lt;T, D&gt;&amp; x) noexcept;</code></h5>
+
+<p><a class="anchor" id="p11" href="#p11">11</a><em>Returns:</em> <code class="sh_cpp">(bool)x</code>.</p>
+
+<h5><code class="sh_cpp">template &lt;class T, class D&gt;
+  bool <dfn>operator&lt;</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator&lt;"></object>(const unique_ptr&lt;T, D&gt;&amp; x, nullptr_t);
+template &lt;class T, class D&gt;
+  bool operator&lt;(nullptr_t, const unique_ptr&lt;T, D&gt;&amp; x);</code></h5>
+
+<p><a class="anchor" id="p12" href="#p12">12</a><em>Requires:</em> The specialization <code class="sh_cpp">less&lt;unique_ptr&lt;T, D&gt;::pointer&gt;</code> shall be a function
+object type (<a title="function.objects" href="function.objects.html">20.8</a>) that induces a strict weak ordering (<a title="alg.sorting" href="alg.sorting.html">25.4</a>) on the pointer
+values.</p>
+
+<p><a class="anchor" id="p13" href="#p13">13</a><em>Returns:</em> The first template function returns <code class="sh_cpp">less&lt;unique_ptr&lt;T, D&gt;::pointer&gt;()(x.get(),
+nullptr)</code>. The second template function returns <code class="sh_cpp">less&lt;unique_ptr&lt;T, D&gt;::pointer&gt;()(nullptr,
+x.get())</code>.</p>
+
+<h5><code class="sh_cpp">template &lt;class T, class D&gt;
+  bool <dfn>operator&gt;</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator&gt;"></object>(const unique_ptr&lt;T, D&gt;&amp; x, nullptr_t);
+template &lt;class T, class D&gt;
+  bool operator&gt;(nullptr_t, const unique_ptr&lt;T, D&gt;&amp; x);</code></h5>
+
+<p><a class="anchor" id="p14" href="#p14">14</a><em>Returns:</em> The first template function returns <code class="sh_cpp">nullptr &lt; x</code>. The second template function returns
+<code class="sh_cpp">x &lt; nullptr</code>.</p>
+
+<h5><code class="sh_cpp">template &lt;class T, class D&gt;
+  bool <dfn>operator&lt;=</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator&lt;="></object>(const unique_ptr&lt;T, D&gt;&amp; x, nullptr_t);
+template &lt;class T, class D&gt;
+  bool operator&lt;=(nullptr_t, const unique_ptr&lt;T, D&gt;&amp; x);</code></h5>
+
+<p><a class="anchor" id="p15" href="#p15">15</a><em>Returns:</em> The first template function returns <code class="sh_cpp">!(nullptr &lt; x)</code>. The second template function
+returns <code class="sh_cpp">!(x &lt; nullptr)</code>.</p>
+
+<h5><code class="sh_cpp">template &lt;class T, class D&gt;
+  bool <dfn>operator&gt;=</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator&gt;="></object>(const unique_ptr&lt;T, D&gt;&amp; x, nullptr_t);
+template &lt;class T, class D&gt;
+  bool operator&gt;=(nullptr_t, const unique_ptr&lt;T, D&gt;&amp; x);</code></h5>
+
+<p><a class="anchor" id="p16" href="#p16">16</a><em>Returns:</em> The first template function returns <code class="sh_cpp">!(x &lt; nullptr)</code>. The second template function
+returns <code class="sh_cpp">!(nullptr &lt; x)</code>.</p>
+</body>
+</html>
+

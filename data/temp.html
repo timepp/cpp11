@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Templates</title>
+</head>
+<body>
+<h1>
+<dfn class="label">[temp]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[temp]"></object>14 Templates </h1>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A <dfn>template</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="template"></object> defines a family of classes or functions or an alias for a family of types.</p>
+
+<dl>
+<dt>
+<dfn><i class="nonterminal">template-declaration</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="template-declaration"></object>:</dt>
+	<dd>
+<code class="sh_cpp">template</code> <code class="sh_cpp">&lt;</code> <i class="nonterminal">template-parameter-list</i> <code class="sh_cpp">&gt;</code> <i class="nonterminal">declaration</i>
+</dd>
+<dt>
+<dfn><i class="nonterminal">template-parameter-list</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="template-parameter-list"></object>:</dt>
+	<dd><i class="nonterminal">template-parameter</i></dd>
+	<dd>
+<i class="nonterminal">template-parameter-list</i> <code class="sh_cpp">,</code> <i class="nonterminal">template-parameter</i>
+</dd>
+</dl>
+
+<p><span class="note">[ <em>Note:</em> The <code class="sh_cpp">&gt;</code> token following the <i class="nonterminal">template-parameter-list</i> of a <i class="nonterminal">template-declaration</i>
+may be the product of replacing a <code class="sh_cpp">&gt;&gt;</code> token by two consecutive <code class="sh_cpp">&gt;</code> tokens
+(<a title="temp.names" href="temp.names.html">14.2</a>). — <em>end note</em> ]</span></p>
+
+<p>The <i class="nonterminal">declaration</i> in a <i class="nonterminal">template-declaration</i> shall</p>
+
+<ul>
+<li>declare or define a function or a class, or</li>
+<li>define a member function, a member class, a member enumeration, or a static data member of a class template or of a class nested within a
+	class template, or</li>
+<li>define a member template of a class or class template, or</li>
+<li>be an <i class="nonterminal">alias-declaration</i>.</li>
+</ul>
+
+<p>A <i class="nonterminal">template-declaration</i> is a <i class="nonterminal">declaration</i>. A <i class="nonterminal">template-declaration</i> is also a definition if
+its <i class="nonterminal">declaration</i> defines a function, a class, or a static data member.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>A <i class="nonterminal">template-declaration</i> can appear only as a namespace scope or class scope declaration. In a function
+template declaration, the last component of the <i class="nonterminal">declarator-id</i> shall not be a <i class="nonterminal">template-id</i>. <span class="note">[ <em>Note:</em> That
+last component may be an <i class="nonterminal">identifier</i>, an <i class="nonterminal">operator-function-id</i>, a <i class="nonterminal">conversion-function-id</i>, or a
+<i class="nonterminal">literal-operator-id</i>. In a class template declaration, if the class name is a <i class="nonterminal">simple-template-id</i>, the
+declaration declares a class template partial specialization (<a title="temp.class.spec" href="temp.class.spec.html">14.5.5</a>). — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>In a <i class="nonterminal">template-declaration</i>, explicit specialization, or explicit instantiation the
+<i class="nonterminal">init-declarator-list</i> in the declaration shall contain at most one declarator. When such a declaration is used
+to declare a class template, no declarator is permitted.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>A template name has linkage (<a title="basic.link" href="basic.link.html">3.5</a>). A non-member function template can have internal linkage; any
+other template name shall have external linkage. Specializations (explicit or implicit) of a template that has internal
+linkage are distinct from all specializations in other translation units. A template, a template explicit specialization
+(<a title="temp.expl.spec" href="temp.expl.spec.html">14.7.3</a>), and a class template partial specialization shall not have C linkage. Use of a linkage
+specification other than C or C++ with any of these constructs is conditionally-supported, with implementation-defined
+semantics. Template definitions shall obey the one definition rule (<a title="basic.def.odr" href="basic.def.odr.html">3.2</a>). <span class="note">[ <em>Note:</em> Default arguments for
+function templates and for member functions of class templates are considered definitions for the purpose of template
+instantiation (<a title="temp.decls" href="temp.decls.html">14.5</a>) and must also obey the one definition rule. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>A class template shall not have the same name as any other template, class, function, variable, enumeration,
+enumerator, namespace, or type in the same scope (<a title="basic.scope" href="basic.scope.declarative.html">3.3</a>), except as specified in (<a title="temp.class.spec" href="temp.class.spec.html">14.5.5</a>). Except
+that a function template can be overloaded either by (non-template) functions with the same name or by other function
+templates with the same name (<a title="temp.over" href="temp.over.html">14.8.3</a>), a template name declared in namespace scope or in class scope shall be
+unique in that scope.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>A function template, member function of a class template, or static data member of a class template shall be
+defined in every translation unit in which it is implicitly instantiated (<a title="temp.inst" href="temp.inst.html">14.7.1</a>) unless the corresponding
+specialization is explicitly instantiated (<a title="temp.explicit" href="temp.explicit.html">14.7.2</a>) in some translation unit; no diagnostic is required.</p>
+</body>
+</html>
+

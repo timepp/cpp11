@@ -1,0 +1,233 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Declarators</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[gram.decl]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[gram.decl]"></object>A.7 Declarators </h2>
+<dl>
+<dt>
+<i class="nonterminal">init-declarator-list</i>:</dt>
+	<dd><i class="nonterminal">init-declarator</i></dd>
+	<dd>
+<i class="nonterminal">init-declarator-list</i> <code class="sh_cpp">,</code> <i class="nonterminal">init-declarator</i>
+</dd>
+<dt>
+<i class="nonterminal">init-declarator</i>:</dt>
+	<dd>
+<i class="nonterminal">declarator</i> <i class="nonterminal">initializer</i><sub class="opt">opt</sub>
+</dd>
+<dt>
+<i class="nonterminal">declarator</i>:</dt>
+	<dd><i class="nonterminal">ptr-declarator</i></dd>
+	<dd>
+<i class="nonterminal">noptr-declarator</i> <i class="nonterminal">parameters-and-qualifiers</i> <i class="nonterminal">trailing-return-type</i>
+</dd>
+<dt>
+<i class="nonterminal">ptr-declarator</i>:</dt>
+	<dd><i class="nonterminal">noptr-declarator</i></dd>
+	<dd>
+<i class="nonterminal">ptr-operator</i> <i class="nonterminal">ptr-declarator</i>
+</dd>
+<dt>
+<i class="nonterminal">noptr-declarator</i>:</dt>
+	<dd>
+<i class="nonterminal">declarator-id</i> <i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub>
+</dd>
+	<dd>
+<i class="nonterminal">noptr-declarator</i> <i class="nonterminal">parameters-and-qualifiers</i>
+</dd>
+	<dd>
+<i class="nonterminal">noptr-declarator</i> <code class="sh_cpp">[</code> <i class="nonterminal">constant-expression</i><sub class="opt">opt</sub> <code class="sh_cpp">]</code>
+		<i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub>
+</dd>
+	<dd>
+<code class="sh_cpp">(</code> <i class="nonterminal">ptr-declarator</i> <code class="sh_cpp">)</code>
+</dd>
+<dt>
+<i class="nonterminal">parameters-and-qualifiers</i>:</dt>
+	<dd>
+<code class="sh_cpp">(</code> <i class="nonterminal">parameter-declaration-clause</i> <code class="sh_cpp">)</code> <i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub>
+		<i class="nonterminal">cv-qualifier-seq</i><sub class="opt">opt</sub>
+</dd>
+	<dd>
+<i class="nonterminal">ref-qualifier</i><sub class="opt">opt</sub> <i class="nonterminal">exception-specification</i><sub class="opt">opt</sub>
+</dd>
+<dt>
+<i class="nonterminal">trailing-return-type</i>:</dt>
+	<dd>
+<code class="sh_cpp">-&gt;</code> <i class="nonterminal">trailing-type-specifier-seq</i> <i class="nonterminal">abstract-declarator</i><sub class="opt">opt</sub>
+</dd>
+<dt>
+<i class="nonterminal">ptr-operator</i>:</dt>
+	<dd>
+<code class="sh_cpp">*</code> <i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub> <i class="nonterminal">cv-qualifier-seq</i><sub class="opt">opt</sub>
+</dd>
+	<dd>
+<code class="sh_cpp">&amp;</code> <i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub>
+</dd>
+	<dd>
+<code class="sh_cpp">&amp;&amp;</code> <i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub>
+</dd>
+	<dd>
+<i class="nonterminal">nested-name-specifier</i> <code class="sh_cpp">*</code> <i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub>
+		<i class="nonterminal">cv-qualifier-seq</i><sub class="opt">opt</sub>
+</dd>
+<dt>
+<i class="nonterminal">cv-qualifier-seq</i>:</dt>
+	<dd>
+<i class="nonterminal">cv-qualifier</i> <i class="nonterminal">cv-qualifier-seq</i><sub class="opt">opt</sub>
+</dd>
+<dt>
+<i class="nonterminal">cv-qualifier</i>:</dt>
+	<dd><code class="sh_cpp">const</code></dd>
+	<dd><code class="sh_cpp">volatile</code></dd>
+<dt>
+<i class="nonterminal">ref-qualifier</i>:</dt>
+	<dd><code class="sh_cpp">&amp;</code></dd>
+	<dd><code class="sh_cpp">&amp;&amp;</code></dd>
+<dt>
+<i class="nonterminal">declarator-id</i>:</dt>
+	<dd>
+<code class="sh_cpp">...</code><sub class="opt">opt</sub> <i class="nonterminal">id-expression</i>
+</dd>
+	<dd>
+<i class="nonterminal">nested-name-specifier</i><sub class="opt">opt</sub> <i class="nonterminal">class-name</i>
+</dd>
+<dt>
+<i class="nonterminal">type-id</i>:</dt>
+	<dd>
+<i class="nonterminal">type-specifier-seq</i> <i class="nonterminal">abstract-declarator</i><sub class="opt">opt</sub>
+</dd>
+<dt>
+<i class="nonterminal">abstract-declarator</i>:</dt>
+	<dd><i class="nonterminal">ptr-abstract-declarator</i></dd>
+	<dd>
+<i class="nonterminal">noptr-abstract-declarator</i><sub class="opt">opt</sub> <i class="nonterminal">parameters-and-qualifiers</i> <i class="nonterminal">trailing-return-type</i>
+</dd>
+	<dd><i class="nonterminal">abstract-pack-declarator</i></dd>
+<dt>
+<i class="nonterminal">ptr-abstract-declarator</i>:</dt>
+	<dd><i class="nonterminal">noptr-abstract-declarator</i></dd>
+	<dd>
+<i class="nonterminal">ptr-operator</i> <i class="nonterminal">ptr-abstract-declarator</i><sub class="opt">opt</sub>
+</dd>
+<dt>
+<i class="nonterminal">noptr-abstract-declarator</i>:</dt>
+	<dd>
+<i class="nonterminal">noptr-abstract-declarator</i><sub class="opt">opt</sub> <i class="nonterminal">parameters-and-qualifiers</i>
+</dd>
+	<dd>	<i class="nonterminal">noptr-abstract-declarator</i><sub class="opt">opt</sub> <code class="sh_cpp">[</code> <i class="nonterminal">constant-expression</i><sub class="opt">opt</sub> <code class="sh_cpp">]</code>
+		<i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub>
+</dd>
+	<dd>
+<code class="sh_cpp">(</code> <i class="nonterminal">ptr-abstract-declarator</i> <code class="sh_cpp">)</code>
+</dd>
+<dt>
+<i class="nonterminal">abstract-pack-declarator</i>:</dt>
+	<dd><i class="nonterminal">noptr-abstract-pack-declarator</i></dd>
+	<dd>
+<i class="nonterminal">ptr-operator</i> <i class="nonterminal">abstract-pack-declarator</i>
+</dd>
+<dt>
+<i class="nonterminal">noptr-abstract-pack-declarator</i>:</dt>
+	<dd>
+<i class="nonterminal">noptr-abstract-pack-declarator</i> <i class="nonterminal">parameters-and-qualifiers</i>
+</dd>
+	<dd>
+<i class="nonterminal">noptr-abstract-pack-declarator</i> <code class="sh_cpp">[</code> <i class="nonterminal">constant-expression</i><sub class="opt">opt</sub> <code class="sh_cpp">]</code>
+		<i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub>
+</dd>
+	<dd><code class="sh_cpp">...</code></dd>
+<dt>
+<i class="nonterminal">parameter-declaration-clause</i>:</dt>
+	<dd>
+<i class="nonterminal">parameter-declaration-list</i><sub class="opt">opt</sub> <code class="sh_cpp">...</code><sub class="opt">opt</sub>
+</dd>
+	<dd>
+<i class="nonterminal">parameter-declaration-list</i> <code class="sh_cpp">,</code> <code class="sh_cpp">...</code>
+</dd>
+<dt>
+<i class="nonterminal">parameter-declaration-list</i>:</dt>
+	<dd><i class="nonterminal">parameter-declaration</i></dd>
+	<dd>
+<i class="nonterminal">parameter-declaration-list</i> <code class="sh_cpp">,</code> <i class="nonterminal">parameter-declaration</i>
+</dd>
+<dt>
+<i class="nonterminal">parameter-declaration</i>:</dt>
+	<dd>
+<i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub> <i class="nonterminal">decl-specifier-seq</i> <i class="nonterminal">declarator</i>
+</dd>
+	<dd>
+<i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub> <i class="nonterminal">decl-specifier-seq</i> <i class="nonterminal">declarator</i> <code class="sh_cpp">=</code>
+		<i class="nonterminal">initializer-clause</i>
+</dd>
+	<dd>
+<i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub> <i class="nonterminal">decl-specifier-seq</i>
+		<i class="nonterminal">abstract-declarator</i><sub class="opt">opt</sub>
+</dd>
+	<dd>
+<i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub> <i class="nonterminal">decl-specifier-seq</i> <i class="nonterminal">abstract-declarator</i><sub class="opt">opt</sub>
+		<code class="sh_cpp">=</code> <i class="nonterminal">initializer-clause</i>
+</dd>
+<dt>
+<i class="nonterminal">function-definition</i>:</dt>
+	<dd>
+<i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub> <i class="nonterminal">decl-specifier-seq</i><sub class="opt">opt</sub> <i class="nonterminal">declarator</i>
+		<i class="nonterminal">virt-specifier-seq</i><sub class="opt">opt</sub> <i class="nonterminal">function-body</i>
+</dd>
+<dt>
+<i class="nonterminal">function-body</i>:</dt>
+	<dd>
+<i class="nonterminal">ctor-initializer</i><sub class="opt">opt</sub> <i class="nonterminal">compound-statement</i>
+</dd>
+	<dd><i class="nonterminal">function-try-block</i></dd>
+	<dd>
+<code class="sh_cpp">=</code> <code class="sh_cpp">default</code> <code class="sh_cpp">;</code>
+</dd>
+	<dd>
+<code class="sh_cpp">=</code> <code class="sh_cpp">delete</code> <code class="sh_cpp">;</code>
+</dd>
+<dt>
+<i class="nonterminal">initializer</i>:</dt>
+	<dd><i class="nonterminal">brace-or-equal-initializer</i></dd>
+	<dd>
+<code class="sh_cpp">(</code> <i class="nonterminal">expression-list</i> <code class="sh_cpp">)</code>
+</dd>
+<dt>
+<i class="nonterminal">brace-or-equal-initializer</i>:</dt>
+	<dd>
+<code class="sh_cpp">=</code> <i class="nonterminal">initializer-clause</i>
+</dd>
+	<dd><i class="nonterminal">braced-init-list</i></dd>
+<dt>
+<i class="nonterminal">initializer-clause</i>:</dt>
+	<dd><i class="nonterminal">assignment-expression</i></dd>
+	<dd><i class="nonterminal">braced-init-list</i></dd>
+<dt>
+<i class="nonterminal">initializer-list</i>:</dt>
+	<dd>
+<i class="nonterminal">initializer-clause</i> <code class="sh_cpp">...</code><sub class="opt">opt</sub>
+</dd>
+	<dd>
+<i class="nonterminal">initializer-list</i> <code class="sh_cpp">,</code> <i class="nonterminal">initializer-clause</i> <code class="sh_cpp">...</code><sub class="opt">opt</sub>
+</dd>
+<dt>
+<i class="nonterminal">braced-init-list</i>:</dt>
+	<dd>
+<code class="sh_cpp">{</code> <i class="nonterminal">initializer-list</i> <code class="sh_cpp">,</code><sub class="opt">opt</sub> <code class="sh_cpp">}</code>
+</dd>
+	<dd><code class="sh_cpp">{}</code></dd>
+</dl>
+</body>
+</html>
+

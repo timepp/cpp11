@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class members</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[class.qual]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[class.qual]"></object>3.4.3.1 Class members </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>If the <i class="nonterminal">nested-name-specifier</i> of a <i class="nonterminal">qualified-id</i> nominates a class, the name specified after
+the <i class="nonterminal">nested-name-specifier</i> is looked up in the scope of the class (<a title="class.member.lookup" href="class.member.lookup.html">10.2</a>), except for the cases listed
+below. The name shall represent one or more members of that class or of one of its base classes (Clause <a title="class.derived" href="class.derived.html">10</a>).
+<span class="note">[ <em>Note:</em> A class member can be referred to using a <i class="nonterminal">qualified-id</i> at any point in its potential scope
+(<a title="basic.scope.class" href="basic.scope.class.html">3.3.7</a>). — <em>end note</em> ]</span> The exceptions to the name lookup rule above are the following:</p>
+<ul>
+<li>a destructor name is looked up as specified in <a title="basic.lookup.qual" href="basic.lookup.qual.html">3.4.3</a>;</li>
+<li>a <i class="nonterminal">conversion-type-id</i> of a <i class="nonterminal">conversion-function-id</i> is looked up in the same manner as a
+	<i class="nonterminal">conversion-type-id</i> in a class member access (see 3.4.5);</li>
+<li>the names in a <i class="nonterminal">template-argument</i> of a <i class="nonterminal">template-id</i> are looked up in the context in which the entire
+	<i class="nonterminal">postfix-expression</i> occurs.</li>
+<li>the lookup for a name specified in a <i class="nonterminal">using-declaration</i> (<a title="namespace.udecl" href="namespace.udecl.html">7.3.3</a>) also finds class or enumeration
+	names hidden within the same scope (<a title="basic.scope.hiding" href="basic.scope.hiding.html">3.3.10</a>).</li>
+</ul>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>In a lookup in which the constructor is an acceptable lookup result and the <i class="nonterminal">nested-name-specifier</i>
+nominates a class <code class="sh_cpp">C</code>:</p>
+<ul>
+<li>if the name specified after the <i class="nonterminal">nested-name-specifier</i>, when looked up in <code class="sh_cpp">C</code>, is the
+	<i class="nonterminal">injected-class-name</i> of <code class="sh_cpp">C</code> (Clause <a title="class" href="class.html">9</a>), or</li>
+<li>in a <i class="nonterminal">using-declaration</i> (<a title="namespace.udecl" href="namespace.udecl.html">7.3.3</a>) that is a <i class="nonterminal">member-declaration</i>, if the name specified
+	after the <i class="nonterminal">nested-name-specifier</i> is the same as the identifier or the <i class="nonterminal">simple-template-id</i>’s
+	<i class="nonterminal">template-name</i> in the last component of the <i class="nonterminal">nested-name-specifier</i>,</li>
+</ul>
+
+<p>the name is instead considered to name the constructor of class <code class="sh_cpp">C</code>. <span class="note">[ <em>Note:</em> For example, the constructor is
+not an acceptable lookup result in an <i class="nonterminal">elaborated-type-specifier</i> so the constructor would not be used in place
+of the <i class="nonterminal">injected-class-name</i>. — <em>end note</em> ]</span> Such a constructor name shall be used only in the <i class="nonterminal">declarator-id</i> of
+a declaration that names a constructor or in a <i class="nonterminal">using-declaration</i>.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct A { A(); };
+struct B: public A { B(); };
+
+A::A() { }
+B::B() { }
+
+B::A ba;                // object of type A
+A::A a;                 // error, A::A is not a type name
+struct A::A a2;         // object of type A</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>A class member name hidden by a name in a nested declarative region or by the name of a derived class member
+can still be found if qualified by the name of its class followed by the <code class="sh_cpp">::</code> operator.</p>
+</body>
+</html>
+

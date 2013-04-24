@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Seed sequence requirements</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[rand.req.seedseq]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[rand.req.seedseq]"></object>26.5.1.2 Seed sequence requirements </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A <dfn>seed sequence</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="seed sequence"></object> is an object that consumes a sequence of integer-valued data and produces a
+requested number of unsigned integer values <var>i</var>, 0 ≤ <var>i</var> &lt; 2<sup>32</sup>, based on the consumed
+data. <span class="note">[ <em>Note:</em> Such an object provides a mechanism to avoid replication of streams of random variates. This can be useful,
+for example, in applications requiring large numbers of random number engines. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>A class <code class="sh_cpp">S</code> satisfies the requirements of a seed sequence if the expressions shown in Table <a href="rand.req.seedseq.html#t115">115</a> are valid and have the indicated semantics, and if <code class="sh_cpp">S</code> also satisfies all other requirements of
+this section <a title="rand.req.seedseq" href="rand.req.seedseq.html">26.5.1.2</a>. In that Table and throughout this section:</p>
+
+<ol class="lettered">
+<li>
+<code class="sh_cpp">T</code> is the type named by <code class="sh_cpp">S</code>’s associated <code class="sh_cpp">result_type</code>;</li>
+<li>
+<code class="sh_cpp">q</code> is a value of <code class="sh_cpp">S</code> and <code class="sh_cpp">r</code> is a possibly const value of <code class="sh_cpp">S</code>;</li>
+<li>
+<code class="sh_cpp">ib</code> and <code class="sh_cpp">ie</code> are input iterators with an unsigned integer <code class="sh_cpp">value_type</code> of at least
+	32 bits;</li>
+<li>
+<code class="sh_cpp">rb</code> and <code class="sh_cpp">re</code> are mutable random access iterators with an unsigned integer
+	<code class="sh_cpp">value_type</code> of at least 32 bits;</li>
+<li>
+<code class="sh_cpp">ob</code> is an output iterator; and</li>
+<li>
+<code class="sh_cpp">il</code> is a value of <code class="sh_cpp">initializer_list&lt;T&gt;</code>.</li>
+</ol>
+
+<table id="t115" class="requirements">
+<caption>Table 115 — Seed sequence requirements</caption>
+<thead><tr>
+<th>Expression</th>
+<th>Return type</th>
+<th>Pre/post-condition</th>
+<th>Complexity</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code class="sh_cpp">​S::​result_­type</code></td>
+<td><code class="sh_cpp">T</code></td>
+	<td>
+<code class="sh_cpp">T</code> is an unsigned integer type (<a title="basic.fundamental" href="basic.fundamental.html">3.9.1</a>) of at least 32 bits.</td>
+	<td>compile-time</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">S()</code></td>
+<td></td>
+	<td>Creates a seed sequence with the same initial state as all other default-constructed seed sequences of type
+		<code class="sh_cpp">S</code>.</td>
+	<td>constant</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">S(ib,​ie)</code></td>
+<td></td>
+	<td>Creates a seed sequence having internal state that depends on some or all of the bits of the supplied sequence
+		<code class="sh_cpp">[ib, ie)</code>.</td>
+	<td>
+<var>O</var>(<code class="sh_cpp">ie - ib</code>)</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">S(il)</code></td>
+<td></td>
+	<td>Same as <code class="sh_cpp">S(il.begin(), il.end())</code>.</td>
+	<td>same as <code class="sh_cpp">S(il.begin(), il.end())</code>
+</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">q.​generate​(rb,​re)</code></td>
+<td><code class="sh_cpp">void</code></td>
+	<td>Does nothing if <code class="sh_cpp">rb == re</code>. Otherwise, fills the supplied sequence <code class="sh_cpp">[rb, re)</code> with 32-bit
+		quantities that depend on the sequence supplied to the constructor and possibly also depend on the history of
+		<code class="sh_cpp">generate</code>’s previous invocations.</td>
+	<td>
+<var>O</var>(<code class="sh_cpp">re - rb</code>)</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">r.​size()</code></td>
+<td><code class="sh_cpp">size_t</code></td>
+	<td>The number of 32-bit units that would be copied by a call to <code class="sh_cpp">r.param</code>.</td>
+	<td>constant</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">r.​param​(ob)</code></td>
+<td><code class="sh_cpp">void</code></td>
+	<td>Copies to the given destination a sequence of 32-bit units that can be provided to the constructor of a second
+		object of type <code class="sh_cpp">S</code>, and that would reproduce in that second object a state indistinguishable from the
+		state of the first object.</td>
+	<td>
+<var>O</var>(<code class="sh_cpp">r.size()</code>)</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>
+

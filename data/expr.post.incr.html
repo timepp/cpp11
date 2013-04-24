@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Increment and decrement</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[expr.post.incr]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[expr.post.incr]"></object>5.2.6 Increment and decrement </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The value of a postfix <code class="sh_cpp">++</code> expression is the value of its operand. <span class="note">[ <em>Note:</em> the value obtained is a
+copy of the original value — <em>end note</em> ]</span> The operand shall be a modifiable lvalue. The type of the operand shall be an
+arithmetic type or a pointer to a complete object type. The value of the operand object is modified by adding
+<code class="sh_cpp">1</code> to it, unless the object is of type <code class="sh_cpp">bool</code>, in which case it is set to <code class="sh_cpp">true</code>.
+<span class="note">[ <em>Note:</em> this use is deprecated, see Annex <a title="depr" href="depr.html">D</a>. — <em>end note</em> ]</span> The value computation of the <code class="sh_cpp">++</code> expression is
+sequenced before the modification of the operand object. With respect to an indeterminately-sequenced function call, the
+operation of postfix <code class="sh_cpp">++</code> is a single evaluation. <span class="note">[ <em>Note:</em> Therefore, a function call shall not intervene
+between the lvalue-to-rvalue conversion and the side effect associated with any single postfix <code class="sh_cpp">++</code>
+operator. — <em>end note</em> ]</span> The result is a prvalue. The type of the result is the cv-unqualified version of the type of the
+operand. See also <a title="expr.add" href="expr.add.html">5.7</a> and <a title="expr.ass" href="expr.ass.html">5.17</a>.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The operand of postfix <code class="sh_cpp">--</code> is decremented analogously to the postfix <code class="sh_cpp">++</code> operator,
+except that the operand shall not be of type <code class="sh_cpp">bool</code>. <span class="note">[ <em>Note:</em> For prefix increment and decrement, see
+<a title="expr.pre.incr" href="expr.pre.incr.html">5.3.2</a>. — <em>end note</em> ]</span></p>
+</body>
+</html>
+

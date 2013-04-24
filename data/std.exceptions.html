@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Exception classes</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[std.exceptions]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[std.exceptions]"></object>19.2 Exception classes </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The Standard C++ library provides classes to be used to report certain errors (<a title="res.on.exception.handling" href="res.on.exception.handling.html">17.6.5.12</a>) in C++
+programs. In the error model reflected in these classes, errors are divided into two broad categories: <dfn>logic
+errors</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="logic
+errors"></object> and <dfn>runtime errors</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="runtime errors"></object>.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The distinguishing characteristic of logic errors is that they are due to errors in the internal logic of the
+program. In theory, they are preventable.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>By contrast, runtime errors are due to events beyond the scope of the program. They cannot be easily predicted
+in advance. The header <dfn><code class="header">&lt;stdexcept&gt;</code></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="&lt;stdexcept&gt;"></object> defines several types of predefined exceptions for
+reporting errors in a C++ program. These exceptions are related by inheritance.</p>
+
+<h3>Header <code class="header">&lt;stdexcept&gt;</code> synopsis</h3>
+
+<pre><code class="sh_cpp">namespace std {
+  class logic_error;
+    class domain_error;
+    class invalid_argument;
+    class length_error;
+    class out_of_range;
+  class runtime_error;
+    class range_error;
+    class overflow_error;
+    class underflow_error;
+}</code></pre>
+</body>
+</html>
+

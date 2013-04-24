@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Function templates</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[temp.fct]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[temp.fct]"></object>14.5.6 Function templates </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A function template defines an unbounded set of related functions.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> a family of sort functions might be declared like this:</p>
+
+<pre><code class="sh_cpp">template&lt;class T&gt; class Array { };
+template&lt;class T&gt; void sort(Array&lt;T&gt;&amp;);</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>A function template can be overloaded with other function templates and with normal (non-template) functions. A
+normal function is not related to a function template (i.e., it is never considered to be a specialization), even if it
+has the same name and type as a potentially generated function template specialization.<sup class="footnote"><a href="#fn144">144</a></sup></p>
+
+
+<div><p class="footnote" id="fn140">140) That is, declarations of non-template functions do not merely guide overload resolution of function
+template specializations with the same name. If such a non-template function is odr-used (<a title="basic.def.odr" href="basic.def.odr.html">3.2</a>) in a program,
+it must be defined; it will not be implicitly instantiated using the function template definition.</p></div>
+</body>
+</html>
+

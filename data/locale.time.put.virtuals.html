@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>time_put virtual functions</title>
+</head>
+<body>
+<h5>
+<dfn class="label">[locale.time.put.virtuals]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[locale.time.put.virtuals]"></object>22.4.5.3.2 <code class="sh_cpp">time_put</code> virtual functions </h5>
+
+<pre><code class="sh_cpp">iter_type <dfn>do_put</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="do_put"></object>(iter_type s, ios_base&amp;, char_type fill, const tm* t,
+                 char format, char modifier) const;</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Effects:</em> Formats the contents of the parameter <code class="sh_cpp">t</code> into characters placed on the output sequence
+<code class="sh_cpp">s</code>. Formatting is controlled by the parameters <code class="sh_cpp">format</code> and <code class="sh_cpp">modifier</code>, interpreted
+identically as the format specifiers in the string argument to the standard library function <code class="sh_cpp">strftime()</code>.<sup class="footnote"><a href="#fn255">255</a></sup> except that the sequence of characters produced for those specifiers that are described as depending on the
+C locale are instead implementation-defined.<sup class="footnote"><a href="#fn256">256</a></sup></p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Returns:</em> An iterator pointing immediately after the last character produced. <span class="note">[ <em>Note:</em> The <code class="sh_cpp">fill</code>
+argument may be used in the implementation-defined formats or by derivations. A space character is a reasonable default
+for this argument. — <em>end note</em> ]</span></p>
+
+
+
+
+<div>
+<p class="footnote" id="fn255">255) Interpretation of the <code class="sh_cpp">modifier</code> argument is implementation-defined, but should follow
+POSIX conventions.</p>
+<p class="footnote" id="fn256">256) Implementations are encouraged to refer to other standards (such as POSIX) for these
+definitions.</p>
+</div>
+</body>
+</html>
+

@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Namespace scope</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[basic.scope.namespace]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[basic.scope.namespace]"></object>3.3.6 Namespace scope </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The declarative region of a <i class="nonterminal">namespace-definition</i> is its <i class="nonterminal">namespace-body</i>. The potential scope
+denoted by an <i class="nonterminal">original-namespace-name</i> is the concatenation of the declarative regions established by each of
+the <i class="nonterminal">namespace-definition</i>s in the same declarative region with that <i class="nonterminal">original-namespace-name</i>. Entities
+declared in a <i class="nonterminal">namespace-body</i> are said to be <dfn>members</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="members"></object> of the namespace, and names introduced by these
+declarations into the declarative region of the namespace are said to be <dfn>member names</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="member names"></object> of the namespace. A
+namespace member name has namespace scope. Its potential scope includes its namespace from the name’s point of
+declaration (<a title="basic.scope.pdecl" href="basic.scope.pdecl.html">3.3.2</a>) onwards; and for each <i class="nonterminal">using-directive</i> (<a title="namespace.udir" href="namespace.udir.html">7.3.4</a>) that nominates the
+member’s namespace, the member’s potential scope includes that portion of the potential scope of the
+<i class="nonterminal">using-directive</i> that follows the member’s point of declaration.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">namespace N {
+  int i;
+  int g(int a) { return a; }
+  int j();
+  void q();
+}
+namespace { int l=1; }
+// the potential scope of l is from its point of declaration
+// to the end of the translation unit
+
+namespace N {
+  int g(char a) {       // overloads N::g(int)
+    return l+a;         // l is from unnamed namespace
+  }
+
+  int i;                // error: duplicate definition
+  int j();              // OK: duplicate function declaration
+
+  int j() {             // OK: definition of N::j()
+    return g(i);        // calls N::g(int)
+  }
+  int q();              // error: different return type
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>A namespace member can also be referred to after the <code class="sh_cpp">::</code> scope resolution operator (<a title="expr.prim" href="expr.prim.general.html">5.1</a>)
+applied to the name of its namespace or the name of a namespace which nominates the member’s namespace in a
+<i class="nonterminal">using-directive</i>; see <a title="namespace.qual" href="namespace.qual.html">3.4.3.2</a>.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>The outermost declarative region of a translation unit is also a namespace, called the <dfn>global
+namespace</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="global
+namespace"></object>. A name declared in the global namespace has <dfn>global namespace scope</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="global namespace scope"></object> (also called <dfn>global
+scope</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="global
+scope"></object>). The potential scope of such a name begins at its point of declaration (<a title="basic.scope.pdecl" href="basic.scope.pdecl.html">3.3.2</a>) and ends at the
+end of the translation unit that is its declarative region. Names with global namespace scope are said to be
+<dfn>global name</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="global name"></object>.</p>
+</body>
+</html>
+

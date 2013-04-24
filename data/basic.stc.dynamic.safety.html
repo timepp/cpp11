@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Safely-derived pointers</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[basic.stc.dynamic.safety]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[basic.stc.dynamic.safety]"></object>3.7.4.3 Safely-derived pointers </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A <dfn>traceable pointer object</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="traceable pointer object"></object> is</p>
+<ul>
+<li>an object of an object pointer type (<a title="basic.compound" href="basic.compound.html">3.9.2</a>), or</li>
+<li>an object of an integral type that is at least as large as <code class="sh_cpp">std::intptr_t</code>, or</li>
+<li>a sequence of elements in an array of character type, where the size and alignment of the sequence match those of
+	some object pointer type.</li>
+</ul>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>A pointer value is a <dfn>safely-derived pointer</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="safely-derived pointer"></object> to a dynamic object only if it has an object pointer
+type and it is one of the following:</p>
+<ul>
+<li>the value returned by a call to the C++ standard library implementation of <code class="sh_cpp">::operator
+	new(std::size_t)</code>;<sup class="footnote"><a href="#fn37">37</a></sup>
+</li>
+<li>the result of taking the address of an object (or one of its subobjects) designated by an lvalue resulting from
+	dereferencing a safely-derived pointer value;</li>
+<li>the result of well-defined pointer arithmetic (<a title="expr.add" href="expr.add.html">5.7</a>) using a safely-derived pointer value;</li>
+<li>the result of a well-defined pointer conversion (<a title="conv.ptr" href="conv.ptr.html">4.10</a>, <a title="expr.cast" href="expr.cast.html">5.4</a>) of a safely-derived pointer
+	value;</li>
+<li>the result of a <code class="sh_cpp">reinterpret_cast</code> of a safely-derived pointer value;</li>
+<li>the result of a <code class="sh_cpp">reinterpret_cast</code> of an integer representation of a safely-derived pointer value;</li>
+<li>the value of an object whose value was copied from a traceable pointer object, where at the time of the copy the
+	source object contained a copy of a safely-derived pointer value.</li>
+</ul>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>An integer value is an <dfn>integer representation of a safely-derived pointer</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="integer representation of a safely-derived pointer"></object> only if its type is at
+least as large as <code class="sh_cpp">std::intptr_t</code> and it is one of the following:</p>
+<ul>
+<li>the result of a <code class="sh_cpp">reinterpret_cast</code> of a safely-derived pointer value;</li>
+<li>the result of a valid conversion of an integer representation of a safely-derived pointer value;</li>
+<li>the value of an object whose value was copied from a traceable pointer object, where at the time of the copy the
+	source object contained an integer representation of a safely-derived pointer value;</li>
+<li>the result of an additive or bitwise operation, one of whose operands is an integer representation of a
+	safely-derived pointer value <code class="sh_cpp">P</code>, if that result converted by
+	<code class="sh_cpp">reinterpret_cast&lt;void*&gt;</code> would compare equal to a safely-derived pointer computable from
+	<code class="sh_cpp">reinterpret_cast&lt;void*&gt;(P)</code>.</li>
+</ul>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>An implementation may have <dfn>relaxed pointer safety</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="relaxed pointer safety"></object>, in which case the validity of a pointer value
+does not depend on whether it is a safely-derived pointer value. Alternatively, an implementation may have <dfn>strict
+pointer safety</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="strict
+pointer safety"></object>, in which case a pointer value that is not a safely-derived pointer value is an invalid pointer
+value unless the referenced complete object is of dynamic storage duration and has previously been declared reachable
+(<a title="util.dynamic.safety" href="util.dynamic.safety.html">20.6.4</a>). <span class="note">[ <em>Note:</em> the effect of using an invalid pointer value (including passing it to a deallocation
+function) is undefined, see <a title="basic.stc.dynamic.deallocation" href="basic.stc.dynamic.deallocation.html">3.7.4.2</a>. This is true even if the unsafely-derived pointer value might compare
+equal to some safely-derived pointer value. — <em>end note</em> ]</span> It is implementation-defined whether an implementation has relaxed or
+strict pointer safety.</p>
+
+
+
+<div><p class="footnote" id="fn37">37) This section does not impose restrictions on dereferencing pointers to memory not allocated by
+<code class="sh_cpp">::operator new</code>. This maintains the ability of many C++ implementations to use binary libraries and
+components written in other languages. In particular, this applies to C binaries, because dereferencing pointers to
+memory allocated by <code class="sh_cpp">malloc</code> is not restricted.</p></div>
+</body>
+</html>
+

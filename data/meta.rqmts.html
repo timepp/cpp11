@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Requirements</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[meta.rqmts]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[meta.rqmts]"></object>20.9.1 Requirements </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A <code class="concept"><dfn>UnaryTypeTrait</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="UnaryTypeTrait"></object></code> describes a property of a type. It shall be a class template
+that takes one template type argument and, optionally, additional arguments that help define the property being
+described. It shall be <code class="concept">DefaultConstructible</code>, <code class="concept">CopyConstructible</code>, and publicly and
+unambiguously derived, directly or indirectly, from its <dfn>BaseCharacteristic</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="BaseCharacteristic"></object>, which is a specialization of the
+template <code class="sh_cpp">integral_constant</code> (<a title="meta.help" href="meta.help.html">20.9.3</a>), with the arguments to the template
+<code class="sh_cpp">integral_constant</code> determined by the requirements for the particular property being described. The member
+names of the BaseCharacteristic shall not be hidden and shall be unambiguously available in the
+<code class="concept">UnaryTypeTrait</code>.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>A <code class="concept"><dfn>BinaryTypeTrait</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="BinaryTypeTrait"></object></code> describes a relationship between two types. It shall be a class
+template that takes two template type arguments and, optionally, additional arguments that help define the relationship
+being described. It shall be <code class="concept">DefaultConstructible</code>, <code class="concept">CopyConstructible</code>, and publicly
+and unambiguously derived, directly or indirectly, from its <dfn>BaseCharacteristic</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="BaseCharacteristic"></object>, which is a specialization of
+the template <code class="sh_cpp">integral_constant</code> (<a title="meta.help" href="meta.help.html">20.9.3</a>), with the arguments to the template
+<code class="sh_cpp">integral_constant</code> determined by the requirements for the particular relationship being described. The
+member names of the BaseCharacteristic shall not be hidden and shall be unambiguously available in the
+<code class="concept">BinaryTypeTrait</code>.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>A <code class="concept"><dfn>TransformationTrait</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="TransformationTrait"></object></code> modifies a property of a type. It shall be a class template
+that takes one template type argument and, optionally, additional arguments that help define the modification. It shall
+define a nested type named <code class="sh_cpp">type</code>, which shall be a synonym for the modified type.</p>
+</body>
+</html>
+

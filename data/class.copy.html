@@ -1,0 +1,528 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Copying and moving class objects</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[class.copy]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[class.copy]"></object>12.8 Copying and moving class objects </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A class object can be copied or moved in two ways: by initialization (<a title="class.ctor" href="class.ctor.html">12.1</a>, <a title="dcl.init" href="dcl.init.html">8.5</a>),
+including for function argument passing (<a title="expr.call" href="expr.call.html">5.2.2</a>) and for function value return (<a title="stmt.return" href="stmt.return.html">6.6.3</a>); and by
+assignment (<a title="expr.ass" href="expr.ass.html">5.17</a>). Conceptually, these two operations are implemented by a copy/move constructor
+(<a title="class.ctor" href="class.ctor.html">12.1</a>) and copy/move assignment operator (<a title="over.ass" href="over.ass.html">13.5.3</a>).</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>A non-template constructor for class <code class="sh_cpp">X</code> is a copy constructor if its first parameter is of type
+<code class="sh_cpp">X&amp;</code>, <code class="sh_cpp">const X&amp;</code>, <code class="sh_cpp">volatile X&amp;</code> or <code class="sh_cpp">const volatile X&amp;</code>, and
+either there are no other parameters or else all other parameters have default arguments (<a title="dcl.fct.default" href="dcl.fct.default.html">8.3.6</a>).</p>
+
+<div class="example">
+<p>[ <em>Example:</em> <code class="sh_cpp">X::X(const X&amp;)</code> and <code class="sh_cpp">X::X(X&amp;,int=1)</code> are copy constructors.</p>
+
+<pre><code class="sh_cpp">struct X {
+  X(int);
+  X(const X&amp;, int = 1);
+};
+X a(1);             // calls X(int);
+X b(a, 0);          // calls X(const X&amp;, int);
+X c = b;            // calls X(const X&amp;, int);</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>A non-template constructor for class <code class="sh_cpp">X</code> is a move constructor if its first parameter is of type
+<code class="sh_cpp">X&amp;&amp;</code>, <code class="sh_cpp">const X&amp;&amp;</code>, <code class="sh_cpp">volatile X&amp;&amp;</code>, or <code class="sh_cpp">const volatile
+X&amp;&amp;</code>, and either there are no other parameters or else all other parameters have default arguments
+(<a title="dcl.fct.default" href="dcl.fct.default.html">8.3.6</a>).</p>
+
+<div class="example">
+<p>[ <em>Example:</em> <code class="sh_cpp">Y::Y(Y&amp;&amp;)</code> is a move constructor.</p>
+
+<pre><code class="sh_cpp">struct Y {
+  Y(const Y&amp;);
+  Y(Y&amp;&amp;);
+};
+extern Y f(int);
+Y d(f(1));          // calls Y(Y&amp;&amp;)
+Y e = d;            // calls Y(const Y&amp;)</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<div class="note">
+<p><a class="anchor" id="p4" href="#p4">4</a>[ <em>Note:</em> All forms of copy/move constructor may be declared for a class.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct X {
+  X(const X&amp;);
+  X(X&amp;);            // OK
+  X(X&amp;&amp;);
+  X(const X&amp;&amp;);     // OK, but possibly not sensible
+};</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+<p> — <em>end note</em> ]</p>
+</div>
+
+<div class="note">
+<p><a class="anchor" id="p5" href="#p5">5</a>[ <em>Note:</em> If a class <code class="sh_cpp">X</code> only has a copy constructor with a parameter of type <code class="sh_cpp">X&amp;</code>, an
+initializer of type <code class="sh_cpp">const X</code> or <code class="sh_cpp">volatile X</code> cannot initialize an object of type (possibly
+cv-qualified) <code class="sh_cpp">X</code>.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct X {
+  X();              // default constructor
+  X(X&amp;);            // copy constructor with a nonconst parameter
+};
+const X cx;
+X x = cx;           // error: X::X(X&amp;) cannot copy cx into x</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+<p> — <em>end note</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>A declaration of a constructor for a class <code class="sh_cpp">X</code> is ill-formed if its first parameter is of type
+(optionally cv-qualified) <code class="sh_cpp">X</code> and either there are no other parameters or else all other parameters have
+default arguments. A member function template is never instantiated to produce such a constructor signature.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct S {
+  template&lt;typename T&gt; S(T);
+  S();
+};
+
+S g;
+
+void h() {
+  S a(g);           // does not instantiate the member template to produce S::S&lt;S&gt;(S);
+                    // uses the implicitly declared copy constructor
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p7" href="#p7">7</a>If the class definition does not explicitly declare a copy constructor, one is <dfn>declared implicitly</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="declared implicitly"></object>.
+If the class definition declares a move constructor or move assignment operator, the implicitly declared copy
+constructor is defined as deleted; otherwise, it is defined as defaulted (<a title="dcl.fct.def" href="dcl.fct.def.general.html">8.4</a>). The latter case is
+deprecated if the class has a user-declared copy assignment operator or a user-declared destructor. Thus, for the class
+definition</p>
+
+<pre><code class="sh_cpp">struct X {
+  X(const X&amp;, int);
+};</code></pre>
+
+<p>a copy constructor is implicitly-declared. If the user-declared constructor is later defined as</p>
+
+<pre><code class="sh_cpp">X::X(const X&amp; x, int i =0) { /* … */ }</code></pre>
+
+<p>then any use of <code class="sh_cpp">X</code>’s copy constructor is ill-formed because of the ambiguity; no diagnostic is
+required.</p>
+
+<p><a class="anchor" id="p8" href="#p8">8</a>The implicitly-declared copy constructor for a class <code class="sh_cpp">X</code> will have the form</p>
+
+<pre><code class="sh_cpp">X::X(const X&amp;)</code></pre>
+
+<p>if</p>
+
+<ul>
+<li>each direct or virtual base class <code class="sh_cpp">B</code> of <code class="sh_cpp">X</code> has a copy constructor whose first parameter is
+	of type <code class="sh_cpp">const B&amp;</code> or <code class="sh_cpp">const volatile B&amp;</code>, and</li>
+<li>for all the non-static data members of <code class="sh_cpp">X</code> that are of a class type <code class="sh_cpp">M</code> (or array thereof),
+	each such class type has a copy constructor whose first parameter is of type <code class="sh_cpp">const M&amp;</code> or
+	<code class="sh_cpp">const volatile M&amp;</code>.<sup class="footnote"><a href="#fn122">122</a></sup>
+</li>
+</ul>
+
+<p>Otherwise, the implicitly-declared copy constructor will have the form</p>
+
+<pre><code class="sh_cpp">X::X(X&amp;)</code></pre>
+
+<p><a class="anchor" id="p9" href="#p9">9</a>If the definition of a class <code class="sh_cpp">X</code> does not explicitly declare a move constructor, one will be
+implicitly declared as defaulted if and only if</p>
+
+<ul>
+<li>
+<code class="sh_cpp">X</code> does not have a user-declared copy constructor,</li>
+<li>
+<code class="sh_cpp">X</code> does not have a user-declared copy assignment operator,</li>
+<li>
+<code class="sh_cpp">X</code> does not have a user-declared move assignment operator,</li>
+<li>
+<code class="sh_cpp">X</code> does not have a user-declared destructor, and</li>
+<li>the move constructor would not be implicitly defined as deleted.</li>
+</ul>
+
+<p><span class="note">[ <em>Note:</em> When the move constructor is not implicitly declared or explicitly supplied, expressions that otherwise would
+have invoked the move constructor may instead invoke a copy constructor. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p10" href="#p10">10</a>The implicitly-declared move constructor for class <code class="sh_cpp">X</code> will have the form</p>
+
+<pre><code class="sh_cpp">X::X(X&amp;&amp;)</code></pre>
+
+<p><a class="anchor" id="p11" href="#p11">11</a>An implicitly-declared copy/move constructor is an <code class="sh_cpp">inline</code> <code class="sh_cpp">public</code> member of its
+class. A defaulted copy/move constructor for a class <code class="sh_cpp">X</code> is defined as deleted (<a title="dcl.fct.def.delete" href="dcl.fct.def.delete.html">8.4.3</a>) if
+<code class="sh_cpp">X</code> has:</p>
+
+<ul>
+<li>a variant member with a non-trivial corresponding constructor and <code class="sh_cpp">X</code> is a union-like class,</li>
+<li>a non-static data member of class type <code class="sh_cpp">M</code> (or array thereof) that cannot be copied/moved because
+	overload resolution (<a title="over.match" href="over.match.html">13.3</a>), as applied to <code class="sh_cpp">M</code>’s copy corresponding constructor, results in an
+	ambiguity or a function that is deleted or inaccessible from the defaulted constructor,</li>
+<li>a direct or virtual base class <code class="sh_cpp">B</code> that cannot be copied/moved because overload resolution
+	(<a title="over.match" href="over.match.html">13.3</a>), as applied to <code class="sh_cpp">B</code>’s corresponding constructor, results in an ambiguity or a
+	function that is deleted or inaccessible from the defaulted constructor,</li>
+<li>any direct or virtual base class or non-static data member of a type with a destructor that is deleted or
+	inaccessible from the defaulted constructor,</li>
+<li>for the copy constructor, a non-static data member of rvalue reference type, or</li>
+<li>for the move constructor, a non-static data member or direct or virtual base class with a type that does not have a
+	move constructor and is not trivially copyable.</li>
+</ul>
+
+<p><a class="anchor" id="p12" href="#p12">12</a>A copy/move constructor for class <code class="sh_cpp">X</code> is <dfn>trivial</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="trivial"></object> if it is not user-provided and if</p>
+
+<ul>
+<li>class <code class="sh_cpp">X</code> has no virtual functions (<a title="class.virtual" href="class.virtual.html">10.3</a>) and no virtual base classes (<a title="class.mi" href="class.mi.html">10.1</a>),
+	and</li>
+<li>the constructor selected to copy/move each direct base class subobject is trivial, and</li>
+<li>for each non-static data member of <code class="sh_cpp">X</code> that is of class type (or array thereof), the constructor selected
+	to copy/move that member is trivial;</li>
+</ul>
+
+<p>otherwise the copy/move constructor is <dfn>non-trivial</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="non-trivial"></object>.</p>
+
+<p><a class="anchor" id="p13" href="#p13">13</a>A copy/move constructor that is defaulted and not defined as deleted is <dfn>implicitly defined</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="implicitly defined"></object> if it is
+odr-used (<a title="basic.def.odr" href="basic.def.odr.html">3.2</a>) to initialize an object of its class type from a copy of an object of its class type or of a
+class type derived from its class type<sup class="footnote"><a href="#fn123">123</a></sup> or when it is explicitly defaulted after its first declaration.
+<span class="note">[ <em>Note:</em> The copy/move constructor is implicitly defined even if the implementation elided its odr-use (<a title="basic.def.odr" href="basic.def.odr.html">3.2</a>,
+<a title="class.temporary" href="class.temporary.html">12.2</a>). — <em>end note</em> ]</span> If the implicitly-defined constructor would satisfy the requirements of a
+<code class="sh_cpp">constexpr</code> constructor (<a title="dcl.constexpr" href="dcl.constexpr.html">7.1.5</a>), the implicitly-defined constructor is <code class="sh_cpp">constexpr</code>.</p>
+
+<p><a class="anchor" id="p14" href="#p14">14</a>Before the defaulted copy/move constructor for a class is implicitly defined, all non-user-provided copy/move
+constructors for its direct and virtual base classes and its non-static data members shall have been implicitly defined.
+<span class="note">[ <em>Note:</em> An implicitly-declared copy/move constructor has an <i class="nonterminal">exception-specification</i> (<a title="except.spec" href="except.spec.html">15.4</a>). — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p15" href="#p15">15</a>The implicitly-defined copy/move constructor for a non-union class <code class="sh_cpp">X</code> performs a memberwise
+copy/move of its bases and members. <span class="note">[ <em>Note:</em> <i class="nonterminal">brace-or-equal-initializer</i>s of non-static data members are ignored.
+See also the example in <a title="class.base.init" href="class.base.init.html">12.6.2</a>. — <em>end note</em> ]</span> The order of initialization is the same as the order of initialization
+of bases and members in a user-defined constructor (see <a title="class.base.init" href="class.base.init.html">12.6.2</a>). Let <code class="sh_cpp">x</code> be either the parameter
+of the constructor or, for the move constructor, an xvalue referring to the parameter. Each base or non-static data
+member is copied/moved in the manner appropriate to its type:</p>
+
+<ul>
+<li>if the member is an array, each element is direct-initialized with the corresponding subobject of
+	<code class="sh_cpp">x</code>;</li>
+<li>if a member <code class="sh_cpp">m</code> has rvalue reference type <code class="sh_cpp">T&amp;&amp;</code>, it is direct-initialized with
+	<code class="sh_cpp">static_cast&lt;T&amp;&amp;&gt;(x.m)</code>;</li>
+<li>otherwise, the base or member is direct-initialized with the corresponding base or member of <code class="sh_cpp">x</code>.</li>
+</ul>
+
+<p>Virtual base class subobjects shall be initialized only once by the implicitly-defined copy/move constructor (see
+<a title="class.base.init" href="class.base.init.html">12.6.2</a>).</p>
+
+<p><a class="anchor" id="p16" href="#p16">16</a>The implicitly-defined copy/move constructor for a union <code class="sh_cpp">X</code> copies the object representation
+(<a title="basic.types" href="basic.types.html">3.9</a>) of <code class="sh_cpp">X</code>.</p>
+
+<p><a class="anchor" id="p17" href="#p17">17</a>A user-declared <dfn>copy assignment operator</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="copy assignment operator"></object> <code class="sh_cpp">X::operator=</code> is a non-static non-template
+member function of class <code class="sh_cpp">X</code> with exactly one parameter of type <code class="sh_cpp">X</code>, <code class="sh_cpp">X&amp;</code>,
+<code class="sh_cpp">const X&amp;</code>, <code class="sh_cpp">volatile X&amp;</code> or <code class="sh_cpp">const volatile X&amp;</code>.<sup class="footnote"><a href="#fn124">124</a></sup> <span class="note">[ <em>Note:</em> An
+overloaded assignment operator must be declared to have only one parameter; see <a title="over.ass" href="over.ass.html">13.5.3</a>. — <em>end note</em> ]</span> <span class="note">[ <em>Note:</em> More
+than one form of copy assignment operator may be declared for a class. — <em>end note</em> ]</span></p>
+
+<div class="note">
+<p>[ <em>Note:</em> If a class <code class="sh_cpp">X</code> only has a copy assignment operator with a parameter of type <code class="sh_cpp">X&amp;</code>, an
+expression of type <code class="sh_cpp">const X</code> cannot be assigned to an object of type <code class="sh_cpp">X</code>.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct X {
+  X();
+  X&amp; operator=(X&amp;);
+};
+const X cx;
+X x;
+void f() {
+  x = cx;           // error: X::operator=(X&amp;) cannot assign cx into x
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+<p> — <em>end note</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p18" href="#p18">18</a>If the class definition does not explicitly declare a copy assignment operator, one is <dfn>declared
+implicitly</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="declared
+implicitly"></object>. If the class definition declares a move constructor or move assignment operator, the implicitly
+declared copy assignment operator is defined as deleted; otherwise, it is defined as defaulted (<a title="dcl.fct.def" href="dcl.fct.def.general.html">8.4</a>). The
+latter case is deprecated if the class has a user-declared copy constructor or a user-declared destructor. The
+implicitly-declared copy assignment operator for a class <code class="sh_cpp">X</code> will have the form</p>
+
+<pre><code class="sh_cpp">X&amp; X::operator=(const X&amp;)</code></pre>
+
+<p>if</p>
+
+<ul>
+<li>each direct base class <code class="sh_cpp">B</code> of <code class="sh_cpp">X</code> has a copy assignment operator whose parameter is of type
+	<code class="sh_cpp">const B&amp;</code>, <code class="sh_cpp">const volatile B&amp;</code> or <code class="sh_cpp">B</code>, and</li>
+<li>for all the non-static data members of <code class="sh_cpp">X</code> that are of a class type <code class="sh_cpp">M</code> (or array thereof),
+	each such class type has a copy assignment operator whose parameter is of type <code class="sh_cpp">const M&amp;</code>,
+	<code class="sh_cpp">const volatile M&amp;</code> or <code class="sh_cpp">M</code>.<sup class="footnote"><a href="#fn125">125</a></sup>
+</li>
+</ul>
+
+<p>Otherwise, the implicitly-declared copy assignment operator will have the form</p>
+
+<pre><code class="sh_cpp">X&amp; X::operator=(X&amp;)</code></pre>
+
+<p><a class="anchor" id="p19" href="#p19">19</a>A user-declared move assignment <code class="sh_cpp">operator X::operator=</code> is a non-static non-template member
+function of class <code class="sh_cpp">X</code> with exactly one parameter of type <code class="sh_cpp">X&amp;&amp;</code>, <code class="sh_cpp">const
+X&amp;&amp;</code>, <code class="sh_cpp">volatile X&amp;&amp;</code>, or <code class="sh_cpp">const volatile X&amp;&amp;</code>. <span class="note">[ <em>Note:</em> An overloaded
+assignment operator must be declared to have only one parameter; see <a title="over.ass" href="over.ass.html">13.5.3</a>. — <em>end note</em> ]</span> <span class="note">[ <em>Note:</em> More than one form
+of move assignment operator may be declared for a class. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p20" href="#p20">20</a>If the definition of a class <code class="sh_cpp">X</code> does not explicitly declare a move assignment operator, one will
+be implicitly declared as defaulted if and only if</p>
+
+<ul>
+<li>
+<code class="sh_cpp">X</code> does not have a user-declared copy constructor,</li>
+<li>
+<code class="sh_cpp">X</code> does not have a user-declared move constructor,</li>
+<li>
+<code class="sh_cpp">X</code> does not have a user-declared copy assignment operator,</li>
+<li>
+<code class="sh_cpp">X</code> does not have a user-declared destructor, and</li>
+<li>the move assignment operator would not be implicitly defined as deleted.</li>
+</ul>
+
+<div class="example">
+<p>[ <em>Example:</em> The class definition</p>
+
+<pre><code class="sh_cpp">struct S {
+  int a;
+  S&amp; operator=(const S&amp;) = default;
+};</code></pre>
+
+<p>will not have a default move assignment operator implicitly declared because the copy assignment operator has been
+user-declared. The move assignment operator may be explicitly defaulted.</p>
+
+<pre><code class="sh_cpp">struct S {
+  int a;
+  S&amp; operator=(const S&amp;) = default;
+  S&amp; operator=(S&amp;&amp;) = default;
+};</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p21" href="#p21">21</a>The implicitly-declared move assignment operator for a class <code class="sh_cpp">X</code> will have the form</p>
+
+<pre><code class="sh_cpp">X&amp; X::operator=(X&amp;&amp;);</code></pre>
+
+<p><a class="anchor" id="p22" href="#p22">22</a>The implicitly-declared copy/move assignment operator for class <code class="sh_cpp">X</code> has the return type
+<code class="sh_cpp">X&amp;</code>; it returns the object for which the assignment operator is invoked, that is, the object assigned
+to. An implicitly-declared copy/move assignment operator is an <code class="sh_cpp">inline</code> <code class="sh_cpp">public</code> member of its
+class.</p>
+
+<p><a class="anchor" id="p23" href="#p23">23</a>A defaulted copy/move assignment operator for class <code class="sh_cpp">X</code> is defined as deleted if <code class="sh_cpp">X</code>
+has:</p>
+
+<ul>
+<li>a variant member with a non-trivial corresponding assignment operator and <code class="sh_cpp">X</code> is a union-like class,
+	or</li>
+<li>a non-static data member of <code class="sh_cpp">const</code> non-class type (or array thereof), or</li>
+<li>a non-static data member of reference type, or</li>
+<li>a non-static data member of class type <code class="sh_cpp">M</code> (or array thereof) that cannot be copied/moved because
+	overload resolution (<a title="over.match" href="over.match.html">13.3</a>), as applied to <code class="sh_cpp">M</code>’s corresponding assignment operator, results in
+	an ambiguity or a function that is deleted or inaccessible from the defaulted assignment operator, or</li>
+<li>a direct or virtual base class <code class="sh_cpp">B</code> that cannot be copied/moved because overload resolution
+	(<a title="over.match" href="over.match.html">13.3</a>), as applied to <code class="sh_cpp">B</code>’s corresponding assignment operator, results in an ambiguity or a
+	function that is deleted or inaccessible from the defaulted assignment operator, or</li>
+<li>for the move assignment operator, a non-static data member or direct base class with a type that does not have a
+	move assignment operator and is not trivially copyable, or any direct or indirect virtual base class.</li>
+</ul>
+
+<p><a class="anchor" id="p24" href="#p24">24</a>Because a copy/move assignment operator is implicitly declared for a class if not declared by the user, a base
+class copy/move assignment operator is always hidden by the corresponding assignment operator of a derived class
+(<a title="over.ass" href="over.ass.html">13.5.3</a>). A <i class="nonterminal">using-declaration</i> (<a title="namespace.udecl" href="namespace.udecl.html">7.3.3</a>) that brings in from a base class an assignment
+operator with a parameter type that could be that of a copy/move assignment operator for the derived class is not
+considered an explicit declaration of such an operator and does not suppress the implicit declaration of the derived
+class operator; the operator introduced by the <i class="nonterminal">using-declaration</i> is hidden by the implicitly-declared operator
+in the derived class.</p>
+
+<p><a class="anchor" id="p25" href="#p25">25</a>A copy/move assignment operator for class <code class="sh_cpp">X</code> is <dfn>trivial</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="trivial"></object> if it is not user-provided
+ and if</p>
+
+<ul>
+<li>class <code class="sh_cpp">X</code> has no virtual functions (<a title="class.virtual" href="class.virtual.html">10.3</a>) and no virtual base classes (<a title="class.mi" href="class.mi.html">10.1</a>),
+	and</li>
+<li>the assignment operator selected to copy/move each direct base class subobject is trivial, and</li>
+<li>for each non-static data member of <code class="sh_cpp">X</code> that is of class type (or array thereof), the assignment operator
+	selected to copy/move that member is trivial;</li>
+</ul>
+
+<p>otherwise the copy/move assignment operator is <dfn>non-trivial</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="non-trivial"></object>.</p>
+
+<p><a class="anchor" id="p26" href="#p26">26</a>A copy/move assignment operator that is defaulted and not defined as deleted is <dfn>implicitly defined</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="implicitly defined"></object>
+when it is odr-used (<a title="basic.def.odr" href="basic.def.odr.html">3.2</a>) (e.g., when it is selected by overload resolution to assign to an object of its
+class type) or when it is explicitly defaulted after its first declaration.</p>
+
+<p><a class="anchor" id="p27" href="#p27">27</a>Before the defaulted copy/move assignment operator for a class is implicitly defined, all non-user-provided
+copy/move assignment operators for its direct base classes and its non-static data members shall have been implicitly
+defined. <span class="note">[ <em>Note:</em> An implicitly-declared copy/move assignment operator has an <i class="nonterminal">exception-specification</i>
+(<a title="except.spec" href="except.spec.html">15.4</a>). — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p28" href="#p28">28</a>The implicitly-defined copy/move assignment operator for a non-union class <code class="sh_cpp">X</code> performs memberwise
+copy/move assignment of its subobjects. The direct base classes of <code class="sh_cpp">X</code> are assigned first, in the order of
+their declaration in the <i class="nonterminal">base-specifier-list</i>, and then the immediate non-static data members of <code class="sh_cpp">X</code>
+are assigned, in the order in which they were declared in the class definition. Let <code class="sh_cpp">x</code> be either the
+parameter of the function or, for the move operator, an xvalue referring to the parameter. Each subobject is assigned in
+the manner appropriate to its type:</p>
+
+<ul>
+<li>if the subobject is of class type, as if by a call to <code class="sh_cpp">operator=</code> with the subobject as the object
+	expression and the corresponding subobject of <code class="sh_cpp">x</code> as a single function argument (as if by explicit
+	qualification; that is, ignoring any possible virtual overriding functions in more derived classes);</li>
+<li>if the subobject is an array, each element is assigned, in the manner appropriate to the element type;</li>
+<li>if the subobject is of scalar type, the built-in assignment operator is used.</li>
+</ul>
+
+<p>It is unspecified whether subobjects representing virtual base classes are assigned more than once by the
+implicitly-defined copy assignment operator.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct V { };
+struct A : virtual V { };
+struct B : virtual V { };
+struct C : B, A { };</code></pre>
+
+<p>It is unspecified whether the virtual base class subobject <code class="sh_cpp">V</code> is assigned twice by the implicitly-defined
+copy assignment operator for <code class="sh_cpp">C</code>. — <em>end example</em> ]</p>
+</div>
+
+<p><span class="note">[ <em>Note:</em> This does not apply to move assignment, as a defaulted move assignment operator is deleted if the class has
+virtual bases. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p29" href="#p29">29</a>The implicitly-defined copy assignment operator for a union <code class="sh_cpp">X</code> copies the object representation
+(<a title="basic.types" href="basic.types.html">3.9</a>) of <code class="sh_cpp">X</code>.</p>
+
+<p><a class="anchor" id="p30" href="#p30">30</a>A program is ill-formed if the copy/move constructor or the copy/move assignment operator for an object is
+implicitly odr-used and the special member function is not accessible (Clause <a title="class.access" href="class.access.html">11</a>). <span class="note">[ <em>Note:</em> Copying/moving one
+object into another using the copy/move constructor or the copy/move assignment operator does not change the layout or
+size of either object. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p31" href="#p31">31</a>When certain criteria are met, an implementation is allowed to omit the copy/move construction of a class
+object, even if the copy/move constructor and/or destructor for the object have side effects. In such cases, the
+implementation treats the source and target of the omitted copy/move operation as simply two different ways of referring
+to the same object, and the destruction of that object occurs at the later of the times when the two objects would have
+been destroyed without the optimization.<sup class="footnote"><a href="#fn126">126</a></sup> This elision of copy/move operations, called <dfn>copy
+elision</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="copy
+elision"></object>, is permitted in the following circumstances (which may be combined to eliminate multiple copies):</p>
+<ul>
+
+<li>in a <code class="sh_cpp">return</code> statement in a function with a class return type, when the expression is the name of a
+	non-volatile automatic object (other than a function or catch-clause parameter) with the same cv-unqualified type as
+	the function return type, the copy/move operation can be omitted by constructing the automatic object directly into
+	the function’s return value</li>
+<li>in a <i class="nonterminal">throw-expression</i>, when the operand is the name of a non-volatile automatic object (other than a
+	function or catch-clause parameter) whose scope does not extend beyond the end of the innermost enclosing
+	<i class="nonterminal">try-block</i> (if there is one), the copy/move operation from the operand to the exception object
+	(<a title="except.throw" href="except.throw.html">15.1</a>) can be omitted by constructing the automatic object directly into the exception object</li>
+<li>when a temporary class object that has not been bound to a reference (<a title="class.temporary" href="class.temporary.html">12.2</a>) would be copied/moved to a
+	class object with the same cv-unqualified type, the copy/move operation can be omitted by constructing the temporary
+	object directly into the target of the omitted copy/move</li>
+<li>when the <i class="nonterminal">exception-declaration</i> of an exception handler (Clause <a title="except" href="except.html">15</a>) declares an object of the
+	same type (except for cv-qualification) as the exception object (<a title="except.throw" href="except.throw.html">15.1</a>), the copy/move operation can be
+	omitted by treating the <i class="nonterminal">exception-declaration</i> as an alias for the exception object if the meaning of the
+	program will be unchanged except for the execution of constructors and destructors for the object declared by the
+	<i class="nonterminal">exception-declaration</i>.</li>
+</ul>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">class Thing {
+public:
+  Thing();
+  ~Thing();
+  Thing(const Thing&amp;);
+};
+
+Thing f() {
+  Thing t;
+  return t;
+}
+
+Thing t2 = f();</code></pre>
+
+<p>Here the criteria for elision can be combined to eliminate two calls to the copy constructor of class
+<code class="sh_cpp">Thing</code>: the copying of the local automatic object <code class="sh_cpp">t</code> into the temporary object for the return
+value of function <code class="sh_cpp">f()</code> and the copying of that temporary object into object <code class="sh_cpp">t2</code>. Effectively,
+the construction of the local object <code class="sh_cpp">t</code> can be viewed as directly initializing the global object
+<code class="sh_cpp">t2</code>, and that object’s destruction will occur at program exit. Adding a move constructor to
+<code class="sh_cpp">Thing</code> has the same effect, but it is the move construction from the temporary object to <code class="sh_cpp">t2</code>
+that is elided. — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p32" href="#p32">32</a>When the criteria for elision of a copy operation are met or would be met save for the fact that the source
+object is a function parameter, and the object to be copied is designated by an lvalue, overload resolution to select
+the constructor for the copy is first performed as if the object were designated by an rvalue. If overload resolution
+fails, or if the type of the first parameter of the selected constructor is not an rvalue reference to the object’s type
+(possibly cv-qualified), overload resolution is performed again, considering the object as an lvalue. <span class="note">[ <em>Note:</em> This
+two-stage overload resolution must be performed regardless of whether copy elision will occur. It determines the
+constructor to be called if elision is not performed, and the selected constructor must be accessible even if the call
+is elided. — <em>end note</em> ]</span></p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">class Thing {
+public:
+  Thing();
+  ~Thing();
+  Thing(Thing&amp;&amp;);
+private:
+  Thing(const Thing&amp;);
+};
+
+Thing f(bool b) {
+  Thing t;
+  if (b)
+    throw t;            // OK: Thing(Thing&amp;&amp;) used (or elided) to throw t
+  return t;             // OK: Thing(Thing&amp;&amp;) used (or elided) to return t
+}
+
+Thing t2 = f(false);    // OK: Thing(Thing&amp;&amp;) used (or elided) to construct t2</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+<div>
+<p class="footnote" id="fn122">122) This implies that the reference parameter of the implicitly-declared copy constructor cannot bind to a
+<code class="sh_cpp">volatile</code> lvalue; see <a title="diff.special" href="diff.special.html">C.1.9</a>.</p>
+<p class="footnote" id="fn123">123) See <a title="dcl.init" href="dcl.init.html">8.5</a> for more details on direct and copy initialization.</p>
+<p class="footnote" id="fn124">124) Because a template assignment operator or an assignment operator taking an rvalue reference parameter
+is never a copy assignment operator, the presence of such an assignment operator does not suppress the implicit
+declaration of a copy assignment operator. Such assignment operators participate in overload resolution with other
+assignment operators, including copy assignment operators, and, if selected, will be used to assign an
+object.</p>
+<p class="footnote" id="fn125">125) This implies that the reference parameter of the implicitly-declared copy assignment operator cannot
+bind to a <code class="sh_cpp">volatile</code> lvalue; see <a title="diff.special" href="diff.special.html">C.1.9</a>.</p>
+<p class="footnote" id="fn126">126) Because only one object is destroyed instead of two, and one copy/move constructor is not executed,
+there is still one object destroyed for each one constructed.</p>
+</div>
+</body>
+</html>
+

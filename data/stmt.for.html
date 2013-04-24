@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>The for statement</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[stmt.for]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[stmt.for]"></object>6.5.3 The <code class="sh_cpp">for</code> statement </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The <code class="sh_cpp">for</code> statement</p>
+
+<pre><code class="sh_cpp">for (</code> <i class="nonterminal">for-init-statement</i> <i class="nonterminal">condition</i><sub class="opt">opt</sub> <code class="sh_cpp">;</code> <i class="nonterminal">expression</i><sub class="opt">opt</sub> <code class="sh_cpp">)</code> <i class="nonterminal">statement</i></pre>
+
+<p>is equivalent to</p>
+
+<pre><code class="sh_cpp">{
+    <i class="nonterminal">for-init-statement</i>
+    while ( <i class="nonterminal">condition</i> ) {
+      <i class="nonterminal">statement</i>
+      <i class="nonterminal">expression</i> ;
+    }
+}</code></pre>
+
+<p>except that names declared in the <i class="nonterminal">for-init-statement</i> are in the same declarative-region as those declared in
+the condition, and except that a <code class="sh_cpp">continue</code> in statement (not enclosed in another iteration statement) will
+execute expression before re-evaluating condition. <span class="note">[ <em>Note:</em> Thus the first statement specifies initialization for the loop;
+the condition (<a title="stmt.select" href="stmt.select.html">6.4</a>) specifies a test, made before each iteration, such that the loop is exited when the
+condition becomes <code class="sh_cpp">false</code>; the expression often specifies incrementing that is done after each
+iteration. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>Either or both of the condition and the expression can be omitted. A missing condition makes the implied
+<code class="sh_cpp">while</code> clause equivalent to <code class="sh_cpp">while(true)</code>.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>If the <i class="nonterminal">for-init-statement</i> is a declaration, the scope of the name(s) declared extends to the end of the
+<i class="nonterminal">for-statement</i>.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">int i = 42;
+int a[10];
+
+for (int i = 0; i &lt; 10; i++)
+  a[i] = i;
+
+int j = i;              // j = 42</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+</body>
+</html>
+

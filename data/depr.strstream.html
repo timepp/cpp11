@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class strstream</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[depr.strstream]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[depr.strstream]"></object>D.7.4 Class <code class="sh_cpp"><dfn>strstream</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="strstream"></object></code> </h3>
+
+<pre><code class="sh_cpp">namespace std {
+  class strstream
+    : public basic_iostream&lt;char&gt; {
+  public:
+    // Types
+    typedef char                                char_type;
+    typedef typename char_traits&lt;char&gt;::int_type int_type;
+    typedef typename char_traits&lt;char&gt;::pos_type pos_type;
+    typedef typename char_traits&lt;char&gt;::off_type off_type;
+
+    // constructors/destructor
+    strstream();
+    strstream(char* s, int n,
+              ios_base::openmode mode = ios_base::in|ios_base::out);
+
+    virtual ~strstream();
+
+    // Members:
+    strstreambuf* rdbuf() const;
+    void freeze(bool freezefl = true);
+    int pcount() const;
+    char* str();
+
+  private:
+    strstreambuf sb; // exposition only
+  };
+}</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The class <code class="sh_cpp">strstream</code> supports reading and writing from objects of classs <code class="sh_cpp">strstreambuf</code>.
+It supplies a <code class="sh_cpp">strstreambuf</code> object to control the associated array object. For the sake of exposition, the
+maintained data is presented here as</p>
+
+<ul>
+<li>
+<code class="sh_cpp">sb</code>, the <code class="sh_cpp">strstreambuf</code> object.</li>
+</ul>
+</body>
+</html>
+

@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>General requirements</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[rand.req]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[rand.req]"></object>26.5.1 Requirements </h3>
+
+<h4>
+<dfn class="label">[rand.req.genl]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[rand.req.genl]"></object>26.5.1.1 General requirements </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Throughout this subclause <a title="rand" href="rand.req.html">26.5</a>, the effect of instantiating a template:</p>
+
+<ol class="lettered">
+<li>that has a template type parameter named <code class="sh_cpp">Sseq</code> is undefined unless the corresponding template argument
+	is cv-unqualified and satisfies the requirements of seed sequence (<a title="rand.req.seedseq" href="rand.req.seedseq.html">26.5.1.2</a>).</li>
+<li>that has a template type parameter named <code class="sh_cpp">URNG</code> is undefined unless the corresponding template argument
+	is cv-unqualified and satisfies the requirements of uniform random number generator (<a title="rand.req.urng" href="rand.req.urng.html">26.5.1.3</a>).</li>
+<li>that has a template type parameter named <code class="sh_cpp">Engine</code> is undefined unless the corresponding template argument
+	is cv-unqualified and satisfies the requirements of random number engine (<a title="rand.req.eng" href="rand.req.eng.html">26.5.1.4</a>).</li>
+<li>that has a template type parameter named <code class="sh_cpp">RealType</code> is undefined unless the corresponding template
+	argument is cv-unqualified and is one of <code class="sh_cpp">float</code>, <code class="sh_cpp">double</code>, or <code class="sh_cpp">long double</code>.</li>
+<li>that has a template type parameter named <code class="sh_cpp">IntType</code> is undefined unless the corresponding template
+	argument is cv-unqualified and is one of <code class="sh_cpp">short</code>, <code class="sh_cpp">int</code>, <code class="sh_cpp">long</code>, <code class="sh_cpp">long
+	long</code>, <code class="sh_cpp">unsigned short</code>, <code class="sh_cpp">unsigned int</code>, <code class="sh_cpp">unsigned long</code>, or <code class="sh_cpp">unsigned
+	long long</code>.</li>
+<li>that has a template type parameter named <code class="sh_cpp">UIntType</code> is undefined unless the corresponding template
+	argument is cv-unqualified and is one of <code class="sh_cpp">unsigned short</code>, <code class="sh_cpp">unsigned int</code>, <code class="sh_cpp">unsigned
+	long</code>, or <code class="sh_cpp">unsigned long long</code>.</li>
+</ol>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>Throughout this subclause <a title="rand" href="rand.req.html">26.5</a>, phrases of the form “<code class="sh_cpp">x</code> is an iterator of a specific
+kind” shall be interpreted as equivalent to the more formal requirement that “<code class="sh_cpp">x</code> is a value of a type
+satisfying the requirements of the specified iterator type”.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>Throughout this subclause <a title="rand" href="rand.req.html">26.5</a>, any constructor that can be called with a single argument and that
+satisfies a requirement specified in this subclause shall be declared <code class="sh_cpp">explicit</code>.</p>
+</body>
+</html>
+

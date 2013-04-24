@@ -1,0 +1,173 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Clause 7: declarations</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[diff.dcl]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[diff.dcl]"></object>C.1.6 Clause <a title="dcl.dcl" href="dcl.dcl.html">7</a>: declarations </h3>
+
+<h4><a title="dcl.stc" href="dcl.stc.html">7.1.1</a></h4>
+
+<p><strong>Change:</strong> In C++, the <code class="sh_cpp">static</code> or <code class="sh_cpp">extern</code> specifiers can only be applied to names of objects or
+functions Using these specifiers with type declarations is illegal in C++. In C, these specifiers are ignored when used
+on type declarations.</p>
+
+<p>Example:</p>
+
+<pre><code class="sh_cpp">static struct S {   // valid C, invalid in C++
+  int i;
+};</code></pre>
+
+<p><strong>Rationale:</strong> Storage class specifiers don’t have any meaning when associated with a type. In C++, class members can be
+declared with the <code class="sh_cpp">static</code> storage class specifier. Allowing storage class specifiers on type declarations
+could render the code confusing for users.</p>
+
+<p><strong>Effect on original feature:</strong> Deletion of semantically well-defined feature.</p>
+
+<p><strong>Difficulty of converting:</strong> Syntactic transformation.</p>
+
+<p><strong>How widely used:</strong> Seldom.</p>
+
+
+<h4><a title="dcl.typedef" href="dcl.typedef.html">7.1.3</a></h4>
+
+<p><strong>Change:</strong> A C++ typedef name must be different from any class type name declared in the same scope (except if the
+typedef is a synonym of the class name with the same name). In C, a typedef name and a struct tag name declared in the
+same scope can have the same name (because they have different name spaces)</p>
+
+<p>Example:</p>
+
+<pre><code class="sh_cpp">typedef struct name1 { /* … */ } name1; // valid C and C++
+
+struct name { /* … */ };
+typedef int name;                       // valid C, invalid C++</code></pre>
+
+<p><strong>Rationale:</strong> For ease of use, C++ doesn’t require that a type name be prefixed with the keywords <code class="sh_cpp">class</code>,
+<code class="sh_cpp">struct</code> or <code class="sh_cpp">union</code> when used in object declarations or type casts.</p>
+
+<p>Example:</p>
+
+<pre><code class="sh_cpp">class name { /* … */ };
+name i;                                 // i has type class name</code></pre>
+
+<p><strong>Effect on original feature:</strong> Deletion of semantically well-defined feature.</p>
+
+<p><strong>Difficulty of converting:</strong> Semantic transformation. One of the 2 types has to be renamed.</p>
+
+<p><strong>How widely used:</strong> Seldom.</p>
+
+
+<h4>
+<a title="dcl.type" href="dcl.type.html">7.1.6</a> [see also <a title="basic.link" href="basic.link.html">3.5</a>]</h4>
+
+<p><strong>Change:</strong> const objects must be initialized in C++ but can be left uninitialized in C</p>
+
+<p><strong>Rationale:</strong> A const object cannot be assigned to so it must be initialized to hold a useful value.</p>
+
+<p><strong>Effect on original feature:</strong> Deletion of semantically well-defined feature.</p>
+
+<p><strong>Difficulty of converting:</strong> Semantic transformation.</p>
+
+<p><strong>How widely used:</strong> Seldom.</p>
+
+
+<h4><a title="dcl.type" href="dcl.type.html">7.1.6</a></h4>
+
+<p><strong>Change:</strong> Banning implicit int</p>
+
+<p>In C++ a <i class="nonterminal">decl-specifier-seq</i> must contain a <i class="nonterminal">type-specifier</i>, unless it is followed by a declarator
+for a constructor, a destructor, or a conversion function. In the following example, the left-hand column presents valid
+C; the right-hand column presents equivalent C++:</p>
+
+<table class="padded"><tr>
+<td><pre><code class="sh_cpp">void f(const parm);
+const n = 3;
+main()
+    /* … */</code></pre></td>
+<td><pre><code class="sh_cpp">void f(const int parm);
+const int n = 3;
+int main()
+    /* … */</code></pre></td>
+</tr></table>
+
+<p><strong>Rationale:</strong> In C++, implicit int creates several opportunities for ambiguity between expressions involving
+function-like casts and declarations. Explicit declaration is increasingly considered to be proper style. Liaison with
+WG14 (C) indicated support for (at least) deprecating implicit int in the next revision of C.</p>
+
+<p><strong>Effect on original feature:</strong> Deletion of semantically well-defined feature.</p>
+
+<p><strong>Difficulty of converting:</strong> Syntactic transformation. Could be automated.</p>
+
+<p><strong>How widely used:</strong> Common.</p>
+
+
+<h4><a title="dcl.spec.auto" href="dcl.spec.auto.html">7.1.6.4</a></h4>
+
+<p><strong>Change:</strong> The keyword <code class="sh_cpp">auto</code> cannot be used as a storage class specifier.</p>
+
+<pre><code class="sh_cpp">void f() {
+  auto int x;       // valid C, invalid C++
+}</code></pre>
+
+<p><strong>Rationale:</strong> Allowing the use of <code class="sh_cpp">auto</code> to deduce the type of a variable from its initializer results in
+undesired interpretations of <code class="sh_cpp">auto</code> as a storage class specifier in certain contexts.</p>
+
+<p><strong>Effect on original feature:</strong> Deletion of semantically well-defined feature.</p>
+
+<p><strong>Difficulty of converting:</strong> Syntactic transformation.</p>
+
+<p><strong>How widely used:</strong> Rare.</p>
+
+
+<h4><a title="dcl.enum" href="dcl.enum.html">7.2</a></h4>
+
+<p><strong>Change:</strong> C++ objects of enumeration type can only be assigned values of the same enumeration type. In
+C, objects of enumeration type can be assigned values of any integral type</p>
+
+<p>Example:</p>
+
+<pre><code class="sh_cpp">enum color { red, blue, green };
+enum color c = 1;               // valid C, invalid C++</code></pre>
+
+<p><strong>Rationale:</strong> The type-safe nature of C++.</p>
+
+<p><strong>Effect on original feature:</strong> Deletion of semantically well-defined feature.</p>
+
+<p><strong>Difficulty of converting:</strong> Syntactic transformation. (The type error produced by the assignment can be automatically
+corrected by applying an explicit cast.)</p>
+
+<p><strong>How widely used:</strong> Common.</p>
+
+
+<h4><a title="dcl.enum" href="dcl.enum.html">7.2</a></h4>
+
+<p><strong>Change:</strong> In C++, the type of an enumerator is its enumeration. In C, the type of an enumerator is <code class="sh_cpp">int</code>.</p>
+
+<p>Example:</p>
+
+<pre><code class="sh_cpp">enum e { A };
+sizeof(A) == sizeof(int)    // in C
+sizeof(A) == sizeof(e)      // in C++
+/* and sizeof(int) is not necessarily equal to sizeof(e) */</code></pre>
+
+<p><strong>Rationale:</strong> In C++, an enumeration is a distinct type.</p>
+
+<p><strong>Effect on original feature:</strong> Change to semantics of well-defined feature.</p>
+
+<p><strong>Difficulty of converting:</strong> Semantic transformation.</p>
+
+<p><strong>How widely used:</strong> Seldom. The only time this affects existing C code is when the size of an enumerator is taken.
+Taking the size of an enumerator is not a common C coding practice.</p>
+
+</body>
+</html>
+

@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>uses-allocator construction</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[allocator.uses.construction]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[allocator.uses.construction]"></object>20.6.7.2 uses-allocator construction </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><dfn>Uses-allocator construction</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="Uses-allocator construction"></object> with allocator <code class="sh_cpp">Alloc</code> refers to the construction of an
+object <code class="sh_cpp">obj</code> of type <code class="sh_cpp">T</code>, using constructor arguments <code class="sh_cpp">v1</code>, <code class="sh_cpp">v2</code>, …,
+<code class="sh_cpp">vN</code> of types <code class="sh_cpp">V1</code>, <code class="sh_cpp">V2</code>, …, <code class="sh_cpp">VN</code>, respectively, and an allocator
+<code class="sh_cpp">alloc</code> of type <code class="sh_cpp">Alloc</code>, according to the following rules:</p>
+
+<ul>
+<li>if <code class="sh_cpp">uses_allocator&lt;T, Alloc&gt;::value</code> is <code class="sh_cpp">false</code> and
+	<code class="sh_cpp">is_constructible&lt;T, V1, V2, …, VN&gt;::value</code> is <code class="sh_cpp">true</code>, then <code class="sh_cpp">obj</code> is
+	initialized as <code class="sh_cpp">obj(v1, v2, …, vN)</code>;</li>
+<li>otherwise, if <code class="sh_cpp">uses_allocator&lt;T, Alloc&gt;::value</code> is <code class="sh_cpp">true</code> and
+	<code class="sh_cpp">is_constructible&lt;T, allocator_arg_t, Alloc, V1, V2, …, VN&gt;::value</code> is <code class="sh_cpp">true</code>,
+	then <code class="sh_cpp">obj</code> is initialized as <code class="sh_cpp">obj(allocator_arg, alloc, v1, v2, …, vN)</code>;</li>
+<li>otherwise, if <code class="sh_cpp">uses_allocator&lt;T, Alloc&gt;::value</code> is <code class="sh_cpp">true</code> and
+	<code class="sh_cpp">is_constructible&lt;T, V1, V2, …, VN, Alloc&gt;::value</code> is <code class="sh_cpp">true</code>, then
+	<code class="sh_cpp">obj</code> is initialized as <code class="sh_cpp">obj(v1, v2, …, vN, alloc)</code>;</li>
+<li>otherwise, the request for uses-allocator construction is ill-formed. <span class="note">[ <em>Note:</em> an error will result if
+	<code class="sh_cpp">uses_allocator&lt;T, Alloc&gt;::value</code> is <code class="sh_cpp">true</code> but the specific constructor does not
+	take an allocator. This definition prevents a silent failure to pass the allocator to an element. — <em>end note</em> ]</span>
+</li>
+</ul>
+</body>
+</html>
+

@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Relationships between types</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[meta.rel]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[meta.rel]"></object>20.9.6 Relationships between types </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>This sub-clause contains templates that may be used to query relationships between types at compile time.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>Each of these templates shall be a <code class="concept">BinaryTypeTrait</code> (<a title="meta.rqmts" href="meta.rqmts.html">20.9.1</a>) with a
+BaseCharacteristic of <code class="sh_cpp">true_type</code> if the corresponding condition is true, otherwise
+<code class="sh_cpp">false_type</code>.</p>
+
+<table id="t51" class="type_traits">
+<caption>Table 51 — Type relationship predicates</caption>
+<thead><tr>
+<th>Template</th>
+<th>Condition</th>
+<th>Comments</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T, class U&gt;
+struct <dfn>is_­same</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_same"></object>;</code></pre></td>
+	<td>
+<code class="sh_cpp">T</code> and <code class="sh_cpp">U</code> name the same type with the same cv-qualifications</td>
+	<td></td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class Base, class Derived&gt;
+struct <dfn>is_­base_­of</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_base_of"></object>;</code></pre></td>
+	<td>
+<code class="sh_cpp">Base</code> is a base class of <code class="sh_cpp">Derived</code> (<a title="class.derived" href="class.derived.html">10</a>) without regard to cv-qualifiers or
+		<code class="sh_cpp">Base</code> and <code class="sh_cpp">Derived</code> are not unions and name the same class type without regard to
+		cv-qualifiers</td>
+	<td>If <code class="sh_cpp">Base</code> and <code class="sh_cpp">Derived</code> are class types and are different types (ignoring possible
+		cv-qualifiers) then <code class="sh_cpp">Derived</code> shall be a complete type. <span class="note">[ <em>Note:</em> Base classes that are private,
+		protected, or ambiguous are, nonetheless, base classes. — <em>end note</em> ]</span>
+</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class From, class To&gt;
+struct <dfn>is_­convertible</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_convertible"></object>;</code></pre></td>
+	<td><em>see below</em></td>
+	<td>
+<code class="sh_cpp">From</code> and <code class="sh_cpp">To</code> shall be complete types, arrays of unknown bound, or (possibly
+		cv-qualified) void types.</td>
+</tr>
+</tbody>
+</table>
+
+<div class="example">
+<p><a class="anchor" id="p3" href="#p3">3</a>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct B {};
+struct B1 : B {};
+struct B2 : B {};
+struct D : private B1, private B2 {};
+
+is_base_of&lt;B, D&gt;::value         // true
+is_base_of&lt;const B, D&gt;::value   // true
+is_base_of&lt;B, const D&gt;::value   // true
+is_base_of&lt;B, const B&gt;::value   // true
+is_base_of&lt;D, B&gt;::value         // false
+is_base_of&lt;B&amp;, D&amp;&gt;::value       // false
+is_base_of&lt;B[3], D[3]&gt;::value   // false
+is_base_of&lt;int, int&gt;::value     // false</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>Given the following function prototype:</p>
+
+<pre><code class="sh_cpp">template &lt;class T&gt;
+  typename add_rvalue_reference&lt;T&gt;::type create();</code></pre>
+
+<p>the predicate condition for a template specialization <code class="sh_cpp">is_convertible&lt;From, To&gt;</code> shall be satisfied
+if and only if the return expression in the following code would be well-formed, including any implicit conversions to
+the return type of the function:</p>
+
+<pre><code class="sh_cpp">To test() {
+  return create&lt;From&gt;();
+}</code></pre>
+
+<p><span class="note">[ <em>Note:</em> This requirement gives well defined results for reference types, void types, array types, and function
+types. — <em>end note</em> ]</span> Access checking is performed as if in a context unrelated to <code class="sh_cpp">To</code> and <code class="sh_cpp">From</code>. Only
+the validity of the immediate context of the expression of the <i class="nonterminal">return-statement</i> (including conversions to the
+return type) is considered. <span class="note">[ <em>Note:</em> The evaluation of the conversion can result in side effects such as the instantiation
+of class template specializations and function template specializations, the generation of implicitly-defined functions,
+and so on. Such side effects are not in the “immediate context” and can result in the program being
+ill-formed. — <em>end note</em> ]</span></p>
+</body>
+</html>
+

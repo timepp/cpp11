@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class templates</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[temp.class]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[temp.class]"></object>14.5.1 Class templates </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A class <i class="nonterminal">template</i> defines the layout and operations for an unbounded set of related types. <span class="example">[ <em>Example:</em> a
+single class template <code class="sh_cpp">List</code> might provide a common definition for list of <code class="sh_cpp">int</code>, list of
+<code class="sh_cpp">float</code>, and list of pointers to <code class="sh_cpp">Shape</code>s. — <em>end example</em> ]</span></p>
+
+<div class="example">
+<p>[ <em>Example:</em> An array class template might be declared like this:</p>
+
+<pre><code class="sh_cpp">template&lt;class T&gt; class Array {
+  T* v;
+  int sz;
+public:
+  explicit Array(int);
+  T&amp; operator[](int);
+  T&amp; elem(int i) { return v[i]; }
+};</code></pre>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The prefix <code class="sh_cpp">template &lt;class T&gt;</code> specifies that a template is being declared and that a
+<i class="nonterminal">type-name</i> <code class="sh_cpp">T</code> will be used in the declaration. In other words, <code class="sh_cpp">Array</code> is a parameterized
+type with <code class="sh_cpp">T</code> as its parameter. — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>When a member function, a member class, a member enumeration, a static data member or a member template of a class template is
+defined outside of the class template definition, the member definition is defined as a template definition in which the
+<i class="nonterminal">template-parameter</i>s are those of the class template. The names of the template parameters used in the
+definition of the member may be different from the template parameter names used in the class template definition. The
+template argument list following the class template name in the member definition shall name the parameters in the same
+order as the one used in the template parameter list of the member. Each template parameter pack shall be expanded with
+an ellipsis in the template argument list.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">template&lt;class T1, class T2&gt; struct A {
+  void f1();
+  void f2();
+};
+
+template&lt;class T2, class T1&gt; void A&lt;T2,T1&gt;::f1() { }    // OK
+template&lt;class T2, class T1&gt; void A&lt;T1,T2&gt;::f2() { }    // error
+
+template&lt;class ... Types&gt; struct B {
+  void f3();
+  void f4();
+};
+
+template&lt;class ... Types&gt; void B&lt;Types ...&gt;::f3() { }   // OK
+template&lt;class ... Types&gt; void B&lt;Types&gt;::f4() { }       // error</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>In a redeclaration, partial specialization, explicit specialization or explicit instantiation of a class
+template, the <i class="nonterminal">class-key</i> shall agree in kind with the original class template declaration
+(<a title="dcl.type.elab" href="dcl.type.elab.html">7.1.6.3</a>).</p>
+</body>
+</html>
+

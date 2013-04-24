@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Abstract classes</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[class.abstract]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[class.abstract]"></object>10.4 Abstract classes </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The abstract class mechanism supports the notion of a general concept, such as a <code class="sh_cpp">shape</code>, of which
+only more concrete variants, such as <code class="sh_cpp">circle</code> and <code class="sh_cpp">square</code>, can actually be used. An abstract
+class can also be used to define an interface for which derived classes provide a variety of implementations.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>An <dfn>abstract class</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="abstract class"></object> is a class that can be used only as a base class of some other class; no objects
+of an abstract class can be created except as subobjects of a class derived from it. A class is abstract if it has at
+least one <dfn>pure virtual function</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="pure virtual function"></object>. <span class="note">[ <em>Note:</em> Such a function might be inherited: see below. — <em>end note</em> ]</span> A virtual
+function is specified <dfn>pure</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="pure"></object> by using a <i class="nonterminal">pure-specifier</i> (<a title="class.mem" href="class.mem.html">9.2</a>) in the function declaration in
+the class definition. A pure virtual function need be defined only if called with, or as if with (<a title="class.dtor" href="class.dtor.html">12.4</a>), the
+<i class="nonterminal">qualified-id</i> syntax (<a title="expr.prim" href="expr.prim.general.html">5.1</a>).</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">class point { /* … */ };
+class shape {                   // abstract class
+  point center;
+public:
+  point where() { return center; }
+  void move(point p) { center=p; draw(); }
+  virtual void rotate(int) = 0; // pure virtual
+  virtual void draw() = 0;      // pure virtual
+};</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><span class="note">[ <em>Note:</em> A function declaration cannot provide both a <i class="nonterminal">pure-specifier</i> and a definition — <em>end note</em> ]</span></p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct C {
+  virtual void f() = 0 { };     // ill-formed
+};</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>An abstract class shall not be used as a parameter type, as a function return type, or as the type of an
+explicit conversion. Pointers and references to an abstract class can be declared.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">shape x;                // error: object of abstract class
+shape* p;               // OK
+shape f();              // error
+void g(shape);          // error
+shape&amp; h(shape&amp;);       // OK</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>A class is abstract if it contains or inherits at least one pure virtual function for which the final overrider
+is pure virtual.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">class ab_circle : public shape {
+  int radius;
+public:
+  void rotate(int) { }
+  // ab_circle::draw() is a pure virtual
+};</code></pre>
+
+<p>Since <code class="sh_cpp">shape::draw()</code> is a pure virtual function <code class="sh_cpp">ab_circle::draw()</code> is a pure virtual by
+default. The alternative declaration,</p>
+
+<pre><code class="sh_cpp">class circle : public shape {
+  int radius;
+public:
+  void rotate(int) { }
+  void draw();          // a definition is required somewhere
+};</code></pre>
+
+<p>would make class <code class="sh_cpp">circle</code> nonabstract and a definition of <code class="sh_cpp">circle::draw()</code> must be
+provided. — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><span class="note">[ <em>Note:</em> An abstract class can be derived from a class that is not abstract, and a pure virtual function may
+override a virtual function which is not pure. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>Member functions can be called from a constructor (or destructor) of an abstract class; the effect of making a
+virtual call (<a title="class.virtual" href="class.virtual.html">10.3</a>) to a pure virtual function directly or indirectly for the object being created (or
+destroyed) from such a constructor (or destructor) is undefined.</p>
+</body>
+</html>
+

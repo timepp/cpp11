@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class template sub_match</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[re.submatch]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[re.submatch]"></object>28.9 Class template <code class="sh_cpp"><dfn>sub_match</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="sub_match"></object></code> </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Class template <code class="sh_cpp">sub_match</code> denotes the sequence of characters matched by a particular marked
+sub-expression.</p>
+
+<pre><code class="sh_cpp">namespace std {
+  template &lt;class BidirectionalIterator&gt;
+  class sub_match : public std::pair&lt;BidirectionalIterator, BidirectionalIterator&gt; {
+  public:
+    typedef typename iterator_traits&lt;BidirectionalIterator&gt;::
+      value_type                     value_type;
+    typedef typename iterator_traits&lt;BidirectionalIterator&gt;::
+      difference_type                difference_type;
+    typedef BidirectionalIterator    iterator;
+    typedef basic_string&lt;value_type&gt; string_type;
+
+    bool matched;
+
+    constexpr sub_match();
+
+    difference_type length() const;
+    operator string_type() const;
+    string_type str() const;
+
+    int compare(const sub_match&amp; s) const;
+    int compare(const string_type&amp; s) const;
+    int compare(const value_type* s) const;
+  };
+}</code></pre>
+</body>
+</html>
+

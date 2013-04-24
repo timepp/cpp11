@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Restrictions on storage of pointers</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[res.on.pointer.storage]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[res.on.pointer.storage]"></object>17.6.5.13 Restrictions on storage of pointers </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Objects constructed by the standard library that may hold a user-supplied pointer value or an integer of type
+<code class="sh_cpp">std::intptr_t</code> shall store such values in a traceable pointer location (<a title="basic.stc.dynamic.safety" href="basic.stc.dynamic.safety.html">3.7.4.3</a>). <span class="note">[ <em>Note:</em> Other
+libraries are strongly encouraged to do the same, since not doing so may result in accidental use of pointers that are
+not safely derived. Libraries that store pointers outside the user’s address space should make it appear that they are
+stored and retrieved from a traceable pointer location. — <em>end note</em> ]</span></p>
+</body>
+</html>
+

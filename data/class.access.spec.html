@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Access specifiers</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[class.access.spec]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[class.access.spec]"></object>11.1 Access specifiers </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Member declarations can be labeled by an <i class="nonterminal">access-specifier</i> (Clause <a title="class.derived" href="class.derived.html">10</a>):</p>
+
+<dl><dd>
+<i class="nonterminal">access-specifier</i> <code class="sh_cpp">:</code> <i class="nonterminal">member-specification</i><sub class="opt">opt</sub>
+</dd></dl>
+
+<p>An <i class="nonterminal">access-specifier</i> specifies the access rules for members following it until the end of the class or until
+another <i class="nonterminal">access-specifier</i> is encountered.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">class X {
+  int a;                // X::a is private by default: class used
+public:
+  int b;                // X::b is public
+  int c;                // X::c is public
+};</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>Any number of access specifiers is allowed and no particular order is required.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct S {
+  int a;                // S::a is public by default: struct used
+protected:
+  int b;                // S::b is protected
+private:
+  int c;                // S::c is private
+public:
+  int d;                // S::d is public
+};</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><span class="note">[ <em>Note:</em> The effect of access control on the order of allocation of data members is described in
+<a title="class.mem" href="class.mem.html">9.2</a>. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>When a member is redeclared within its class definition, the access specified at its redeclaration shall be the
+same as at its initial declaration.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct S {
+  class A;
+  enum E : int;
+private:
+  class A { };          // error: cannot change access
+  enum E: int { e0 };   // error: cannot change access
+};</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><span class="note">[ <em>Note:</em> In a derived class, the lookup of a base class name will find the injected-class-name instead of the name
+of the base class in the scope in which it was declared. The injected-class-name might be less accessible than the name
+of the base class in the scope in which it was declared. — <em>end note</em> ]</span></p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">class A { };
+class B : private A { };
+class C : public B {
+  A *p;                 // error: injected-class-name A is inaccessible
+  ::A *q;               // OK
+};</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+</body>
+</html>
+

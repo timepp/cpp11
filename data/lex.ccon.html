@@ -1,0 +1,204 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Character literals</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[lex.ccon]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[lex.ccon]"></object>2.14.3 Character literals </h3>
+<dl>
+<dt>
+<i class="nonterminal"><dfn>character-literal</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="character-literal"></object></i>:</dt>
+<dd>
+<code class="sh_cpp">'</code> <i class="nonterminal">c-char-sequence</i> <code class="sh_cpp">'</code>
+</dd>
+<dd>
+<code class="sh_cpp">u'</code> <i class="nonterminal">c-char-sequence</i> <code class="sh_cpp">'</code>
+</dd>
+<dd>
+<code class="sh_cpp">U'</code> <i class="nonterminal">c-char-sequence</i> <code class="sh_cpp">'</code>
+</dd>
+<dd>
+<code class="sh_cpp">L'</code> <i class="nonterminal">c-char-sequence</i> <code class="sh_cpp">'</code>
+</dd>
+<dt>
+<i class="nonterminal"><dfn>c-char-sequence</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="c-char-sequence"></object></i>:</dt>
+<dd><i class="nonterminal">c-char</i></dd>
+<dd>
+<i class="nonterminal">c-char-sequence</i> <i class="nonterminal">c-char</i>
+</dd>
+<dt>
+<i class="nonterminal"><dfn>c-char</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="c-char"></object></i>:</dt>
+<dd>any member of the source character set except the single-quote <code class="sh_cpp">'</code>, backslash <code class="sh_cpp">\</code>, or new-line
+character</dd>
+<dd><i class="nonterminal">escape-sequence</i></dd>
+<dd><i class="nonterminal">universal-character-name</i></dd>
+<dt>
+<i class="nonterminal"><dfn>escape-sequence</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="escape-sequence"></object></i>:</dt>
+<dd><i class="nonterminal">simple-escape-sequence</i></dd>
+<dd><i class="nonterminal">octal-escape-sequence</i></dd>
+<dd><i class="nonterminal">hexadecimal-escape-sequence</i></dd>
+<dt>
+<i class="nonterminal"><dfn>simple-escape-sequence</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="simple-escape-sequence"></object></i>: one of</dt>
+<dd><pre>\'  \"   \?  \\
+\a  \b  \f  \n  \r  \t  \v</pre></dd>
+<dt>
+<i class="nonterminal"><dfn>octal-escape-sequence</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="octal-escape-sequence"></object></i>:</dt>
+<dd>
+<code class="sh_cpp">\</code> <i class="nonterminal">octal-digit</i>
+</dd>
+<dd>
+<code class="sh_cpp">\</code> <i class="nonterminal">octal-digit</i> <i class="nonterminal">octal-digit</i>
+</dd>
+<dd>
+<code class="sh_cpp">\</code> <i class="nonterminal">octal-digit</i> <i class="nonterminal">octal-digit</i> <i class="nonterminal">octal-digit</i>
+</dd>
+<dt>
+<i class="nonterminal"><dfn>hexadecimal-escape-sequence</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="hexadecimal-escape-sequence"></object></i>:</dt>
+<dd>
+<code class="sh_cpp">\x</code> <i class="nonterminal">hexadecimal-digit</i>
+</dd>
+<dd>
+<i class="nonterminal">hexadecimal-escape-sequence</i> <i class="nonterminal">hexadecimal-digit</i>
+</dd>
+</dl>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A character literal is one or more characters enclosed in single quotes, as in <code class="sh_cpp">'x'</code>, optionally
+preceded by one of the letters <code class="sh_cpp">u</code>, <code class="sh_cpp">U</code>, or <code class="sh_cpp">L</code>, as in <code class="sh_cpp">u'y'</code>,
+<code class="sh_cpp">U'z'</code>, or <code class="sh_cpp">L'x'</code>, respectively. A character literal that does not begin with <code class="sh_cpp">u</code>,
+<code class="sh_cpp">U</code>, or <code class="sh_cpp">L</code> is an <dfn>ordinary character literal</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="ordinary character literal"></object>, also referred to as a
+<dfn>narrow-character literal</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="narrow-character literal"></object>. An ordinary character literal that contains a single <i class="nonterminal">c-char</i> has type
+<code class="sh_cpp">char</code>, with value equal to the numerical value of the encoding of the <i class="nonterminal">c-char</i> in the execution
+character set. An ordinary character literal that contains more than one <i class="nonterminal">c-char</i> is a <dfn>multicharacter
+literal</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="multicharacter
+literal"></object>. A multicharacter literal has type <code class="sh_cpp">int</code> and implementation-defined value.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>A character literal that begins with the letter <code class="sh_cpp">u</code>, such as <code class="sh_cpp">u'y'</code>, is a character
+literal of type <code class="sh_cpp">char16_t</code>. The value of a <code class="sh_cpp">char16_t</code> literal containing a single <i class="nonterminal">c-char</i>
+is equal to its ISO 10646 code point value, provided that the code point is representable with a single 16-bit code
+unit. (That is, provided it is a basic multi-lingual plane code point.) If the value is not representable within 16
+bits, the program is ill-formed. A <code class="sh_cpp">char16_t</code> literal containing multiple <i class="nonterminal">c-char</i>s is ill-formed. A
+character literal that begins with the letter <code class="sh_cpp">U</code>, such as <code class="sh_cpp">U'z'</code>, is a character literal of type
+<code class="sh_cpp">char32_t</code>. The value of a <code class="sh_cpp">char32_t</code> literal containing a single <i class="nonterminal">c-char</i> is equal to its
+ISO 10646 code point value. A <code class="sh_cpp">char32_t</code> literal containing multiple <i class="nonterminal">c-char</i>s is ill-formed. A
+character literal that begins with the letter <code class="sh_cpp">L</code>, such as <code class="sh_cpp">L'x'</code>, is a <dfn>wide-character
+literal</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="wide-character
+literal"></object>. A wide-character literal has type <code class="sh_cpp">wchar_t</code>.<sup class="footnote"><a href="#fn23">23</a></sup> The value of a wide-character
+literal containing a single <i class="nonterminal">c-char</i> has value equal to the numerical value of the encoding of the
+<i class="nonterminal">c-char</i> in the execution wide-character set, unless the <i class="nonterminal">c-char</i> has no representation in the execution
+wide-character set, in which case the value is implementation-defined. <span class="note">[ <em>Note:</em> The type <code class="sh_cpp">wchar_t</code> is able to
+represent all members of the execution wide-character set (see <a title="basic.fundamental" href="basic.fundamental.html">3.9.1</a>). — <em>end note</em> ]</span>. The value of a wide-character
+literal containing multiple <i class="nonterminal">c-char</i>s is implementation-defined.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>Certain nongraphic characters, the single quote <code class="sh_cpp">'</code>, the double quote <code class="sh_cpp">"</code>, the question
+mark <code class="sh_cpp">?</code>,<sup class="footnote"><a href="#fn24">24</a></sup> and the backslash <code class="sh_cpp">\</code>, can be represented according to Table <a href="lex.ccon.html#t7">7</a>.
+The double quote <code class="sh_cpp">"</code> and the question mark <code class="sh_cpp">?</code>, can be represented as themselves or by the escape
+sequences <code class="sh_cpp">\"</code> and <code class="sh_cpp">\?</code> respectively, but the single quote <code class="sh_cpp">'</code> and the backslash
+<code class="sh_cpp">\</code> shall be represented by the escape sequences <code class="sh_cpp">\'</code> and <code class="sh_cpp">\\</code> respectively. Escape
+sequences in which the character following the backslash is not listed in Table <a href="lex.ccon.html#t7">7</a> are conditionally-supported,
+with implementation-defined semantics. An escape sequence specifies a single character.</p>
+
+<table id="t7" class="bordered">
+<caption>Table 7 — Escape sequences</caption>
+<tr>
+<td>new-line</td>
+<td>NL(LF)</td>
+<td><code class="sh_cpp">\n</code></td>
+</tr>
+<tr>
+<td>horizontal tab</td>
+<td>HT</td>
+<td><code class="sh_cpp">\t</code></td>
+</tr>
+<tr>
+<td>vertical tab</td>
+<td>VT</td>
+<td><code class="sh_cpp">\v</code></td>
+</tr>
+<tr>
+<td>backspace</td>
+<td>BS</td>
+<td><code class="sh_cpp">\b</code></td>
+</tr>
+<tr>
+<td>carriage return</td>
+<td>CR</td>
+<td><code class="sh_cpp">\r</code></td>
+</tr>
+<tr>
+<td>form feed</td>
+<td>FF</td>
+<td><code class="sh_cpp">\f</code></td>
+</tr>
+<tr>
+<td>alert</td>
+<td>BEL</td>
+<td><code class="sh_cpp">\a</code></td>
+</tr>
+<tr>
+<td>backslash</td>
+<td>\</td>
+<td><code class="sh_cpp">\\</code></td>
+</tr>
+<tr>
+<td>question mark</td>
+<td>?</td>
+<td><code class="sh_cpp">\?</code></td>
+</tr>
+<tr>
+<td>single quote</td>
+<td>'</td>
+<td><code class="sh_cpp">\'</code></td>
+</tr>
+<tr>
+<td>double quote</td>
+<td>"</td>
+<td><code class="sh_cpp">\"</code></td>
+</tr>
+<tr>
+<td>octal number</td>
+<td><var>ooo</var></td>
+<td><code class="sh_cpp">\<var>ooo</var></code></td>
+</tr>
+<tr>
+<td>hex number</td>
+<td><var>hhh</var></td>
+<td><code class="sh_cpp">\x<var>hhh</var></code></td>
+</tr>
+</table>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>The escape <code class="sh_cpp">\<var>ooo</var></code> consists of the backslash followed by one, two, or three octal digits
+that are taken to specify the value of the desired character. The escape <code class="sh_cpp">\x<var>hhh</var></code> consists of the
+backslash followed by <code class="sh_cpp">x</code> followed by one or more hexadecimal digits that are taken to specify the value of
+the desired character. There is no limit to the number of digits in a hexadecimal sequence. A sequence of octal or
+hexadecimal digits is terminated by the first character that is not an octal digit or a hexadecimal digit, respectively.
+The value of a character literal is implementation-defined if it falls outside of the implementation-defined range
+defined for <code class="sh_cpp">char</code> (for literals with no prefix), <code class="sh_cpp">char16_t</code> (for literals prefixed by
+<code class="sh_cpp">'u'</code>), <code class="sh_cpp">char32_t</code> (for literals prefixed by <code class="sh_cpp">'U'</code>), or <code class="sh_cpp">wchar_t</code> (for
+literals prefixed by <code class="sh_cpp">'L'</code>).</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>A universal-character-name is translated to the encoding, in the appropriate execution character set, of the
+character named. If there is no such encoding, the universal-character-name is translated to an implementation-defined
+encoding. <span class="note">[ <em>Note:</em> In translation phase 1, a universal-character-name is introduced whenever an actual extended character
+is encountered in the source text. Therefore, all extended characters are described in terms of
+universal-character-names. However, the actual compiler implementation may use its own native character set, so long as
+the same results are obtained. — <em>end note</em> ]</span></p>
+
+
+
+
+<div>
+<p class="footnote" id="fn23">23) They are intended for character sets where a character does not fit into a single byte.</p>
+<p class="footnote" id="fn24">24) Using an escape sequence for a question mark can avoid accidentally creating a trigraph.</p>
+</div>
+</body>
+</html>
+

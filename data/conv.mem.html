@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Pointer to member conversions</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[conv.mem]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[conv.mem]"></object>4.11 Pointer to member conversions </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A null pointer constant (<a title="conv.ptr" href="conv.ptr.html">4.10</a>) can be converted to a pointer to member type; the result is the
+<dfn>null member pointer value</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="null member pointer value"></object> of that type and is distinguishable from any pointer to member not created from a
+null pointer constant. Such a conversion is called a <dfn>null member pointer conversion</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="null member pointer conversion"></object>. Two null member pointer
+values of the same type shall compare equal. The conversion of a null pointer constant to a pointer to member of
+cv-qualified type is a single conversion, and not the sequence of a pointer to member conversion followed by a
+qualification conversion (<a title="conv.qual" href="conv.qual.html">4.4</a>).</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>A prvalue of type “pointer to member of <code class="sh_cpp">B</code> of type <var>cv</var> <code class="sh_cpp">T</code>”, where
+<code class="sh_cpp">B</code> is a class type, can be converted to a prvalue of type “pointer to member of <code class="sh_cpp">D</code> of type
+<var>cv</var> <code class="sh_cpp">T</code>”, where <code class="sh_cpp">D</code> is a derived class (Clause <a title="class.derived" href="class.derived.html">10</a>) of <code class="sh_cpp">B</code>. If
+<code class="sh_cpp">B</code> is an inaccessible (Clause <a title="class.access" href="class.access.html">11</a>), ambiguous (<a title="class.member.lookup" href="class.member.lookup.html">10.2</a>), or virtual (<a title="class.mi" href="class.mi.html">10.1</a>) base
+class of <code class="sh_cpp">D</code>, or a base class of a virtual base class of <code class="sh_cpp">D</code>, a program that necessitates this
+conversion is ill-formed. The result of the conversion refers to the same member as the pointer to member before the
+conversion took place, but it refers to the base class member as if it were a member of the derived class. The result
+refers to the member in <code class="sh_cpp">D</code>’s instance of <code class="sh_cpp">B</code>. Since the result has type “pointer to member of
+<code class="sh_cpp">D</code> of type <var>cv</var> <code class="sh_cpp">T</code>”, it can be dereferenced with a <code class="sh_cpp">D</code> object. The result is
+the same as if the pointer to member of <code class="sh_cpp">B</code> were dereferenced with the <code class="sh_cpp">B</code> subobject of
+<code class="sh_cpp">D</code>. The null member pointer value is converted to the null member pointer value of the destination
+type.<sup class="footnote"><a href="#fn57">57</a></sup></p>
+
+
+<div><p class="footnote" id="fn57">57) The rule for conversion of pointers to members (from pointer to member of base to pointer to member of
+derived) appears inverted compared to the rule for pointers to objects (from pointer to derived to pointer to base)
+(<a title="conv.ptr" href="conv.ptr.html">4.10</a>, Clause <a title="class.derived" href="class.derived.html">10</a>). This inversion is necessary to ensure type safety. Note that a pointer to
+member is not an object pointer or a function pointer and the rules for conversions of such pointers do not apply to
+pointers to members. In particular, a pointer to member cannot be converted to a <code class="sh_cpp">void*</code>.</p></div>
+</body>
+</html>
+

@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Clause 5: expressions</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[diff.expr]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[diff.expr]"></object>C.1.4 Clause <a title="expr" href="expr.html">5</a>: expressions </h3>
+
+<h4><a title="expr.call" href="expr.call.html">5.2.2</a></h4>
+
+<p><strong>Change:</strong> Implicit declaration of functions is not allowed</p>
+
+<p><strong>Rationale:</strong> The type-safe nature of C++.</p>
+
+<p><strong>Effect on original feature:</strong> Deletion of semantically well-defined feature. Note: the original feature was labeled as “obsolescent” in ISO
+C.</p>
+
+<p><strong>Difficulty of converting:</strong> Syntactic transformation. Facilities for producing explicit function declarations are fairly
+widespread commercially.</p>
+
+<p><strong>How widely used:</strong> Common.</p>
+
+
+<h4>
+<a title="expr.sizeof" href="expr.sizeof.html">5.3.3</a>, <a title="expr.cast" href="expr.cast.html">5.4</a>
+</h4>
+
+<p><strong>Change:</strong> Types must be declared in declarations, not in expressions In C, a sizeof expression or cast
+expression may create a new type. For example,</p>
+
+<pre><code class="sh_cpp">p = (void*)(struct x {int i;} *)0;</code></pre>
+
+<p>declares a new type, <code class="sh_cpp">struct x</code>.</p>
+
+<p><strong>Rationale:</strong> This prohibition helps to clarify the location of declarations in the source code.</p>
+
+<p><strong>Effect on original feature:</strong> Deletion of a semantically well-defined feature.</p>
+
+<p><strong>Difficulty of converting:</strong> Syntactic transformation.</p>
+
+<p><strong>How widely used:</strong> Seldom.</p>
+
+
+<h4>
+<a title="expr.cond" href="expr.cond.html">5.16</a>, <a title="expr.ass" href="expr.ass.html">5.17</a>, <a title="expr.comma" href="expr.comma.html">5.18</a>
+</h4>
+
+<p><strong>Change:</strong> The result of a conditional expression, an assignment expression, or a comma expression may be an
+lvalue</p>
+
+<p><strong>Rationale:</strong> C++ is an object-oriented language, placing relatively more emphasis on lvalues. For example, functions
+may return lvalues.</p>
+
+<p><strong>Effect on original feature:</strong> Change to semantics of well-defined feature. Some C expressions that implicitly
+rely on lvalue-to-rvalue conversions will yield different results. For example,</p>
+
+<pre><code class="sh_cpp">char arr[100];
+sizeof(0, arr)</code></pre>
+
+<p>yields 100 in C++ and <code class="sh_cpp">sizeof(char*)</code> in C.</p>
+
+<p><strong>Difficulty of converting:</strong> Programs must add explicit casts to the appropriate rvalue.</p>
+
+<p><strong>How widely used:</strong> Rare.</p>
+
+</body>
+</html>
+

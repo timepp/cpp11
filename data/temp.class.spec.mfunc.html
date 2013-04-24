@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Members of class template specializations</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[temp.class.spec.mfunc]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[temp.class.spec.mfunc]"></object>14.5.5.3 Members of class template specializations </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The template parameter list of a member of a class template partial specialization shall match the template
+parameter list of the class template partial specialization. The template argument list of a member of a class template
+partial specialization shall match the template argument list of the class template partial specialization. A class
+template specialization is a distinct template. The members of the class template partial specialization are unrelated
+to the members of the primary template. Class template partial specialization members that are used in a way that
+requires a definition shall be defined; the definitions of members of the primary template are never used as definitions
+for members of a class template partial specialization. An explicit specialization of a member of a class template
+partial specialization is declared in the same way as an explicit specialization of the primary template.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">// primary template
+template&lt;class T, int I&gt; struct A {
+  void f();
+};
+
+template&lt;class T, int I&gt; void A&lt;T,I&gt;::f() { }
+
+// class template partial specialization
+template&lt;class T&gt; struct A&lt;T,2&gt; {
+  void f();
+  void g();
+  void h();
+};
+
+// member of class template partial specialization
+template&lt;class T&gt; void A&lt;T,2&gt;::g() { }
+
+// explicit specialization
+template&lt;&gt; void A&lt;char,2&gt;::h() { }
+
+int main() {
+  A&lt;char,0&gt; a0;
+  A&lt;char,2&gt; a2;
+  a0.f();               // OK, uses definition of primary template’s member
+  a2.g();               // OK, uses definition of
+                        // partial specialization’s member
+  a2.h();               // OK, uses definition of
+                        // explicit specialization’s member
+  a2.f();               // ill-formed, no definition of f for A&lt;T,2&gt;
+                        // the primary template is not used here
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>If a member template of a class template is partially specialized, the member template partial specializations
+are member templates of the enclosing class template; if the enclosing class template is instantiated
+(<a title="temp.inst" href="temp.inst.html">14.7.1</a>, <a title="temp.explicit" href="temp.explicit.html">14.7.2</a>), a declaration for every member template partial specialization is also
+instantiated as part of creating the members of the class template specialization. If the primary member template is
+explicitly specialized for a given (implicit) specialization of the enclosing class template, the partial
+specializations of the member template are ignored for this specialization of the enclosing class template. If a partial
+specialization of the member template is explicitly specialized for a given (implicit) specialization of the enclosing
+class template, the primary member template and its other partial specializations are still considered for this
+specialization of the enclosing class template.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">template&lt;class T&gt; struct A {
+  template&lt;class T2&gt; struct B {};                       // #1
+  template&lt;class T2&gt; struct B&lt;T2*&gt; {};                  // #2
+};
+
+template&lt;&gt; template&lt;class T2&gt; struct A&lt;short&gt;::B {};    // #3
+
+A&lt;char&gt;::B&lt;int*&gt; abcip;     // uses #2
+A&lt;short&gt;::B&lt;int*&gt; absip;    // uses #3
+A&lt;char&gt;::B&lt;int&gt; abci;       // uses #1</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+</body>
+</html>
+

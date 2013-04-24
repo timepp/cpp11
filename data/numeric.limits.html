@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class template numeric_limits</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[numeric.limits]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[numeric.limits]"></object>18.3.2.3 Class template <code class="sh_cpp"><dfn>numeric_limits</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="numeric_limits"></object></code> </h4>
+
+<pre><code class="sh_cpp">namespace std {
+  template&lt;class T&gt; class numeric_limits {
+  public:
+    static constexpr bool is_specialized = false;
+    static constexpr T min() noexcept { return T(); }
+    static constexpr T max() noexcept { return T(); }
+    static constexpr T lowest() noexcept { return T(); }
+
+    static constexpr int digits = 0;
+    static constexpr int digits10 = 0;
+    static constexpr int max_digits10 = 0;
+    static constexpr bool is_signed = false;
+    static constexpr bool is_integer = false;
+    static constexpr bool is_exact = false;
+    static constexpr int radix = 0;
+    static constexpr T epsilon() noexcept { return T(); }
+    static constexpr T round_error() noexcept { return T(); }
+
+    static constexpr int min_exponent = 0;
+    static constexpr int min_exponent10 = 0;
+    static constexpr int max_exponent = 0;
+    static constexpr int max_exponent10 = 0;
+
+    static constexpr bool has_infinity = false;
+    static constexpr bool has_quiet_NaN = false;
+    static constexpr bool has_signaling_NaN = false;
+    static constexpr float_denorm_style has_denorm = denorm_absent;
+    static constexpr bool has_denorm_loss = false;
+    static constexpr T infinity() noexcept { return T(); }
+    static constexpr T quiet_NaN() noexcept { return T(); }
+    static constexpr T signaling_NaN() noexcept { return T(); }
+    static constexpr T denorm_min() noexcept { return T(); }
+
+    static constexpr bool is_iec559 = false;
+    static constexpr bool is_bounded = false;
+    static constexpr bool is_modulo = false;
+
+    static constexpr bool traps = false;
+    static constexpr bool tinyness_before = false;
+    static constexpr float_round_style round_style = round_toward_zero;
+  };
+
+  template&lt;class T&gt; class numeric_limits&lt;const T&gt;;
+  template&lt;class T&gt; class numeric_limits&lt;volatile T&gt;;
+  template&lt;class T&gt; class numeric_limits&lt;const volatile T&gt;;
+}</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The default <code class="sh_cpp">numeric_limits&lt;T&gt;</code> template shall have all members, but with 0 or
+<code class="sh_cpp">false</code> values.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The value of each member of a specialization of <code class="sh_cpp">numeric_limits</code> on a cv-qualified type
+<var>cv</var> <code class="sh_cpp">T</code> shall be equal to the value of the corresponding member of the specialization on the
+unqualified type <code class="sh_cpp">T</code>.</p>
+</body>
+</html>
+

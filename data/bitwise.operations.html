@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Bitwise operations</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[bitwise.operations]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[bitwise.operations]"></object>20.8.7 Bitwise operations </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The library provides basic function object classes for all of the bitwise operators in the language
+(<a title="expr.bit.and" href="expr.bit.and.html">5.11</a>, <a title="expr.or" href="expr.or.html">5.13</a>, <a title="expr.xor" href="expr.xor.html">5.12</a>).</p>
+
+<h4><code class="sh_cpp">template &lt;class T&gt; struct <dfn>bit_and</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="bit_and"></object> {
+  T operator()(const T&amp; x, const T&amp; y) const;
+  typedef T first_argument_type;
+  typedef T second_argument_type;
+  typedef T result_type;
+};</code></h4>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><code class="sh_cpp">operator()</code> returns <code class="sh_cpp">x &amp; y</code>.</p>
+
+<h4><code class="sh_cpp">template &lt;class T&gt; struct <dfn>bit_or</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="bit_or"></object> {
+  T operator()(const T&amp; x, const T&amp; y) const;
+  typedef T first_argument_type;
+  typedef T second_argument_type;
+  typedef T result_type;
+};</code></h4>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><code class="sh_cpp">operator()</code> returns <code class="sh_cpp">x | y</code>.</p>
+
+<h4><code class="sh_cpp">template &lt;class T&gt; struct <dfn>bit_xor</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="bit_xor"></object> {
+  T operator()(const T&amp; x, const T&amp; y) const;
+  typedef T first_argument_type;
+  typedef T second_argument_type;
+  typedef T result_type;
+};</code></h4>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><code class="sh_cpp">operator()</code> returns <code class="sh_cpp">x ^ y</code>.</p>
+</body>
+</html>
+

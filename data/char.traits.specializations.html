@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>char_traits specializations</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[char.traits.specializations]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[char.traits.specializations]"></object>21.2.3 <code class="sh_cpp">char_traits</code> specializations </h3>
+
+<pre><code class="sh_cpp">namespace std {
+  template&lt;&gt; struct char_traits&lt;char&gt;;
+  template&lt;&gt; struct char_traits&lt;char16_t&gt;;
+  template&lt;&gt; struct char_traits&lt;char32_t&gt;;
+  template&lt;&gt; struct char_traits&lt;wchar_t&gt;;
+}</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The header <code class="header">&lt;string&gt;</code> shall define four specializations of the template struct
+<code class="sh_cpp">char_traits</code>: <code class="sh_cpp">char_traits&lt;char&gt;</code>, <code class="sh_cpp">char_traits&lt;char16_t&gt;</code>,
+<code class="sh_cpp">char_traits&lt;char32_t&gt;</code>, and <code class="sh_cpp">char_traits&lt;wchar_t&gt;</code>.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The requirements for the members of these specializations are given in Clause <a title="char.traits.require" href="char.traits.require.html">21.2.1</a>.</p>
+</body>
+</html>
+

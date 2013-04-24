@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Logical OR operator</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[expr.log.or]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[expr.log.or]"></object>5.15 Logical OR operator </h2>
+
+<dl>
+<dt>
+<i class="nonterminal"><dfn>logical-or-expression</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="logical-or-expression"></object></i>:</dt>
+	<dd><i class="nonterminal">logical-and-expression</i></dd>
+	<dd>
+<i class="nonterminal">logical-or-expression</i> <code class="sh_cpp">||</code> <i class="nonterminal">logical-and-expression</i>
+</dd>
+</dl>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The <code class="sh_cpp">||</code> operator groups left-to-right. The operands are both contextually converted to
+<code class="sh_cpp">bool</code> (Clause <a title="conv" href="conv.html">4</a>). It returns <code class="sh_cpp">true</code> if either of its operands is <code class="sh_cpp">true</code>,
+and false otherwise. Unlike <code class="sh_cpp">|</code>, <code class="sh_cpp">||</code> guarantees left-to-right evaluation; moreover, the second
+operand is not evaluated if the first operand evaluates to <code class="sh_cpp">true</code>.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The result is a <code class="sh_cpp">bool</code>. If the second expression is evaluated, every value computation and side
+effect associated with the first expression is sequenced before every value computation and side effect associated with
+the second expression.</p>
+</body>
+</html>
+

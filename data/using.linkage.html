@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Linkage</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[using.linkage]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[using.linkage]"></object>17.6.2.3 Linkage </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Entities in the C++ standard library have external linkage (<a title="basic.link" href="basic.link.html">3.5</a>). Unless otherwise specified,
+objects and functions have the default <code class="sh_cpp">extern "C++"</code> linkage (<a title="dcl.link" href="dcl.link.html">7.5</a>).</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>Whether a name from the C standard library declared with external linkage has <code class="sh_cpp">extern "C"</code> or
+<code class="sh_cpp">extern "C++"</code> linkage is implementation-defined. It is recommended that an implementation use <code class="sh_cpp">extern
+"C++"</code> linkage for this purpose.<sup class="footnote"><a href="#fn182">182</a></sup></p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>Objects and functions defined in the library and required by a C++ program are included in the program prior to
+program startup.</p>
+
+<p><span class="seealso">See also:</span> replacement functions (<a title="replacement.functions" href="replacement.functions.html">17.6.4.6</a>), run-time changes (<a title="handler.functions" href="handler.functions.html">17.6.4.7</a>).</p>
+
+
+<div><p class="footnote" id="fn182">182) The only reliable way to declare an object or function signature from the Standard C library is by
+including the header that declares it, notwithstanding the latitude granted in 7.1.7 of the C Standard.</p></div>
+</body>
+</html>
+

@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>C standard library headers</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[depr.c.headers]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[depr.c.headers]"></object>D.5 C standard library headers </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>For compatibility with the C standard library and the C Unicode TR, the C++ standard library provides the 25
+<dfn>C headers</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="C headers"></object>, as shown in Table <a href="depr.str.strstreams.html#t154">154</a>.</p>
+
+<table id="t154" class="bordered padded">
+<caption>Table 154 — C headers</caption>
+<tbody>
+<tr>
+<td><code class="header">&lt;assert.h&gt;</code></td>
+<td><code class="header">&lt;inttypes.h&gt;</code></td>
+<td><code class="header">&lt;signal.h&gt;</code></td>
+<td><code class="header">&lt;stdio.h&gt;</code></td>
+<td><code class="header">&lt;wchar.h&gt;</code></td>
+</tr>
+<tr>
+<td><code class="header">&lt;complex.h&gt;</code></td>
+<td><code class="header">&lt;iso646.h&gt;</code></td>
+<td><code class="header">&lt;stdalign.h&gt;</code></td>
+<td><code class="header">&lt;stdlib.h&gt;</code></td>
+<td><code class="header">&lt;wctype.h&gt;</code></td>
+</tr>
+<tr>
+<td><code class="header">&lt;ctype.h&gt;</code></td>
+<td><code class="header">&lt;limits.h&gt;</code></td>
+<td><code class="header">&lt;stdarg.h&gt;</code></td>
+<td><code class="header">&lt;string.h&gt;</code></td>
+</tr>
+<tr>
+<td><code class="header">&lt;errno.h&gt;</code></td>
+<td><code class="header">&lt;locale.h&gt;</code></td>
+<td><code class="header">&lt;stdbool.h&gt;</code></td>
+<td><code class="header">&lt;tgmath.h&gt;</code></td>
+</tr>
+<tr>
+<td><code class="header">&lt;fenv.h&gt;</code></td>
+<td><code class="header">&lt;math.h&gt;</code></td>
+<td><code class="header">&lt;stddef.h&gt;</code></td>
+<td><code class="header">&lt;time.h&gt;</code></td>
+</tr>
+<tr>
+<td><code class="header">&lt;float.h&gt;</code></td>
+<td><code class="header">&lt;setjmp.h&gt;</code></td>
+<td><code class="header">&lt;stdint.h&gt;</code></td>
+<td><code class="header">&lt;uchar.h&gt;</code></td>
+</tr>
+</tbody>
+</table>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>Every C header, each of which has a name of the form <code class="sh_cpp">name.h</code>, behaves as if each name placed in the
+standard library namespace by the corresponding <code class="sh_cpp">cname</code> header is placed within the global namespace scope.
+It is unspecified whether these names are first declared or defined within namespace scope (<a title="basic.scope.namespace" href="basic.scope.namespace.html">3.3.6</a>) of the
+namespace <code class="sh_cpp">std</code> and are then injected into the global namespace scope by explicit <i class="nonterminal">using-declaration</i>s
+(<a title="namespace.udecl" href="namespace.udecl.html">7.3.3</a>).</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><span class="example">[ <em>Example:</em> The header <code class="header">&lt;cstdlib&gt;</code> assuredly provides its declarations and definitions within the
+namespace <code class="sh_cpp">std</code>. It may also provide these names within the global namespace. The header
+<code class="sh_cpp">stdlib.h</code> assuredly provides the same declarations and definitions within the global namespace, much as in
+the C Standard. It may also provide these names within the namespace <code class="sh_cpp">std</code>. — <em>end example</em> ]</span></p>
+</body>
+</html>
+

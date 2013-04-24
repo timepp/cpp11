@@ -1,0 +1,172 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Constant expressions</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[expr.const]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[expr.const]"></object>5.19 Constant expressions </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Certain contexts require expressions that satisfy additional requirements as detailed in this sub-clause; other
+contexts have different semantics depending on whether or not an expression satisfies these requirements. Expressions
+that satisfy these requirements are called <dfn>constant expressions</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="constant expressions"></object>. <span class="note">[ <em>Note:</em> Constant expressions can be evaluated
+during translation. — <em>end note</em> ]</span></p>
+
+<dl>
+<dt>
+<i class="nonterminal"><dfn>constant-expression</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="constant-expression"></object></i>:</dt>
+	<dd><i class="nonterminal">conditional-expression</i></dd>
+</dl>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>A <i class="nonterminal">conditional-expression</i> is a <dfn>core constant expression</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="core constant expression"></object> unless it involves one of the
+following as a potentially evaluated subexpression (<a title="basic.def.odr" href="basic.def.odr.html">3.2</a>), but subexpressions of logical AND
+(<a title="expr.log.and" href="expr.log.and.html">5.14</a>), logical OR (<a title="expr.log.or" href="expr.log.or.html">5.15</a>), and conditional (<a title="expr.cond" href="expr.cond.html">5.16</a>) operations that are not evaluated are
+not considered <span class="note">[ <em>Note:</em> An overloaded operator invokes a function. — <em>end note</em> ]</span>:</p>
+<ul>
+<li>this (<a title="expr.prim" href="expr.prim.general.html">5.1</a>) unless it appears as the <i class="nonterminal">postfix-expression</i> in a class member access expression,
+	including the result of the implicit transformation in the body of a non-static member function
+	(<a title="class.mfct.non-static" href="class.mfct.non-static.html">9.3.1</a>);</li>
+<li>an invocation of a function other than a <code class="sh_cpp">constexpr</code> constructor for a literal class or a
+	<code class="sh_cpp">constexpr</code> function <span class="note">[ <em>Note:</em> Overload resolution (<a title="over.match" href="over.match.html">13.3</a>) is applied as usual — <em>end note</em> ]</span>;</li>
+<li>an invocation of an undefined <code class="sh_cpp">constexpr</code> function or an undefined <code class="sh_cpp">constexpr</code> constructor
+	outside the definition of a <code class="sh_cpp">constexpr</code> function or a <code class="sh_cpp">constexpr</code> constructor;</li>
+<li>an invocation of a <code class="sh_cpp">constexpr</code> function with arguments that, when substituted by function invocation
+	substitution (<a title="dcl.constexpr" href="dcl.constexpr.html">7.1.5</a>), do not produce a constant expression;
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">constexpr const int* addr(const int&amp; ir) { return &amp;ir; }    // OK
+static const int x = 5;
+constexpr const int* xp = addr(x);  // OK: (const int*)&amp;(const int&amp;)x is an
+                                    // address contant expression
+constexpr const int* tp = addr(5);  // error, initializer for constexpr variable not a constant
+                                    // expression; (const int*)&amp;(const int&amp;)5 is not a constant
+                                    // expression because it takes the address of a temporary</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+</li>
+
+<li>an invocation of a <code class="sh_cpp">constexpr</code> constructor with arguments that, when substituted by function invocation
+	substitution (<a title="dcl.constexpr" href="dcl.constexpr.html">7.1.5</a>), do not produce all constant expressions for the constructor calls and
+	full-expressions in the <i class="nonterminal">mem-initializer</i>s;
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">int x;                              // not constant
+struct A {
+  constexpr A(bool b) : m(b?42:x) { }
+  int m;
+};
+constexpr int v = A(true).m;        // OK: constructor call initializes
+                                    // m with the value 42 after substitution
+constexpr int w = A(false).m;       // error: initializer for m is
+                                    // x, which is non-constant</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+</li>
+
+<li>an invocation of a <code class="sh_cpp">constexpr</code> function or a <code class="sh_cpp">constexpr</code> constructor that would exceed the
+	implementation-defined recursion limits (see Annex <a title="implimits" href="implimits.html">B</a>);</li>
+<li>a result that is not mathematically defined or not in the range of representable values for its type;</li>
+<li>a <i class="nonterminal">lambda-expression</i> (<a title="expr.prim.lambda" href="expr.prim.lambda.html">5.1.2</a>);</li>
+<li>an lvalue-to-rvalue conversion (<a title="conv.lval" href="conv.lval.html">4.1</a>) unless it is applied to
+	<ul>
+	<li>a glvalue of integral or enumeration type that refers to a non-volatile const object with a preceding
+		initialization, initialized with a constant expression, or</li>
+	<li>a glvalue of literal type that refers to a non-volatile object defined with <code class="sh_cpp">constexpr</code>, or that
+		refers to a sub-object of such an object, or</li>
+	<li>a glvalue of literal type that refers to a non-volatile temporary object whose lifetime has not ended,
+		initialized with a constant expression;</li>
+	<li>an lvalue-to-rvalue conversion (<a title="conv.lval" href="conv.lval.html">4.1</a>) that is applied to a glvalue that refers to a non-active member
+		of a union or a subobject thereof;</li>
+	</ul>
+</li>
+<li>an <i class="nonterminal">id-expression</i> that refers to a variable or data member of reference type unless the reference has a
+	preceding initialization, initialized with a constant expression;</li>
+<li>a dynamic cast (<a title="expr.dynamic.cast" href="expr.dynamic.cast.html">5.2.7</a>);</li>
+<li>a <code class="sh_cpp">reinterpret_cast</code> (<a title="expr.reinterpret.cast" href="expr.reinterpret.cast.html">5.2.10</a>);</li>
+<li>a pseudo-destructor call (<a title="expr.pseudo" href="expr.pseudo.html">5.2.4</a>);</li>
+<li>increment or decrement operations (<a title="expr.post.incr" href="expr.post.incr.html">5.2.6</a>, <a title="expr.pre.incr" href="expr.pre.incr.html">5.3.2</a>);</li>
+<li>a typeid expression (<a title="expr.typeid" href="expr.typeid.html">5.2.8</a>) whose operand is of a polymorphic class type;</li>
+<li>a <i class="nonterminal">new-expression</i> (<a title="expr.new" href="expr.new.html">5.3.4</a>);</li>
+<li>a <i class="nonterminal">delete-expression</i> (<a title="expr.delete" href="expr.delete.html">5.3.5</a>);</li>
+<li>a subtraction (<a title="expr.add" href="expr.add.html">5.7</a>) where both operands are pointers;</li>
+<li>a relational (<a title="expr.rel" href="expr.rel.html">5.9</a>) or equality (<a title="expr.eq" href="expr.eq.html">5.10</a>) operator where the result is unspecified;</li>
+<li>an assignment or a compound assignment (<a title="expr.ass" href="expr.ass.html">5.17</a>); or</li>
+<li>a <i class="nonterminal">throw-expression</i> (<a title="except.throw" href="except.throw.html">15.1</a>).</li>
+</ul>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>A <dfn>literal constant expression</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="literal constant expression"></object> is a prvalue core constant expression of literal type, but not pointer
+type. An <dfn>integral constant expression</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="integral constant expression"></object> is a literal constant expression of integral or unscoped enumeration
+type. <span class="note">[ <em>Note:</em> Such expressions may be used as array bounds (<a title="dcl.array" href="dcl.array.html">8.3.4</a>, <a title="expr.new" href="expr.new.html">5.3.4</a>), as bit-field lengths
+(<a title="class.bit" href="class.bit.html">9.6</a>), as enumerator initializers (<a title="dcl.enum" href="dcl.enum.html">7.2</a>) if the underlying type is not fixed, as null pointer
+constants (<a title="conv.ptr" href="conv.ptr.html">4.10</a>), and as alignments (<a title="dcl.align" href="dcl.align.html">7.6.2</a>). — <em>end note</em> ]</span> A <dfn>converted constant expression</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="converted constant expression"></object> of
+type <code class="sh_cpp">T</code> is a literal constant expression, implicitly converted to type <code class="sh_cpp">T</code>, where the implicit
+conversion (if any) is permitted in a literal constant expression and the implicit conversion sequence contains only
+user-defined conversions, lvalue-to-rvalue conversions (<a title="conv.lval" href="conv.lval.html">4.1</a>), integral promotions (<a title="conv.prom" href="conv.prom.html">4.5</a>), and
+integral conversions (<a title="conv.integral" href="conv.integral.html">4.7</a>) other than narrowing conversions (<a title="dcl.init.list" href="dcl.init.list.html">8.5.4</a>). <span class="note">[ <em>Note:</em> such expressions may be
+used as case expressions (<a title="stmt.switch" href="stmt.switch.html">6.4.2</a>), as enumerator initializers if the underlying type is fixed
+(<a title="dcl.enum" href="dcl.enum.html">7.2</a>), and as integral or enumeration non-type template arguments (<a title="temp.arg" href="temp.arg.html">14.3</a>). — <em>end note</em> ]</span> A <dfn>reference
+constant expression</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="reference
+constant expression"></object> is an lvalue core constant expression that designates an object with static storage duration
+or a function. An <dfn>address constant expression</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="address constant expression"></object> is a prvalue core constant expression of pointer type that
+evaluates to the address of an object with static storage duration, to the address of a function, or to a null pointer
+value, or a prvalue core constant expression of type <code class="sh_cpp">std::nullptr_t</code>. Collectively, literal constant
+expressions, reference constant expressions, and address constant expressions are called <code class="sh_cpp">constant
+expressions</code>.</p>
+
+<div class="note">
+<p><a class="anchor" id="p4" href="#p4">4</a>[ <em>Note:</em> Although in some contexts constant expressions must be evaluated during program translation, others may
+be evaluated during program execution. Since this International Standard imposes no restrictions on the accuracy of
+floating-point operations, it is unspecified whether the evaluation of a floating-point expression during translation
+yields the same result as the evaluation of the same expression (or the same operations on the same values) during
+program execution.<sup class="footnote"><a href="#fn87">87</a></sup></p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">bool f() {
+  char array[1 + int(1 + 0.2 - 0.1 - 0.1)]; // Must be evaluated during translation
+  int size = 1 + int(1 + 0.2 - 0.1 - 0.1);  // May be evaluated at runtime
+  return sizeof(array) == size;
+}</code></pre>
+
+<p>It is unspecified whether the value of <code class="sh_cpp">f()</code> will be <code class="sh_cpp">true</code> or
+<code class="sh_cpp">false</code>. — <em>end example</em> ]</p>
+</div>
+<p> — <em>end note</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>If an expression of literal class type is used in a context where an integral constant expression is required,
+then that class type shall have a single non-explicit conversion function to an integral or unscoped enumeration type
+and that conversion function shall be constexpr.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct A {
+  constexpr A(int i) : val(i) { }
+  constexpr operator int() { return val; }
+  constexpr operator long() { return 43; }
+private:
+  int val;
+};
+template&lt;int&gt; struct X { };
+constexpr A a = 42;
+X&lt;a&gt; x;                 // OK: unique conversion to int
+int ary[a];             // error: ambiguous conversion</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+
+<div><p class="footnote" id="fn87">87) Nonetheless, implementations are encouraged to provide consistent results, irrespective of whether the
+evaluation was actually performed during translation or during program execution.</p></div>
+</body>
+</html>
+

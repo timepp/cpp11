@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class template basic_ostream</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[ostream]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[ostream]"></object>27.7.3.1 Class template <code class="sh_cpp"><dfn>basic_ostream</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="basic_ostream"></object></code> </h4>
+
+<pre><code class="sh_cpp">namespace std {
+  template &lt;class charT, class traits = char_traits&lt;charT&gt; &gt;
+  class basic_ostream : virtual public basic_ios&lt;charT,traits&gt; {
+  public:
+    // types (inherited from basic_ios (<a title="ios" href="ios.overview.html">27.5.5</a>)):
+    typedef charT                     char_type;
+    typedef typename traits::int_type int_type;
+    typedef typename traits::pos_type pos_type;
+    typedef typename traits::off_type off_type;
+    typedef traits                    traits_type;
+
+    // <a title="ostream.cons" href="ostream.cons.html">27.7.3.2</a> Constructor/destructor:
+    explicit basic_ostream(basic_streambuf&lt;char_type,traits&gt;* sb);
+    virtual ~basic_ostream();
+
+    // <a title="ostream::sentry" href="ostream.sentry.html">27.7.3.4</a> Prefix/suffix:
+    class sentry;
+
+    // <a title="ostream.formatted" href="ostream.formatted.reqmts.html">27.7.3.6</a> Formatted output:
+    basic_ostream&lt;charT,traits&gt;&amp; operator&lt;&lt;(
+      basic_ostream&lt;charT,traits&gt;&amp; (*pf)(basic_ostream&lt;charT,traits&gt;&amp;));
+    basic_ostream&lt;charT,traits&gt;&amp; operator&lt;&lt;(
+      basic_ios&lt;charT,traits&gt;&amp; (*pf)(basic_ios&lt;charT,traits&gt;&amp;));
+    basic_ostream&lt;charT,traits&gt;&amp; operator&lt;&lt;(
+      ios_base&amp; (*pf)(ios_base&amp;));
+
+    basic_ostream&lt;charT,traits&gt;&amp; operator&lt;&lt;(bool n);
+    basic_ostream&lt;charT,traits&gt;&amp; operator&lt;&lt;(short n);
+    basic_ostream&lt;charT,traits&gt;&amp; operator&lt;&lt;(unsigned short n);
+    basic_ostream&lt;charT,traits&gt;&amp; operator&lt;&lt;(int n);
+    basic_ostream&lt;charT,traits&gt;&amp; operator&lt;&lt;(unsigned int n);
+    basic_ostream&lt;charT,traits&gt;&amp; operator&lt;&lt;(long n);
+    basic_ostream&lt;charT,traits&gt;&amp; operator&lt;&lt;(unsigned long n);
+    basic_ostream&lt;charT,traits&gt;&amp; operator&lt;&lt;(long long n);
+    basic_ostream&lt;charT,traits&gt;&amp; operator&lt;&lt;(unsigned long long n);
+    basic_ostream&lt;charT,traits&gt;&amp; operator&lt;&lt;(float f);
+    basic_ostream&lt;charT,traits&gt;&amp; operator&lt;&lt;(double f);
+    basic_ostream&lt;charT,traits&gt;&amp; operator&lt;&lt;(long double f);
+
+    basic_ostream&lt;charT,traits&gt;&amp; operator&lt;&lt;(const void* p);
+    basic_ostream&lt;charT,traits&gt;&amp; operator&lt;&lt;(
+      basic_streambuf&lt;char_type,traits&gt;* sb);
+
+    // <a title="ostream.unformatted" href="ostream.unformatted.html">27.7.3.7</a> Unformatted output:
+    basic_ostream&lt;charT,traits&gt;&amp; put(char_type c);
+    basic_ostream&lt;charT,traits&gt;&amp; write(const char_type* s, streamsize n);
+
+    basic_ostream&lt;charT,traits&gt;&amp; flush();
+
+    // <a title="ostream.seeks" href="ostream.seeks.html">27.7.3.5</a> seeks:
+    pos_type tellp();
+    basic_ostream&lt;charT,traits&gt;&amp; seekp(pos_type);
+    basic_ostream&lt;charT,traits&gt;&amp; seekp(off_type, ios_base::seekdir);
+  protected:
+    basic_ostream(const basic_ostream&amp; rhs) = delete;
+    basic_ostream(basic_ostream&amp;&amp; rhs);
+
+    // <a title="ostream.assign" href="ostream.assign.html">27.7.3.3</a> Assign/swap
+    basic_ostream&amp; operator=(basic_ostream&amp; rhs) = delete;
+    basic_ostream&amp; operator=(basic_ostream&amp;&amp; rhs);
+    void swap(basic_ostream&amp; rhs);
+  };
+
+  // <a title="ostream.inserters.character" href="ostream.inserters.character.html">27.7.3.6.4</a> character inserters
+  template&lt;class charT, class traits&gt;
+    basic_ostream&lt;charT,traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;charT,traits&gt;&amp;,
+                                            charT);
+  template&lt;class charT, class traits&gt;
+    basic_ostream&lt;charT,traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;charT,traits&gt;&amp;,
+                                            char);
+  template&lt;class traits&gt;
+    basic_ostream&lt;char,traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;char,traits&gt;&amp;,
+                                           char);
+
+  // signed and unsigned
+  template&lt;class traits&gt;
+    basic_ostream&lt;char,traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;char,traits&gt;&amp;,
+                                           signed char);
+  template&lt;class traits&gt;
+    basic_ostream&lt;char,traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;char,traits&gt;&amp;,
+                                           unsigned char);
+
+  template&lt;class charT, class traits&gt;
+    basic_ostream&lt;charT,traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;charT,traits&gt;&amp;,
+                                            const charT*);
+  template&lt;class charT, class traits&gt;
+    basic_ostream&lt;charT,traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;charT,traits&gt;&amp;,
+                                            const char*);
+  template&lt;class traits&gt;
+    basic_ostream&lt;char,traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;char,traits&gt;&amp;,
+                                           const char*);
+
+  // signed and unsigned
+  template&lt;class traits&gt;
+    basic_ostream&lt;char,traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;char,traits&gt;&amp;,
+                                           const signed char*);
+  template&lt;class traits&gt;
+    basic_ostream&lt;char,traits&gt;&amp; operator&lt;&lt;(basic_ostream&lt;char,traits&gt;&amp;,
+                                           const unsigned char*);
+}</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The class <code class="sh_cpp">basic_ostream</code> defines a number of member function signatures that assist in formatting
+and writing output to output sequences controlled by a stream buffer.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>Two groups of member function signatures share common properties: the <dfn>formatted output functions</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="formatted output functions"></object> (or
+<dfn>inserters</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="inserters"></object>) and the <dfn>unformatted output functions</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="unformatted output functions"></object>. Both groups of output functions generate (or
+<dfn>insert</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="insert"></object>) output characters by actions equivalent to calling <code class="sh_cpp">rdbuf()-&gt;sputc(int_type)</code>. They may
+use other public members of <code class="sh_cpp">basic_ostream</code> except that they shall not invoke any virtual members of
+<code class="sh_cpp">rdbuf()</code> except <code class="sh_cpp">overflow()</code>, <code class="sh_cpp">xsputn()</code>, and <code class="sh_cpp">sync()</code>.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>If one of these called functions throws an exception, then unless explicitly noted otherwise the output
+function sets <code class="sh_cpp">badbit</code> in error state. If <code class="sh_cpp">badbit</code> is on in <code class="sh_cpp">exceptions()</code>, the output
+function rethrows the exception without completing its actions, otherwise it does not throw anything and treat as an
+error.</p>
+</body>
+</html>
+

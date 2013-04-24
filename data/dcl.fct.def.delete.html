@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Deleted definitions</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[dcl.fct.def.delete]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[dcl.fct.def.delete]"></object>8.4.3 Deleted definitions </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A function definition of the form:</p>
+
+<dl><dd>
+<i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub> <i class="nonterminal">decl-specifier-seq</i><sub class="opt">opt</sub> <i class="nonterminal">declarator</i> <code class="sh_cpp">=</code> <code class="sh_cpp">delete</code> <code class="sh_cpp">;</code>
+</dd></dl>
+
+<p>is called a <dfn>deleted definition</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="deleted definition"></object>. A function with a deleted definition is also called a <dfn>deleted
+function</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="deleted
+function"></object>.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>A program that refers to a deleted function implicitly or explicitly, other than to declare it, is ill-formed.
+<span class="note">[ <em>Note:</em> This includes calling the function implicitly or explicitly and forming a pointer or pointer-to-member to the
+function. It applies even for references in expressions that are not potentially-evaluated. If a function is overloaded,
+it is referenced only if the function is selected by overload resolution. — <em>end note</em> ]</span></p>
+
+<div class="example">
+<p><a class="anchor" id="p3" href="#p3">3</a>[ <em>Example:</em> One can enforce non-default initialization and non-integral initialization with</p>
+
+<pre><code class="sh_cpp">struct sometype {
+  sometype() = delete;              // OK, but redundant
+  sometype(std::intmax_t) = delete;
+  sometype(double);
+};</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<div class="example">
+<p>[ <em>Example:</em> One can prevent use of a class in certain <code class="sh_cpp">new</code> expressions by using deleted definitions of a
+user-declared <code class="sh_cpp">operator new</code> for that class.</p>
+
+<pre><code class="sh_cpp">struct sometype {
+  void *operator new(std::size_t) = delete;
+  void *operator new[](std::size_t) = delete;
+};
+sometype *p = new sometype;     // error, deleted class operator new
+sometype *q = new sometype[3];  // error, deleted class operator new[]</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<div class="example">
+<p>[ <em>Example:</em> One can make a class uncopyable, i.e. move-only, by using deleted definitions of the copy constructor and
+copy assignment operator, and then providing defaulted definitions of the move constructor and move assignment
+operator.</p>
+
+<pre><code class="sh_cpp">struct moveonly {
+  moveonly() = default;
+  moveonly(const moveonly&amp;) = delete;
+  moveonly(moveonly&amp;&amp;) = default;
+  moveonly&amp; operator=(const moveonly&amp;) = delete;
+  moveonly&amp; operator=(moveonly&amp;&amp;) = default;
+  ~moveonly() = default;
+};
+moveonly *p;
+moveonly q(*p);         // error, deleted copy constructor</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>A deleted function is implicitly inline. <span class="note">[ <em>Note:</em> The one-definition rule (<a title="basic.def.odr" href="basic.def.odr.html">3.2</a>) applies to deleted
+definitions. — <em>end note</em> ]</span> A deleted definition of a function shall be the first declaration of the function or, for an
+explicit specialization of a function template, the first declaration of that specialization.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct sometype {
+  sometype();
+};
+
+sometype::sometype() = delete;  // ill-formed; not first declaration</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+</body>
+</html>
+

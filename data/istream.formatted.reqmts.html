@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Common requirements</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[istream.formatted]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[istream.formatted]"></object>27.7.2.2 Formatted input functions </h4>
+
+<h5>
+<dfn class="label">[istream.formatted.reqmts]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[istream.formatted.reqmts]"></object>27.7.2.2.1 Common requirements </h5>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Each formatted input function begins execution by constructing an object of class <code class="sh_cpp">sentry</code> with the
+<code class="sh_cpp">noskipws</code> (second) argument <code class="sh_cpp">false</code>. If the <code class="sh_cpp">sentry</code> object returns <code class="sh_cpp">true</code>,
+when converted to a value of type <code class="sh_cpp">bool</code>, the function endeavors to obtain the requested input. If an
+exception is thrown during input then <code class="sh_cpp">ios::badbit</code> is turned on<sup class="footnote"><a href="#fn316">316</a></sup> in <code class="sh_cpp">*this</code>’s error
+state. If <code class="sh_cpp">(exceptions()&amp;badbit) != 0</code> then the exception is rethrown. In any case, the formatted input
+function destroys the <code class="sh_cpp">sentry</code> object. If no exception has been thrown, it returns <code class="sh_cpp">*this</code>.</p>
+
+
+<div><p class="footnote" id="fn316">316) This is done without causing an <code class="sh_cpp">ios::failure</code> to be thrown.</p></div>
+</body>
+</html>
+

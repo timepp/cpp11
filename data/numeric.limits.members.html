@@ -1,0 +1,330 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>numeric_limits members</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[numeric.limits.members]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[numeric.limits.members]"></object>18.3.2.4 <code class="sh_cpp">numeric_limits</code> members </h4>
+
+<h5><code class="sh_cpp">static constexpr T <dfn>min</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="min"></object>() noexcept;</code></h5>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Minimum finite value.<sup class="footnote"><a href="#fn199">199</a></sup></p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>For floating types with denormalization, returns the minimum positive normalized value.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>Meaningful for all specializations in which <code class="sh_cpp">is_bounded != false</code>, or <code class="sh_cpp">is_bounded == false
+&amp;&amp; is_signed == false</code>.</p>
+
+<h5><code class="sh_cpp">static constexpr T <dfn>max</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="max"></object>() noexcept;</code></h5>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>Maximum finite value.<sup class="footnote"><a href="#fn200">200</a></sup></p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>Meaningful for all specializations in which <code class="sh_cpp">is_bounded != false</code>.</p>
+
+<h5><code class="sh_cpp">static constexpr T <dfn>lowest</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="lowest"></object>() noexcept;</code></h5>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>A finite value <code class="sh_cpp">x</code> such that there is no other finite value <code class="sh_cpp">y</code> where <code class="sh_cpp">y &lt;
+x</code>.<sup class="footnote"><a href="#fn201">201</a></sup></p>
+
+<p><a class="anchor" id="p7" href="#p7">7</a>Meaningful for all specializations in which <code class="sh_cpp">is_bounded != false</code>.</p>
+
+<h5><code class="sh_cpp">static constexpr int <dfn>digits</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="digits"></object>;</code></h5>
+
+<p><a class="anchor" id="p8" href="#p8">8</a>Number of <code class="sh_cpp">radix</code> digits that can be represented without change.</p>
+
+<p><a class="anchor" id="p9" href="#p9">9</a>For integer types, the number of non-sign bits in the representation.</p>
+
+<p><a class="anchor" id="p10" href="#p10">10</a>For floating point types, the number of <code class="sh_cpp">radix</code> digits in the mantissa.<sup class="footnote"><a href="#fn202">202</a></sup></p>
+
+<h5><code class="sh_cpp">static constexpr int <dfn>digits10</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="digits10"></object>;</code></h5>
+
+<p><a class="anchor" id="p11" href="#p11">11</a>Number of base 10 digits that can be represented without change.<sup class="footnote"><a href="#fn203">203</a></sup></p>
+
+<p><a class="anchor" id="p12" href="#p12">12</a>Meaningful for all specializations in which <code class="sh_cpp">is_bounded != false</code>.</p>
+
+<h5><code class="sh_cpp">static constexpr int <dfn>max_digits10</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="max_digits10"></object>;</code></h5>
+
+<p><a class="anchor" id="p13" href="#p13">13</a>Number of base 10 digits required to ensure that values which differ are always differentiated.</p>
+
+<p><a class="anchor" id="p14" href="#p14">14</a>Meaningful for all floating point types.</p>
+
+<h5><code class="sh_cpp">static constexpr bool <dfn>is_signed</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_signed"></object>;</code></h5>
+
+<p><a class="anchor" id="p15" href="#p15">15</a>True if the type is signed.</p>
+
+<p><a class="anchor" id="p16" href="#p16">16</a>Meaningful for all specializations.</p>
+
+<h5><code class="sh_cpp">static constexpr bool <dfn>is_integer</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_integer"></object>;</code></h5>
+
+<p><a class="anchor" id="p17" href="#p17">17</a>True if the type is integer.</p>
+
+<p><a class="anchor" id="p18" href="#p18">18</a>Meaningful for all specializations.</p>
+
+<h5><code class="sh_cpp">static constexpr bool <dfn>is_exact</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_exact"></object>;</code></h5>
+
+<p><a class="anchor" id="p19" href="#p19">19</a>True if the type uses an exact representation. All integer types are exact, but not all exact types are
+integer. For example, rational and fixed-exponent representations are exact but not integer.</p>
+
+<p><a class="anchor" id="p20" href="#p20">20</a>Meaningful for all specializations.</p>
+
+<h5><code class="sh_cpp">static constexpr int <dfn>radix</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="radix"></object>;</code></h5>
+
+<p><a class="anchor" id="p21" href="#p21">21</a>For floating types, specifies the base or radix of the exponent representation (often 2).<sup class="footnote"><a href="#fn204">204</a></sup></p>
+
+<p><a class="anchor" id="p22" href="#p22">22</a>For integer types, specifies the base of the representation.<sup class="footnote"><a href="#fn205">205</a></sup></p>
+
+<p><a class="anchor" id="p23" href="#p23">23</a>Meaningful for all specializations.</p>
+
+<h5><code class="sh_cpp">static constexpr T <dfn>epsilon</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="epsilon"></object>() noexcept;</code></h5>
+
+<p><a class="anchor" id="p24" href="#p24">24</a>Machine epsilon: the difference between 1 and the least value greater than 1 that is representable.<sup class="footnote"><a href="#fn206">206</a></sup></p>
+
+<p><a class="anchor" id="p25" href="#p25">25</a>Meaningful for all floating point types.</p>
+
+<h5><code class="sh_cpp">static constexpr T <dfn>round_error</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="round_error"></object>() noexcept;</code></h5>
+
+<p><a class="anchor" id="p26" href="#p26">26</a>Measure of the maximum rounding error.<sup class="footnote"><a href="#fn207">207</a></sup></p>
+
+<h5><code class="sh_cpp">static constexpr int <dfn>min_exponent</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="min_exponent"></object>;</code></h5>
+
+<p><a class="anchor" id="p27" href="#p27">27</a>Minimum negative integer such that <code class="sh_cpp">radix</code> raised to the power of one less than that integer is a
+normalized floating point number.<sup class="footnote"><a href="#fn208">208</a></sup></p>
+
+<p><a class="anchor" id="p28" href="#p28">28</a>Meaningful for all floating point types.</p>
+
+<h5><code class="sh_cpp">static constexpr int <dfn>min_exponent10</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="min_exponent10"></object>;</code></h5>
+
+<p><a class="anchor" id="p29" href="#p29">29</a>Minimum negative integer such that 10 raised to that power is in the range of normalized floating point
+numbers.<sup class="footnote"><a href="#fn209">209</a></sup></p>
+
+<p><a class="anchor" id="p30" href="#p30">30</a>Meaningful for all floating point types.</p>
+
+<h5><code class="sh_cpp">static constexpr int <dfn>max_exponent</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="max_exponent"></object>;</code></h5>
+
+<p><a class="anchor" id="p31" href="#p31">31</a>Maximum positive integer such that <code class="sh_cpp">radix</code> raised to the power one less than that integer is a
+representable finite floating point number.<sup class="footnote"><a href="#fn210">210</a></sup></p>
+
+<p><a class="anchor" id="p32" href="#p32">32</a>Meaningful for all floating point types.</p>
+
+<h5><code class="sh_cpp">static constexpr int <dfn>max_exponent10</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="max_exponent10"></object>;</code></h5>
+
+<p><a class="anchor" id="p33" href="#p33">33</a>Maximum positive integer such that 10 raised to that power is in the range of representable finite floating
+point numbers.<sup class="footnote"><a href="#fn211">211</a></sup></p>
+
+<p><a class="anchor" id="p34" href="#p34">34</a>Meaningful for all floating point types.</p>
+
+<h5><code class="sh_cpp">static constexpr bool <dfn>has_infinity</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="has_infinity"></object>;</code></h5>
+
+<p><a class="anchor" id="p35" href="#p35">35</a>True if the type has a representation for positive infinity.</p>
+
+<p><a class="anchor" id="p36" href="#p36">36</a>Meaningful for all floating point types.</p>
+
+<p><a class="anchor" id="p37" href="#p37">37</a>Shall be <code class="sh_cpp">true</code> for all specializations in which <code class="sh_cpp">is_iec559 != false</code>.</p>
+
+<h5><code class="sh_cpp">static constexpr bool <dfn>has_quiet_NaN</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="has_quiet_NaN"></object>;</code></h5>
+
+<p><a class="anchor" id="p38" href="#p38">38</a>True if the type has a representation for a quiet (non-signaling) “Not a Number”.<sup class="footnote"><a href="#fn212">212</a></sup></p>
+
+<p><a class="anchor" id="p39" href="#p39">39</a>Meaningful for all floating point types.</p>
+
+<p><a class="anchor" id="p40" href="#p40">40</a>Shall be <code class="sh_cpp">true</code> for all specializations in which <code class="sh_cpp">is_iec559 != false</code>.</p>
+
+<h5><code class="sh_cpp">static constexpr bool <dfn>has_signaling_NaN</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="has_signaling_NaN"></object>;</code></h5>
+
+<p><a class="anchor" id="p41" href="#p41">41</a>True if the type has a representation for a signaling “Not a Number”.<sup class="footnote"><a href="#fn213">213</a></sup></p>
+
+<p><a class="anchor" id="p42" href="#p42">42</a>Meaningful for all floating point types.</p>
+
+<p><a class="anchor" id="p43" href="#p43">43</a>Shall be <code class="sh_cpp">true</code> for all specializations in which <code class="sh_cpp">is_iec559 != false</code>.</p>
+
+<h5><code class="sh_cpp">static constexpr float_denorm_style <dfn>has_denorm</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="has_denorm"></object>;</code></h5>
+
+<p><a class="anchor" id="p44" href="#p44">44</a><code class="sh_cpp">denorm_present</code> if the type allows denormalized values (variable number of exponent bits)<sup class="footnote"><a href="#fn214">214</a></sup>, <code class="sh_cpp">denorm_absent</code> if the type does not allow denormalized values, and
+<code class="sh_cpp">denorm_indeterminate</code> if it is indeterminate at compile time whether the type allows denormalized
+values.</p>
+
+<p><a class="anchor" id="p45" href="#p45">45</a>Meaningful for all floating point types.</p>
+
+<h5><code class="sh_cpp">static constexpr bool <dfn>has_denorm_loss</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="has_denorm_loss"></object>;</code></h5>
+
+<p><a class="anchor" id="p46" href="#p46">46</a>True if loss of accuracy is detected as a denormalization loss, rather than as an inexact result.<sup class="footnote"><a href="#fn215">215</a></sup></p>
+
+<h5><code class="sh_cpp">static constexpr T <dfn>infinity</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="infinity"></object>() noexcept;</code></h5>
+
+<p><a class="anchor" id="p47" href="#p47">47</a>Representation of positive infinity, if available.<sup class="footnote"><a href="#fn216">216</a></sup></p>
+
+<p><a class="anchor" id="p48" href="#p48">48</a>Meaningful for all specializations for which <code class="sh_cpp">has_infinity != false</code>. Required in specializations
+for which <code class="sh_cpp">is_iec559 != false</code>.</p>
+
+<h5><code class="sh_cpp">static constexpr T <dfn>quiet_NaN</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="quiet_NaN"></object>() noexcept;</code></h5>
+
+<p><a class="anchor" id="p49" href="#p49">49</a>Representation of a quiet “Not a Number”, if available.<sup class="footnote"><a href="#fn217">217</a></sup></p>
+
+<p><a class="anchor" id="p50" href="#p50">50</a>Meaningful for all specializations for which <code class="sh_cpp">has_quiet_NaN != false</code>. Required in specializations
+for which <code class="sh_cpp">is_iec559 != false</code>.</p>
+
+<h5><code class="sh_cpp">static constexpr T <dfn>signaling_NaN</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="signaling_NaN"></object>() noexcept;</code></h5>
+
+<p><a class="anchor" id="p51" href="#p51">51</a>Representation of a signaling “Not a Number”, if available.<sup class="footnote"><a href="#fn218">218</a></sup></p>
+
+<p><a class="anchor" id="p52" href="#p52">52</a>Meaningful for all specializations for which <code class="sh_cpp">has_signaling_NaN != false</code>. Required in
+specializations for which <code class="sh_cpp">is_iec559 != false</code>.</p>
+
+<h5><code class="sh_cpp">static constexpr T <dfn>denorm_min</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="denorm_min"></object>() noexcept;</code></h5>
+
+<p><a class="anchor" id="p53" href="#p53">53</a>Minimum positive denormalized value.<sup class="footnote"><a href="#fn219">219</a></sup></p>
+
+<p><a class="anchor" id="p54" href="#p54">54</a>Meaningful for all floating point types.</p>
+
+<p><a class="anchor" id="p55" href="#p55">55</a>In specializations for which <code class="sh_cpp">has_denorm == false</code>, returns the minimum positive normalized
+value.</p>
+
+<h5><code class="sh_cpp">static constexpr bool <dfn>is_iec559</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_iec559"></object>;</code></h5>
+
+<p><a class="anchor" id="p56" href="#p56">56</a>True if and only if the type adheres to IEC 559 standard.<sup class="footnote"><a href="#fn220">220</a></sup></p>
+
+<p><a class="anchor" id="p57" href="#p57">57</a>Meaningful for all floating point types.</p>
+
+<h5><code class="sh_cpp">static constexpr bool <dfn>is_bounded</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_bounded"></object>;</code></h5>
+
+<p><a class="anchor" id="p58" href="#p58">58</a>True if the set of values representable by the type is finite.<sup class="footnote"><a href="#fn221">221</a></sup> <span class="note">[ <em>Note:</em> All fundamental types
+(<a title="basic.fundamental" href="basic.fundamental.html">3.9.1</a>) are bounded. This member would be false for arbitrary precision types. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p59" href="#p59">59</a>Meaningful for all specializations.</p>
+
+<h5><code class="sh_cpp">static constexpr bool <dfn>is_modulo</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_modulo"></object>;</code></h5>
+
+<p><a class="anchor" id="p60" href="#p60">60</a>True if the type is modulo.<sup class="footnote"><a href="#fn222">222</a></sup> A type is modulo if, for any operation involving <code class="sh_cpp">+</code>,
+<code class="sh_cpp">-</code>, or <code class="sh_cpp">*</code> on values of that type whose result would fall outside the range
+<code class="sh_cpp">[min(),max()]</code>, the value returned differs from the true value by an integer multiple of <code class="sh_cpp">max() - min()
++ 1</code>.</p>
+
+<p><a class="anchor" id="p61" href="#p61">61</a>On most machines, this is <code class="sh_cpp">false</code> for floating types, <code class="sh_cpp">true</code> for unsigned integers, and
+<code class="sh_cpp">true</code> for signed integers.</p>
+
+<p><a class="anchor" id="p62" href="#p62">62</a>Meaningful for all specializations.</p>
+
+<h5><code class="sh_cpp">static constexpr bool <dfn>traps</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="traps"></object>;</code></h5>
+
+<p><a class="anchor" id="p63" href="#p63">63</a><code class="sh_cpp">true</code> if, at program startup, there exists a value of the type that would cause an arithmetic
+operation using that value to trap.<sup class="footnote"><a href="#fn223">223</a></sup></p>
+
+<p><a class="anchor" id="p64" href="#p64">64</a>Meaningful for all specializations.</p>
+
+<h5><code class="sh_cpp">static constexpr bool <dfn>tinyness_before</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="tinyness_before"></object>;</code></h5>
+
+<p><a class="anchor" id="p65" href="#p65">65</a><code class="sh_cpp">true</code> if tinyness is detected before rounding.<sup class="footnote"><a href="#fn224">224</a></sup></p>
+
+<p><a class="anchor" id="p66" href="#p66">66</a>Meaningful for all floating point types.</p>
+
+<h5><code class="sh_cpp">static constexpr float_round_style <dfn>round_style</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="round_style"></object>;</code></h5>
+
+<p><a class="anchor" id="p67" href="#p67">67</a>The rounding style for the type.<sup class="footnote"><a href="#fn225">225</a></sup></p>
+
+<p><a class="anchor" id="p68" href="#p68">68</a>Meaningful for all floating point types. Specializations for integer types shall return
+<code class="sh_cpp">round_toward_zero</code>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div>
+<p class="footnote" id="fn199">199) Equivalent to <code class="sh_cpp">CHAR_MIN</code>, <code class="sh_cpp">SHRT_MIN</code>, <code class="sh_cpp">FLT_MIN</code>,
+<code class="sh_cpp">DBL_MIN</code>, etc.</p>
+<p class="footnote" id="fn200">200) Equivalent to <code class="sh_cpp">CHAR_MAX</code>, <code class="sh_cpp">SHRT_MAX</code>, <code class="sh_cpp">FLT_MAX</code>,
+<code class="sh_cpp">DBL_MAX</code>, etc.</p>
+<p class="footnote" id="fn201">201) <code class="sh_cpp">lowest()</code> is necessary because not all floating-point representations have a smallest
+(most negative) value that is the negative of the largest (most positive) finite value.</p>
+<p class="footnote" id="fn202">202) Equivalent to <code class="sh_cpp">FLT_MANT_DIG</code>, <code class="sh_cpp">DBL_MANT_DIG</code>,
+<code class="sh_cpp">LDBL_MANT_DIG</code>.</p>
+<p class="footnote" id="fn203">203) Equivalent to <code class="sh_cpp">FLT_DIG</code>, <code class="sh_cpp">DBL_DIG</code>, <code class="sh_cpp">LDBL_DIG</code>.</p>
+<p class="footnote" id="fn204">204) Equivalent to <code class="sh_cpp">FLT_RADIX</code>.</p>
+<p class="footnote" id="fn205">205) Distinguishes types with bases other than 2 (e.g. BCD).</p>
+<p class="footnote" id="fn206">206) Equivalent to <code class="sh_cpp">FLT_EPSILON</code>, <code class="sh_cpp">DBL_EPSILON</code>,
+<code class="sh_cpp">LDBL_EPSILON</code>.</p>
+<p class="footnote" id="fn207">207) Rounding error is described in ISO/IEC 10967-1 Language independent arithmetic — Part 1 Section 5.2.8
+and Annex A Rationale Section A.5.2.8 — Rounding constants.</p>
+<p class="footnote" id="fn208">208) Equivalent to <code class="sh_cpp">FLT_MIN_EXP</code>, <code class="sh_cpp">DBL_MIN_EXP</code>,
+<code class="sh_cpp">LDBL_MIN_EXP</code>.</p>
+<p class="footnote" id="fn209">209) Equivalent to <code class="sh_cpp">FLT_MIN_10_EXP</code>, <code class="sh_cpp">DBL_MIN_10_EXP</code>,
+<code class="sh_cpp">LDBL_MIN_10_EXP</code>.</p>
+<p class="footnote" id="fn210">210) Equivalent to <code class="sh_cpp">FLT_MAX_EXP</code>, <code class="sh_cpp">DBL_MAX_EXP</code>,
+<code class="sh_cpp">LDBL_MAX_EXP</code>.</p>
+<p class="footnote" id="fn211">211) Equivalent to <code class="sh_cpp">FLT_MAX_10_EXP</code>, <code class="sh_cpp">DBL_MAX_10_EXP</code>,
+<code class="sh_cpp">LDBL_MAX_10_EXP</code>.</p>
+<p class="footnote" id="fn212">212) Required by LIA-1.</p>
+<p class="footnote" id="fn213">213) Required by LIA-1.</p>
+<p class="footnote" id="fn214">214) Required by LIA-1.</p>
+<p class="footnote" id="fn215">215) See IEC 559.</p>
+<p class="footnote" id="fn216">216) Required by LIA-1.</p>
+<p class="footnote" id="fn217">217) Required by LIA-1.</p>
+<p class="footnote" id="fn218">218) Required by LIA-1.</p>
+<p class="footnote" id="fn219">219) Required by LIA-1.</p>
+<p class="footnote" id="fn220">220) International Electrotechnical Commission standard 559 is the same as IEEE 754.</p>
+<p class="footnote" id="fn221">221) Required by LIA-1.</p>
+<p class="footnote" id="fn222">222) Required by LIA-1.</p>
+<p class="footnote" id="fn223">223) Required by LIA-1.</p>
+<p class="footnote" id="fn224">224) Refer to IEC 559. Required by LIA-1.</p>
+<p class="footnote" id="fn225">225) Equivalent to <code class="sh_cpp">FLT_ROUNDS</code>. Required by LIA-1.</p>
+</div>
+</body>
+</html>
+

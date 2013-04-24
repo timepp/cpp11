@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Clause 17: library introduction</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[diff.cpp03.library]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[diff.cpp03.library]"></object>C.2.7 Clause 17: library introduction </h3>
+
+<h4>
+<a title="library" href="library.general.html">17</a>–<a title="thread" href="thread.general.html">30</a>
+</h4>
+
+<p><strong>Change:</strong> New reserved identifiers</p>
+
+<p><strong>Rationale:</strong> Required by new features.</p>
+
+<p><strong>Effect on original feature:</strong> Valid C++ 2003 code that uses any identifiers added to the C++ standard library by this International
+Standard may fail to compile or produce different results in this International Standard. A comprehensive list of
+identifiers used by the C++ standard library can be found in the Index of Library Names in this International
+Standard.</p>
+
+<h4><a title="headers" href="headers.html">17.6.1.2</a></h4>
+
+<p><strong>Change:</strong> New headers</p>
+
+<p><strong>Rationale:</strong> New functionality.</p>
+
+<p><strong>Effect on original feature:</strong> The following C++ headers are new: <code class="header">&lt;array&gt;</code>, <code class="header">&lt;atomic&gt;</code>, <code class="header">&lt;chrono&gt;</code>,
+<code class="header">&lt;codecvt&gt;</code>, <code class="header">&lt;condition_variable&gt;</code>, <code class="header">&lt;forward_list&gt;</code>, <code class="header">&lt;future&gt;</code>,
+<code class="header">&lt;initializer_list&gt;</code>, <code class="header">&lt;mutex&gt;</code>, <code class="header">&lt;random&gt;</code>, <code class="header">&lt;ratio&gt;</code>,
+<code class="header">&lt;regex&gt;</code>, <code class="header">&lt;scoped_allocator&gt;</code>, <code class="header">&lt;system_error&gt;</code>, <code class="header">&lt;thread&gt;</code>,
+<code class="header">&lt;tuple&gt;</code>, <code class="header">&lt;typeindex&gt;</code>, <code class="header">&lt;type_traits&gt;</code>, <code class="header">&lt;unordered_map&gt;</code>, and
+<code class="header">&lt;unordered_set&gt;</code>. In addition the following C compatibility headers are new: <code class="header">&lt;ccomplex&gt;</code>,
+<code class="header">&lt;cfenv&gt;</code>, <code class="header">&lt;cinttypes&gt;</code>, <code class="header">&lt;cstdalign&gt;</code>, <code class="header">&lt;cstdbool&gt;</code>,
+<code class="header">&lt;cstding&gt;</code>, <code class="header">&lt;ctgmath&gt;</code>, and <code class="header">&lt;cuchar&gt;</code>. Valid C++ 2003 code that
+<code class="sh_cpp">#include</code>s headers with these names may be invalid in this International Standard.</p>
+
+<h4><a title="swappable.requirements" href="swappable.requirements.html">17.6.3.2</a></h4>
+
+<p><strong>Change:</strong> Function <code class="sh_cpp">swap</code> moved to a different header</p>
+
+<p><strong>Rationale:</strong> Remove dependency on <code class="header">&lt;algorithm&gt;</code> for swap.</p>
+
+<p><strong>Effect on original feature:</strong> Valid C++ 2003 code that has been compiled expecting <code class="sh_cpp">swap</code> to be in <code class="header">&lt;algorithm&gt;</code>
+may have to instead include <code class="header">&lt;utility&gt;</code>.</p>
+
+<h4><a title="namespace.posix" href="namespace.posix.html">17.6.4.2.2</a></h4>
+
+<p><strong>Change:</strong> New reserved namespace</p>
+
+<p><strong>Rationale:</strong> New functionality.</p>
+
+<p><strong>Effect on original feature:</strong> The global namespace <code class="sh_cpp">posix</code> is now reserved for standardization. Valid C++ 2003 code that uses a
+top-level namespace <code class="sh_cpp">posix</code> may be invalid in this International Standard.</p>
+
+<h4><a title="res.on.macro.definitions" href="res.on.macro.definitions.html">17.6.5.3</a></h4>
+
+<p><strong>Change:</strong> Additional restrictions on macro names</p>
+
+<p><strong>Rationale:</strong> Avoid hard to diagnose or non-portable constructs.</p>
+
+<p><strong>Effect on original feature:</strong> Names of attribute identifiers may not be used as macro names. Valid C++ 2003 code that defines
+<code class="sh_cpp">override</code>, <code class="sh_cpp">final</code>, <code class="sh_cpp">carries_dependency</code>, or <code class="sh_cpp">noreturn</code> as macros is
+invalid in this International Standard.</p>
+</body>
+</html>
+

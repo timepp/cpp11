@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Narrow stream objects</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[narrow.stream.objects]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[narrow.stream.objects]"></object>27.4.2 Narrow stream objects </h3>
+
+<h4><code class="sh_cpp">istream <dfn>cin</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="cin"></object>;</code></h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The object <code class="sh_cpp">cin</code> controls input from a stream buffer associated with the object <code class="sh_cpp">stdin</code>,
+declared in <code class="header">&lt;cstdio&gt;</code>.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>After the object <code class="sh_cpp">cin</code> is initialized, <code class="sh_cpp">cin.tie()</code> returns <code class="sh_cpp">&amp;cout</code>. Its
+state is otherwise the same as required for <code class="sh_cpp">basic_ios&lt;char&gt;::init</code> (<a title="basic.ios.cons" href="basic.ios.cons.html">27.5.5.2</a>).</p>
+
+<h4><code class="sh_cpp">ostream <dfn>cout</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="cout"></object>;</code></h4>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>The object <code class="sh_cpp">cout</code> controls output to a stream buffer associated with the object <code class="sh_cpp">stdout</code>,
+declared in <code class="header">&lt;cstdio&gt;</code> (<a title="c.files" href="c.files.html">27.9.2</a>).</p>
+
+<h4><code class="sh_cpp">ostream <dfn>cerr</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="cerr"></object>;</code></h4>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>The object <code class="sh_cpp">cerr</code> controls output to a stream buffer associated with the object <code class="sh_cpp">stderr</code>,
+declared in <code class="header">&lt;cstdio&gt;</code> (<a title="c.files" href="c.files.html">27.9.2</a>).</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>After the object <code class="sh_cpp">cerr</code> is initialized, <code class="sh_cpp">cerr.flags() &amp; unitbuf</code> is nonzero and
+<code class="sh_cpp">cerr.tie()</code> returns <code class="sh_cpp">&amp;cout</code>. Its state is otherwise the same as required for
+<code class="sh_cpp">basic_ios&lt;char&gt;::init</code> (<a title="basic.ios.cons" href="basic.ios.cons.html">27.5.5.2</a>).</p>
+
+<h4><code class="sh_cpp">ostream <dfn>clog</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="clog"></object>;</code></h4>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>The object <code class="sh_cpp">clog</code> controls output to a stream buffer associated with the object <code class="sh_cpp">stderr</code>,
+declared in <code class="header">&lt;cstdio&gt;</code> (<a title="c.files" href="c.files.html">27.9.2</a>).</p>
+</body>
+</html>
+

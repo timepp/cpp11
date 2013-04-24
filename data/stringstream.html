@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class template basic_stringstream</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[stringstream]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[stringstream]"></object>27.8.5 Class template <code class="sh_cpp"><dfn>basic_stringstream</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="basic_stringstream"></object></code> </h3>
+
+<pre><code class="sh_cpp">namespace std {
+  template &lt;class charT, class traits = char_traits&lt;charT&gt;,
+            class Allocator = allocator&lt;charT&gt; &gt;
+  class basic_stringstream
+    : public basic_iostream&lt;charT,traits&gt; {
+  public:
+
+    // types:
+    typedef charT                     char_type;
+    typedef typename traits::int_type int_type;
+    typedef typename traits::pos_type pos_type;
+    typedef typename traits::off_type off_type;
+    typedef traits                    traits_type;
+    typedef Allocator                 allocator_type;
+
+    // constructors/destructor
+    explicit basic_stringstream(
+    ios_base::openmode which = ios_base::out|ios_base::in);
+    explicit basic_stringstream(
+    const basic_string&lt;charT,traits,Allocator&gt;&amp; str,
+    ios_base::openmode which = ios_base::out|ios_base::in);
+    basic_stringstream(const basic_stringstream&amp; rhs) = delete;
+    basic_stringstream(basic_stringstream&amp;&amp; rhs);
+
+    // <a title="stringstream.assign" href="stringstream.assign.html">27.8.6.1</a> Assign/swap:
+    basic_stringstream&amp; operator=(const basic_stringstream&amp; rhs) = delete;
+    basic_stringstream&amp; operator=(basic_stringstream&amp;&amp; rhs);
+    void swap(basic_stringstream&amp; rhs);
+
+    // Members:
+    basic_stringbuf&lt;charT,traits,Allocator&gt;* rdbuf() const;
+    basic_string&lt;charT,traits,Allocator&gt; str() const;
+    void str(const basic_string&lt;charT,traits,Allocator&gt;&amp; str);
+
+  private:
+    basic_stringbuf&lt;charT, traits&gt; sb;  // exposition only
+  };
+
+  template &lt;class charT, class traits, class Allocator&gt;
+    void swap(basic_stringstream&lt;charT, traits, Allocator&gt;&amp; x,
+              basic_stringstream&lt;charT, traits, Allocator&gt;&amp; y);
+}</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The class template <code class="sh_cpp">basic_stringstream&lt;charT, traits&gt;</code> supports reading and writing from
+objects of class <code class="sh_cpp">basic_string&lt;charT, traits, Allocator&gt;</code>. It uses a
+<code class="sh_cpp">basic_stringbuf&lt;charT, traits, Allocator&gt;</code> object to control the associated sequence. For the
+sake of exposition, the maintained data is presented here as</p>
+
+<ul>
+<li>
+<code class="sh_cpp">sb</code>, the <code class="sh_cpp">stringbuf</code> object.</li>
+</ul>
+</body>
+</html>
+

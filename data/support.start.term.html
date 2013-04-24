@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Start and termination</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[support.start.term]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[support.start.term]"></object>18.5 Start and termination </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Table <a href="support.start.term.html#t33">33</a> describes some of the contents of the header <dfn><code class="header">&lt;cstdlib&gt;</code></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="&lt;cstdlib&gt;"></object>.</p>
+
+<table id="t33" class="header_synopsis">
+<caption>Table 33 — Header <code class="header">&lt;cstdlib&gt;</code> synopsis</caption>
+<thead><tr>
+<th>Type</th>
+<th>Name(s)</th>
+</tr></thead>
+<tbody>
+<tr>
+<th>Macros:</th>   <td><pre><code class="sh_cpp">EXIT_FAILURE   EXIT_SUCCESS</code></pre></td>
+</tr>
+<tr>
+<th>Functions:</th>
+<td><pre><code class="sh_cpp">_Exit          abort          atexit
+at_quick_exit  exit           quick_exit</code></pre></td>
+</tr>
+</tbody>
+</table>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The contents are the same as the Standard C library header <code class="header">&lt;stdlib.h&gt;</code>, with the following
+changes:</p>
+
+<h3><code class="sh_cpp">[[noreturn]] void <dfn>_Exit</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="_Exit"></object>(int status) noexcept;</code></h3>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>The function <code class="sh_cpp">_Exit(int status)</code> has additional behavior in this International Standard:</p>
+
+<ul>
+<li>The program is terminated without executing destructors for objects of automatic, thread, or static storage duration
+	and without calling functions passed to <code class="sh_cpp">atexit()</code> (<a title="basic.start.term" href="basic.start.term.html">3.6.3</a>).</li>
+</ul>
+
+<h3><code class="sh_cpp">[[noreturn]] void <dfn>abort</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="abort"></object>(void) noexcept;</code></h3>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>The function <code class="sh_cpp">abort()</code> has additional behavior in this International Standard:</p>
+
+<ul>
+<li>The program is terminated without executing destructors for objects of automatic, thread, or static storage duration
+	and without calling functions passed to <code class="sh_cpp">atexit()</code> (<a title="basic.start.term" href="basic.start.term.html">3.6.3</a>).</li>
+</ul>
+
+<h3><code class="sh_cpp">extern "C" int <dfn>atexit</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="atexit"></object>(void (*f)(void)) noexcept;
+extern "C++" int atexit(void (*f)(void)) noexcept;</code></h3>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><em>Effects:</em> The <code class="sh_cpp">atexit()</code> functions register the function pointed to by <code class="sh_cpp">f</code> to be called
+without arguments at normal program termination. It is unspecified whether a call to <code class="sh_cpp">atexit()</code> that does not
+happen before (<a title="intro.multithread" href="intro.multithread.html">1.10</a>) a call to <code class="sh_cpp">exit()</code> will succeed. <span class="note">[ <em>Note:</em> The <code class="sh_cpp">atexit()</code> functions
+do not introduce a data race (<a title="res.on.data.races" href="res.on.data.races.html">17.6.5.9</a>). — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a><em>Implementation limits:</em> The implementation shall support the registration of at least 32 functions.</p>
+
+<p><a class="anchor" id="p7" href="#p7">7</a><em>Returns:</em> The <code class="sh_cpp">atexit()</code> function returns zero if the registration succeeds, nozero if it
+fails.</p>
+
+<h3><code class="sh_cpp">[[noreturn]] void <dfn>exit</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="exit"></object>(int status)</code></h3>
+
+<p><a class="anchor" id="p8" href="#p8">8</a>The function <code class="sh_cpp">exit()</code> has additional behavior in this International Standard:</p>
+
+<ul>
+<li>
+<p>First, objects with thread storage duration and associated with the current thread are destroyed. Next, objects
+	with static storage duration are destroyed and functions registered by calling <code class="sh_cpp">atexit</code> are called.<sup class="footnote"><a href="#fn226">226</a></sup> See <a title="basic.start.term" href="basic.start.term.html">3.6.3</a> for the order of destructions and calls. (Automatic objects are not destroyed as a
+	result of calling <code class="sh_cpp">exit()</code>.)<sup class="footnote"><a href="#fn227">227</a></sup></p>
+
+	<p>If control leaves a registered function called by <code class="sh_cpp">exit</code> because the function does not provide a
+	handler for a thrown exception, <code class="sh_cpp">terminate()</code> shall be called (<a title="except.terminate" href="except.terminate.html">15.5.1</a>).</p>
+</li>
+
+<li>Next, all open C streams (as mediated by the function signatures declared in <code class="header">&lt;cstdio&gt;</code>) with
+	unwritten buffered data are flushed, all open C streams are closed, and all files created by calling
+	<code class="sh_cpp">tmpfile()</code> are removed.</li>
+<li>Finally, control is returned to the host environment. If <code class="sh_cpp">status</code> is zero or <code class="sh_cpp">EXIT_SUCCESS</code>,
+	an implementation-defined form of the status <em>successful termination</em> is returned. If status is
+	<code class="sh_cpp">EXIT_FAILURE</code>, an implementation-defined form of the status <em>unsuccessful termination</em> is
+	returned. Otherwise the status returned is implementation-defined.<sup class="footnote"><a href="#fn228">228</a></sup>
+</li>
+</ul>
+
+<h3><code class="sh_cpp">extern "C" int <dfn>at_quick_exit</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="at_quick_exit"></object>(void (*f)(void)) noexcept;
+extern "C++" int at_quick_exit(void (*f)(void)) noexcept;</code></h3>
+
+<p><a class="anchor" id="p9" href="#p9">9</a><em>Effects:</em> The <code class="sh_cpp">at_quick_exit()</code> functions register the function pointed to by <code class="sh_cpp">f</code> to be
+called without arguments when <code class="sh_cpp">quick_exit</code> is called. It is unspecified whether a call to
+<code class="sh_cpp">at_quick_exit()</code> that does not happen before (<a title="intro.multithread" href="intro.multithread.html">1.10</a>) all calls to <code class="sh_cpp">quick_exit</code> will
+succeed. <span class="note">[ <em>Note:</em> The <code class="sh_cpp">at_quick_exit()</code> functions do not introduce a data race (<a title="res.on.data.races" href="res.on.data.races.html">17.6.5.9</a>). — <em>end note</em> ]</span>
+<span class="note">[ <em>Note:</em> The order of registration may be indeterminate if <code class="sh_cpp">at_quick_exit</code> was called from more than one
+thread. — <em>end note</em> ]</span> <span class="note">[ <em>Note:</em> The <code class="sh_cpp">at_quick_exit</code> registrations are distinct from the <code class="sh_cpp">atexit</code>
+registrations, and applications may need to call both registration functions with the same
+argument. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p10" href="#p10">10</a><em>Implementation limits:</em> The implementation shall support the registration of at least 32 functions.</p>
+
+<p><a class="anchor" id="p11" href="#p11">11</a><em>Returns:</em> Zero if the registration succeeds, non-zero if it fails.</p>
+
+<h3><code class="sh_cpp">[[noreturn]] void <dfn>quick_exit</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="quick_exit"></object>(int status) noexcept;</code></h3>
+
+<p><a class="anchor" id="p12" href="#p12">12</a><em>Effects:</em> Functions registered by calls to <code class="sh_cpp">at_quick_exit</code> are called in the reverse order of their
+registration, except that a function shall be called after any previously registered functions that had already been
+called at the time it was registered. Objects shall not be destroyed as a result of calling <code class="sh_cpp">quick_exit</code>. If
+control leaves a registered function called by <code class="sh_cpp">quick_exit</code> because the function does not provide a handler
+for a thrown exception, <code class="sh_cpp">terminate()</code> shall be called. <span class="note">[ <em>Note:</em> <code class="sh_cpp">at_quick_exit</code> may call a registered
+function from a different thread than the one that registered it, so registered functions should not rely on the
+identity of objects with thread storage duration. — <em>end note</em> ]</span> After calling registered functions, <code class="sh_cpp">quick_exit</code>
+shall call <code class="sh_cpp">_Exit(status)</code>. <span class="note">[ <em>Note:</em> The standard file buffers are not flushed. <span class="seealso">See:</span> ISO C
+7.20.4.4. — <em>end note</em> ]</span></p>
+
+<p><span class="seealso">See also:</span> <a title="basic.start" href="basic.start.main.html">3.6</a>, <a title="basic.start.term" href="basic.start.term.html">3.6.3</a>, ISO C 7.10.4.</p>
+
+
+
+
+
+
+<div>
+<p class="footnote" id="fn226">226) A function is called for every time it is registered.</p>
+<p class="footnote" id="fn227">227) Objects with automatic storage duration are all destroyed in a program whose function
+<code class="sh_cpp">main()</code> contains no automatic objects and executes the call to <code class="sh_cpp">exit()</code>. Control can be
+transferred directly to such a <code class="sh_cpp">main()</code> by throwing an exception that is caught in
+<code class="sh_cpp">main()</code>.</p>
+<p class="footnote" id="fn228">228) The macros <code class="sh_cpp">EXIT_FAILURE</code> and <code class="sh_cpp">EXIT_SUCCESS</code> are defined in
+<code class="header">&lt;cstdlib&gt;</code>.</p>
+</div>
+</body>
+</html>
+

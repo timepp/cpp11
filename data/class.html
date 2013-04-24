@@ -1,0 +1,168 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Classes</title>
+</head>
+<body>
+<h1>
+<dfn class="label">[class]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[class]"></object>9 Classes </h1>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A class is a type. Its name becomes a <i class="nonterminal">class-name</i> (<a title="class.name" href="class.name.html">9.1</a>) within its scope.</p>
+<dl>
+<dt>
+<dfn><i class="nonterminal">class-name</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="class-name"></object>:</dt>
+	<dd><i class="nonterminal">identifier</i></dd>
+	<dd><i class="nonterminal">simple-template-id</i></dd>
+</dl>
+
+<p><i class="nonterminal">Class-specifier</i>s and <i class="nonterminal">elaborated-type-specifier</i>s (<a title="dcl.type.elab" href="dcl.type.elab.html">7.1.6.3</a>) are used to make
+<i class="nonterminal">class-name</i>s. An object of a class consists of a (possibly empty) sequence of members and base class
+objects.</p>
+
+<dl>
+<dt>
+<dfn><i class="nonterminal">class-specifier</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="class-specifier"></object>:</dt>
+	<dd>
+<i class="nonterminal">class-head</i> <code class="sh_cpp">{</code> <i class="nonterminal">member-specification</i><sub class="opt">opt</sub> <code class="sh_cpp">}</code>
+</dd>
+<dt>
+<dfn><i class="nonterminal">class-head</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="class-head"></object>:</dt>
+	<dd>
+<i class="nonterminal">class-key</i> <i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub> <i class="nonterminal">class-head-name</i> <i class="nonterminal">class-virt-specifier</i><sub class="opt">opt</sub> <i class="nonterminal">base-clause</i><sub class="opt">opt</sub>
+</dd>
+	<dd>
+<i class="nonterminal">class-key</i> <i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub> <i class="nonterminal">base-clause</i><sub class="opt">opt</sub>
+</dd>
+<dt>
+<dfn><i class="nonterminal">class-head-name</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="class-head-name"></object>:</dt>
+	<dd>
+<i class="nonterminal">nested-name-specifier</i><sub class="opt">opt</sub> <i class="nonterminal">class-name</i>
+</dd>
+<dt>
+<dfn><i class="nonterminal">class-virt-specifier</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="class-virt-specifier"></object>:</dt>
+	<dd><code class="sh_cpp">final</code></dd>
+<dt>
+<dfn><i class="nonterminal">class-key</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="class-key"></object>:</dt>
+	<dd><code class="sh_cpp">class</code></dd>
+	<dd><code class="sh_cpp">struct</code></dd>
+	<dd><code class="sh_cpp">union</code></dd>
+</dl>
+
+<p>A <i class="nonterminal">class-specifier</i> whose <i class="nonterminal">class-head</i> omits the <i class="nonterminal">class-head-name</i> defines an unnamed class.
+<span class="note">[ <em>Note:</em> An unnamed class thus can’t be <code class="sh_cpp">final</code>. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>A <i class="nonterminal">class-name</i> is inserted into the scope in which it is declared immediately after the
+<i class="nonterminal">class-name</i> is seen. The <i class="nonterminal">class-name</i> is also inserted into the scope of the class itself; this is known
+as the <dfn>injected-class-name</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="injected-class-name"></object>. For purposes of access checking, the injected-class-name is treated as if it were
+a public member name. A <i class="nonterminal">class-specifier</i> is commonly referred to as a class definition. A class is considered
+defined after the closing brace of its <i class="nonterminal">class-specifier</i> has been seen even though its member functions are in
+general not yet defined. The optional <i class="nonterminal">attribute-specifier-seq</i> appertains to the class; the attributes in the
+<i class="nonterminal">attribute-specifier-seq</i> are thereafter considered attributes of the class whenever it is named.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>If a class is marked with the <i class="nonterminal">class-virt-specifier</i> <code class="sh_cpp">final</code> and it appears as a
+<i class="nonterminal">base-type-specifier</i> in a <i class="nonterminal">base-clause</i> (Clause <a title="class.derived" href="class.derived.html">10</a>), the program is ill-formed.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>Complete objects and member subobjects of class type shall have nonzero size.<sup class="footnote"><a href="#fn110">110</a></sup> <span class="note">[ <em>Note:</em> Class
+objects can be assigned, passed as arguments to functions, and returned by functions (except objects of classes for
+which copying or moving has been restricted; see <a title="class.copy" href="class.copy.html">12.8</a>). Other plausible operators, such as equality
+comparison, can be defined by the user; see <a title="over.oper" href="over.oper.html">13.5</a>. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>A <dfn>union</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="union"></object> is a class defined with the <i class="nonterminal">class-key</i> <code class="sh_cpp">union</code>; it holds only one data
+member at a time (<a title="class.union" href="class.union.html">9.5</a>). <span class="note">[ <em>Note:</em> Aggregates of class type are described in <a title="dcl.init.aggr" href="dcl.init.aggr.html">8.5.1</a>. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>A <dfn>trivially copyable class</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="trivially copyable class"></object> is a class that:</p>
+<ul>
+<li>has no non-trivial copy constructors (<a title="class.copy" href="class.copy.html">12.8</a>),</li>
+<li>has no non-trivial move constructors (<a title="class.copy" href="class.copy.html">12.8</a>),</li>
+<li>has no non-trivial copy assignment operators (<a title="over.ass" href="over.ass.html">13.5.3</a>, <a title="class.copy" href="class.copy.html">12.8</a>),</li>
+<li>has no non-trivial move assignment operators (<a title="over.ass" href="over.ass.html">13.5.3</a>, <a title="class.copy" href="class.copy.html">12.8</a>), and</li>
+<li>has a trivial destructor (<a title="class.dtor" href="class.dtor.html">12.4</a>).</li>
+</ul>
+
+<p>A <dfn>trivial class</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="trivial class"></object> is a class that has a trivial default constructor (<a title="class.ctor" href="class.ctor.html">12.1</a>) and is trivially
+copyable.</p>
+
+<p><span class="note">[ <em>Note:</em> In particular, a trivially copyable or trivial class does not have virtual functions or virtual base
+classes. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p7" href="#p7">7</a>A <dfn>standard-layout class</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="standard-layout class"></object> is a class that:</p>
+<ul>
+<li>has no non-static data members of type non-standard-layout class (or array of such types) or reference,</li>
+<li>has no virtual functions (<a title="class.virtual" href="class.virtual.html">10.3</a>) and no virtual base classes (<a title="class.mi" href="class.mi.html">10.1</a>),</li>
+<li>has the same access control (Clause <a title="class.access" href="class.access.html">11</a>) for all non-static data members,</li>
+<li>has no non-standard-layout base classes,</li>
+<li>either has no non-static data members in the most derived class and at most one base class with non-static data
+	members, or has no base classes with non-static data members, and</li>
+<li>has no base classes of the same type as the first non-static data member.<sup class="footnote"><a href="#fn111">111</a></sup>
+</li>
+</ul>
+
+<p><a class="anchor" id="p8" href="#p8">8</a>A <dfn>standard-layout struct</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="standard-layout struct"></object> is a standard-layout class defined with the <i class="nonterminal">class-key</i>
+<code class="sh_cpp">struct</code> or the <i class="nonterminal">class-key</i> <code class="sh_cpp">class</code>. A <dfn>standard-layout union</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="standard-layout union"></object> is a
+standard-layout class defined with the <i class="nonterminal">class-key</i> <code class="sh_cpp">union</code>.</p>
+
+<p><a class="anchor" id="p9" href="#p9">9</a><span class="note">[ <em>Note:</em> Standard-layout classes are useful for communicating with code written in other programming languages.
+Their layout is specified in <a title="class.mem" href="class.mem.html">9.2</a>. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p10" href="#p10">10</a>A <dfn>POD struct</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="POD struct"></object><sup class="footnote"><a href="#fn112">112</a></sup> is a non-union class that is both a trivial class and a standard-layout
+class, and has no non-static data members of type non-POD struct, non-POD union (or array of such types). Similarly, a
+<dfn>POD union</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="POD union"></object> is a union that is both a trivial class and a standard layout class, and has no non-static data
+members of type non-POD struct, non-POD union (or array of such types). A <dfn>POD class</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="POD class"></object> is a class that is either
+a POD struct or a POD union.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct N {              // neither trivial nor standard-layout
+  int i;
+  int j;
+  virtual ~N();
+};
+
+struct T {              // trivial but not standard-layout
+  int i;
+private:
+  int j;
+};
+
+struct SL {             // standard-layout but not trivial
+  int i;
+  int j;
+  ~SL();
+};
+
+struct POD {            // both trivial and standard-layout
+  int i;
+  int j;
+};</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p11" href="#p11">11</a>If a <i class="nonterminal">class-head-name</i> contains a <i class="nonterminal">nested-name-specifier</i>, the <i class="nonterminal">class-specifier</i> shall refer
+to a class that was previously declared directly in the class or namespace to which the <i class="nonterminal">nested-name-specifier</i>
+refers, or in an element of the inline namespace set (<a title="namespace.def" href="namespace.def.html">7.3.1</a>) of that namespace (i.e., not merely inherited or
+introduced by a <i class="nonterminal">using-declaration</i>), and the <i class="nonterminal">class-specifier</i> shall appear in a namespace enclosing the
+previous declaration. In such cases, the <i class="nonterminal">nested-name-specifier</i> of the <i class="nonterminal">class-head-name</i> of the definition
+shall not begin with a <i class="nonterminal">decltype-specifier</i>.</p>
+
+
+
+
+
+
+<div>
+<p class="footnote" id="fn110">110) Base class subobjects are not so constrained.</p>
+<p class="footnote" id="fn111">111) This ensures that two subobjects that have the same class type and that belong to the same
+most-derived object are not allocated at the same address (<a title="expr.eq" href="expr.eq.html">5.10</a>).</p>
+<p class="footnote" id="fn112">112) The acronym POD stands for “plain old data”.</p>
+</div>
+</body>
+</html>
+

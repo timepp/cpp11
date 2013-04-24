@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Template template arguments</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[temp.arg.template]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[temp.arg.template]"></object>14.3.3 Template template arguments </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A <i class="nonterminal">template-argument</i> for a template <i class="nonterminal">template-parameter</i> shall be the name of a class template
+or an alias template, expressed as <i class="nonterminal">id-expression</i>. When the <i class="nonterminal">template-argument</i> names a class template,
+only primary class templates are considered when matching the template template argument with the corresponding
+parameter; partial specializations are not considered even if their parameter lists match that of the template template
+parameter.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>Any partial specializations (<a title="temp.class.spec" href="temp.class.spec.html">14.5.5</a>) associated with the primary class template are considered when
+a specialization based on the template <i class="nonterminal">template-parameter</i> is instantiated. If a specialization is not visible
+at the point of instantiation, and it would have been selected had it been visible, the program is ill-formed; no
+diagnostic is required.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">template&lt;class T&gt; class A {     // primary template
+  int x;
+};
+template&lt;class T&gt; class A&lt;T*&gt; { // partial specialization
+  long x;
+};
+template&lt;template&lt;class U&gt; class V&gt; class C {
+  V&lt;int&gt; y;
+  V&lt;int*&gt; z;
+};
+C&lt;A&gt; c;                         // V&lt;int&gt; within C&lt;A&gt; uses the primary template,
+                                // so c.y.x has type int
+                                // V&lt;int*&gt; within C&lt;A&gt; uses the partial specialization,
+                                // so c.z.x has type long</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">template&lt;class T&gt; class A { /* … */ };
+template&lt;class T, class U = T&gt; class B { /* … */ };
+template &lt;class ... Types&gt; class C { /* … */ };
+
+template&lt;template&lt;class&gt; class P&gt; class X { /* … */ };
+template&lt;template&lt;class ...&gt; class Q&gt; class Y { /* … */ };
+
+X&lt;A&gt; xa;            // OK
+X&lt;B&gt; xb;            // ill-formed: default arguments for the parameters of a template argument are ignored
+X&lt;C&gt; xc;            // ill-formed: a template parameter pack does not match a template parameter
+
+Y&lt;A&gt; ya;            // OK
+Y&lt;B&gt; yb;            // OK
+Y&lt;C&gt; yc;            // OK</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>A <i class="nonterminal">template-argument</i> matches a template <i class="nonterminal">template-parameter</i> (call it <code class="sh_cpp">P</code>) when each
+of the template parameters in the <i class="nonterminal">template-parameter-list</i> of the <i class="nonterminal">template-argument</i>’s corresponding
+class template or alias template (call it <code class="sh_cpp">A</code>) matches the corresponding template parameter in the
+<i class="nonterminal">template-parameter-list</i> of <code class="sh_cpp">P</code>. When <code class="sh_cpp">P</code>’s <i class="nonterminal">template-parameter-list</i> contains a
+template parameter pack (<a title="temp.variadic" href="temp.variadic.html">14.5.3</a>), the template parameter pack will match zero or more template parameters or
+template parameter packs in the <i class="nonterminal">template-parameter-list</i> of <code class="sh_cpp">A</code> with the same type and form as the
+template parameter pack in <code class="sh_cpp">P</code> (ignoring whether those template parameters are template parameter packs)</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">template &lt;class T&gt; struct eval;
+
+template &lt;template &lt;class, class...&gt; class TT, class T1, class... Rest&gt;
+struct eval&lt;TT&lt;T1, Rest...&gt;&gt; { };
+
+template &lt;class T1&gt; struct A;
+template &lt;class T1, class T2&gt; struct B;
+template &lt;int N&gt; struct C;
+template &lt;class T1, int N&gt; struct D;
+template &lt;class T1, class T2, int N = 17&gt; struct E;
+
+eval&lt;A&lt;int&gt;&gt; eA;        // OK: matches partial specialization of eval
+eval&lt;B&lt;int, float&gt;&gt; eB; // OK: matches partial specialization of eval
+eval&lt;C&lt;17&gt;&gt; eC;         // error: C does not match TT in partial specialization
+eval&lt;D&lt;int, 17&gt;&gt; eD;    // error: D does not match TT in partial specialization
+eval&lt;E&lt;int, float&gt;&gt; eE; // error: E does not match TT in partial specialization</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+</body>
+</html>
+

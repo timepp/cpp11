@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Enumerated types</title>
+</head>
+<body>
+<h5>
+<dfn class="label">[enumerated.types]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[enumerated.types]"></object>17.5.2.1.2 Enumerated types </h5>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Several types defined in Clause <a title="input.output" href="input.output.general.html">27</a> are <dfn>enumerated types</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="enumerated types"></object>. Each enumerated type may be
+implemented as an enumeration or as a synonym for an enumeration.<sup class="footnote"><a href="#fn169">169</a></sup></p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The enumerated type <var>enumerated</var> can be written:</p>
+
+<pre><code class="sh_cpp">enum <var>enumerated</var> { <var>V0</var>, <var>V1</var>, <var>V2</var>, <var>V3</var>, … };</code></pre>
+
+<pre><code class="sh_cpp">static const <var>enumerated</var> <var>C0</var> (<var>V0</var>);
+static const <var>enumerated</var> <var>C1</var> (<var>V1</var>);
+static const <var>enumerated</var> <var>C2</var> (<var>V2</var>);
+static const <var>enumerated</var> <var>C3</var> (<var>V3</var>);
+…</code></pre>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>Here, the names <var>C0</var>, <var>C1</var>, etc. represent <dfn>enumerated elements</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="enumerated elements"></object> for this particular
+enumerated type. All such elements have distinct values.</p>
+
+
+<div><p class="footnote" id="fn169">169) Such as an integer type, with constant integer values (<a title="basic.fundamental" href="basic.fundamental.html">3.9.1</a>).</p></div>
+</body>
+</html>
+

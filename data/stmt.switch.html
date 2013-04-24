@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>The switch statement</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[stmt.switch]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[stmt.switch]"></object>6.4.2 The <code class="sh_cpp">switch</code> statement </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The <code class="sh_cpp">switch</code> statement causes control to be transferred to one of several statements depending on
+the value of a condition.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The condition shall be of integral type, enumeration type, or of a class type for which a single non-explicit
+conversion function to integral or enumeration type exists (<a title="class.conv" href="class.conv.html">12.3</a>). If the condition is of class type, the
+condition is converted by calling that conversion function, and the result of the conversion is used in place of the
+original condition for the remainder of this section. Integral promotions are performed. Any statement within the
+<code class="sh_cpp">switch</code> statement can be labeled with one or more case labels as follows:</p>
+
+<dl><dd>
+<code class="sh_cpp">case</code> <i class="nonterminal">constant-expression</i> <code class="sh_cpp">:</code>
+</dd></dl>
+
+<p>where the <i class="nonterminal">constant-expression</i> shall be a converted constant expression (<a title="expr.const" href="expr.const.html">5.19</a>) of the promoted
+type of the switch condition. No two of the case constants in the same switch shall have the same value after conversion
+to the promoted type of the switch condition.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>There shall be at most one label of the form</p>
+
+<dl><dd>
+<code class="sh_cpp">default</code> <code class="sh_cpp">:</code>
+</dd></dl>
+
+<p>within a switch statement.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>Switch statements can be nested; a <code class="sh_cpp">case</code> or <code class="sh_cpp">default</code> label is associated with the
+smallest switch enclosing it.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>When the <code class="sh_cpp">switch</code> statement is executed, its condition is evaluated and compared with each case
+constant. If one of the case constants is equal to the value of the condition, control is passed to the statement
+following the matched case label. If no case constant matches the condition, and if there is a <code class="sh_cpp">default</code>
+label, control passes to the statement labeled by the default label. If no case matches and if there is no
+<code class="sh_cpp">default</code> then none of the statements in the switch is executed.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a><code class="sh_cpp">case</code> and <code class="sh_cpp">default</code> labels in themselves do not alter the flow of control, which
+continues unimpeded across such labels. To exit from a switch, see <code class="sh_cpp">break</code>, <a title="stmt.break" href="stmt.break.html">6.6.1</a>. <span class="note">[ <em>Note:</em> Usually,
+the substatement that is the subject of a switch is compound and <code class="sh_cpp">case</code> and <code class="sh_cpp">default</code> labels
+appear on the top-level statements contained within the (compound) substatement, but this is not required. Declarations
+can appear in the substatement of a <i class="nonterminal">switch-statement</i>. — <em>end note</em> ]</span></p>
+</body>
+</html>
+

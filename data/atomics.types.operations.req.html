@@ -1,0 +1,317 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Requirements for operations on atomic types</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[atomics.types.operations.req]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[atomics.types.operations.req]"></object>29.6.5 Requirements for operations on atomic types </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>There are only a few kinds of operations on atomic types, though there are many instances on those kinds. This
+section specifies each general kind. The specific instances are defined in <a title="atomics.types.generic" href="atomics.types.generic.html">29.5</a>, <a title="atomics.types.operations.general" href="atomics.types.operations.general.html">29.6.1</a>,
+<a title="atomics.types.operations.arith" href="atomics.types.operations.arith.html">29.6.3</a>, and <a title="atomics.types.operations.pointer" href="atomics.types.operations.pointer.html">29.6.4</a>.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>In the following operation definitions:</p>
+
+<ul>
+<li>an <var>A</var> refers to one of the atomic types.</li>
+<li>a <var>C</var> refers to its corresponding non-atomic type. The <code class="sh_cpp">atomic_address</code> atomic type corresponds
+	to the <code class="sh_cpp">void*</code> non-atomic type.</li>
+<li>an <var>M</var> refers to type of the other argument for arithmetic operations. For integral atomic types,
+	<var>M</var> is <var>C</var>. For atomic address types, <var>M</var> is <code class="sh_cpp">std::ptrdiff_t</code>.</li>
+<li>the free functions not ending in <code class="sh_cpp">_explicit</code> have the semantics of their corresponding
+	<code class="sh_cpp">_explicit</code> with <code class="sh_cpp">memory_order</code> arguments of <code class="sh_cpp">memory_order_seq_cst</code>.</li>
+</ul>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><span class="note">[ <em>Note:</em> Many operations are volatile-qualified. The “volatile as device register” semantics have not changed in
+the standard. This qualification means that volatility is preserved when applying these operations to volatile objects.
+It does not mean that operations on non-volatile objects become volatile. Thus, volatile qualified operations on
+non-volatile objects may be merged under some conditions. — <em>end note</em> ]</span></p>
+
+<h4><code class="sh_cpp"><var>A</var>::<var>A</var>() noexcept = default;</code></h4>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><em>Effects:</em> leaves the atomic object in an uninitialized state. <span class="note">[ <em>Note:</em> These semantics ensure compatibility with
+C. — <em>end note</em> ]</span></p>
+
+<h4><code class="sh_cpp">constexpr <var>A</var>::<var>A</var>(<var>C</var> desired) noexcept;</code></h4>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><em>Effects:</em> Initializes the object with the value <code class="sh_cpp">desired</code>. Initialization is not an atomic operation
+(<a title="intro.multithread" href="intro.multithread.html">1.10</a>). <span class="note">[ <em>Note:</em> it is possible to have an access to an atomic object <code class="sh_cpp">A</code> race with its construction,
+for example by communicating the address of the just-constructed object <code class="sh_cpp">A</code> to another thread via
+<code class="sh_cpp">memory_order_relaxed</code> operations on a suitable atomic pointer variable, and then immediately accessing
+<code class="sh_cpp">A</code> in the receiving thread. This results in undefined behavior. — <em>end note</em> ]</span></p>
+
+<h4><code class="sh_cpp">#define <dfn>ATOMIC_VAR_INIT</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="ATOMIC_VAR_INIT"></object>(value) <em>see below</em></code></h4>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>The macro expands to a token sequence suitable for constant initialization an atomic variable of static storage
+duration of a type that is initialization-compatible with <code class="sh_cpp">value</code>. <span class="note">[ <em>Note:</em> This operation may need to
+initialize locks. — <em>end note</em> ]</span> Concurrent access to the variable being initialized, even via an atomic operation, constitutes
+a data race.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">atomic&lt;int&gt; v = ATOMIC_VAR_INIT(5);</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<h4><code class="sh_cpp">bool <dfn>atomic_is_lock_free</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="atomic_is_lock_free"></object>(const volatile <var>A</var> *object) noexcept;
+bool atomic_is_lock_free(const <var>A</var> *object) noexcept;
+bool <var>A</var>::<dfn>is_lock_free</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_lock_free"></object>() const volatile noexcept;
+bool <var>A</var>::is_lock_free() const noexcept;</code></h4>
+
+<p><a class="anchor" id="p7" href="#p7">7</a><em>Returns:</em> True if the object’s operations are lock-free, false otherwise.</p>
+
+<h4><code class="sh_cpp">void <dfn>atomic_init</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="atomic_init"></object>(volatile <var>A</var> *object, <var>C</var> desired) noexcept;
+void atomic_init(<var>A</var> *object, <var>C</var> desired) noexcept;</code></h4>
+
+<p><a class="anchor" id="p8" href="#p8">8</a><em>Effects:</em> Non-atomically initializes <code class="sh_cpp">*object</code> with value <code class="sh_cpp">desired</code>. This function shall
+only be applied to objects that have been default constructed, and then only once. <span class="note">[ <em>Note:</em> These semantics ensure
+compatibility with C. — <em>end note</em> ]</span> <span class="note">[ <em>Note:</em> Concurrent access from another thread, even via an atomic operation, constitutes a
+data race. — <em>end note</em> ]</span></p>
+
+<h4><code class="sh_cpp">void <dfn>atomic_store</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="atomic_store"></object>(volatile <var>A</var>* object, <var>C</var> desired) noexcept;
+void atomic_store(<var>A</var>* object, <var>C</var> desired) noexcept;
+void <dfn>atomic_store_explicit</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="atomic_store_explicit"></object>(volatile <var>A</var> *object, <var>C</var> desired, memory_order order) noexcept;
+void atomic_store_explicit(<var>A</var>* object, <var>C</var> desired, memory_order order) noexcept;
+void <var>A</var>::<dfn>store</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="store"></object>(<var>C</var> desired, memory_order order = memory_order_seq_cst) volatile noexcept;
+void <var>A</var>::store(<var>C</var> desired, memory_order order = memory_order_seq_cst) noexcept;</code></h4>
+
+<p><a class="anchor" id="p9" href="#p9">9</a><em>Requires:</em> The <code class="sh_cpp">order</code> argument shall not be <code class="sh_cpp">memory_order_consume</code>,
+<code class="sh_cpp">memory_order_acquire</code>, nor <code class="sh_cpp">memory_order_acq_rel</code>.</p>
+
+<p><a class="anchor" id="p10" href="#p10">10</a><em>Effects:</em> Atomically replaces the value pointed to by <code class="sh_cpp">object</code> or by <code class="sh_cpp">this</code> with the
+value of <code class="sh_cpp">desired</code>. Memory is affected according to the value of <code class="sh_cpp">order</code>.</p>
+
+<h4><code class="sh_cpp"><var>C</var> <var>A</var>::operator=(<var>C</var> desired) volatile noexcept;
+<var>C</var> <var>A</var>::operator=(<var>C</var> desired) noexcept;</code></h4>
+
+<p><a class="anchor" id="p11" href="#p11">11</a><em>Effects:</em> <code class="sh_cpp">store(desired)</code>.</p>
+
+<p><a class="anchor" id="p12" href="#p12">12</a><em>Returns:</em> <code class="sh_cpp">desired</code>.</p>
+
+<h4><code class="sh_cpp"><var>C</var> <dfn>atomic_load</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="atomic_load"></object>(const volatile <var>A</var>* object) noexcept;
+<var>C</var> atomic_load(const <var>A</var>* object) noexcept;
+<var>C</var> atomic_load_explicit(const volatile <var>A</var>* object, memory_order) noexcept;
+<var>C</var> atomic_load_explicit(const <var>A</var>* object, memory_order) noexcept;
+<var>C</var> <var>A</var>::<dfn>load</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="load"></object>(memory_order order = memory_order_seq_cst) const volatile noexcept;
+<var>C</var> <var>A</var>::load(memory_order order = memory_order_seq_cst) const noexcept;</code></h4>
+
+<p><a class="anchor" id="p13" href="#p13">13</a><em>Requires:</em> The <code class="sh_cpp">order</code> argument shall not be <code class="sh_cpp">memory_order_release</code> nor
+<code class="sh_cpp">memory_order_acq_rel</code>.</p>
+
+<p><a class="anchor" id="p14" href="#p14">14</a><em>Effects:</em> Memory is affected according to the value of <code class="sh_cpp">order</code>.</p>
+
+<p><a class="anchor" id="p15" href="#p15">15</a><em>Returns:</em> Atomically returns the value pointed to by <code class="sh_cpp">object</code> or by <code class="sh_cpp">this</code>.</p>
+
+<h4><code class="sh_cpp"><var>A</var>::operator <var>C</var>() const volatile noexcept;
+<var>A</var>::operator <var>C</var>() const noexcept;</code></h4>
+
+<p><a class="anchor" id="p16" href="#p16">16</a><em>Effects:</em> <code class="sh_cpp">load()</code>.</p>
+
+<p><a class="anchor" id="p17" href="#p17">17</a><em>Returns:</em> The result of <code class="sh_cpp">load()</code>.</p>
+
+<h4><code class="sh_cpp"><var>C</var> <dfn>atomic_exchange</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="atomic_exchange"></object>(volatile <var>A</var>* object, <var>C</var> desired) noexcept;
+<var>C</var> atomic_exchange(<var>A</var>* object, <var>C</var> desired) noexcept;
+<var>C</var> atomic_exchange_explicit(volatile <var>A</var>* object, <var>C</var> desired, memory_order) noexcept;
+<var>C</var> atomic_exchange_explicit(<var>A</var>* object, <var>C</var> desired, memory_order) noexcept;
+<var>C</var> <var>A</var>::<dfn>exchange</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="exchange"></object>(<var>C</var> desired, memory_order order = memory_order_seq_cst) volatile noexcept;
+<var>C</var> <var>A</var>::exchange(<var>C</var> desired, memory_order order = memory_order_seq_cst) noexcept;</code></h4>
+
+<p><a class="anchor" id="p18" href="#p18">18</a><em>Effects:</em> Atomically replaces the value pointed to by <code class="sh_cpp">object</code> or by <code class="sh_cpp">this</code> with
+<code class="sh_cpp">desired</code>. Memory is affected according to the value of <code class="sh_cpp">order</code>. These operations are atomic
+read-modify-write operations (<a title="intro.multithread" href="intro.multithread.html">1.10</a>).</p>
+
+<p><a class="anchor" id="p19" href="#p19">19</a><em>Returns:</em> Atomically returns the value pointed to by <code class="sh_cpp">object</code> or by <code class="sh_cpp">this</code> immediately
+before the effects.</p>
+
+<h4><code class="sh_cpp">bool <dfn>atomic_compare_exchange_weak</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="atomic_compare_exchange_weak"></object>(volatile <var>A</var>* object, <var>C</var>* expected, <var>C</var> desired) noexcept;
+bool atomic_compare_exchange_weak(<var>A</var>* object, <var>C</var>* expected, <var>C</var> desired) noexcept;
+bool <dfn>atomic_compare_exchange_strong</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="atomic_compare_exchange_strong"></object>(volatile <var>A</var>* object, <var>C</var>* expected, <var>C</var> desired) noexcept;
+bool atomic_compare_exchange_strong(<var>A</var>* object, <var>C</var>* expected, <var>C</var> desired) noexcept;
+bool <dfn>atomic_compare_exchange_weak_explicit</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="atomic_compare_exchange_weak_explicit"></object>(volatile <var>A</var>* object, <var>C</var>* expected, <var>C</var> desired,
+    memory_order success, memory_order failure) noexcept;
+bool atomic_compare_exchange_weak_explicit(<var>A</var>* object, <var>C</var>* expected, <var>C</var> desired,
+    memory_order success, memory_order failure) noexcept;
+bool <dfn>atomic_compare_exchange_strong_explicit</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="atomic_compare_exchange_strong_explicit"></object>(volatile <var>A</var>* object, <var>C</var>* expected, <var>C</var> desired,
+    memory_order success, memory_order failure) noexcept;
+bool atomic_compare_exchange_strong_explicit(<var>A</var>* object, <var>C</var>* expected, <var>C</var> desired,
+    memory_order success, memory_order failure) noexcept;
+bool <var>A</var>::<dfn>compare_exchange_weak</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="compare_exchange_weak"></object>(<var>C</var>&amp; expected, <var>C</var> desired,
+    memory_order success, memory_order failure) volatile noexcept;
+bool <var>A</var>::compare_exchange_weak(<var>C</var>&amp; expected, <var>C</var> desired,
+    memory_order success, memory_order failure) noexcept;
+bool <var>A</var>::<dfn>compare_exchange_strong</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="compare_exchange_strong"></object>(<var>C</var>&amp; expected, <var>C</var> desired,
+    memory_order success, memory_order failure) volatile noexcept;
+bool <var>A</var>::compare_exchange_strong(<var>C</var>&amp; expected, <var>C</var> desired,
+    memory_order success, memory_order failure) noexcept;
+bool <var>A</var>::compare_exchange_weak(<var>C</var>&amp; expected, <var>C</var> desired,
+    memory_order order = memory_order_seq_cst) volatile noexcept;
+bool <var>A</var>::compare_exchange_weak(<var>C</var>&amp; expected, <var>C</var> desired,
+    memory_order order = memory_order_seq_cst) noexcept;
+bool <var>A</var>::compare_exchange_strong(<var>C</var>&amp; expected, <var>C</var> desired,
+    memory_order order = memory_order_seq_cst) volatile noexcept;
+bool <var>A</var>::compare_exchange_strong(<var>C</var>&amp; expected, <var>C</var> desired,
+    memory_order order = memory_order_seq_cst) noexcept;</code></h4>
+
+<p><a class="anchor" id="p20" href="#p20">20</a><em>Requires:</em> The <code class="sh_cpp">failure</code> argument shall not be <code class="sh_cpp">memory_order_release</code> nor
+<code class="sh_cpp">memory_order_acq_rel</code>. The <code class="sh_cpp">failure</code> argument shall be no stronger than the <code class="sh_cpp">success</code>
+argument.</p>
+
+<p><a class="anchor" id="p21" href="#p21">21</a><em>Effects:</em> Atomically, compares the contents of the memory pointed to by <code class="sh_cpp">object</code> or by
+<code class="sh_cpp">this</code> for equality with that in <code class="sh_cpp">expected</code>, and if true, replaces the contents of the memory
+pointed to by <code class="sh_cpp">object</code> or by <code class="sh_cpp">this</code> with that in <code class="sh_cpp">desired</code>, and if false, updates the
+contents of the memory in <code class="sh_cpp">expected</code> with the contents of the memory pointed to by <code class="sh_cpp">object</code> or by
+<code class="sh_cpp">this</code>. Further, if the comparison is true, memory is affected according to the value of
+<code class="sh_cpp">success</code>, and if the comparison is false, memory is affected according to the value of <code class="sh_cpp">failure</code>.
+When only one <code class="sh_cpp">memory_order</code> argument is supplied, the value of <code class="sh_cpp">success</code> is order, and the value
+of <code class="sh_cpp">failure</code> is <code class="sh_cpp">order</code> except that a value of <code class="sh_cpp">memory_order_acq_rel</code> shall be replaced
+by the value <code class="sh_cpp">memory_order_acquire</code> and a value of <code class="sh_cpp">memory_order_release</code> shall be replaced by the
+value <code class="sh_cpp">memory_order_relaxed</code>. If the operation returns <code class="sh_cpp">true</code>, these operations are atomic
+read-modify-write operations (<a title="intro.multithread" href="intro.multithread.html">1.10</a>). Otherwise, these operations are atomic load operations.</p>
+
+<p><a class="anchor" id="p22" href="#p22">22</a><em>Returns:</em> The result of the comparison.</p>
+
+<div class="note">
+<p><a class="anchor" id="p23" href="#p23">23</a>[ <em>Note:</em> For example, the effect of <code class="sh_cpp">atomic_compare_exchange_strong</code> is</p>
+
+<pre><code class="sh_cpp">if (memcmp(object, expected, sizeof(*object)) == 0)
+  memcpy(object, &amp;desired, sizeof(*object));
+else
+  memcpy(expected, object, sizeof(*object));</code></pre>
+<p> — <em>end note</em> ]</p>
+</div>
+
+<div class="example">
+<p>[ <em>Example:</em> the expected use of the compare-and-exchange operations is as follows. The compare-and-exchange operations
+will update expected when another iteration of the loop is needed.</p>
+
+<pre><code class="sh_cpp">expected = current.load();
+do {
+  desired = function(expected);
+} while (!current.compare_exchange_weak(expected, desired));</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p24" href="#p24">24</a>Implementations should ensure that weak compare-and-exchange operations do not consistently return
+<code class="sh_cpp">false</code> unless either the atomic object has value different from <code class="sh_cpp">expected</code> or there are
+concurrent modifications to the atomic object.</p>
+
+<p><a class="anchor" id="p25" href="#p25">25</a><em>Remarks:</em> A weak compare-and-exchange operation may fail spuriously. That is, even when the contents of memory
+referred to by <code class="sh_cpp">expected</code> and <code class="sh_cpp">object</code> are equal, it may return false and store back to
+<code class="sh_cpp">expected</code> the same memory contents that were originally there.</p>
+
+<div class="note">
+<p>[ <em>Note:</em> This spurious failure enables implementation of compare-and-exchange on a broader class of machines, e.g.,
+load-locked store-conditional machines. A consequence of spurious failure is that nearly all uses of weak
+compare-and-exchange will be in a loop.</p>
+
+<p>When a compare-and-exchange is in a loop, the weak version will yield better performance on some platforms. When a
+weak compare-and-exchange would require a loop and a strong one would not, the strong one is
+preferable. — <em>end note</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p26" href="#p26">26</a><span class="note">[ <em>Note:</em> The <code class="sh_cpp">memcpy</code> and <code class="sh_cpp">memcmp</code> semantics of the compare-and-exchange operations may
+result in failed comparisons for values that compare equal with <code class="sh_cpp">operator==</code> if the underlying type has
+padding bits, trap bits, or alternate representations of the same value. Thus, <code class="sh_cpp">compare_exchange_strong</code>
+should be used with extreme care. On the other hand, <code class="sh_cpp">compare_exchange_weak</code> should converge
+rapidly. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p27" href="#p27">27</a>The following operations perform arithmetic computations. The key, operator, and computation correspondence
+is:</p>
+
+<table id="t147" class="bordered headed padded">
+<caption>Table 147 — Atomic arithmetic computations</caption>
+<thead><tr>
+<th>Key</th>
+<th>Op</th>
+<th>Computation</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code class="sh_cpp">add</code></td>
+<td><code class="sh_cpp">+</code></td>
+<td>addition</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">sub</code></td>
+<td><code class="sh_cpp">-</code></td>
+<td>subtraction</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">or</code></td>
+<td><code class="sh_cpp">|</code></td>
+<td>bitwise inclusive or</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">xor</code></td>
+<td><code class="sh_cpp">^</code></td>
+<td>bitwise exclusive or</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">and</code></td>
+<td><code class="sh_cpp">&amp;</code></td>
+<td>bitwise and</td>
+</tr>
+</tbody>
+</table>
+
+<h4><code class="sh_cpp"><var>C</var> atomic_fetch_<var>key</var>(volatile <var>A</var> *object, <var>M</var> operand) noexcept;
+<var>C</var> atomic_fetch_<var>key</var>(<var>A</var>* object, <var>M</var> operand) noexcept;
+<var>C</var> atomic_fetch_<var>key</var>_explicit(volatile <var>A</var> *object, <var>M</var> operand, memory_order order) noexcept;
+<var>C</var> atomic_fetch_<var>key</var>_explicit(<var>A</var>* object, <var>M</var> operand, memory_order order) noexcept;
+<var>C</var> <var>A</var>::fetch_<var>key</var>(<var>M</var> operand, memory_order order = memory_order_seq_cst) volatile noexcept;
+<var>C</var> <var>A</var>::fetch_<var>key</var>(<var>M</var> operand, memory_order order = memory_order_seq_cst) noexcept;</code></h4>
+
+<p><a class="anchor" id="p28" href="#p28">28</a><em>Effects:</em> Atomically replaces the value pointed to by <code class="sh_cpp">object</code> or by <code class="sh_cpp">this</code> with the
+result of the computation applied to the value pointed to by <code class="sh_cpp">object</code> or by <code class="sh_cpp">this</code> and the given
+operand. Memory is affected according to the value of order. These operations are atomic read-modify-write operations
+(<a title="intro.multithread" href="intro.multithread.html">1.10</a>).</p>
+
+<p><a class="anchor" id="p29" href="#p29">29</a><em>Returns:</em> Atomically, the value pointed to by <code class="sh_cpp">object</code> or by <code class="sh_cpp">this</code> immediately before
+the effects.</p>
+
+<p><a class="anchor" id="p30" href="#p30">30</a><em>Remarks:</em> For signed integer types, arithmetic is defined to use two’s complement representation. There are no
+undefined results. For address types, the result may be an undefined address, but the operations otherwise have no
+undefined behavior.</p>
+
+<h4><code class="sh_cpp"><var>C</var> <var>A</var>::operator <var>op</var>=(<var>M</var> operand) volatile noexcept;
+<var>C</var> <var>A</var>::operator <var>op</var>=(<var>M</var> operand) noexcept;</code></h4>
+
+<p><a class="anchor" id="p31" href="#p31">31</a><em>Effects:</em> <code class="sh_cpp">fetch_<var>key</var>(operand)</code>.</p>
+
+<p><a class="anchor" id="p32" href="#p32">32</a><em>Returns:</em> <code class="sh_cpp">fetch_<var>key</var>(operand) <var>op</var> operand</code>.</p>
+
+<h4><code class="sh_cpp"><var>C</var> <var>A</var>::<dfn>operator++</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator++"></object>(int) volatile noexcept;
+<var>C</var> <var>A</var>::operator++(int) noexcept;</code></h4>
+
+<p><a class="anchor" id="p33" href="#p33">33</a><em>Returns:</em> <code class="sh_cpp">fetch_add(1)</code>.</p>
+
+<h4><code class="sh_cpp"><var>C</var> <var>A</var>::<dfn>operator--</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator--"></object>(int) volatile noexcept;
+<var>C</var> <var>A</var>::operator--(int) noexcept;</code></h4>
+
+<p><a class="anchor" id="p34" href="#p34">34</a><em>Returns:</em> <code class="sh_cpp">fetch_sub(1)</code>.</p>
+
+<h4><code class="sh_cpp"><var>C</var> <var>A</var>::<dfn>operator++</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator++"></object>() volatile noexcept;
+<var>C</var> <var>A</var>::operator++() noexcept;</code></h4>
+
+<p><a class="anchor" id="p35" href="#p35">35</a><em>Effects:</em> <code class="sh_cpp">fetch_add(1)</code>.</p>
+
+<p><a class="anchor" id="p36" href="#p36">36</a><em>Returns:</em> <code class="sh_cpp">fetch_add(1) + 1</code>.</p>
+
+<h4><code class="sh_cpp"><var>C</var> <var>A</var>::<dfn>operator--</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator--"></object>() volatile noexcept;
+<var>C</var> <var>A</var>::operator--() noexcept;</code></h4>
+
+<p><a class="anchor" id="p37" href="#p37">37</a><em>Effects:</em> <code class="sh_cpp">fetch_sub(1)</code>.</p>
+
+<p><a class="anchor" id="p38" href="#p38">38</a><em>Returns:</em> <code class="sh_cpp">fetch_sub(1) - 1</code>.</p>
+</body>
+</html>
+

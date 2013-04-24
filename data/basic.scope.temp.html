@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Template parameter scope</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[basic.scope.temp]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[basic.scope.temp]"></object>3.3.9 Template parameter scope </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The declarative region of the name of a template parameter of a template <i class="nonterminal">template-parameter</i> is the
+smallest <i class="nonterminal">template-parameter-list</i> in which the name was introduced.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The declarative region of the name of a template parameter of a template is the smallest
+<i class="nonterminal">template-declaration</i> in which the name was introduced. Only template parameter names belong to this declarative
+region; any other kind of name introduced by the <i class="nonterminal">declaration</i> of a <i class="nonterminal">template-declaration</i> is instead
+introduced into the same declarative region where it would be introduced as a result of a non-template declaration of
+the same name.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">namespace N {
+  template&lt;class T&gt; struct A { };                 // #1
+  template&lt;class U&gt; void f(U) { }                 // #2
+  struct B {
+    template&lt;class V&gt; friend int g(struct C*);    // #3
+  };
+}</code></pre>
+
+<p>The declarative regions of <code class="sh_cpp">T</code>, <code class="sh_cpp">U</code> and <code class="sh_cpp">V</code> are the <i class="nonterminal">template-declaration</i>s
+on lines <code class="sh_cpp">#1</code>, <code class="sh_cpp">#2</code> and <code class="sh_cpp">#3</code>, respectively. But the names <code class="sh_cpp">A</code>,
+<code class="sh_cpp">f</code>, <code class="sh_cpp">g</code> and <code class="sh_cpp">C</code> all belong to the same declarative region — namely, the
+<i class="nonterminal">namespace-body</i> of <code class="sh_cpp">N</code>. (<code class="sh_cpp">g</code> is still considered to belong to this declarative region in
+spite of its being hidden during qualified and unqualified name lookup.) — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>The potential scope of a template parameter name begins at its point of declaration (<a title="basic.scope.pdecl" href="basic.scope.pdecl.html">3.3.2</a>) and ends
+at the end of its declarative region.</p>
+
+<div class="note">
+<p>[ <em>Note:</em> This implies that a <i class="nonterminal">template-parameter</i> can be used in the declaration of subsequent
+<i class="nonterminal">template-parameters</i> and their default arguments but cannot be used in preceding <i class="nonterminal">template-parameters</i> or
+their default arguments. For example,</p>
+
+<pre><code class="sh_cpp">template&lt;class T, T* p, class U = T&gt; class X { /* … */ };
+template&lt;class T&gt; void f(T* p = new T);</code></pre>
+
+<p>This also implies that a <i class="nonterminal">template-parameter</i> can be used in the specification of base classes. For
+example,</p>
+
+<pre><code class="sh_cpp">template&lt;class T&gt; class X : public Array&lt;T&gt; { /* … */ };
+template&lt;class T&gt; class Y : public T { /* … */ };</code></pre>
+
+<p>The use of a template parameter as a base class implies that a class used as a template argument must be defined and
+not just declared when the class template is instantiated. — <em>end note</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>The declarative region of the name of a template parameter is nested within the immediately-enclosing
+declarative region.</p>
+
+<div class="note">
+<p>[ <em>Note:</em> As a result, a <i class="nonterminal">template-parameter</i> hides any entity with the same name in an enclosing scope
+(<a title="basic.scope.hiding" href="basic.scope.hiding.html">3.3.10</a>).</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">typedef int N;
+template&lt;N X, typename N, template&lt;N Y&gt; class T&gt; struct A;</code></pre>
+
+<p>Here, <code class="sh_cpp">X</code> is a non-type template parameter of type <code class="sh_cpp">int</code> and <code class="sh_cpp">Y</code> is a non-type
+template parameter of the same type as the second template parameter of <code class="sh_cpp">A</code>. — <em>end example</em> ]</p>
+</div>
+<p> — <em>end note</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><span class="note">[ <em>Note:</em> Because the name of a template parameter cannot be redeclared within its potential scope
+(<a title="temp.local" href="temp.local.html">14.6.1</a>), a template parameter’s scope is often its potential scope. However, it is still possible for a
+template parameter name to be hidden; see <a title="temp.local" href="temp.local.html">14.6.1</a>. — <em>end note</em> ]</span></p>
+</body>
+</html>
+

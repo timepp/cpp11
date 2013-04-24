@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Scoped allocator adaptor constructors</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[allocator.adaptor.cnstr]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[allocator.adaptor.cnstr]"></object>20.12.3 Scoped allocator adaptor constructors </h4>
+
+<h5><code class="sh_cpp"><dfn>scoped_allocator_adaptor</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="scoped_allocator_adaptor"></object>();</code></h5>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Effects:</em> value-initializes the <code class="sh_cpp">OuterAlloc</code> base class and the <code class="sh_cpp">inner</code> allocator
+object.</p>
+
+<h5><code class="sh_cpp">template &lt;class OuterA2&gt;
+  <dfn>scoped_allocator_adaptor</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="scoped_allocator_adaptor"></object>(OuterA2&amp;&amp; outerAlloc,
+                           const InnerAllocs&amp;... innerAllocs) noexcept;</code></h5>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Requires:</em> <code class="sh_cpp">OuterAlloc</code> shall be constructible from <code class="sh_cpp">OuterA2</code>.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Effects:</em> initializes the <code class="sh_cpp">OuterAlloc</code> base class with
+<code class="sh_cpp">std::forward&lt;OuterA2&gt;(outerAlloc)</code> and <code class="sh_cpp">inner</code> with <code class="sh_cpp">innerAllocs...</code>
+(hence recursively initializing each allocator within the adaptor with the corresponding allocator from the argument
+list).</p>
+
+<h5><code class="sh_cpp"><dfn>scoped_allocator_adaptor</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="scoped_allocator_adaptor"></object>(const scoped_allocator_adaptor&amp; other) noexcept;</code></h5>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><em>Effects:</em> intializes each allocator within the adaptor with the corresponding allocator from
+<code class="sh_cpp">other</code>.</p>
+
+<h5><code class="sh_cpp"><dfn>scoped_allocator_adaptor</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="scoped_allocator_adaptor"></object>(scoped_allocator_adaptor&amp;&amp; other) noexcept;</code></h5>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><em>Effects:</em> move constructs each allocator within the adaptor with the corresponding allocator from
+<code class="sh_cpp">other</code>.</p>
+
+<h5><code class="sh_cpp">template &lt;class OuterA2&gt;
+  <dfn>scoped_allocator_adaptor</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="scoped_allocator_adaptor"></object>(const scoped_allocator_adaptor&lt;OuterA2,
+                                                          InnerAllocs...&gt;&amp; other) noexcept;</code></h5>
+
+<p><a class="anchor" id="p6" href="#p6">6</a><em>Requires:</em> <code class="sh_cpp">OuterAlloc</code> shall be constructible from <code class="sh_cpp">OuterA2</code>.</p>
+
+<p><a class="anchor" id="p7" href="#p7">7</a><em>Effects:</em> initializes each allocator within the adaptor with the corresponding allocator from
+<code class="sh_cpp">other</code>.</p>
+
+<h5><code class="sh_cpp">template &lt;class OuterA2&gt;
+  <dfn>scoped_allocator_adaptor</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="scoped_allocator_adaptor"></object>(const scoped_allocator_adaptor&lt;OuterA2,
+                                                          InnerAllocs...&gt;&amp;&amp; other) noexcept;</code></h5>
+
+<p><a class="anchor" id="p8" href="#p8">8</a><em>Requires:</em> <code class="sh_cpp">OuterAlloc</code> shall be constructible from <code class="sh_cpp">OuterA2</code>.</p>
+
+<p><a class="anchor" id="p9" href="#p9">9</a><em>Effects:</em> initializes each allocator within the adaptor with the corresponding allocator rvalue from
+<code class="sh_cpp">other</code>.</p>
+</body>
+</html>
+

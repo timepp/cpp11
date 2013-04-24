@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Elaborated type specifiers</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[dcl.type.elab]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[dcl.type.elab]"></object>7.1.6.3 Elaborated type specifiers </h4>
+
+<dl>
+<dt>
+<i class="nonterminal"><dfn>elaborated-type-specifier</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="elaborated-type-specifier"></object></i>:</dt>
+	<dd>
+<i class="nonterminal">class-key</i> <i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub> <i class="nonterminal">nested-name-specifier</i><sub class="opt">opt</sub> <i class="nonterminal">identifier</i>
+</dd>
+	<dd>
+<i class="nonterminal">class-key</i> <i class="nonterminal">nested-name-specifier</i><sub class="opt">opt</sub> <code class="sh_cpp">template</code><sub class="opt">opt</sub> <i class="nonterminal">simple-template-id</i>
+</dd>
+	<dd>
+<code class="sh_cpp">enum</code> <i class="nonterminal">nested-name-specifier</i><sub class="opt">opt</sub> <i class="nonterminal">identifier</i>
+</dd>
+</dl>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>An <i class="nonterminal">attribute-specifier-seq</i> shall not appear in an <i class="nonterminal">elaborated-type-specifier</i> unless the latter
+is the sole constituent of a declaration. If an <i class="nonterminal">elaborated-type-specifier</i> is the sole constituent of a
+declaration, the declaration is ill-formed unless it is an explicit specialization (<a title="temp.expl.spec" href="temp.expl.spec.html">14.7.3</a>), an explicit
+instantiation (<a title="temp.explicit" href="temp.explicit.html">14.7.2</a>) or it has one of the following forms:</p>
+
+<dl>
+<dd>
+<i class="nonterminal">class-key</i> <i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub> <i class="nonterminal">identifier</i> <code class="sh_cpp">;</code>
+</dd>
+<dd>
+<code class="sh_cpp">friend</code> <i class="nonterminal">class-key</i> <code class="sh_cpp">::</code><sub class="opt">opt</sub> <i class="nonterminal">identifier</i> <code class="sh_cpp">;</code>
+</dd>
+<dd>
+<code class="sh_cpp">friend</code> <i class="nonterminal">class-key</i> <code class="sh_cpp">::</code><sub class="opt">opt</sub> <i class="nonterminal">simple-template-id</i> <code class="sh_cpp">;</code>
+</dd>
+<dd>
+<code class="sh_cpp">friend</code> <i class="nonterminal">class-key</i> <i class="nonterminal">nested-name-specifier</i> <i class="nonterminal">identifier</i> <code class="sh_cpp">;</code>
+</dd>
+<dd>
+<code class="sh_cpp">friend</code> <i class="nonterminal">class-key</i> <i class="nonterminal">nested-name-specifier</i> <code class="sh_cpp">template</code><sub class="opt">opt</sub> <i class="nonterminal">simple-template-id</i> <code class="sh_cpp">;</code>
+</dd>
+</dl>
+
+<p>In the first case, the <i class="nonterminal">attribute-specifier-seq</i>, if any, appertains to the class being declared; the
+attributes in the <i class="nonterminal">attribute-specifier-seq</i> are thereafter considered attributes of the class whenever it is
+named.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><a title="basic.lookup.elab" href="basic.lookup.elab.html">3.4.4</a> describes how name lookup proceeds for the identifier in an
+<i class="nonterminal">elaborated-type-specifier</i>. If the <i class="nonterminal">identifier</i> resolves to a <i class="nonterminal">class-name</i> or <i class="nonterminal">enum-name</i>,
+the <i class="nonterminal">elaborated-type-specifier</i> introduces it into the declaration the same way a <i class="nonterminal">simple-type-specifier</i>
+introduces its <i class="nonterminal">type-name</i>. If the identifier resolves to a <i class="nonterminal">typedef-name</i> or the
+<i class="nonterminal">simple-template-id</i> resolves to an alias template specialization, the <i class="nonterminal">elaborated-type-specifier</i> is
+ill-formed.</p>
+
+<div class="note">
+<p>[ <em>Note:</em> This implies that, within a class template with a template <i class="nonterminal">type-parameter</i> <code class="sh_cpp">T</code>, the
+declaration</p>
+
+<pre><code class="sh_cpp">friend class T;</code></pre>
+
+<p>is ill-formed. However, the similar declaration <code class="sh_cpp">friend T;</code> is allowed (<a title="class.friend" href="class.friend.html">11.3</a>). — <em>end note</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>The <i class="nonterminal">class-key</i> or <code class="sh_cpp">enum</code> keyword present in the <i class="nonterminal">elaborated-type-specifier</i> shall
+agree in kind with the declaration to which the name in the <i class="nonterminal">elaborated-type-specifier</i> refers. This rule also
+applies to the form of <i class="nonterminal">elaborated-type-specifier</i> that declares a <i class="nonterminal">class-name</i> or <code class="sh_cpp">friend</code>
+class since it can be construed as referring to the definition of the class. Thus, in any
+<i class="nonterminal">elaborated-type-specifier</i>, the <code class="sh_cpp">enum</code> keyword shall be used to refer to an enumeration
+(<a title="dcl.enum" href="dcl.enum.html">7.2</a>), the <code class="sh_cpp">union</code> <i class="nonterminal">class-key</i> shall be used to refer to a union (Clause <a title="class" href="class.html">9</a>), and
+either the <code class="sh_cpp">class</code> or <code class="sh_cpp">struct</code> <i class="nonterminal">class-key</i> shall be used to refer to a class (Clause
+<a title="class" href="class.html">9</a>) declared using the <code class="sh_cpp">class</code> or <code class="sh_cpp">struct</code> <i class="nonterminal">class-key</i>.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">enum class E { a, b };
+enum E x = E::a;        // OK</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+</body>
+</html>
+

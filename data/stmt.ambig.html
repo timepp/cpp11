@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Ambiguity resolution</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[stmt.ambig]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[stmt.ambig]"></object>6.8 Ambiguity resolution </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>There is an ambiguity in the grammar involving <i class="nonterminal">expression-statement</i>s and declarations: An
+<i class="nonterminal">expression-statement</i> with a function-style explicit type conversion (<a title="expr.type.conv" href="expr.type.conv.html">5.2.3</a>) as its leftmost
+subexpression can be indistinguishable from a declaration where the first declarator starts with a <code class="sh_cpp">(</code>. In
+those cases the statement is a declaration.</p>
+
+<div class="note">
+<p>[ <em>Note:</em> To disambiguate, the whole statement might have to be examined to determine if it is an
+<i class="nonterminal">expression-statement</i> or a declaration. This disambiguates many examples.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> assuming <code class="sh_cpp">T</code> is a <i class="nonterminal">simple-type-specifier</i> (<a title="dcl.type" href="dcl.type.html">7.1.6</a>),</p>
+
+<pre><code class="sh_cpp">T(a)-&gt;m = 7;            // expression-statement
+T(a)++;                 // expression-statement
+T(a,5)&lt;&lt;c;              // expression-statement
+
+T(*d)(int);             // declaration
+T(e)[5];                // declaration
+T(f) = { 1, 2 };        // declaration
+T(*g)(double(3));       // declaration</code></pre>
+
+<p>In the last example above, <code class="sh_cpp">g</code>, which is a pointer to <code class="sh_cpp">T</code>, is initialized to
+<code class="sh_cpp">double(3)</code>. This is of course ill-formed for semantic reasons, but that does not affect the syntactic
+analysis. — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The remaining cases are declarations.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">class T {
+  // ...
+public:
+  T();
+  T(int);
+  T(int, int);
+};
+T(a);                   // declaration
+T(*b)();                // declaration
+T(c)=7;                 // declaration
+T(d),e,f=3;             // declaration
+extern int h;
+T(g)(h,2);              // declaration</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+<p> — <em>end note</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>The disambiguation is purely syntactic; that is, the meaning of the names occurring in such a statement, beyond
+whether they are <i class="nonterminal">type-name</i>s or not, is not generally used in or changed by the disambiguation. Class templates
+are instantiated as necessary to determine if a qualified name is a <i class="nonterminal">type-name</i>. Disambiguation precedes parsing,
+and a statement disambiguated as a declaration may be an ill-formed declaration. If, during parsing, a name in a
+template parameter is bound differently than it would be bound during a trial parse, the program is ill-formed. No
+diagnostic is required. <span class="note">[ <em>Note:</em> This can occur only when the name is declared earlier in the declaration. — <em>end note</em> ]</span></p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct T1 {
+  T1 operator()(int x) { return T1(x); }
+  int operator=(int x) { return x; }
+  T1(int) { }
+};
+struct T2 { T2(int){ } };
+int a, (*(*b)(T2))(int), c, d;
+
+void f() {
+  // disambiguation requires this to be parsed as a declaration:
+  T1(a) = 3,
+  T2(4),                    // T2 will be declared as
+  (*(*b)(T2(c)))(int(d));   // a variable of type T1
+                            // but this will not allow
+                            // the last part of the
+                            // declaration to parse
+                            // properly since it depends
+                            // on T2 being a type-name
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+</body>
+</html>
+

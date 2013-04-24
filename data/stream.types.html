@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Types</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[stream.types]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[stream.types]"></object>27.5.2 Types </h3>
+
+<h4><code class="sh_cpp">typedef <em>implementation-defined</em> <dfn>streamoff</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="streamoff"></object>;</code></h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The type <code class="sh_cpp">streamoff</code> is a synonym for one of the signed basic integral types of sufficient size to
+represent the maximum possible file size for the operating system.<sup class="footnote"><a href="#fn299">299</a></sup></p>
+
+<h4><code class="sh_cpp">typedef <em>implementation-defined</em> <dfn>streamsize</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="streamsize"></object>;</code></h4>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The type <code class="sh_cpp">streamsize</code> is a synonym for one of the signed basic integral types. It is used to
+represent the number of characters transferred in an I/O operation, or the size of I/O buffers.<sup class="footnote"><a href="#fn300">300</a></sup></p>
+
+
+
+
+<div>
+<p class="footnote" id="fn299">299) Typically <code class="sh_cpp">long long</code>.</p>
+<p class="footnote" id="fn300">300) <code class="sh_cpp">streamsize</code> is used in most places where ISO C would use <code class="sh_cpp">size_t</code>. Most of the
+uses of <code class="sh_cpp">streamsize</code> could use <code class="sh_cpp">size_t</code>, except for the <code class="sh_cpp">strstreambuf</code> constructors,
+which require negative values. It should probably be the signed type corresponding to <code class="sh_cpp">size_t</code> (which is what
+Posix.2 calls <code class="sh_cpp">ssize_t</code>). </p>
+</div>
+</body>
+</html>
+

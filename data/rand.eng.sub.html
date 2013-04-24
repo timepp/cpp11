@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class template subtract_with_carry_engine</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[rand.eng.sub]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[rand.eng.sub]"></object>26.5.3.3 Class template <code class="sh_cpp"><dfn>subtract_with_carry_engine</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="subtract_with_carry_engine"></object></code> </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A <code class="sh_cpp">subtract_with_carry_engine</code> random number engine produces unsigned integer random numbers.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The state <code class="sh_cpp">x</code><sub><var>i</var></sub> of a <code class="sh_cpp">subtract_with_carry_engine</code> object
+<code class="sh_cpp">x</code> is of size <var>O</var>(<var>r</var>), and consists of a sequence <var>X</var> of <var>r</var> integer
+values 0 ≤ <var>X</var><sub><var>i</var></sub> &lt; <var>m</var> = 2<sup><var>w</var></sup>; all subscripts applied to
+<var>X</var> are to be taken modulo <var>r</var>. The state <code class="sh_cpp">x</code><sub><var>i</var></sub> additionally consists
+of an integer <var>c</var> (known as the <dfn>carry</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="carry"></object>) whose value is either 0 or 1.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>The state transition is performed as follows:</p>
+
+<ol class="lettered">
+<li>Let <var>Y</var> = <var>X</var><sub><var>i</var>−<var>s</var></sub> −
+	<var>X</var><sub><var>i</var>−<var>r</var></sub> − <var>c</var>.</li>
+<li>Set <var>X</var><sub><var>i</var></sub> to <var>y</var> = <var>Y</var> mod <var>m</var>. Set <var>c</var> to 1 if
+	<var>Y</var> &lt; 0, otherwise set <var>c</var> to 0.</li>
+</ol>
+
+<p><span class="note">[ <em>Note:</em> This algorithm corresponds to a modular linear function of the form
+<code class="sh_cpp">TA</code>(<code class="sh_cpp">x</code><sub><var>i</var></sub>) = (<var>a</var>⋅<var>x</var><sub><var>i</var></sub>) mod
+<var>b</var>, where <var>b</var> is of the form <var>m</var><sup><var>r</var></sup> −
+<var>m</var><sup><var>s</var></sup> + 1 and <var>a</var> = <var>b</var> − (<var>b</var>−1)/<var>m</var>. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>The generation algorithm is given by <code class="sh_cpp">GA</code>(<code class="sh_cpp">x</code><sub><var>i</var></sub>) = <var>y</var>,
+where <var>y</var> is the value produced as a result of advancing the engine’s state as described above.</p>
+
+<pre><code class="sh_cpp">template&lt;class UIntType, size_t w, size_t s, size_t r&gt;
+  class subtract_with_carry_engine
+{
+public:
+  // types
+  typedef UIntType result_type;
+
+  // engine characteristics
+  static constexpr size_t word_size = w;
+  static constexpr size_t short_lag = s;
+  static constexpr size_t long_lag = r;
+  static constexpr result_type min() { return 0; }
+  static constexpr result_type max() { return m - 1; }
+  static constexpr result_type default_seed = 19780503u;
+
+  // constructors and seeding functions
+  explicit subtract_with_carry_engine(result_type value = default_seed);
+  template&lt;class Sseq&gt; explicit subtract_with_carry_engine(Sseq&amp; q);
+  void seed(result_type value = default_seed);
+  template&lt;class Sseq&gt; void seed(Sseq&amp; q);
+
+  // generating functions
+  result_type operator()();
+  void discard(unsigned long long z);
+};</code></pre>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>The following relations shall hold: <code class="sh_cpp">0u &lt; s</code>, <code class="sh_cpp">s &lt; r</code>,
+<code class="sh_cpp">0 &lt; w</code>, and <code class="sh_cpp">w &lt;= numeric_limits&lt;UIntType&gt;::digits</code>.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>The textual representation consists of the values of <var>X</var><sub><var>i</var>−<var>r</var></sub>, …,
+<var>X</var><sub><var>i</var>−1</sub>, in that order, followed by <var>c</var>.</p>
+
+<h5><code class="sh_cpp">explicit subtract_with_carry_engine(result_type value = default_seed);</code></h5>
+
+<p><a class="anchor" id="p7" href="#p7">7</a><em>Effects:</em> Constructs a <code class="sh_cpp">subtract_with_carry_engine</code> object. Sets the values of
+<var>X</var><sub>−<var>r</var></sub>, …, <var>X</var><sub>−1</sub>, in that order, as specified below. If
+<var>X</var><sub>−1</sub> is then 0, sets <var>c</var> to 1; otherwise sets <var>c</var> to 0.</p>
+
+<p>To set the values <var>X</var><sub><var>k</var></sub>, first construct <code class="sh_cpp">e</code>, a
+<code class="sh_cpp">linear_congruential_engine</code> object, as if by the following definition:</p>
+
+<pre><code class="sh_cpp">linear_congruential_engine&lt;result_type,
+                           40014u,0u,2147483563u&gt; e(value == 0u ? default_seed : value);</code></pre>
+
+<p>Then, to set each <var>X</var><sub><var>k</var></sub>, obtain new values <var>z</var><sub>0</sub>, …,
+<var>z</var><sub><var>n</var>−1</sub> from <span class="math"><var>n</var> = ⌈<var>w</var>/32⌉</span>
+successive invocations of <code class="sh_cpp">e</code> taken modulo 2<sup>32</sup>. Set <var>X</var><sub><var>k</var></sub> to <span class="math">(∑<sub><var>j</var>=0…<var>n</var>−1</sub>
+<var>z</var><sub><var>j</var></sub>⋅2<sup>32<var>j</var></sup>) mod <var>m</var></span>.</p>
+
+<p><a class="anchor" id="p8" href="#p8">8</a><em>Complexity:</em> Exactly <var>n</var>⋅<var>r</var> invocations of <code class="sh_cpp">e</code>.</p>
+
+<h5><code class="sh_cpp">template&lt;class Sseq&gt; explicit subtract_with_carry_engine(Sseq&amp; q);</code></h5>
+
+<p><a class="anchor" id="p9" href="#p9">9</a><em>Effects:</em> Constructs a <code class="sh_cpp">subtract_with_carry_engine</code> object. With <span class="math"><var>k</var> =
+⌈<var>w</var>/32⌉</span> and <var>a</var> an array (or equivalent) of length <var>r</var>⋅<var>k</var>,
+invokes <code class="sh_cpp">q.generate(<var>a</var> + 0, <var>a</var> + <var>r</var>⋅<var>k</var>)</code> and then, iteratively
+for <var>i</var> = −<var>r</var>, …, −1, sets <var>X</var><sub><var>i</var></sub> to <span class="math">(∑<sub><var>j</var>=0…<var>k</var>−1</sub>
+<var>a</var><sub><var>k</var>(<var>i</var>+<var>r</var>)+<var>j</var></sub>⋅2<sup>32<var>j</var></sup>) mod
+<var>m</var></span>. If <var>X</var><sub>−1</sub> is then 0, sets <var>c</var> to 1; otherwise sets <var>c</var> to
+0.</p>
+</body>
+</html>
+

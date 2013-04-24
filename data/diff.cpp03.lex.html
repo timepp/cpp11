@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Clause 2: lexical conventions</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[diff.cpp03.lex]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[diff.cpp03.lex]"></object>C.2.1 Clause 2: lexical conventions </h3>
+
+<h4><a title="lex.pptoken" href="lex.pptoken.html">2.5</a></h4>
+
+<p><strong>Change:</strong> New kinds of string literals</p>
+
+<p><strong>Rationale:</strong> Required for new features.</p>
+
+<p><strong>Effect on original feature:</strong> Valid C++ 2003 code may fail to compile or produce different results in this International Standard.
+Specifically, macros named <code class="sh_cpp">R</code>, <code class="sh_cpp">u8</code>, <code class="sh_cpp">u8R</code>, <code class="sh_cpp">u</code>, <code class="sh_cpp">uR</code>,
+<code class="sh_cpp">U</code>, <code class="sh_cpp">UR</code>, or <code class="sh_cpp">LR</code> will not be expanded when adjacent to a string literal but will be
+interpreted as part of the string literal. For example,</p>
+
+<pre><code class="sh_cpp">#define u8 "abc"
+const char *s = u8"def";        // Previously "abcdef", now "def"</code></pre>
+
+<h4><a title="lex.pptoken" href="lex.pptoken.html">2.5</a></h4>
+
+<p><strong>Change:</strong> User-defined literal string support</p>
+
+<p><strong>Rationale:</strong> Required for new features.</p>
+
+<p><strong>Effect on original feature:</strong> Valid C++ 2003 code may fail to compile or produce different results in this International Standard, as the
+following example illustrates.</p>
+
+<pre><code class="sh_cpp">#define _x "there"
+"hello"_x           // line 1</code></pre>
+
+<p>Previously, line 1 would have consisted of two separate preprocessing tokens and the macro <code class="sh_cpp">_x</code> would have
+been expanded. In this International Standard, #1 consists of a single preprocessing tokens, so the macro
+is not expanded.</p>
+
+<h4><a title="lex.key" href="lex.key.html">2.12</a></h4>
+
+<p><strong>Change:</strong> New keywords</p>
+
+<p><strong>Rationale:</strong> Required for new features.</p>
+
+<p><strong>Effect on original feature:</strong> Added to Table <a href="lex.key.html#t4">4</a>, the following identifiers are new keywords: <code class="sh_cpp">alignas</code>,
+<code class="sh_cpp">alignof</code>, <code class="sh_cpp">char16_t</code>, <code class="sh_cpp">char32_t</code>, <code class="sh_cpp">constexpr</code>, <code class="sh_cpp">decltype</code>,
+<code class="sh_cpp">noexcept</code>, <code class="sh_cpp">nullptr</code>, <code class="sh_cpp">static_assert</code>, and <code class="sh_cpp">thread_local</code>. Valid C++ 2003
+code using these identifiers is invalid in this International Standard.</p>
+
+<h4><a title="lex.icon" href="lex.icon.html">2.14.2</a></h4>
+
+<p><strong>Change:</strong> Type of integer literals</p>
+
+<p><strong>Rationale:</strong> C99 compatibility.</p>
+
+<p><strong>Effect on original feature:</strong> Certain integer literals larger than can be represented by <code class="sh_cpp">long</code> could change from an unsigned
+integer type to <code class="sh_cpp">signed long long</code>.</p>
+</body>
+</html>
+

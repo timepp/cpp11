@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Deallocation functions</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[basic.stc.dynamic.deallocation]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[basic.stc.dynamic.deallocation]"></object>3.7.4.2 Deallocation functions </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Deallocation functions shall be class member functions or global functions; a program is ill-formed if deal-
+location functions are declared in a namespace scope other than global scope or declared static in global scope.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>Each deallocation function shall return <code class="sh_cpp">void</code> and its first parameter shall be <code class="sh_cpp">void*</code>.
+A deallocation function can have more than one parameter. If a class <code class="sh_cpp">T</code> has a member deallocation function
+named <code class="sh_cpp">operator delete</code> with exactly one parameter, then that function is a usual (non-placement)
+deallocation function. If class <code class="sh_cpp">T</code> does not declare such an <code class="sh_cpp">operator delete</code> but does declare a
+member deallocation function named <code class="sh_cpp">operator delete</code> with exactly two parameters, the second of which has
+type <code class="sh_cpp">std::size_t</code> (<a title="support.types" href="support.types.html">18.2</a>), then this function is a usual deallocation function. Similarly, if a
+class <code class="sh_cpp">T</code> has a member deallocation function named <code class="sh_cpp">operator delete[]</code> with exactly one parameter,
+then that function is a usual (non-placement) deallocation function. If class <code class="sh_cpp">T</code> does not declare such an
+<code class="sh_cpp">operator delete[]</code> but does declare a member deallocation function named <code class="sh_cpp">operator delete[]</code> with
+exactly two parameters, the second of which has type <code class="sh_cpp">std::size_t</code>, then this function is a usual
+deallocation function. A deallocation function can be an instance of a function template. Neither the first parameter
+nor the return type shall depend on a template parameter. <span class="note">[ <em>Note:</em> That is, a deallocation function template shall have a
+first parameter of type <code class="sh_cpp">void*</code> and a return type of <code class="sh_cpp">void</code> (as specified above). — <em>end note</em> ]</span> A
+deallocation function template shall have two or more function parameters. A template instance is never a usual
+deallocation function, regardless of its signature.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>If a deallocation function terminates by throwing an exception, the behavior is undefined. The value of the
+first argument supplied to a deallocation function may be a null pointer value; if so, and if the deallocation function
+is one supplied in the standard library, the call has no effect. Otherwise, the behavior is undefined if the value
+supplied to <code class="sh_cpp">operator delete(void*)</code> in the standard library is not one of the values returned by a previous
+invocation of either <code class="sh_cpp">operator new(std::size_t)</code> or <code class="sh_cpp">operator new(std::size_t, const
+std::nothrow_t&amp;)</code> in the standard library, and the behavior is undefined if the value supplied to
+<code class="sh_cpp">operator delete[](void*)</code> in the standard library is not one of the values returned by a previous invocation
+of either <code class="sh_cpp">operator new[](std::size_t)</code> or operator <code class="sh_cpp">new[](std::size_t, const
+std::nothrow_t&amp;)</code> in the standard library.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>If the argument given to a deallocation function in the standard library is a pointer that is not the null
+pointer value (<a title="conv.ptr" href="conv.ptr.html">4.10</a>), the deallocation function shall deallocate the storage referenced by the pointer,
+rendering invalid all pointers referring to any part of the deallocated storage. The effect of using an invalid pointer
+value (including passing it to a deallocation function) is undefined.<sup class="footnote"><a href="#fn36">36</a></sup></p>
+
+
+<div><p class="footnote" id="fn36">36) On some implementations, it causes a system-generated runtime fault.</p></div>
+</body>
+</html>
+

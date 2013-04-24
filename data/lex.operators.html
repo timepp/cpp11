@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Operators and punctuators</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[lex.operators]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[lex.operators]"></object>2.13 Operators and punctuators </h2>
+<p><a class="anchor" id="p1" href="#p1">1</a>The lexical representation of C++ programs includes a number of preprocessing tokens which are used in the
+syntax of the preprocessor or are converted into tokens for operators and punctuators:</p>
+
+<dl>
+<dt>
+<i class="nonterminal"><dfn>preprocessing-op-or-punc</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="preprocessing-op-or-punc"></object></i>: one of</dt>
+<dd><pre><code class="sh_cpp">{       }       [       ]       #       ##      (       )
+&lt;:      :&gt;      &lt;%      %&gt;      %:      %:%:    ;       :       ...
+new     delete  ?       ::      .       .*
++       -       *       /       %       ^       &amp;       |       ~
+!       =       &lt;       &gt;       +=      -=      *=      /=      %=
+^=      &amp;=      |=      &lt;&lt;      &gt;&gt;      &gt;&gt;=     &lt;&lt;=     ==      !=
+&lt;=      &gt;=      &amp;&amp;      ||      ++      --      ,       -&gt;*     -&gt;
+and     and_eq  bitand  bitor   compl   not     not_eq
+or      or_eq   xor     xor_eq</code></pre></dd>
+</dl>
+
+<p>Each <i class="nonterminal">preprocessing-op-or-punc</i> is converted to a single token in translation phase 7 (<a title="lex.phases" href="lex.phases.html">2.2</a>).</p>
+</body>
+</html>
+

@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Integer conversion rank</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[conv.rank]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[conv.rank]"></object>4.13 Integer conversion rank </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Every integer type has an <dfn>integer conversion rank</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="integer conversion rank"></object> defined as follows:</p>
+<ul>
+<li>No two signed integer types other than <code class="sh_cpp">char</code> and <code class="sh_cpp">signed char</code> (if <code class="sh_cpp">char</code> is
+	signed) shall have the same rank, even if they have the same representation.</li>
+<li>The rank of a signed integer type shall be greater than the rank of any signed integer type with a smaller
+	size.</li>
+<li>The rank of <code class="sh_cpp">long long int</code> shall be greater than the rank of <code class="sh_cpp">long int</code>, which shall be
+	greater than the rank of <code class="sh_cpp">int</code>, which shall be greater than the rank of <code class="sh_cpp">short int</code>, which
+	shall be greater than the rank of <code class="sh_cpp">signed char</code>.</li>
+<li>The rank of any unsigned integer type shall equal the rank of the corresponding signed integer type.</li>
+<li>The rank of any standard integer type shall be greater than the rank of any extended integer type with the same
+	size.</li>
+<li>The rank of <code class="sh_cpp">char</code> shall equal the rank of <code class="sh_cpp">signed char</code> and <code class="sh_cpp">unsigned char</code>.</li>
+<li>The rank of <code class="sh_cpp">bool</code> shall be less than the rank of all other standard integer types.</li>
+<li>The ranks of <code class="sh_cpp">char16_t</code>, <code class="sh_cpp">char32_t</code>, and <code class="sh_cpp">wchar_t</code> shall equal the ranks of their
+	underlying types (<a title="basic.fundamental" href="basic.fundamental.html">3.9.1</a>).</li>
+<li>The rank of any extended signed integer type relative to another extended signed integer type with the same size is
+	implementation-defined, but still subject to the other rules for determining the integer conversion rank.</li>
+<li>For all integer types <code class="sh_cpp">T1</code>, <code class="sh_cpp">T2</code>, and <code class="sh_cpp">T3</code>, if <code class="sh_cpp">T1</code> has greater rank
+	than <code class="sh_cpp">T2</code> and <code class="sh_cpp">T2</code> has greater rank than <code class="sh_cpp">T3</code>, then <code class="sh_cpp">T1</code> shall have
+	greater rank than <code class="sh_cpp">T3</code>.</li>
+</ul>
+
+<p><span class="note">[ <em>Note:</em> The integer conversion rank is used in the definition of the integral promotions (<a title="conv.prom" href="conv.prom.html">4.5</a>) and the usual
+arithmetic conversions (Clause <a title="expr" href="expr.html">5</a>). — <em>end note</em> ]</span></p>
+</body>
+</html>
+

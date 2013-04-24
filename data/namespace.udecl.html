@@ -1,0 +1,380 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>The using declaration</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[namespace.udecl]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[namespace.udecl]"></object>7.3.3 The <code class="sh_cpp">using</code> declaration </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A <i class="nonterminal">using-declaration</i> introduces a name into the declarative region in which the
+<i class="nonterminal">using-declaration</i> appears.</p>
+
+<dl>
+<dt>
+<i class="nonterminal"><dfn>using-declaration</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="using-declaration"></object></i>:</dt>
+	<dd>
+<code class="sh_cpp">using</code> <code class="sh_cpp">typename</code><sub class="opt">opt</sub> <i class="nonterminal">nested-name-specifier</i> <i class="nonterminal">unqualified-id</i> <code class="sh_cpp">;</code>
+</dd>
+	<dd>
+<code class="sh_cpp">using</code> <code class="sh_cpp">::</code> <i class="nonterminal">unqualified-id</i> <code class="sh_cpp">;</code>
+</dd>
+</dl>
+
+<p>The member name specified in a <i class="nonterminal">using-declaration</i> is declared in the declarative region in which the
+<i class="nonterminal">using-declaration</i> appears. <span class="note">[ <em>Note:</em> Only the specified name is so declared; specifying an enumeration name in a
+<i class="nonterminal">using-declaration</i> does not declare its enumerators in the <i class="nonterminal">using-declaration</i>’s declarative
+region. — <em>end note</em> ]</span> If a <i class="nonterminal">using-declaration</i> names a constructor (<a title="class.qual" href="class.qual.html">3.4.3.1</a>), it implicitly declares a set of
+constructors in the class in which the <i class="nonterminal">using-declaration</i> appears (<a title="class.inhctor" href="class.inhctor.html">12.9</a>); otherwise the name
+specified in a <i class="nonterminal">using-declaration</i> is a synonym for the name of some entity declared elsewhere.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>Every <i class="nonterminal">using-declaration</i> is a <i class="nonterminal">declaration</i> and a <i class="nonterminal">member-declaration</i> and so can be used
+in a class definition.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct B {
+  void f(char);
+  void g(char);
+  enum E { e };
+  union { int x; };
+};
+
+struct D : B {
+  using B::f;
+  void f(int) { f('c'); }   // calls B::f(char)
+  void g(int) { g('c'); }   // recursively calls D::g(int)
+};</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>In a <i class="nonterminal">using-declaration</i> used as a <i class="nonterminal">member-declaration</i>, the <i class="nonterminal">nested-name-specifier</i> shall
+name a base class of the class being defined. If such a <i class="nonterminal">using-declaration</i> names a constructor, the
+<i class="nonterminal">nested-name-specifier</i> shall name a direct base class of the class being defined; otherwise it introduces the
+set of declarations found by member name lookup (<a title="class.member.lookup" href="class.member.lookup.html">10.2</a>, <a title="class.qual" href="class.qual.html">3.4.3.1</a>).</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">class C {
+  int g();
+};
+
+class D2 : public B {
+  using B::f;           // OK: B is a base of D2
+  using B::e;           // OK: e is an enumerator of base B
+  using B::x;           // OK: x is a union member of base B
+  using C::g;           // error: C isn’t a base of D2
+};</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><span class="note">[ <em>Note:</em> Since destructors do not have names, a <i class="nonterminal">using-declaration</i> cannot refer to a destructor for a base
+class. Since specializations of member templates for conversion functions are not found by name lookup, they are not
+considered when a <i class="nonterminal">using-declaration</i> specifies a conversion function (<a title="temp.mem" href="temp.mem.html">14.5.2</a>). — <em>end note</em> ]</span> If an
+assignment operator brought from a base class into a derived class scope has the signature of a copy/move assignment
+operator for the derived class (<a title="class.copy" href="class.copy.html">12.8</a>), the <i class="nonterminal">using-declaration</i> does not by itself suppress the
+implicit declaration of the derived class assignment operator; the copy/move assignment operator from the base class is
+hidden or overridden by the implicitly-declared copy/move assignment operator of the derived class, as described
+below.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>A <i class="nonterminal">using-declaration</i> shall not name a <i class="nonterminal">template-id</i>.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct A {
+  template &lt;class T&gt; void f(T);
+  template &lt;class T&gt; struct X { };
+};
+struct B : A {
+  using A::f&lt;double&gt;;           // ill-formed
+  using A::X&lt;int&gt;;              // ill-formed
+};</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>A <i class="nonterminal">using-declaration</i> shall not name a namespace.</p>
+
+<p><a class="anchor" id="p7" href="#p7">7</a>A <i class="nonterminal">using-declaration</i> shall not name a scoped enumerator.</p>
+
+<p><a class="anchor" id="p8" href="#p8">8</a>A <i class="nonterminal">using-declaration</i> for a class member shall be a <i class="nonterminal">member-declaration</i>.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct X {
+  int i;
+  static int s;
+};
+
+void f() {
+  using X::i;           // error: X::i is a class member
+                        // and this is not a member declaration.
+  using X::s;           // error: X::s is a class member
+                        // and this is not a member declaration.
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p9" href="#p9">9</a>Members declared by a <i class="nonterminal">using-declaration</i> can be referred to by explicit qualification just like other
+member names (<a title="namespace.qual" href="namespace.qual.html">3.4.3.2</a>). In a <i class="nonterminal">using-declaration</i>, a prefix <code class="sh_cpp">::</code> refers to the global
+namespace.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">void f();
+
+namespace A {
+  void g();
+}
+
+namespace X {
+  using ::f;            // global f
+  using A::g;           // A’s g
+}
+
+void h()
+{
+  X::f();               // calls ::f
+  X::g();               // calls A::g
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p10" href="#p10">10</a>A <i class="nonterminal">using-declaration</i> is a <i class="nonterminal">declaration</i> and can therefore be used repeatedly where (and only
+where) multiple declarations are allowed.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">namespace A {
+  int i;
+}
+
+namespace A1 {
+  using A::i;
+  using A::i;           // OK: double declaration
+}
+
+void f() {
+  using A::i;
+  using A::i;           // error: double declaration
+}
+
+struct B {
+  int i;
+};
+
+struct X : B {
+  using B::i;
+  using B::i;           // error: double member declaration
+};</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p11" href="#p11">11</a>The entity declared by a <i class="nonterminal">using-declaration</i> shall be known in the context using it according to its
+definition at the point of the <i class="nonterminal">using-declaration</i>. Definitions added to the namespace after the
+<i class="nonterminal">using-declaration</i> are not considered when a use of the name is made.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">namespace A {
+  void f(int);
+}
+
+using A::f;             // f is a synonym for A::f;
+                        // that is, for A::f(int).
+namespace A {
+  void f(char);
+}
+
+void foo() {
+  f('a');               // calls f(int),
+}                       // even though f(char) exists.
+
+void bar() {
+  using A::f;           // f is a synonym for A::f;
+                        // that is, for A::f(int) and A::f(char).
+  f('a');               // calls f(char)
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p12" href="#p12">12</a><span class="note">[ <em>Note:</em> Partial specializations of class templates are found by looking up the primary class template and then
+considering all partial specializations of that template. If a <i class="nonterminal">using-declaration</i> names a class template,
+partial specializations introduced after the <i class="nonterminal">using-declaration</i> are effectively visible because the primary
+template is visible (<a title="temp.class.spec" href="temp.class.spec.html">14.5.5</a>). — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p13" href="#p13">13</a>Since a <i class="nonterminal">using-declaration</i> is a declaration, the restrictions on declarations of the same name in the
+same declarative region (<a title="basic.scope" href="basic.scope.declarative.html">3.3</a>) also apply to <i class="nonterminal">using-declaration</i>s.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">namespace A {
+  int x;
+}
+
+namespace B {
+  int i;
+  struct g { };
+  struct x { };
+  void f(int);
+  void f(double);
+  void g(char);         // OK: hides struct g
+}
+
+void func() {
+  int i;
+  using B::i;           // error: i declared twice
+  void f(char);
+  using B::f;           // OK: each f is a function
+  f(3.5);               // calls B::f(double)
+  using B::g;
+  g('a');               // calls B::g(char)
+  struct g g1;          // g1 has class type B::g
+  using B::x;
+  using A::x;           // OK: hides struct B::x
+  x = 99;               // assigns to A::x
+  struct x x1;          // x1 has class type B::x
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p14" href="#p14">14</a>If a function declaration in namespace scope or block scope has the same name and the same parameter types as
+a function introduced by a <i class="nonterminal">using-declaration</i>, and the declarations do not declare the same function, the
+program is ill-formed.</p>
+
+<div class="note">
+<p>[ <em>Note:</em> Two <i class="nonterminal">using-declaration</i>s may introduce functions with the same name and the same parameter types. If,
+for a call to an unqualified function name, function overload resolution selects the functions introduced by such
+<i class="nonterminal">using-declaration</i>s, the function call is ill-formed.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">namespace B {
+  void f(int);
+  void f(double);
+}
+namespace C {
+  void f(int);
+  void f(double);
+  void f(char);
+}
+
+void h() {
+  using B::f;           // B::f(int) and B::f(double)
+  using C::f;           // C::f(int), C::f(double), and C::f(char)
+  f('h');               // calls C::f(char)
+  f(1);                 // error: ambiguous: B::f(int) or C::f(int)?
+  void f(int);          // error: f(int) conflicts with C::f(int) and B::f(int)
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+<p> — <em>end note</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p15" href="#p15">15</a>When a <i class="nonterminal">using-declaration</i> brings names from a base class into a derived class scope, member functions
+and member function templates in the derived class override and/or hide member functions and member function templates
+with the same name, parameter-type-list (<a title="dcl.fct" href="dcl.fct.html">8.3.5</a>), cv-qualification, and <i class="nonterminal">ref-qualifier</i> (if any) in a
+base class (rather than conflicting). <span class="note">[ <em>Note:</em> For <i class="nonterminal">using-declaration</i>s that name a constructor, see
+<a title="class.inhctor" href="class.inhctor.html">12.9</a>. — <em>end note</em> ]</span></p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct B {
+  virtual void f(int);
+  virtual void f(char);
+  void g(int);
+  void h(int);
+};
+
+struct D : B {
+  using B::f;
+  void f(int);          // OK: D::f(int) overrides B::f(int);
+
+  using B::g;
+  void g(char);         // OK
+
+  using B::h;
+  void h(int);          // OK: D::h(int) hides B::h(int)
+};
+
+void k(D* p)
+{
+  p-&gt;f(1);              // calls D::f(int)
+  p-&gt;f('a');            // calls B::f(char)
+  p-&gt;g(1);              // calls B::g(int)
+  p-&gt;g('a');            // calls D::g(char)
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p16" href="#p16">16</a>For the purpose of overload resolution, the functions which are introduced by a <i class="nonterminal">using-declaration</i>
+into a derived class will be treated as though they were members of the derived class. In particular, the implicit
+<code class="sh_cpp">this</code> parameter shall be treated as if it were a pointer to the derived class rather than to the base class.
+This has no effect on the type of the function, and in all other respects the function remains a member of the base
+class.</p>
+
+<p><a class="anchor" id="p17" href="#p17">17</a>The access rules for inheriting constructors are specified in <a title="class.inhctor" href="class.inhctor.html">12.9</a>; otherwise all instances of the
+name mentioned in a <i class="nonterminal">using-declaration</i> shall be accessible. In particular, if a derived class uses a
+<i class="nonterminal">using-declaration</i> to access a member of a base class, the member name shall be accessible. If the name is that
+of an overloaded member function, then all functions named shall be accessible. The base class members mentioned by a
+<i class="nonterminal">using-declaration</i> shall be visible in the scope of at least one of the direct base classes of the class where
+the <i class="nonterminal">using-declaration</i> is specified.</p>
+
+<div class="note">
+<p>[ <em>Note:</em> Because a <i class="nonterminal">using-declaration</i> designates a base class member (and not a member subobject or a member
+function of a base class subobject), a <i class="nonterminal">using-declaration</i> cannot be used to resolve inherited member
+ambiguities. For example,</p>
+
+<pre><code class="sh_cpp">struct A { int x(); };
+struct B : A { };
+struct C : A {
+  using A::x;
+  int x(int);
+};
+
+struct D : B, C {
+  using C::x;
+  int x(double);
+};
+int f(D* d) {
+  return d-&gt;x();        // ambiguous: B::x or C::x
+}</code></pre>
+<p> — <em>end note</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p18" href="#p18">18</a>The alias created by the <i class="nonterminal">using-declaration</i> has the usual accessibility for a
+<i class="nonterminal">member-declaration</i>. <span class="note">[ <em>Note:</em> A <i class="nonterminal">using-declaration</i> that names a constructor does not create aliases; see
+<a title="class.inhctor" href="class.inhctor.html">12.9</a> for the pertinent accessibility rules. — <em>end note</em> ]</span></p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">class A {
+private:
+  void f(char);
+public:
+  void f(int);
+protected:
+  void g();
+};
+
+class B : public A {
+  using A::f;           // error: A::f(char) is inaccessible
+public:
+  using A::g;           // B::g is a public synonym for A::g
+};</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p19" href="#p19">19</a>If a <i class="nonterminal">using-declaration</i> uses the keyword <code class="sh_cpp">typename</code> and specifies a dependent name
+(<a title="temp.dep" href="temp.dep.html">14.6.2</a>), the name introduced by the <i class="nonterminal">using-declaration</i> is treated as a <i class="nonterminal">typedef-name</i>
+(<a title="dcl.typedef" href="dcl.typedef.html">7.1.3</a>).</p>
+</body>
+</html>
+

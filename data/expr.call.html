@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Function call</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[expr.call]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[expr.call]"></object>5.2.2 Function call </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>There are two kinds of function call: ordinary function call and member function<sup class="footnote"><a href="#fn63">63</a></sup> (<a title="class.mfct" href="class.mfct.html">9.3</a>)
+call. A function call is a postfix expression followed by parentheses containing a possibly empty, comma-separated list
+of expressions which constitute the arguments to the function. For an ordinary function call, the postfix expression
+shall be either an lvalue that refers to a function (in which case the function-to-pointer standard conversion
+(<a title="conv.func" href="conv.func.html">4.3</a>) is suppressed on the postfix expression), or it shall have pointer to function type. Calling a function
+through an expression whose function type has a language linkage that is different from the language linkage of the
+function type of the called function’s definition is undefined (<a title="dcl.link" href="dcl.link.html">7.5</a>). For a member function call, the postfix
+expression shall be an implicit (<a title="class.mfct.non-static" href="class.mfct.non-static.html">9.3.1</a>, <a title="class.static" href="class.static.html">9.4</a>) or explicit class member access (<a title="expr.ref " href=".html"></a>)
+whose <i class="nonterminal">id-expression</i> is a function member name, or a pointer-to-member expression (<a title="expr.mptr.oper" href="expr.mptr.oper.html">5.5</a>) selecting a
+function member; the call is as a member of the class object referred to by the object expression. In the case of an
+implicit class member access, the implied object is the one pointed to by <code class="sh_cpp">this</code>. <span class="note">[ <em>Note:</em> a member function
+call of the form <code class="sh_cpp">f()</code> is interpreted as <code class="sh_cpp">(*this).f()</code> (see <a title="class.mfct.non-static" href="class.mfct.non-static.html">9.3.1</a>). — <em>end note</em> ]</span> If a
+function or member function name is used, the name can be overloaded (Clause <a title="over" href="over.html">13</a>), in which case the
+appropriate function shall be selected according to the rules in <a title="over.match" href="over.match.html">13.3</a>. If the selected function is
+non-virtual, or if the <i class="nonterminal">id-expression</i> in the class member access expression is a <i class="nonterminal">qualified-id</i>, that
+function is called. Otherwise, its final overrider (<a title="class.virtual" href="class.virtual.html">10.3</a>) in the dynamic type of the object expression is
+called. <span class="note">[ <em>Note:</em> the dynamic type is the type of the object referred to by the current value of the object expression.
+<a title="class.cdtor" href="class.cdtor.html">12.7</a> describes the behavior of virtual function calls when the object expression refers to an object under
+construction or destruction. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><span class="note">[ <em>Note:</em> If a function or member function name is used, and name lookup (<a title="basic.lookup" href="basic.lookup.html">3.4</a>) does not find a
+declaration of that name, the program is ill-formed. No function is implicitly declared by such a call. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>If the <i class="nonterminal">postfix-expression</i> designates a destructor (<a title="class.dtor" href="class.dtor.html">12.4</a>), the type of the function call
+expression is <code class="sh_cpp">void</code>; otherwise, the type of the function call expression is the return type of the
+statically chosen function (i.e., ignoring the <code class="sh_cpp">virtual</code> keyword), even if the type of the function actually
+called is different. This type shall be an object type, a reference type or the type <code class="sh_cpp">void</code>.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>When a function is called, each parameter (<a title="dcl.fct" href="dcl.fct.html">8.3.5</a>) shall be initialized (<a title="dcl.init" href="dcl.init.html">8.5</a>,
+<a title="class.copy" href="class.copy.html">12.8</a>, <a title="class.ctor" href="class.ctor.html">12.1</a>) with its corresponding argument. <span class="note">[ <em>Note:</em> Such initializations are indeterminately
+sequenced with respect to each other (<a title="intro.execution" href="intro.execution.html">1.9</a>) — <em>end note</em> ]</span> If the function is a non-static member function, the
+<code class="sh_cpp">this</code> parameter of the function (<a title="class.this" href="class.this.html">9.3.2</a>) shall be initialized with a pointer to the object of the
+call, converted as if by an explicit type conversion (<a title="expr.cast" href="expr.cast.html">5.4</a>). <span class="note">[ <em>Note:</em> There is no access or ambiguity checking on
+this conversion; the access checking and disambiguation are done as part of the (possibly implicit) class member access
+operator. See <a title="class.member.lookup" href="class.member.lookup.html">10.2</a>, <a title="class.access.base" href="class.access.base.html">11.2</a>, and <a title="expr.ref " href=".html"></a>. — <em>end note</em> ]</span> When a function is called, the parameters
+that have object type shall have completely-defined object type. <span class="note">[ <em>Note:</em> this still allows a parameter to be a pointer or
+reference to an incomplete class type. However, it prevents a passed-by-value parameter to have an incomplete class
+type. — <em>end note</em> ]</span> During the initialization of a parameter, an implementation may avoid the construction of extra temporaries
+by combining the conversions on the associated argument and/or the construction of temporaries with the initialization
+of the parameter (see <a title="class.temporary" href="class.temporary.html">12.2</a>). The lifetime of a parameter ends when the function in which it is defined
+returns. The initialization and destruction of each parameter occurs within the context of the calling function.
+<span class="example">[ <em>Example:</em> the access of the constructor, conversion functions or destructor is checked at the point of call in the
+calling function. If a constructor or destructor for a function parameter throws an exception, the search for a handler
+starts in the scope of the calling function; in particular, if the function called has a <i class="nonterminal">function-try-block</i>
+(Clause <a title="except" href="except.html">15</a>) with a handler that could handle the exception, this handler is not considered. — <em>end example</em> ]</span> The
+value of a function call is the value returned by the called function except in a virtual function call if the return
+type of the final overrider is different from the return type of the statically chosen function, the value returned from
+the final overrider is converted to the return type of the statically chosen function.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><span class="note">[ <em>Note:</em> a function can change the values of its non-const parameters, but these changes cannot affect the values
+of the arguments except where a parameter is of a reference type (<a title="dcl.ref" href="dcl.ref.html">8.3.2</a>); if the reference is to a
+const-qualified type, <code class="sh_cpp">const_cast</code> is required to be used to cast away the constness in order to modify the
+argument’s value. Where a parameter is of <code class="sh_cpp">const</code> reference type a temporary object is introduced if needed
+(<a title="dcl.type" href="dcl.type.html">7.1.6</a>, <a title="lex.literal" href="lex.literal.kinds.html">2.14</a>, <a title="lex.string" href="lex.string.html">2.14.5</a>, <a title="dcl.array" href="dcl.array.html">8.3.4</a>, <a title="class.temporary" href="class.temporary.html">12.2</a>). In addition, it is possible
+to modify the values of nonconstant objects through pointer parameters. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>A function can be declared to accept fewer arguments (by declaring default arguments (<a title="dcl.fct.default" href="dcl.fct.default.html">8.3.6</a>)) or
+more arguments (by using the ellipsis, <code class="sh_cpp">...</code>, or a function parameter pack (<a title="dcl.fct" href="dcl.fct.html">8.3.5</a>)) than the
+number of parameters in the function definition (<a title="dcl.fct.def" href="dcl.fct.def.general.html">8.4</a>). <span class="note">[ <em>Note:</em> this implies that, except where the ellipsis
+(<code class="sh_cpp">...</code>) or a function parameter pack is used, a parameter is available for each argument. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p7" href="#p7">7</a>When there is no parameter for a given argument, the argument is passed in such a way that the receiving
+function can obtain the value of the argument by invoking <code class="sh_cpp">va_arg</code> (<a title="support.runtime" href="support.runtime.html">18.10</a>). <span class="note">[ <em>Note:</em> This paragraph
+does not apply to arguments passed to a function parameter pack. Function parameter packs are expanded during template
+instantiation (<a title="temp.variadic" href="temp.variadic.html">14.5.3</a>), thus each such argument has a corresponding parameter when a function template
+specialization is actually called. — <em>end note</em> ]</span> The lvalue-to-rvalue (<a title="conv.lval" href="conv.lval.html">4.1</a>), array-to-pointer (<a title="conv.array" href="conv.array.html">4.2</a>), and
+function-to-pointer (<a title="conv.func" href="conv.func.html">4.3</a>) standard conversions are performed on the argument expression. An argument that has
+(possibly cv-qualified) type <code class="sh_cpp">std::nullptr_t</code> is converted to type <code class="sh_cpp">void*</code> (<a title="conv.ptr" href="conv.ptr.html">4.10</a>).
+After these conversions, if the argument does not have arithmetic, enumeration, pointer, pointer to member, or class
+type, the program is ill-formed. Passing a potentially-evaluated argument of class type (Clause <a title="class" href="class.html">9</a>) having a
+non-trivial copy constructor, a non-trivial move contructor, or a non-trivial destructor, with no corresponding
+parameter, is conditionally-supported with implementation-defined semantics. If the argument has integral or enumeration
+type that is subject to the integral promotions (<a title="conv.prom" href="conv.prom.html">4.5</a>), or a floating point type that is subject to the
+floating point promotion (<a title="conv.fpprom" href="conv.fpprom.html">4.6</a>), the value of the argument is converted to the promoted type before the call.
+These promotions are referred to as the <dfn>default argument promotions</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="default argument promotions"></object>.</p>
+
+<p><a class="anchor" id="p8" href="#p8">8</a><span class="note">[ <em>Note:</em> The evaluations of the postfix expression and of the argument expressions are all unsequenced relative to
+one another. All side effects of argument expression evaluations are sequenced before the function is entered (see
+<a title="intro.execution" href="intro.execution.html">1.9</a>). — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p9" href="#p9">9</a>Recursive calls are permitted, except to the function named <code class="sh_cpp">main</code> (<a title="basic.start.main" href="basic.start.main.html">3.6.1</a>).</p>
+
+<p><a class="anchor" id="p10" href="#p10">10</a>A function call is an lvalue if the result type is an lvalue reference type or an rvalue reference to function
+type, an xvalue if the result type is an rvalue reference to object type, and a prvalue otherwise.</p>
+
+<p><a class="anchor" id="p11" href="#p11">11</a>If a function call is a prvalue of object type:</p>
+
+<ul>
+<li>if the function call is either
+	<ul>
+	<li>the operand of a <i class="nonterminal">decltype-specifier</i> or</li>
+	<li>the right operand of a comma operator that is the operand of a <i class="nonterminal">decltype-specifier</i>,</li>
+	</ul>
+	a temporary object is not introduced for the prvalue. The type of the prvalue may be incomplete. <span class="note">[ <em>Note:</em> as a result,
+	storage is not allocated for the prvalue and it is not destroyed; thus, a class type is not instantiated as a result
+	of being the type of a function call in this context. This is true regardless of whether the expression uses
+	function call notation or operator notation (<a title="over.match.oper" href="over.match.oper.html">13.3.1.2</a>). — <em>end note</em> ]</span> <span class="note">[ <em>Note:</em> unlike the rule for a
+	<i class="nonterminal">decltype-specifier</i> that considers whether an <i class="nonterminal">id-expression</i> is parenthesized (<a title="dcl.type.simple" href="dcl.type.simple.html">7.1.6.2</a>),
+	parentheses have no special meaning in this context. — <em>end note</em> ]</span>
+</li>
+<li>otherwise, the type of the prvalue shall be complete.</li>
+</ul>
+
+
+<div><p class="footnote" id="fn63">63) A static member function (<a title="class.static" href="class.static.html">9.4</a>) is an ordinary function.</p></div>
+</body>
+</html>
+

@@ -1,0 +1,108 @@
+code.sh_sourceCode {
+  font-style: normal;
+  font-family: "monaco;courier new;monospace";
+}
+
+code.sh_sourceCode .sh_keyword {
+  font-weight: bold;
+  font-style: normal;
+  color: blue;
+}
+
+code.sh_sourceCode .sh_type {
+  font-weight: bold;
+  font-style: normal;
+}
+
+code.sh_sourceCode .sh_string {
+  font-style: normal;
+}
+
+code.sh_sourceCode .sh_regexp {
+  font-style: normal;
+}
+
+code.sh_sourceCode .sh_specialchar {
+  font-style: normal;
+}
+
+code.sh_sourceCode .sh_comment {
+  font-style: italic;
+}
+
+code.sh_sourceCode .sh_number {
+  font-style: normal;
+}
+
+code.sh_sourceCode .sh_code.roc {
+  font-weight: bold;
+  font-style: normal;
+}
+
+code.sh_sourceCode .sh_symbol {
+  font-style: normal;
+}
+
+code.sh_sourceCode .sh_cbracket {
+  font-style: normal;
+}
+
+code.sh_sourceCode .sh_url {
+  font-style: normal;
+}
+
+code.sh_sourceCode .sh_date {
+  font-weight: bold;
+  font-style: normal;
+}
+
+code.sh_sourceCode .sh_time {
+  font-weight: bold;
+  font-style: normal;
+}
+
+code.sh_sourceCode .sh_file {
+  font-weight: bold;
+  font-style: normal;
+}
+
+code.sh_sourceCode .sh_ip {
+  font-style: normal;
+}
+
+code.sh_sourceCode .sh_name {
+  font-style: normal;
+}
+
+code.sh_sourceCode .sh_variable {
+  font-weight: bold;
+  font-style: normal;
+}
+
+code.sh_sourceCode .sh_oldfile {
+  font-style: normal;
+}
+
+code.sh_sourceCode .sh_newfile {
+  font-style: normal;
+}
+
+code.sh_sourceCode .sh_difflines {
+  font-weight: bold;
+  font-style: normal;
+}
+
+code.sh_sourceCode .sh_selector {
+  font-weight: bold;
+  font-style: normal;
+}
+
+code.sh_sourceCode .sh_property {
+  font-weight: bold;
+  font-style: normal;
+}
+
+code.sh_sourceCode .sh_value {
+  font-style: normal;
+}
+

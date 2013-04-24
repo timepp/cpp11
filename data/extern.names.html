@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>External linkage</title>
+</head>
+<body>
+<h5>
+<dfn class="label">[extern.names]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[extern.names]"></object>17.6.4.3.3 External linkage </h5>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Each name declared as an object with external linkage in a header is reserved to the implementation to
+designate that library object with external linkage,<sup class="footnote"><a href="#fn185">185</a></sup> both in namespace <code class="sh_cpp">std</code> and in the global
+namespace.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>Each global function signature declared with external linkage in a header is reserved to the implementation to
+designate that function signature with external linkage.<sup class="footnote"><a href="#fn186">186</a></sup></p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>Each name from the Standard C library declared with external linkage is reserved to the implementation for use
+as a name with <code class="sh_cpp">extern "C"</code> linkage, both in namespace <code class="sh_cpp">std</code> and in the global namespace.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>Each function signature from the Standard C library declared with external linkage is reserved to the
+implementation for use as a function signature with both <code class="sh_cpp">extern "C"</code> and <code class="sh_cpp">extern "C++"</code>
+linkage,<sup class="footnote"><a href="#fn187">187</a></sup> or as a name of namespace scope in the global namespace.</p>
+
+
+
+
+
+
+<div>
+<p class="footnote" id="fn185">185) The list of such reserved names includes <code class="sh_cpp">errno</code>, declared or defined in
+<code class="header">&lt;cerrno&gt;</code>.</p>
+<p class="footnote" id="fn186">186) The list of such reserved function signatures with external linkage includes
+<code class="sh_cpp">setjmp(jmp_buf)</code>, declared or defined in <code class="header">&lt;csetjmp&gt;</code>, and <code class="sh_cpp">va_end(va_list)</code>,
+declared or defined in <code class="header">&lt;cstdarg&gt;</code>.</p>
+<p class="footnote" id="fn187">187) The function signatures declared in <code class="header">&lt;cuchar&gt;</code>, <code class="header">&lt;cwchar&gt;</code>, and
+<code class="header">&lt;cwctype&gt;</code> are always reserved, notwithstanding the restrictions imposed in subclause 4.5.1 of
+Amendment 1 to the C Standard for these headers.</p>
+</div>
+</body>
+</html>
+

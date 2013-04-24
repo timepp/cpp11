@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>duration constructors</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[time.duration.cons]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[time.duration.cons]"></object>20.11.5.1 <code class="sh_cpp">duration</code> constructors </h4>
+
+<h5><code class="sh_cpp">template &lt;class Rep2&gt;
+  constexpr explicit <dfn>duration</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="duration"></object>(const Rep2&amp; r);</code></h5>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Remarks:</em> This constructor shall not participate in overload resolution unless <code class="sh_cpp">Rep2</code>
+is implicitly convertible to <code class="sh_cpp">rep</code> and</p>
+
+<ul>
+<li>
+<code class="sh_cpp">treat_as_floating_point&lt;rep&gt;::value</code> is <code class="sh_cpp">true</code> or</li>
+<li>
+<code class="sh_cpp">treat_as_floating_point&lt;Rep2&gt;::value</code> is <code class="sh_cpp">false</code>.</li>
+</ul>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">duration&lt;int, milli&gt; d(3);      // OK
+duration&lt;int, milli&gt; d(3.5);    // error</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Effects:</em> Constructs an object of type <code class="sh_cpp">duration</code>.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Postconditions:</em> <code class="sh_cpp">count() == static_cast&lt;rep&gt;(r)</code>.</p>
+
+<h5><code class="sh_cpp">template &lt;class Rep2, class Period2&gt;
+  constexpr <dfn>duration</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="duration"></object>(const duration&lt;Rep2, Period2&gt;&amp; d);</code></h5>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><em>Remarks:</em> This constructor shall not participate in overload resolution unless
+<code class="sh_cpp">treat_as_floating_point&lt;rep&gt;::value</code> is <code class="sh_cpp">true</code> or both
+<code class="sh_cpp">ratio_divide&lt;Period2, period&gt;::den</code> is <code class="sh_cpp">1</code> and
+<code class="sh_cpp">treat_as_floating_point&lt;Rep2&gt;::value</code> is <code class="sh_cpp">false</code>. <span class="note">[ <em>Note:</em> This requirement prevents
+implicit truncation error when converting between integral-based <code class="sh_cpp">duration</code> types. Such a construction could
+easily lead to confusion about the value of the <code class="sh_cpp">duration</code>. — <em>end note</em> ]</span></p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">duration&lt;int, milli&gt; ms(3);
+duration&lt;int, micro&gt; us = ms;   // OK
+duration&lt;int, milli&gt; ms2 = us;  // error</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><em>Effects:</em> Constructs an object of type <code class="sh_cpp">duration</code>, constructing <code class="sh_cpp">rep_</code> from
+<code class="sh_cpp">duration_cast&lt;duration&gt;(d).count()</code>.</p>
+</body>
+</html>
+

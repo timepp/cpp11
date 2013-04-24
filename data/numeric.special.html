@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>numeric_limits specializations</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[numeric.special]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[numeric.special]"></object>18.3.2.7 <code class="sh_cpp">numeric_limits</code> specializations </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>All members shall be provided for all specializations. However, many values are only required to be meaningful
+under certain conditions (for example, <code class="sh_cpp">epsilon()</code> is only meaningful if <code class="sh_cpp">is_integer</code> is
+<code class="sh_cpp">false</code>). Any value that is not “meaningful” shall be set to 0 or <code class="sh_cpp">false</code>.</p>
+
+<div class="example">
+<p><a class="anchor" id="p2" href="#p2">2</a>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">namespace std {
+  template&lt;&gt; class numeric_limits&lt;float&gt; {
+  public:
+    static constexpr bool is_specialized = true;
+
+    inline static constexpr float min() noexcept { return 1.17549435E-38F; }
+    inline static constexpr float max() noexcept { return 3.40282347E+38F; }
+    inline static constexpr float lowest() noexcept { return -3.40282347E+38F; }
+
+    static constexpr int digits   = 24;
+    static constexpr int digits10 = 6;
+    static constexpr int max_digits10 =  9;
+
+    static constexpr bool is_signed  = true;
+    static constexpr bool is_integer = false;
+    static constexpr bool is_exact   = false;
+
+    static constexpr int radix = 2;
+    inline static constexpr float epsilon() noexcept     { return 1.19209290E-07F; }
+    inline static constexpr float round_error() noexcept { return 0.5F; }
+
+    static constexpr int min_exponent   = -125;
+    static constexpr int min_exponent10 = - 37;
+    static constexpr int max_exponent   = +128;
+    static constexpr int max_exponent10 = + 38;
+
+    static constexpr bool has_infinity             = true;
+    static constexpr bool has_quiet_NaN            = true;
+    static constexpr bool has_signaling_NaN        = true;
+    static constexpr float_denorm_style has_denorm = denorm_absent;
+    static constexpr bool has_denorm_loss          = false;
+
+    inline static constexpr float infinity()      noexcept { return <var>value</var>; }
+    inline static constexpr float quiet_NaN()     noexcept { return <var>value</var>; }
+    inline static constexpr float signaling_NaN() noexcept { return <var>value</var>; }
+    inline static constexpr float denorm_min()    noexcept { return min(); }
+
+    static constexpr bool is_iec559  = true;
+    static constexpr bool is_bounded = true;
+    static constexpr bool is_modulo  = false;
+    static constexpr bool traps      = true;
+    static constexpr bool tinyness_before = true;
+
+    static constexpr float_round_style round_style = round_to_nearest;
+  };
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>The specialization for <code class="sh_cpp">bool</code> shall be provided as follows:</p>
+
+<pre><code class="sh_cpp">namespace std {
+  template&lt;&gt; class <dfn>numeric_limits&lt;bool&gt;</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="numeric_limits&lt;bool&gt;"></object> {
+  public:
+    static constexpr bool is_specialized = true;
+    static constexpr bool min() noexcept { return false; }
+    static constexpr bool max() noexcept { return true; }
+    static constexpr bool lowest() noexcept { return false; }
+
+    static constexpr int  digits = 1;
+    static constexpr int  digits10 = 0;
+    static constexpr int  max_digits10 = 0;
+
+    static constexpr bool is_signed = false;
+    static constexpr bool is_integer = true;
+    static constexpr bool is_exact = true;
+    static constexpr int  radix = 2;
+    static constexpr bool epsilon() noexcept { return 0; }
+    static constexpr bool round_error() noexcept { return 0; }
+
+    static constexpr int  min_exponent = 0;
+    static constexpr int  min_exponent10 = 0;
+    static constexpr int  max_exponent = 0;
+    static constexpr int  max_exponent10 = 0;
+
+    static constexpr bool has_infinity = false;
+    static constexpr bool has_quiet_NaN = false;
+    static constexpr bool has_signaling_NaN = false;
+    static constexpr float_denorm_style has_denorm = denorm_absent;
+    static constexpr bool has_denorm_loss = false;
+    static constexpr bool infinity() noexcept { return 0; }
+    static constexpr bool quiet_NaN() noexcept { return 0; }
+    static constexpr bool signaling_NaN() noexcept { return 0; }
+    static constexpr bool denorm_min() noexcept { return 0; }
+
+    static constexpr bool is_iec559 = false;
+    static constexpr bool is_bounded = true;
+    static constexpr bool is_modulo = false;
+
+    static constexpr bool traps = false;
+    static constexpr bool tinyness_before = false;
+    static constexpr float_round_style round_style = round_toward_zero;
+  };
+}</code></pre>
+</body>
+</html>
+

@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Name hiding</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[basic.scope.hiding]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[basic.scope.hiding]"></object>3.3.10 Name hiding </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A name can be hidden by an explicit declaration of that same name in a nested declarative region or derived
+class (<a title="class.member.lookup" href="class.member.lookup.html">10.2</a>).</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>A class name (<a title="class.name" href="class.name.html">9.1</a>) or enumeration name (<a title="dcl.enum" href="dcl.enum.html">7.2</a>) can be hidden by the name of a variable,
+data member, function, or enumerator declared in the same scope. If a class or enumeration name and a variable, data
+member, function, or enumerator are declared in the same scope (in any order) with the same name, the class or
+enumeration name is hidden wherever the variable, data member, function, or enumerator name is visible.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>In a member function definition, the declaration of a name at block scope hides the declaration of a member of
+the class with the same name; see <a title="temp.local" href="temp.local.html">14.6.1</a>. The declaration of a member in a derived class (Clause
+<a title="class.derived" href="class.derived.html">10</a>) hides the declaration of a member of a base class of the same name; see <a title="class.member.lookup" href="class.member.lookup.html">10.2</a>.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>During the lookup of a name qualified by a namespace name, declarations that would otherwise be made visible by
+a <i class="nonterminal">using-directive</i> can be hidden by declarations with the same name in the namespace containing the
+<i class="nonterminal">using-directive</i>; see (<a title="namespace.qual" href="namespace.qual.html">3.4.3.2</a>).</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>If a name is in scope and is not hidden it is said to be <dfn>visible</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="visible"></object>.</p>
+</body>
+</html>
+

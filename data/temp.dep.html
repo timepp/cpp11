@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Dependent names</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[temp.dep]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[temp.dep]"></object>14.6.2 Dependent names </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Inside a template, some constructs have semantics which may differ from one instantiation to another. Such a
+construct <dfn>depends</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="depends"></object> on the template parameters. In particular, types and expressions may depend on the type
+and/or value of template parameters (as determined by the template arguments) and this determines the context for name
+lookup for certain names. Expressions may be <dfn>type-dependent</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="type-dependent"></object> (on the type of a template parameter) or
+<dfn>value-dependent</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="value-dependent"></object> (on the value of a non-type template parameter). In an expression of the form:</p>
+
+<dl><dd>
+<i class="nonterminal">postfix-expression</i> <code class="sh_cpp">(</code> <i class="nonterminal">expression-list</i><sub class="opt">opt</sub> <code class="sh_cpp">)</code>
+</dd></dl>
+
+<p>where the <i class="nonterminal">postfix-expression</i> is an <i class="nonterminal">id-expression</i>, the <i class="nonterminal">id-expression</i> denotes a
+<dfn>dependent name</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="dependent name"></object> if</p>
+
+<ul>
+<li>any of the expressions in the <i class="nonterminal">expression-list</i> is a pack expansion (<a title="temp.variadic" href="temp.variadic.html">14.5.3</a>),</li>
+<li>any of the expressions in the <i class="nonterminal">expression-list</i> is a type-dependent expression (<a title="temp.dep.expr" href="temp.dep.expr.html">14.6.2.2</a>), or</li>
+<li>if the <i class="nonterminal">unqualified-id</i> of the <i class="nonterminal">id-expression</i> is a <i class="nonterminal">template-id</i> in which any of the template
+	arguments depends on a template parameter.</li>
+</ul>
+
+<p>If an operand of an operator is a type-dependent expression, the operator also denotes a dependent name. Such names
+are unbound and are looked up at the point of the template instantiation (<a title="temp.point" href="temp.point.html">14.6.4.1</a>) in both the context of
+the template definition and the context of the point of instantiation.</p>
+
+<div class="example">
+<p><a class="anchor" id="p2" href="#p2">2</a>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">template&lt;class T&gt; struct X : B&lt;T&gt; {
+  typename T::A* pa;
+  void f(B&lt;T&gt;* pb) {
+    static int i = B&lt;T&gt;::i;
+    pb-&gt;j++;
+  }
+};</code></pre>
+
+<p>the base class name <code class="sh_cpp">B&lt;T&gt;</code>, the type name <code class="sh_cpp">T::A</code>, the names
+<code class="sh_cpp">B&lt;T&gt;::i</code> and <code class="sh_cpp">pb-&gt;j</code> explicitly depend on the
+<i class="nonterminal">template-parameter</i>. — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>In the definition of a class or class template, if a base class depends on a <i class="nonterminal">template-parameter</i>, the
+base class scope is not examined during unqualified name lookup either at the point of definition of the class template
+or member or during an instantiation of the class template or member.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">typedef double A;
+template&lt;class T&gt; class B {
+  typedef int A;
+};
+template&lt;class T&gt; struct X : B&lt;T&gt; {
+  A a;              // a has type double
+};</code></pre>
+
+<p>The type name <code class="sh_cpp">A</code> in the definition of <code class="sh_cpp">X&lt;T&gt;</code> binds to the typedef name defined in
+the global namespace scope, not to the typedef name defined in the base class
+<code class="sh_cpp">B&lt;T&gt;</code>. — <em>end example</em> ]</p>
+</div>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct A {
+  struct B { /* … */ };
+  int a;
+  int Y;
+};
+
+int a;
+
+template&lt;class T&gt; struct Y : T {
+  struct B { /* … */ };
+  B b;                          // The B defined in Y
+  void f(int i) { a = i; }      // ::a
+  Y* p;                         // Y&lt;T&gt;
+};
+
+Y&lt;A&gt; ya;</code></pre>
+
+<p>The members <code class="sh_cpp">A::B</code>, <code class="sh_cpp">A::a</code>, and <code class="sh_cpp">A::Y</code> of the template argument <code class="sh_cpp">A</code> do
+not affect the binding of names in <code class="sh_cpp">Y&lt;A&gt;</code>. — <em>end example</em> ]</p>
+</div>
+</body>
+</html>
+

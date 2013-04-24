@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class ios_base::failure</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[ios.types]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[ios.types]"></object>27.5.3.1 Types </h4>
+
+<h5>
+<dfn class="label">[ios::failure]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[ios::failure]"></object>27.5.3.1.1 Class <code class="sh_cpp">ios_base::<dfn>failure</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="failure"></object></code> </h5>
+
+<pre><code class="sh_cpp">namespace std {
+  class ios_base::failure : public system_error {
+  public:
+    explicit failure(const string&amp; msg, const error_code&amp; ec = io_errc::stream);
+    explicit failure(const char* msg, const error_code&amp; ec = io_errc::stream);
+  };
+}</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The class <code class="sh_cpp">failure</code> defines the base class for the types of all objects thrown as exceptions, by
+functions in the iostreams library, to report errors detected during stream buffer operations.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>When throwing <code class="sh_cpp">ios_base::failure</code> exceptions, implementations should provide values of
+<code class="sh_cpp">ec</code> that identify the specific reason for the failure. <span class="note">[ <em>Note:</em> Errors arising from the operating system would
+typically be reported as <code class="sh_cpp">system_category()</code> errors with an error value of the error number reported by the
+operating system. Errors arising from within the stream library would typically be reported as
+<code class="sh_cpp">error_code(io_errc::stream, iostream_category())</code>. — <em>end note</em> ]</span></p>
+
+<h6><code class="sh_cpp">explicit failure(const string&amp; msg, const error_code&amp; ec = io_errc::stream);</code></h6>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Effects:</em> Constructs an object of class <code class="sh_cpp">failure</code> by constructing the base class with
+<code class="sh_cpp">msg</code> and <code class="sh_cpp">ec</code>.</p>
+
+<h6><code class="sh_cpp">explicit failure(const char* msg, const error_code&amp; ec = io_errc::stream);</code></h6>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><em>Effects:</em> Constructs an object of class <code class="sh_cpp">failure</code> by constructing the base class with
+<code class="sh_cpp">msg</code> and <code class="sh_cpp">ec</code>.</p>
+</body>
+</html>
+

@@ -1,0 +1,437 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Type properties</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[meta.unary.prop]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[meta.unary.prop]"></object>20.9.4.3 Type properties </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>These templates provide access to some of the more important properties of types.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>It is unspecified whether the library defines any full or partial specializations of any of these
+templates.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>For all of the class templates <code class="sh_cpp">X</code> declared in this Clause, instantiating that template with a
+template-argument that is a class template specialization may result in the implicit instantiation of the template
+argument if and only if the semantics of <code class="sh_cpp">X</code> require that the argument must be a complete type.</p>
+
+<table id="t49" class="type_traits">
+<caption>Table 49 — Type property predicates</caption>
+<thead><tr>
+<th>Template</th>
+<th>Condition</th>
+<th>Preconditions</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>is_­const</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_const"></object>;</code></pre></td>
+	<td>
+<code class="sh_cpp">T</code> is const-qualified (<a title="basic.type.qualifier" href="basic.type.qualifier.html">3.9.3</a>)</td>
+	<td></td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>is_­volatile</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_volatile"></object>;</code></pre></td>
+	<td>
+<code class="sh_cpp">T</code> is volatile-qualified (<a title="basic.type.qualifier" href="basic.type.qualifier.html">3.9.3</a>)</td>
+	<td></td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>is_­trivial</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_trivial"></object>;</code></pre></td>
+	<td>
+<code class="sh_cpp">T</code> is a trivial type (<a title="basic.types" href="basic.types.html">3.9</a>)</td>
+	<td>
+<code class="sh_cpp">T</code> shall be a complete type, (possibly cv-qualified) <code class="sh_cpp">void</code>, or an array of unknown
+		bound.</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>is_­trivially_­copyable</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_trivially_copyable"></object>;</code></pre></td>
+	<td>
+<code class="sh_cpp">T</code> is a trivially copyable type (<a title="basic.types" href="basic.types.html">3.9</a>)</td>
+	<td>
+<code class="sh_cpp">T</code> shall be a complete type, (possibly cv-qualified) <code class="sh_cpp">void</code>, or an array of unknown
+		bound.</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>is_­standard_­layout</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_standard_layout"></object>;</code></pre></td>
+	<td>
+<code class="sh_cpp">T</code> is a standard-layout type (<a title="basic.types" href="basic.types.html">3.9</a>)</td>
+	<td>
+<code class="sh_cpp">T</code> shall be a complete type, (possibly cv-qualified) <code class="sh_cpp">void</code>, or an array of unknown
+		bound.</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>is_­pod</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_pod"></object>;</code></pre></td>
+	<td>
+<code class="sh_cpp">T</code> is a POD type (<a title="basic.types" href="basic.types.html">3.9</a>)</td>
+	<td>
+<code class="sh_cpp">T</code> shall be a complete type, (possibly cv-qualified) <code class="sh_cpp">void</code>, or an array of unknown
+		bound.</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>is_­literal_­type</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_literal_type"></object>;</code></pre></td>
+	<td>
+<code class="sh_cpp">T</code> is a literal type (<a title="basic.types" href="basic.types.html">3.9</a>)</td>
+	<td>
+<code class="sh_cpp">T</code> shall be a complete type, (possibly cv-qualified) <code class="sh_cpp">void</code>, or an array of unknown
+		bound.</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>is_­empty</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_empty"></object>;</code></pre></td>
+	<td>
+<code class="sh_cpp">T</code> is a class type, but not a union type, with no non-static data members other than bit-fields of
+		length 0, no virtual member functions, no virtual base classes, and no base class <code class="sh_cpp">B</code> for which
+		<code class="sh_cpp">is_­empty​&lt;B&gt;​::​value</code> is false.</td>
+	<td>
+<code class="sh_cpp">T</code> shall be a complete type, (possibly cv-qualified) <code class="sh_cpp">void</code>, or an array of unknown
+		bound.</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>is_­polymorphic</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_polymorphic"></object>;</code></pre></td>
+	<td>
+<code class="sh_cpp">T</code> is a polymorphic class (<a title="class.virtual" href="class.virtual.html">10.3</a>)</td>
+	<td>
+<code class="sh_cpp">T</code> shall be a complete type, (possibly cv-qualified) <code class="sh_cpp">void</code>, or an array of unknown
+		bound.</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>is_­abstract</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_abstract"></object>;</code></pre></td>
+	<td>
+<code class="sh_cpp">T</code> is an abstract class (<a title="class.abstract" href="class.abstract.html">10.4</a>)</td>
+	<td>
+<code class="sh_cpp">T</code> shall be a complete type, (possibly cv-qualified) <code class="sh_cpp">void</code>, or an array of unknown
+		bound.</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>is_­signed</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_signed"></object>;</code></pre></td>
+	<td><code class="sh_cpp">is_­arithmetic​&lt;T&gt;​::​value &amp;&amp; T(-1) &lt; T(0)</code></td>
+	<td></td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>is_­unsigned</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_unsigned"></object>;</code></pre></td>
+	<td><code class="sh_cpp">is_­arithmetic​&lt;T&gt;​::​value &amp;&amp; T(0) &lt; T(-1)</code></td>
+	<td></td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T, class... Args&gt;
+struct <dfn>is_­construct­ible</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_constructible"></object>;</code></pre></td>
+	<td><em>see below</em></td>
+	<td>
+<code class="sh_cpp">T</code> and all types in the parameter pack <code class="sh_cpp">Args</code> shall be complete types, (possibly
+		cv-qualified) <code class="sh_cpp">void</code>, or arrays of unknown bound.</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>is_­default_­construct­ible</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_default_constructible"></object>;</code></pre></td>
+	<td>​<code class="sh_cpp">is_­construct­ible​&lt;T&gt;​::​value</code> is <code class="sh_cpp">true</code>
+</td>
+	<td>
+<code class="sh_cpp">T</code> shall be a complete type, (possibly cv-qualified) <code class="sh_cpp">void</code>, or an array of unknown
+		bound.</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>is_­copy_­construct­ible</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_copy_constructible"></object>;</code></pre></td>
+	<td>​<code class="sh_cpp">is_­construct­ible​&lt;T, const T&amp;&gt;​::​value</code> is
+		<code class="sh_cpp">true</code>
+</td>
+	<td>
+<code class="sh_cpp">T</code> shall be a complete type, (possibly cv-qualified) <code class="sh_cpp">void</code>, or an array of unknown
+		bound.</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>is_­move_­construct­ible</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_move_constructible"></object>;</code></pre></td>
+	<td>​<code class="sh_cpp">is_­construct­ible​&lt;T, T&amp;&amp;&gt;​::​value</code> is
+		<code class="sh_cpp">true</code>
+</td>
+	<td>
+<code class="sh_cpp">T</code> shall be a complete type, (possibly cv-qualified) <code class="sh_cpp">void</code>, or an array of unknown
+		bound.</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T, class U&gt;
+struct <dfn>is_­assign­able</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_assignable"></object>;</code></pre></td>
+	<td>The expression <code class="sh_cpp">declval&lt;T&gt;() = declval&lt;U&gt;()</code> is well-formed when treated as an
+		unevaluated operand (Clause <a title="expr" href="expr.html">5</a>). Access checking is performed as if in a context unrelated to
+		<code class="sh_cpp">T</code> and <code class="sh_cpp">U</code>. Only the validity of the immediate context of the assignment expression is
+		considered. <span class="note">[ <em>Note:</em> The compilation of the expression can result in side effects such as the instantiation of
+		class template specializations and function template specializations, the generation of implicitly-defined
+		functions, and so on. Such side effects are not in the “immediate context” and can result in the program being
+		ill-formed — <em>end note</em> ]</span>
+</td>
+	<td>
+<code class="sh_cpp">T</code> and <code class="sh_cpp">U</code> shall be complete types, (possibly cv-qualified) <code class="sh_cpp">void</code>, or arrays
+		of unknown bound.</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>is_­copy_­assign­able</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_copy_assignable"></object>;</code></pre></td>
+	<td>
+<code class="sh_cpp">is_­assign­able​&lt;T&amp;, const T&amp;&gt;​::​value</code> is
+		<code class="sh_cpp">true</code>
+</td>
+	<td>
+<code class="sh_cpp">T</code> shall be a complete type, (possibly cv-qualified) <code class="sh_cpp">void</code>, or an array of unknown
+		bound.</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>is_­move_­assign­able</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_move_assignable"></object>;</code></pre></td>
+	<td>
+<code class="sh_cpp">is_­assign­able​&lt;T&amp;, T&amp;&amp;&gt;​::​value</code> is
+		<code class="sh_cpp">true</code>
+</td>
+	<td>
+<code class="sh_cpp">T</code> shall be a complete type, (possibly cv-qualified) <code class="sh_cpp">void</code>, or an array of unknown
+		bound.</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>is_­destruct­ible</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_destructible"></object>;</code></pre></td>
+	<td>For a complete type <code class="sh_cpp">T</code> and given <code class="sh_cpp">template &lt;class U&gt; struct test { U u; };</code>,
+		<code class="sh_cpp">test&lt;T&gt;::~test()</code> is not deleted.</td>
+	<td>
+<code class="sh_cpp">T</code> shall be a complete type, (possibly cv-qualified) <code class="sh_cpp">void</code>, or an array of unknown
+		bound.</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T, class... Args&gt;
+struct <dfn>is_­trivially_­construct­ible</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_trivially_constructible"></object>;</code></pre></td>
+	<td>
+<code class="sh_cpp">is_­construct­ible​&lt;T, Args...&gt;​::​value</code> is <code class="sh_cpp">true</code> and the
+		variable definition for <code class="sh_cpp">is_­construct­ible</code>, as defined below, is known to call no operation
+		that is not trivial (<a title="basic.types" href="basic.types.html">3.9</a>, <a title="special" href="special.html">12</a>).</td>
+	<td>
+<code class="sh_cpp">T</code> and all types in the parameter pack <code class="sh_cpp">Args</code> shall be complete types, (possibly
+		cv-qualified) <code class="sh_cpp">void</code>, or arrays of unknown bound.</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>is_­trivially_­default_­construct­ible</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_trivially_default_constructible"></object>;</code></pre></td>
+	<td>
+<code class="sh_cpp">is_­trivially_­construct­ible&lt;T&gt;::value</code> is <code class="sh_cpp">true</code>
+</td>
+	<td>
+<code class="sh_cpp">T</code> shall be a complete type, (possibly cv-qualified) <code class="sh_cpp">void</code>, or an array of unknown
+		bound.</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>is_­trivially_­copy_­construct­ible</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_trivially_copy_constructible"></object>;</code></pre></td>
+	<td>
+<code class="sh_cpp">is_­trivially_­construct­ible&lt;T, const T&amp;&gt;::value</code> is <code class="sh_cpp">true</code>
+</td>
+	<td>
+<code class="sh_cpp">T</code> shall be a complete type, (possibly cv-qualified) <code class="sh_cpp">void</code>, or an array of unknown
+		bound.</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>is_­trivially_­move_­construct­ible</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_trivially_move_constructible"></object>;</code></pre></td>
+	<td>
+<code class="sh_cpp">is_­trivially_­construct­ible&lt;T, T&amp;&amp;&gt;::value</code> is <code class="sh_cpp">true</code>
+</td>
+	<td>
+<code class="sh_cpp">T</code> shall be a complete type, (possibly cv-qualified) <code class="sh_cpp">void</code>, or an array of unknown
+		bound.</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T, class U&gt;
+struct <dfn>is_­trivially_­assign­able</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_trivially_assignable"></object>;</code></pre></td>
+	<td>
+<code class="sh_cpp">is_­assign­able​&lt;T, U&gt;​::​value</code> is <code class="sh_cpp">true</code> and the
+		assignment, as defined by <code class="sh_cpp">is_­assign­able</code>, is known to call no operation that is not
+		trivial (<a title="basic.types" href="basic.types.html">3.9</a>, <a title="special" href="special.html">12</a>).</td>
+	<td>
+<code class="sh_cpp">T</code> and <code class="sh_cpp">U</code> shall be complete types, (possibly cv-qualified) <code class="sh_cpp">void</code>, or arrays
+		of unknown bound.</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>is_­trivially_­copy_­assign­able</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_trivially_copy_assignable"></object>;</code></pre></td>
+	<td>
+<code class="sh_cpp">is_­trivially_­assign­able​&lt;T&amp;, const T&amp;&gt;​::​value</code> is
+		<code class="sh_cpp">true</code>
+</td>
+	<td>
+<code class="sh_cpp">T</code> shall be a complete type, (possibly cv-qualified) <code class="sh_cpp">void</code>, or an array of unknown
+		bound.</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>is_­trivially_­move_­assign­able</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_trivially_move_assignable"></object>;</code></pre></td>
+	<td>
+<code class="sh_cpp">is_­trivially_­assign­able​&lt;T&amp;, T&amp;&amp;&gt;​::​value</code> is
+		<code class="sh_cpp">true</code>
+</td>
+	<td>
+<code class="sh_cpp">T</code> shall be a complete type, (possibly cv-qualified) <code class="sh_cpp">void</code>, or an array of unknown
+		bound.</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>is_­trivially_­destruct­ible</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_trivially_destructible"></object>;</code></pre></td>
+	<td>
+<code class="sh_cpp">is_­destruct­ible​&lt;T&gt;​::​value</code> is <code class="sh_cpp">true</code> and the indicated
+		destructor is known to be trivial</td>
+	<td>
+<code class="sh_cpp">T</code> shall be a complete type, (possibly cv-qualified) <code class="sh_cpp">void</code>, or an array of unknown
+		bound.</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T, class... Args&gt;
+struct <dfn>is_­nothrow_­construct­ible</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_nothrow_constructible"></object>;</code></pre></td>
+	<td>
+<code class="sh_cpp">is_­construct­ible​&lt;T, Args...&gt;​::​value</code> is <code class="sh_cpp">true</code> and the
+		variable definition for <code class="sh_cpp">is_­construct­ible</code>, as defined below, is known not to throw any
+		exceptions (<a title="expr.unary.noexcept" href="expr.unary.noexcept.html">5.3.7</a>)</td>
+	<td>
+<code class="sh_cpp">T</code> and all types in the parameter pack <code class="sh_cpp">Args</code> shall be complete types, (possibly
+		cv-qualified) <code class="sh_cpp">void</code>, or arrays of unknown bound.</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>is_­nothrow_­default_­construct­ible</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_nothrow_default_constructible"></object>;</code></pre></td>
+	<td>
+<code class="sh_cpp">is_­nothrow_­construct­ible​&lt;T&gt;​::​value</code> is <code class="sh_cpp">true</code>
+</td>
+	<td>
+<code class="sh_cpp">T</code> shall be a complete type, (possibly cv-qualified) <code class="sh_cpp">void</code>, or an array of unknown
+		bound.</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>is_­nothrow_­copy_­constructible</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_nothrow_copy_constructible"></object>;</code></pre></td>
+	<td>
+<code class="sh_cpp">is_­nothrow_­construct­ible​&lt;T, const T&amp;&gt;​::​value</code> is
+		<code class="sh_cpp">true</code>
+</td>
+	<td>
+<code class="sh_cpp">T</code> shall be a complete type, (possibly cv-qualified) <code class="sh_cpp">void</code>, or an array of unknown
+		bound.</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>is_­nothrow_­move_­construct­ible</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_nothrow_move_constructible"></object>;</code></pre></td>
+	<td>
+<code class="sh_cpp">is_­nothrow_­construct­ible​&lt;T, T&amp;&amp;&gt;​::​value</code> is
+		<code class="sh_cpp">true</code>
+</td>
+	<td>
+<code class="sh_cpp">T</code> shall be a complete type, (possibly cv-qualified) <code class="sh_cpp">void</code>, or an array of unknown
+		bound.</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T, class U&gt;
+struct is_­nothrow_­assign­able;</code></pre></td>
+	<td>
+<code class="sh_cpp">is_­assign­able​&lt;T, U&gt;​::​value</code> is <code class="sh_cpp">true</code> and the
+		assignment is known not to throw any exceptions (<a title="expr.unary.noexcept" href="expr.unary.noexcept.html">5.3.7</a>)</td>
+	<td>
+<code class="sh_cpp">T</code> and <code class="sh_cpp">U</code> shall be complete types, (possibly cv-qualified) <code class="sh_cpp">void</code>, or arrays
+		of unknown bound.</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>is_­nothrow_­copy_­assign­able</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_nothrow_copy_assignable"></object>;</code></pre></td>
+	<td>
+<code class="sh_cpp">is_­nothrow_­assign­able​&lt;T&amp;, const T&amp;&gt;​::​value</code> is
+		<code class="sh_cpp">true</code>
+</td>
+	<td>
+<code class="sh_cpp">T</code> shall be a complete type, (possibly cv-qualified) <code class="sh_cpp">void</code>, or an array of unknown
+		bound.</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>is_­nothrow_­move_­assign­able</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_nothrow_move_assignable"></object>;</code></pre></td>
+	<td>
+<code class="sh_cpp">is_­nothrow_­assign­able​&lt;T&amp;, T&amp;&amp;&gt;​::​value</code> is
+		<code class="sh_cpp">true</code>
+</td>
+	<td>
+<code class="sh_cpp">T</code> shall be a complete type, (possibly cv-qualified) <code class="sh_cpp">void</code>, or an array of unknown
+		bound.</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>is_­nothrow_­destruct­ible</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_nothrow_destructible"></object>;</code></pre></td>
+	<td>
+<code class="sh_cpp">is_­destruct­ible​&lt;T&gt;​::​value</code> is <code class="sh_cpp">true</code> and the indicated
+		destructor is known not to throw any exceptions (<a title="expr.unary.noexcept" href="expr.unary.noexcept.html">5.3.7</a>)</td>
+	<td>
+<code class="sh_cpp">T</code> shall be a complete type, (possibly cv-qualified) <code class="sh_cpp">void</code>, or an array of unknown
+		bound.</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>has_­virtual_­destructor</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="has_virtual_destructor"></object>;</code></pre></td>
+	<td>
+<code class="sh_cpp">T</code> has a virtual destructor (<a title="class.dtor" href="class.dtor.html">12.4</a>)</td>
+	<td>
+<code class="sh_cpp">T</code> shall be a complete type, (possibly cv-qualified) <code class="sh_cpp">void</code>, or an array of unknown
+		bound.</td>
+</tr>
+</tbody>
+</table>
+
+<div class="example">
+<p><a class="anchor" id="p4" href="#p4">4</a>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">is_const&lt;const volatile int&gt;::value     // true
+is_const&lt;const int*&gt;::value             // false
+is_const&lt;const int&amp;&gt;::value             // false
+is_const&lt;int[3]&gt;::value                 // false
+is_const&lt;const int[3]&gt;::value           // true</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<div class="example">
+<p><a class="anchor" id="p5" href="#p5">5</a>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">remove_const&lt;const volatile int&gt;::type  // volatile int
+remove_const&lt;const int* const&gt;::type    // const int*
+remove_const&lt;const int&amp;&gt;::type          // const int&amp;
+remove_const&lt;const int[3]&gt;::type        // int[3]</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>Given the following function prototype:</p>
+
+<pre><code class="sh_cpp">template &lt;class T&gt;
+  typename add_rvalue_reference&lt;T&gt;::type create();</code></pre>
+
+<p>the predicate condition for a template specialization <code class="sh_cpp">is_constructible&lt;T, Args...&gt;</code> shall be
+satisfied if and only if the following variable definition would be well-formed for some invented variable
+<code class="sh_cpp">t</code>:</p>
+
+<pre><code class="sh_cpp">T t(create&lt;Args&gt;()...);</code></pre>
+
+<p><span class="note">[ <em>Note:</em> These tokens are never interpreted as a function declaration. — <em>end note</em> ]</span> Access checking is performed as if in a
+context unrelated to <code class="sh_cpp">T</code> and any of the <code class="sh_cpp">Args</code>. Only the validity of the immediate context of the
+variable initialization is considered. <span class="note">[ <em>Note:</em> The evaluation of the initialization can result in side effects such as the
+instantiation of class template specializations and function template specializations, the generation of
+implicitly-defined functions, and so on. Such side effects are not in the “immediate context” and can result in the
+program being ill-formed. — <em>end note</em> ]</span></p>
+</body>
+</html>
+

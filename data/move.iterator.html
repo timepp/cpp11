@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class template move_iterator</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[move.iterator]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[move.iterator]"></object>24.5.3.1 Class template <code class="sh_cpp"><dfn>move_iterator</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="move_iterator"></object></code> </h4>
+
+<pre><code class="sh_cpp">namespace std {
+  template &lt;class Iterator&gt;
+  class move_iterator {
+  public:
+    typedef Iterator                                              iterator_type;
+    typedef typename iterator_traits&lt;Iterator&gt;::difference_type   difference_type;
+    typedef Iterator                                              pointer;
+    typedef typename iterator_traits&lt;Iterator&gt;::value_type        value_type;
+    typedef typename iterator_traits&lt;Iterator&gt;::iterator_category iterator_category;
+    typedef value_type&amp;&amp;                                          reference;
+
+    move_iterator();
+    explicit move_iterator(Iterator i);
+    template &lt;class U&gt; move_iterator(const move_iterator&lt;U&gt;&amp; u);
+    template &lt;class U&gt; move_iterator&amp; operator=(const move_iterator&lt;U&gt;&amp; u);
+
+    iterator_type base() const;
+    reference operator*() const;
+    pointer operator-&gt;() const;
+
+    move_iterator&amp; operator++();
+    move_iterator operator++(int);
+    move_iterator&amp; operator--();
+    move_iterator operator--(int);
+
+    move_iterator operator+(difference_type n) const;
+    move_iterator&amp; operator+=(difference_type n);
+    move_iterator operator-(difference_type n) const;
+    move_iterator&amp; operator-=(difference_type n);
+    <em>unspecified</em> operator[](difference_type n) const;
+
+  private:
+    Iterator current;   // exposition only
+  };
+
+  template &lt;class Iterator1, class Iterator2&gt;
+    bool operator==(
+      const move_iterator&lt;Iterator1&gt;&amp; x, const move_iterator&lt;Iterator2&gt;&amp; y);
+  template &lt;class Iterator1, class Iterator2&gt;
+    bool operator!=(
+      const move_iterator&lt;Iterator1&gt;&amp; x, const move_iterator&lt;Iterator2&gt;&amp; y);
+  template &lt;class Iterator1, class Iterator2&gt;
+    bool operator&lt;(
+      const move_iterator&lt;Iterator1&gt;&amp; x, const move_iterator&lt;Iterator2&gt;&amp; y);
+  template &lt;class Iterator1, class Iterator2&gt;
+    bool operator&lt;=(
+      const move_iterator&lt;Iterator1&gt;&amp; x, const move_iterator&lt;Iterator2&gt;&amp; y);
+  template &lt;class Iterator1, class Iterator2&gt;
+    bool operator&gt;(
+      const move_iterator&lt;Iterator1&gt;&amp; x, const move_iterator&lt;Iterator2&gt;&amp; y);
+  template &lt;class Iterator1, class Iterator2&gt;
+    bool operator&gt;=(
+      const move_iterator&lt;Iterator1&gt;&amp; x, const move_iterator&lt;Iterator2&gt;&amp; y);
+
+  template &lt;class Iterator1, class Iterator2&gt;
+    auto operator-(
+      const move_iterator&lt;Iterator1&gt;&amp; x,
+      const move_iterator&lt;Iterator2&gt;&amp; y) -&gt; decltype(x.base() - y.base());
+  template &lt;class Iterator&gt;
+    move_iterator&lt;Iterator&gt; operator+(
+      typename move_iterator&lt;Iterator&gt;::difference_type n, const move_iterator&lt;Iterator&gt;&amp; x);
+  template &lt;class Iterator&gt;
+    move_iterator&lt;Iterator&gt; make_move_iterator(const Iterator&amp; i);
+}</code></pre>
+</body>
+</html>
+

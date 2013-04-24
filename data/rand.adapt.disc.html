@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class template discard_block_engine</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[rand.adapt.disc]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[rand.adapt.disc]"></object>26.5.4.2 Class template <code class="sh_cpp"><dfn>discard_block_engine</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="discard_block_engine"></object></code> </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A <code class="sh_cpp">discard_block_engine</code> random number engine adaptor produces random numbers selected from those
+produced by some base engine <var>e</var>. The state <code class="sh_cpp">x</code><sub><var>i</var></sub> of a
+<code class="sh_cpp">discard_block_engine</code> engine adaptor object <code class="sh_cpp">x</code> consists of the state
+<code class="sh_cpp">e</code><sub><var>i</var></sub> of its base engine <var>e</var> and an additional integer <code class="sh_cpp">n</code>. The
+size of the state is the size of <var>e</var>’s state plus 1.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The transition algorithm discards all but <var>r</var> &gt; 0 values from each block of <var>p</var> ≥
+<var>r</var> values delivered by <var>e</var>. The state transition is performed as follows: If <var>n</var> ≥
+<var>r</var>, advance the state of <code class="sh_cpp">e</code> from <code class="sh_cpp">e</code><sub><var>i</var></sub> to
+<code class="sh_cpp">e</code><sub><var>i</var>+<var>p</var>−<var>r</var></sub> and set <var>n</var> to 0. In any case, then increment
+<var>n</var> and advance <code class="sh_cpp">e</code>’s then-current state <code class="sh_cpp">e</code><sub><var>j</var></sub> to
+<code class="sh_cpp">e</code><sub><var>j</var>+1</sub>.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>The generation algorithm yields the value returned by the last invocation of <code class="sh_cpp">e()</code> while advancing
+<code class="sh_cpp">e</code>’s state as described above.</p>
+
+<pre><code class="sh_cpp">template&lt;class Engine, size_t p, size_t r&gt;
+  class discard_block_engine
+{
+public:
+  // types
+  typedef typename Engine::result_type result_type;
+
+  // engine characteristics
+  static constexpr size_t block_size = p;
+  static constexpr size_t used_block = r;
+  static constexpr result_type min() { return Engine::min(); }
+  static constexpr result_type max() { return Engine::max(); }
+
+  // constructors and seeding functions
+  discard_block_engine();
+  explicit discard_block_engine(const Engine&amp; e);
+  explicit discard_block_engine(Engine&amp;&amp; e);
+  explicit discard_block_engine(result_type s);
+  template&lt;class Sseq&gt; explicit discard_block_engine(Sseq&amp; q);
+  void seed();
+  void seed(result_type s);
+  template&lt;class Sseq&gt; void seed(Sseq&amp; q);
+
+  // generating functions
+  result_type operator()();
+  void discard(unsigned long long z);
+
+  // property functions
+  const Engine&amp; base() const noexcept { return e; };
+
+private:
+  Engine e;     // exposition only
+  int n;        // exposition only
+};</code></pre>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>The following relations shall hold: <code class="sh_cpp">0 &lt; r</code> and <code class="sh_cpp">r &lt;= p</code>.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>The textual representation consists of the textual representation of <code class="sh_cpp">e</code> followed by the value of
+<code class="sh_cpp">n</code>.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>In addition to its behavior pursuant to section <a title="rand.req.adapt" href="rand.req.adapt.html">26.5.1.5</a>, each constructor that is not a copy
+constructor sets <code class="sh_cpp">n</code> to 0.</p>
+</body>
+</html>
+

@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Pointers to members</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[dcl.mptr]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[dcl.mptr]"></object>8.3.3 Pointers to members </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>In a declaration <code class="sh_cpp">T</code> <code class="sh_cpp">D</code> where <code class="sh_cpp">D</code> has the form</p>
+
+<dl><dd>
+<i class="nonterminal">nested-name-specifier</i> <code class="sh_cpp">*</code> <i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub> <i class="nonterminal">cv-qualifier-seq</i><sub class="opt">opt</sub> <code class="sh_cpp">D1</code>
+</dd></dl>
+
+<p>and the <i class="nonterminal">nested-name-specifier</i> denotes a class, and the type of the identifier in the declaration <code class="sh_cpp">T
+D1</code> is “<i class="nonterminal">derived-declarator-type-list</i> <code class="sh_cpp">T</code>”, then the type of the identifier of <code class="sh_cpp">D</code>
+is “<i class="nonterminal">derived-declarator-type-list</i> <i class="nonterminal">cv-qualifier-seq</i> pointer to member of class
+<i class="nonterminal">nested-name-specifier</i> of type <code class="sh_cpp">T</code>”. The optional <i class="nonterminal">attribute-specifier-seq</i> (<a title="dcl.attr.grammar" href="dcl.attr.grammar.html">7.6.1</a>)
+appertains to the pointer-to-member.</p>
+
+<div class="example">
+<p><a class="anchor" id="p2" href="#p2">2</a>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct X {
+  void f(int);
+  int a;
+};
+struct Y;
+
+int X::* pmi = &amp;X::a;
+void (X::* pmf)(int) = &amp;X::f;
+double X::* pmd;
+char Y::* pmc;</code></pre>
+
+<p>declares <code class="sh_cpp">pmi</code>, <code class="sh_cpp">pmf</code>, <code class="sh_cpp">pmd</code> and <code class="sh_cpp">pmc</code> to be a pointer to a member of
+<code class="sh_cpp">X</code> of type <code class="sh_cpp">int</code>, a pointer to a member of <code class="sh_cpp">X</code> of type <code class="sh_cpp">void(int)</code>, a
+pointer to a member of <code class="sh_cpp">X</code> of type <code class="sh_cpp">double</code> and a pointer to a member of <code class="sh_cpp">Y</code> of type
+<code class="sh_cpp">char</code> respectively. The declaration of <code class="sh_cpp">pmd</code> is well-formed even though <code class="sh_cpp">X</code> has no
+members of type <code class="sh_cpp">double</code>. Similarly, the declaration of <code class="sh_cpp">pmc</code> is well-formed even though
+<code class="sh_cpp">Y</code> is an incomplete type. <code class="sh_cpp">pmi</code> and <code class="sh_cpp">pmf</code> can be used like this:</p>
+
+<pre><code class="sh_cpp">X obj;
+// …
+obj.*pmi = 7;           // assign 7 to an integer
+                        // member of obj
+(obj.*pmf)(7);          // call a function member of obj
+                        // with the argument 7</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>A pointer to member shall not point to a static member of a class (<a title="class.static" href="class.static.html">9.4</a>), a member with reference
+type, or “<var>cv</var> <code class="sh_cpp">void</code>”. <span class="note">[ <em>Note:</em> See also <a title="expr.unary" href="expr.unary.html">5.3</a> and <a title="expr.mptr.oper" href="expr.mptr.oper.html">5.5</a>. The type “pointer to
+member” is distinct from the type “pointer”, that is, a pointer to member is declared only by the pointer to member
+declarator syntax, and never by the pointer declarator syntax. There is no “reference-to-member” type in C++. — <em>end note</em> ]</span></p>
+</body>
+</html>
+

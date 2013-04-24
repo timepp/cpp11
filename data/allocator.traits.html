@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Allocator traits</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[allocator.traits]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[allocator.traits]"></object>20.6.8 Allocator traits </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The class template <code class="sh_cpp"><dfn>allocator_traits</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="allocator_traits"></object></code> supplies a uniform interface to all allocator
+types. An allocator cannot be a non-class type, however, even if <code class="sh_cpp">allocator_traits</code> supplies the entire
+required interface. <span class="note">[ <em>Note:</em> Thus, it is always possible to create a derived class from an allocator. — <em>end note</em> ]</span></p>
+
+<pre><code class="sh_cpp">namespace std {
+  template &lt;class Alloc&gt; struct allocator_traits {
+    typedef Alloc allocator_type;
+
+    typedef typename Alloc::value_type value_type;
+
+    typedef <em>see below</em> pointer;
+    typedef <em>see below</em> const_pointer;
+    typedef <em>see below</em> void_pointer;
+    typedef <em>see below</em> const_void_pointer;
+
+    typedef <em>see below</em> difference_type;
+    typedef <em>see below</em> size_type;
+
+    typedef <em>see below</em> propagate_on_container_copy_assignment;
+    typedef <em>see below</em> propagate_on_container_move_assignment;
+    typedef <em>see below</em> propagate_on_container_swap;
+
+    template &lt;class T&gt; using rebind_alloc = <em>see below</em>;
+    template &lt;class T&gt; using rebind_traits = allocator_traits&lt;rebind_alloc&lt;T&gt; &gt;;
+
+    static pointer allocate(Alloc&amp; a, size_type n);
+    static pointer allocate(Alloc&amp; a, size_type n, const_void_pointer hint);
+
+    static void deallocate(Alloc&amp; a, pointer p, size_type n);
+
+    template &lt;class T, class... Args&gt;
+      static void construct(Alloc&amp; a, T* p, Args&amp;&amp;... args);
+
+    template &lt;class T&gt;
+    static void destroy(Alloc&amp; a, T* p);
+
+    static size_type max_size(const Alloc&amp; a);
+
+    static Alloc select_on_container_copy_construction(const Alloc&amp; rhs);
+  };
+}</code></pre>
+</body>
+</html>
+

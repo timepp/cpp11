@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class template owner_less</title>
+</head>
+<body>
+<h5>
+<dfn class="label">[util.smartptr.ownerless]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[util.smartptr.ownerless]"></object>20.7.2.3.7 Class template <code class="sh_cpp"><dfn>owner_less</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="owner_less"></object></code> </h5>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The class template <code class="sh_cpp">owner_less</code> allows ownership-based mixed comparisons of shared and weak
+pointers.</p>
+
+<pre><code class="sh_cpp">namespace std {
+  template&lt;class T&gt; struct owner_less;
+
+  template&lt;class T&gt; struct owner_less&lt;shared_ptr&lt;T&gt; &gt; {
+    typedef bool result_type;
+    typedef shared_ptr&lt;T&gt; first_argument_type;
+    typedef shared_ptr&lt;T&gt; second_argument_type;
+    bool operator()(shared_ptr&lt;T&gt; const&amp;, shared_ptr&lt;T&gt; const&amp;) const;
+    bool operator()(shared_ptr&lt;T&gt; const&amp;, weak_ptr&lt;T&gt; const&amp;) const;
+    bool operator()(weak_ptr&lt;T&gt; const&amp;, shared_ptr&lt;T&gt; const&amp;) const;
+  };
+
+  template&lt;class T&gt; struct owner_less&lt;weak_ptr&lt;T&gt; &gt; {
+    typedef bool result_type;
+    typedef shared_ptr&lt;T&gt; first_argument_type;
+    typedef shared_ptr&lt;T&gt; second_argument_type;
+    bool operator()(weak_ptr&lt;T&gt; const&amp;, weak_ptr&lt;T&gt; const&amp;) const;
+    bool operator()(shared_ptr&lt;T&gt; const&amp;, weak_ptr&lt;T&gt; const&amp;) const;
+    bool operator()(weak_ptr&lt;T&gt; const&amp;, shared_ptr&lt;T&gt; const&amp;) const;
+  };
+}</code></pre>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><code class="sh_cpp">operator()(x,y)</code> shall return <code class="sh_cpp">x.owner_before(y)</code>.</p>
+
+<div class="note">
+<p>[ <em>Note:</em> Note that</p>
+
+<ul>
+<li>
+<code class="sh_cpp">operator()</code> defines a strict weak ordering as defined in <a title="alg.sorting" href="alg.sorting.html">25.4</a>;</li>
+<li>under the equivalence relation defined by <code class="sh_cpp">operator()</code>, <code class="sh_cpp">!operator()(a, b) &amp;&amp;
+	!operator()(b, a)</code>, two <code class="sh_cpp">shared_ptr</code> or <code class="sh_cpp">weak_ptr</code> instances are equivalent if and
+	only if they share ownership or are both empty.</li>
+</ul>
+<p> — <em>end note</em> ]</p>
+</div>
+</body>
+</html>
+

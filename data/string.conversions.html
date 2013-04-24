@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Numeric conversions</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[string.conversions]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[string.conversions]"></object>21.5 Numeric conversions </h2>
+
+<h3><code class="sh_cpp">int <dfn>stoi</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="stoi"></object>(const string&amp; str, size_t *idx = 0, int base = 10);
+long <dfn>stol</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="stol"></object>(const string&amp; str, size_t *idx = 0, int base = 10);
+unsigned long <dfn>stoul</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="stoul"></object>(const string&amp; str, size_t *idx = 0, int base = 10);
+long long <dfn>stoll</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="stoll"></object>(const string&amp; str, size_t *idx = 0, int base = 10);
+unsigned long long <dfn>stoull</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="stoull"></object>(const string&amp; str, size_t *idx = 0, int base = 10);</code></h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Effects:</em> the first two functions call <code class="sh_cpp">strtol(str.c_str(), ptr, base)</code>, and the last three functions
+call <code class="sh_cpp">strtoul(str.c_str(), ptr, base)</code>, <code class="sh_cpp">strtoll(str.c_str(), ptr, base)</code>, and
+<code class="sh_cpp">strtoull(str.c_str(), ptr, base)</code>, respectively. Each function returns the converted result, if any. The
+argument <code class="sh_cpp">ptr</code> designates a pointer to an object internal to the function that is used to determine what to
+store at <code class="sh_cpp">*idx</code>. If the function does not throw an exception and <code class="sh_cpp">idx != 0</code>, the function stores
+in <code class="sh_cpp">*idx</code> the index of the first unconverted element of <code class="sh_cpp">str</code>.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Returns:</em> The converted result.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Throws:</em> <code class="sh_cpp">invalid_argument</code> if <code class="sh_cpp">strtol</code>, <code class="sh_cpp">strtoul</code>, <code class="sh_cpp">strtoll</code>, or
+<code class="sh_cpp">strtoull</code> reports that no conversion could be performed. Throws <code class="sh_cpp">out_of_range</code> if the converted
+value is outside the range of representable values for the return type.</p>
+
+<h3><code class="sh_cpp">float <code class="sh_cpp">stof</code>(const string&amp; str, size_t *idx = 0);
+double <code class="sh_cpp">stod</code>(const string&amp; str, size_t *idx = 0);
+long double <code class="sh_cpp">stold</code>(const string&amp; str, size_t *idx = 0);</code></h3>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><em>Effects:</em> the first two functions call <code class="sh_cpp">strtod(str.c_str(), ptr)</code> and the third function calls
+<code class="sh_cpp">strtold(str.c_str(), ptr)</code>. Each function returns the converted result, if any. The argument
+<code class="sh_cpp">ptr</code> designates a pointer to an object internal to the function that is used to determine what to store at
+<code class="sh_cpp">*idx</code>. If the function does not throw an exception and <code class="sh_cpp">idx != 0</code>, the function stores in
+<code class="sh_cpp">*idx</code> the index of the first unconverted element of <code class="sh_cpp">str</code>.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><em>Returns:</em> The converted result.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a><em>Throws:</em> <code class="sh_cpp">invalid_argument</code> if <code class="sh_cpp">strtod</code> or <code class="sh_cpp">strtold</code> reports that no conversion
+could be performed. Throws <code class="sh_cpp">out_of_range</code> if <code class="sh_cpp">strtod</code> or <code class="sh_cpp">strtold</code> sets
+<code class="sh_cpp">errno</code> to <code class="sh_cpp">ERANGE</code>.</p>
+
+<h3><code class="sh_cpp">string <dfn>to_string</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="to_string"></object>(int val);
+string <dfn>to_string</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="to_string"></object>(unsigned val);
+string <dfn>to_string</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="to_string"></object>(long val);
+string <dfn>to_string</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="to_string"></object>(unsigned long val);
+string <dfn>to_string</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="to_string"></object>(long long val);
+string <dfn>to_string</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="to_string"></object>(unsigned long long val);
+string <dfn>to_string</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="to_string"></object>(float val);
+string <dfn>to_string</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="to_string"></object>(double val);
+string <dfn>to_string</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="to_string"></object>(long double val);</code></h3>
+
+<p><a class="anchor" id="p7" href="#p7">7</a><em>Returns:</em> Each function returns a <code class="sh_cpp">string</code> object holding the character representation of the value
+of its argument that would be generated by calling <code class="sh_cpp">sprintf(buf, fmt, val)</code> with a format specifier of
+<code class="sh_cpp">"%d"</code>, <code class="sh_cpp">"%u"</code>, <code class="sh_cpp">"%ld"</code>, <code class="sh_cpp">"%lu"</code>, <code class="sh_cpp">"%lld"</code>, <code class="sh_cpp">"%llu"</code>,
+<code class="sh_cpp">"%f"</code>, <code class="sh_cpp">"%f"</code>, or <code class="sh_cpp">"%Lf"</code>, respectively, where <code class="sh_cpp">buf</code> designates an internal
+character buffer of sufficient size.</p>
+
+<h3><code class="sh_cpp">int <dfn>stoi</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="stoi"></object>(const wstring&amp; str, size_t *idx = 0, int base = 10);
+long <dfn>stol</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="stol"></object>(const wstring&amp; str, size_t *idx = 0, int base = 10);
+unsigned long <dfn>stoul</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="stoul"></object>(const wstring&amp; str, size_t *idx = 0, int base = 10);
+long long <dfn>stoll</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="stoll"></object>(const wstring&amp; str, size_t *idx = 0, int base = 10);
+unsigned long long <dfn>stoull</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="stoull"></object>(const wstring&amp; str, size_t *idx = 0, int base = 10);</code></h3>
+
+<p><a class="anchor" id="p8" href="#p8">8</a><em>Effects:</em> the first two functions call <code class="sh_cpp">wcstol(str.c_str(), ptr, base)</code>, and the last three functions
+call <code class="sh_cpp">wcstoul(str.c_str(), ptr, base)</code>, <code class="sh_cpp">wcstoll(str.c_str(), ptr, base)</code>, and
+<code class="sh_cpp">wcstoull(str.c_str(), ptr, base)</code>, respectively. Each function returns the converted result, if any. The
+argument <code class="sh_cpp">ptr</code> designates a pointer to an object internal to the function that is used to determine what to
+store at <code class="sh_cpp">*idx</code>. If the function does not throw an exception and <code class="sh_cpp">idx != 0</code>, the function stores
+in <code class="sh_cpp">*idx</code> the index of the first unconverted element of <code class="sh_cpp">str</code>.</p>
+
+<p><a class="anchor" id="p9" href="#p9">9</a><em>Returns:</em> The converted result.</p>
+
+<p><a class="anchor" id="p10" href="#p10">10</a><em>Throws:</em> <code class="sh_cpp">invalid_argument</code> if <code class="sh_cpp">wcstol</code>, <code class="sh_cpp">wcstoul</code>, <code class="sh_cpp">wcstoll</code>, or
+<code class="sh_cpp">wcstoull</code> reports that no conversion could be performed. Throws <code class="sh_cpp">out_of_range</code> if the converted
+value is outside the range of representable values for the return type.</p>
+
+<h3><code class="sh_cpp">float <dfn>stof</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="stof"></object>(const wstring&amp; str, size_t *idx = 0);
+double <dfn>stod</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="stod"></object>(const wstring&amp; str, size_t *idx = 0);
+long double <dfn>stold</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="stold"></object>(const wstring&amp; str, size_t *idx = 0);</code></h3>
+
+<p><a class="anchor" id="p11" href="#p11">11</a><em>Effects:</em> the first two functions call <code class="sh_cpp">wcstod(str.c_str(), ptr)</code> and the third function calls
+<code class="sh_cpp">wcstold(str.c_str(), ptr)</code>. Each function returns the converted result, if any. The argument
+<code class="sh_cpp">ptr</code> designates a pointer to an object internal to the function that is used to determine what to store at
+<code class="sh_cpp">*idx</code>. If the function does not throw an exception and <code class="sh_cpp">idx != 0</code>, the function stores in
+<code class="sh_cpp">*idx</code> the index of the first unconverted element of <code class="sh_cpp">str</code>.</p>
+
+<p><a class="anchor" id="p12" href="#p12">12</a><em>Returns:</em> The converted result.</p>
+
+<p><a class="anchor" id="p13" href="#p13">13</a><em>Throws:</em> <code class="sh_cpp">invalid_argument</code> if <code class="sh_cpp">wcstod</code> or <code class="sh_cpp">wcstold</code> reports that no
+conversion could be performed. Throws <code class="sh_cpp">out_of_range</code> if <code class="sh_cpp">wcstod</code> or <code class="sh_cpp">wcstold</code> sets
+<code class="sh_cpp">errno</code> to <code class="sh_cpp">ERANGE</code>.</p>
+
+<h3><code class="sh_cpp">wstring <dfn>to_wstring</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="to_wstring"></object>(int val);
+wstring <dfn>to_wstring</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="to_wstring"></object>(unsigned val);
+wstring <dfn>to_wstring</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="to_wstring"></object>(long val);
+wstring <dfn>to_wstring</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="to_wstring"></object>(unsigned long val);
+wstring <dfn>to_wstring</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="to_wstring"></object>(long long val);
+wstring <dfn>to_wstring</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="to_wstring"></object>(unsigned long long val);
+wstring <dfn>to_wstring</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="to_wstring"></object>(float val);
+wstring <dfn>to_wstring</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="to_wstring"></object>(double val);
+wstring <dfn>to_wstring</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="to_wstring"></object>(long double val);</code></h3>
+
+<p><a class="anchor" id="p14" href="#p14">14</a><em>Returns:</em> Each function returns a <code class="sh_cpp">wstring</code> object holding the character representation of the value
+of its argument that would be generated by calling <code class="sh_cpp">swprintf(buf, buffsz, fmt, val)</code> with a format specifier
+of <code class="sh_cpp">L"%d"</code>, <code class="sh_cpp">L"%u"</code>, <code class="sh_cpp">L"%ld"</code>, <code class="sh_cpp">L"%lu"</code>, <code class="sh_cpp">L"%lld"</code>,
+<code class="sh_cpp">L"%llu"</code>, <code class="sh_cpp">L"%f"</code>, <code class="sh_cpp">L"%f"</code>, or <code class="sh_cpp">L"%Lf"</code>, respectively, where
+<code class="sh_cpp">buf</code> designates an internal character buffer of sufficient size <code class="sh_cpp">buffsz</code>.</p>
+</body>
+</html>
+

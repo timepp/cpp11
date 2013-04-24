@@ -1,0 +1,146 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Friends</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[temp.friend]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[temp.friend]"></object>14.5.4 Friends </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A friend of a class or class template can be a function template or class template, a specialization of a
+function template or class template, or an ordinary (non-template) function or class. For a friend function declaration
+that is not a template declaration:</p>
+
+<ul>
+<li>if the name of the friend is a qualified or unqualified <i class="nonterminal">template-id</i>, the friend declaration refers to a
+	specialization of a function template, otherwise</li>
+<li>if the name of the friend is a <i class="nonterminal">qualified-id</i> and a matching non-template function is found in the specified
+	class or namespace, the friend declaration refers to that function, otherwise,</li>
+<li>if the name of the friend is a <i class="nonterminal">qualified-id</i> and a matching function template is found in the specified
+	class or namespace, the friend declaration refers to the deduced specialization of that function template
+	(<a title="temp.deduct.decl" href="temp.deduct.decl.html">14.8.2.5</a>), otherwise,</li>
+<li>the name shall be an <i class="nonterminal">unqualified-id</i> that declares (or redeclares) an ordinary (non-template) function.</li>
+</ul>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">template&lt;class T&gt; class task;
+template&lt;class T&gt; task&lt;T&gt;* preempt(task&lt;T&gt;*);
+
+template&lt;class T&gt; class task {
+  friend void next_time();
+  friend void process(task&lt;T&gt;*);
+  friend task&lt;T&gt;* preempt&lt;T&gt;(task&lt;T&gt;*);
+  template&lt;class C&gt; friend int func(C);
+  
+  friend class task&lt;int&gt;;
+  template&lt;class P&gt; friend class frd;
+};</code></pre>
+
+<p>Here, each specialization of the <code class="sh_cpp">task</code> class template has the function <code class="sh_cpp">next_time</code> as a
+friend; because <code class="sh_cpp">process</code> does not have explicit <i class="nonterminal">template-argument</i>s, each specialization of the task
+class template has an appropriately typed function <code class="sh_cpp">process</code> as a friend, and this friend is not a function
+template specialization; because the friend <code class="sh_cpp">preempt</code> has an explicit <i class="nonterminal">template-argument</i>
+<code class="sh_cpp">&lt;T&gt;</code>, each specialization of the <code class="sh_cpp">task</code> class template has the appropriate specialization
+of the function template <code class="sh_cpp">preempt</code> as a friend; and each specialization of the <code class="sh_cpp">task</code> class
+template has all specializations of the function template <code class="sh_cpp">func</code> as friends. Similarly, each specialization
+of the <code class="sh_cpp">task</code> class template has the class template specialization <code class="sh_cpp">task&lt;int&gt;</code> as a
+friend, and has all specializations of the class template <code class="sh_cpp">frd</code> as friends. — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>A friend template may be declared within a class or class template. A friend function template may be defined
+within a class or class template, but a friend class template may not be defined in a class or class template. In these
+cases, all specializations of the friend class or friend function template are friends of the class or class template
+granting friendship.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">class A {
+  template&lt;class T&gt; friend class B;                 // OK
+  template&lt;class T&gt; friend void f(T){ /* … */ }     // OK
+};</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>A template friend declaration specifies that all specializations of that template, whether they are implicitly
+instantiated (<a title="temp.inst" href="temp.inst.html">14.7.1</a>), partially specialized (<a title="temp.class.spec" href="temp.class.spec.html">14.5.5</a>) or explicitly specialized
+(<a title="temp.expl.spec" href="temp.expl.spec.html">14.7.3</a>), are friends of the class containing the template friend declaration.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">class X {
+  template&lt;class T&gt; friend struct A;
+  class Y { };
+};
+template&lt;class T&gt; struct A { X::Y ab; };            // OK
+template&lt;class T&gt; struct A&lt;T*&gt; { X::Y ab; };        // OK</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>When a function is defined in a friend function declaration in a class template, the function is instantiated
+when the function is odr-used. The same restrictions on multiple declarations and definitions that apply to non-template
+function declarations and definitions also apply to these implicit definitions.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>A member of a class template may be declared to be a friend of a non-template class. In this case, the
+corresponding member of every specialization of the class template is a friend of the class granting friendship. For
+explicit specializations the corresponding member is the member (if any) that has the same name, kind (type, function,
+class template, or function template), template parameters, and signature as the member of the class template
+instantiation that would otherwise have been generated.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">template&lt;class T&gt; struct A {
+  struct B { };
+  void f();
+  struct D {
+    void g();
+  };
+};
+template&lt;&gt; struct A&lt;int&gt; {
+  struct B { };
+  int f();
+  struct D {
+    void g();
+  };
+};
+
+class C {
+  template&lt;class T&gt; friend struct A&lt;T&gt;::B;      // grants friendship to A&lt;int&gt;::B even though
+                                                // it is not a specialization of A&lt;T&gt;::B
+  template&lt;class T&gt; friend void A&lt;T&gt;::f();      // does not grant friendship to A&lt;int&gt;::f()
+                                                // because its return type does not match
+  template&lt;class T&gt; friend void A&lt;T&gt;::D::g();   // does not grant friendship to A&lt;int&gt;::D::g()
+                                                // because A&lt;int&gt;::D is not a specialization of A&lt;T&gt;::D
+};</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p6" href="#p6">6</a><span class="note">[ <em>Note:</em> A friend declaration may first declare a member of an enclosing namespace scope
+(<a title="temp.inject" href="temp.inject.html">14.6.5</a>). — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p7" href="#p7">7</a>A friend template shall not be declared in a local class.</p>
+
+<p><a class="anchor" id="p8" href="#p8">8</a>Friend declarations shall not declare partial specializations.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">template&lt;class T&gt; class A { };
+class X {
+  template&lt;class T&gt; friend class A&lt;T*&gt;; // error
+};</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p9" href="#p9">9</a>When a friend declaration refers to a specialization of a function template, the function parameter
+declarations shall not include default arguments, nor shall the inline specifier be used in such a declaration.</p>
+</body>
+</html>
+

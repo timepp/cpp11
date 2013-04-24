@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>regex_token_iterator constructors</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[re.tokiter.cnstr]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[re.tokiter.cnstr]"></object>28.12.2.1 <code class="sh_cpp">regex_token_iterator</code> constructors </h4>
+
+<h5><code class="sh_cpp"><dfn>regex_token_iterator</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="regex_token_iterator"></object>();</code></h5>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Effects:</em> Constructs the end-of-sequence iterator.</p>
+
+<h5><code class="sh_cpp"><dfn>regex_token_iterator</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="regex_token_iterator"></object>(BidirectionalIterator a, BidirectionalIterator b,
+                     const regex_type&amp; re,
+                     int submatch = 0,
+                     regex_constants::match_flag_type m =
+                      regex_constants::match_default);
+
+<dfn>regex_token_iterator</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="regex_token_iterator"></object>(BidirectionalIterator a, BidirectionalIterator b,
+                     const regex_type&amp; re,
+                     const std::vector&lt;int&gt;&amp; submatches,
+                     regex_constants::match_flag_type m =
+                      regex_constants::match_default);
+
+<dfn>regex_token_iterator</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="regex_token_iterator"></object>(BidirectionalIterator a, BidirectionalIterator b,
+                     const regex_type&amp; re,
+                     initializer_list&lt;int&gt; submatches,
+                     regex_constants::match_flag_type m =
+                       regex_constants::match_default);
+
+template &lt;std::size_t N&gt;
+  <dfn>regex_token_iterator</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="regex_token_iterator"></object>(BidirectionalIterator a, BidirectionalIterator b,
+                       const regex_type&amp; re,
+                       const int (&amp;submatches)[N],
+                       regex_constants::match_flag_type m =
+                        regex_constants::match_default);</code></h5>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Requires:</em> Each of the initialization values of <code class="sh_cpp">submatches</code> shall be <code class="sh_cpp">&gt;=
+-1</code>.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Effects:</em> The first constructor initializes the member <code class="sh_cpp">subs</code> to hold the single value
+<code class="sh_cpp">submatch</code>. The second constructor initializes the member <code class="sh_cpp">subs</code> to hold a copy of the argument
+<code class="sh_cpp">submatches</code>. The third and fourth constructors initialize the member <code class="sh_cpp">subs</code> to hold a copy of the
+sequence of integer values pointed to by the iterator range <code class="sh_cpp">[submatches.begin(),submatches.end())</code> and
+<code class="sh_cpp">[&amp;submatches,&amp;submatches + N)</code>, respectively.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>Each constructor then sets <code class="sh_cpp">N</code> to 0, and <code class="sh_cpp">position</code> to <code class="sh_cpp">position_iterator(a, b, re,
+m)</code>. If <code class="sh_cpp">position</code> is not an end-of-sequence iterator the constructor sets <code class="sh_cpp">result</code> to the
+address of the current match. Otherwise if any of the values stored in <code class="sh_cpp">subs</code> is equal to −1 the constructor
+sets <code class="sh_cpp">*this</code> to a suffix iterator that points to the range <code class="sh_cpp">[a,b)</code>, otherwise the constructor sets
+<code class="sh_cpp">*this</code> to an end-of-sequence iterator.</p>
+</body>
+</html>
+

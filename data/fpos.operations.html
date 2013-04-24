@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>fpos requirements</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[fpos.operations]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[fpos.operations]"></object>27.5.4.2 <code class="sh_cpp">fpos</code> requirements </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Operations specified in Table <a href="fpos.operations.html#t127">127</a> are permitted. In that table,</p>
+
+<ul>
+<li>
+<code class="sh_cpp">P</code> refers to an instance of <code class="sh_cpp">fpos</code>,</li>
+<li>
+<code class="sh_cpp">p</code> and <code class="sh_cpp">q</code> refer to values of type <code class="sh_cpp">P</code>,</li>
+<li>
+<code class="sh_cpp">O</code> refers to type <code class="sh_cpp">streamoff</code>,</li>
+<li>
+<code class="sh_cpp">o</code> refers to a value of type <code class="sh_cpp">streamoff</code>,</li>
+<li>
+<code class="sh_cpp">sz</code> refers to a value of type <code class="sh_cpp">streamsize</code> and</li>
+<li>
+<code class="sh_cpp">i</code> refers to a value of type <code class="sh_cpp">int</code>.</li>
+</ul>
+
+<table id="t127" class="bordered hruled padded">
+<caption>Table 127 — Position type requirements</caption>
+<thead><tr>
+<th>Expression</th>
+<th>Return type</th>
+	<th>Operational semantics</th>
+	<th>Assertion/note<br>pre-/post-condition</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><pre><code class="sh_cpp">P(i)</code></pre></td>
+<td></td>
+	<td></td>
+	<td>
+<p><code class="sh_cpp">p == P(i)</code></p>
+		<p>note: a destructor is assumed.</p>
+</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">P p(i);
+P p = i;</code></pre></td>
+<td></td>
+	<td></td>
+	<td>post: <code class="sh_cpp">p == P(i)</code>.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">P(o)</code></td>
+<td><code class="sh_cpp">fpos</code></td>
+	<td>converts from <code class="sh_cpp">offset</code>
+</td>
+<td></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">O(p)</code></td>
+<td><code class="sh_cpp">streamoff</code></td>
+	<td>converts to <code class="sh_cpp">offset</code>
+</td>
+	<td><code class="sh_cpp">P(O(p)) == p</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">p == q</code></td>
+<td>convertible to <code class="sh_cpp">bool</code>
+</td>
+	<td></td>
+	<td>
+<code class="sh_cpp">==</code> is an equivalence relation</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">p != q</code></td>
+<td>convertible to <code class="sh_cpp">bool</code>
+</td>
+	<td><code class="sh_cpp">!(p == q)</code></td>
+	<td></td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">q = p + o
+p += o</code></pre></td>
+<td><code class="sh_cpp">fpos</code></td>
+	<td>
+<code class="sh_cpp">+</code> offset</td>
+	<td><code class="sh_cpp">q - o == p</code></td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">q = p - o
+p -= o</code></pre></td>
+<td><code class="sh_cpp">fpos</code></td>
+	<td>
+<code class="sh_cpp">-</code> offset</td>
+	<td><code class="sh_cpp">q + o == p</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">o = p - q</code></td>
+<td><code class="sh_cpp">streamoff</code></td>
+	<td>distance</td>
+	<td><code class="sh_cpp">q + o == p</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">streamsize(o)</code></td>
+<td><code class="sh_cpp">streamsize</code></td>
+	<td>converts</td>
+	<td><code class="sh_cpp">streamsize(O(sz)) == sz</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">O(sz)</code></td>
+<td><code class="sh_cpp">streamoff</code></td>
+	<td>converts</td>
+	<td><code class="sh_cpp">streamsize(O(sz)) == sz</code></td>
+</tr>
+</tbody>
+</table>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><span class="note">[ <em>Note:</em> Every implementation is required to supply overloaded operators on <code class="sh_cpp">fpos</code> objects to satisfy
+the requirements of <a title="fpos.operations" href="fpos.operations.html">27.5.4.2</a>. It is unspecified whether these operators are members of <code class="sh_cpp">fpos</code>,
+global operators, or provided in some other way. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>Stream operations that return a value of type <code class="sh_cpp">traits::pos_type</code> return <code class="sh_cpp">P(O(-1))</code> as an
+invalid value to signal an error. If this value is used as an argument to any <code class="sh_cpp">istream</code>,
+<code class="sh_cpp">ostream</code>, or <code class="sh_cpp">streambuf</code> member that accepts a value of type <code class="sh_cpp">traits::pos_type</code> then
+the behavior of that function is undefined.</p>
+</body>
+</html>
+

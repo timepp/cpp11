@@ -1,0 +1,649 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>General</title>
+</head>
+<body>
+<h1>
+<dfn class="label">[algorithms]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[algorithms]"></object>25 Algorithms library </h1>
+
+<h2>
+<dfn class="label">[algorithms.general]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[algorithms.general]"></object>25.1 General </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>This Clause describes components that C++ programs may use to perform algorithmic operations on containers
+(Clause <a title="containers" href="containers.general.html">23</a>) and other sequences.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The following subclauses describe components for non-modifying sequence operation, modifying sequence
+operations, sorting and related operations, and algorithms from the ISO C library, as summarized in Table <a href="algorithms.general.html#t112">112</a>.</p>
+
+<table id="t112" class="library_summary">
+<caption>Table 112 — Algorithms library summary</caption>
+<thead><tr>
+<th colspan="2">Subclause</th>
+<th>Header(s)</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><a title="alg.nonmodifying" href="alg.all_of.html">25.2</a></td>
+<td>Non-modifying sequence operations</td>
+<td rowspan="3"><code class="header">&lt;algorithm&gt;</code></td>
+</tr>
+<tr>
+<td><a title="alg.modifying.operations" href="alg.copy.html">25.3</a></td>
+<td>Mutating sequence operations</td>
+</tr>
+<tr>
+<td><a title="alg.sorting" href="alg.sorting.html">25.4</a></td>
+<td>Sorting and related operations</td>
+</tr>
+</tbody>
+<tbody><tr>
+<td><a title="alg.c.library" href="alg.c.library.html">25.5</a></td>
+<td>C library algorithms</td>
+<td><code class="header">&lt;cstdlib&gt;</code></td>
+</tr></tbody>
+</table>
+
+<h3>Header <dfn><code class="header">&lt;algorithm&gt;</code></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="&lt;algorithm&gt;"></object> synopsis</h3>
+
+<pre><code class="sh_cpp">#include &lt;initializer_list&gt;
+
+namespace std {
+
+  // <a title="alg.nonmodifying" href="alg.all_of.html">25.2</a>, non-modifying sequence operations:
+  template &lt;class InputIterator, class Predicate&gt;
+    bool all_of(InputIterator first, InputIterator last, Predicate pred);
+  template &lt;class InputIterator, class Predicate&gt;
+    bool any_of(InputIterator first, InputIterator last, Predicate pred);
+  template &lt;class InputIterator, class Predicate&gt;
+    bool none_of(InputIterator first, InputIterator last, Predicate pred);
+
+  template&lt;class InputIterator, class Function&gt;
+    Function for_each(InputIterator first, InputIterator last, Function f);
+  template&lt;class InputIterator, class T&gt;
+    InputIterator find(InputIterator first, InputIterator last,
+                       const T&amp; value);
+  template&lt;class InputIterator, class Predicate&gt;
+    InputIterator find_if(InputIterator first, InputIterator last,
+                          Predicate pred);
+  template&lt;class InputIterator, class Predicate&gt;
+    InputIterator find_if_not(InputIterator first, InputIterator last,
+                              Predicate pred);
+  template&lt;class ForwardIterator1, class ForwardIterator2&gt;
+    ForwardIterator1
+      find_end(ForwardIterator1 first1, ForwardIterator1 last1,
+               ForwardIterator2 first2, ForwardIterator2 last2);
+  template&lt;class ForwardIterator1, class ForwardIterator2,
+           class BinaryPredicate&gt;
+    ForwardIterator1
+    find_end(ForwardIterator1 first1, ForwardIterator1 last1,
+             ForwardIterator2 first2, ForwardIterator2 last2,
+             BinaryPredicate pred);
+
+  template&lt;class InputIterator, class ForwardIterator&gt;
+    InputIterator
+      find_first_of(InputIterator first1, InputIterator last1,
+                    ForwardIterator first2, ForwardIterator last2);
+  template&lt;class InputIterator, class ForwardIterator,
+           class BinaryPredicate&gt;
+    InputIterator
+      find_first_of(InputIterator first1, InputIterator last1,
+                    ForwardIterator first2, ForwardIterator last2,
+                    BinaryPredicate pred);
+
+  template&lt;class ForwardIterator&gt;
+    ForwardIterator adjacent_find(ForwardIterator first,
+                                  ForwardIterator last);
+  template&lt;class ForwardIterator, class BinaryPredicate&gt;
+    ForwardIterator adjacent_find(ForwardIterator first,
+                                  ForwardIterator last,
+                                  BinaryPredicate pred);
+
+  template&lt;class InputIterator, class T&gt;
+    typename iterator_traits&lt;InputIterator&gt;::difference_type
+      count(InputIterator first, InputIterator last, const T&amp; value);
+  template&lt;class InputIterator, class Predicate&gt;
+    typename iterator_traits&lt;InputIterator&gt;::difference_type
+      count_if(InputIterator first, InputIterator last, Predicate pred);
+
+  template&lt;class InputIterator1, class InputIterator2&gt;
+    pair&lt;InputIterator1, InputIterator2&gt;
+      mismatch(InputIterator1 first1, InputIterator1 last1,
+               InputIterator2 first2);
+  template&lt;class InputIterator1, class InputIterator2,
+           class BinaryPredicate&gt;
+    pair&lt;InputIterator1, InputIterator2&gt;
+      mismatch(InputIterator1 first1, InputIterator1 last1,
+               InputIterator2 first2, BinaryPredicate pred);
+
+  template&lt;class InputIterator1, class InputIterator2&gt;
+    bool equal(InputIterator1 first1, InputIterator1 last1,
+               InputIterator2 first2);
+  template&lt;class InputIterator1, class InputIterator2,
+           class BinaryPredicate&gt;
+    bool equal(InputIterator1 first1, InputIterator1 last1,
+               InputIterator2 first2, BinaryPredicate pred);
+
+  template&lt;class ForwardIterator1, class ForwardIterator2&gt;
+    bool is_permutation(ForwardIterator1 first1, ForwardIterator1 last1,
+                        ForwardIterator2 first2);
+  template&lt;class ForwardIterator1, class ForwardIterator2,
+           class BinaryPredicate&gt;
+    bool is_permutation(ForwardIterator1 first1, ForwardIterator1 last1,
+                        ForwardIterator2 first2, BinaryPredicate pred);
+
+  template&lt;class ForwardIterator1, class ForwardIterator2&gt;
+    ForwardIterator1 search(
+      ForwardIterator1 first1, ForwardIterator1 last1,
+      ForwardIterator2 first2, ForwardIterator2 last2);
+  template&lt;class ForwardIterator1, class ForwardIterator2,
+           class BinaryPredicate&gt;
+    ForwardIterator1 search(
+      ForwardIterator1 first1, ForwardIterator1 last1,
+      ForwardIterator2 first2, ForwardIterator2 last2,
+      BinaryPredicate pred);
+  template&lt;class ForwardIterator, class Size, class T&gt;
+    ForwardIterator search_n(ForwardIterator first, ForwardIterator last,
+                             Size count, const T&amp; value);
+  template&lt;class ForwardIterator, class Size, class T,
+           class BinaryPredicate&gt;
+    ForwardIterator1 search_n(ForwardIterator first, ForwardIterator last,
+                              Size count, const T&amp; value,
+                              BinaryPredicate pred);
+
+  // <a title="alg.modifying.operations" href="alg.copy.html">25.3</a>, modifying sequence operations:
+  // <a title="alg.copy" href="alg.copy.html">25.3.1</a>, copy:
+  template&lt;class InputIterator, class OutputIterator&gt;
+    OutputIterator copy(InputIterator first, InputIterator last,
+                        OutputIterator result);
+  template&lt;class InputIterator, class Size, class OutputIterator&gt;
+    OutputIterator copy_n(InputIterator first, Size n,
+                          OutputIterator result);
+  template&lt;class InputIterator, class OutputIterator, class Predicate&gt;
+    OutputIterator copy_if(InputIterator first, InputIterator last,
+                           OutputIterator result, Predicate pred);
+  template&lt;class BidirectionalIterator1, class BidirectionalIterator2&gt;
+    BidirectionalIterator2 copy_backward(
+      BidirectionalIterator1 first, BidirectionalIterator1 last,
+      BidirectionalIterator2 result);
+
+  // <a title="alg.move" href="alg.move.html">25.3.2</a>, move:
+  template&lt;class InputIterator, class OutputIterator&gt;
+    OutputIterator move(InputIterator first, InputIterator last,
+                        OutputIterator result);
+  template&lt;class BidirectionalIterator1, class BidirectionalIterator2&gt;
+    BidirectionalIterator2 move_backward(
+      BidirectionalIterator1 first, BidirectionalIterator1 last,
+      BidirectionalIterator2 result);
+
+  // <a title="alg.swap" href="alg.swap.html">25.3.3</a>, swap:
+  template&lt;class ForwardIterator1, class ForwardIterator2&gt;
+    ForwardIterator2 swap_ranges(
+      ForwardIterator1 first1, ForwardIterator1 last1,
+      ForwardIterator2 first2);
+  template&lt;class ForwardIterator1, class ForwardIterator2&gt;
+    void iter_swap(ForwardIterator1 a, ForwardIterator2 b);
+
+  // <a title="alg.transform" href="alg.transform.html">25.3.4</a>, transform:
+  template&lt;class InputIterator, class OutputIterator, class UnaryOperation&gt;
+    OutputIterator transform(InputIterator first, InputIterator last,
+                             OutputIterator result, UnaryOperation op);
+  template&lt;class InputIterator1, class InputIterator2, class OutputIterator,
+           class BinaryOperation&gt;
+    OutputIterator transform(InputIterator1 first1, InputIterator1 last1,
+                             InputIterator2 first2, OutputIterator result,
+                             BinaryOperation binary_op);
+
+  // <a title="alg.replace" href="alg.replace.html">25.3.5</a>, replace:
+  template&lt;class ForwardIterator, class T&gt;
+    void replace(ForwardIterator first, ForwardIterator last,
+                 const T&amp; old_value, const T&amp; new_value);
+  template&lt;class ForwardIterator, class Predicate, class T&gt;
+    void replace_if(ForwardIterator first, ForwardIterator last,
+                    Predicate pred, const T&amp; new_value);
+  template&lt;class InputIterator, class OutputIterator, class T&gt;
+    OutputIterator replace_copy(InputIterator first, InputIterator last,
+                                OutputIterator result,
+                                const T&amp; old_value, const T&amp; new_value);
+  template&lt;class InputIterator, class OutputIterator, class Predicate, class T&gt;
+    OutputIterator replace_copy_if(InputIterator first, InputIterator last,
+                                   OutputIterator result,
+                                   Predicate pred, const T&amp; new_value);
+
+  // <a title="alg.fill" href="alg.fill.html">25.3.6</a>, fill:
+  template&lt;class ForwardIterator, class T&gt;
+    void fill(ForwardIterator first, ForwardIterator last, const T&amp; value);
+  template&lt;class OutputIterator, class Size, class T&gt;
+    OutputIterator fill_n(OutputIterator first, Size n, const T&amp; value);
+
+  // <a title="alg.generate" href="alg.generate.html">25.3.7</a>, generate:
+  template&lt;class ForwardIterator, class Generator&gt;
+    void generate(ForwardIterator first, ForwardIterator last,
+                  Generator gen);
+  template&lt;class OutputIterator, class Size, class Generator&gt;
+    OutputIterator generate_n(OutputIterator first, Size n, Generator gen);
+
+  // <a title="alg.remove" href="alg.remove.html">25.3.8</a>, remove:
+  template&lt;class ForwardIterator, class T&gt;
+    ForwardIterator remove(ForwardIterator first, ForwardIterator last,
+                           const T&amp; value);
+  template&lt;class ForwardIterator, class Predicate&gt;
+    ForwardIterator remove_if(ForwardIterator first, ForwardIterator last,
+                              Predicate pred);
+  template&lt;class InputIterator, class OutputIterator, class T&gt;
+    OutputIterator remove_copy(InputIterator first, InputIterator last,
+                               OutputIterator result, const T&amp; value);
+  template&lt;class InputIterator, class OutputIterator, class Predicate&gt;
+    OutputIterator remove_copy_if(InputIterator first, InputIterator last,
+                                  OutputIterator result, Predicate pred);
+
+  // <a title="alg.unique" href="alg.unique.html">25.3.9</a>, unique:
+  template&lt;class ForwardIterator&gt;
+    ForwardIterator unique(ForwardIterator first, ForwardIterator last);
+  template&lt;class ForwardIterator, class BinaryPredicate&gt;
+    ForwardIterator unique(ForwardIterator first, ForwardIterator last,
+                           BinaryPredicate pred);
+  template&lt;class InputIterator, class OutputIterator&gt;
+    OutputIterator unique_copy(InputIterator first, InputIterator last,
+                               OutputIterator result);
+  template&lt;class InputIterator, class OutputIterator, class BinaryPredicate&gt;
+    OutputIterator unique_copy(InputIterator first, InputIterator last,
+                               OutputIterator result, BinaryPredicate pred);
+
+  // <a title="alg.reverse" href="alg.reverse.html">25.3.10</a>, reverse:
+  template&lt;class BidirectionalIterator&gt;
+    void reverse(BidirectionalIterator first, BidirectionalIterator last);
+  template&lt;class BidirectionalIterator, class OutputIterator&gt;
+    OutputIterator reverse_copy(BidirectionalIterator first,
+                                BidirectionalIterator last,
+                                OutputIterator result);
+
+  // <a title="alg.rotate" href="alg.rotate.html">25.3.11</a>, rotate:
+  template&lt;class ForwardIterator&gt;
+    ForwardIterator rotate(ForwardIterator first, ForwardIterator middle,
+                           ForwardIterator last);
+  template&lt;class ForwardIterator, class OutputIterator&gt;
+    OutputIterator rotate_copy(
+      ForwardIterator first, ForwardIterator middle,
+      ForwardIterator last, OutputIterator result);
+
+  // <a title="alg.random.shuffle" href="alg.random.shuffle.html">25.3.12</a>, random shuffle:
+  template&lt;class RandomAccessIterator&gt;
+    void random_shuffle(RandomAccessIterator first,
+                        RandomAccessIterator last);
+  template&lt;class RandomAccessIterator, class RandomNumberGenerator&gt;
+    void random_shuffle(RandomAccessIterator first,
+                        RandomAccessIterator last,
+                        RandomNumberGenerator&amp;&amp; rand);
+  template&lt;class RandomAccessIterator, class UniformRandomNumberGenerator&gt;
+    void shuffle(RandomAccessIterator first,
+                 RandomAccessIterator last,
+                 UniformRandomNumberGenerator&amp;&amp; rand);
+
+  // <a title="alg.partitions" href="alg.partitions.html">25.3.13</a>, partitions:
+  template &lt;class InputIterator, class Predicate&gt;
+    bool is_partitioned(InputIterator first, InputIterator last, Predicate pred);
+
+  template&lt;class ForwardIterator, class Predicate&gt;
+    ForwardIterator partition(ForwardIterator first,
+                              ForwardIterator last,
+                              Predicate pred);
+  template&lt;class BidirectionalIterator, class Predicate&gt;
+    BidirectionalIterator stable_partition(BidirectionalIterator first,
+                                           BidirectionalIterator last,
+                                           Predicate pred);
+  template &lt;class InputIterator, class OutputIterator1,
+            class OutputIterator2, class Predicate&gt;
+    pair&lt;OutputIterator1, OutputIterator2&gt;
+    partition_copy(InputIterator first, InputIterator last,
+                   OutputIterator1 out_true, OutputIterator2 out_false,
+                   Predicate pred);
+  template&lt;class ForwardIterator, class Predicate&gt;
+    ForwardIterator partition_point(ForwardIterator first,
+                                    ForwardIterator last,
+                                    Predicate pred);
+
+  // <a title="alg.sorting" href="alg.sorting.html">25.4</a>, sorting and related operations:
+  // <a title="alg.sort" href="sort.html">25.4.1</a>, sorting:
+  template&lt;class RandomAccessIterator&gt;
+    void sort(RandomAccessIterator first, RandomAccessIterator last);
+  template&lt;class RandomAccessIterator, class Compare&gt;
+    void sort(RandomAccessIterator first, RandomAccessIterator last,
+              Compare comp);
+
+  template&lt;class RandomAccessIterator&gt;
+    void stable_sort(RandomAccessIterator first, RandomAccessIterator last);
+  template&lt;class RandomAccessIterator, class Compare&gt;
+    void stable_sort(RandomAccessIterator first, RandomAccessIterator last,
+                     Compare comp);
+
+  template&lt;class RandomAccessIterator&gt;
+    void partial_sort(RandomAccessIterator first,
+                      RandomAccessIterator middle,
+                      RandomAccessIterator last);
+  template&lt;class RandomAccessIterator, class Compare&gt;
+    void partial_sort(RandomAccessIterator first,
+                      RandomAccessIterator middle,
+                      RandomAccessIterator last, Compare comp);
+  template&lt;class InputIterator, class RandomAccessIterator&gt;
+    RandomAccessIterator partial_sort_copy(
+      InputIterator first, InputIterator last,
+      RandomAccessIterator result_first,
+      RandomAccessIterator result_last);
+  template&lt;class InputIterator, class RandomAccessIterator, class Compare&gt;
+    RandomAccessIterator partial_sort_copy(
+      InputIterator first, InputIterator last,
+      RandomAccessIterator result_first,
+      RandomAccessIterator result_last,
+      Compare comp);
+  template&lt;class ForwardIterator&gt;
+    bool is_sorted(ForwardIterator first, ForwardIterator last);
+  template&lt;class ForwardIterator, class Compare&gt;
+    bool is_sorted(ForwardIterator first, ForwardIterator last,
+                   Compare comp);
+  template&lt;class ForwardIterator&gt;
+    ForwardIterator is_sorted_until(ForwardIterator first, ForwardIterator last);
+  template&lt;class ForwardIterator, class Compare&gt;
+    ForwardIterator is_sorted_until(ForwardIterator first, ForwardIterator last,
+                                    Compare comp);
+
+  // <a title="alg.nth.element" href="alg.nth.element.html">25.4.2</a>, Nth element:
+  template&lt;class RandomAccessIterator&gt;
+    void nth_element(RandomAccessIterator first, RandomAccessIterator nth,
+                     RandomAccessIterator last);
+  template&lt;class RandomAccessIterator, class Compare&gt;
+    void nth_element(RandomAccessIterator first, RandomAccessIterator nth,
+                     RandomAccessIterator last, Compare comp);
+
+  // <a title="alg.binary.search" href="alg.binary.search.html">25.4.3</a>, binary search:
+  template&lt;class ForwardIterator, class T&gt;
+    ForwardIterator lower_bound(ForwardIterator first, ForwardIterator last,
+                                const T&amp; value);
+  template&lt;class ForwardIterator, class T, class Compare&gt;
+    ForwardIterator lower_bound(ForwardIterator first, ForwardIterator last,
+                                const T&amp; value, Compare comp);
+  template&lt;class ForwardIterator, class T&gt;
+    ForwardIterator upper_bound(ForwardIterator first, ForwardIterator last,
+                                const T&amp; value);
+  template&lt;class ForwardIterator, class T, class Compare&gt;
+    ForwardIterator upper_bound(ForwardIterator first, ForwardIterator last,
+                                const T&amp; value, Compare comp);
+
+  template&lt;class ForwardIterator, class T&gt;
+    pair&lt;ForwardIterator, ForwardIterator&gt;
+      equal_range(ForwardIterator first, ForwardIterator last,
+                  const T&amp; value);
+  template&lt;class ForwardIterator, class T, class Compare&gt;
+    pair&lt;ForwardIterator, ForwardIterator&gt;
+      equal_range(ForwardIterator first, ForwardIterator last,
+                  const T&amp; value, Compare comp);
+
+  template&lt;class ForwardIterator, class T&gt;
+    bool binary_search(ForwardIterator first, ForwardIterator last,
+                       const T&amp; value);
+  template&lt;class ForwardIterator, class T, class Compare&gt;
+    bool binary_search(ForwardIterator first, ForwardIterator last,
+                       const T&amp; value, Compare comp);
+
+  // <a title="alg.merge" href="alg.merge.html">25.4.4</a>, merge:
+  template&lt;class InputIterator1, class InputIterator2, class OutputIterator&gt;
+    OutputIterator merge(InputIterator1 first1, InputIterator1 last1,
+                         InputIterator2 first2, InputIterator2 last2,
+                         OutputIterator result);
+  template&lt;class InputIterator1, class InputIterator2, class OutputIterator,
+           class Compare&gt;
+    OutputIterator merge(InputIterator1 first1, InputIterator1 last1,
+                         InputIterator2 first2, InputIterator2 last2,
+                         OutputIterator result, Compare comp);
+
+  template&lt;class BidirectionalIterator&gt;
+    void inplace_merge(BidirectionalIterator first,
+                       BidirectionalIterator middle,
+                       BidirectionalIterator last);
+  template&lt;class BidirectionalIterator, class Compare&gt;
+    void inplace_merge(BidirectionalIterator first,
+                       BidirectionalIterator middle,
+                       BidirectionalIterator last, Compare comp);
+
+  // <a title="alg.set.operations" href="alg.set.operations.html">25.4.5</a>, set operations:
+  template&lt;class InputIterator1, class InputIterator2&gt;
+    bool includes(InputIterator1 first1, InputIterator1 last1,
+                  InputIterator2 first2, InputIterator2 last2);
+  template&lt;class InputIterator1, class InputIterator2, class Compare&gt;
+    bool includes(
+      InputIterator1 first1, InputIterator1 last1,
+      InputIterator2 first2, InputIterator2 last2, Compare comp);
+
+  template&lt;class InputIterator1, class InputIterator2, class OutputIterator&gt;
+    OutputIterator set_union(InputIterator1 first1, InputIterator1 last1,
+                             InputIterator2 first2, InputIterator2 last2,
+                             OutputIterator result);
+  template&lt;class InputIterator1, class InputIterator2, class OutputIterator,
+           class Compare&gt;
+    OutputIterator set_union(InputIterator1 first1, InputIterator1 last1,
+                             InputIterator2 first2, InputIterator2 last2,
+                             OutputIterator result, Compare comp);
+
+  template&lt;class InputIterator1, class InputIterator2, class OutputIterator&gt;
+    OutputIterator set_intersection(
+      InputIterator1 first1, InputIterator1 last1,
+      InputIterator2 first2, InputIterator2 last2,
+      OutputIterator result);
+  template&lt;class InputIterator1, class InputIterator2, class OutputIterator,
+           class Compare&gt;
+    OutputIterator set_intersection(
+      InputIterator1 first1, InputIterator1 last1,
+      InputIterator2 first2, InputIterator2 last2,
+      OutputIterator result, Compare comp);
+
+  template&lt;class InputIterator1, class InputIterator2, class OutputIterator&gt;
+    OutputIterator set_difference(
+      InputIterator1 first1, InputIterator1 last1,
+      InputIterator2 first2, InputIterator2 last2,
+      OutputIterator result);
+  template&lt;class InputIterator1, class InputIterator2, class OutputIterator,
+           class Compare&gt;
+    OutputIterator set_difference(
+      InputIterator1 first1, InputIterator1 last1,
+      InputIterator2 first2, InputIterator2 last2,
+      OutputIterator result, Compare comp);
+
+  template&lt;class InputIterator1, class InputIterator2, class OutputIterator&gt;
+    OutputIterator set_symmetric_difference(
+      InputIterator1 first1, InputIterator1 last1,
+      InputIterator2 first2, InputIterator2 last2,
+      OutputIterator result);
+  template&lt;class InputIterator1, class InputIterator2, class OutputIterator,
+           class Compare&gt;
+    OutputIterator set_symmetric_difference(
+      InputIterator1 first1, InputIterator1 last1,
+      InputIterator2 first2, InputIterator2 last2,
+      OutputIterator result, Compare comp);
+
+  // <a title="alg.heap.operations" href="alg.heap.operations.html">25.4.6</a>, heap operations:
+  template&lt;class RandomAccessIterator&gt;
+    void push_heap(RandomAccessIterator first, RandomAccessIterator last);
+  template&lt;class RandomAccessIterator, class Compare&gt;
+    void push_heap(RandomAccessIterator first, RandomAccessIterator last,
+                   Compare comp);
+
+  template&lt;class RandomAccessIterator&gt;
+    void pop_heap(RandomAccessIterator first, RandomAccessIterator last);
+  template&lt;class RandomAccessIterator, class Compare&gt;
+    void pop_heap(RandomAccessIterator first, RandomAccessIterator last,
+                  Compare comp);
+
+  template&lt;class RandomAccessIterator&gt;
+    void make_heap(RandomAccessIterator first, RandomAccessIterator last);
+  template&lt;class RandomAccessIterator, class Compare&gt;
+    void make_heap(RandomAccessIterator first, RandomAccessIterator last,
+                   Compare comp);
+
+  template&lt;class RandomAccessIterator&gt;
+    void sort_heap(RandomAccessIterator first, RandomAccessIterator last);
+  template&lt;class RandomAccessIterator, class Compare&gt;
+    void sort_heap(RandomAccessIterator first, RandomAccessIterator last,
+                   Compare comp);
+
+  template&lt;class RandomAccessIterator&gt;
+    bool is_heap(RandomAccessIterator first, RandomAccessIterator last);
+  template&lt;class RandomAccessIterator, class Compare&gt;
+    bool is_heap(RandomAccessIterator first, RandomAccessIterator last, Compare comp);
+  template&lt;class RandomAccessIterator&gt;
+    RandomAccessIterator is_heap_until(RandomAccessIterator first, RandomAccessIterator last);
+  template&lt;class RandomAccessIterator, class Compare&gt;
+    RandomAccessIterator is_heap_until(RandomAccessIterator first, RandomAccessIterator last,
+                                       Compare comp);
+
+  // <a title="alg.min.max" href="alg.min.max.html">25.4.7</a>, minimum and maximum:
+  template&lt;class T&gt; const T&amp; min(const T&amp; a, const T&amp; b);
+  template&lt;class T, class Compare&gt;
+    const T&amp; min(const T&amp; a, const T&amp; b, Compare comp);
+  template&lt;class T&gt;
+    T min(initializer_list&lt;T&gt; t);
+  template&lt;class T, class Compare&gt;
+    T min(initializer_list&lt;T&gt; t, Compare comp);
+
+  template&lt;class T&gt; const T&amp; max(const T&amp; a, const T&amp; b);
+  template&lt;class T, class Compare&gt;
+    const T&amp; max(const T&amp; a, const T&amp; b, Compare comp);
+  template&lt;class T&gt;
+    T max(initializer_list&lt;T&gt; t);
+  template&lt;class T, class Compare&gt;
+    T max(initializer_list&lt;T&gt; t, Compare comp);
+
+  template&lt;class T&gt; pair&lt;const T&amp;, const T&amp;&gt;   minmax(const T&amp; a, const T&amp; b);
+  template&lt;class T, class Compare&gt;
+    pair&lt;const T&amp;, const T&amp;&gt; minmax(const T&amp; a, const T&amp; b, Compare comp);
+  template&lt;class T&gt;
+    pair&lt;T, T&gt; minmax(initializer_list&lt;T&gt; t);
+  template&lt;class T, class Compare&gt;
+    pair&lt;T, T&gt; minmax(initializer_list&lt;T&gt; t, Compare comp);
+
+  template&lt;class ForwardIterator&gt;
+    ForwardIterator min_element(ForwardIterator first, ForwardIterator last);
+  template&lt;class ForwardIterator, class Compare&gt;
+    ForwardIterator min_element(ForwardIterator first, ForwardIterator last,
+                                Compare comp);
+  template&lt;class ForwardIterator&gt;
+    ForwardIterator max_element(ForwardIterator first, ForwardIterator last);
+  template&lt;class ForwardIterator, class Compare&gt;
+    ForwardIterator max_element(ForwardIterator first, ForwardIterator last,
+                                Compare comp);
+  template&lt;class ForwardIterator&gt;
+    pair&lt;ForwardIterator, ForwardIterator&gt;
+      minmax_element(ForwardIterator first, ForwardIterator last);
+  template&lt;class ForwardIterator, class Compare&gt;
+    pair&lt;ForwardIterator, ForwardIterator&gt;
+      minmax_element(ForwardIterator first, ForwardIterator last, Compare comp);
+
+  template&lt;class InputIterator1, class InputIterator2&gt;
+    bool lexicographical_compare(
+      InputIterator1 first1, InputIterator1 last1,
+      InputIterator2 first2, InputIterator2 last2);
+  template&lt;class InputIterator1, class InputIterator2, class Compare&gt;
+    bool lexicographical_compare(
+      InputIterator1 first1, InputIterator1 last1,
+      InputIterator2 first2, InputIterator2 last2,
+      Compare comp);
+
+  // <a title="alg.permutation.generators" href="alg.permutation.generators.html">25.4.9</a>, permutations:
+  template&lt;class BidirectionalIterator&gt;
+    bool next_permutation(BidirectionalIterator first,
+                          BidirectionalIterator last);
+  template&lt;class BidirectionalIterator, class Compare&gt;
+    bool next_permutation(BidirectionalIterator first,
+                          BidirectionalIterator last, Compare comp);
+  template&lt;class BidirectionalIterator&gt;
+    bool prev_permutation(BidirectionalIterator first,
+                          BidirectionalIterator last);
+  template&lt;class BidirectionalIterator, class Compare&gt;
+    bool prev_permutation(BidirectionalIterator first,
+                          BidirectionalIterator last, Compare comp);
+}</code></pre>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>All of the algorithms are separated from the particular implementations of data structures and are
+parameterized by iterator types. Because of this, they can work with program-defined data structures, as long as these
+data structures have iterator types satisfying the assumptions on the algorithms.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>For purposes of determining the existence of data races, algorithms shall not modify objects referenced through
+an iterator argument unless the specification requires such modification.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>Throughout this Clause, the names of template parameters are used to express type requirements. If an
+algorithm’s template parameter is <code class="sh_cpp">InputIterator</code>, <code class="sh_cpp">InputIterator1</code>, or
+<code class="sh_cpp">InputIterator2</code>, the actual template argument shall satisfy the requirements of an input iterator
+(<a title="input.iterators" href="input.iterators.html">24.2.3</a>). If an algorithm’s template parameter is <code class="sh_cpp">OutputIterator</code>, <code class="sh_cpp">OutputIterator1</code>,
+or <code class="sh_cpp">OutputIterator2</code>, the actual template argument shall satisfy the requirements of an output iterator
+(<a title="output.iterators" href="output.iterators.html">24.2.4</a>). If an algorithm’s template parameter is <code class="sh_cpp">ForwardIterator</code>,
+<code class="sh_cpp">ForwardIterator1</code>, or <code class="sh_cpp">ForwardIterator2</code>, the actual template argument shall satisfy the
+requirements of a forward iterator (<a title="forward.iterators" href="forward.iterators.html">24.2.5</a>). If an algorithm’s template parameter is
+<code class="sh_cpp">BidirectionalIterator</code>, <code class="sh_cpp">BidirectionalIterator1</code>, or <code class="sh_cpp">BidirectionalIterator2</code>, the
+actual template argument shall satisfy the requirements of a bidirectional iterator (<a title="bidirectional.iterators" href="bidirectional.iterators.html">24.2.6</a>). If an
+algorithm’s template parameter is <code class="sh_cpp">RandomAccessIterator</code>, <code class="sh_cpp">RandomAccessIterator1</code>, or
+<code class="sh_cpp">RandomAccessIterator2</code>, the actual template argument shall satisfy the requirements of a random-access
+iterator (<a title="random.access.iterators" href="random.access.iterators.html">24.2.7</a>).</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>If an algorithm’s <em>Effects</em> section says that a value pointed to by any iterator passed as an argument
+is modified, then that algorithm has an additional type requirement: The type of that argument shall satisfy the
+requirements of a mutable iterator (<a title="iterator.requirements" href="iterator.requirements.general.html">24.2</a>). <span class="note">[ <em>Note:</em> This requirement does not affect arguments that are declared
+as <code class="sh_cpp">OutputIterator</code>, <code class="sh_cpp">OutputIterator1</code>, or <code class="sh_cpp">OutputIterator2</code>, because output iterators
+must always be mutable. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p7" href="#p7">7</a>Both in-place and copying versions are provided for certain algorithms.<sup class="footnote"><a href="#fn271">271</a></sup> When such a version is
+provided for <var>algorithm</var> it is called <code class="sh_cpp"><var>algorithm</var>_copy</code>. Algorithms that take predicates
+end with the suffix <code class="sh_cpp">_if</code> (which follows the suffix <code class="sh_cpp">_copy</code>).</p>
+
+<p><a class="anchor" id="p8" href="#p8">8</a>The <code class="sh_cpp">Predicate</code> parameter is used whenever an algorithm expects a function object (<a title="function.objects" href="function.objects.html">20.8</a>)
+that, when applied to the result of dereferencing the corresponding iterator, returns a value testable as
+<code class="sh_cpp">true</code>. In other words, if an algorithm takes <code class="sh_cpp">Predicate pred</code> as its argument and
+<code class="sh_cpp">first</code> as its iterator argument, it should work correctly in the construct <code class="sh_cpp">pred(*first)</code>
+contextually converted to <code class="sh_cpp">bool</code> (Chapter <a title="conv" href="conv.html">4</a>). The function object <code class="sh_cpp">pred</code> shall not
+apply any non-constant function through the dereferenced iterator.</p>
+
+<p><a class="anchor" id="p9" href="#p9">9</a>The <code class="sh_cpp">BinaryPredicate</code> parameter is used whenever an algorithm expects a function object that when
+applied to the result of dereferencing two corresponding iterators or to dereferencing an iterator and type
+<code class="sh_cpp">T</code> when <code class="sh_cpp">T</code> is part of the signature returns a value testable as <code class="sh_cpp">true</code>. In other
+words, if an algorithm takes <code class="sh_cpp">BinaryPredicate binary_pred</code> as its argument and <code class="sh_cpp">first1</code> and
+<code class="sh_cpp">first2</code> as its iterator arguments, it should work correctly in the construct <code class="sh_cpp">binary_pred(*first1,
+*first2)</code> contextually converted to <code class="sh_cpp">bool</code> (Clause <a title="conv" href="conv.html">4</a>). <code class="sh_cpp">BinaryPredicate</code> always
+takes the first iterator’s <code class="sh_cpp">value_type</code> as its first argument, that is, in those cases when <code class="sh_cpp">T
+value</code> is part of the signature, it should work correctly in the construct <code class="sh_cpp">binary_pred(*first1,
+value)</code> contextually converted to <code class="sh_cpp">bool</code> (Chapter <a title="conv" href="conv.html">4</a>). <code class="sh_cpp">binary_pred</code> shall not
+apply any non-constant function through the dereferenced iterators.</p>
+
+<p><a class="anchor" id="p10" href="#p10">10</a><span class="note">[ <em>Note:</em> Unless otherwise specified, algorithms that take function objects as arguments are permitted to copy
+those function objects freely. Programmers for whom object identity is important should consider using a wrapper class
+that points to a noncopied implementation object such as <code class="sh_cpp">reference_wrapper&lt;T&gt;</code>
+(<a title="refwrap" href="refwrap.const.html">20.8.3</a>), or some equivalent solution. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p11" href="#p11">11</a>When the description of an algorithm gives an expression such as <code class="sh_cpp">*first == value</code> for a condition,
+the expression shall evaluate to either true or false in boolean contexts.</p>
+
+<p><a class="anchor" id="p12" href="#p12">12</a>In the description of the algorithms operators <code class="sh_cpp">+</code> and <code class="sh_cpp">-</code> are used for some of the
+iterator categories for which they do not have to be defined. In these cases the semantics of <code class="sh_cpp">a+n</code> is the
+same as that of</p>
+
+<pre><code class="sh_cpp">X tmp = a;
+advance(tmp, n);
+return tmp;</code></pre>
+
+<p>and that of <code class="sh_cpp">b-a</code> is the same as of</p>
+
+<pre><code class="sh_cpp">return distance(a, b);</code></pre>
+
+
+<div><p class="footnote" id="fn271">271) The decision whether to include a copying version was usually based on complexity considerations. When
+the cost of doing the operation dominates the cost of copy, the copying version is not included. For example,
+<code class="sh_cpp">sort_copy</code> is not included because the cost of sorting is much more significant, and users might as well do
+<code class="sh_cpp">copy</code> followed by <code class="sh_cpp">sort</code>.</p></div>
+</body>
+</html>
+

@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Specializations of common_type</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[time.traits.specializations]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[time.traits.specializations]"></object>20.11.4.3 Specializations of <code class="sh_cpp">common_type</code> </h4>
+
+<h5><code class="sh_cpp">template &lt;class Rep1, class Period1, class Rep2, class Period2&gt;
+struct <dfn>common_type</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="common_type"></object>&lt;chrono::duration&lt;Rep1, Period1&gt;, chrono::duration&lt;Rep2, Period2&gt;&gt; {
+  typedef chrono::duration&lt;typename common_type&lt;Rep1, Rep2&gt;::type, <em>see below</em>&gt; type;
+};</code></h5>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The <code class="sh_cpp">period</code> of the <code class="sh_cpp">duration</code> indicated by this specialization of
+<code class="sh_cpp">common_type</code> shall be the greatest common divisor of <code class="sh_cpp">Period1</code> and <code class="sh_cpp">Period2</code>.
+<span class="note">[ <em>Note:</em> This can be computed by forming a ratio of the greatest common divisor of <code class="sh_cpp">Period1::num</code> and
+<code class="sh_cpp">Period2::num</code> and the least common multiple of <code class="sh_cpp">Period1::den</code> and
+<code class="sh_cpp">Period2::den</code>. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><span class="note">[ <em>Note:</em> The <code class="sh_cpp">typedef</code> name <code class="sh_cpp">type</code> is a synonym for the <code class="sh_cpp">duration</code> with the
+largest tick <code class="sh_cpp">period</code> possible where both <code class="sh_cpp">duration</code> arguments will convert to it without
+requiring a division operation. The representation of this type is intended to be able to hold any value resulting from
+this conversion with no truncation error, although floating-point durations may have round-off errors. — <em>end note</em> ]</span></p>
+
+<h5><code class="sh_cpp">template &lt;class Clock, class Duration1, class Duration2&gt;
+struct <dfn>common_type</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="common_type"></object>&lt;chrono::time_point&lt;Clock, Duration1&gt;, chrono::time_point&lt;Clock, Duration2&gt;&gt; {
+   typedef chrono::time_point&lt;Clock, typename common_type&lt;Duration1, Duration2&gt;::type&gt; type;
+};</code></h5>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>The common type of two <code class="sh_cpp">time_point</code> types is a <code class="sh_cpp">time_point</code> with the same clock as the
+two types and the common type of their two <code class="sh_cpp">duration</code>s.</p>
+</body>
+</html>
+

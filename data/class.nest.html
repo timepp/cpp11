@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Nested class declarations</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[class.nest]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[class.nest]"></object>9.7 Nested class declarations </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A class can be declared within another class. A class declared within another is called a <dfn>nested
+class</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="nested
+class"></object>. The name of a nested class is local to its enclosing class. The nested class is in the scope of its
+enclosing class. <span class="note">[ <em>Note:</em> See <a title="expr.prim" href="expr.prim.general.html">5.1</a> for restrictions on the use of non-static data members and non-static member
+functions. — <em>end note</em> ]</span></p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">int x;
+int y;
+
+struct enclose {
+  int x;
+  static int s;
+
+  struct inner {
+    void f(int i) {
+      int a = sizeof(x);    // OK: operand of sizeof is an unevaluated operand
+      x = i;                // error: assign to enclose::x
+      s = i;                // OK: assign to enclose::s
+      ::x = i;              // OK: assign to global x
+      y = i;                // OK: assign to global y
+    }
+    void g(enclose* p, int i) {
+      p-&gt;x = i;             // OK: assign to enclose::x
+    }
+  };
+};
+
+inner* p = 0;               // error: inner not in scope</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>Member functions and static data members of a nested class can be defined in a namespace scope enclosing the
+definition of their class.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct enclose {
+  struct inner {
+    static int x;
+    void f(int i);
+  };
+};
+
+int enclose::inner::x = 1;
+
+void enclose::inner::f(int i) { /* … */ }</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>If class <code class="sh_cpp">X</code> is defined in a namespace scope, a nested class <code class="sh_cpp">Y</code> may be declared in class
+<code class="sh_cpp">X</code> and later defined in the definition of class <code class="sh_cpp">X</code> or be later defined in a namespace scope
+enclosing the definition of class <code class="sh_cpp">X</code>.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">class E {
+  class I1;             // forward declaration of nested class
+  class I2;
+  class I1 { };         // definition of nested class
+};
+class E::I2 { };        // definition of nested class</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>Like a member function, a friend function (<a title="class.friend" href="class.friend.html">11.3</a>) defined within a nested class is in the lexical
+scope of that class; it obeys the same rules for name binding as a static member function of that class
+(<a title="class.static" href="class.static.html">9.4</a>), but it has no special access rights to members of an enclosing class.</p>
+</body>
+</html>
+

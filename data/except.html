@@ -1,0 +1,138 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Exception handling</title>
+</head>
+<body>
+<h1>
+<dfn class="label">[except]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[except]"></object>15 Exception handling </h1>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Exception handling provides a way of transferring control and information from a point in the execution of a
+thread to an exception handler associated with a point previously passed by the execution. A handler will be invoked
+only by a <i class="nonterminal">throw-expression</i> invoked in code executed in the handler’s try block or in functions called from the
+handler’s try block.</p>
+
+<dl>
+<dt>
+<dfn><i class="nonterminal">try-block</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="try-block"></object>:</dt>
+	<dd>
+<code class="sh_cpp">try</code> <i class="nonterminal">compound-statement</i> <i class="nonterminal">handler-seq</i>
+</dd>
+<dt>
+<dfn><i class="nonterminal">function-try-block</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="function-try-block"></object>:</dt>
+	<dd>
+<code class="sh_cpp">try</code> <i class="nonterminal">ctor-initializer</i><sub class="opt">opt</sub> <i class="nonterminal">compound-statement</i> <i class="nonterminal">handler-seq</i>
+</dd>
+<dt>
+<dfn><i class="nonterminal">handler-seq</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="handler-seq"></object>:</dt>
+	<dd>
+<i class="nonterminal">handler</i> <i class="nonterminal">handler-seq</i><sub class="opt">opt</sub>
+</dd>
+<dt>
+<dfn><i class="nonterminal">handler</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="handler"></object>:</dt>
+	<dd>
+<code class="sh_cpp">catch</code> <code class="sh_cpp">(</code> <i class="nonterminal">exception-declaration</i> <code class="sh_cpp">)</code> <i class="nonterminal">compound-statement</i>
+</dd>
+<dt>
+<dfn><i class="nonterminal">exception-declaration</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="exception-declaration"></object>:</dt>
+	<dd>
+<i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub> <i class="nonterminal">type-specifier-seq</i> <i class="nonterminal">declarator</i>
+</dd>
+	<dd>
+<i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub> <i class="nonterminal">type-specifier-seq</i> <i class="nonterminal">abstract-declarator</i><sub class="opt">opt</sub>
+</dd>
+	<dd><code class="sh_cpp">...</code></dd>
+<dt>
+<dfn><i class="nonterminal">throw-expression</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="throw-expression"></object>:</dt>
+	<dd>
+<code class="sh_cpp">throw</code> <i class="nonterminal">assignment-expression</i><sub class="opt">opt</sub>
+</dd>
+</dl>
+
+<p>The optional <i class="nonterminal">attribute-specifier-seq</i> in an <i class="nonterminal">exception-declaration</i> appertains to the formal parameter
+of the catch clause (<a title="except.handle" href="except.handle.html">15.3</a>).</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>A <i class="nonterminal">try-block</i> is a <i class="nonterminal">statement</i> (Clause <a title="stmt.stmt" href="stmt.stmt.html">6</a>). A <i class="nonterminal">throw-expression</i> is of type
+<code class="sh_cpp">void</code>. Code that executes a <i class="nonterminal">throw-expression</i> is said to “throw an exception”; code that
+subsequently gets control is called a “handler”. <span class="note">[ <em>Note:</em> Within this Clause “try block” is taken to mean both
+<i class="nonterminal">try-block</i> and <i class="nonterminal">function-try-block</i>. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>A <code class="sh_cpp">goto</code> or <code class="sh_cpp">switch</code> statement shall not be used to transfer control into a try block or
+into a handler.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">void f() {
+  goto l1;          // Ill-formed
+  goto l2;          // Ill-formed
+  try {
+    goto l1;        // OK
+    goto l2;        // Ill-formed
+    l1: ;
+  } catch (...) {
+    l2: ;
+    goto l1;        // Ill-formed
+    goto l2;        // OK
+  }
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p>A <code class="sh_cpp">goto</code>, <code class="sh_cpp">break</code>, <code class="sh_cpp">return</code>, or <code class="sh_cpp">continue</code> statement can be used to
+transfer control out of a try block or handler. When this happens, each variable declared in the try block will be
+destroyed in the context that directly contains its declaration.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">lab: try {
+  T1 t1;
+  try {
+    T2 t2;
+    if (condition)
+      goto lab;
+  } catch(...) { /* handler 2 */ }
+} catch(...) { /* handler 1 */ }</code></pre>
+
+<p>Here, executing <code class="sh_cpp">goto lab;</code> will destroy first <code class="sh_cpp">t2</code>, then <code class="sh_cpp">t1</code>, assuming the
+<i class="nonterminal">condition</i> does not declare a variable. Any exception raised while destroying <code class="sh_cpp">t2</code> will result in
+executing <var>handler 2</var>; any exception raised while destroying <code class="sh_cpp">t1</code> will result in executing
+<var>handler 1</var>. — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>A <i class="nonterminal">function-try-block</i> associates a <i class="nonterminal">handler-seq</i> with the <i class="nonterminal">ctor-initializer</i>, if present,
+and the <i class="nonterminal">compound-statement</i>. An exception thrown during the execution of the <i class="nonterminal">compound-statement</i> or, for
+constructors and destructors, during the initialization or destruction, respectively, of the class’s subobjects,
+transfers control to a handler in a <i class="nonterminal">function-try-block</i> in the same way as an exception thrown during the
+execution of a <i class="nonterminal">try-block</i> transfers control to other handlers.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">int f(int);
+class C {
+  int i;
+  double d;
+public:
+  C(int, double);
+};
+
+C::C(int ii, double id)
+try : i(f(ii)), d(id) {
+    // constructor statements
+}
+catch (...) {
+    // handles exceptions thrown from the ctor-initializer
+    // and from the constructor statements
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+</body>
+</html>
+

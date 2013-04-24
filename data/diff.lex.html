@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Clause 2: lexical conventions</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[diff.lex]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[diff.lex]"></object>C.1.1 Clause <a title="lex" href="lex.separate.html">2</a>: lexical conventions </h3>
+
+<h4><a title="lex.key" href="lex.key.html">2.12</a></h4>
+
+<p><strong>Change:</strong> New Keywords</p>
+
+<p>New keywords are added to C++; see <a title="lex.key" href="lex.key.html">2.12</a>.</p>
+
+<p><strong>Rationale:</strong> These keywords were added in order to implement the new semantics of C++.</p>
+
+<p><strong>Effect on original feature:</strong> Change to semantics of well-defined feature. Any ISO C programs that used any of these keywords as
+identifiers are not valid C++ programs.</p>
+
+<p><strong>Difficulty of converting:</strong> Syntactic transformation. Converting one specific program is easy. Converting a large collection
+of related programs takes more work.</p>
+
+<p><strong>How widely used:</strong> Common.</p>
+
+
+<h4><a title="lex.ccon" href="lex.ccon.html">2.14.3</a></h4>
+
+<p><strong>Change:</strong> Type of character literal is changed from <code class="sh_cpp">int</code> to <code class="sh_cpp">cha</code>r</p>
+
+<p><strong>Rationale:</strong> This is needed for improved overloaded function argument type matching. For example:</p>
+
+<pre><code class="sh_cpp">int function( int i );
+int function( char c );
+function( 'x' );</code></pre>
+
+<p>It is preferable that this call match the second version of function rather than the first.</p>
+
+<p><strong>Effect on original feature:</strong> Change to semantics of well-defined feature. ISO C programs which depend on</p>
+
+<pre><code class="sh_cpp">sizeof('x') == sizeof(int)</code></pre>
+
+<p>will not work the same as C++ programs.</p>
+
+<p><strong>Difficulty of converting:</strong> Simple.</p>
+
+<p><strong>How widely used:</strong> Programs which depend upon <code class="sh_cpp">sizeof('x')</code> are probably rare.</p>
+
+
+<h4><a title="lex.string" href="lex.string.html">2.14.5</a></h4>
+
+<p><strong>Change:</strong> String literals made const</p>
+
+<p>The type of a string literal is changed from “array of <code class="sh_cpp">char</code>” to “array of <code class="sh_cpp">const char</code>.” The
+type of a <code class="sh_cpp">char16_t</code> string literal is changed from “array of <var>some-integer-type</var>” to “array of
+<code class="sh_cpp">const char16_t</code>”. The type of a <code class="sh_cpp">char32_t</code> string literal is changed from “array of
+<var>some-integer-type</var>” to “array of <code class="sh_cpp">const char</code>32_t”. The type of a wide string literal is changed
+from “array of <code class="sh_cpp">wchar_t</code>” to “array of <code class="sh_cpp">const wchar_t</code>”.</p>
+
+<p><strong>Rationale:</strong> This avoids calling an inappropriate overloaded function, which might expect to be able to modify its
+argument.</p>
+
+<p><strong>Effect on original feature:</strong> Change to semantics of well-defined feature.</p>
+
+<p><strong>Difficulty of converting:</strong> Syntactic transformation. The fix is to add a cast:</p>
+
+<pre><code class="sh_cpp">char* p = "abc";            // valid in C, invalid in C++
+void f(char*) {
+  char* p = (char*)"abc";   // OK: cast added
+  f(p);
+  f((char*)"def");          // OK: cast added
+}</code></pre>
+
+<p><strong>How widely used:</strong> Programs that have a legitimate reason to treat string literals as pointers to potentially
+modifiable memory are probably rare.</p>
+
+</body>
+</html>
+

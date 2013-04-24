@@ -1,0 +1,205 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Type locale::category</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[locale.types]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[locale.types]"></object>22.3.1.1 <code class="sh_cpp">locale</code> types </h4>
+
+<h5>
+<dfn class="label">[locale.category]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[locale.category]"></object>22.3.1.1.1 Type <code class="sh_cpp">locale::category</code> </h5>
+
+<h6><code class="sh_cpp">typedef int <dfn>category</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="category"></object>;</code></h6>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><dfn>Valid</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="Valid"></object> <code class="sh_cpp">category</code> values include the <code class="sh_cpp">locale</code> member bitmask elements
+<code class="sh_cpp">collate</code>, <code class="sh_cpp">ctype</code>, <code class="sh_cpp">monetary</code>, <code class="sh_cpp">numeric</code>, <code class="sh_cpp">time</code>, and
+<code class="sh_cpp">messages</code>, each of which represents a single locale category. In addition, <code class="sh_cpp">locale</code> member
+bitmask constant <code class="sh_cpp">none</code> is defined as zero and represents no category. And <code class="sh_cpp">locale</code> member bitmask
+constant <code class="sh_cpp">all</code> is defined such that the expression</p>
+
+<pre><code class="sh_cpp">(collate | ctype | monetary | numeric | time | messages | all) == all</code></pre>
+
+<p>is true, and represents the union of all categories. Further, the expression <code class="sh_cpp">(X | Y)</code>, where
+<code class="sh_cpp">X</code> and <code class="sh_cpp">Y</code> each represent a single category, represents the union of the two categories.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><code class="sh_cpp">locale</code> member functions expecting a <code class="sh_cpp">category</code> argument require one of the
+<code class="sh_cpp">category</code> values defined above, or the union of two or more such values. Such a <code class="sh_cpp">category</code> value
+identifies a set of locale categories. Each locale category, in turn, identifies a set of locale facets, including at
+least those shown in Table <a href="locale.category.html#t81">81</a>.</p>
+
+<table id="t81" class="bordered hruled padded">
+<caption>Table 81 — Locale category facets</caption>
+<thead><tr>
+<th>Category</th>
+<th>Includes facets</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>collate</td>
+	<td>
+<code class="sh_cpp">collate&lt;char&gt;</code>, <code class="sh_cpp">collate&lt;wchar_t&gt;</code>
+</td>
+</tr>
+<tr>
+<td>ctype</td>
+	<td><ul class="unbulleted">
+<li>
+<code class="sh_cpp">ctype&lt;char&gt;</code>, <code class="sh_cpp">ctype&lt;wchar_t&gt;</code>
+</li>
+		<li><code class="sh_cpp">codecvt&lt;char,char,mbstate_t&gt;</code></li>
+		<li><code class="sh_cpp">codecvt&lt;char16_t,char,mbstate_t&gt;</code></li>
+		<li><code class="sh_cpp">codecvt&lt;char32_t,char,mbstate_t&gt;</code></li>
+		<li><code class="sh_cpp">codecvt&lt;wchar_t,char,mbstate_t&gt;</code></li>
+</ul></td>
+</tr>
+<tr>
+<td>monetary</td>
+	<td><ul class="unbulleted">
+<li>
+<code class="sh_cpp">moneypunct&lt;char&gt;</code>, <code class="sh_cpp">moneypunct&lt;wchar_t&gt;</code>
+</li>
+		<li>
+<code class="sh_cpp">moneypunct&lt;char,true&gt;</code>, <code class="sh_cpp">moneypunct&lt;wchar_t,true&gt;</code>
+</li>
+		<li>
+<code class="sh_cpp">money_get&lt;char&gt;</code>, <code class="sh_cpp">money_get&lt;wchar_t&gt;</code>
+</li>
+		<li>
+<code class="sh_cpp">money_put&lt;char&gt;</code>, <code class="sh_cpp">money_put&lt;wchar_t&gt;</code>
+</li>
+</ul></td>
+</tr>
+<tr>
+<td>numeric</td>
+	<td><ul class="unbulleted">
+<li>
+<code class="sh_cpp">numpunct&lt;char&gt;</code>, <code class="sh_cpp">numpunct&lt;wchar_t&gt;</code>
+</li>
+		<li>
+<code class="sh_cpp">num_get&lt;char&gt;</code>, <code class="sh_cpp">num_get&lt;wchar_t&gt;</code>
+</li>
+		<li>
+<code class="sh_cpp">num_put&lt;char&gt;</code>, <code class="sh_cpp">num_put&lt;wchar_t&gt;</code>
+</li>
+</ul></td>
+</tr>
+<tr>
+<td>time</td>
+	<td><ul class="unbulleted">
+<li>
+<code class="sh_cpp">time_get&lt;char&gt;</code>, <code class="sh_cpp">time_get&lt;wchar_t&gt;</code>
+</li>
+		<li>
+<code class="sh_cpp">time_put&lt;char&gt;</code>, <code class="sh_cpp">time_put&lt;wchar_t&gt;</code>
+</li>
+</ul></td>
+</tr>
+<tr>
+<td>messages</td>
+	<td>
+<code class="sh_cpp">messages&lt;char&gt;</code>, <code class="sh_cpp">messages&lt;wchar_t&gt;</code>
+</td>
+</tr>
+</tbody>
+</table>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>For any locale <code class="sh_cpp">loc</code> either constructed, or returned by <code class="sh_cpp">locale::classic()</code>, and any
+facet <code class="sh_cpp">Facet</code> shown in Table <a href="locale.category.html#t81">81</a>, <code class="sh_cpp">has_facet&lt;Facet&gt;(loc)</code> is true. Each
+<code class="sh_cpp">locale</code> member function which takes a <code class="sh_cpp">locale::category</code> argument operates on the corresponding
+set of facets.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>An implementation is required to provide those specializations for facet templates identified as members of a
+category, and for those shown in Table <a href="locale.category.html#t82">82</a>.</p>
+
+<table id="t82" class="bordered hruled padded">
+<caption>Table 82 — Required specializations</caption>
+<thead><tr>
+<th>Category</th>
+<th>Includes facets</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>collate</td>
+	<td>
+<code class="sh_cpp">collate_byname&lt;char&gt;</code>, <code class="sh_cpp">collate_byname&lt;wchar_t&gt;</code>
+</td>
+</tr>
+<tr>
+<td>ctype</td>
+	<td><ul class="unbulleted">
+<li>
+<code class="sh_cpp">ctype_byname&lt;char&gt;</code>, <code class="sh_cpp">ctype_byname&lt;wchar_t&gt;</code>
+</li>
+		<li><code class="sh_cpp">codecvt_byname&lt;char,char,mbstate_t&gt;</code></li>
+		<li><code class="sh_cpp">codecvt_byname&lt;char16_t,char,mbstate_t&gt;</code></li>
+		<li><code class="sh_cpp">codecvt_byname&lt;char32_t,char,mbstate_t&gt;</code></li>
+		<li><code class="sh_cpp">codecvt_byname&lt;wchar_t,char,mbstate_t&gt;</code></li>
+</ul></td>
+</tr>
+<tr>
+<td>monetary</td>
+	<td><ul class="unbulleted">
+<li><code class="sh_cpp">moneypunct_byname&lt;char,International&gt;</code></li>
+		<li><code class="sh_cpp">moneypunct_byname&lt;wchar_t,International&gt;</code></li>
+		<li><code class="sh_cpp">money_get&lt;C,InputIterator&gt;</code></li>
+		<li><code class="sh_cpp">money_put&lt;C,OutputIterator&gt;</code></li>
+</ul></td>
+</tr>
+<tr>
+<td>numeric</td>
+	<td><ul class="unbulleted">
+<li>
+<code class="sh_cpp">numpunct_byname&lt;char&gt;</code>, <code class="sh_cpp">numpunct_byname&lt;wchar_t&gt;</code>
+</li>
+		<li>
+<code class="sh_cpp">num_get&lt;C,InputIterator&gt;</code>, <code class="sh_cpp">num_put&lt;C,OutputIterator&gt;</code>
+</li>
+</ul></td>
+</tr>
+<tr>
+<td>time</td>
+	<td><ul class="unbulleted">
+<li><code class="sh_cpp">time_get&lt;char,InputIterator&gt;</code></li>
+		<li><code class="sh_cpp">time_get_byname&lt;char,InputIterator&gt;</code></li>
+		<li><code class="sh_cpp">time_get&lt;wchar_t,InputIterator&gt;</code></li>
+		<li><code class="sh_cpp">time_get_byname&lt;wchar_t,InputIterator&gt;</code></li>
+		<li><code class="sh_cpp">time_put&lt;char,OutputIterator&gt;</code></li>
+		<li><code class="sh_cpp">time_put_byname&lt;char,OutputIterator&gt;</code></li>
+		<li><code class="sh_cpp">time_put&lt;wchar_t,OutputIterator&gt;</code></li>
+		<li><code class="sh_cpp">time_put_byname&lt;wchar_t,OutputIterator&gt;</code></li>
+</ul></td>
+</tr>
+<tr>
+<td>messages</td>
+	<td>
+<code class="sh_cpp">messages_byname&lt;char&gt;</code>, <code class="sh_cpp">messages_byname&lt;wchar_t&gt;</code>
+</td>
+</tr>
+</tbody>
+</table>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>The provided implementation of members of facets <code class="sh_cpp">num_get&lt;charT&gt;</code> and
+<code class="sh_cpp">num_put&lt;charT&gt;</code> calls <code class="sh_cpp">use_facet&lt;F&gt;(l)</code> only for facet <code class="sh_cpp">F</code> of
+types <code class="sh_cpp">numpunct&lt;charT&gt;</code> and <code class="sh_cpp">ctype&lt;charT&gt;</code>, and for locale <code class="sh_cpp">l</code>
+the value obtained by calling member <code class="sh_cpp">getloc()</code> on the <code class="sh_cpp">ios_base&amp;</code> argument to these
+functions.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>In declarations of facets, a template formal parameter with name <code class="sh_cpp">InputIterator</code> or
+<code class="sh_cpp">OutputIterator</code> indicates the set of all possible specializations on parameters that satisfy the
+requirements of an Input Iterator or an Output Iterator, respectively (<a title="iterator.requirements" href="iterator.requirements.general.html">24.2</a>). A template formal parameter
+with name <code class="sh_cpp">C</code> represents the set of types containing <code class="sh_cpp">char</code>, <code class="sh_cpp">wchar_t</code>, and any other
+implementation-defined character types that satisfy the requirements for a character on which any of the iostream
+components can be instantiated. A template formal parameter with name <code class="sh_cpp">International</code> represents the set of
+all possible specializations on a bool parameter.</p>
+</body>
+</html>
+

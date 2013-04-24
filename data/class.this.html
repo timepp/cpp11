@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>The this pointer</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[class.this]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[class.this]"></object>9.3.2 The <code class="sh_cpp">this</code> pointer </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>In the body of a non-static (<a title="class.mfct" href="class.mfct.html">9.3</a>) member function, the keyword <code class="sh_cpp">this</code> is a prvalue
+expression whose value is the address of the object for which the function is called. The type of <code class="sh_cpp">this</code> in a
+member function of a class <code class="sh_cpp">X</code> is <code class="sh_cpp">X*</code>. If the member function is declared <code class="sh_cpp">const</code>, the
+type of <code class="sh_cpp">this</code> is <code class="sh_cpp">const X*</code>, if the member function is declared <code class="sh_cpp">volatile</code>, the type
+of <code class="sh_cpp">this</code> is <code class="sh_cpp">volatile X*</code>, and if the member function is declared <code class="sh_cpp">const volatile</code>,
+the type of <code class="sh_cpp">this</code> is <code class="sh_cpp">const volatile X*</code>.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>In a <code class="sh_cpp">const</code> member function, the object for which the function is called is accessed through a
+<code class="sh_cpp">const</code> access path; therefore, a <code class="sh_cpp">const</code> member function shall not modify the object and its
+non-static data members.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct s {
+  int a;
+  int f() const;
+  int g() { return a++; }
+  int h() const { return a++; } // error
+};
+
+int s::f() const { return a; }</code></pre>
+
+<p>The <code class="sh_cpp">a++</code> in the body of <code class="sh_cpp">s::h</code> is ill-formed because it tries to modify (a part of) the object
+for which <code class="sh_cpp">s::h()</code> is called. This is not allowed in a <code class="sh_cpp">const</code> member function because
+<code class="sh_cpp">this</code> is a pointer to <code class="sh_cpp">const</code>; that is, <code class="sh_cpp">*this</code> has <code class="sh_cpp">const</code>
+type. — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>Similarly, <code class="sh_cpp">volatile</code> semantics (<a title="dcl.type.cv" href="dcl.type.cv.html">7.1.6.1</a>) apply in <code class="sh_cpp">volatile</code> member functions
+when accessing the object and its non-static data members.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>A <em>cv-qualified</em> member function can be called on an object-expression (<a title="expr.ref " href=".html"></a>) only if the
+object-expression is as cv-qualified or less-cv-qualified than the member function.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">void k(s&amp; x, const s&amp; y) {
+  x.f();
+  x.g();
+  y.f();
+  y.g();                // error
+}</code></pre>
+
+<p>The call <code class="sh_cpp">y.g()</code> is ill-formed because <code class="sh_cpp">y</code> is <code class="sh_cpp">const</code> and <code class="sh_cpp">s::g()</code> is a
+non-<code class="sh_cpp">const</code> member function, that is, <code class="sh_cpp">s::g()</code> is less-qualified than the object-expression
+<code class="sh_cpp">y</code>. — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>Constructors (<a title="class.ctor" href="class.ctor.html">12.1</a>) and destructors (<a title="class.dtor" href="class.dtor.html">12.4</a>) shall not be declared <code class="sh_cpp">const</code>,
+<code class="sh_cpp">volatile</code> or <code class="sh_cpp">const volatile</code>. <span class="note">[ <em>Note:</em> However, these functions can be invoked to create and
+destroy objects with cv-qualified types, see (<a title="class.ctor" href="class.ctor.html">12.1</a>) and (<a title="class.dtor" href="class.dtor.html">12.4</a>). — <em>end note</em> ]</span></p>
+</body>
+</html>
+

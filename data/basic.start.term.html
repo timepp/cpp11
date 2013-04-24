@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Termination</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[basic.start.term]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[basic.start.term]"></object>3.6.3 Termination </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Destructors (<a title="class.dtor" href="class.dtor.html">12.4</a>) for initialized objects (that is, objects whose lifetime (<a title="basic.life" href="basic.life.html">3.8</a>) has
+begun) with static storage duration are called as a result of returning from <code class="sh_cpp">main</code> and as a result of
+calling <code class="sh_cpp">std::exit</code> (<a title="support.start.term" href="support.start.term.html">18.5</a>). Destructors for initialized objects with thread storage duration
+within a given thread are called as a result of returning from the initial function of that thread and as a result of
+that thread calling <code class="sh_cpp">std::exit</code>. The completions of the destructors for all initialized objects with thread
+storage duration within that thread are sequenced before the initiation of the destructors of any object with static
+storage duration. If the completion of the constructor or dynamic initialization of an object with thread storage
+duration is sequenced before that of another, the completion of the destructor of the second is sequenced before the
+initiation of the destructor of the first. If the completion of the constructor or dynamic initialization of an object
+with static storage duration is sequenced before that of another, the completion of the destructor of the second is
+sequenced before the initiation of the destructor of the first. <span class="note">[ <em>Note:</em> This definition permits concurrent
+destruction. — <em>end note</em> ]</span> If an object is initialized statically, the object is destroyed in the same order as if the object
+was dynamically initialized. For an object of array or class type, all subobjects of that object are destroyed before
+any block-scope object with static storage duration initialized during the construction of the subobjects is destroyed.
+If the destruction of an object with static or thread storage duration exits via an exception,
+<code class="sh_cpp">std::terminate</code> is called (<a title="except.terminate" href="except.terminate.html">15.5.1</a>).</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>If a function contains a block-scope object of static or thread storage duration that has been destroyed and the
+function is called during the destruction of an object with static or thread storage duration, the program has undefined
+behavior if the flow of control passes through the definition of the previously destroyed block-scope object. Likewise, the
+behavior is undefined if the block-scope object is used indirectly (i.e., through a pointer) after its
+destruction.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>If the completion of the initialization of an object with static storage duration is sequenced before
+a call to <code class="sh_cpp">std::atexit</code> (see <code class="header">&lt;cstdlib&gt;</code>, <a title="support.start.term" href="support.start.term.html">18.5</a>), the call to the function passed
+to <code class="sh_cpp">std::atexit</code> is sequenced before the call to the destructor for the object. If a call to
+<code class="sh_cpp">std::atexit</code> is sequenced before the completion of the initialization of an object with static
+storage duration, the call to the destructor for the object is sequenced before the call to the function passed to
+<code class="sh_cpp">std::atexit</code>. If a call to <code class="sh_cpp">std::atexit</code> is sequenced before another call to
+<code class="sh_cpp">std::atexit</code>, the call to the function passed to the second <code class="sh_cpp">std::atexit</code> call is sequenced
+before the call to the function passed to the first <code class="sh_cpp">std::atexit</code> call.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>If there is a use of a standard library object or function not permitted within signal handlers
+(<a title="support.runtime" href="support.runtime.html">18.10</a>) that does not happen before (<a title="intro.multithread" href="intro.multithread.html">1.10</a>) completion of destruction of objects with static
+storage duration and execution of <code class="sh_cpp">std::atexit</code> registered functions (<a title="support.start.term" href="support.start.term.html">18.5</a>), the program has
+undefined behavior. <span class="note">[ <em>Note:</em> If there is a use of an object with static storage duration that does not happen before the
+object’s destruction, the program has undefined behavior. Terminating every thread before a call to
+<code class="sh_cpp">std::exit</code> or the exit from <code class="sh_cpp">main</code> is sufficient, but not necessary, to satisfy these
+requirements. These requirements permit thread managers as static-storage-duration objects. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>Calling the function <code class="sh_cpp">std::abort()</code> declared in <code class="header">&lt;cstdlib&gt;</code> terminates the program without
+executing any destructors and without calling the functions passed to <code class="sh_cpp">std::atexit()</code> or
+<code class="sh_cpp">std::at_quick_exit()</code>.</p>
+</body>
+</html>
+

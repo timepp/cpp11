@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Candidate functions</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[temp.dep.candidate]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[temp.dep.candidate]"></object>14.6.4.2 Candidate functions </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>For a function call that depends on a template parameter, the candidate functions are found using the usual
+lookup rules (<a title="basic.lookup.unqual" href="basic.lookup.unqual.html">3.4.1</a>, <a title="basic.lookup.argdep" href="basic.lookup.argdep.html">3.4.2</a>, <a title="basic.lookup.qual" href="basic.lookup.qual.html">3.4.3</a>) except that:</p>
+
+<ul>
+<li>For the part of the lookup using unqualified name lookup (<a title="basic.lookup.unqual" href="basic.lookup.unqual.html">3.4.1</a>) or qualified name lookup
+	(<a title="basic.lookup.qual" href="basic.lookup.qual.html">3.4.3</a>), only function declarations from the template definition context are found.</li>
+<li>For the part of the lookup using associated namespaces (<a title="basic.lookup.argdep" href="basic.lookup.argdep.html">3.4.2</a>), only function declarations found in
+	either the template definition context or the template instantiation context are found.</li>
+</ul>
+
+<p>If the function name is an <i class="nonterminal">unqualified-id</i> and the call would be ill-formed or would find a better match had
+the lookup within the associated namespaces considered all the function declarations with external linkage introduced in
+those namespaces in all translation units, not just considering those declarations found in the template definition and
+template instantiation contexts, then the program has undefined behavior.</p>
+</body>
+</html>
+

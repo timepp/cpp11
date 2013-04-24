@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>The C++ object model</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[intro.object]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[intro.object]"></object>1.8 The C++ object model </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The constructs in a C++ program create, destroy, refer to, access, and manipulate objects. An <dfn>object</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="object"></object>
+is a region of storage. <span class="note">[ <em>Note:</em> A function is not an object, regardless of whether or not it occupies storage in the way
+that objects do. — <em>end note</em> ]</span> An object is created by a <em>definition</em> (<a title="basic.def" href="basic.def.html">3.1</a>), by a <i class="nonterminal">new-expression</i>
+(<a title="expr.new" href="expr.new.html">5.3.4</a>) or by the implementation (<a title="class.temporary" href="class.temporary.html">12.2</a>) when needed. The properties of an object are determined
+when the object is created. An object can have a <em>name</em> (Clause <a title="basic" href="basic.html">3</a>). An object has a <em>storage
+duration</em> (<a title="basic.stc" href="basic.stc.html">3.7</a>) which influences its <em>lifetime</em> (<a title="basic.life" href="basic.life.html">3.8</a>). An object has a <em>type</em>
+(<a title="basic.types" href="basic.types.html">3.9</a>). The term <dfn>object type</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="object type"></object> refers to the type with which the object is created. Some objects are
+<em>polymorphic</em> (<a title="class.virtual" href="class.virtual.html">10.3</a>); the implementation generates information associated with each such object that
+makes it possible to determine that object's type during program execution. For other objects, the interpretation of the
+values found therein is determined by the type of the <i class="nonterminal">expression</i>s (Clause <a title="expr" href="expr.html">5</a>) used to access
+them.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>Objects can contain other objects, called <dfn>subobjects</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="subobjects"></object>. A subobject can be a <dfn>member
+subobject</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="member
+subobject"></object> (<a title="class.mem" href="class.mem.html">9.2</a>), a <dfn>base class subobject</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="base class subobject"></object> (Clause <a title="class.derived" href="class.derived.html">10</a>), or an array element. An
+object that is not a subobject of any other object is called a <dfn>complete object</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="complete object"></object>.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>For every object <code class="sh_cpp">x</code>, there is some object called <dfn>the complete object of</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="the complete object of"></object> <code class="sh_cpp">x</code>,
+determined as follows:</p>
+
+<ul>
+<li>If <code class="sh_cpp">x</code> is a complete object, then <code class="sh_cpp">x</code> is the complete object of <code class="sh_cpp">x</code>.</li>
+
+<li>Otherwise, the complete object of <code class="sh_cpp">x</code> is the complete object of the (unique) object that contains
+<code class="sh_cpp">x</code>.</li>
+</ul>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>If a complete object, a data member (<a title="class.mem" href="class.mem.html">9.2</a>), or an array element is of class type, its type is
+considered the <dfn>most derived class</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="most derived class"></object>, to distinguish it from the class type of any base class subobject; an
+object of a most derived class type or of a non-class type is called a <dfn>most derived object</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="most derived object"></object>.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>Unless it is a bit-field (<a title="class.bit" href="class.bit.html">9.6</a>), a most derived object shall have a non-zero size and shall occupy
+one or more bytes of storage. Base class subobjects may have zero size. An object of trivially copyable or
+standard-layout type (<a title="basic.types" href="basic.types.html">3.9</a>) shall occupy contiguous bytes of storage.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>Unless an object is a bit-field or a base class subobject of zero size, the address of that object is the
+address of the first byte it occupies. Two objects that are not bit-fields may have the same address if one is a
+subobject of the other or if at least one is a base class subobject of zero size and they are of different types;
+otherwise, they shall have distinct addresses.<sup class="footnote"><a href="#fn4">4</a></sup></p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">static const char test1 = 'x';
+static const char test2 = 'x';
+const bool b = &amp;test1 != &amp;test2;    // always true</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p7" href="#p7">7</a><span class="note">[ <em>Note:</em> C++ provides a variety of fundamental types and several ways of composing new types from existing types
+(<a title="basic.types" href="basic.types.html">3.9</a>). — <em>end note</em> ]</span></p>
+
+
+
+<div><p class="footnote" id="fn4">4) Under the “as-if” rule an implementation is allowed to store two objects at the same machine address or
+not store an object at all if the program cannot observe the difference (<a title="intro.execution" href="intro.execution.html">1.9</a>).</p></div>
+</body>
+</html>
+

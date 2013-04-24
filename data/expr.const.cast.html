@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Const cast</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[expr.const.cast]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[expr.const.cast]"></object>5.2.11 Const cast </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The result of the expression <code class="sh_cpp">const_cast&lt;T&gt;(v)</code> is of type <code class="sh_cpp">T</code>. If
+<code class="sh_cpp">T</code> is an lvalue reference to object type, the result is an lvalue; if
+<code class="sh_cpp">T</code> is an rvalue reference to object type, the result is an xvalue; otherwise, the result is a prvalue and
+the lvalue-to-rvalue (<a title="conv.lval" href="conv.lval.html">4.1</a>), array-to-pointer (<a title="conv.array" href="conv.array.html">4.2</a>), and function-to-pointer (<a title="conv.func" href="conv.func.html">4.3</a>)
+standard conversions are performed on the expression <code class="sh_cpp">v</code>. Conversions that can be performed explicitly using
+<code class="sh_cpp">const_cast</code> are listed below. No other conversion shall be performed explicitly using
+<code class="sh_cpp">const_cast</code>.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><span class="note">[ <em>Note:</em> Subject to the restrictions in this section, an expression may be cast to its own type using a
+<code class="sh_cpp">const_cast</code> operator. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>For two pointer types <code class="sh_cpp">T1</code> and <code class="sh_cpp">T2</code> where</p>
+
+<dl><dd>
+<code class="sh_cpp">T1</code> is <var>cv</var><sub>1,0</sub> pointer to <var>cv</var><sub>1,1</sub> pointer to … <var>cv</var><sub>1,<var>n</var>−1</sub> pointer to <var>cv</var><sub>1,<var>n</var></sub> <code class="sh_cpp">T</code>
+</dd></dl>
+
+<p>and</p>
+
+<dl><dd>
+<code class="sh_cpp">T2</code> is <var>cv</var><sub>2,0</sub> pointer to <var>cv</var><sub>2,1</sub> pointer to … <var>cv</var><sub>2,<var>n</var>−1</sub> pointer to <var>cv</var><sub>2,<var>n</var></sub> <code class="sh_cpp">T</code>
+</dd></dl>
+
+<p>where <code class="sh_cpp">T</code> is any object type or the <code class="sh_cpp">void</code> type and where
+<var>cv</var><sub>1,<var>k</var></sub> and <var>cv</var><sub>2,<var>k</var></sub> may be different cv-qualifications, a
+prvalue of type <code class="sh_cpp">T1</code> may be explicitly converted to the type <code class="sh_cpp">T2</code> using a <code class="sh_cpp">const_cast</code>.
+The result of a pointer <code class="sh_cpp">const_cast</code> refers to the original object.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>For two object types <code class="sh_cpp">T1</code> and <code class="sh_cpp">T2</code>, if a pointer to <code class="sh_cpp">T1</code> can be explicitly
+converted to the type “pointer to <code class="sh_cpp">T2</code>” using a <code class="sh_cpp">const_cast</code>, then the following conversions can
+also be made:</p>
+<ul>
+<li>an lvalue of type <code class="sh_cpp">T1</code> can be explicitly converted to an lvalue of type <code class="sh_cpp">T2</code> using the cast
+	<code class="sh_cpp">const_cast&lt;T2&amp;&gt;</code>;</li>
+<li>a glvalue of type <code class="sh_cpp">T1</code> can be explicitly converted to an xvalue of type <code class="sh_cpp">T2</code> using the cast
+	<code class="sh_cpp">const_cast&lt;T2&amp;&amp;&gt;</code>;</li>
+<li>if <code class="sh_cpp">T1</code> is a class type, a prvalue of type <code class="sh_cpp">T1</code> can be explicitly converted to an xvalue of
+	type <code class="sh_cpp">T2</code> using the cast <code class="sh_cpp">const_cast&lt;T2&amp;&amp;&gt;</code>.</li>
+</ul>
+
+<p>The result of a reference <code class="sh_cpp">const_cast</code> refers to the original object.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>For a <code class="sh_cpp">const_cast</code> involving pointers to data members, multi-level pointers to data members and
+multi-level mixed pointers and pointers to data members (<a title="conv.qual" href="conv.qual.html">4.4</a>), the rules for <code class="sh_cpp">const_cast</code> are the
+same as those used for pointers; the “member” aspect of a pointer to member is ignored when determining where the
+cv-qualifiers are added or removed by the <code class="sh_cpp">const_cast</code>. The result of a pointer to data member
+<code class="sh_cpp">const_cast</code> refers to the same member as the original (uncast) pointer to data member.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>A null pointer value (<a title="conv.ptr" href="conv.ptr.html">4.10</a>) is converted to the null pointer value of the destination type. The null
+member pointer value (<a title="conv.mem" href="conv.mem.html">4.11</a>) is converted to the null member pointer value of the destination type.</p>
+
+<p><a class="anchor" id="p7" href="#p7">7</a><span class="note">[ <em>Note:</em> Depending on the type of the object, a write operation through the pointer, lvalue or pointer to data
+member resulting from a <code class="sh_cpp">const_cast</code> that casts away a const-qualifier<sup class="footnote"><a href="#fn74">74</a></sup> may produce undefined
+behavior (<a title="dcl.type.cv" href="dcl.type.cv.html">7.1.6.1</a>). — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p8" href="#p8">8</a>The following rules define the process known as casting away constness. In these rules
+<code class="sh_cpp">T<var>n</var></code> and <code class="sh_cpp">X<var>n</var></code> represent types. For two pointer types:</p>
+
+<dl>
+<dd>
+<code class="sh_cpp">X1</code> is <code class="sh_cpp">T1</code> <var>cv</var><sub>1,1</sub> <code class="sh_cpp">*</code> … <var>cv</var><sub>1,<var>N</var></sub> <code class="sh_cpp">*</code> where <code class="sh_cpp">T1</code> is not a pointer type</dd>
+<dd>
+<code class="sh_cpp">X2</code> is <code class="sh_cpp">T2</code> <var>cv</var><sub>2,1</sub> <code class="sh_cpp">*</code> … <var>cv</var><sub>2,<var>M</var></sub> <code class="sh_cpp">*</code> where <code class="sh_cpp">T2</code> is not a pointer type</dd>
+<dd>
+<var>K</var> is min(<var>N</var>, <var>M</var>)</dd>
+</dl>
+
+<p>casting from <code class="sh_cpp">X1</code> to <code class="sh_cpp">X2</code> casts away constness if, for a non-pointer type <code class="sh_cpp">T</code> there
+does not exist an implicit conversion (Clause <a title="conv" href="conv.html">4</a>) from:</p>
+
+<dl><dd>
+<code class="sh_cpp">T</code> <var>cv</var><sub>1,(<var>N</var>−<var>K</var>+1)</sub> <code class="sh_cpp">*</code> <var>cv</var><sub>1,(<var>N</var>−<var>K</var>+2)</sub> <code class="sh_cpp">*</code> … <var>cv</var><sub>1,<var>N</var></sub> <code class="sh_cpp">*</code>
+</dd></dl>
+
+<p>to</p>
+
+<dl><dd>
+<code class="sh_cpp">T</code> <var>cv</var><sub>2,(<var>M</var>−<var>K</var>+1)</sub> <code class="sh_cpp">*</code> <var>cv</var><sub>2,(<var>M</var>−<var>K</var>+2)</sub> <code class="sh_cpp">*</code> … <var>cv</var><sub>2,<var>M</var></sub> <code class="sh_cpp">*</code>
+</dd></dl>
+
+<p><a class="anchor" id="p9" href="#p9">9</a>Casting from an lvalue of type <code class="sh_cpp">T1</code> to an lvalue of type <code class="sh_cpp">T2</code> using an lvalue reference
+cast or casting from an expression of type <code class="sh_cpp">T1</code> to an xvalue of type <code class="sh_cpp">T2</code> using an rvalue
+reference cast casts away constness if a cast from a prvalue of type “pointer to <code class="sh_cpp">T1</code>” to the type “pointer
+to <code class="sh_cpp">T2</code>” casts away constness.</p>
+
+<p><a class="anchor" id="p10" href="#p10">10</a>Casting from a prvalue of type “pointer to data member of <code class="sh_cpp">X</code> of type <code class="sh_cpp">T1</code>” to the type
+“pointer to data member of <code class="sh_cpp">Y</code> of type <code class="sh_cpp">T2</code>” casts away constness if a cast from a prvalue of type
+“pointer to <code class="sh_cpp">T1</code>” to the type “pointer to <code class="sh_cpp">T2</code>” casts away constness.</p>
+
+<p><a class="anchor" id="p11" href="#p11">11</a>For multi-level pointer to members and multi-level mixed pointers and pointer to members (<a title="conv.qual" href="conv.qual.html">4.4</a>), the
+“member” aspect of a pointer to member level is ignored when determining if a <code class="sh_cpp">const</code> cv-qualifier has been
+cast away.</p>
+
+<p><a class="anchor" id="p12" href="#p12">12</a><span class="note">[ <em>Note:</em> some conversions which involve only changes in cv-qualification cannot be done using
+<code class="sh_cpp">const_cast</code>. For instance, conversions between pointers to functions are not covered because such
+conversions lead to values whose use causes undefined behavior. For the same reasons, conversions between pointers to
+member functions, and in particular, the conversion from a pointer to a const member function to a pointer to a
+non-const member function, are not covered. — <em>end note</em> ]</span></p>
+
+
+<div><p class="footnote" id="fn74">74) <code class="sh_cpp">const_cast</code> is not limited to conversions that cast away a const-qualifier.</p></div>
+</body>
+</html>
+

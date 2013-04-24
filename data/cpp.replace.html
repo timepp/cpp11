@@ -1,0 +1,111 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Macro replacement</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[cpp.replace]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[cpp.replace]"></object>16.3 Macro replacement </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Two replacement lists are identical if and only if the preprocessing tokens in both have the same number,
+ordering, spelling, and white-space separation, where all white-space separations are considered identical.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>An identifier currently defined as an <em>object-like</em> macro may be redefined by another
+<code class="sh_cpp">#define</code> preprocessing directive provided that the second definition is an object-like macro definition and
+the two replacement lists are identical, otherwise the program is ill-formed. Likewise, an identifier currently defined
+as a <em>function-like</em> macro may be redefined by another <code class="sh_cpp">#define</code> preprocessing directive provided that
+the second definition is a function-like macro definition that has the same number and spelling of parameters, and the
+two replacement lists are identical, otherwise the program is ill-formed.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>There shall be white-space between the identifier and the replacement list in the definition of an object-like
+macro.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>If the identifier-list in the macro definition does not end with an ellipsis, the number of arguments
+(including those arguments consisting of no preprocessing tokens) in an invocation of a function-like macro shall equal
+the number of parameters in the macro definition. Otherwise, there shall be more arguments in the invocation than there
+are parameters in the macro definition (excluding the <code class="sh_cpp">...</code>). There shall exist a <code class="sh_cpp">)</code>
+preprocessing token that terminates the invocation.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>The identifier <code class="sh_cpp">__VA_ARGS__</code> shall occur only in the replacement-list of a function-like macro that
+uses the ellipsis notation in the parameters.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>A parameter identifier in a function-like macro shall be uniquely declared within its scope.</p>
+
+<p><a class="anchor" id="p7" href="#p7">7</a>The identifier immediately following the <code class="sh_cpp">define</code> is called the <dfn>macro name</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="macro name"></object>. There is one
+name space for macro names. Any white-space characters preceding or following the replacement list of preprocessing
+tokens are not considered part of the replacement list for either form of macro.</p>
+
+<p><a class="anchor" id="p8" href="#p8">8</a>If a <code class="sh_cpp">#</code> preprocessing token, followed by an identifier, occurs lexically at the point at which a
+preprocessing directive could begin, the identifier is not subject to macro replacement.</p>
+
+<p><a class="anchor" id="p9" href="#p9">9</a>A preprocessing directive of the form</p>
+
+<dl>
+<dd>
+<code class="sh_cpp">#</code> <code class="sh_cpp">define</code> <i class="nonterminal">identifier</i> <i class="nonterminal">replacement-list</i> <i class="nonterminal">new-line</i>
+</dd>
+</dl>
+
+<p>defines an <dfn>object-like macro</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="object-like macro"></object> that causes each subsequent instance of the macro name<sup class="footnote"><a href="#fn156">156</a></sup> to be
+replaced by the replacement list of preprocessing tokens that constitute the remainder of the directive.<sup class="footnote"><a href="#fn157">157</a></sup>
+The replacement list is then rescanned for more macro names as specified below.</p>
+
+<p><a class="anchor" id="p10" href="#p10">10</a>A preprocessing directive of the form</p>
+
+<dl>
+<dd>
+<code class="sh_cpp">#</code> <code class="sh_cpp">define</code> <i class="nonterminal">identifier</i> <i class="nonterminal">lparen</i> <i class="nonterminal">identifier-list</i><sub class="opt">opt</sub> <code class="sh_cpp">)</code> <i class="nonterminal">replacement-list</i> <i class="nonterminal">new-line</i>
+</dd>
+<dd>
+<code class="sh_cpp">#</code> <code class="sh_cpp">define</code> <i class="nonterminal">identifier</i> <i class="nonterminal">lparen</i> <code class="sh_cpp">...</code> <code class="sh_cpp">)</code> <i class="nonterminal">replacement-list</i> <i class="nonterminal">new-line</i>
+</dd>
+<dd>
+<code class="sh_cpp">#</code> <code class="sh_cpp">define</code> <i class="nonterminal">identifier</i> <i class="nonterminal">lparen</i> <i class="nonterminal">identifier-list</i> <code class="sh_cpp">,</code> <code class="sh_cpp">...</code> <code class="sh_cpp">)</code> <i class="nonterminal">replacement-list</i> <i class="nonterminal">new-line</i>
+</dd>
+</dl>
+
+<p>defines a <dfn>function-like macro</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="function-like macro"></object> with parameters, whose use is similar syntactically to a function call. The
+parameters are specified by the optional list of identifiers, whose scope extends from their declaration in the
+identifier list until the new-line character that terminates the <code class="sh_cpp">#define</code> preprocessing directive. Each
+subsequent instance of the function-like macro name followed by a <code class="sh_cpp">(</code> as the next preprocessing token
+introduces the sequence of preprocessing tokens that is replaced by the replacement list in the definition (an
+invocation of the macro). The replaced sequence of preprocessing tokens is terminated by the matching <code class="sh_cpp">)</code>
+preprocessing token, skipping intervening matched pairs of left and right parenthesis preprocessing tokens. Within the
+sequence of preprocessing tokens making up an invocation of a function-like macro, new-line is considered a normal
+white-space character.</p>
+
+<p><a class="anchor" id="p11" href="#p11">11</a>The sequence of preprocessing tokens bounded by the outside-most matching parentheses forms the list of
+arguments for the function-like macro. The individual arguments within the list are separated by comma preprocessing
+tokens, but comma preprocessing tokens between matching inner parentheses do not separate arguments. If there are
+sequences of preprocessing tokens within the list of arguments that would otherwise act as preprocessing directives,<sup class="footnote"><a href="#fn158">158</a></sup> the behavior is undefined.</p>
+
+<p><a class="anchor" id="p12" href="#p12">12</a>If there is a <code class="sh_cpp">...</code> in the identifier-list in the macro definition, then the trailing arguments,
+including any separating comma preprocessing tokens, are merged to form a single item: the variable arguments. The
+number of arguments so combined is such that, following merger, the number of arguments is one more than the number of
+parameters in the macro definition (excluding the <code class="sh_cpp">...</code>).</p>
+
+
+
+
+
+
+<div>
+<p class="footnote" id="fn156">156) Since, by macro-replacement time, all character literals and string literals are preprocessing tokens,
+not sequences possibly containing identifier-like subsequences (see <a title="lex.phases" href="lex.phases.html">2.2</a>, translation phases), they are never
+scanned for macro names or parameters.</p>
+<p class="footnote" id="fn157">157) An alternative token (<a title="lex.digraph" href="lex.digraph.html">2.6</a>) is not an identifier, even when its spelling consists entirely
+of letters and underscores. Therefore it is not possible to define a macro whose name is the same as that of an
+alternative token.</p>
+<p class="footnote" id="fn158">158) Despite the name, a non-directive is a preprocessing directive.</p>
+</div>
+</body>
+</html>
+

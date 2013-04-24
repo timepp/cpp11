@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Merge</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[alg.merge]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[alg.merge]"></object>25.4.4 Merge </h3>
+
+<h4><code class="sh_cpp">template&lt;class InputIterator1, class InputIterator2,
+         class OutputIterator&gt;
+  OutputIterator
+    <dfn>merge</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="merge"></object>(InputIterator1 first1, InputIterator1 last1,
+          InputIterator2 first2, InputIterator2 last2,
+          OutputIterator result);
+
+template&lt;class InputIterator1, class InputIterator2,
+         class OutputIterator, class Compare&gt;
+  OutputIterator
+    merge(InputIterator1 first1, InputIterator1 last1,
+          InputIterator2 first2, InputIterator2 last2,
+          OutputIterator result, Compare comp);</code></h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Effects:</em> Copies all the elements of the two ranges <code class="sh_cpp">[first1, last1)</code> and <code class="sh_cpp">[first2,
+last2)</code> into the range <code class="sh_cpp">[result, result_last)</code>, where <code class="sh_cpp">result_last</code> is <code class="sh_cpp">result + (last1
+- first1) + (last2 - first2)</code>, such that the resulting range satisfies <code class="sh_cpp">is_sorted(result, result_last)</code>
+or <code class="sh_cpp">is_sorted(result, result_last, comp)</code>, respectively.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Requires:</em> The ranges <code class="sh_cpp">[first1, last1)</code> and <code class="sh_cpp">[first2, last2)</code> shall be sorted with respect
+to <code class="sh_cpp">operator&lt;</code> or <code class="sh_cpp">comp</code>. The resulting range shall not overlap with either of the original
+ranges.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Returns:</em> <code class="sh_cpp">result + (last1 - first1) + (last2 - first2)</code>.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><em>Complexity:</em> At most <code class="sh_cpp">(last1 - first1) + (last2 - first2) - 1</code> comparisons.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><em>Remarks:</em> Stable.</p>
+
+<h4><code class="sh_cpp">template&lt;class BidirectionalIterator&gt;
+  void <dfn>inplace_merge</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="inplace_merge"></object>(BidirectionalIterator first,
+                     BidirectionalIterator middle,
+                     BidirectionalIterator last);
+
+template&lt;class BidirectionalIterator, class Compare&gt;
+  void inplace_merge(BidirectionalIterator first,
+                     BidirectionalIterator middle,
+                     BidirectionalIterator last, Compare comp);</code></h4>
+
+<p><a class="anchor" id="p6" href="#p6">6</a><em>Effects:</em> Merges two sorted consecutive ranges <code class="sh_cpp">[first, middle)</code> and <code class="sh_cpp">[middle, last)</code>,
+putting the result of the merge into the range <code class="sh_cpp">[first, last)</code>. The resulting range will be in non-decreasing
+order; that is, for every iterator <code class="sh_cpp">i</code> in <code class="sh_cpp">[first, last)</code> other than <code class="sh_cpp">first</code>, the
+condition <code class="sh_cpp">*i &lt; *(i - 1)</code> or, respectively, <code class="sh_cpp">comp(*i, *(i - 1))</code> will be false.</p>
+
+<p><a class="anchor" id="p7" href="#p7">7</a><em>Requires:</em> The ranges <code class="sh_cpp">[first, middle)</code> and <code class="sh_cpp">[middle, last)</code> shall be sorted with respect
+to <code class="sh_cpp">operator&lt;</code> or <code class="sh_cpp">comp</code>. <code class="sh_cpp">BidirectionalIterator</code> shall satisfy the requirements of
+<code class="concept">ValueSwappable</code> (<a title="swappable.requirements" href="swappable.requirements.html">17.6.3.2</a>). The type of <code class="sh_cpp">*first</code> shall satisfy the requirements
+of <code class="concept">MoveConstructible</code> (Table <a href="utility.arg.requirements.html#t20">20</a>) and of <code class="concept">MoveAssignable</code> (Table <a href="utility.arg.requirements.html#t22">22</a>).</p>
+
+<p><a class="anchor" id="p8" href="#p8">8</a><em>Complexity:</em> When enough additional memory is available, <code class="sh_cpp">(last - first) - 1</code> comparisons. If no
+additional memory is available, an algorithm with complexity <var>N</var>log(<var>N</var>) (where <var>N</var> is equal
+to <code class="sh_cpp">last - first</code>) may be used.</p>
+
+<p><a class="anchor" id="p9" href="#p9">9</a><em>Remarks:</em> Stable.</p>
+</body>
+</html>
+

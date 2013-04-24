@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Imbue limitations</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[iostreams.requirements]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[iostreams.requirements]"></object>Annex  Iostreams requirements </h2>
+
+<h3>
+<dfn class="label">[iostream.limits.imbue]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[iostream.limits.imbue]"></object>27.2.1 Imbue limitations </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>No function described in Clause <a title="input.output" href="input.output.general.html">27</a> except for <code class="sh_cpp">ios_base::imbue</code> and
+<code class="sh_cpp">basic_filebuf::pubimbue</code> causes any instance of <code class="sh_cpp">basic_ios::imbue</code> or
+<code class="sh_cpp">basic_streambuf::imbue</code> to be called. If any user function called from a function declared in Clause
+<a title="input.output" href="input.output.general.html">27</a> or as an overriding virtual function of any class declared in Clause <a title="input.output" href="input.output.general.html">27</a> calls
+<code class="sh_cpp">imbue</code>, the behavior is undefined.</p>
+</body>
+</html>
+

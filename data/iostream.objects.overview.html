@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Overview</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[iostream.objects]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[iostream.objects]"></object>27.4 Standard iostream objects </h2>
+
+<h3>
+<dfn class="label">[iostream.objects.overview]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[iostream.objects.overview]"></object>27.4.1 Overview </h3>
+
+<h3>Header <dfn><code class="header">&lt;iostream&gt;</code></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="&lt;iostream&gt;"></object> synopsis</h3>
+
+<pre><code class="sh_cpp">#include &lt;ios&gt;
+#include &lt;streambuf&gt;
+#include &lt;istream&gt;
+#include &lt;ostream&gt;
+
+namespace std {
+  extern istream cin;
+  extern ostream cout;
+  extern ostream cerr;
+  extern ostream clog;
+
+  extern wistream wcin;
+  extern wostream wcout;
+  extern wostream wcerr;
+  extern wostream wclog;
+}</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The header <code class="header">&lt;iostream&gt;</code> declares objects that associate objects with the standard C streams
+provided for by the functions declared in <code class="header">&lt;cstdio&gt;</code> (<a title="c.files" href="c.files.html">27.9.2</a>), and includes all the headers
+necessary to use these objects.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The objects are constructed and the associations are established at some time prior to or during the first time
+an object of class <code class="sh_cpp">ios_base::Init</code> is constructed, and in any case before the body of <code class="sh_cpp">main</code>
+begins execution.<sup class="footnote"><a href="#fn297">297</a></sup> The objects are not destroyed during program execution.<sup class="footnote"><a href="#fn298">298</a></sup> The results of
+including <code class="header">&lt;iostream&gt;</code> in a translation unit shall be as if <code class="header">&lt;iostream&gt;</code> defined an instance
+of <code class="sh_cpp">ios_base::Init</code> with static storage duration. Similarly, the entire program shall behave as if there were
+at least one instance of <code class="sh_cpp">ios_base::Init</code> with static storage duration.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>Mixing operations on corresponding wide- and narrow-character streams follows the same semantics as mixing such
+operations on <code class="sh_cpp">FILE</code>s, as specified in Amendment 1 of the ISO C standard.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>Concurrent access to a synchronized (<a title="ios.members.static" href="ios.members.static.html">27.5.3.4</a>) standard iostream object’s formatted and unformatted
+input (<a title="istream" href="istream.html">27.7.2.1</a>) and output (<a title="ostream" href="ostream.html">27.7.3.1</a>) functions or a standard C stream by multiple threads shall
+not result in a data race (<a title="intro.multithread" href="intro.multithread.html">1.10</a>). <span class="note">[ <em>Note:</em> Users must still synchronize concurrent use of these objects and
+streams by multiple threads if they wish to avoid interleaved characters. — <em>end note</em> ]</span></p>
+
+
+
+
+<div>
+<p class="footnote" id="fn297">297) If it is possible for them to do so, implementations are encouraged to initialize the objects earlier
+than required.</p>
+<p class="footnote" id="fn298">298) Constructors and destructors for static objects can access these objects to read input from
+<code class="sh_cpp">stdin</code> or write output to <code class="sh_cpp">stdout</code> or <code class="sh_cpp">stderr</code>.</p>
+</div>
+</body>
+</html>
+

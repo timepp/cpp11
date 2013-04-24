@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Static members</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[class.static]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[class.static]"></object>9.4 Static members </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A data or function member of a class may be declared <code class="sh_cpp">static</code> in a class definition, in which case
+it is a <dfn>static member</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="static member"></object> of the class.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>A static member <code class="sh_cpp">s</code> of class <code class="sh_cpp">X</code> may be referred to using the <i class="nonterminal">qualified-id</i>
+expression <code class="sh_cpp">X::s</code>; it is not necessary to use the class member access syntax (<a title="expr.ref " href=".html"></a>) to refer to a
+<code class="sh_cpp">static</code> member. A <code class="sh_cpp">static</code> member may be referred to using the class member access syntax, in
+which case the object expression is evaluated.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct process {
+  static void reschedule();
+};
+process&amp; g();
+void f() {
+  process::reschedule();    // OK: no object necessary
+  g().reschedule();         // g() is called
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>A <code class="sh_cpp">static</code> member may be referred to directly in the scope of its class or in the scope of a class
+derived (Clause <a title="class.derived" href="class.derived.html">10</a>) from its class; in this case, the <code class="sh_cpp">static</code> member is referred to as if a
+<i class="nonterminal">qualified-id</i> expression was used, with the <i class="nonterminal">nested-name-specifier</i> of the <i class="nonterminal">qualified-id</i> naming
+the class scope from which the static member is referenced.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">int g();
+struct X {
+  static int g();
+};
+struct Y : X {
+  static int i;
+};
+int Y::i = g();         // equivalent to Y::g();</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>If an <i class="nonterminal">unqualified-id</i> (<a title="expr.prim" href="expr.prim.general.html">5.1</a>) is used in the definition of a <code class="sh_cpp">static</code> member
+following the member’s <i class="nonterminal">declarator-id</i>, and name lookup (<a title="basic.lookup.unqual" href="basic.lookup.unqual.html">3.4.1</a>) finds that the <i class="nonterminal">unqualified-id</i>
+refers to a <code class="sh_cpp">static</code> member, enumerator, or nested type of the member’s class (or of a base class of the
+member’s class), the <i class="nonterminal">unqualified-id</i> is transformed into a <i class="nonterminal">qualified-id</i> expression in which the
+<i class="nonterminal">nested-name-specifier</i> names the class scope from which the member is referenced. <span class="note">[ <em>Note:</em> See <a title="expr.prim" href="expr.prim.general.html">5.1</a> for
+restrictions on the use of non-static data members and non-static member functions. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>Static members obey the usual class member access rules (Clause <a title="class.access" href="class.access.html">11</a>). When used in the declaration of
+a class member, the <code class="sh_cpp">static</code> specifier shall only be used in the member declarations that appear within the
+<i class="nonterminal">member-specification</i> of the class definition. <span class="note">[ <em>Note:</em> It cannot be specified in member declarations that appear
+in namespace scope. — <em>end note</em> ]</span></p>
+</body>
+</html>
+

@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Type float_round_style</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[round.style]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[round.style]"></object>18.3.2.5 Type <code class="sh_cpp"><dfn>float_round_style</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="float_round_style"></object></code> </h4>
+
+<pre><code class="sh_cpp">namespace std {
+  enum float_round_style {
+     round_indeterminate       = -1,
+     round_toward_zero         = 0,
+     round_to_nearest          = 1,
+     round_toward_infinity     = 2,
+     round_toward_neg_infinity = 3
+  };
+}</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The rounding mode for floating point arithmetic is characterized by the values:</p>
+
+<ul>
+<li>
+<code class="sh_cpp"><dfn>round_indeterminate</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="round_indeterminate"></object></code> if the rounding style is indeterminable</li>
+<li>
+<code class="sh_cpp"><dfn>round_toward_zero</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="round_toward_zero"></object></code> if the rounding style is toward zero</li>
+<li>
+<code class="sh_cpp"><dfn>round_to_nearest</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="round_to_nearest"></object></code> if the rounding style is to the nearest representable value</li>
+<li>
+<code class="sh_cpp"><dfn>round_toward_infinity</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="round_toward_infinity"></object></code> if the rounding style is toward infinity</li>
+<li>
+<code class="sh_cpp"><dfn>round_toward_neg_infinity</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="round_toward_neg_infinity"></object></code> if the rounding style is toward negative infinity</li>
+</ul>
+</body>
+</html>
+

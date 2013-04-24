@@ -1,0 +1,186 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>string conversions</title>
+</head>
+<body>
+<h5>
+<dfn class="label">[conversions.string]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[conversions.string]"></object>22.3.3.2.2 <code class="sh_cpp">string</code> conversions </h5>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Class template <code class="sh_cpp"><dfn>wstring_convert</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="wstring_convert"></object></code> performs conversions between a wide string and a byte
+string. It lets you specify a code conversion facet (like class template <code class="sh_cpp">codecvt</code>) to perform the
+conversions, without affecting any streams or locales.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> Say, for example, you have a code conversion facet called <code class="sh_cpp">codecvt_utf8</code> that you want to use to
+output to <code class="sh_cpp">cout</code> a UTF-8 multibyte sequence corresponding to a wide string, but you don’t want to alter the
+locale for <code class="sh_cpp">cout</code>. You can write something like:</p>
+
+<pre><code class="sh_cpp">wstring_convert&lt;codecvt_utf8&lt;wchar_t&gt;&gt; myconv;
+std::string mbstring = myconv.to_bytes(L"Hello\n");
+std::cout &lt;&lt; mbstring;</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<h6>
+<a class="anchor" id="p2" href="#p2">2</a>Class template <code class="sh_cpp">wstring_convert</code> synopsis</h6>
+
+<pre><code class="sh_cpp">namespace std {
+template&lt;class Codecvt, class Elem = wchar_t,
+    class Wide_alloc = std::allocator&lt;Elem&gt;,
+    class Byte_alloc = std::allocator&lt;char&gt; &gt; class wstring_convert {
+  public:
+    typedef std::basic_string&lt;char, char_traits&lt;char&gt;, Byte_alloc&gt; byte_string;
+    typedef std::basic_string&lt;Elem, char_traits&lt;Elem&gt;, Wide_alloc&gt; wide_string;
+    typedef typename Codecvt::state_type state_type;
+    typedef typename wide_string::traits_type::int_type int_type;
+
+    wstring_convert(Codecvt *pcvt = new Codecvt);
+    wstring_convert(Codecvt *pcvt, state_type state);
+    wstring_convert(const byte_string&amp; byte_err,
+                    const wide_string&amp; wide_err = wide_string());
+    ~wstring_convert();
+
+    wide_string from_bytes(char byte);
+    wide_string from_bytes(const char *ptr);
+    wide_string from_bytes(const byte_string&amp; str);
+    wide_string from_bytes(const char *first, const char *last);
+
+    byte_string to_bytes(Elem wchar);
+    byte_string to_bytes(const Elem *wptr);
+    byte_string to_bytes(const wide_string&amp; wstr);
+    byte_string to_bytes(const Elem *first, const Elem *last);
+
+    size_t converted() const;
+    state_type state() const;
+    
+    byte_string byte_err_string;    // exposition only
+    wide_string wide_err_string;    // exposition only
+    Codecvt *cvtptr;                // exposition only
+    state_type cvtstate;            // exposition only
+    size_t cvtcount;                // exposition only
+  };
+}</code></pre>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>The class template describes an object that controls conversions between wide string objects of class
+<code class="sh_cpp">std::basic_string&lt;Elem, char_traits&lt;Elem&gt;, Wide_alloc&gt;</code> and byte string objects of class
+<code class="sh_cpp">std::basic_string&lt;char, char_traits&lt;char&gt;, Byte_alloc&gt;</code>. The class template defines the types
+<code class="sh_cpp">wide_string</code> and <code class="sh_cpp">byte_string</code> as synonyms for these two types. Conversion between a sequence of
+<code class="sh_cpp">Elem</code> values (stored in a <code class="sh_cpp">wide_string</code> object) and multibyte sequences (stored in a
+<code class="sh_cpp">byte_string</code> object) is performed by an object of class <code class="sh_cpp">Codecvt&lt;Elem, char,
+std::mbstate_t&gt;</code>, which meets the requirements of the standard code-conversion facet
+<code class="sh_cpp">std::codecvt&lt;Elem, char, std::mbstate_t&gt;</code>.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>An object of this class template stores:</p>
+
+<ul>
+<li>
+<code class="sh_cpp">byte_err_string</code> — a byte string to display on errors</li>
+<li>
+<code class="sh_cpp">wide_err_string</code> — a wide string to display on errors</li>
+<li>
+<code class="sh_cpp">cvtptr</code> — a pointer to the allocated conversion object (which is freed when the
+	<code class="sh_cpp">wstring_convert</code> object is destroyed)</li>
+<li>
+<code class="sh_cpp">cvtstate</code> — a conversion state object</li>
+<li>
+<code class="sh_cpp">cvtcount</code> — a conversion count</li>
+</ul>
+
+<h6><code class="sh_cpp">typedef std::basic_string&lt;char&gt; <dfn>byte_string</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="byte_string"></object>;</code></h6>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>The type shall be a synonym for <code class="sh_cpp">std::basic_string&lt;char&gt;</code>.</p>
+
+<h6><code class="sh_cpp">size_t <dfn>converted</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="converted"></object>() const;</code></h6>
+
+<p><a class="anchor" id="p6" href="#p6">6</a><em>Returns:</em> <code class="sh_cpp">cvtcount</code>.</p>
+
+<h6><code class="sh_cpp">wide_string <dfn>from_bytes</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="from_bytes"></object>(char byte);
+wide_string from_bytes(const char *ptr);
+wide_string from_bytes(const byte_string&amp; str);
+wide_string from_bytes(const char *first, const char *last);</code></h6>
+
+<p><a class="anchor" id="p7" href="#p7">7</a><em>Effects:</em> The first member function shall convert the single-element sequence <code class="sh_cpp">byte</code> to a wide
+string. The second member function shall convert the nul-terminated sequence beginning at <code class="sh_cpp">ptr</code> to a wide
+string. The third member function shall convert the sequence stored in <code class="sh_cpp">str</code> to a wide string. The fourth
+member function shall convert the sequence defined by the range <code class="sh_cpp">[first,last)</code> to a wide
+string.</p>
+
+<p><a class="anchor" id="p8" href="#p8">8</a>In all cases:</p>
+
+<ul>
+<li>If the <code class="sh_cpp">cvtstate</code> object was not constructed with an explicit value, it shall be set to its default value
+	(the initial conversion state) before the conversion begins. Otherwise it shall be left unchanged.</li>
+<li>The number of input elements successfully converted shall be stored in <code class="sh_cpp">cvtcount</code>.</li>
+</ul>
+
+<p><a class="anchor" id="p9" href="#p9">9</a><em>Returns:</em> If no conversion error occurs, the member function shall return the converted wide string. Otherwise,
+if the object was constructed with a wide-error string, the member function shall return the wide-error string.
+Otherwise, the member function throws an object of class <code class="sh_cpp">std::range_error</code>.</p>
+
+<h6><code class="sh_cpp">typedef typename wide_string::traits_type::int_type <dfn>int_type</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="int_type"></object>;</code></h6>
+
+<p>The type shall be a synonym for <code class="sh_cpp">wide_string::traits_type::int_type</code>.</p>
+
+<h6><code class="sh_cpp">state_type <dfn>state</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="state"></object>() const;</code></h6>
+
+<p><a class="anchor" id="p10" href="#p10">10</a><em>Returns:</em> <code class="sh_cpp">cvtstate</code>.</p>
+
+<h6><code class="sh_cpp">typedef typename Codecvt::state_type <dfn>state_type</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="state_type"></object>;</code></h6>
+
+<p><a class="anchor" id="p11" href="#p11">11</a>The type shall be a synonym for <code class="sh_cpp">Codecvt::state_type</code>.</p>
+
+<h6><code class="sh_cpp">byte_string <dfn>to_bytes</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="to_bytes"></object>(Elem wchar);
+byte_string to_bytes(const Elem *wptr);
+byte_string to_bytes(const wide_string&amp; wstr);
+byte_string to_bytes(const Elem *first, const Elem *last);</code></h6>
+
+<p><a class="anchor" id="p12" href="#p12">12</a><em>Effects:</em> The first member function shall convert the single-element sequence <code class="sh_cpp">wchar</code> to a byte
+string. The second member function shall convert the nul-terminated sequence beginning at <code class="sh_cpp">wptr</code> to a byte
+string. The third member function shall convert the sequence stored in <code class="sh_cpp">wstr</code> to a byte string. The fourth
+member function shall convert the sequence defined by the range <code class="sh_cpp">[first,last)</code> to a byte
+string.</p>
+
+<p><a class="anchor" id="p13" href="#p13">13</a>In all cases:</p>
+
+<ul>
+<li>If the <code class="sh_cpp">cvtstate</code> object was not constructed with an explicit value, it shall be set to its default value
+	(the initial conversion state) before the conversion begins. Otherwise it shall be left unchanged.</li>
+<li>The number of input elements successfully converted shall be stored in <code class="sh_cpp">cvtcount</code>.</li>
+</ul>
+
+<p><a class="anchor" id="p14" href="#p14">14</a><em>Returns:</em> If no conversion error occurs, the member function shall return the converted byte string. Otherwise,
+if the object was constructed with a byte-error string, the member function shall return the byte-error string.
+Otherwise, the member function shall throw an object of class <code class="sh_cpp">std::range_error</code>.</p>
+
+<h5><code class="sh_cpp">typedef std::basic_string&lt;Elem&gt; <dfn>wide_string</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="wide_string"></object>;</code></h5>
+
+<p><a class="anchor" id="p15" href="#p15">15</a>The type shall be a synonym for <code class="sh_cpp">std::basic_string&lt;Elem&gt;</code>.</p>
+
+<h6><code class="sh_cpp"><dfn>wstring_convert</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="wstring_convert"></object>(Codecvt *pcvt = new Codecvt);
+<dfn>wstring_convert</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="wstring_convert"></object>(Codecvt *pcvt, state_type state);
+<dfn>wstring_convert</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="wstring_convert"></object>(const byte_string&amp; byte_err,
+    const wide_string&amp; wide_err = wide_string());</code></h6>
+
+<p><a class="anchor" id="p16" href="#p16">16</a><em>Effects:</em> The first constructor shall store <code class="sh_cpp">pcvt</code> in <code class="sh_cpp">cvtptr</code> and default values in
+<code class="sh_cpp">cvtstate</code>, <code class="sh_cpp">byte_err_string</code>, and <code class="sh_cpp">wide_err_string</code>. The second constructor shall
+store <code class="sh_cpp">pcvt</code> in <code class="sh_cpp">cvtptr</code>, <code class="sh_cpp">state</code> in <code class="sh_cpp">cvtstate</code>, and default values in
+<code class="sh_cpp">byte_err_string</code> and <code class="sh_cpp">wide_err_string</code>; moreover the stored state shall be retained between calls
+to <code class="sh_cpp">from_bytes</code> and <code class="sh_cpp">to_bytes</code>. The third constructor shall store <code class="sh_cpp">new Codecvt</code> in
+<code class="sh_cpp">cvtptr</code>, <code class="sh_cpp">state_type()</code> in <code class="sh_cpp">cvtstate</code>, <code class="sh_cpp">byte_err</code> in
+<code class="sh_cpp">byte_err_string</code>, and <code class="sh_cpp">wide_err</code> in <code class="sh_cpp">wide_err_string</code>.</p>
+
+<h6><code class="sh_cpp"><dfn>~wstring_convert</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="~wstring_convert"></object>();</code></h6>
+
+<p><a class="anchor" id="p17" href="#p17">17</a><em>Effects:</em> The destructor shall delete <code class="sh_cpp">cvtptr</code>.</p>
+</body>
+</html>
+

@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Clause 25: algorithms library</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[diff.cpp03.algorithms]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[diff.cpp03.algorithms]"></object>C.2.13 Clause 25: algorithms library </h3>
+
+<h4><a title="algorithms.general" href="algorithms.general.html">25.1</a></h4>
+
+<p><strong>Change:</strong> Result state of inputs after application of some algorithms</p>
+
+<p><strong>Rationale:</strong> Required by new feature.</p>
+
+<p><strong>Effect on original feature:</strong> A valid C++ 2003 program may detect that an object with a valid but unspecified state has a different valid
+but unspecified state with this International Standard. For example, <code class="sh_cpp">std::remove</code> and
+<code class="sh_cpp">std::remove_if</code> may leave the tail of the input sequence with a different set of values than
+previously.</p>
+</body>
+</html>
+

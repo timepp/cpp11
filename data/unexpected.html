@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>unexpected</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[unexpected]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[unexpected]"></object>D.11.4 <code class="sh_cpp"><dfn>unexpected</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="unexpected"></object></code> </h3>
+
+<pre><code class="sh_cpp">[[noreturn]] void unexpected();</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Remarks:</em> Called by the implementation when a function exits via an exception not allowed by its
+<i class="nonterminal">exception-specification</i> (<a title="except.unexpected" href="except.unexpected.html">15.5.2</a>), in effect after evaluating the <i class="nonterminal">throw-expression</i>
+(<a title="unexpected.handler" href="unexpected.handler.html">D.11.1</a>). May also be called directly by the program.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Effects:</em> Calls the current <code class="sh_cpp">unexpected_handler</code> function. <span class="note">[ <em>Note:</em> A default
+<code class="sh_cpp">unexpected_handler</code> is always considered a callable handler in this context. — <em>end note</em> ]</span></p>
+</body>
+</html>
+

@@ -1,0 +1,246 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Header &lt;memory&gt; synopsis</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[memory.syn]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[memory.syn]"></object>Annex  Header <code class="header">&lt;memory&gt;</code> synopsis </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The header <code class="header">&lt;memory&gt;</code> defines several types and template functions that describe properties of
+pointers and pointer-like types, manage memory for containers and other template types, and construct multiple objects
+in unitialized memory buffers (<a title="pointer.traits" href="pointer.traits.html">20.6.3</a>–<a title="specialized.algorithms" href="specialized.algorithms.html">20.6.12</a>). The header also defines the templates
+<code class="sh_cpp">unique_ptr</code>, <code class="sh_cpp">shared_ptr</code>, <code class="sh_cpp">weak_ptr</code>, and various template functions that operate on
+objects of these types (<a title="smartptr" href="unique.ptr.html">20.7</a>).</p>
+
+<pre><code class="sh_cpp">namespace std {
+  // <a title="pointer.traits" href="pointer.traits.html">20.6.3</a>, pointer traits
+  template &lt;class Ptr&gt; struct pointer_traits;
+  template &lt;class T&gt; struct pointer_traits&lt;T*&gt;;
+
+  // <a title="util.dynamic.safety" href="util.dynamic.safety.html">20.6.4</a>, pointer safety
+  enum class pointer_safety { relaxed, preferred, strict };
+  void declare_reachable(void *p);
+  template &lt;class T&gt; T *undeclare_reachable(T *p);
+  void declare_no_pointers(char *p, size_t n);
+  void undeclare_no_pointers(char *p, size_t n);
+  pointer_safety get_pointer_safety() noexcept;
+
+  // <a title="ptr.align" href="ptr.align.html">20.6.5</a>, pointer alignment function
+  void *align(std::size_t alignment, std::size_t size,
+    void *&amp;ptr, std::size_t&amp; space);
+
+  // <a title="allocator.tag" href="allocator.tag.html">20.6.6</a>, allocator argument tag
+  struct allocator_arg_t { };
+  constexpr allocator_arg_t allocator_arg = allocator_arg_t();
+
+  // <a title="allocator.uses" href="allocator.uses.trait.html">20.6.7</a>, uses_allocator
+  template &lt;class T, class Alloc&gt; struct uses_allocator;
+
+  // <a title="allocator.traits" href="allocator.traits.html">20.6.8</a>, allocator traits
+  template &lt;class Alloc&gt; struct allocator_traits;
+
+  // <a title="default.allocator" href="default.allocator.html">20.6.9</a>, the default allocator:
+  template &lt;class T&gt; class allocator;
+  template &lt;&gt; class allocator&lt;void&gt;;
+  template &lt;class T, class U&gt;
+    bool operator==(const allocator&lt;T&gt;&amp;, const allocator&lt;U&gt;&amp;) noexcept;
+  template &lt;class T, class U&gt;
+    bool operator!=(const allocator&lt;T&gt;&amp;, const allocator&lt;U&gt;&amp;) noexcept;
+
+  // <a title="storage.iterator" href="storage.iterator.html">20.6.10</a>, raw storage iterator:
+  template &lt;class OutputIterator, class T&gt; class raw_storage_iterator;
+
+  // <a title="temporary.buffer" href="temporary.buffer.html">20.6.11</a>, temporary buffers:
+  template &lt;class T&gt;
+    pair&lt;T*,ptrdiff_t&gt; get_temporary_buffer(ptrdiff_t n) noexcept;
+  template &lt;class T&gt;
+    void return_temporary_buffer(T* p) noexcept;
+
+  // <a title="specialized.algorithms" href="specialized.algorithms.html">20.6.12</a>, specialized algorithms:
+  template &lt;class T&gt; T* addressof(T&amp; r) noexcept;
+  template &lt;class InputIterator, class ForwardIterator&gt;
+    ForwardIterator uninitialized_copy(InputIterator first, InputIterator last,
+                                       ForwardIterator result);
+  template &lt;class InputIterator, class Size, class ForwardIterator&gt;
+    ForwardIterator uninitialized_copy_n(InputIterator first, Size n,
+                                         ForwardIterator result);
+  template &lt;class ForwardIterator, class T&gt;
+    void uninitialized_fill(ForwardIterator first, ForwardIterator last,
+                            const T&amp; x);
+  template &lt;class ForwardIterator, class Size, class T&gt;
+    ForwardIterator uninitialized_fill_n(ForwardIterator first, Size n, const T&amp; x);
+
+  // <a title="unique.ptr" href="unique.ptr.html">20.7.1</a> class template unique_ptr:
+  template &lt;class T&gt; class default_delete;
+  template &lt;class T&gt; class default_delete&lt;T[]&gt;;
+  template &lt;class T, class D = default_delete&lt;T&gt;&gt; class unique_ptr;
+  template &lt;class T, class D&gt; class unique_ptr&lt;T[], D&gt;;
+
+  template &lt;class T1, class D1, class T2, class D2&gt;
+    bool operator==(const unique_ptr&lt;T1, D1&gt;&amp; x, const unique_ptr&lt;T2, D2&gt;&amp; y);
+  template &lt;class T1, class D1, class T2, class D2&gt;
+    bool operator!=(const unique_ptr&lt;T1, D1&gt;&amp; x, const unique_ptr&lt;T2, D2&gt;&amp; y);
+  template &lt;class T1, class D1, class T2, class D2&gt;
+    bool operator&lt;(const unique_ptr&lt;T1, D1&gt;&amp; x, const unique_ptr&lt;T2, D2&gt;&amp; y);
+  template &lt;class T1, class D1, class T2, class D2&gt;
+    bool operator&lt;=(const unique_ptr&lt;T1, D1&gt;&amp; x, const unique_ptr&lt;T2, D2&gt;&amp; y);
+  template &lt;class T1, class D1, class T2, class D2&gt;
+    bool operator&gt;(const unique_ptr&lt;T1, D1&gt;&amp; x, const unique_ptr&lt;T2, D2&gt;&amp; y);
+  template &lt;class T1, class D1, class T2, class D2&gt;
+    bool operator&gt;=(const unique_ptr&lt;T1, D1&gt;&amp; x, const unique_ptr&lt;T2, D2&gt;&amp; y);
+
+  template &lt;class T, class D&gt;
+    bool operator==(const unique_ptr&lt;T, D&gt;&amp; x, nullptr_t) noexcept;
+  template &lt;class T, class D&gt;
+    bool operator==(nullptr_t, const unique_ptr&lt;T, D&gt;&amp; y) noexcept;
+  template &lt;class T, class D&gt;
+    bool operator!=(const unique_ptr&lt;T, D&gt;&amp; x, nullptr_t) noexcept;
+  template &lt;class T, class D&gt;
+    bool operator!=(nullptr_t, const unique_ptr&lt;T, D&gt;&amp; y) noexcept;
+  template &lt;class T, class D&gt;
+    bool operator&lt;(const unique_ptr&lt;T, D&gt;&amp; x, nullptr_t);
+  template &lt;class T, class D&gt;
+    bool operator&lt;(nullptr_t, const unique_ptr&lt;T, D&gt;&amp; y);
+  template &lt;class T, class D&gt;
+    bool operator&lt;=(const unique_ptr&lt;T, D&gt;&amp; x, nullptr_t);
+  template &lt;class T, class D&gt;
+    bool operator&lt;=(nullptr_t, const unique_ptr&lt;T, D&gt;&amp; y);
+  template &lt;class T, class D&gt;
+    bool operator&gt;(const unique_ptr&lt;T, D&gt;&amp; x, nullptr_t);
+  template &lt;class T, class D&gt;
+    bool operator&gt;(nullptr_t, const unique_ptr&lt;T, D&gt;&amp; y);
+  template &lt;class T, class D&gt;
+    bool operator&gt;=(const unique_ptr&lt;T, D&gt;&amp; x, nullptr_t);
+  template &lt;class T, class D&gt;
+    bool operator&gt;=(nullptr_t, const unique_ptr&lt;T, D&gt;&amp; y);
+
+  // <a title="util.smartptr.weakptr" href="util.smartptr.weakptr.html">20.7.2.1</a>, Class bad_weak_ptr:
+  class bad_weak_ptr;
+
+  // <a title="util.smartptr.shared" href="util.smartptr.shared.html">20.7.2.2</a>, Class template shared_ptr:
+  template&lt;class T&gt; class shared_ptr;
+
+  // <a title="util.smartptr.shared.cmp" href="util.smartptr.shared.cmp.html">20.7.2.2.7</a>, shared_ptr comparisons:
+  template&lt;class T, class U&gt;
+    bool operator==(shared_ptr&lt;T&gt; const&amp; a, shared_ptr&lt;U&gt; const&amp; b) noexcept;
+  template&lt;class T, class U&gt;
+    bool operator!=(shared_ptr&lt;T&gt; const&amp; a, shared_ptr&lt;U&gt; const&amp; b) noexcept;
+  template&lt;class T, class U&gt;
+    bool operator&lt;(shared_ptr&lt;T&gt; const&amp; a, shared_ptr&lt;U&gt; const&amp; b) noexcept;
+  template&lt;class T, class U&gt;
+    bool operator&gt;(shared_ptr&lt;T&gt; const&amp; a, shared_ptr&lt;U&gt; const&amp; b) noexcept;
+  template&lt;class T, class U&gt;
+    bool operator&lt;=(shared_ptr&lt;T&gt; const&amp; a, shared_ptr&lt;U&gt; const&amp; b) noexcept;
+  template&lt;class T, class U&gt;
+    bool operator&gt;=(shared_ptr&lt;T&gt; const&amp; a, shared_ptr&lt;U&gt; const&amp; b) noexcept;
+
+  template &lt;class T&gt;
+    bool operator==(const shared_ptr&lt;T&gt;&amp; x, nullptr_t) noexcept;
+  template &lt;class T&gt;
+    bool operator==(nullptr_t, const shared_ptr&lt;T&gt;&amp; y) noexcept;
+  template &lt;class T&gt;
+    bool operator!=(const shared_ptr&lt;T&gt;&amp; x, nullptr_t) noexcept;
+  template &lt;class T&gt;
+    bool operator!=(nullptr_t, const shared_ptr&lt;T&gt;&amp; y) noexcept;
+  template &lt;class T&gt;
+    bool operator&lt;(const shared_ptr&lt;T&gt;&amp; x, nullptr_t) noexcept;
+  template &lt;class T&gt;
+    bool operator&lt;(nullptr_t, const shared_ptr&lt;T&gt;&amp; y) noexcept;
+  template &lt;class T&gt;
+    bool operator&lt;=(const shared_ptr&lt;T&gt;&amp; x, nullptr_t) noexcept;
+  template &lt;class T&gt;
+    bool operator&lt;=(nullptr_t, const shared_ptr&lt;T&gt;&amp; y) noexcept;
+  template &lt;class T&gt;
+    bool operator&gt;(const shared_ptr&lt;T&gt;&amp; x, nullptr_t) noexcept;
+  template &lt;class T&gt;
+    bool operator&gt;(nullptr_t, const shared_ptr&lt;T&gt;&amp; y) noexcept;
+  template &lt;class T&gt;
+    bool operator&gt;=(const shared_ptr&lt;T&gt;&amp; x, nullptr_t) noexcept;
+  template &lt;class T&gt;
+    bool operator&gt;=(nullptr_t, const shared_ptr&lt;T&gt;&amp; y) noexcept;
+
+  // <a title="util.smartptr.shared.spec" href="util.smartptr.shared.spec.html">20.7.2.2.8</a>, shared_ptr specialized algorithms:
+  template&lt;class T&gt; void swap(shared_ptr&lt;T&gt;&amp; a, shared_ptr&lt;T&gt;&amp; b) noexcept;
+
+  // <a title="util.smartptr.shared.cast" href="util.smartptr.shared.cast.html">20.7.2.2.9</a>, shared_ptr casts:
+  template&lt;class T, class U&gt;
+    shared_ptr&lt;T&gt; static_pointer_cast(shared_ptr&lt;U&gt; const&amp; r) noexcept;
+  template&lt;class T, class U&gt;
+    shared_ptr&lt;T&gt; dynamic_pointer_cast(shared_ptr&lt;U&gt; const&amp; r) noexcept;
+  template&lt;class T, class U&gt;
+    shared_ptr&lt;T&gt; const_pointer_cast(shared_ptr&lt;U&gt; const&amp; r) noexcept;
+
+  // <a title="util.smartptr.getdeleter" href="util.smartptr.getdeleter.html">20.7.2.2.10</a>, shared_ptr get_deleter:
+  template&lt;class D, class T&gt; D* get_deleter(shared_ptr&lt;T&gt; const&amp; p);
+
+  // <a title="util.smartptr.shared.io" href="util.smartptr.shared.io.html">20.7.2.2.11</a>, shared_ptr I/O:
+  template&lt;class E, class T, class Y&gt;
+    basic_ostream&lt;E, T&gt;&amp; operator&lt;&lt; (basic_ostream&lt;E, T&gt;&amp; os, shared_ptr&lt;Y&gt; const&amp; p);
+
+  // <a title="util.smartptr.weak" href="util.smartptr.weak.html">20.7.2.3</a>, class template weak_ptr:
+  template&lt;class T&gt; class weak_ptr;
+
+  // <a title="util.smartptr.weak.spec" href="util.smartptr.weak.spec.html">20.7.2.3.6</a>, weak_ptr specialized algorithms:
+  template&lt;class T&gt; void swap(weak_ptr&lt;T&gt;&amp; a, weak_ptr&lt;T&gt;&amp; b);
+
+  // <a title="util.smartptr.ownerless" href="util.smartptr.ownerless.html">20.7.2.3.7</a>, class template owner_less:
+  template&lt;class T&gt; class owner_less;
+
+  // <a title="util.smartptr.enab" href="util.smartptr.enab.html">20.7.2.4</a>, class template enable_shared_from_this:
+  template&lt;class T&gt; class enable_shared_from_this;
+
+  // <a title="util.smartptr.shared.atomic" href="util.smartptr.shared.atomic.html">20.7.2.5</a>, shared_ptr atomic access:
+  template&lt;class T&gt;
+    bool atomic_is_lock_free(const shared_ptr&lt;T&gt;* p);
+
+  template&lt;class T&gt;
+    shared_ptr&lt;T&gt; atomic_load(const shared_ptr&lt;T&gt;* p);
+  template&lt;class T&gt;
+    shared_ptr&lt;T&gt; atomic_load_explicit(const shared_ptr&lt;T&gt;* p, memory_order mo);
+
+  template&lt;class T&gt;
+    void atomic_store(shared_ptr&lt;T&gt;* p, shared_ptr&lt;T&gt; r);
+  template&lt;class T&gt;
+    void atomic_store_explicit(shared_ptr&lt;T&gt;* p, shared_ptr&lt;T&gt; r, memory_order mo);
+
+  template&lt;class T&gt;
+    shared_ptr&lt;T&gt; atomic_exchange(shared_ptr&lt;T&gt;* p, shared_ptr&lt;T&gt; r);
+  template&lt;class T&gt;
+    shared_ptr&lt;T&gt; atomic_exchange_explicit(shared_ptr&lt;T&gt;* p, shared_ptr&lt;T&gt; r,
+                                           memory_order mo);
+
+  template&lt;class T&gt;
+    bool atomic_compare_exchange_weak(
+      shared_ptr&lt;T&gt;* p, shared_ptr&lt;T&gt;* v, shared_ptr&lt;T&gt; w);
+  template&lt;class T&gt;
+    bool atomic_compare_exchange_strong(
+      shared_ptr&lt;T&gt;* p, shared_ptr&lt;T&gt;* v, shared_ptr&lt;T&gt; w);
+  template&lt;class T&gt;
+    bool atomic_compare_exchange_weak_explicit(
+      shared_ptr&lt;T&gt;* p, shared_ptr&lt;T&gt;* v, shared_ptr&lt;T&gt; w,
+      memory_order success, memory_order failure);
+  template&lt;class T&gt;
+    bool atomic_compare_exchange_strong_explicit(
+      shared_ptr&lt;T&gt;* p, shared_ptr&lt;T&gt;* v, shared_ptr&lt;T&gt; w,
+      memory_order success, memory_order failure);
+
+  // <a title="util.smartptr.hash" href="util.smartptr.hash.html">20.7.2.6</a> hash support
+  template &lt;class T&gt; struct hash;
+  template &lt;class T, class D&gt; struct hash&lt;unique_ptr&lt;T, D&gt; &gt;;
+  template &lt;class T&gt; struct hash&lt;shared_ptr&lt;T&gt; &gt;;
+
+  // <a title="depr.auto.ptr" href="auto.ptr.cons.html">D.10</a>, auto_ptr (deprecated)
+  template &lt;class X&gt; class auto_ptr;
+}</code></pre>
+</body>
+</html>
+

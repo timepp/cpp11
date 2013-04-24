@@ -1,0 +1,150 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Template non-type arguments</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[temp.arg.nontype]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[temp.arg.nontype]"></object>14.3.2 Template non-type arguments </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A <i class="nonterminal">template-argument</i> for a non-type, non-template <i class="nonterminal">template-parameter</i> shall be one of:</p>
+
+<ul>
+<li>for a non-type <i class="nonterminal">template-parameter</i> of integral or enumeration type, a converted constant expression
+	(<a title="expr.const" href="expr.const.html">5.19</a>) of the type of the <i class="nonterminal">template-parameter</i>; or</li>
+<li>the name of a non-type <i class="nonterminal">template-parameter</i>; or</li>
+<li>a constant expression (<a title="expr.const" href="expr.const.html">5.19</a>) that designates the address of an object with static storage duration and
+	external or internal linkage or a function with external or internal linkage, including function templates and
+	function <i class="nonterminal">template-id</i>s but excluding non-static class members, expressed (ignoring parentheses) as
+	<code class="sh_cpp">&amp;</code> <i class="nonterminal">id-expression</i>, except that the <code class="sh_cpp">&amp;</code> may be omitted if the name refers to a
+	function or array and shall be omitted if the corresponding <i class="nonterminal">template-parameter</i> is a reference; or</li>
+<li>a constant expression that evaluates to a null pointer value (<a title="conv.ptr" href="conv.ptr.html">4.10</a>); or</li>
+<li>a constant expression that evaluates to a null member pointer value (<a title="conv.mem" href="conv.mem.html">4.11</a>); or</li>
+<li>a pointer to member expressed as described in 5.3.1.</li>
+</ul>
+
+<div class="note">
+<p><a class="anchor" id="p2" href="#p2">2</a>[ <em>Note:</em> A string literal (<a title="lex.string" href="lex.string.html">2.14.5</a>) does not satisfy the requirements of any of these categories and
+thus is not an acceptable <i class="nonterminal">template-argument</i>.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">template&lt;class T, const char* p&gt; class X {
+  /* … */
+};
+
+X&lt;int, "Studebaker"&gt; x1;        // error: string literal as template-argument
+
+const char p[] = "Vivisectionist";
+X&lt;int,p&gt; x2;                    // OK</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+<p> — <em>end note</em> ]</p>
+</div>
+
+<div class="note">
+<p><a class="anchor" id="p3" href="#p3">3</a>[ <em>Note:</em> Addresses of array elements and names or addresses of non-static class members are not acceptable
+<i class="nonterminal">template-argument</i>s.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">template&lt;int* p&gt; class X { };
+
+int a[10];
+struct S { int m; static int s; } s;
+
+X&lt;&amp;a[2]&gt; x3;            // error: address of array element
+X&lt;&amp;s.m&gt; x4;             // error: address of non-static member
+X&lt;&amp;s.s&gt; x5;             // error: &amp;S::s must be used
+X&lt;&amp;S::s&gt; x6;            // OK: address of static member</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+<p> — <em>end note</em> ]</p>
+</div>
+
+<div class="note">
+<p><a class="anchor" id="p4" href="#p4">4</a>[ <em>Note:</em> Temporaries, unnamed lvalues, and named lvalues with no linkage are not acceptable
+<i class="nonterminal">template-argument</i>s when the corresponding <i class="nonterminal">template-parameter</i> has reference type.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">template&lt;const int&amp; CRI&gt; struct B { /* … */ };
+
+B&lt;1&gt; b2;                // error: temporary would be required for template argument
+
+int c = 1;
+B&lt;c&gt; b1;                // OK</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+<p> — <em>end note</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>The following conversions are performed on each expression used as a non-type <i class="nonterminal">template-argument</i>. If a
+non-type <i class="nonterminal">template-argument</i> cannot be converted to the type of the corresponding <i class="nonterminal">template-parameter</i>
+then the program is ill-formed.</p>
+
+<ul>
+<li>For a non-type <i class="nonterminal">template-parameter</i> of integral or enumeration type, conversions permitted in a converted
+	constant expression (<a title="expr.const" href="expr.const.html">5.19</a>) are applied.</li>
+<li>for a non-type <i class="nonterminal">template-parameter</i> of type pointer to object, qualification conversions (<a title="conv.qual" href="conv.qual.html">4.4</a>) and
+	the array-to-pointer conversion (<a title="conv.array" href="conv.array.html">4.2</a>) are applied; if the <i class="nonterminal">template-argument</i> is of type
+	<code class="sh_cpp">std::nullptr_t</code>, the null pointer conversion (<a title="conv.ptr" href="conv.ptr.html">4.10</a>) is applied. <span class="note">[ <em>Note:</em> In particular, neither
+	the null pointer conversion for a zero-valued integral constant expression (<a title="conv.ptr" href="conv.ptr.html">4.10</a>) nor the derived-to-base
+	conversion (<a title="conv.ptr" href="conv.ptr.html">4.10</a>) are applied. Although <code class="sh_cpp">0</code> is a valid <i class="nonterminal">template-argument</i> for a
+	non-type <i class="nonterminal">template-parameter</i> of integral type, it is not a valid <i class="nonterminal">template-argument</i> for a non-type
+	<i class="nonterminal">template-parameter</i> of pointer type. However, both <code class="sh_cpp">(int*)0</code> and <code class="sh_cpp">nullptr</code> are valid
+	<i class="nonterminal">template-argument</i>s for a non-type <i class="nonterminal">template-parameter</i> of type “pointer to
+	<code class="sh_cpp">int</code>”. — <em>end note</em> ]</span>
+</li>
+<li>For a non-type <i class="nonterminal">template-parameter</i> of type reference to object, no conversions apply. The type referred to
+	by the reference may be more cv-qualified than the (otherwise identical) type of the <i class="nonterminal">template-argument</i>. The
+	<i class="nonterminal">template-parameter</i> is bound directly to the <i class="nonterminal">template-argument</i>, which shall be an lvalue.</li>
+<li>For a non-type <i class="nonterminal">template-parameter</i> of type pointer to function, the function-to-pointer conversion
+	(<a title="conv.func" href="conv.func.html">4.3</a>) is applied; if the <i class="nonterminal">template-argument</i> is of type <code class="sh_cpp">std::nullptr_t</code>, the null
+	pointer conversion (<a title="conv.ptr" href="conv.ptr.html">4.10</a>) is applied. If the <i class="nonterminal">template-argument</i> represents a set of overloaded
+	functions (or a pointer to such), the matching function is selected from the set (<a title="over.over" href="over.over.html">13.4</a>).</li>
+<li>For a non-type <i class="nonterminal">template-parameter</i> of type reference to function, no conversions apply. If the
+	<i class="nonterminal">template-argument</i> represents a set of overloaded functions, the matching function is selected from the set
+	(<a title="over.over" href="over.over.html">13.4</a>).</li>
+<li>For a non-type <i class="nonterminal">template-parameter</i> of type pointer to member function, if the <i class="nonterminal">template-argument</i> is
+	of type <code class="sh_cpp">std::nullptr_t</code>, the null member pointer conversion (<a title="conv.mem" href="conv.mem.html">4.11</a>) is applied; otherwise, no
+	conversions apply. If the <i class="nonterminal">template-argument</i> represents a set of overloaded member functions, the matching
+	member function is selected from the set (<a title="over.over" href="over.over.html">13.4</a>).</li>
+<li>For a non-type <i class="nonterminal">template-parameter</i> of type pointer to data member, qualification conversions
+	(<a title="conv.qual" href="conv.qual.html">4.4</a>) are applied; if the <i class="nonterminal">template-argument</i> is of type <code class="sh_cpp">std::nullptr_t</code>, the null
+	member pointer conversion (<a title="conv.mem" href="conv.mem.html">4.11</a>) is applied.</li>
+</ul>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">template&lt;const int* pci&gt; struct X { /* … */ };
+int ai[10];
+X&lt;ai&gt; xi;                       // array to pointer and qualification conversions
+
+struct Y { /* … */ };
+template&lt;const Y&amp; b&gt; struct Z { /* … */ };
+Y y;
+Z&lt;y&gt; z;                         // no conversion, but note extra cv-qualification
+
+template&lt;int (&amp;pa)[5]&gt; struct W { /* … */ };
+int b[5];
+W&lt;b&gt; w;                         // no conversion
+
+void f(char);
+void f(int);
+
+template&lt;void (*pf)(int)&gt; struct A { /* … */ };
+A&lt;&amp;f&gt; a;                        // selects f(int)</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+</body>
+</html>
+

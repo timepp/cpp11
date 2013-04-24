@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>multimap operations</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[multimap.ops]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[multimap.ops]"></object>23.4.5.4 <code class="sh_cpp">multimap</code> operations </h4>
+
+<pre><code class="sh_cpp">iterator       <dfn>find</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="find"></object>(const key_type &amp;x);
+const_iterator find(const key_type&amp; x) const;
+
+iterator       <dfn>lower_bound</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="lower_bound"></object>(const key_type&amp; x);
+const_iterator lower_bound(const key_type&amp; x) const;
+
+iterator       <dfn>upper_bound</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="upper_bound"></object>(const key_type&amp; x);
+const_iterator upper_bound(const key_type&amp; x) const;
+
+pair&lt;iterator, iterator&gt;
+  <dfn>equal_range</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="equal_range"></object>(const key_type&amp; x);
+pair&lt;const_iterator, const_iterator&gt;
+  equal_range(const key_type&amp; x) const;</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The <code class="sh_cpp">find</code>, <code class="sh_cpp">lower_bound</code>, <code class="sh_cpp">upper_bound</code>, and <code class="sh_cpp">equal_range</code> member
+functions each have two versions, one const and one non-const. In each case the behavior of the two versions is
+identical except that the const version returns a <code class="sh_cpp">const_iterator</code> and the non-const version an
+<code class="sh_cpp">iterator</code> (<a title="associative.reqmts" href="associative.reqmts.html">23.2.4</a>).</p>
+</body>
+</html>
+

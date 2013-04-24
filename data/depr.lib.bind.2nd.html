@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>bind2nd</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[depr.lib.bind.2nd]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[depr.lib.bind.2nd]"></object>D.9.4 <code class="sh_cpp"><dfn>bind2nd</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="bind2nd"></object></code> </h3>
+
+<pre><code class="sh_cpp">template &lt;class Fn, class T&gt;
+  binder2nd&lt;Fn&gt; bind2nd(const Fn&amp; op, const T&amp; x);</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Returns:</em> <code class="sh_cpp">binder2nd&lt;Fn&gt;(op, typename Fn::second_argument_type(x))</code>.</p>
+
+<div class="example">
+<p><a class="anchor" id="p2" href="#p2">2</a>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">find_if(v.begin(), v.end(), bind2nd(greater&lt;int&gt;(), 5));</code></pre>
+
+<p>finds the first integer in vector <code class="sh_cpp">v</code> greater than 5;</p>
+
+<pre><code class="sh_cpp">find_if(v.begin(), v.end(), bind1st(greater&lt;int&gt;(), 5));</code></pre>
+
+<p>finds the first integer in <code class="sh_cpp">v</code> less than 5. — <em>end example</em> ]</p>
+</div>
+</body>
+</html>
+

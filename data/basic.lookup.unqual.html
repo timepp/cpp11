@@ -1,0 +1,269 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Unqualified name lookup</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[basic.lookup.unqual]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[basic.lookup.unqual]"></object>3.4.1 Unqualified name lookup </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>In all the cases listed in <a title="basic.lookup.unqual" href="basic.lookup.unqual.html">3.4.1</a>, the scopes are searched for a declaration in the order listed in
+each of the respective categories; name lookup ends as soon as a declaration is found for the name. If no declaration is
+found, the program is ill-formed.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The declarations from the namespace nominated by a <i class="nonterminal">using-directive</i> become visible in a namespace
+enclosing the <i class="nonterminal">using-directive</i>; see <a title="namespace.udir" href="namespace.udir.html">7.3.4</a>. For the purpose of the unqualified name lookup rules
+described in <a title="basic.lookup.unqual" href="basic.lookup.unqual.html">3.4.1</a>, the declarations from the namespace nominated by the <i class="nonterminal">using-directive</i> are
+considered members of that enclosing namespace.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>The lookup for an unqualified name used as the <i class="nonterminal">postfix-expression</i> of a function call is described in
+<a title="basic.lookup.argdep" href="basic.lookup.argdep.html">3.4.2</a>.</p>
+
+<div class="note">
+<p>[ <em>Note:</em> For purposes of determining (during parsing) whether an expression is a <i class="nonterminal">postfix-expression</i> for a
+function call, the usual name lookup rules apply. The rules in <a title="basic.lookup.argdep" href="basic.lookup.argdep.html">3.4.2</a> have no effect on the syntactic
+interpretation of an expression. For example,</p>
+
+<pre><code class="sh_cpp">typedef int f;
+namespace N {
+  struct A {
+    friend void f(A &amp;);
+    operator int();
+    void g(A a) {
+      int i = f(a);     // f is the typedef, not the friend
+                        // function: equivalent to int(a)
+    }
+  };
+}</code></pre>
+
+<p>Because the expression is not a function call, the argument-dependent name lookup (<a title="basic.lookup.argdep" href="basic.lookup.argdep.html">3.4.2</a>) does not apply
+and the friend function <code class="sh_cpp">f</code> is not found. — <em>end note</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>A name used in global scope, outside of any function, class or user-declared namespace, shall be declared
+before its use in global scope.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>A name used in a user-declared namespace outside of the definition of any function or class shall be declared
+before its use in that namespace or before its use in a namespace enclosing its namespace.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>A name used in the definition of a function following the function’s <i class="nonterminal">declarator-id</i><sup class="footnote"><a href="#fn28">28</a></sup> that
+is a member of namespace <code class="sh_cpp">N</code> (where, only for the purpose of exposition, <code class="sh_cpp">N</code> could represent the
+global scope) shall be declared before its use in the block in which it is used or in one of its enclosing blocks
+(<a title="stmt.block" href="stmt.block.html">6.3</a>) or, shall be declared before its use in namespace <code class="sh_cpp">N</code> or, if <code class="sh_cpp">N</code> is a nested
+namespace, shall be declared before its use in one of <code class="sh_cpp">N</code>’s enclosing namespaces.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">namespace A {
+  namespace N {
+    void f();
+  }
+}
+void A::N::f() {
+  i = 5;
+  // The following scopes are searched for a declaration of i:
+  // 1) outermost block scope of A::N::f, before the use of i
+  // 2) scope of namespace N
+  // 3) scope of namespace A
+  // 4) global scope, before the definition of A::N::f
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p7" href="#p7">7</a>A name used in the definition of a class <code class="sh_cpp">X</code> outside of a member function body or nested class
+definition<sup class="footnote"><a href="#fn29">29</a></sup> shall be declared in one of the following ways:</p>
+
+<ul>
+<li>before its use in class <code class="sh_cpp">28</code> or be a member of a base class of <code class="sh_cpp">X</code> (<a title="class.member.lookup" href="class.member.lookup.html">10.2</a>), or</li>
+<li>if <code class="sh_cpp">X</code> is a nested class of class <code class="sh_cpp">Y</code> (<a title="class.nest" href="class.nest.html">9.7</a>), before the definition of
+	<code class="sh_cpp">X</code> in <code class="sh_cpp">Y</code>, or shall be a member of a base class of <code class="sh_cpp">Y</code> (this lookup applies in turn to
+	<code class="sh_cpp">Y</code>’s enclosing classes, starting with the innermost enclosing class),<sup class="footnote"><a href="#fn30">30</a></sup> or</li>
+<li>if <code class="sh_cpp">X</code> is a local class (<a title="class.local" href="class.local.html">9.8</a>) or is a nested class of a local class, before the definition of
+	class <code class="sh_cpp">X</code> in a block enclosing the definition of class <code class="sh_cpp">X</code>, or</li>
+<li>if <code class="sh_cpp">X</code> is a member of namespace <code class="sh_cpp">N</code>, or is a nested class of a class that is a member of
+	<code class="sh_cpp">N</code>, or is a local class or a nested class within a local class of a function that is a member of
+	<code class="sh_cpp">N</code>, before the definition of class <code class="sh_cpp">X</code> in namespace <code class="sh_cpp">N</code> or in one of <code class="sh_cpp">N</code>’s
+	enclosing namespaces.</li>
+</ul>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">namespace M {
+  class B { };
+}
+
+namespace N {
+  class Y : public M::B {
+    class X {
+      int a[i];
+    };
+  };
+}
+
+// The following scopes are searched for a declaration of i:
+// 1) scope of class N::Y::X, before the use of i
+// 2) scope of class N::Y, before the definition of N::Y::X
+// 3) scope of N::Y’s base class M::B
+// 4) scope of namespace N, before the definition of N::Y
+// 5) global scope, before the definition of N</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><span class="note">[ <em>Note:</em> When looking for a prior declaration of a class or function introduced by a friend declaration, scopes outside
+of the innermost enclosing namespace scope are not considered; see <a title="namespace.memdef" href="namespace.memdef.html">7.3.1.2</a>. — <em>end note</em> ]</span> <span class="note">[ <em>Note:</em> <a title="basic.scope.class" href="basic.scope.class.html">3.3.7</a>
+further describes the restrictions on the use of names in a class definition. <a title="class.nest" href="class.nest.html">9.7</a> further describes the
+restrictions on the use of names in nested class definitions. <a title="class.local" href="class.local.html">9.8</a> further describes the restrictions on the
+use of names in local class definitions. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p8" href="#p8">8</a>A name used in the definition of a member function (<a title="class.mfct" href="class.mfct.html">9.3</a>) of class <code class="sh_cpp">X</code> following the
+function’s <i class="nonterminal">declarator-id</i><sup class="footnote"><a href="#fn31">31</a></sup> or in the <i class="nonterminal">brace-or-equal-initializer</i> of a non-static data
+member (<a title="class.mem" href="class.mem.html">9.2</a>) of class <code class="sh_cpp">X</code> shall be declared in one of the following ways:</p>
+<ul>
+<li>before its use in the block in which it is used or in an enclosing block (<a title="stmt.block" href="stmt.block.html">6.3</a>), or</li>
+<li>shall be a member of class <code class="sh_cpp">X</code> or be a member of a base class of <code class="sh_cpp">X</code> (<a title="class.member.lookup" href="class.member.lookup.html">10.2</a>),
+	or</li>
+<li>if <code class="sh_cpp">X</code> is a nested class of class <code class="sh_cpp">Y</code> (<a title="class.nest" href="class.nest.html">9.7</a>), shall be a member of <code class="sh_cpp">Y</code>,
+	or shall be a member of a base class of <code class="sh_cpp">Y</code> (this lookup applies in turn to <code class="sh_cpp">Y</code>’s enclosing
+	classes, starting with the innermost enclosing class),<sup class="footnote"><a href="#fn32">32</a></sup> or</li>
+<li>if <code class="sh_cpp">X</code> is a local class (<a title="class.local" href="class.local.html">9.8</a>) or is a nested class of a local class, before the definition of
+	class <code class="sh_cpp">X</code> in a block enclosing the definition of class <code class="sh_cpp">X</code>, or</li>
+<li>if <code class="sh_cpp">X</code> is a member of namespace <code class="sh_cpp">N</code>, or is a nested class of a class that is a member of
+<code class="sh_cpp">N</code>, or is a local class or a nested class within a local class of a function that is a member of
+<code class="sh_cpp">N</code>, before the use of the name, in namespace <code class="sh_cpp">N</code> or in one of <code class="sh_cpp">N</code>’s enclosing
+namespaces. </li>
+</ul>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">class B { };
+namespace M {
+  namespace N {
+    class X : public B {
+      void f();
+    };
+  }
+}
+void M::N::X::f() {
+  i = 16;
+}
+
+// The following scopes are searched for a declaration of i:
+// 1) outermost block scope of M::N::X::f, before the use of i
+// 2) scope of class M::N::X
+// 3) scope of M::N::X's base class B
+// 4) scope of namespace M::N
+// 5) scope of namespace M
+// 6) global scope, before the definition of M::N::X::f</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><span class="note">[ <em>Note:</em> <a title="class.mfct" href="class.mfct.html">9.3</a> and <a title="class.static" href="class.static.html">9.4</a> further describe the restrictions on the use of names in member function
+definitions. <a title="class.nest" href="class.nest.html">9.7</a> further describes the restrictions on the use of names in the scope of nested classes.
+<a title="class.local" href="class.local.html">9.8</a> further describes the restrictions on the use of names in local class definitions. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p9" href="#p9">9</a>Name lookup for a name used in the definition of a <code class="sh_cpp">friend</code> function (<a title="class.friend" href="class.friend.html">11.3</a>) defined
+inline in the class granting friendship shall proceed as described for lookup in member function definitions. If the
+<code class="sh_cpp">friend</code> function is not defined in the class granting friendship, name lookup in the <code class="sh_cpp">friend</code>
+function definition shall proceed as described for lookup in namespace member function definitions.</p>
+
+<p><a class="anchor" id="p10" href="#p10">10</a>In a <code class="sh_cpp">friend</code> declaration naming a member function, a name used in the function declarator and not
+part of a <i class="nonterminal">template-argument</i> in the <i class="nonterminal">declarator-id</i> is first looked up in the scope of the member
+function’s class (<a title="class.member.lookup" href="class.member.lookup.html">10.2</a>). If it is not found, or if the name is part of a <i class="nonterminal">template-argument</i> in the
+<i class="nonterminal">declarator-id</i>, the look up is as described for unqualified names in the definition of the class granting
+friendship.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct A {
+  typedef int AT;
+  void f1(AT);
+  void f2(float);
+  template &lt;class T&gt; void f3();
+};
+struct B {
+  typedef char AT;
+  typedef float BT;
+  friend void A::f1(AT);    // parameter type is A::AT
+  friend void A::f2(BT);    // parameter type is B::BT
+  friend void A::f3&lt;AT&gt;();  // template argument is B::AT
+};</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p11" href="#p11">11</a>During the lookup for a name used as a default argument (<a title="dcl.fct.default" href="dcl.fct.default.html">8.3.6</a>) in a function
+<i class="nonterminal">parameter-declaration-clause</i> or used in the <i class="nonterminal">expression</i> of a <i class="nonterminal">mem-initializer</i> for a constructor
+(<a title="class.base.init" href="class.base.init.html">12.6.2</a>), the function parameter names are visible and hide the names of entities declared in the block,
+class or namespace scopes containing the function declaration. <span class="note">[ <em>Note:</em> <a title="dcl.fct.default" href="dcl.fct.default.html">8.3.6</a> further describes the restrictions
+on the use of names in default arguments. <a title="class.base.init" href="class.base.init.html">12.6.2</a> further describes the restrictions on the use of names in a
+<i class="nonterminal">ctor-initializer</i>. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p12" href="#p12">12</a>During the lookup of a name used in the <i class="nonterminal">ctor-initializer</i> of an <i class="nonterminal">enumerator-definition</i>,
+previously declared <i class="nonterminal">enumerator</i>s of the enumeration are visible and hide the names of entities declared in the
+block, class, or namespace scopes containing the <i class="nonterminal">enum-specifier</i>.</p>
+
+<p><a class="anchor" id="p13" href="#p13">13</a>A name used in the definition of a <code class="sh_cpp">enum-specifier</code> data member of class <code class="sh_cpp">X</code>
+(<a title="class.static.data" href="class.static.data.html">9.4.2</a>) (after the <i class="nonterminal">qualified-id</i> of the static member) is looked up as if the name was used in a
+member function of <code class="sh_cpp">X</code>. <span class="note">[ <em>Note:</em> <a title="class.static.data" href="class.static.data.html">9.4.2</a> further describes the restrictions on the use of names in the
+definition of a <code class="sh_cpp">static</code> data member. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p14" href="#p14">14</a>If a variable member of a namespace is defined outside of the scope of its namespace then any name that
+appears in the definition of the member (after the <i class="nonterminal">declarator-id</i>) is looked up as if the definition of the
+member occurred in its namespace.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">namespace N {
+  int i = 4;
+  extern int j;
+}
+
+int i = 2;
+
+int N::j = i;           // N::j == 4</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p15" href="#p15">15</a>A name used in the handler for a <i class="nonterminal">function-try-block</i> (Clause <a title="except" href="except.html">15</a>) is looked up as if the
+name was used in the outermost block of the function definition. In particular, the function parameter names shall not
+be redeclared in the <i class="nonterminal">exception-declaration</i> nor in the outermost block of a handler for the
+<i class="nonterminal">function-try-block</i>. Names declared in the outermost block of the function definition are not found when looked
+up in the scope of a handler for the <i class="nonterminal">function-try-block</i>. <span class="note">[ <em>Note:</em> But function parameter names are
+found. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p16" href="#p16">16</a><span class="note">[ <em>Note:</em> The rules for name lookup in template definitions are described in <a title="temp.res" href="temp.res.html">14.6</a>. — <em>end note</em> ]</span></p>
+
+
+
+
+
+
+
+
+
+
+
+<div>
+<p class="footnote" id="fn28">28) This refers to unqualified names that occur, for instance, in a type or default argument in
+the <i class="nonterminal">parameter-declaration-clause</i> or used in the function body.</p>
+<p class="footnote" id="fn29">29) This refers to unqualified names following the class name; such a name may be used in the
+<i class="nonterminal">base-clause</i> or may be used in the class definition.</p>
+<p class="footnote" id="fn30">30) This lookup applies whether the definition of <code class="sh_cpp">X</code> is nested within <code class="sh_cpp">Y</code>’s
+definition or whether <code class="sh_cpp">X</code>’s definition appears in a namespace scope enclosing <code class="sh_cpp">Y</code>’s definition
+(<a title="class.nest" href="class.nest.html">9.7</a>).</p>
+<p class="footnote" id="fn31">31) That is, an unqualified name that occurs, for instance, in a type or default argument in the
+<i class="nonterminal">parameter-declaration-clause</i> or in the function body.</p>
+<p class="footnote" id="fn32">32) This lookup applies whether the member function is defined within the definition of class
+<code class="sh_cpp">X</code> or whether the member function is defined in a namespace scope enclosing <code class="sh_cpp">X</code>’s
+definition.</p>
+</div>
+</body>
+</html>
+

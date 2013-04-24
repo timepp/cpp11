@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>unique_ptr constructors</title>
+</head>
+<body>
+<h5>
+<dfn class="label">[unique.ptr.runtime.ctor]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[unique.ptr.runtime.ctor]"></object>20.7.1.3.1 <code class="sh_cpp">unique_ptr</code> constructors </h5>
+
+<h6><code class="sh_cpp">explicit <dfn>unique_ptr</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="unique_ptr"></object>(pointer p) noexcept;
+unique_ptr(pointer p, <em>see below</em> d) noexcept;
+unique_ptr(pointer p, <em>see below</em> d) noexcept;</code></h6>
+
+<p>These constructors behave the same as in the primary template except that they do not accept pointer types which are
+convertible to <code class="sh_cpp">pointer</code>. <span class="note">[ <em>Note:</em> One implementation technique is to create private templated overloads of
+these members. — <em>end note</em> ]</span></p>
+</body>
+</html>
+

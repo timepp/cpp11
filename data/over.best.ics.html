@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Implicit conversion sequences</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[over.best.ics]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[over.best.ics]"></object>13.3.3.1 Implicit conversion sequences </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>An <dfn>implicit conversion sequence</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="implicit conversion sequence"></object> is a sequence of conversions used to convert an argument in a
+function call to the type of the corresponding parameter of the function being called. The sequence of conversions is an
+implicit conversion as defined in Clause <a title="conv" href="conv.html">4</a>, which means it is governed by the rules for initialization of an
+object or reference by a single expression (<a title="dcl.init" href="dcl.init.html">8.5</a>, <a title="dcl.init.ref" href="dcl.init.ref.html">8.5.3</a>).</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>Implicit conversion sequences are concerned only with the type, cv-qualification, and value category of the
+argument and how these are converted to match the corresponding properties of the parameter. Other properties, such as
+the lifetime, storage class, alignment, or accessibility of the argument and whether or not the argument is a bit-field
+are ignored. So, although an implicit conversion sequence can be defined for a given argument-parameter pair, the
+conversion from the argument to the parameter might still be ill-formed in the final analysis.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>A well-formed implicit conversion sequence is one of the following forms:</p>
+
+<ul>
+<li>a <em>standard conversion sequence</em> (<a title="over.ics.scs" href="over.ics.scs.html">13.3.3.1.1</a>),</li>
+<li>a <em>user-defined conversion sequence</em> (<a title="over.ics.user" href="over.ics.user.html">13.3.3.1.2</a>), or</li>
+<li>an <em>ellipsis conversion sequence</em> (<a title="over.ics.ellipsis" href="over.ics.ellipsis.html">13.3.3.1.3</a>).</li>
+</ul>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>However, when considering the argument of a constructor or user-defined conversion function that is a candidate
+by <a title="over.match.ctor" href="over.match.ctor.html">13.3.1.3</a> when invoked for the copying/moving of the temporary in the second step of a class
+copy-initialization, by <a title="over.match.list" href="over.match.list.html">13.3.1.7</a> when passing the initializer list as a single argument or when the
+initializer list has exactly one element and a conversion to some class <code class="sh_cpp">X</code> or reference to (possibly
+cv-qualified) <code class="sh_cpp">X</code> is considered for the first parameter of a constructor of <code class="sh_cpp">X</code>, or by
+<a title="over.match.copy" href="over.match.copy.html">13.3.1.4</a>, <a title="over.match.conv" href="over.match.conv.html">13.3.1.5</a>, or <a title="over.match.ref " href=".html"></a> in all cases, only standard conversion sequences and
+ellipsis conversion sequences are considered.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>For the case where the parameter type is a reference, see <a title="over.ics.ref" href="over.ics.ref.html">13.3.3.1.4</a>.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>When the parameter type is not a reference, the implicit conversion sequence models a copy-initialization of
+the parameter from the argument expression. The implicit conversion sequence is the one required to convert the argument
+expression to a prvalue of the type of the parameter. <span class="note">[ <em>Note:</em> When the parameter has a class type, this is a conceptual
+conversion defined for the purposes of Clause <a title="over" href="over.html">13</a>; the actual initialization is defined in terms of
+constructors and is not a conversion. — <em>end note</em> ]</span> Any difference in top-level cv-qualification is subsumed by the
+initialization itself and does not constitute a conversion. <span class="example">[ <em>Example:</em> a parameter of type <code class="sh_cpp">A</code> can be
+initialized from an argument of type <code class="sh_cpp">const A</code>. The implicit conversion sequence for that case is the
+identity sequence; it contains no “conversion” from <code class="sh_cpp">const A</code> to <code class="sh_cpp">A</code>. — <em>end example</em> ]</span> When the parameter
+has a class type and the argument expression has the same type, the implicit conversion sequence is an identity
+conversion. When the parameter has a class type and the argument expression has a derived class type, the implicit
+conversion sequence is a derived-to-base conversion from the derived class to the base class. <span class="note">[ <em>Note:</em> There is no such
+standard conversion; this derived-to-base Conversion exists only in the description of implicit conversion
+sequences. — <em>end note</em> ]</span> A derived-to-base Conversion has Conversion rank (<a title="over.ics.scs" href="over.ics.scs.html">13.3.3.1.1</a>).</p>
+
+<p><a class="anchor" id="p7" href="#p7">7</a>In all contexts, when converting to the implicit object parameter or when converting to the left operand of an
+assignment operation only standard conversion sequences that create no temporary object for the result are allowed.</p>
+
+<p><a class="anchor" id="p8" href="#p8">8</a>If no conversions are required to match an argument to a parameter type, the implicit conversion sequence is
+the standard conversion sequence consisting of the identity conversion (<a title="over.ics.scs" href="over.ics.scs.html">13.3.3.1.1</a>).</p>
+
+<p><a class="anchor" id="p9" href="#p9">9</a>If no sequence of conversions can be found to convert an argument to a parameter type or the conversion is
+otherwise ill-formed, an implicit conversion sequence cannot be formed.</p>
+
+<p><a class="anchor" id="p10" href="#p10">10</a>If several different sequences of conversions exist that each convert the argument to the parameter type, the
+implicit conversion sequence associated with the parameter is defined to be the unique conversion sequence designated
+the <dfn>ambiguous conversion sequence</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="ambiguous conversion sequence"></object>. For the purpose of ranking implicit conversion sequences as described in
+<a title="over.ics.rank" href="over.ics.rank.html">13.3.3.2</a>, the ambiguous conversion sequence is treated as a user-defined sequence that is indistinguishable
+from any other user-defined conversion sequence.<sup class="footnote"><a href="#fn137">137</a></sup> If a function that uses the ambiguous conversion
+sequence is selected as the best viable function, the call will be ill-formed because the conversion of one of the
+arguments in the call is ambiguous.</p>
+
+<p><a class="anchor" id="p11" href="#p11">11</a>The three forms of implicit conversion sequences mentioned above are defined in the following subclauses.</p>
+
+
+<div><div class="footnote" id="fn137">
+<p>137) The ambiguous conversion sequence is ranked with user-defined conversion sequences because multiple
+conversion sequences for an argument can exist only if they involve different user-defined conversions. The ambiguous
+conversion sequence is indistinguishable from any other user-defined conversion sequence because it represents at least
+two user-defined conversion sequences, each with a different user-defined conversion, and any other user-defined
+conversion sequence must be indistinguishable from at least one of them.</p>
+
+<p>This rule prevents a function from becoming non-viable because of an ambiguous conversion sequence for one of its
+parameters. Consider this example,</p>
+
+<pre><code class="sh_cpp">class B;
+class A { A (B&amp;);};
+class B { operator A (); };
+class C { C (B&amp;); };
+void f(A) { }
+void f(C) { }
+B b;
+f(b);                   // ambiguous because b → C via constructor and
+                        // b → A via constructor or conversion function.</code></pre>
+
+<p>If it were not for this rule, <code class="sh_cpp">f(A)</code> would be eliminated as a viable function for the call
+<code class="sh_cpp">f(b)</code> causing overload resolution to select <code class="sh_cpp">f(C)</code> as the function to call even though it is not
+clearly the best choice. On the other hand, if an <code class="sh_cpp">f(B)</code> were to be declared then <code class="sh_cpp">f(b)</code> would
+resolve to that <code class="sh_cpp">f(B)</code> because the exact match with <code class="sh_cpp">f(B)</code> is better than any of the sequences
+required to match <code class="sh_cpp">f(A)</code>.</p>
+</div></div>
+</body>
+</html>
+

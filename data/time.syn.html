@@ -1,0 +1,135 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Header &lt;chrono&gt; synopsis</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[time.syn]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[time.syn]"></object>20.11.2 Header <code class="header">&lt;chrono&gt;</code> synopsis </h3>
+
+<pre><code class="sh_cpp">namespace std {
+namespace chrono {
+
+// <a title="time.duration" href="time.duration.html">20.11.5</a>, class template duration
+template &lt;class Rep, class Period = ratio&lt;1&gt;&gt; class duration;
+
+// <a title="time.point" href="time.point.html">20.11.6</a>, class template time_point
+template &lt;class Clock, class Duration = typename Clock::duration&gt; class time_point;
+
+} // namespace chrono
+
+// <a title="time.traits.specializations" href="time.traits.specializations.html">20.11.4.3</a> common_type specializations
+template &lt;class Rep1, class Period1, class Rep2, class Period2&gt;
+  struct common_type&lt;chrono::duration&lt;Rep1, Period1&gt;, chrono::duration&lt;Rep2, Period2&gt;&gt;;
+
+template &lt;class Clock, class Duration1, class Duration2&gt;
+  struct common_type&lt;chrono::time_point&lt;Clock, Duration1&gt;, chrono::time_point&lt;Clock, Duration2&gt;&gt;;
+
+namespace chrono {
+
+// <a title="time.traits" href="time.traits.is_fp.html">20.11.4</a>, customization traits
+template &lt;class Rep&gt; struct treat_as_floating_point;
+template &lt;class Rep&gt; struct duration_values;
+
+// <a title="time.duration.nonmember" href="time.duration.nonmember.html">20.11.5.5</a>, duration arithmetic
+template &lt;class Rep1, class Period1, class Rep2, class Period2&gt;
+  typename common_type&lt;duration&lt;Rep1, Period1&gt;, duration&lt;Rep2, Period2&gt;&gt;::type
+  constexpr operator+(const duration&lt;Rep1, Period1&gt;&amp; lhs, const duration&lt;Rep2, Period2&gt;&amp; rhs);
+template &lt;class Rep1, class Period1, class Rep2, class Period2&gt;
+  typename common_type&lt;duration&lt;Rep1, Period1&gt;, duration&lt;Rep2, Period2&gt;&gt;::type
+  constexpr operator-(const duration&lt;Rep1, Period1&gt;&amp; lhs, const duration&lt;Rep2, Period2&gt;&amp; rhs);
+template &lt;class Rep1, class Period, class Rep2&gt;
+  duration&lt;typename common_type&lt;Rep1, Rep2&gt;::type, Period&gt;
+  constexpr operator*(const duration&lt;Rep1, Period&gt;&amp; d, const Rep2&amp; s);
+template &lt;class Rep1, class Rep2, class Period&gt;
+  duration&lt;typename common_type&lt;Rep1, Rep2&gt;::type, Period&gt;
+  constexpr operator*(const Rep1&amp; s, const duration&lt;Rep2, Period&gt;&amp; d);
+template &lt;class Rep1, class Period, class Rep2&gt;
+  duration&lt;typename common_type&lt;Rep1, Rep2&gt;::type, Period&gt;
+  constexpr operator/(const duration&lt;Rep1, Period&gt;&amp; d, const Rep2&amp; s);
+template &lt;class Rep1, class Period1, class Rep2, class Period2&gt;
+  typename common_type&lt;Rep1, Rep2&gt;::type
+  constexpr operator/(const duration&lt;Rep1, Period1&gt;&amp; lhs, const duration&lt;Rep2, Period2&gt;&amp; rhs);
+template &lt;class Rep1, class Period, class Rep2&gt;
+  duration&lt;typename common_type&lt;Rep1, Rep2&gt;::type, Period&gt;
+  constexpr operator%(const duration&lt;Rep1, Period&gt;&amp; d, const Rep2&amp; s);
+template &lt;class Rep1, class Period1, class Rep2, class Period2&gt;
+  typename common_type&lt;duration&lt;Rep1, Period1&gt;, duration&lt;Rep2, Period2&gt;&gt;::type
+  constexpr operator%(const duration&lt;Rep1, Period1&gt;&amp; lhs, const duration&lt;Rep2, Period2&gt;&amp; rhs);
+
+// <a title="time.duration.comparisons" href="time.duration.comparisons.html">20.11.5.6</a>, duration comparisons
+template &lt;class Rep1, class Period1, class Rep2, class Period2&gt;
+  constexpr bool operator==(const duration&lt;Rep1, Period1&gt;&amp; lhs, const duration&lt;Rep2, Period2&gt;&amp; rhs);
+template &lt;class Rep1, class Period1, class Rep2, class Period2&gt;
+  constexpr bool operator!=(const duration&lt;Rep1, Period1&gt;&amp; lhs, const duration&lt;Rep2, Period2&gt;&amp; rhs);
+template &lt;class Rep1, class Period1, class Rep2, class Period2&gt;
+  constexpr bool operator&lt; (const duration&lt;Rep1, Period1&gt;&amp; lhs, const duration&lt;Rep2, Period2&gt;&amp; rhs);
+template &lt;class Rep1, class Period1, class Rep2, class Period2&gt;
+  constexpr bool operator&lt;=(const duration&lt;Rep1, Period1&gt;&amp; lhs, const duration&lt;Rep2, Period2&gt;&amp; rhs);
+template &lt;class Rep1, class Period1, class Rep2, class Period2&gt;
+  constexpr bool operator&gt; (const duration&lt;Rep1, Period1&gt;&amp; lhs, const duration&lt;Rep2, Period2&gt;&amp; rhs);
+template &lt;class Rep1, class Period1, class Rep2, class Period2&gt;
+  constexpr bool operator&gt;=(const duration&lt;Rep1, Period1&gt;&amp; lhs, const duration&lt;Rep2, Period2&gt;&amp; rhs);
+
+// <a title="time.duration.cast" href="time.duration.cast.html">20.11.5.7</a>, duration_cast
+template &lt;class ToDuration, class Rep, class Period&gt;
+  ToDuration duration_cast(const duration&lt;Rep, Period&gt;&amp; d);
+
+// convenience typedefs
+typedef duration&lt;<em>signed integer type of at least 64 bits</em>,        nano&gt; nanoseconds;
+typedef duration&lt;<em>signed integer type of at least 55 bits</em>,       micro&gt; microseconds;
+typedef duration&lt;<em>signed integer type of at least 45 bits</em>,       milli&gt; milliseconds;
+typedef duration&lt;<em>signed integer type of at least 35 bits</em>             &gt; seconds;
+typedef duration&lt;<em>signed integer type of at least 29 bits</em>, ratio&lt;  60&gt;&gt; minutes;
+typedef duration&lt;<em>signed integer type of at least 23 bits</em>, ratio&lt;3600&gt;&gt; hours;
+
+// <a title="time.point.nonmember" href="time.point.nonmember.html">20.11.6.5</a>, time_point arithmetic
+template &lt;class Clock, class Duration1, class Rep2, class Period2&gt;
+  time_point&lt;Clock, typename common_type&lt;Duration1, duration&lt;Rep2, Period2&gt;&gt;::type&gt;
+  operator+(const time_point&lt;Clock, Duration1&gt;&amp; lhs, const duration&lt;Rep2, Period2&gt;&amp; rhs);
+template &lt;class Rep1, class Period1, class Clock, class Duration2&gt;
+  time_point&lt;Clock, typename common_type&lt;duration&lt;Rep1, Period1&gt;, Duration2&gt;::type&gt;
+  operator+(const duration&lt;Rep1, Period1&gt;&amp; lhs, const time_point&lt;Clock, Duration2&gt;&amp; rhs);
+template &lt;class Clock, class Duration1, class Rep2, class Period2&gt;
+  time_point&lt;Clock, typename common_type&lt;Duration1, duration&lt;Rep2, Period2&gt;&gt;::type&gt;
+  operator-(const time_point&lt;Clock, Duration1&gt;&amp; lhs, const duration&lt;Rep2, Period2&gt;&amp; rhs);
+template &lt;class Clock, class Duration1, class Duration2&gt;
+  typename common_type&lt;Duration1, Duration2&gt;::type
+  operator-(const time_point&lt;Clock, Duration1&gt;&amp; lhs, const time_point&lt;Clock, Duration2&gt;&amp; rhs);
+
+// <a title="time.point.comparisons" href="time.point.comparisons.html">20.11.6.6</a> time_point comparisons
+template &lt;class Clock, class Duration1, class Duration2&gt;
+  bool operator==(const time_point&lt;Clock, Duration1&gt;&amp; lhs, const time_point&lt;Clock, Duration2&gt;&amp; rhs);
+template &lt;class Clock, class Duration1, class Duration2&gt;
+  bool operator!=(const time_point&lt;Clock, Duration1&gt;&amp; lhs, const time_point&lt;Clock, Duration2&gt;&amp; rhs);
+template &lt;class Clock, class Duration1, class Duration2&gt;
+  bool operator&lt; (const time_point&lt;Clock, Duration1&gt;&amp; lhs, const time_point&lt;Clock, Duration2&gt;&amp; rhs);
+template &lt;class Clock, class Duration1, class Duration2&gt;
+  bool operator&lt;=(const time_point&lt;Clock, Duration1&gt;&amp; lhs, const time_point&lt;Clock, Duration2&gt;&amp; rhs);
+template &lt;class Clock, class Duration1, class Duration2&gt;
+  bool operator&gt; (const time_point&lt;Clock, Duration1&gt;&amp; lhs, const time_point&lt;Clock, Duration2&gt;&amp; rhs);
+template &lt;class Clock, class Duration1, class Duration2&gt;
+  bool operator&gt;=(const time_point&lt;Clock, Duration1&gt;&amp; lhs, const time_point&lt;Clock, Duration2&gt;&amp; rhs);
+
+// <a title="time.point.cast" href="time.point.cast.html">20.11.6.7</a>, time_point_cast
+template &lt;class ToDuration, class Clock, class Duration&gt;
+  time_point&lt;Clock, ToDuration&gt; time_point_cast(const time_point&lt;Clock, Duration&gt;&amp; t);
+
+// <a title="time.clock" href="time.clock.html">20.11.7</a>, clocks
+class system_clock;
+class steady_clock;
+class high_resolution_clock;
+
+} // namespace chrono
+} // namespace std</code></pre>
+</body>
+</html>
+

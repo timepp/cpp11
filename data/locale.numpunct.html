@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class template numpunct</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[facet.numpunct]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[facet.numpunct]"></object>22.4.3 The numeric punctuation facet </h3>
+
+<h4>
+<dfn class="label">[locale.numpunct]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[locale.numpunct]"></object>22.4.3.1 Class template <code class="sh_cpp"><dfn>numpunct</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="numpunct"></object></code> </h4>
+
+<pre><code class="sh_cpp">namespace std {
+  template &lt;class charT&gt;
+  class numpunct : public locale::facet {
+  public:
+    typedef charT               char_type;
+    typedef basic_string&lt;charT&gt; string_type;
+
+    explicit numpunct(size_t refs = 0);
+
+    char_type   decimal_point() const;
+    char_type   thousands_sep() const;
+    string      grouping()      const;
+    string_type truename()      const;
+    string_type falsename()     const;
+
+    static locale::id id;
+
+  protected:
+    ~numpunct();        // virtual
+    virtual char_type   do_decimal_point() const;
+    virtual char_type   do_thousands_sep() const;
+    virtual string      do_grouping()      const;
+    virtual string_type do_truename()      const;   // for bool
+    virtual string_type do_falsename()     const;   // for bool
+  };
+}</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><code class="sh_cpp">numpunct&lt;&gt;</code> specifies numeric punctuation. The specializations required in Table <a href="locale.category.html#t81">81</a> (<a title="locale.category" href="locale.category.html">22.3.1.1.1</a>), namely <code class="sh_cpp">numpunct&lt;wchar_t&gt;</code> and
+<code class="sh_cpp">numpunct&lt;char&gt;</code>, provide classic <code class="sh_cpp">"C"</code> numeric formats, i.e., they contain
+information equivalent to that contained in the <code class="sh_cpp">"C"</code> locale or their wide character counterparts as if
+obtained by a call to <code class="sh_cpp">widen</code>.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The syntax for number formats is as follows, where <code class="sh_cpp">digit</code> represents the radix set specified by the
+<code class="sh_cpp">fmtflags</code> argument value, and <code class="sh_cpp">thousands-sep</code> and <code class="sh_cpp">decimal-point</code> are the results of
+corresponding <code class="sh_cpp">numpunct&lt;charT&gt;</code> members. Integer values have the format:</p>
+
+<pre><code class="sh_cpp">integer   ::= [sign] units
+sign      ::= plusminus
+plusminus ::= '+' | '-'
+units     ::= digits [thousands-sep units]
+digits    ::= digit [digits]</code></pre>
+
+<p>and floating-point values have:</p>
+
+<pre><code class="sh_cpp">floatval ::= [sign] units [decimal-point [digits]] [e [sign] digits] |
+             [sign]        decimal-point digits    [e [sign] digits]
+e        ::= 'e' | 'E'</code></pre>
+
+<p>where <code class="sh_cpp">the number of digits between thousands-sep</code>s is as specified by <code class="sh_cpp">do_grouping()</code>. For
+parsing, if the <code class="sh_cpp">digits</code> portion contains no thousands-separators, no grouping constraint is applied.</p>
+</body>
+</html>
+

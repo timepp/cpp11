@@ -1,0 +1,160 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Types</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[basic.types]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[basic.types]"></object>3.9 Types </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><span class="note">[ <em>Note:</em> <a title="basic.types" href="basic.types.html">3.9</a> and the subclauses thereof impose requirements on implementations regarding the
+representation of types. There are two kinds of types: fundamental types and compound types. Types describe objects
+(<a title="intro.object" href="intro.object.html">1.8</a>), references (<a title="dcl.ref" href="dcl.ref.html">8.3.2</a>), or functions (<a title="dcl.fct" href="dcl.fct.html">8.3.5</a>). — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>For any object (other than a base-class subobject) of trivially copyable type <code class="sh_cpp">T</code>, whether or not
+the object holds a valid value of type <code class="sh_cpp">T</code>, the underlying bytes (<a title="intro.memory" href="intro.memory.html">1.7</a>) making up the object can be
+copied into an array of <code class="sh_cpp">char</code> or <code class="sh_cpp">unsigned char</code>.<sup class="footnote"><a href="#fn40">40</a></sup> If the content of the array of
+<code class="sh_cpp">char</code> or <code class="sh_cpp">unsigned char</code> is copied back into the object, the object shall subsequently hold its
+original value.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">#define N sizeof(T)
+char buf[N];
+T obj;                      // obj initialized to its original value
+std::memcpy(buf, &amp;obj, N);  // between these two calls to std::memcpy,
+                            // obj might be modified
+std::memcpy(&amp;obj, buf, N);  // at this point, each subobject of obj of scalar type
+                            // holds its original value</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>For any trivially copyable type <code class="sh_cpp">T</code>, if two pointers to <code class="sh_cpp">T</code> point to distinct
+<code class="sh_cpp">T</code> objects <code class="sh_cpp">obj1</code> and <code class="sh_cpp">obj2</code>, where neither <code class="sh_cpp">obj1</code> nor <code class="sh_cpp">obj2</code> is
+a base-class subobject, if the underlying bytes (<a title="intro.memory" href="intro.memory.html">1.7</a>) making up <code class="sh_cpp">obj1</code> are copied into
+<code class="sh_cpp">obj2</code>,<sup class="footnote"><a href="#fn41">41</a></sup> <code class="sh_cpp">obj2</code> shall subsequently hold the same value as <code class="sh_cpp">obj1</code>.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">T* t1p;
+T* t2p;
+    // provided that t2p points to an initialized object…
+std::memcpy(t1p, t2p, sizeof(T));
+    // at this point, every subobject of trivially copyable type in *t1p contains
+    // the same value as the corresponding subobject in *t2p</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>The <dfn>object representation</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="object representation"></object> of an object of type <code class="sh_cpp">T</code> is the sequence of <var>N</var>
+<code class="sh_cpp">unsigned char</code> objects taken up by the object of type <code class="sh_cpp">T</code>, where <var>N</var> equals
+<code class="sh_cpp">sizeof(T)</code>. The <dfn>value representation</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="value representation"></object> of an object is the set of bits that hold the value of type
+<code class="sh_cpp">T</code>. For trivially copyable types, the value representation is a set of bits in the object representation
+that determines a <dfn>value</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="value"></object>, which is one discrete element of an implementation-defined set of values.<sup class="footnote"><a href="#fn42">42</a></sup></p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>A class that has been declared but not defined, or an array of unknown size or of incomplete element type, is
+an incompletely-defined object type.<sup class="footnote"><a href="#fn43">43</a></sup> Incompletely-defined object types and the void types are incomplete
+types (<a title="basic.fundamental" href="basic.fundamental.html">3.9.1</a>). Objects shall not be defined to have an incomplete type.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>A class type (such as “<code class="sh_cpp">class X</code>”) might be incomplete at one point in a translation unit and
+complete later on; the type “<code class="sh_cpp">class X</code>” is the same type at both points. The declared type of an array object
+might be an array of incomplete class type and therefore incomplete; if the class type is completed later on in the
+translation unit, the array type becomes complete; the array type at those two points is the same type. The declared
+type of an array object might be an array of unknown size and therefore be incomplete at one point in a translation unit
+and complete later on; the array types at those two points (“array of unknown bound of <code class="sh_cpp">T</code>” and “array of
+<var>N</var> <code class="sh_cpp">T</code>”) are different types. The type of a pointer to array of unknown size, or of a type defined
+by a <code class="sh_cpp">typedef</code> declaration to be an array of unknown size, cannot be completed.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">class X;                // X is an incomplete type
+extern X* xp;           // xp is a pointer to an incomplete type
+extern int arr[];       // the type of arr is incomplete
+typedef int UNKA[];     // UNKA is an incomplete type
+UNKA* arrp;             // arrp is a pointer to an incomplete type
+UNKA** arrpp;
+
+void foo() {
+  xp++;                 // ill-formed: X is incomplete
+  arrp++;               // ill-formed: incomplete type
+  arrpp++;              // OK: sizeof UNKA* is known
+}
+
+struct X { int i; };    // now X is a complete type
+int arr[10];            // now the type of arr is complete
+
+X x;
+void bar() {
+  xp = &amp;x;              // OK; type is “pointer to X”
+  arrp = &amp;arr;          // ill-formed: different types
+  xp++;                 // OK: X is complete
+  arrp++;               // ill-formed: UNKA can’t be completed
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p7" href="#p7">7</a><span class="note">[ <em>Note:</em> The rules for declarations and expressions describe in which contexts incomplete types are
+prohibited. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p8" href="#p8">8</a>An <dfn>object type</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="object type"></object> is a (possibly cv-qualified) type that is not a function type, not a reference type,
+and not a void type.</p>
+
+<p><a class="anchor" id="p9" href="#p9">9</a>Arithmetic types (<a title="basic.fundamental" href="basic.fundamental.html">3.9.1</a>), enumeration types, pointer types, pointer to member types
+(<a title="basic.compound" href="basic.compound.html">3.9.2</a>), <code class="sh_cpp">std::nullptr_t</code>, and cv-qualified versions of these types (<a title="basic.type.qualifier" href="basic.type.qualifier.html">3.9.3</a>) are
+collectively called <dfn>scalar types</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="scalar types"></object>. Scalar types, POD classes (Clause <a title="class" href="class.html">9</a>), arrays of such types and
+cv-qualified versions of these types (<a title="basic.type.qualifier" href="basic.type.qualifier.html">3.9.3</a>) are collectively called <dfn>POD types</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="POD types"></object>. Scalar types,
+trivially copyable class types (Clause <a title="class" href="class.html">9</a>), arrays of such types, and cv-qualified versions of these types
+(<a title="basic.type.qualifier" href="basic.type.qualifier.html">3.9.3</a>) are collectively called <dfn>trivially copyable types</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="trivially copyable types"></object>. Scalar types, trivial class types
+(Clause <a title="class" href="class.html">9</a>), arrays of such types and cv-qualified versions of these types (<a title="basic.type.qualifier" href="basic.type.qualifier.html">3.9.3</a>) are collectively
+called <dfn>trivial types</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="trivial types"></object>. Scalar types, standard-layout class types (Clause <a title="class" href="class.html">9</a>), arrays of such types
+and cv-qualified versions of these types (<a title="basic.type.qualifier" href="basic.type.qualifier.html">3.9.3</a>) are collectively called <dfn>standard-layout
+types</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="standard-layout
+types"></object>.</p>
+
+<p><a class="anchor" id="p10" href="#p10">10</a>A type is a <dfn>literal type</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="literal type"></object> if it is:</p>
+<ul>
+<li>a scalar type; or</li>
+<li>a reference type; or</li>
+<li>a class type (Clause <a title="class" href="class.html">9</a>) that has all of the following properties:
+	<ul>
+	<li>it has a trivial destructor,</li>
+	<li>every constructor call and full-expression in the <i class="nonterminal">brace-or-equal-initializer</i>s for non-static data
+		members (if any) is a constant expression (<a title="expr.const" href="expr.const.html">5.19</a>),</li>
+	<li>it is an aggregate type (<a title="dcl.init.aggr" href="dcl.init.aggr.html">8.5.1</a>) or has at least one constexpr constructor or constructor template
+		that is not a copy or move constructor, and</li>
+	<li>it has all non-static data members and base classes of literal types; or</li>
+	</ul>
+</li>
+<li>an array of literal type.</li>
+</ul>
+
+<p><a class="anchor" id="p11" href="#p11">11</a>If two types <code class="sh_cpp">T1</code> and <code class="sh_cpp">T2</code> are the same type, then <code class="sh_cpp">T1</code> and <code class="sh_cpp">T2</code>
+are <dfn>layout-compatible</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="layout-compatible"></object> types. <span class="note">[ <em>Note:</em> Layout-compatible enumerations are described in <a title="dcl.enum" href="dcl.enum.html">7.2</a>.
+Layout-compatible standard-layout structs and standard-layout unions are described in <a title="class.mem" href="class.mem.html">9.2</a>. — <em>end note</em> ]</span></p>
+
+
+
+
+
+
+
+
+<div>
+<p class="footnote" id="fn40">40) By using, for example, the library functions (<a title="headers" href="headers.html">17.6.1.2</a>) <code class="sh_cpp">std::memcpy</code> or
+<code class="sh_cpp">std::memmove</code>.</p>
+<p class="footnote" id="fn41">41) By using, for example, the library functions (<a title="headers" href="headers.html">17.6.1.2</a>) <code class="sh_cpp">std::memcpy</code> or
+<code class="sh_cpp">std::memmove</code>.</p>
+<p class="footnote" id="fn42">42) The intent is that the memory model of C++ is compatible with that of ISO/IEC 9899 <cite>Programming
+Language C</cite>.</p>
+<p class="footnote" id="fn43">43) The size and layout of an instance of an incompletely-defined object type is unknown.</p>
+</div>
+</body>
+</html>
+

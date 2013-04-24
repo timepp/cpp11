@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Selection statements</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[stmt.select]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[stmt.select]"></object>6.4 Selection statements </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Selection statements choose one of several flows of control.</p>
+
+<dl>
+<dt>
+<i class="nonterminal"><dfn>selection-statement</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="selection-statement"></object></i>:</dt>
+	<dd>
+<code class="sh_cpp">if</code> <code class="sh_cpp">(</code> <i class="nonterminal">condition</i> <code class="sh_cpp">)</code> <i class="nonterminal">statement</i>
+</dd>
+	<dd>
+<code class="sh_cpp">if</code> <code class="sh_cpp">(</code> <i class="nonterminal">condition</i> <code class="sh_cpp">)</code> <i class="nonterminal">statement</i> <code class="sh_cpp">else</code> <i class="nonterminal">statement</i>
+</dd>
+	<dd>
+<code class="sh_cpp">switch</code> <code class="sh_cpp">(</code> <i class="nonterminal">condition</i> <code class="sh_cpp">)</code> <i class="nonterminal">statement</i>
+</dd>
+<dt>
+<i class="nonterminal"><dfn>condition</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="condition"></object></i>:</dt>
+	<dd><i class="nonterminal">expression</i></dd>
+	<dd>
+<i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub> <i class="nonterminal">decl-specifier-seq</i> <i class="nonterminal">declarator</i> <code class="sh_cpp">=</code> <i class="nonterminal">initializer-clause</i>
+</dd>
+	<dd>
+<i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub> <i class="nonterminal">decl-specifier-seq</i> <i class="nonterminal">declarator</i> <i class="nonterminal">braced-init-list</i>
+</dd>
+</dl>
+
+<p>See <a title="dcl.meaning" href="dcl.meaning.html">8.3</a> for the optional <i class="nonterminal">attribute-specifier-seq</i> in a condition. In Clause <a title="stmt.stmt" href="stmt.stmt.html">6</a>, the term
+<dfn>substatement</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="substatement"></object> refers to the contained statement or statements that appear in the syntax notation. The
+substatement in a <i class="nonterminal">selection-statement</i> (each substatement, in the <code class="sh_cpp">else</code> form of the <code class="sh_cpp">if</code>
+statement) implicitly defines a block scope (<a title="basic.scope" href="basic.scope.declarative.html">3.3</a>). If the substatement in a <i class="nonterminal">selection-statement</i> is a
+single statement and not a <i class="nonterminal">compound-statement</i>, it is as if it was rewritten to be a <i class="nonterminal">compound-statement</i>
+containing the original substatement.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">if (x)
+  int i;</code></pre>
+
+<p>can be equivalently rewritten as</p>
+
+<pre><code class="sh_cpp">if (x) {
+  int i;
+}</code></pre>
+
+<p>Thus after the <code class="sh_cpp">if</code> statement, <code class="sh_cpp">i</code> is no longer in scope. — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The rules for conditions apply both to <i class="nonterminal">selection-statement</i>s and to the <code class="sh_cpp">for</code> and
+<code class="sh_cpp">while</code> statements (<a title="stmt.iter" href="stmt.iter.html">6.5</a>). The declarator shall not specify a function or an array. If the
+<code class="sh_cpp">auto</code> <i class="nonterminal">type-specifier</i> appears in the <i class="nonterminal">type-specifier-seq</i>, the type of the identifier being
+declared is deduced from the initializer as described in <a title="dcl.spec.auto" href="dcl.spec.auto.html">7.1.6.4</a>.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>A name introduced by a declaration in a condition (either introduced by the <i class="nonterminal">type-specifier-seq</i> or the
+declarator of the condition) is in scope from its point of declaration until the end of the substatements controlled by
+the condition. If the name is re-declared in the outermost block of a substatement controlled by the condition, the
+declaration that re-declares the name is ill-formed.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">if (int x = f()) {
+  int x;                // ill-formed, redeclaration of x
+}
+else {
+  int x;                // ill-formed, redeclaration of x
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>The value of a condition that is an initialized declaration in a statement other than a <code class="sh_cpp">switch</code>
+statement is the value of the declared variable contextually converted to <code class="sh_cpp">bool</code> (Clause <a title="conv" href="conv.html">4</a>). If
+that conversion is ill-formed, the program is ill-formed. The value of a condition that is an initialized declaration in
+a <code class="sh_cpp">switch</code> statement is the value of the declared variable if it has integral or enumeration type, or of that
+variable implicitly converted to integral or enumeration type otherwise. The value of a condition that is an expression
+is the value of the expression, contextually converted to <code class="sh_cpp">bool</code> for statements other than
+<code class="sh_cpp">switch</code>; if that conversion is ill-formed, the program is ill-formed. The value of the condition will be
+referred to as simply “the condition” where the usage is unambiguous.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>If a condition can be syntactically resolved as either an expression or the declaration of a block-scope name,
+it is interpreted as a declaration.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>In the <i class="nonterminal">decl-specifier-seq</i> of a <i class="nonterminal">condition</i>, each <i class="nonterminal">decl-specifier</i> shall be either a
+<i class="nonterminal">type-specifier</i> or <code class="sh_cpp">constexpr</code>.</p>
+
+</body>
+</html>
+

@@ -1,0 +1,156 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>List-initialization sequence</title>
+</head>
+<body>
+<h5>
+<dfn class="label">[over.ics.list]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[over.ics.list]"></object>13.3.3.1.5 List-initialization sequence </h5>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>When an argument is an initializer list (<a title="dcl.init.list" href="dcl.init.list.html">8.5.4</a>), it is not an expression and special rules apply for
+converting it to a parameter type.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>If the parameter type is <code class="sh_cpp">std::initializer_list&lt;X&gt;</code> or “array of <code class="sh_cpp">X</code>”<sup class="footnote"><a href="#fn138">138</a></sup> and all the elements of the initializer list can be implicitly converted to <code class="sh_cpp">X</code>, the implicit
+conversion sequence is the worst conversion necessary to convert an element of the list to <code class="sh_cpp">X</code>. This
+conversion can be a user-defined conversion even in the context of a call to an initializer-list constructor.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">void f(std::initializer_list&lt;int&gt;);
+f( {1,2,3} );           // OK: f(initializer_list&lt;int&gt;) identity conversion
+f( {'a','b'} );         // OK: f(initializer_list&lt;int&gt;) integral promotion
+f( {1.0} );             // error: narrowing
+
+struct A {
+  A(std::initializer_list&lt;double&gt;);             // #1
+  A(std::initializer_list&lt;complex&lt;double&gt;&gt;);    // #2
+  A(std::initializer_list&lt;std::string&gt;);        // #3
+};
+A a{ 1.0,2.0 };         // OK, uses #1
+
+void g(A);
+g({ "foo", "bar" });    // OK, uses #3
+
+typedef int IA[3];
+void h(const IA&amp;);
+h({ 1, 2, 3 });         // OK: identity conversion</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>Otherwise, if the parameter is a non-aggregate class <code class="sh_cpp">X</code> and overload resolution per
+<a title="over.match.list" href="over.match.list.html">13.3.1.7</a> chooses a single best constructor of <code class="sh_cpp">X</code> to perform the initialization of an object of
+type <code class="sh_cpp">X</code> from the argument initializer list, the implicit conversion sequence is a user-defined conversion
+sequence. If multiple constructors are viable but none is better than the others, the implicit conversion sequence is
+the ambiguous conversion sequence. User-defined conversions are allowed for conversion of the initializer list elements
+to the constructor parameter types except as noted in <a title="over.best.ics" href="over.best.ics.html">13.3.3.1</a>.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct A {
+  A(std::initializer_list&lt;int&gt;);
+};
+void f(A);
+f( {'a', 'b'} );        // OK: f(A(std::initializer_list&lt;int&gt;)) user-defined conversion
+
+struct B {
+  B(int, double);
+};
+void g(B);
+g( {'a', 'b'} );        // OK: g(B(int,double)) user-defined conversion
+g( {1.0, 1,0} );        // error: narrowing
+
+void f(B);
+f( {'a', 'b'} );        // error: ambiguous f(A) or f(B)
+
+struct C {
+  C(std::string);
+};
+void h(C);
+h({"foo"});             // OK: h(C(std::string("foo")))
+
+struct D {
+  C(A, C);
+};
+void i(D);
+i({ {1,2}, {"bar"} });  // OK: i(D(A(std::initializer_list&lt;int&gt;{1,2}),C(std::string("bar"))))</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>Otherwise, if the parameter has an aggregate type which can be initialized from the initializer list according
+to the rules for aggregate initialization (<a title="dcl.init.aggr" href="dcl.init.aggr.html">8.5.1</a>), the implicit conversion sequence is a user-defined
+conversion sequence.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct A {
+  int m1;
+  double m2;
+};
+
+void f(A);
+f( {'a', 'b'} );        // OK: f(A(int,double)) user-defined conversion
+f( {1.0} );             // error: narrowing</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>Otherwise, if the parameter is a reference, see <a title="over.ics.ref" href="over.ics.ref.html">13.3.3.1.4</a>. <span class="note">[ <em>Note:</em> The rules in this section will
+apply for initializing the underlying temporary for the reference. — <em>end note</em> ]</span></p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct A {
+  int m1;
+  double m2;
+};
+
+void f(const A&amp;);
+f( {'a', 'b'} );        // OK: f(A(int,double)) user-defined conversion
+f( {1.0} );             // error: narrowing
+
+void g(const double &amp;);
+g({1});                 // same conversion as int to double</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>Otherwise, if the parameter type is not a class:</p>
+
+<ul>
+<li>if the initializer list has one element, the implicit conversion sequence is the one required to convert the element
+	to the parameter type;
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">void f(int);
+f( {'a'} );             // OK: same conversion as char to int
+f( {1.0} );             // error: narrowing</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+</li>
+
+<li>if the initializer list has no elements, the implicit conversion sequence is the identity conversion.
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">void f(int);
+f( { } );               // OK: identity conversion</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+</li>
+</ul>
+
+<p><a class="anchor" id="p7" href="#p7">7</a>In all cases other than those enumerated above, no conversion is possible.</p>
+
+
+<div><p class="footnote" id="fn138">138) Since there are no parameters of array type, this will only occur as the underlying type of a
+reference parameter.</p></div>
+</body>
+</html>
+

@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Namespace definition</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[namespace.def]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[namespace.def]"></object>7.3.1 Namespace definition </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The grammar for a <i class="nonterminal">namespace-definition</i> is</p>
+
+<dl>
+<dt>
+<i class="nonterminal"><dfn>namespace-name</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="namespace-name"></object></i>:</dt>
+	<dd><i class="nonterminal">original-namespace-name</i></dd>
+	<dd><i class="nonterminal">namespace-alias</i></dd>
+<dt>
+<i class="nonterminal"><dfn>original-namespace-name</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="original-namespace-name"></object></i>:</dt>
+	<dd><i class="nonterminal">identifier</i></dd>
+<dt>
+<i class="nonterminal"><dfn>namespace-definition</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="namespace-definition"></object></i>:</dt>
+	<dd><i class="nonterminal">named-namespace-definition</i></dd>
+	<dd><i class="nonterminal">unnamed-namespace-definition</i></dd>
+<dt>
+<i class="nonterminal"><dfn>named-namespace-definition</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="named-namespace-definition"></object></i>:</dt>
+	<dd><i class="nonterminal">original-namespace-definition</i></dd>
+	<dd><i class="nonterminal">extension-namespace-definition</i></dd>
+<dt>
+<i class="nonterminal"><dfn>original-namespace-definition</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="original-namespace-definition"></object></i>:</dt>
+	<dd>
+<code class="sh_cpp">inline</code><sub class="opt">opt</sub> <code class="sh_cpp">namespace</code> <i class="nonterminal">identifier</i> <code class="sh_cpp">{</code> <i class="nonterminal">namespace-body</i> <code class="sh_cpp">}</code>
+</dd>
+<dt>
+<i class="nonterminal"><dfn>extension-namespace-definition</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="extension-namespace-definition"></object></i>:</dt>
+	<dd>
+<code class="sh_cpp">inline</code><sub class="opt">opt</sub> <code class="sh_cpp">namespace</code> <i class="nonterminal">original-namespace-name</i> <code class="sh_cpp">{</code> <i class="nonterminal">namespace-body</i> <code class="sh_cpp">}</code>
+</dd>
+<dt>
+<i class="nonterminal"><dfn>unnamed-namespace-definition</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="unnamed-namespace-definition"></object></i>:</dt>
+	<dd>
+<code class="sh_cpp">inline</code><sub class="opt">opt</sub> <code class="sh_cpp">namespace</code> <code class="sh_cpp">{</code> <i class="nonterminal">namespace-body</i> <code class="sh_cpp">}</code>
+</dd>
+<dt>
+<i class="nonterminal"><dfn>namespace-body</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="namespace-body"></object></i>:</dt>
+	<dd>
+<i class="nonterminal">declaration-seq</i><sub class="opt">opt</sub>
+</dd>
+</dl>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The <i class="nonterminal">identifier</i> in an <i class="nonterminal">original-namespace-definition</i> shall not have been previously defined in
+the declarative region in which the <i class="nonterminal">original-namespace-definition</i> appears. The <i class="nonterminal">identifier</i> in an
+<i class="nonterminal">original-namespace-definition</i> is the name of the namespace. Subsequently in that declarative region, it is
+treated as an <i class="nonterminal">original-namespace-name</i>.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>The <i class="nonterminal">original-namespace-name</i> in an <i class="nonterminal">extension-namespace-definition</i> shall have previously been
+defined in an <i class="nonterminal">original-namespace-definition</i> in the same declarative region.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>Every <i class="nonterminal">namespace-definition</i> shall appear in the global scope or in a namespace scope
+(<a title="basic.scope.namespace" href="basic.scope.namespace.html">3.3.6</a>).</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>Because a <i class="nonterminal">namespace-definition</i> contains declarations in its <i class="nonterminal">namespace-body</i> and a
+<i class="nonterminal">namespace-definition</i> is itself a <i class="nonterminal">declaration</i>, it follows that <i class="nonterminal">namespace-definition</i>s can be
+nested.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">namespace Outer {
+  int i;
+  namespace Inner {
+    void f() { i++; }   // Outer::i
+    int i;
+    void g() { i++; }   // Inner::i
+  }
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>The <dfn>enclosing namespaces</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="enclosing namespaces"></object> of a declaration are those namespaces in which the declaration lexically
+appears, except for a redeclaration of a namespace member outside its original namespace (e.g., a definition as
+specified in <a title="namespace.memdef" href="namespace.memdef.html">7.3.1.2</a>). Such a redeclaration has the same enclosing namespaces as the original
+declaration.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">namespace Q {
+  namespace V {
+    void f();   // enclosing namespaces are the global namespace, Q, and Q::V
+    class C { void m(); };
+  }
+  void V::f() { // enclosing namespaces are the global namespace, Q, and Q::V
+    extern void h(); // … so this declares Q::V::h
+  }
+  void V::C::m() { // enclosing namespaces are the global namespace, Q, and Q::V
+  }
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p7" href="#p7">7</a>If the optional initial <code class="sh_cpp">inline</code> keyword appears in a <i class="nonterminal">namespace-definition</i> for a particular
+namespace, that namespace is declared to be an <dfn>inline namespace</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="inline namespace"></object>. The <code class="sh_cpp">inline</code> keyword may be used
+on an <i class="nonterminal">extension-namespace-definition</i> only if it was previously used on the
+<i class="nonterminal">original-namespace-definition</i> for that namespace.</p>
+
+<p><a class="anchor" id="p8" href="#p8">8</a>Members of an inline namespace can be used in most respects as though they were members of the enclosing
+namespace. Specifically, the inline namespace and its enclosing namespace are both added to the set of associated
+namespaces used in argument-dependent lookup (<a title="basic.lookup.argdep" href="basic.lookup.argdep.html">3.4.2</a>) whenever one of them is, and a <i class="nonterminal">using-directive</i>
+(<a title="namespace.udir" href="namespace.udir.html">7.3.4</a>) that names the inline namespace is implicitly inserted into the enclosing namespace as for an unnamed
+namespace (<a title="namespace.unnamed" href="namespace.unnamed.html">7.3.1.1</a>). Furthermore, each member of the inline namespace can subsequently be explicitly
+instantiated (<a title="temp.explicit" href="temp.explicit.html">14.7.2</a>) or explicitly specialized (<a title="temp.expl.spec" href="temp.expl.spec.html">14.7.3</a>) as though it were a member of the
+enclosing namespace. Finally, looking up a name in the enclosing namespace via explicit qualification
+(<a title="namespace.qual" href="namespace.qual.html">3.4.3.2</a>) will include members of the inline namespace brought in by the <i class="nonterminal">using-directive</i> even if
+there are declarations of that name in the enclosing namespace.</p>
+
+<p><a class="anchor" id="p9" href="#p9">9</a>These properties are transitive: if a namespace <code class="sh_cpp">N</code> contains an inline namespace <code class="sh_cpp">M</code>,
+which in turn contains an inline namespace <code class="sh_cpp">O</code>, then the members of <code class="sh_cpp">O</code> can be used as though they
+were members of <code class="sh_cpp">M</code> or <code class="sh_cpp">N</code>. The <dfn>inline namespace set</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="inline namespace set"></object> of <code class="sh_cpp">N</code> is the
+transitive closure of all inline namespaces in <code class="sh_cpp">N</code>. The <dfn>enclosing namespace set</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="enclosing namespace set"></object> of <code class="sh_cpp">O</code>
+is the set of namespaces consisting of the innermost non-inline namespace enclosing an inline namespace <code class="sh_cpp">O</code>,
+together with any intervening inline namespaces.</p>
+</body>
+</html>
+

@@ -1,0 +1,216 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Other runtime support</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[support.runtime]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[support.runtime]"></object>18.10 Other runtime support </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Headers
+<code class="header">&lt;csetjmp&gt;</code> (nonlocal jumps),
+<code class="header">&lt;csignal&gt;</code> (signal handling),
+<code class="header">&lt;cstdalign&gt;</code> (alignment),
+<code class="header">&lt;cstdarg&gt;</code> (variable arguments),
+<code class="header">&lt;cstdbool&gt;</code> (<code class="sh_cpp">__bool_true_false_are_defined</code>),
+<code class="header">&lt;cstdlib&gt;</code> (runtime environment <code class="sh_cpp">getenv()</code>, <code class="sh_cpp">system()</code>), and
+<code class="header">&lt;ctime&gt;</code> (system clock <code class="sh_cpp">clock()</code>, <code class="sh_cpp">time()</code>),
+provide further compatibility with C code.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The contents of these headers are the same as the Standard C library headers
+<code class="header">&lt;setjmp.h&gt;</code>,
+<code class="header">&lt;signal.h&gt;</code>,
+<code class="header">&lt;stdalign.h&gt;</code>,
+<code class="header">&lt;stdarg.h&gt;</code>,
+<code class="header">&lt;stdbool.h&gt;</code>,
+<code class="header">&lt;stdlib.h&gt;</code>, and
+<code class="header">&lt;time.h&gt;</code>,
+respectively, with the following changes:</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>The restrictions that ISO C places on the second parameter to the <code class="sh_cpp">va_start()</code> macro in header
+<code class="header">&lt;stdarg.h&gt;</code> are different in this International Standard. The parameter <code class="sh_cpp">parmN</code> is the
+identifier of the rightmost parameter in the variable parameter list of the function definition (the one just before the
+<code class="sh_cpp">...</code>).<sup class="footnote"><a href="#fn230">230</a></sup> If the parameter <code class="sh_cpp">parmN</code> is declared with a function, array, or reference
+type, or with a type that is not compatible with the type that results when passing an argument for which there is no
+parameter, the behavior is undefined.</p>
+
+<p><span class="seealso">See also:</span> ISO C 4.8.1.1.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>The function signature <code class="sh_cpp"><dfn>longjmp</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="longjmp"></object>(jmp_buf jbuf, int val)</code> has more restricted behavior in
+this International Standard. A <code class="sh_cpp">setjmp</code>/<code class="sh_cpp">longjmp</code> call pair has undefined behavior if replacing
+the <code class="sh_cpp">setjmp</code> and <code class="sh_cpp">longjmp</code> by <code class="sh_cpp">catch</code> and <code class="sh_cpp">throw</code> would invoke any
+non-trivial destructors for any automatic objects.</p>
+
+<p><span class="seealso">See also:</span> ISO C 7.10.4, 7.8, 7.6, 7.12.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>Calls to the function <code class="sh_cpp"><dfn>getenv</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="getenv"></object></code> shall not introduce a data race (<a title="res.on.data.races" href="res.on.data.races.html">17.6.5.9</a>)
+provided that nothing modifies the environment. <span class="note">[ <em>Note:</em> Calls to the POSIX functions <code class="sh_cpp">setenv</code> and
+<code class="sh_cpp">putenv</code> modify the environment. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>A call to the <code class="sh_cpp">setlocale</code> function may introduce a data race with other calls to the
+<code class="sh_cpp">setlocale</code> function or with calls to functions that are affected by the current C locale. The implementation
+shall behave as if no library function other than <code class="sh_cpp">locale::global()</code> calls the <code class="sh_cpp">setlocale</code>
+function.</p>
+
+<p><a class="anchor" id="p7" href="#p7">7</a>The header <code class="header">&lt;cstdalign&gt;</code> and the header <code class="header">&lt;stdalign.h&gt;</code> shall not define a macro named
+<code class="sh_cpp">alignas</code>.</p>
+
+<p><a class="anchor" id="p8" href="#p8">8</a>The header <code class="header">&lt;cstdbool&gt;</code> and the header <code class="header">&lt;stdbool.h&gt;</code> shall not define macros named
+<code class="sh_cpp">bool</code>, <code class="sh_cpp">true</code>, or <code class="sh_cpp">false</code>.</p>
+
+<p><a class="anchor" id="p9" href="#p9">9</a>The common subset of the C and C++ languages consists of all declarations, definitions, and expressions that
+may appear in a well formed C++ program and also in a conforming C program. A POF (“plain old function”) is a function
+that uses only features from this common subset, and that does not directly or indirectly use any function that is not a
+POF, except that it may use functions defined in Clause <a title="atomics" href="atomics.general.html">29</a> that are not member functions. All signal handlers
+shall have C linkage. A POF that could be used as a signal handler in a conforming C program does not produce undefined
+behavior when used as a signal handler in a C++ program. The behavior of any other function used as a signal handler in
+a C++ program is implementation-defined.<sup class="footnote"><a href="#fn231">231</a></sup></p>
+
+<table id="t34" class="header_synopsis">
+<caption>Table 34 — Header <dfn><code class="header">&lt;csetjmp&gt;</code></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="&lt;csetjmp&gt;"></object> synopsis</caption>
+<thead><tr>
+<th>Type</th>
+<th>Name(s)</th>
+</tr></thead>
+<tbody>
+<tr>
+<th>Macro:</th>
+<td><code class="sh_cpp">setjmp</code></td>
+</tr>
+<tr>
+<th>Type:</th>
+<td><code class="sh_cpp">jmp_buf</code></td>
+</tr>
+<tr>
+<th>Function:</th>
+<td><code class="sh_cpp">longjmp</code></td>
+</tr>
+</tbody>
+</table>
+
+<table id="t35" class="header_synopsis">
+<caption>Table 35 — Header <dfn><code class="header">&lt;csignal&gt;</code></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="&lt;csignal&gt;"></object> synopsis</caption>
+<thead><tr>
+<th>Type</th>
+<th>Name(s)</th>
+</tr></thead>
+<tbody>
+<tr>
+<th>Macros:</th>
+<td><pre><code class="sh_cpp">SIGABRT   SIGILL    SIGSEGV   SIG_DFL
+SIG_IGN   SIGFPE    SIGINT    SIGTERM     SIG_ERR</code></pre></td>
+</tr>
+<tr>
+<th>Type:</th>
+<td><code class="sh_cpp">sig_atomic_t</code></td>
+</tr>
+<tr>
+<th>Functions:</th>
+<td><pre><code class="sh_cpp">raise     signal</code></pre></td>
+</tr>
+</tbody>
+</table>
+
+<table id="t36" class="header_synopsis">
+<caption>Table 36 — Header <code class="header">&lt;cstdalign&gt;</code> synopsis</caption>
+<thead><tr>
+<th>Type</th>
+<th>Name(s)</th>
+</tr></thead>
+<tbody>
+<tr>
+<th>Macro:</th>
+<td><code class="sh_cpp">__alignas_is_defined</code></td>
+</tr>
+</tbody>
+</table>
+
+<table id="t37" class="header_synopsis">
+<caption>Table 37 — Header <dfn><code class="header">&lt;cstdarg&gt;</code></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="&lt;cstdarg&gt;"></object> synopsis</caption>
+<thead><tr>
+<th>Type</th>
+<th>Name(s)</th>
+</tr></thead>
+<tbody>
+<tr>
+<th>Macros:</th>
+<td><pre><code class="sh_cpp">va_arg    va_end    va_start  va_copy</code></pre></td>
+</tr>
+<tr>
+<th>Type:</th>
+<td><code class="sh_cpp">va_list</code></td>
+</tr>
+</tbody>
+</table>
+
+<table id="t38" class="header_synopsis">
+<caption>Table 38 — Header <dfn><code class="header">&lt;cstdbool&gt;</code></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="&lt;cstdbool&gt;"></object> synopsis</caption>
+<thead><tr>
+<th>Type</th>
+<th>Name(s)</th>
+</tr></thead>
+<tbody>
+<tr>
+<th>Macro:</th>
+<td><code class="sh_cpp">__bool_true_false_are_defined</code></td>
+</tr>
+</tbody>
+</table>
+
+<table id="t39" class="header_synopsis">
+<caption>Table 39 — Header <dfn><code class="header">&lt;cstdlib&gt;</code></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="&lt;cstdlib&gt;"></object> synopsis</caption>
+<thead><tr>
+<th>Type</th>
+<th>Name(s)</th>
+</tr></thead>
+<tbody>
+<tr>
+<th>Functions:</th>
+<td><pre><code class="sh_cpp">getenv    system</code></pre></td>
+</tr>
+</tbody>
+</table>
+
+<table id="t40" class="header_synopsis">
+<caption>Table 40 — Header <dfn><code class="header">&lt;ctime&gt;</code></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="&lt;ctime&gt;"></object> synopsis</caption>
+<thead><tr>
+<th>Type</th>
+<th>Name(s)</th>
+</tr></thead>
+<tbody>
+<tr>
+<th>Macro:</th>
+<td><code class="sh_cpp">CLOCKS_PER_SEC</code></td>
+</tr>
+<tr>
+<th>Type:</th>
+<td><code class="sh_cpp">clock_t</code></td>
+</tr>
+<tr>
+<th>Function:</th>
+<td><code class="sh_cpp">clock</code></td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+<div>
+<p class="footnote" id="fn230">230) Note that <code class="sh_cpp">va_start</code> is required to work as specified even if unary
+<code class="sh_cpp">operator&amp;</code> is overloaded for the type of <code class="sh_cpp">parmN</code>.</p>
+<p class="footnote" id="fn231">231) In particular, a signal handler using exception handling is very likely to have problems. Also,
+invoking <code class="sh_cpp">std::exit</code> may cause destruction of objects, including those of the standard library
+implementation, which, in general, yields undefined behavior in a signal handler (see <a title="intro.execution" href="intro.execution.html">1.9</a>).</p>
+</div>
+</body>
+</html>
+

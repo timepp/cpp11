@@ -1,0 +1,148 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Temporary objects</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[class.temporary]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[class.temporary]"></object>12.2 Temporary objects </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Temporaries of class type are created in various contexts: binding a reference to a prvalue (<a title="dcl.init.ref" href="dcl.init.ref.html">8.5.3</a>),
+returning a prvalue (<a title="stmt.return" href="stmt.return.html">6.6.3</a>), a conversion that creates a prvalue (<a title="conv.lval" href="conv.lval.html">4.1</a>, <a title="expr.static.cast" href="expr.static.cast.html">5.2.9</a>,
+<a title="expr.const.cast" href="expr.const.cast.html">5.2.11</a>, <a title="expr.cast" href="expr.cast.html">5.4</a>), throwing an exception (<a title="except.throw" href="except.throw.html">15.1</a>), entering a <i class="nonterminal">handler</i>
+(<a title="except.handle" href="except.handle.html">15.3</a>), and in some initializations (<a title="dcl.init" href="dcl.init.html">8.5</a>). <span class="note">[ <em>Note:</em> The lifetime of exception objects is described in
+<a title="except.throw" href="except.throw.html">15.1</a>. — <em>end note</em> ]</span> Even when the creation of the temporary object is unevaluated (Clause <a title="expr" href="expr.html">5</a>) or otherwise
+avoided (<a title="class.copy" href="class.copy.html">12.8</a>), all the semantic restrictions shall be respected as if the temporary object had been created
+and later destroyed. <span class="note">[ <em>Note:</em> even if there is no call to the destructor or copy/move constructor, all the semantic
+restrictions, such as accessibility (Clause <a title="class.access" href="class.access.html">11</a>) and whether the function is deleted (<a title="dcl.fct.def.delete" href="dcl.fct.def.delete.html">8.4.3</a>), shall
+be satisfied. However, in the special case of a function call used as the operand of a <i class="nonterminal">decltype-specifier</i>
+(<a title="expr.call" href="expr.call.html">5.2.2</a>), no temporary is introduced, so the foregoing does not apply to the prvalue of any such function
+call. — <em>end note</em> ]</span></p>
+
+<div class="example">
+<p><a class="anchor" id="p2" href="#p2">2</a>[ <em>Example:</em> Consider the following code:</p>
+
+<pre><code class="sh_cpp">class X {
+public:
+  X(int);
+  X(const X&amp;);
+  X&amp; operator=(const X&amp;);
+  ~X();
+};
+
+class Y {
+public:
+  Y(int);
+  Y(Y&amp;&amp;);
+  ~Y();
+};
+
+X f(X);
+Y g(Y);
+
+void h() {
+  X a(1);
+  X b = f(X(2));
+  Y c = g(Y(3));
+  a = f(a);
+}</code></pre>
+
+<p>An implementation might use a temporary in which to construct <code class="sh_cpp">X(2)</code> before passing it to <code class="sh_cpp">f()</code>
+using <code class="sh_cpp">X</code>’s copy constructor; alternatively, <code class="sh_cpp">X(2)</code> might be constructed in the space used to hold
+the argument. Likewise, an implementation might use a temporary in which to construct <code class="sh_cpp">Y(3)</code> before passing
+it to <code class="sh_cpp">g()</code> using <code class="sh_cpp">Y</code>’s move constructor; alternatively, <code class="sh_cpp">Y(3)</code> might be constructed in
+the space used to hold the argument. Also, a temporary might be used to hold the result of <code class="sh_cpp">f(X(2))</code> before
+copying it to <code class="sh_cpp">b</code> using <code class="sh_cpp">X</code>’s copy constructor; alternatively, <code class="sh_cpp">f()</code>’s result might be
+constructed in <code class="sh_cpp">b</code>. Likewise, a temporary might be used to hold the result of <code class="sh_cpp">g(Y(3))</code> before
+moving it to <code class="sh_cpp">c</code> using <code class="sh_cpp">Y</code>’s move constructor; alternatively, <code class="sh_cpp">g()</code>’s result might be
+constructed in <code class="sh_cpp">c</code>. On the other hand, the expression <code class="sh_cpp">a=f(a)</code> requires a temporary for the result
+of <code class="sh_cpp">f(a)</code>, which is then assigned to <code class="sh_cpp">a</code>. — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>When an implementation introduces a temporary object of a class that has a non-trivial constructor
+(<a title="class.ctor" href="class.ctor.html">12.1</a>, <a title="class.copy" href="class.copy.html">12.8</a>), it shall ensure that a constructor is called for the temporary object. Similarly,
+the destructor shall be called for a temporary with a non-trivial destructor (<a title="class.dtor" href="class.dtor.html">12.4</a>). Temporary objects are
+destroyed as the last step in evaluating the full-expression (<a title="intro.execution" href="intro.execution.html">1.9</a>) that (lexically) contains the point where
+they were created. This is true even if that evaluation ends in throwing an exception. The value computations and side
+effects of destroying a temporary object are associated only with the full-expression, not with any specific
+subexpression.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>There are two contexts in which temporaries are destroyed at a different point than the end of the
+full-expression. The first context is when a default constructor is called to initialize an element of an array. If the
+constructor has one or more default arguments, the destruction of every temporary created in a default argument
+is sequenced before the construction of the next array element, if any.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>The second context is when a reference is bound to a temporary. The temporary to which the reference is bound
+or the temporary that is the complete object of a subobject to which the reference is bound persists for the lifetime of
+the reference except:</p>
+
+<ul>
+<li>A temporary bound to a reference member in a constructor’s ctor-initializer (<a title="class.base.init" href="class.base.init.html">12.6.2</a>) persists until the
+	constructor exits.</li>
+<li>A temporary bound to a reference parameter in a function call (<a title="expr.call" href="expr.call.html">5.2.2</a>) persists until the completion of
+	the full-expression containing the call.</li>
+<li>The lifetime of a temporary bound to the returned value in a function return statement (<a title="stmt.return" href="stmt.return.html">6.6.3</a>) is not
+	extended; the temporary is destroyed at the end of the full-expression in the return statement.</li>
+<li>A temporary bound to a reference in a <i class="nonterminal">new-initializer</i> (<a title="expr.new" href="expr.new.html">5.3.4</a>) persists until the completion of
+	the full-expression containing the <i class="nonterminal">new-initializer</i>.
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct S { int mi; const std::pair&lt;int,int&gt;&amp; mp; };
+S a { 1, {2,3} };
+S* p = new S{ 1, {2,3} };   // Creates dangling reference</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+	<span class="note">[ <em>Note:</em> This may introduce a dangling reference, and implementations are encouraged to issue a warning in such a
+	case. — <em>end note</em> ]</span>
+</li>
+</ul>
+
+<p>The destruction of a temporary whose lifetime is not extended by being bound to a reference is sequenced before the
+destruction of every temporary which is constructed earlier in the same full-expression. If the lifetime of two or more
+temporaries to which references are bound ends at the same point, these temporaries are destroyed at that point in the
+reverse order of the completion of their construction. In addition, the destruction of temporaries bound to references
+shall take into account the ordering of destruction of objects with static, thread, or automatic storage duration
+(<a title="basic.stc.static" href="basic.stc.static.html">3.7.1</a>, <a title="basic.stc.thread" href="basic.stc.thread.html">3.7.2</a>, <a title="basic.stc.auto" href="basic.stc.auto.html">3.7.3</a>); that is, if <code class="sh_cpp">obj1</code> is an object with the same storage
+duration as the temporary and created before the temporary is created the temporary shall be destroyed before
+<code class="sh_cpp">obj1</code> is destroyed; if <code class="sh_cpp">obj2</code> is an object with the same storage duration as the temporary and
+created after the temporary is created the temporary shall be destroyed after <code class="sh_cpp">obj2</code> is destroyed.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct S {
+  S();
+  S(int);
+  friend S operator+(const S&amp;, const S&amp;);
+  ~S();
+};
+S obj1;
+const S&amp; cr = S(16)+S(23);
+S obj2;</code></pre>
+
+<p>the expression <code class="sh_cpp">S(16) + S(23)</code> creates three temporaries: a first temporary <code class="sh_cpp">T1</code> to hold the
+result of the expression <code class="sh_cpp">S(16)</code>, a second temporary <code class="sh_cpp">T2</code> to hold the result of the expression
+<code class="sh_cpp">S(23)</code>, and a third temporary <code class="sh_cpp">T3</code> to hold the result of the addition of these two expressions.
+The temporary <code class="sh_cpp">T3</code> is then bound to the reference <code class="sh_cpp">cr</code>. It is unspecified whether <code class="sh_cpp">T1</code>
+or <code class="sh_cpp">T2</code> is created first. On an implementation where <code class="sh_cpp">T1</code> is created before <code class="sh_cpp">T2</code>, it is
+guaranteed that <code class="sh_cpp">T2</code> is destroyed before <code class="sh_cpp">T1</code>. The temporaries <code class="sh_cpp">T1</code> and <code class="sh_cpp">T2</code>
+are bound to the reference parameters of <code class="sh_cpp">operator+</code>; these temporaries are destroyed at the end of the
+full-expression containing the call to <code class="sh_cpp">operator+</code>. The temporary <code class="sh_cpp">T3</code> bound to the reference
+<code class="sh_cpp">cr</code> is destroyed at the end of <code class="sh_cpp">cr</code>’s lifetime, that is, at the end of the program. In addition,
+the order in which <code class="sh_cpp">T3</code> is destroyed takes into account the destruction order of other objects with static
+storage duration. That is, because <code class="sh_cpp">obj1</code> is constructed before <code class="sh_cpp">T3</code>, and <code class="sh_cpp">T3</code> is
+constructed before <code class="sh_cpp">obj2</code>, it is guaranteed that <code class="sh_cpp">obj2</code> is destroyed before <code class="sh_cpp">T3</code>, and
+that <code class="sh_cpp">T3</code> is destroyed before <code class="sh_cpp">obj1</code>. — <em>end example</em> ]</p>
+</div>
+</body>
+</html>
+

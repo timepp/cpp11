@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Character arrays</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[dcl.init.string]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[dcl.init.string]"></object>8.5.2 Character arrays </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A <code class="sh_cpp">char</code> array (whether plain <code class="sh_cpp">char</code>, <code class="sh_cpp">signed char</code>, or <code class="sh_cpp">unsigned
+char</code>), <code class="sh_cpp">char16_t</code> array, <code class="sh_cpp">char32_t</code> array, or <code class="sh_cpp">wchar_t</code> array can be initialized
+by a narrow character literal, <code class="sh_cpp">char16_t</code> string literal, <code class="sh_cpp">char32_t</code> string literal, or wide
+string literal, respectively, or by an appropriately-typed string literal enclosed in braces. Successive characters of
+the value of the string literal initialize the elements of the array.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">char msg[] = "Syntax error on line %s\n";</code></pre>
+
+<p>shows a character array whose members are initialized with a <i class="nonterminal">string-literal</i>. Note that because
+<code class="sh_cpp">'\n'</code> is a single character and because a trailing <code class="sh_cpp">'\0'</code> is appended, <code class="sh_cpp">sizeof(msg)</code>
+is <code class="sh_cpp">25</code>. — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>There shall not be more initializers than there are array elements.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">char cv[4] = "asdf";    // error</code></pre>
+
+<p>is ill-formed since there is no space for the implied trailing <code class="sh_cpp">'\0'</code>. — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>If there are fewer initializers than there are array elements, each element not explicitly initialized shall be
+zero-initialized (<a title="dcl.init" href="dcl.init.html">8.5</a>).</p>
+</body>
+</html>
+

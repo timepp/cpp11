@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Arithmetic inserters</title>
+</head>
+<body>
+<h5>
+<dfn class="label">[ostream.inserters.arithmetic]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[ostream.inserters.arithmetic]"></object>27.7.3.6.2 Arithmetic inserters </h5>
+<pre><code class="sh_cpp"><dfn>operator&lt;&lt;</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator&lt;&lt;"></object>(bool val);
+operator&lt;&lt;(short val);
+operator&lt;&lt;(unsigned short val);
+operator&lt;&lt;(int val);
+operator&lt;&lt;(unsigned int val);
+operator&lt;&lt;(long val);
+operator&lt;&lt;(unsigned long val);
+operator&lt;&lt;(long long val);
+operator&lt;&lt;(unsigned long long val);
+operator&lt;&lt;(float val);
+operator&lt;&lt;(double val);
+operator&lt;&lt;(long double val);
+operator&lt;&lt;(const void* val);</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Effects:</em> The classes <code class="sh_cpp">num_get&lt;&gt;</code> and <code class="sh_cpp">num_put&lt;&gt;</code> handle
+locale-dependent numeric formatting and parsing. These inserter functions use the imbued <code class="sh_cpp">locale</code> value to
+perform numeric formatting. When <code class="sh_cpp">val</code> is of type <code class="sh_cpp">bool</code>, <code class="sh_cpp">long</code>, <code class="sh_cpp">unsigned
+long</code>, <code class="sh_cpp">long long</code>, <code class="sh_cpp">unsigned long long</code>, <code class="sh_cpp">double</code>, <code class="sh_cpp">long double</code>, or
+<code class="sh_cpp">const void*</code>, the formatting conversion occurs as if it performed the following code fragment:</p>
+
+<pre><code class="sh_cpp">bool failed = use_facet&lt;
+  num_put&lt;charT,ostreambuf_iterator&lt;charT,traits&gt; &gt;
+    &gt;(getloc()).put(*this, *this, fill(), val).failed();</code></pre>
+
+<p>When <code class="sh_cpp">val</code> is of type <code class="sh_cpp">short</code> the formatting conversion occurs as if it performed the following
+code fragment:</p>
+
+<pre><code class="sh_cpp">ios_base::fmtflags baseflags = ios_base::flags() &amp; ios_base::basefield;
+bool failed = use_facet&lt;
+  num_put&lt;charT,ostreambuf_iterator&lt;charT,traits&gt; &gt;
+    &gt;(getloc()).put(*this, *this, fill(),
+    baseflags == ios_base::oct || baseflags == ios_base::hex
+      ? static_cast&lt;long&gt;(static_cast&lt;unsigned short&gt;(val))
+      : static_cast&lt;long&gt;(val)).failed();</code></pre>
+
+<p>When <code class="sh_cpp">val</code> is of type <code class="sh_cpp">int</code> the formatting conversion occurs as if it performed the following
+code fragment:</p>
+
+<pre><code class="sh_cpp">ios_base::fmtflags baseflags = ios_base::flags() &amp; ios_base::basefield;
+bool failed = use_facet&lt;
+  num_put&lt;charT,ostreambuf_iterator&lt;charT,traits&gt; &gt;
+    &gt;(getloc()).put(*this, *this, fill(),
+    baseflags == ios_base::oct || baseflags == ios_base::hex
+      ? static_cast&lt;long&gt;(static_cast&lt;unsigned int&gt;(val))
+      : static_cast&lt;long&gt;(val)).failed();</code></pre>
+
+<p>When <code class="sh_cpp">val</code> is of type <code class="sh_cpp">unsigned short</code> or <code class="sh_cpp">unsigned int</code> the formatting conversion
+occurs as if it performed the following code fragment:</p>
+
+<pre><code class="sh_cpp">bool failed = use_facet&lt;
+  num_put&lt;charT,ostreambuf_iterator&lt;charT,traits&gt; &gt;
+    &gt;(getloc()).put(*this, *this, fill(),
+      static_cast&lt;unsigned long&gt;(val)).failed();</code></pre>
+
+<p>When <code class="sh_cpp">val</code> is of type <code class="sh_cpp">float</code> the formatting conversion occurs as if it performed the following
+code fragment:</p>
+
+<pre><code class="sh_cpp">bool failed = use_facet&lt;
+  num_put&lt;charT,ostreambuf_iterator&lt;charT,traits&gt; &gt;
+    &gt;(getloc()).put(*this, *this, fill(),
+      static_cast&lt;double&gt;(val)).failed();</code></pre>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The first argument provides an object of the <code class="sh_cpp">ostreambuf_iterator&lt;&gt;</code> class which is an
+iterator for class <code class="sh_cpp">basic_ostream&lt;&gt;</code>. It bypasses <code class="sh_cpp">ostream</code>s and uses
+<code class="sh_cpp">streambuf</code>s directly. Class <code class="sh_cpp">locale</code> relies on these types as its interface to iostreams, since
+for flexibility it has been abstracted away from direct dependence on <code class="sh_cpp">ostream</code>. The second parameter is a
+reference to the base subobject of type <code class="sh_cpp">ios_base</code>. It provides formatting specifications such as field
+width, and a locale from which to obtain other facets. If <code class="sh_cpp">failed</code> is <code class="sh_cpp">true</code> then does
+<code class="sh_cpp">setstate(badbit)</code>, which may throw an exception, and returns.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Returns:</em> <code class="sh_cpp">*this</code>.</p>
+</body>
+</html>
+

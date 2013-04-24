@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Zero sized arrays</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[array.zero]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[array.zero]"></object>23.3.2.8 Zero sized arrays </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><code class="sh_cpp">array</code> shall provide support for the special case <code class="sh_cpp">N == 0</code>.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>In the case that <code class="sh_cpp">N == 0</code>, <code class="sh_cpp">begin() == end() ==</code> unique value. The return value of
+<code class="sh_cpp">data()</code> is unspecified.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>The effect of calling <code class="sh_cpp">front()</code> or <code class="sh_cpp">back()</code> for a zero-sized array is undefined.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>Member function <code class="sh_cpp">swap()</code> shall have a <i class="nonterminal">noexcept-specification</i> which is equivalent to
+<code class="sh_cpp">noexcept(true)</code>.</p>
+</body>
+</html>
+

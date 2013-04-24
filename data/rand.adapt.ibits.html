@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class template independent_bits_engine</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[rand.adapt.ibits]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[rand.adapt.ibits]"></object>26.5.4.3 Class template <code class="sh_cpp"><dfn>independent_bits_engine</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="independent_bits_engine"></object></code> </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>An <code class="sh_cpp">independent_bits_engine</code> random number engine adaptor combines random numbers that are produced
+by some base engine <var>e</var>, so as to produce random numbers with a specified number of bits <var>w</var>. The
+state <code class="sh_cpp">x</code><sub><var>i</var></sub> of an <code class="sh_cpp">independent_bits_engine</code> engine adaptor object
+<code class="sh_cpp">x</code> consists of the state <code class="sh_cpp">e</code><sub><var>i</var></sub> of its base engine <code class="sh_cpp">e</code>; the size
+of the state is the size of <var>e</var>’s state.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The transition and generation algorithms are described in terms of the following integral constants:</p>
+
+<ol class="lettered">
+<li>Let <var>R</var> = <code class="sh_cpp">e.max() - e.min() + 1</code> and <var>m</var> =
+	⌊log<sub>2</sub><var>R</var>⌋.</li>
+<li>With <var>n</var> as determined below, let <var>w</var><sub>0</sub> = ⌊<var>w</var>/<var>n</var>⌋,
+	<var>n</var><sub>0</sub> = <var>n</var>−<var>w</var> mod <var>n</var>, <var>y</var><sub>0</sub> =
+	2<sup><var>w</var><sub>0</sub></sup>⌊<var>R</var>/2<sup><var>w</var><sub>0</sub></sup>, and
+	<var>y</var><sub>1</sub> =
+	2<sup><var>w</var><sub>0</sub>+1</sup>⌊<var>R</var>/2<sup><var>w</var><sub>0</sub>+1</sup>⌋.</li>
+<li>Let <var>n</var> = ⌈<var>w</var>/<var>m</var>⌉ if and only if the relation
+	<var>R</var>−<var>y</var><sub>0</sub> ≤ ⌊<var>y</var><sub>0</sub>/<var>n</var>⌋ holds as a result.
+	Otherwise let <var>n</var> = 1 + ⌈<var>w</var>/<var>m</var>⌉.</li>
+</ol>
+
+<p><span class="note">[ <em>Note:</em> The relation <var>w</var> =
+<var>n</var><sub>0</sub><var>w</var><sub>0</sub>+(<var>n</var>−<var>n</var><sub>0</sub>)(<var>w</var><sub>0</sub>+1)
+always holds. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>The transition algorithm is carried out by invoking <code class="sh_cpp">e()</code> as often as needed to obtain
+<var>n</var><sub>0</sub> values less than <var>y</var><sub>0</sub> + <code class="sh_cpp">e.min()</code> and
+<var>n</var>−<var>n</var><sub>0</sub> values less than <var>y</var><sub>1</sub> + <code class="sh_cpp">e.min()</code>.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>The generation algorithm uses the values produced while advancing the state as described above to yield a
+quantity <var>S</var> obtained as if by the following algorithm:</p>
+
+<pre><code class="sh_cpp"><var>S</var> = 0;
+for (<var>k</var> = 0; <var>k</var> ≠ <var>n</var><sub>0</sub>; <var>k</var> += 1) {
+  do <var>u</var> = e() - e.min(); while (<var>u</var> ≥ <var>y</var><sub>0</sub>);
+  <var>S</var> = 2<sup><var>w</var><sub>0</sub></sup>⋅<var>S</var> + <var>u</var> mod 2<sup><var>w</var><sub>0</sub></sup>;
+}
+for (<var>k</var> = <var>n</var><sub>0</sub>; <var>k</var> ≠ <var>n</var>; <var>k</var> += 1) {
+  do <var>u</var> = e() - e.min(); while (<var>u</var> ≥ <var>y</var><sub>1</sub>);
+  <var>S</var> = 2<sup><var>w</var><sub>0</sub>+1</sup>⋅<var>S</var> + <var>u</var> mod 2<sup><var>w</var><sub>0</sub>+1</sup>;
+}</code></pre>
+
+<pre><code class="sh_cpp">template&lt;class Engine, size_t w, class UIntType&gt;
+class independent_bits_engine
+{
+public:
+  // types
+  typedef UIntType result_type;
+
+  // engine characteristics
+  static constexpr result_type min() { return 0; }
+  static constexpr result_type max() { return 2w - 1; }
+
+  // constructors and seeding functions
+  independent_bits_engine();
+  explicit independent_bits_engine(const Engine&amp; e);
+  explicit independent_bits_engine(Engine&amp;&amp; e);
+  explicit independent_bits_engine(result_type s);
+  template&lt;class Sseq&gt; explicit independent_bits_engine(Sseq&amp; q);
+  void seed();
+  void seed(result_type s);
+  template&lt;class Sseq&gt; void seed(Sseq&amp; q);
+
+  // generating functions
+  result_type operator()();
+  void discard(unsigned long long z);
+
+  // property functions
+  const Engine&amp; base() const noexcept { return e; };
+
+private:
+  Engine e;     // exposition only
+};</code></pre>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>The following relations shall hold: <code class="sh_cpp">0 &lt; w</code> and <code class="sh_cpp">w &lt;=
+numeric_limits&lt;result_type&gt;::digits</code>.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>The textual representation consists of the textual representation of <code class="sh_cpp">e</code>.</p>
+</body>
+</html>
+

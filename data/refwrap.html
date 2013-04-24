@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class template reference_wrapper</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[refwrap]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[refwrap]"></object>20.8.3 Class template <code class="sh_cpp"><dfn>reference_wrapper</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="reference_wrapper"></object></code> </h3>
+
+<pre><code class="sh_cpp">namespace std {
+  template &lt;class T&gt; class reference_wrapper {
+  public :
+    // types
+    typedef T type;
+    typedef <em>see below</em> result_type;          // not always defined
+    typedef <em>see below</em> argument_type;        // not always defined
+    typedef <em>see below</em> first_argument_type;  // not always defined
+    typedef <em>see below</em> second_argument_type; // not always defined
+
+    // construct/copy/destroy
+    reference_wrapper(T&amp;) noexcept;
+    reference_wrapper(T&amp;&amp;) = delete;    // do not bind to temporary objects
+    reference_wrapper(const reference_wrapper&lt;T&gt;&amp; x) noexcept;
+
+    // assignment
+    reference_wrapper&amp; operator=(const reference_wrapper&lt;T&gt;&amp; x) noexcept;
+
+    // access
+    operator T&amp; () const noexcept;
+    T&amp; get() const noexcept;
+
+    // invocation
+    template &lt;class... ArgTypes&gt;
+    typename result_of&lt;T&amp;(ArgTypes&amp;&amp;...)&gt;::type
+    operator() (ArgTypes&amp;&amp;...) const;
+  };
+}</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><code class="sh_cpp">reference_wrapper&lt;T&gt;</code> is a <code class="concept">CopyConstructible</code> and
+<code class="concept">CopyAssignable</code> wrapper around a reference to an object or function of type <code class="sh_cpp">T</code>.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><code class="sh_cpp">reference_wrapper&lt;T&gt;</code> has a weak result type (<a title="func.require" href="func.require.html">20.8.2</a>). If <code class="sh_cpp">T</code> is a
+function type, <code class="sh_cpp">result_type</code> shall be a synonym for the return type of <code class="sh_cpp">T</code>.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>The template instantiation <code class="sh_cpp">reference_wrapper&lt;T&gt;</code> shall define a nested type named
+<code class="sh_cpp">argument_type</code> as a synonym for <code class="sh_cpp">T1</code> only if the type <code class="sh_cpp">T</code> is any of the following:</p>
+
+<ul>
+<li>a function type or a pointer to function type taking one argument of type <code class="sh_cpp">T1</code>
+</li>
+<li>a pointer to member function <code class="sh_cpp">R T0::f <var>cv</var></code> (where <var>cv</var> represents the member
+	function’s cv-qualifiers); the type <code class="sh_cpp">T1</code> is <code class="sh_cpp"><var>cv</var> T0*</code>
+</li>
+<li>a class type with a member type <code class="sh_cpp">argument_type</code>; the type <code class="sh_cpp">T1</code> is
+	<code class="sh_cpp">T::argument_type</code>.</li>
+</ul>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>The template instantiation <code class="sh_cpp">reference_wrapper&lt;T&gt;</code> shall define two nested types named
+<code class="sh_cpp">first_argument_type</code> and <code class="sh_cpp">second_argument_type</code> as synonyms for <code class="sh_cpp">T1</code> and
+<code class="sh_cpp">T2</code>, respectively, only if the type <code class="sh_cpp">T</code> is any of the following:</p>
+
+<ul>
+<li>a function type or a pointer to function type taking two arguments of types <code class="sh_cpp">T1</code> and <code class="sh_cpp">T2</code>
+</li>
+<li>a pointer to member function <code class="sh_cpp">R T0::f(T2) <var>cv</var></code> (where <var>cv</var> represents the member
+	function’s cv-qualifiers); the type <code class="sh_cpp">T1</code> is <code class="sh_cpp">cv T0*</code>
+</li>
+<li>a class type with member types <code class="sh_cpp">first_argument_type</code> and <code class="sh_cpp">second_argument_type</code>; the type
+	<code class="sh_cpp">T1</code> is <code class="sh_cpp">T::first_argument_type</code>, and the type <code class="sh_cpp">T2</code> is
+	<code class="sh_cpp">T::second_argument_type</code>.</li>
+</ul>
+</body>
+</html>
+

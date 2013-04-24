@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Unions</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[class.union]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[class.union]"></object>9.5 Unions </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>In a union, at most one of the non-static data members can be active at any time, that is, the value of at most
+one of the non-static data members can be stored in a union at any time. <span class="note">[ <em>Note:</em> One special guarantee is made in order to
+simplify the use of unions: If a standard-layout union contains several standard-layout structs that share a common
+initial sequence (<a title="class.mem" href="class.mem.html">9.2</a>), and if an object of this standard-layout union type contains one of the
+standard-layout structs, it is permitted to inspect the common initial sequence of any of standard-layout struct
+members; see <a title="class.mem" href="class.mem.html">9.2</a>. — <em>end note</em> ]</span> The size of a union is sufficient to contain the largest of its non-static data
+members. Each non-static data member is allocated as if it were the sole member of a struct.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>A union can have member functions (including constructors and destructors), but not virtual (<a title="class.virtual" href="class.virtual.html">10.3</a>)
+functions. A union shall not have base classes. A union shall not be used as a base class. If a union contains a
+non-static data member of reference type the program is ill-formed. At most one non-static data member of a union may
+have a <i class="nonterminal">brace-or-equal-initializer</i>. <span class="note">[ <em>Note:</em> If any non-static data member of a union has a non-trivial default
+constructor (<a title="class.ctor" href="class.ctor.html">12.1</a>), copy constructor (<a title="class.copy" href="class.copy.html">12.8</a>), move constructor (<a title="class.copy" href="class.copy.html">12.8</a>), copy assignment
+operator (<a title="class.copy" href="class.copy.html">12.8</a>), move assignment operator (<a title="class.copy" href="class.copy.html">12.8</a>), or destructor (<a title="class.dtor" href="class.dtor.html">12.4</a>), the
+corresponding member function of the union must be user-provided or it will be implicitly deleted (<a title="dcl.fct.def.delete" href="dcl.fct.def.delete.html">8.4.3</a>) for
+the union. — <em>end note</em> ]</span></p>
+
+<div class="example">
+<p><a class="anchor" id="p3" href="#p3">3</a>[ <em>Example:</em> Consider the following union:</p>
+
+<pre><code class="sh_cpp">union U {
+  int i;
+  float f;
+  std::string s;
+};</code></pre>
+
+<p>Since <code class="sh_cpp">std::string</code> (<a title="string.classes" href="string.classes.html">21.3</a>) declares non-trivial versions of all of the special member
+functions, <code class="sh_cpp">U</code> will have an implicitly deleted default constructor, copy/move constructor, copy/move
+assignment operator, and destructor. To use <code class="sh_cpp">U</code>, some or all of these member functions must be
+user-provided. — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><span class="note">[ <em>Note:</em> In general, one must use explicit destructor calls and placement new operators to change the active
+member of a union. — <em>end note</em> ]</span></p>
+
+<div class="example">
+<p>[ <em>Example:</em> Consider an object <code class="sh_cpp">u</code> of a <code class="sh_cpp">union</code> type <code class="sh_cpp">U</code> having non-static data members
+<code class="sh_cpp">m</code> of type <code class="sh_cpp">M</code> and <code class="sh_cpp">n</code> of type <code class="sh_cpp">N</code>. If <code class="sh_cpp">M</code> has a non-trivial
+destructor and <code class="sh_cpp">N</code> has a non-trivial constructor (for instance, if they declare or inherit virtual
+functions), the active member of <code class="sh_cpp">u</code> can be safely switched from <code class="sh_cpp">m</code> to <code class="sh_cpp">n</code> using the
+destructor and placement new operator as follows:</p>
+
+<pre><code class="sh_cpp">u.m.~M();
+new (&amp;u.n) N;</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>A union of the form</p>
+
+<dl><dd>
+<code class="sh_cpp">union</code> <code class="sh_cpp">{</code> <i class="nonterminal">member-specification</i> <code class="sh_cpp">}</code> <code class="sh_cpp">;</code>
+</dd></dl>
+
+<p>is called an <dfn>anonymous union</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="anonymous union"></object>; it defines an unnamed object of unnamed type. The
+<i class="nonterminal">member-specification</i> of an anonymous union shall only define non-static data members. <span class="note">[ <em>Note:</em> Nested types and
+functions cannot be declared within an anonymous union. — <em>end note</em> ]</span> The names of the members of an anonymous union shall be
+distinct from the names of any other entity in the scope in which the anonymous union is declared. For the purpose of
+name lookup, after the anonymous union definition, the members of the anonymous union are considered to have been
+defined in the scope in which the anonymous union is declared.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">void f() {
+  union { int a; const char* p; };
+  a = 1;
+  p = "Jennifer";
+}</code></pre>
+
+<p>Here <code class="sh_cpp">a</code> and <code class="sh_cpp">p</code> are used like ordinary (nonmember) variables, but since they are union members
+they have the same address. — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>Anonymous unions declared in a named namespace or in the global namespace shall be declared
+<code class="sh_cpp">static</code>. Anonymous unions declared at block scope shall be declared with any storage class allowed for a
+block-scope variable, or with no storage class. A storage class is not allowed in a declaration of an anonymous union in
+a class scope. An anonymous union shall not have <code class="sh_cpp">private</code> or <code class="sh_cpp">protected</code> members (Clause
+<a title="class.access" href="class.access.html">11</a>). An anonymous union shall not have function members.</p>
+
+<p><a class="anchor" id="p7" href="#p7">7</a>A union for which objects or pointers are declared is not an anonymous union.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">union { int aa; char* p; } obj, *ptr = &amp;obj;
+aa = 1;                 // error
+ptr-&gt;aa = 1;            // OK</code></pre>
+
+<p>The assignment to plain <code class="sh_cpp">aa</code> is ill-formed since the member name is not visible outside the union, and
+even if it were visible, it is not associated with any particular object. — <em>end example</em> ]</p>
+</div>
+
+<p><span class="note">[ <em>Note:</em> Initialization of unions with no user-declared constructors is described in (<a title="dcl.init.aggr" href="dcl.init.aggr.html">8.5.1</a>). — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p8" href="#p8">8</a>A <dfn>union-like class</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="union-like class"></object> is a union or a class that has an anonymous union as a direct member. A
+union-like class <code class="sh_cpp">X</code> has a set of <dfn>variant member</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="variant member"></object>s. If <code class="sh_cpp">X</code> is a union its variant
+members are the non-static data members; otherwise, its variant members are the non-static data members of all anonymous
+unions that are members of <code class="sh_cpp">X</code>.</p>
+</body>
+</html>
+

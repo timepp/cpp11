@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>basic_regex locale</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[re.regex.locale]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[re.regex.locale]"></object>28.8.5 <code class="sh_cpp">basic_regex</code> locale </h3>
+
+<h4><code class="sh_cpp">locale_type <dfn>imbue</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="imbue"></object>(locale_type loc);</code></h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Effects:</em> Returns the result of <code class="sh_cpp">traits_inst.imbue(loc)</code> where <code class="sh_cpp">traits_inst</code> is a (default
+initialized) instance of the template type argument <code class="sh_cpp">traits</code> stored within the object. After a call to
+<code class="sh_cpp">imbue</code> the <code class="sh_cpp">basic_regex</code> object does not match any character sequence.</p>
+
+<h4><code class="sh_cpp">locale_type <dfn>getloc</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="getloc"></object>() const;</code></h4>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Effects:</em> Returns the result of <code class="sh_cpp">traits_inst.getloc()</code> where <code class="sh_cpp">traits_inst</code> is a (default
+initialized) instance of the template parameter <code class="sh_cpp">traits</code> stored within the object.</p>
+</body>
+</html>
+

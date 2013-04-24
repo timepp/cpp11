@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>shared_ptr creation</title>
+</head>
+<body>
+<h5>
+<dfn class="label">[util.smartptr.shared.create]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[util.smartptr.shared.create]"></object>20.7.2.2.6 <code class="sh_cpp">shared_ptr</code> creation </h5>
+
+<h6><code class="sh_cpp">template&lt;class T, class... Args&gt; shared_ptr&lt;T&gt; <dfn>make_shared</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="make_shared"></object>(Args&amp;&amp;... args);
+template&lt;class T, class A, class... Args&gt;
+  shared_ptr&lt;T&gt; <dfn>allocate_shared</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="allocate_shared"></object>(const A&amp; a, Args&amp;&amp;... args);</code></h6>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Requires:</em> The expression <code class="sh_cpp">::new (pv) T(std::forward&lt;Args&gt;(args)...)</code>, where
+<code class="sh_cpp">pv</code> has type <code class="sh_cpp">void*</code> and points to storage suitable to hold an object of type <code class="sh_cpp">T</code>,
+shall be well formed. <code class="sh_cpp">A</code> shall be an allocator (<a title="allocator.requirements" href="allocator.requirements.html">17.6.3.5</a>). The copy constructor and destructor of
+<code class="sh_cpp">A</code> shall not throw exceptions.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Effects:</em> Allocates memory suitable for an object of type <code class="sh_cpp">T</code> and constructs an object in that memory
+via the placement new expression <code class="sh_cpp">::new (pv) T(std::forward&lt;Args&gt;(args)...)</code>. The template
+<code class="sh_cpp">allocate_shared</code> uses a copy of <code class="sh_cpp">a</code> to allocate memory. If an exception is thrown, the functions
+have no effect.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Returns:</em> A <code class="sh_cpp">shared_ptr</code> instance that stores and owns the address of the newly constructed object of
+type <code class="sh_cpp">T</code>.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><em>Postconditions:</em> <code class="sh_cpp">get() != 0 &amp;&amp; use_count() == 1</code>.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><em>Throws:</em> <code class="sh_cpp">bad_alloc</code>, or an exception thrown from <code class="sh_cpp">A::allocate</code> or from the constructor of
+<code class="sh_cpp">T</code>.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a><em>Remarks:</em> Implementations are encouraged, but not required, to perform no more than one memory allocation.
+<span class="note">[ <em>Note:</em> This provides efficiency equivalent to an intrusive smart pointer. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p7" href="#p7">7</a><span class="note">[ <em>Note:</em> These functions will typically allocate more memory than <code class="sh_cpp">sizeof(T)</code> to allow for internal
+bookkeeping structures such as the reference counts. — <em>end note</em> ]</span></p>
+</body>
+</html>
+

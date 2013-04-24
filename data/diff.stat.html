@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Clause 6: statements</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[diff.stat]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[diff.stat]"></object>C.1.5 Clause <a title="stmt.stmt" href="stmt.stmt.html">6</a>: statements </h3>
+
+<h4>
+<a title="stmt.switch" href="stmt.switch.html">6.4.2</a>, <a title="stmt.goto" href="stmt.goto.html">6.6.4</a>
+</h4>
+
+<p><strong>Change:</strong> It is now invalid to jump past a declaration with explicit or implicit initializer (except across entire
+block not entered)</p>
+
+<p><strong>Rationale:</strong> Constructors used in initializers may allocate resources which need to be de-allocated upon leaving the
+block. Allowing jump past initializers would require complicated run-time determination of allocation. Furthermore, any
+use of the uninitialized object could be a disaster. With this simple compile-time rule, C++ assures that if an
+initialized variable is in scope, then it has assuredly been initialized.</p>
+
+<p><strong>Effect on original feature:</strong> Deletion of semantically well-defined feature.</p>
+
+<p><strong>Difficulty of converting:</strong> Semantic transformation.</p>
+
+<p><strong>How widely used:</strong> Seldom.</p>
+
+
+<h4><a title="stmt.return" href="stmt.return.html">6.6.3</a></h4>
+
+<p><strong>Change:</strong> It is now invalid to return (explicitly or implicitly) from a function which is declared to return a value
+without actually returning a value</p>
+
+<p><strong>Rationale:</strong> The caller and callee may assume fairly elaborate return-value mechanisms for the return of class objects.
+If some flow paths execute a return without specifying any value, the implementation must embody many more
+complications. Besides, promising to return a value of a given type, and then not returning such a value, has always
+been recognized to be a questionable practice, tolerated only because very-old C had no distinction between void
+functions and int functions.</p>
+
+<p><strong>Effect on original feature:</strong> Deletion of semantically well-defined feature.</p>
+
+<p><strong>Difficulty of converting:</strong> Semantic transformation. Add an appropriate return value to the source code, such as
+zero.</p>
+
+<p><strong>How widely used:</strong> Seldom. For several years, many existing C implementations have produced warnings in this
+case.</p>
+
+</body>
+</html>
+

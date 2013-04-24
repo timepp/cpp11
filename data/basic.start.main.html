@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Main function</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[basic.start]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[basic.start]"></object>3.6 Start and termination </h2>
+
+<h3>
+<dfn class="label">[basic.start.main]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[basic.start.main]"></object>3.6.1 Main function </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A program shall contain a global function called <code class="sh_cpp">main</code>, which is the designated start of the
+program. It is implementation-defined whether a program in a freestanding environment is required to define a main
+function. <span class="note">[ <em>Note:</em> In a freestanding environment, start-up and termination is implementation-defined; start-up contains the
+execution of constructors for objects of namespace scope with static storage duration; termination contains the
+execution of destructors for objects with static storage duration. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>An implementation shall not predefine the <code class="sh_cpp">main</code> function. This function shall not be overloaded. It
+shall have a return type of type <code class="sh_cpp">int</code>, but otherwise its type is implementation-defined. All implementations
+shall allow both of the following definitions of main:</p>
+
+<pre><code class="sh_cpp">int main() { /* … */ }</code></pre>
+
+<p>and</p>
+
+<pre><code class="sh_cpp">int main(int argc, char* argv[]) { /* … */ }</code></pre>
+
+<p>In the latter form <code class="sh_cpp">argc</code> shall be the number of arguments passed to the program from the environment in
+which the program is run. If <code class="sh_cpp">argc</code> is nonzero these arguments shall be supplied in <code class="sh_cpp">argv[0]</code>
+through <code class="sh_cpp">argv[argc-1]</code> as pointers to the initial characters of null-terminated multibyte strings (NTMBSs)
+(<a title="multibyte.strings" href="multibyte.strings.html">17.5.2.1.4.2</a>) and <code class="sh_cpp">argv[0]</code> shall be the pointer to the initial character of a NTMBS that
+represents the name used to invoke the program or <code class="sh_cpp">""</code>. The value of <code class="sh_cpp">argc</code> shall be non-negative.
+The value of <code class="sh_cpp">argv[argc]</code> shall be 0. <span class="note">[ <em>Note:</em> It is recommended that any further (optional) parameters be added
+after <code class="sh_cpp">argv</code>. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>The function <code class="sh_cpp">main</code> shall not be used within a program. The linkage (<a title="basic.link" href="basic.link.html">3.5</a>) of
+<code class="sh_cpp">main</code> is implementation-defined. A program that defines <code class="sh_cpp">main</code> as deleted or that declares
+<code class="sh_cpp">main</code> to be <code class="sh_cpp">inline</code>, <code class="sh_cpp">static</code>, or <code class="sh_cpp">constexpr</code> is ill-formed. The name
+<code class="sh_cpp">main</code> is not otherwise reserved. <span class="example">[ <em>Example:</em> member functions, classes, and enumerations can be called
+<code class="sh_cpp">main</code>, as can entities in other namespaces. — <em>end example</em> ]</span></p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>Terminating the program without leaving the current block (e.g., by calling the function
+<code class="sh_cpp">std::exit(int)</code> (<a title="support.start.term" href="support.start.term.html">18.5</a>)) does not destroy any objects with automatic storage duration
+(<a title="class.dtor" href="class.dtor.html">12.4</a>). If <code class="sh_cpp">std::exit</code> is called to end a program during the destruction of an object with static
+or thread storage duration, the program has undefined behavior.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>A return statement in <code class="sh_cpp">main</code> has the effect of leaving the main function (destroying any objects
+with automatic storage duration) and calling <code class="sh_cpp">std::exit</code> with the return value as the argument. If control
+reaches the end of <code class="sh_cpp">main</code> without encountering a return statement, the effect is that of executing</p>
+
+<pre><code class="sh_cpp">return 0;</code></pre>
+</body>
+</html>
+

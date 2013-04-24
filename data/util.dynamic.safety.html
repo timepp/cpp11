@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Pointer safety</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[util.dynamic.safety]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[util.dynamic.safety]"></object>20.6.4 Pointer safety </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A complete object is <dfn>declared reachable</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="declared reachable"></object> while the number of calls to <code class="sh_cpp">declare_reachable</code>
+with an argument referencing the object exceeds the number of calls to <code class="sh_cpp">undeclare_reachable</code> with an argument
+referencing the object.</p>
+
+<h4><code class="sh_cpp">void <dfn>declare_reachable</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="declare_reachable"></object>(void *p);</code></h4>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Requires:</em> <code class="sh_cpp">p</code> shall be a safely-derived pointer (<a title="basic.stc.dynamic.safety" href="basic.stc.dynamic.safety.html">3.7.4.3</a>) or a null pointer
+value.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Effects:</em> If <code class="sh_cpp">p</code> is not null, the complete object referenced by <code class="sh_cpp">p</code> is subsequently
+declared reachable (<a title="basic.stc.dynamic.safety" href="basic.stc.dynamic.safety.html">3.7.4.3</a>).</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><em>Throws:</em> May throw <code class="sh_cpp">std::bad_alloc</code> if the system cannot allocate additional memory that may be
+required to track objects declared reachable.</p>
+
+<h4><code class="sh_cpp">template &lt;class T&gt; T *<dfn>undeclare_reachable</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="undeclare_reachable"></object>(T *p);</code></h4>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><em>Requires:</em> If <code class="sh_cpp">p</code> is not null, the complete object referenced by <code class="sh_cpp">p</code> shall have been
+previously declared reachable, and shall be live (<a title="basic.life" href="basic.life.html">3.8</a>) from the time of the call until the last
+<code class="sh_cpp">undeclare_reachable(p)</code> call on the object.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a><em>Returns:</em> a safely derived copy of <code class="sh_cpp">p</code> which shall compare equal to <code class="sh_cpp">p</code>.</p>
+
+<p><a class="anchor" id="p7" href="#p7">7</a><em>Throws:</em> Nothing.</p>
+
+<p><a class="anchor" id="p8" href="#p8">8</a><span class="note">[ <em>Note:</em> It is expected that calls to <code class="sh_cpp">declare_reachable(p)</code> will consume a small amount of memory in
+addition to that occupied by the referenced object until the matching call to <code class="sh_cpp">undeclare_reachable(p)</code> is
+encountered. Long running programs should arrange that calls are matched. — <em>end note</em> ]</span></p>
+
+<h4><code class="sh_cpp">void <dfn>declare_no_pointers</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="declare_no_pointers"></object>(char *p, size_t n);</code></h4>
+
+<p><a class="anchor" id="p9" href="#p9">9</a><em>Requires:</em> No bytes in the specified range are currently registered with <code class="sh_cpp">declare_no_pointers()</code>. If
+the specified range is in an allocated object, then it must be entirely within a single allocated object. The object
+must be live until the corresponding <code class="sh_cpp">undeclare_no_pointers()</code> call. <span class="note">[ <em>Note:</em> In a garbage-collecting
+implementation, the fact that a region in an object is registered with <code class="sh_cpp">declare_no_pointers()</code> should not
+prevent the object from being collected. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p10" href="#p10">10</a><em>Effects:</em> The <code class="sh_cpp">n</code> bytes starting at <code class="sh_cpp">p</code> no longer contain traceable pointer locations,
+independent of their type. Hence pointers located there may not be dereferenced if the object they point to was created
+by global <code class="sh_cpp">operator new</code> and not previously declared reachable. <span class="note">[ <em>Note:</em> This may be used to inform a garbage
+collector or leak detector that this region of memory need not be traced. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p11" href="#p11">11</a><em>Throws:</em> Nothing.</p>
+
+<p><a class="anchor" id="p12" href="#p12">12</a><span class="note">[ <em>Note:</em> Under some conditions implementations may need to allocate memory. However, the request can be ignored
+if memory allocation fails. — <em>end note</em> ]</span></p>
+
+<h4><code class="sh_cpp">void <dfn>undeclare_no_pointers</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="undeclare_no_pointers"></object>(char *p, size_t n);</code></h4>
+
+<p><a class="anchor" id="p13" href="#p13">13</a><em>Requires:</em> The same range must previously have been passed to <code class="sh_cpp">declare_no_pointers()</code>.</p>
+
+<p><a class="anchor" id="p14" href="#p14">14</a><em>Effects:</em> Unregisters a range registered with <code class="sh_cpp">declare_no_pointers()</code> for destruction. It must be
+called before the lifetime of the object ends.</p>
+
+<p><a class="anchor" id="p15" href="#p15">15</a><em>Throws:</em> Nothing.</p>
+
+<h4><code class="sh_cpp">pointer_safety <dfn>get_pointer_safety</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="get_pointer_safety"></object>() noexcept;</code></h4>
+
+<p><a class="anchor" id="p16" href="#p16">16</a><em>Returns:</em> <code class="sh_cpp">pointer_safety::strict</code> if the implementation has strict pointer safety
+(<a title="basic.stc.dynamic.safety" href="basic.stc.dynamic.safety.html">3.7.4.3</a>). It is implementation-defined whether <code class="sh_cpp">get_pointer_safety</code> returns
+<code class="sh_cpp">pointer_safety::relaxed</code> or <code class="sh_cpp">pointer_safety::preferred</code> if the implementation has relaxed pointer
+safety.<sup class="footnote"><a href="#fn232">232</a></sup></p>
+
+
+<div><p class="footnote" id="fn232">232) <code class="sh_cpp">pointer_safety::preferred</code> might be returned to indicate that a leak detector is running
+so that the program can avoid spurious leak reports.</p></div>
+</body>
+</html>
+

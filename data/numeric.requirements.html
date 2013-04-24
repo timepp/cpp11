@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Numeric type requirements</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[numeric.requirements]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[numeric.requirements]"></object>26.2 Numeric type requirements </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The <code class="sh_cpp">complex</code> and <code class="sh_cpp">valarray</code> components are parameterized by the type of information they
+contain and manipulate. A C++ program shall instantiate these components only with a type <code class="sh_cpp">T</code> that satisfies
+the following requirements:<sup class="footnote"><a href="#fn275">275</a></sup></p>
+
+<ul>
+<li>
+<code class="sh_cpp">T</code> is not an abstract class (it has no pure virtual member functions);</li>
+<li>
+<code class="sh_cpp">T</code> is not a reference type;</li>
+<li>
+<code class="sh_cpp">T</code> is not cv-qualified;</li>
+<li>If <code class="sh_cpp">T</code> is a class, it has a public default constructor;</li>
+<li>If <code class="sh_cpp">T</code> is a class, it has a public copy constructor with the signature <code class="sh_cpp">T::T(const T&amp;)</code>;</li>
+<li>If <code class="sh_cpp">T</code> is a class, it has a public destructor;</li>
+<li>If <code class="sh_cpp">T</code> is a class, it has a public assignment operator whose signature is either <code class="sh_cpp">T&amp;
+	T::operator=(const T&amp;)</code> or <code class="sh_cpp">T&amp; T::operator=(T)</code>;</li>
+<li>
+<p>If <code class="sh_cpp">T</code> is a class, its assignment operator, copy and default constructors, and destructor shall
+	correspond to each other in the following sense: Initialization of raw storage using the default constructor,
+	followed by assignment, is semantically equivalent to initialization of raw storage using the copy constructor.
+	Destruction of an object, followed by initialization of its raw storage using the copy constructor, is semantically
+	equivalent to assignment to the original object.</p>
+
+	<div class="note">
+<p>[ <em>Note:</em> This rule states that there shall not be any subtle differences in the semantics of initialization versus
+	assignment. This gives an implementation considerable flexibility in how arrays are initialized.</p>
+
+	<p><span class="example">[ <em>Example:</em> An implementation is allowed to initialize a <code class="sh_cpp">valarray</code> by allocating storage using the
+	<code class="sh_cpp">new</code> operator (which implies a call to the default constructor for each element) and then assigning each
+	element its value. Or the implementation can allocate raw storage and use the copy constructor to initialize each
+	element. — <em>end example</em> ]</span></p>
+
+	<p>If the distinction between initialization and assignment is important for a class, or if it fails to satisfy any
+	of the other conditions listed above, the programmer should use <code class="sh_cpp">vector</code> (<a title="vector" href="vector.overview.html">23.3.6</a>) instead of
+	<code class="sh_cpp">valarray</code> for that class; — <em>end note</em> ]</p>
+</div>
+</li>
+<li>If <code class="sh_cpp">T</code> is a class, it does not overload unary <code class="sh_cpp">operator&amp;</code>.</li>
+</ul>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>If any operation on <code class="sh_cpp">T</code> throws an exception the effects are undefined.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>In addition, many member and related functions of <code class="sh_cpp">valarray&lt;T&gt;</code> can be successfully
+instantiated and will exhibit well-defined behavior if and only if <code class="sh_cpp">T</code> satisfies additional requirements
+specified for each such member or related function.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><span class="example">[ <em>Example:</em> It is valid to instantiate <code class="sh_cpp">valarray&lt;complex&gt;</code>, but <code class="sh_cpp">operator&gt;()</code>
+will not be successfully instantiated for <code class="sh_cpp">valarray&lt;complex&gt;</code> operands, since
+<code class="sh_cpp">complex</code> does not have any ordering operators. — <em>end example</em> ]</span></p>
+
+
+<div><p class="footnote" id="fn275">275) In other words, value types. These include arithmetic types, pointers, the library class
+<code class="sh_cpp">complex</code>, and instantiations of <code class="sh_cpp">valarray</code> for value types.</p></div>
+</body>
+</html>
+

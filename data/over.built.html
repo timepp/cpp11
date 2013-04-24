@@ -1,0 +1,210 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Built-in operators</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[over.built]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[over.built]"></object>13.6 Built-in operators </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The candidate operator functions that represent the built-in operators defined in Clause <a title="expr" href="expr.html">5</a> are
+specified in this subclause. These candidate functions participate in the operator overload resolution process as
+described in <a title="over.match.oper" href="over.match.oper.html">13.3.1.2</a> and are used for no other purpose. <span class="note">[ <em>Note:</em> Because built-in operators take only operands
+with non-class type, and operator overload resolution occurs only when an operand expression originally has class or
+enumeration type, operator overload resolution can resolve to a built-in operator only when an operand has a class type
+that has a user-defined conversion to a non-class type appropriate for the operator, or when an operand has an
+enumeration type that can be converted to a type appropriate for the operator. Also note that some of the candidate
+operator functions given in this subclause are more permissive than the built-in operators themselves. As described in
+<a title="over.match.oper" href="over.match.oper.html">13.3.1.2</a>, after a built-in operator is selected by overload resolution the expression is subject to the
+requirements for the built-in operator given in Clause <a title="expr" href="expr.html">5</a>, and therefore to any additional semantic
+constraints given there. If there is a user-written candidate with the same name and parameter types as a built-in
+candidate operator function, the built-in operator function is hidden and is not included in the set of candidate
+functions. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>In this subclause, the term <dfn>promoted integral type</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="promoted integral type"></object> is used to refer to those integral types which
+are preserved by integral promotion (including e.g. <code class="sh_cpp">int</code> and <code class="sh_cpp">long</code> but excluding e.g.
+<code class="sh_cpp">char</code>). Similarly, the term <dfn>promoted arithmetic type</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="promoted arithmetic type"></object> refers to floating types plus promoted
+integral types. <span class="note">[ <em>Note:</em> In all cases where a promoted integral type or promoted arithmetic type is required, an operand of
+enumeration type will be acceptable by way of the integral promotions. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>For every pair (<var>T</var>, <var>VQ</var>), where <var>T</var> is an arithmetic type, and <var>VQ</var> is
+either <code class="sh_cpp">volatile</code> or empty, there exist candidate operator functions of the form</p>
+
+<pre><code class="sh_cpp"><var>VQ</var> <var>T</var>&amp; operator++(<var>VQ</var> <var>T</var>&amp;);
+<var>T</var> operator++(<var>VQ</var> <var>T</var>&amp;, int);</code></pre>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>For every pair (<var>T</var>, <var>VQ</var>), where <var>T</var> is an arithmetic type other than
+<code class="sh_cpp">bool</code>, and <var>VQ</var> is either <code class="sh_cpp">volatile</code> or empty, there exist candidate operator functions
+of the form</p>
+
+<pre><code class="sh_cpp"><var>VQ</var> <var>T</var>&amp; operator--(<var>VQ</var> <var>T</var>&amp;);
+<var>T</var> operator--(<var>VQ</var> <var>T</var>&amp;, int);</code></pre>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>For every pair (<var>T</var>, <var>VQ</var>), where <var>T</var> is a cv-qualified or cv-unqualified object
+type, and <var>VQ</var> is either <code class="sh_cpp">volatile</code> or empty, there exist candidate operator functions of the
+form</p>
+
+<pre><code class="sh_cpp"><var>T</var>* <var>VQ</var>&amp; operator++(<var>T</var>* <var>VQ</var>&amp;);
+<var>T</var> *<var>VQ</var>&amp; operator--(<var>T</var>* <var>VQ</var>&amp;);
+<var>T</var>* operator++(<var>T</var>* <var>VQ</var>&amp;, int);
+<var>T</var>* operator--(<var>T</var>* <var>VQ</var>&amp;, int);</code></pre>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>For every cv-qualified or cv-unqualified object type <var>T</var>, there exist candidate operator functions of
+the form</p>
+
+<pre><code class="sh_cpp"><var>T</var>&amp; operator*(<var>T</var>*);</code></pre>
+
+<p><a class="anchor" id="p7" href="#p7">7</a>For every function type <var>T</var> that does not have cv-qualifiers or a <i class="nonterminal">ref-qualifier</i>, there exist
+candidate operator functions of the form</p>
+
+<pre><code class="sh_cpp"><var>T</var>&amp; operator*(<var>T</var>*);</code></pre>
+
+<p><a class="anchor" id="p8" href="#p8">8</a>For every type <var>T</var> there exist candidate operator functions of the form</p>
+
+<pre><code class="sh_cpp"><var>T</var>* operator+(<var>T</var>*);</code></pre>
+
+<p><a class="anchor" id="p9" href="#p9">9</a>For every promoted arithmetic type <var>T</var>, there exist candidate operator functions of the form</p>
+
+<pre><code class="sh_cpp"><var>T</var> operator+(<var>T</var>);
+<var>T</var> operator-(<var>T</var>);</code></pre>
+
+<p><a class="anchor" id="p10" href="#p10">10</a>For every promoted integral type <var>T</var>, there exist candidate operator functions of the form</p>
+
+<pre><code class="sh_cpp"><var>T</var> operator~(<var>T</var>);</code></pre>
+
+<p><a class="anchor" id="p11" href="#p11">11</a>For every quintuple (<var>C1</var>, <var>C2</var>, <var>T</var>, <var>CV1</var>, <var>CV2</var>), where
+<var>C2</var> is a class type, <var>C1</var> is the same type as <var>C2</var> or is a derived class of <var>C2</var>,
+<var>T</var> is an object type or a function type, and <var>CV1</var> and <var>CV2</var> are <i class="nonterminal">cv-qualifier-seq</i>s,
+there exist candidate operator functions of the form</p>
+
+<pre><code class="sh_cpp"><var>CV12</var> <var>T</var>&amp; operator-&gt;*(<var>CV1</var> <var>C1</var>*, <var>CV2</var> <var>T</var> <var>C2</var>::*);</code></pre>
+
+<p>where <var>CV12</var> is the union of <var>CV1</var> and <var>CV2</var>.</p>
+
+<p><a class="anchor" id="p12" href="#p12">12</a>For every pair of promoted arithmetic types <var>L</var> and <var>R</var>, there exist candidate operator
+functions of the form</p>
+
+<pre><code class="sh_cpp"><var>LR</var>   operator*(<var>L</var>, <var>R</var>);
+<var>LR</var>   operator/(<var>L</var>, <var>R</var>);
+<var>LR</var>   operator+(<var>L</var>, <var>R</var>);
+<var>LR</var>   operator-(<var>L</var>, <var>R</var>);
+bool operator&lt;(<var>L</var>, <var>R</var>);
+bool operator&gt;(<var>L</var>, <var>R</var>);
+bool operator&lt;=(<var>L</var>, <var>R</var>);
+bool operator&gt;=(<var>L</var>, <var>R</var>);
+bool operator==(<var>L</var>, <var>R</var>);
+bool operator!=(<var>L</var>, <var>R</var>);</code></pre>
+
+<p>where <var>LR</var> is the result of the usual arithmetic conversions between types <var>L</var> and
+<var>R</var>.</p>
+
+<p><a class="anchor" id="p13" href="#p13">13</a>For every cv-qualified or cv-unqualified object type <var>T</var> there exist candidate operator functions of
+the form</p>
+
+<pre><code class="sh_cpp"><var>T</var>* operator+(<var>T</var>*, std::ptrdiff_t);
+<var>T</var>&amp; operator[](<var>T</var>*, std::ptrdiff_t);
+<var>T</var>* operator-(<var>T</var>*, std::ptrdiff_t);
+<var>T</var>* operator+(std::ptrdiff_t, <var>T</var>*);
+<var>T</var>&amp; operator[](std::ptrdiff_t, <var>T</var>*);</code></pre>
+
+<p><a class="anchor" id="p14" href="#p14">14</a>For every <var>T</var>, where <var>T</var> is a pointer to object type, there exist candidate operator
+functions of the form</p>
+
+<pre><code class="sh_cpp">std::ptrdiff_t operator-(<var>T</var>, <var>T</var>);</code></pre>
+
+<p><a class="anchor" id="p15" href="#p15">15</a>For every <var>T</var>, where <var>T</var> is an enumeration type, a pointer type, or
+<code class="sh_cpp">std::nullptr_t</code>, there exist candidate operator functions of the form</p>
+
+<pre><code class="sh_cpp">bool operator&lt;(<var>T</var>, <var>T</var>);
+bool operator&gt;(<var>T</var>, <var>T</var>);
+bool operator&lt;=(<var>T</var>, <var>T</var>);
+bool operator&gt;=(<var>T</var>, <var>T</var>);
+bool operator==(<var>T</var>, <var>T</var>);
+bool operator!=(<var>T</var>, <var>T</var>);</code></pre>
+
+<p><a class="anchor" id="p16" href="#p16">16</a>For every pointer to member type <var>T</var> there exist candidate operator functions of the form</p>
+
+<pre><code class="sh_cpp">bool operator==(<var>T</var>, <var>T</var>);
+bool operator!=(<var>T</var>, <var>T</var>);</code></pre>
+
+<p><a class="anchor" id="p17" href="#p17">17</a>For every pair of promoted integral types <var>L</var> and <var>R</var>, there exist candidate operator
+functions of the form</p>
+
+<pre><code class="sh_cpp">LR operator%(L, R);
+LR operator&amp;(L, R);
+LR operator^(L, R);
+LR operator|(L, R);
+L  operator&lt;&lt;(L, R);
+L  operator&gt;&gt;(L, R);</code></pre>
+
+<p>where <var>LR</var> is the result of the usual arithmetic conversions between types <var>L</var> and
+<var>R</var>.</p>
+
+<p><a class="anchor" id="p18" href="#p18">18</a>For every triple (<var>L</var>, <var>VQ</var>, <var>R</var>), where <var>L</var> is an arithmetic type,
+<var>VQ</var> is either <code class="sh_cpp">volatile</code> or empty, and <var>R</var> is a promoted arithmetic type, there exist
+candidate operator functions of the form</p>
+
+<pre><code class="sh_cpp"><var>VQ</var> <var>L</var>&amp; operator=(<var>VQ</var> <var>L</var>&amp;, <var>R</var>);
+<var>VQ</var> <var>L</var>&amp; operator*=(<var>VQ</var> <var>L</var>&amp;, <var>R</var>);
+<var>VQ</var> <var>L</var>&amp; operator/=(<var>VQ</var> <var>L</var>&amp;, <var>R</var>);
+<var>VQ</var> <var>L</var>&amp; operator+=(<var>VQ</var> <var>L</var>&amp;, <var>R</var>);
+<var>VQ</var> <var>L</var>&amp; operator-=(<var>VQ</var> <var>L</var>&amp;, <var>R</var>);</code></pre>
+
+<p><a class="anchor" id="p19" href="#p19">19</a>For every pair (<var>T</var>, <var>VQ</var>), where <var>T</var> is any type and <var>VQ</var> is either
+<code class="sh_cpp">volatile</code> or empty, there exist candidate operator functions of the form</p>
+
+<pre><code class="sh_cpp"><var>T</var>* <var>VQ</var>&amp; operator=(<var>T</var>* <var>VQ</var>&amp;, <var>T</var>*);</code></pre>
+
+<p><a class="anchor" id="p20" href="#p20">20</a>For every pair (<var>T</var>, <var>VQ</var>), where <var>T</var> is an enumeration or pointer to member type
+and <var>VQ</var> is either <code class="sh_cpp">volatile</code> or empty, there exist candidate operator functions of the form</p>
+
+<pre><code class="sh_cpp"><var>VQ</var> <var>T</var>&amp; operator=(<var>VQ</var> <var>T</var>&amp;, <var>T</var>);</code></pre>
+
+<p><a class="anchor" id="p21" href="#p21">21</a>For every pair (<var>T</var>, <var>VQ</var>), where <var>T</var> is a cv-qualified or cv-unqualified object
+type and <var>VQ</var> is either <code class="sh_cpp">volatile</code> or empty, there exist candidate operator functions of the
+form</p>
+
+<pre><code class="sh_cpp"><var>T</var>* <var>VQ</var>&amp; operator+=(<var>T</var>* <var>VQ</var>&amp;, std::ptrdiff_t);
+<var>T</var>* <var>VQ</var>&amp; operator-=(<var>T</var>* <var>VQ</var>&amp;, std::ptrdiff_t);</code></pre>
+
+<p><a class="anchor" id="p22" href="#p22">22</a>For every triple (<var>L</var>, <var>VQ</var>, <var>R</var>), where <var>L</var> is an integral type,
+<var>VQ</var> is either <code class="sh_cpp">volatile</code> or empty, and <var>R</var> is a promoted integral type, there exist
+candidate operator functions of the form</p>
+
+<pre><code class="sh_cpp"><var>VQ</var> <var>L</var>&amp; operator%=(<var>VQ</var> <var>L</var>&amp;, <var>R</var>);
+<var>VQ</var> <var>L</var>&amp; operator&lt;&lt;=(<var>VQ</var> <var>L</var>&amp;, <var>R</var>);
+<var>VQ</var> <var>L</var>&amp; operator&gt;&gt;=(<var>VQ</var> <var>L</var>&amp;, <var>R</var>);
+<var>VQ</var> <var>L</var>&amp; operator&amp;=(<var>VQ</var> <var>L</var>&amp;, <var>R</var>);
+<var>VQ</var> <var>L</var>&amp; operator^=(<var>VQ</var> <var>L</var>&amp;, <var>R</var>);
+<var>VQ</var> <var>L</var>&amp; operator|=(<var>VQ</var> <var>L</var>&amp;, <var>R</var>);</code></pre>
+
+<p><a class="anchor" id="p23" href="#p23">23</a>There also exist candidate operator functions of the form</p>
+
+<pre><code class="sh_cpp">bool operator!(bool);
+bool operator&amp;&amp;(bool, bool);
+bool operator||(bool, bool);</code></pre>
+
+<p><a class="anchor" id="p24" href="#p24">24</a>For every pair of promoted arithmetic types <var>L</var> and <var>R</var>, there exist candidate operator
+functions of the form</p>
+
+<pre><code class="sh_cpp"><var>LR</var> operator?:(bool, <var>L</var>, <var>R</var>);</code></pre>
+
+<p>where <var>LR</var> is the result of the usual arithmetic conversions between types <var>L</var> and <var>R</var>.
+<span class="note">[ <em>Note:</em> As with all these descriptions of candidate functions, this declaration serves only to describe the built-in
+operator for purposes of overload resolution. The operator “<code class="sh_cpp">?:</code>” cannot be overloaded. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p25" href="#p25">25</a>For every type <var>T</var>, where <var>T</var> is a pointer, pointer-to-member, or scoped enumeration type,
+there exist candidate operator functions of the form</p>
+
+<pre><code class="sh_cpp"><var>T</var> operator?:(bool, <var>T</var>, <var>T</var>);</code></pre>
+</body>
+</html>
+

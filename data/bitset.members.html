@@ -1,0 +1,220 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>bitset members</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[bitset.members]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[bitset.members]"></object>20.5.2 <code class="sh_cpp">bitset</code> members </h3>
+
+<h4><code class="sh_cpp">bitset&lt;N&gt;&amp; <dfn>operator&amp;=</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator&amp;="></object>(const bitset&lt;N&gt;&amp; rhs) noexcept;</code></h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Effects:</em> Clears each bit in <code class="sh_cpp">*this</code> for which the corresponding bit in <code class="sh_cpp">rhs</code> is clear,
+and leaves all other bits unchanged.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Returns:</em> <code class="sh_cpp">*this</code>.</p>
+
+<h4><code class="sh_cpp">bitset&lt;N&gt;&amp; <dfn>operator|=</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator|="></object>(const bitset&lt;N&gt;&amp; rhs) noexcept;</code></h4>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Effects:</em> Sets each bit in <code class="sh_cpp">*this</code> for which the corresponding bit in <code class="sh_cpp">rhs</code> is set, and
+leaves all other bits unchanged.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><em>Returns:</em> <code class="sh_cpp">*this</code>.</p>
+
+<h4><code class="sh_cpp">bitset&lt;N&gt;&amp; <dfn>operator^=</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator^="></object>(const bitset&lt;N&gt;&amp; rhs) noexcept;</code></h4>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><em>Effects:</em> Toggles each bit in <code class="sh_cpp">*this</code> for which the corresponding bit in <code class="sh_cpp">rhs</code> is set, and
+leaves all other bits unchanged.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a><em>Returns:</em> <code class="sh_cpp">*this</code>.</p>
+
+<h4><code class="sh_cpp">bitset&lt;N&gt;&amp; <dfn>operator&lt;&lt;=</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator&lt;&lt;="></object>(size_t pos) noexcept;</code></h4>
+
+<p><a class="anchor" id="p7" href="#p7">7</a><em>Effects:</em> Replaces each bit at position <code class="sh_cpp">I</code> in <code class="sh_cpp">*this</code> with a value determined as
+follows:</p>
+
+<ul>
+<li>If <code class="sh_cpp">I &lt; pos</code>, the new value is zero;</li>
+<li>If <code class="sh_cpp">I &gt;= pos</code>, the new value is the previous value of the bit at position <code class="sh_cpp">I - pos</code>.</li>
+</ul>
+
+<p><a class="anchor" id="p8" href="#p8">8</a><em>Returns:</em> <code class="sh_cpp">*this</code>.</p>
+
+<h4><code class="sh_cpp">bitset&lt;N&gt;&amp; <dfn>operator&gt;&gt;=</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator&gt;&gt;="></object>(size_t pos) noexcept;</code></h4>
+
+<p><a class="anchor" id="p9" href="#p9">9</a><em>Effects:</em> Replaces each bit at position <code class="sh_cpp">I</code> in <code class="sh_cpp">*this</code> with a value determined as
+follows:</p>
+
+<ul>
+<li>If <code class="sh_cpp">pos &gt;= N - I</code>, the new value is zero;</li>
+<li>If <code class="sh_cpp">pos &lt; N - I</code>, the new value is the previous value of the bit at position <code class="sh_cpp">I +
+	pos</code>.</li>
+</ul>
+<p><a class="anchor" id="p10" href="#p10">10</a><em>Returns:</em> <code class="sh_cpp">*this</code>.</p>
+
+<h4><code class="sh_cpp">bitset&lt;N&gt;&amp; <dfn>set</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="set"></object>() noexcept;</code></h4>
+
+<p><a class="anchor" id="p11" href="#p11">11</a><em>Effects:</em> Sets all bits in <code class="sh_cpp">*this</code>.</p>
+
+<p><a class="anchor" id="p12" href="#p12">12</a><em>Returns:</em> <code class="sh_cpp">*this</code>.</p>
+
+<h4><code class="sh_cpp">bitset&lt;N&gt;&amp; <dfn>set</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="set"></object>(size_t pos, bool val = true);</code></h4>
+
+<p><a class="anchor" id="p13" href="#p13">13</a><em>Requires:</em> <code class="sh_cpp">pos</code> is valid.</p>
+
+<p><a class="anchor" id="p14" href="#p14">14</a><em>Throws:</em> <code class="sh_cpp">out_of_range</code> if pos does not correspond to a valid bit position.</p>
+
+<p><a class="anchor" id="p15" href="#p15">15</a><em>Effects:</em> Stores a new value in the bit at position <code class="sh_cpp">pos</code> in <code class="sh_cpp">*this</code>. If <code class="sh_cpp">val</code>
+is nonzero, the stored value is one, otherwise it is zero.</p>
+
+<p><a class="anchor" id="p16" href="#p16">16</a><em>Returns:</em> <code class="sh_cpp">*this</code>.</p>
+
+<h4><code class="sh_cpp">bitset&lt;N&gt;&amp; <dfn>reset</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="reset"></object>() noexcept;</code></h4>
+
+<p><a class="anchor" id="p17" href="#p17">17</a><em>Effects:</em> Resets all bits in <code class="sh_cpp">*this</code>.</p>
+
+<p><a class="anchor" id="p18" href="#p18">18</a><em>Returns:</em> <code class="sh_cpp">*this</code>.</p>
+
+<h4><code class="sh_cpp">bitset&lt;N&gt;&amp; <dfn>reset</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="reset"></object>(size_t pos);</code></h4>
+
+<p><a class="anchor" id="p19" href="#p19">19</a><em>Requires:</em> <code class="sh_cpp">pos</code> is valid.</p>
+
+<p><a class="anchor" id="p20" href="#p20">20</a><em>Throws:</em> <code class="sh_cpp">out_of_range</code> if <code class="sh_cpp">pos</code> does not correspond to a valid bit
+position.</p>
+
+<p><a class="anchor" id="p21" href="#p21">21</a><em>Effects:</em> Resets the bit at position <code class="sh_cpp">pos</code> in <code class="sh_cpp">*this</code>.</p>
+
+<p><a class="anchor" id="p22" href="#p22">22</a><em>Returns:</em> <code class="sh_cpp">*this</code>.</p>
+
+<h4><code class="sh_cpp">bitset&lt;N&gt; <dfn>operator~</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator~"></object>() const noexcept;</code></h4>
+
+<p><a class="anchor" id="p23" href="#p23">23</a><em>Effects:</em> Constructs an object <code class="sh_cpp">x</code> of class <code class="sh_cpp">bitset&lt;N&gt;</code> and initializes it with
+<code class="sh_cpp">*this</code>.</p>
+
+<p><a class="anchor" id="p24" href="#p24">24</a><em>Returns:</em> <code class="sh_cpp">x.flip()</code>.</p>
+
+<h4><code class="sh_cpp">bitset&lt;N&gt;&amp; <dfn>flip</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="flip"></object>() noexcept;</code></h4>
+
+<p><a class="anchor" id="p25" href="#p25">25</a><em>Effects:</em> Toggles all bits in <code class="sh_cpp">*this</code>.</p>
+
+<p><a class="anchor" id="p26" href="#p26">26</a><em>Returns:</em> <code class="sh_cpp">*this</code>.</p>
+
+<h4><code class="sh_cpp">bitset&lt;N&gt;&amp; <dfn>flip</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="flip"></object>(size_t pos);</code></h4>
+
+<p><a class="anchor" id="p27" href="#p27">27</a><em>Requires:</em> <code class="sh_cpp">pos</code> is valid.</p>
+
+<p><a class="anchor" id="p28" href="#p28">28</a><em>Throws:</em> <code class="sh_cpp">out_of_range</code> if <code class="sh_cpp">pos</code> does not correspond to a valid bit
+position.</p>
+
+<p><a class="anchor" id="p29" href="#p29">29</a><em>Effects:</em> Toggles the bit at position <code class="sh_cpp">pos</code> in <code class="sh_cpp">*this</code>.</p>
+
+<p><a class="anchor" id="p30" href="#p30">30</a><em>Returns:</em> <code class="sh_cpp">*this</code>.</p>
+
+<h4><code class="sh_cpp">unsigned long <dfn>to_ulong</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="to_ulong"></object>() const;</code></h4>
+
+<p><a class="anchor" id="p31" href="#p31">31</a><em>Throws:</em> <code class="sh_cpp">overflow_error</code> if the integral value <code class="sh_cpp">x</code> corresponding to the bits in
+<code class="sh_cpp">*this</code> cannot be represented as type <code class="sh_cpp">unsigned long</code>.</p>
+
+<p><a class="anchor" id="p32" href="#p32">32</a><em>Returns:</em> <code class="sh_cpp">x</code>.</p>
+
+<h4><code class="sh_cpp">unsigned long long <dfn>to_ullong</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="to_ullong"></object>() const;</code></h4>
+
+<p><a class="anchor" id="p33" href="#p33">33</a><em>Throws:</em> <code class="sh_cpp">overflow_error</code> if the integral value <code class="sh_cpp">x</code> corresponding to the bits in
+<code class="sh_cpp">*this</code> cannot be represented as type <code class="sh_cpp">unsigned long long</code>.</p>
+
+<p><a class="anchor" id="p34" href="#p34">34</a><em>Returns:</em> <code class="sh_cpp">x</code>.</p>
+
+<h4><code class="sh_cpp">template &lt;class charT = char,
+    class traits = char_traits&lt;charT&gt;,
+    class Allocator = allocator&lt;charT&gt; &gt;
+  basic_string&lt;charT, traits, Allocator&gt;
+  <dfn>to_string</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="to_string"></object>(charT zero = charT('0'), charT one = charT('1')) const;</code></h4>
+
+<p><a class="anchor" id="p35" href="#p35">35</a><em>Effects:</em> Constructs a string object of the appropriate type and initializes it to a string of length
+<code class="sh_cpp">N</code> characters. Each character is determined by the value of its corresponding bit position in
+<code class="sh_cpp">*this</code>. Character position <code class="sh_cpp">N - 1</code> corresponds to bit position zero. Subsequent decreasing
+character positions correspond to increasing bit positions. Bit value zero becomes the character <code class="sh_cpp">zero</code>, bit
+value one becomes the character <code class="sh_cpp">one</code>.</p>
+
+<p><a class="anchor" id="p36" href="#p36">36</a><em>Returns:</em> The created object.</p>
+
+<h4><code class="sh_cpp">size_t <dfn>count</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="count"></object>() const noexcept;</code></h4>
+
+<p><a class="anchor" id="p37" href="#p37">37</a><em>Returns:</em> A count of the number of bits set in <code class="sh_cpp">*this</code>.</p>
+
+<h4><code class="sh_cpp">constexpr size_t <dfn>size</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="size"></object>() noexcept;</code></h4>
+
+<p><a class="anchor" id="p38" href="#p38">38</a><em>Returns:</em> <code class="sh_cpp">N</code>.</p>
+
+<h4><code class="sh_cpp">bool <dfn>operator==</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator=="></object>(const bitset&lt;N&gt;&amp; rhs) const noexcept;</code></h4>
+
+<p><a class="anchor" id="p39" href="#p39">39</a><em>Returns:</em> <code class="sh_cpp">true</code> if the value of each bit in <code class="sh_cpp">*this</code> equals the value of the corresponding
+bit in <code class="sh_cpp">rhs</code>.</p>
+
+<h4><code class="sh_cpp">bool <dfn>operator!=</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator!="></object>(const bitset&lt;N&gt;&amp; rhs) const noexcept;</code></h4>
+
+<p><a class="anchor" id="p40" href="#p40">40</a><em>Returns:</em> <code class="sh_cpp">true</code> if <code class="sh_cpp">!(*this == rhs)</code>.</p>
+
+<h4><code class="sh_cpp">bool <dfn>test</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="test"></object>(size_t pos) const;</code></h4>
+
+<p><a class="anchor" id="p41" href="#p41">41</a><em>Requires:</em> <code class="sh_cpp">pos</code> is valid.</p>
+
+<p><a class="anchor" id="p42" href="#p42">42</a><em>Throws:</em> <code class="sh_cpp">out_of_range</code> if <code class="sh_cpp">pos</code> does not correspond to a valid bit
+position.</p>
+
+<p><a class="anchor" id="p43" href="#p43">43</a><em>Returns:</em> <code class="sh_cpp">true</code> if the bit at position <code class="sh_cpp">pos</code> in <code class="sh_cpp">*this</code> has the value
+one.</p>
+
+<h4><code class="sh_cpp">bool <dfn>all</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="all"></object>() const noexcept;</code></h4>
+
+<p><a class="anchor" id="p44" href="#p44">44</a><em>Returns:</em> <code class="sh_cpp">count() == size()</code>.</p>
+
+<h4><code class="sh_cpp">bool <dfn>any</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="any"></object>() const noexcept;</code></h4>
+
+<p><a class="anchor" id="p45" href="#p45">45</a><em>Returns:</em> <code class="sh_cpp">count() != 0</code>.</p>
+
+<h4><code class="sh_cpp">bool <dfn>none</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="none"></object>() const noexcept;</code></h4>
+
+<p><a class="anchor" id="p46" href="#p46">46</a><em>Returns:</em> <code class="sh_cpp">count() == 0</code>.</p>
+
+<h4><code class="sh_cpp">bitset&lt;N&gt; <dfn>operator&lt;&lt;</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator&lt;&lt;"></object>(size_t pos) const noexcept;</code></h4>
+
+<p><a class="anchor" id="p47" href="#p47">47</a><em>Returns:</em> <code class="sh_cpp">bitset&lt;N&gt;(*this) &lt;&lt;= pos</code>.</p>
+
+<h4><code class="sh_cpp">bitset&lt;N&gt; <dfn>operator&gt;&gt;</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator&gt;&gt;"></object>(size_t pos) const noexcept;</code></h4>
+
+<p><a class="anchor" id="p48" href="#p48">48</a><em>Returns:</em> <code class="sh_cpp">bitset&lt;N&gt;(*this) &gt;&gt;= pos</code>.</p>
+
+<h4><code class="sh_cpp">constexpr bool <dfn>operator[]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator[]"></object>(size_t pos);</code></h4>
+
+<p><a class="anchor" id="p49" href="#p49">49</a><em>Requires:</em> <code class="sh_cpp">pos</code> shall be valid.</p>
+
+<p><a class="anchor" id="p50" href="#p50">50</a><em>Returns:</em> <code class="sh_cpp">true</code> if the bit at position <code class="sh_cpp">pos</code> in <code class="sh_cpp">*this</code> has the value one,
+otherwise <code class="sh_cpp">false</code>.</p>
+
+<p><a class="anchor" id="p51" href="#p51">51</a><em>Throws:</em> Nothing.</p>
+
+<h4><code class="sh_cpp">bitset&lt;N&gt;::reference <dfn>operator[]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator[]"></object>(size_t pos);</code></h4>
+
+<p><a class="anchor" id="p52" href="#p52">52</a><em>Requires:</em> <code class="sh_cpp">pos</code> shall be valid.</p>
+
+<p><a class="anchor" id="p53" href="#p53">53</a><em>Returns:</em> An object of type <code class="sh_cpp">bitset&lt;N&gt;::reference</code> such that <code class="sh_cpp">(*this)[pos] ==
+this-&gt;test(pos)</code>, and such that <code class="sh_cpp">(*this)[pos] = val</code> is equivalent to <code class="sh_cpp">this-&gt;set(pos,
+val)</code>.</p>
+
+<p><a class="anchor" id="p54" href="#p54">54</a><em>Throws:</em> Nothing.</p>
+
+<p><a class="anchor" id="p55" href="#p55">55</a><em>Remarks:</em> For the purpose of determining the presence of a data race (<a title="intro.multithread" href="intro.multithread.html">1.10</a>), any access or update
+through the resulting reference potentially accesses or modifies, respectively, the entire underlying
+bitset.</p>
+</body>
+</html>
+

@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class template istream_iterator</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[istream.iterator]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[istream.iterator]"></object>24.6.1 Class template <code class="sh_cpp"><dfn>istream_iterator</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="istream_iterator"></object></code> </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The class template <code class="sh_cpp">istream_iterator</code> is an input iterator (<a title="input.iterators" href="input.iterators.html">24.2.3</a>) that reads (using
+<code class="sh_cpp">operator&gt;&gt;</code>) successive elements from the input stream for which it was constructed. After it is
+constructed, and every time <code class="sh_cpp">++</code> is used, the iterator reads and stores a value of <code class="sh_cpp">T</code>. If the
+iterator fails to read and store a value of <code class="sh_cpp">T</code> (<code class="sh_cpp">fail()</code> on the stream returns
+<code class="sh_cpp">true</code>), the iterator becomes equal to the <em>end-of-stream</em> iterator value. The constructor with no
+arguments <code class="sh_cpp">istream_iterator()</code> always constructs an end-of-stream input iterator object, which is the only
+legitimate iterator to be used for the end condition. The result of <code class="sh_cpp">operator*</code> on an end-of-stream iterator
+is not defined. For any other iterator value a <code class="sh_cpp">const T&amp;</code> is returned. The result of
+<code class="sh_cpp">operator-&gt;</code> on an end-of-stream iterator is not defined. For any other iterator value a <code class="sh_cpp">const
+T*</code> is returned. The behavior of a program that applies <code class="sh_cpp">operator++()</code> to an end-of-stream iterator is
+undefined. It is impossible to store things into istream iterators.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>Two end-of-stream iterators are always equal. An end-of-stream iterator is not equal to a non-end-of-stream
+iterator. Two non-end-of-stream iterators are equal when they are constructed from the same stream.</p>
+
+<pre><code class="sh_cpp">namespace std {
+  template &lt;class T, class charT = char, class traits = char_traits&lt;charT&gt;,
+      class Distance = ptrdiff_t&gt;
+  class istream_iterator:
+    public iterator&lt;input_iterator_tag, T, Distance, const T*, const T&amp;&gt; {
+  public:
+    typedef charT char_type;
+    typedef traits traits_type;
+    typedef basic_istream&lt;charT,traits&gt; istream_type;
+    <em>see below</em> istream_iterator();
+    istream_iterator(istream_type&amp; s);
+    istream_iterator(const istream_iterator&amp; x) = default;
+    ~istream_iterator() = default;
+
+    const T&amp; operator*() const;
+    const T* operator-&gt;() const;
+    istream_iterator&lt;T,charT,traits,Distance&gt;&amp; operator++();
+    istream_iterator&lt;T,charT,traits,Distance&gt;  operator++(int);
+  private:
+    basic_istream&lt;charT,traits&gt;* in_stream; // exposition only
+    T value;                                // exposition only
+  };
+
+  template &lt;class T, class charT, class traits, class Distance&gt;
+    bool operator==(const istream_iterator&lt;T,charT,traits,Distance&gt;&amp; x,
+                    const istream_iterator&lt;T,charT,traits,Distance&gt;&amp; y);
+  template &lt;class T, class charT, class traits, class Distance&gt;
+    bool operator!=(const istream_iterator&lt;T,charT,traits,Distance&gt;&amp; x,
+                    const istream_iterator&lt;T,charT,traits,Distance&gt;&amp; y);
+}</code></pre>
+</body>
+</html>
+

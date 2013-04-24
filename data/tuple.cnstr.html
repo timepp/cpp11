@@ -1,0 +1,148 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Construction</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[tuple.cnstr]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[tuple.cnstr]"></object>20.4.2.1 Construction </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>For each <code class="sh_cpp">tuple</code> constructor, an exception is thrown only if the construction of one of the types in
+<code class="sh_cpp">Types</code> throws an exception.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>In the constructor descriptions that follow, let <var>i</var> be in the range <code class="sh_cpp">[0,sizeof...(Types))</code>
+in order, <var>T</var><sub><var>i</var></sub> be the <var>i</var><sup>th</sup> type in <code class="sh_cpp">Types</code>, and
+<var>U</var><sub><var>i</var></sub> be the <var>i</var><sup>th</sup> type in a template parameter pack named
+<code class="sh_cpp">UTypes</code>, where indexing is zero-based.</p>
+
+<h5><code class="sh_cpp">constexpr <dfn>tuple</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="tuple"></object>();</code></h5>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Requires:</em> <code class="sh_cpp">is_default_constructible&lt;<var>T</var><sub><var>i</var></sub>&gt;::value</code> is true for
+all <var>i</var>.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><em>Effects:</em> Value initializes each element.</p>
+
+<h5><code class="sh_cpp">explicit <dfn>tuple</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="tuple"></object>(const Types&amp;...);</code></h5>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><em>Requires:</em> <code class="sh_cpp">is_copy_constructible&lt;<var>T</var><sub><var>i</var></sub>&gt;::value</code> is true for all
+<var>i</var>.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a><em>Effects:</em> Initializes each element with the value of the corresponding parameter.</p>
+
+<h5><code class="sh_cpp">template &lt;class... UTypes&gt;
+  explicit <dfn>tuple</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="tuple"></object>(UTypes&amp;&amp;... u);</code></h5>
+
+<p><a class="anchor" id="p7" href="#p7">7</a><em>Requires:</em> <code class="sh_cpp">sizeof...(Types) == sizeof...(UTypes)</code>.
+<code class="sh_cpp">is_constructible&lt;<var>T</var><sub><var>i</var></sub>,
+<var>U</var><sub><var>i</var></sub>&amp;&amp;&gt;::value</code> is true for all <var>i</var>.</p>
+
+<p><a class="anchor" id="p8" href="#p8">8</a><em>Effects:</em> Initializes the elements in the tuple with the corresponding value in
+<code class="sh_cpp">std::forward&lt;UTypes&gt;(u)</code>.</p>
+
+<p><a class="anchor" id="p9" href="#p9">9</a><em>Remark:</em> This constructor shall not participate in overload resolution unless each type in <code class="sh_cpp">UTypes</code>
+is implicitly convertible to its corresponding type in <code class="sh_cpp">Types</code>.</p>
+
+<h5><code class="sh_cpp"><dfn>tuple</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="tuple"></object>(const tuple&amp; u) = default;</code></h5>
+
+<p><a class="anchor" id="p10" href="#p10">10</a><em>Requires:</em> <code class="sh_cpp">is_copy_constructible&lt;<var>T</var><sub><var>i</var></sub>&gt;::value</code> is true for all
+<var>i</var>.</p>
+
+<p><a class="anchor" id="p11" href="#p11">11</a><em>Effects:</em> Initializes each element of <code class="sh_cpp">*this</code> with the corresponding element of
+<code class="sh_cpp">u</code>.</p>
+
+<h5><code class="sh_cpp"><dfn>tuple</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="tuple"></object>(tuple&amp;&amp; u) = default;</code></h5>
+
+<p><a class="anchor" id="p12" href="#p12">12</a><em>Requires:</em> <code class="sh_cpp">is_move_constructible&lt;<var>T</var><sub><var>i</var></sub>&gt;::value</code> is true for all
+<var>i</var>.</p>
+
+<p><a class="anchor" id="p13" href="#p13">13</a><em>Effects:</em> For all <var>i</var>, initializes the <var>i</var><sup>th</sup> element of <code class="sh_cpp">*this</code> with
+<code class="sh_cpp">std::forward&lt;<var>T</var><sub><var>i</var></sub>&gt;(get&lt;<var>i</var>&gt;(u))</code>.</p>
+
+<h5><code class="sh_cpp">template &lt;class... UTypes&gt; <dfn>tuple</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="tuple"></object>(const tuple&lt;UTypes...&gt;&amp; u);</code></h5>
+
+<p><a class="anchor" id="p14" href="#p14">14</a><em>Requires:</em> <code class="sh_cpp">sizeof...(Types) == sizeof...(UTypes)</code>.
+<code class="sh_cpp">is_constructible&lt;<var>T</var><sub><var>i</var></sub>, const
+<var>U</var><sub><var>i</var></sub>&amp;&gt;::value</code> is true for all <var>i</var>.</p>
+
+<p><a class="anchor" id="p15" href="#p15">15</a><em>Effects:</em> Constructs each element of <code class="sh_cpp">*this</code> with the corresponding element of
+<code class="sh_cpp">u</code>.</p>
+
+<p><a class="anchor" id="p16" href="#p16">16</a><em>Remark:</em> This constructor shall not participate in overload resolution unless <code class="sh_cpp">const
+<var>U</var><sub><var>i</var></sub>&amp;</code> is implicitly convertible to <var>T</var><sub><var>i</var></sub> for all
+<var>i</var>.</p>
+
+<h5><code class="sh_cpp">template &lt;class... UTypes&gt; <dfn>tuple</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="tuple"></object>(tuple&lt;UTypes...&gt;&amp;&amp; u);</code></h5>
+
+<p><a class="anchor" id="p17" href="#p17">17</a><em>Requires:</em> <code class="sh_cpp">sizeof...(Types) == sizeof...(UTypes)</code>.
+<code class="sh_cpp">is_constructible&lt;<var>T</var><sub><var>i</var></sub>,
+<var>U</var><sub><var>i</var></sub>&amp;&amp;&gt;::value</code> is true for all <var>i</var>.</p>
+
+<p><a class="anchor" id="p18" href="#p18">18</a><em>Effects:</em> For all <var>i</var>, initializes the <var>i</var><sup>th</sup> element of <code class="sh_cpp">*this</code> with
+<code class="sh_cpp">std::forward&lt;<var>U</var><sub><var>i</var></sub>&gt;(get&lt;<var>i</var>&gt;(u))</code>.</p>
+
+<p><a class="anchor" id="p19" href="#p19">19</a><em>Remark:</em> This constructor shall not participate in overload resolution unless each type in <code class="sh_cpp">UTypes</code>
+is implicitly convertible to its corresponding type in <code class="sh_cpp">Types</code>.</p>
+
+<h5><code class="sh_cpp">template &lt;class U1, class U2&gt; <dfn>tuple</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="tuple"></object>(const pair&lt;U1, U2&gt;&amp; u);</code></h5>
+
+<p><a class="anchor" id="p20" href="#p20">20</a><em>Requires:</em> <code class="sh_cpp">sizeof...(Types) == 2</code>. <code class="sh_cpp">is_constructible&lt;<var>T</var><sub>0</sub>, const
+U1&amp;&gt;::value</code> is true for the first type <var>T</var><sub>0</sub> in <code class="sh_cpp">Types</code> and
+<code class="sh_cpp">is_constructible&lt;<var>T</var><sub>1</sub>, const U2&amp;&gt;::value</code> is true for the second type
+<var>T</var><sub>1</sub> in <code class="sh_cpp">Types</code>.</p>
+
+<p><a class="anchor" id="p21" href="#p21">21</a><em>Effects:</em> Constructs the first element with <code class="sh_cpp">u.first</code> and the second element with
+<code class="sh_cpp">u.second</code>.</p>
+
+<p><a class="anchor" id="p22" href="#p22">22</a><em>Remark:</em> This constructor shall not participate in overload resolution unless <code class="sh_cpp">const U1&amp;</code> is
+implicitly convertible to <var>T</var><sub>0</sub> and <code class="sh_cpp">const U2&amp;</code> is implicitly convertible to
+<var>T</var><sub>1</sub>.</p>
+
+<h5><code class="sh_cpp">template &lt;class U1, class U2&gt; <dfn>tuple</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="tuple"></object>(pair&lt;U1, U2&gt;&amp;&amp; u);</code></h5>
+
+<p><a class="anchor" id="p23" href="#p23">23</a><em>Requires:</em> <code class="sh_cpp">sizeof...(Types) == 2</code>. <code class="sh_cpp">is_constructible&lt;<var>T</var><sub>0</sub>,
+U1&amp;&amp;&gt;::value</code> is true for the first type <var>T</var><sub>0</sub> in <code class="sh_cpp">Types</code> and
+<code class="sh_cpp">is_constructible&lt;<var>T</var><sub>1</sub>, U2&amp;&amp;&gt;::value</code> is true for the second type
+<var>T</var><sub>1</sub> in <code class="sh_cpp">Types</code>.</p>
+
+<p><a class="anchor" id="p24" href="#p24">24</a><em>Effects:</em> Initializes the first element with <code class="sh_cpp">std::forward&lt;U1&gt;(u.first)</code> and the second element with
+<code class="sh_cpp">std::forward&lt;U2&gt;(u.second)</code>.</p>
+
+<p><a class="anchor" id="p25" href="#p25">25</a><em>Remark:</em> This constructor shall not participate in overload resolution unless <code class="sh_cpp">U1</code> is implicitly
+convertible to <var>T</var><sub>0</sub> and <code class="sh_cpp">U2</code> is implicitly convertible to
+<var>T</var><sub>1</sub>.</p>
+
+<h5><code class="sh_cpp">template &lt;class Alloc&gt;
+  <dfn>tuple</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="tuple"></object>(allocator_arg_t, const Alloc&amp; a);
+template &lt;class Alloc&gt;
+  <dfn>tuple</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="tuple"></object>(allocator_arg_t, const Alloc&amp; a, const Types&amp;...);
+template &lt;class Alloc, class... UTypes&gt;
+  <dfn>tuple</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="tuple"></object>(allocator_arg_t, const Alloc&amp; a, const UTypes&amp;&amp;...);
+template &lt;class Alloc&gt;
+  <dfn>tuple</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="tuple"></object>(allocator_arg_t, const Alloc&amp; a, const tuple&amp;);
+template &lt;class Alloc&gt;
+  <dfn>tuple</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="tuple"></object>(allocator_arg_t, const Alloc&amp; a, tuple&amp;&amp;);
+template &lt;class Alloc, class... UTypes&gt;
+  <dfn>tuple</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="tuple"></object>(allocator_arg_t, const Alloc&amp; a, const tuple&lt;UTypes...&gt;&amp;);
+template &lt;class Alloc, class... UTypes&gt;
+  <dfn>tuple</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="tuple"></object>(allocator_arg_t, const Alloc&amp; a, tuple&lt;UTypes...&gt;&amp;&amp;);
+template &lt;class Alloc, class U1, class U2&gt;
+  <dfn>tuple</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="tuple"></object>(allocator_arg_t, const Alloc&amp; a, const pair&lt;U1, U2&gt;&amp;);
+template &lt;class Alloc, class U1, class U2&gt;
+  <dfn>tuple</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="tuple"></object>(allocator_arg_t, const Alloc&amp; a, pair&lt;U1, U2&gt;&amp;&amp;);</code></h5>
+
+<p><a class="anchor" id="p26" href="#p26">26</a><em>Requires:</em> <code class="sh_cpp">Alloc</code> shall meet the requirements for an <code class="sh_cpp">Allocator</code>
+(<a title="allocator.requirements" href="allocator.requirements.html">17.6.3.5</a>).</p>
+
+<p><a class="anchor" id="p27" href="#p27">27</a><em>Effects:</em> Equivalent to the preceding constructors except that each element is constructed with uses-allocator
+construction (<a title="allocator.uses.construction" href="allocator.uses.construction.html">20.6.7.2</a>).</p>
+</body>
+</html>
+

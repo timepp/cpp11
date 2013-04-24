@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Const-volatile modifications</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[meta.trans.cv]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[meta.trans.cv]"></object>20.9.7.1 Const-volatile modifications </h4>
+
+<table id="t52" class="type_traits">
+<caption>Table 52 — Const-volatile modifications</caption>
+<thead><tr>
+<th>Template</th>
+<th>Comments</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>remove_­const</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="remove_const"></object>;</code></pre></td>
+
+	<td>The member typedef <code class="sh_cpp">type</code> shall name the same type as <code class="sh_cpp">T</code> except that any top-level
+		const-qualifier has been removed. <span class="example">[ <em>Example:</em> <code class="sh_cpp">remove_const&lt;const volatile int&gt;::type</code> evaluates
+		to <code class="sh_cpp">volatile int</code>, whereas <code class="sh_cpp">remove_const&lt;const int*&gt;::type</code> evaluates to
+		<code class="sh_cpp">const int*</code>. — <em>end example</em> ]</span>
+</td>
+</tr>
+
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>remove_­volatile</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="remove_volatile"></object>;</code></pre></td>
+
+	<td>The member typedef <code class="sh_cpp">type</code> shall name the same type as <code class="sh_cpp">T</code> except that any top-level
+		volatile-qualifier has been removed. <span class="example">[ <em>Example:</em> <code class="sh_cpp">remove_­volatile​&lt;const volatile
+		int&gt;​::​type</code> evaluates to <code class="sh_cpp">const int</code>, whereas
+		<code class="sh_cpp">remove_­volatile​&lt;volatile int*&gt;​::​type</code> evaluates to <code class="sh_cpp">volatile
+		int*</code>. — <em>end example</em> ]</span>
+</td>
+</tr>
+
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>remove_­cv</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="remove_cv"></object>;</code></pre></td>
+
+	<td>The member typedef <code class="sh_cpp">type</code> shall be the same as <code class="sh_cpp">T</code> except that any top-level cv-qualifier
+		has been removed. <span class="example">[ <em>Example:</em> <code class="sh_cpp">remove_­cv​&lt;const volatile int&gt;​::​type</code>
+		evaluates to <code class="sh_cpp">int</code>, whereas <code class="sh_cpp">remove_­cv​&lt;const volatile
+		int*&gt;​::​type</code> evaluates to <code class="sh_cpp">const volatile int*</code>. — <em>end example</em> ]</span>
+</td>
+</tr>
+
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>add_­const</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="add_const"></object>;</code></pre></td>
+
+	<td>If <code class="sh_cpp">T</code> is a reference, function, or top-level const-qualified type, then <code class="sh_cpp">type</code> shall name
+		the same type as <code class="sh_cpp">T</code>, otherwise <code class="sh_cpp">T const</code>.</td>
+</tr>
+
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>add_­volatile</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="add_volatile"></object>;</code></pre></td>
+
+	<td>If <code class="sh_cpp">T</code> is a reference, function, or top-level volatile-qualified type, then <code class="sh_cpp">type</code> shall
+		name the same type as <code class="sh_cpp">T</code>, otherwise <code class="sh_cpp">T volatile</code>.</td>
+</tr>
+
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>add_cv</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="add_cv"></object>;</code></pre></td>
+
+	<td>The member typedef <code class="sh_cpp">type</code> shall name the same type as <code class="sh_cpp">add_­const​&lt;typename
+		add_­volatile​&lt;T&gt;​::​type&gt;​::​type</code>.</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>
+

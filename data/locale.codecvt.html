@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class template codecvt</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[locale.codecvt]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[locale.codecvt]"></object>22.4.1.4 Class template <code class="sh_cpp">codecvt</code> </h4>
+
+<pre><code class="sh_cpp">namespace std {
+  class <dfn>codecvt_base</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="codecvt_base"></object> {
+  public:
+    enum result { ok, partial, error, noconv };
+  };
+
+  template &lt;class internT, class externT, class stateT&gt;
+  class <dfn>codecvt</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="codecvt"></object> : public locale::facet, public codecvt_base {
+  public:
+    typedef internT intern_type;
+    typedef externT extern_type;
+    typedef stateT state_type;
+
+    explicit codecvt(size_t refs = 0);
+
+    result out(stateT&amp; state,
+               const internT* from, const internT* from_end, const internT*&amp; from_next,
+                     externT* to,         externT* to_end,         externT*&amp; to_next) const;
+    result unshift(stateT&amp; state,
+                     externT* to,         externT* to_end,         externT*&amp; to_next) const;
+    result in (stateT&amp; state,
+               const externT* from, const externT* from_end, const externT*&amp; from_next,
+                     internT* to,         internT* to_end,         internT*&amp; to_next) const;
+    int encoding() const noexcept;
+    bool always_noconv() const noexcept;
+    int length(stateT&amp;, const externT* from, const externT* end,
+               size_t max) const;
+    int max_length() const noexcept;
+
+    static locale::id id;
+
+  protected:
+    ~codecvt();
+    virtual result do_out(stateT&amp; state,
+                          const internT* from, const internT* from_end, const internT*&amp; from_next,
+                                externT* to,         externT* to_end,         externT*&amp; to_next) const;
+    virtual result do_in (stateT&amp; state,
+                          const externT* from, const externT* from_end, const externT*&amp; from_next,
+                                internT* to,         internT* to_end,         internT*&amp; to_next) const;
+    virtual result do_unshift(stateT&amp; state,
+                                externT* to,         externT* to_end,         externT*&amp; to_next) const;
+    virtual int do_encoding() const noexcept;
+    virtual bool do_always_noconv() const noexcept;
+    virtual int do_length(stateT&amp;, const externT* from,
+                          const externT* end, size_t max) const;
+    virtual int do_max_length() const noexcept;
+  };
+}</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The class <code class="sh_cpp">codecvt&lt;internT, externT, stateT&gt;</code> is for use when converting from one
+character encoding to another, such as from wide characters to multibyte characters or between wide character encodings
+such as Unicode and EUC.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The <code class="sh_cpp">stateT</code> argument selects the pair of character encodings being mapped between.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>The specializations required in Table <a href="locale.category.html#t81">81</a> (<a title="locale.category" href="locale.category.html">22.3.1.1.1</a>) convert the implementation-defined
+native character set. <code class="sh_cpp">codecvt&lt;char, char, mbstate_t&gt;</code> implements a degenerate conversion; it
+does not convert at all. The specialization <code class="sh_cpp">codecvt&lt;char16_t, char, mbstate_t&gt;</code> converts between
+the UTF-16 and UTF-8 encoding schemes, and the specialization <code class="sh_cpp">codecvt&lt;char32_t, char,
+mbstate_t&gt;</code> converts between the UTF-32 and UTF-8 encoding schemes.
+<code class="sh_cpp">codecvt&lt;wchar_t,char,mbstate_t&gt;</code> converts between the native character sets for narrow and wide
+characters. Specializations on <code class="sh_cpp">mbstate_t</code> perform conversion between encodings known to the library
+implementor. Other encodings can be converted by specializing on a user-defined <code class="sh_cpp">stateT</code> type. The
+<code class="sh_cpp">stateT</code> object can contain any state that is useful to communicate to or from the specialized
+<code class="sh_cpp">do_in</code> or <code class="sh_cpp">do_out</code> members.</p>
+</body>
+</html>
+

@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Byte strings</title>
+</head>
+<body>
+<h6>
+<dfn class="label">[byte.strings]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[byte.strings]"></object>17.5.2.1.4.1 Byte strings </h6>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A <dfn>null-terminated byte string</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="null-terminated byte string"></object>, or <dfn><acronym>ntbs</acronym></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="ntbs"></object>, is a character sequence whose
+highest-addressed element with defined content has the value zero (the <dfn>terminating null</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="terminating null"></object> character); no other
+element in the sequence has the value zero.<sup class="footnote"><a href="#fn172">172</a></sup></p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The <dfn>length</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="length"></object> of an <acronym>ntbs</acronym> is the number of elements that precede the terminating null
+character. An <dfn>empty <acronym>ntbs</acronym></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="empty ntbs"></object> has a length of zero.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>The <dfn>value</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="value"></object> of an <acronym>ntbs</acronym> is the sequence of values of the elements up to and
+including the terminating null character.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>A <dfn>static <acronym>ntbs</acronym></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="static ntbs"></object> is an <acronym>ntbs</acronym> with static storage duration.<sup class="footnote"><a href="#fn173">173</a></sup></p>
+
+
+
+
+<div>
+<p class="footnote" id="fn172">172) Many of the objects manipulated by function signatures declared in <code class="header">&lt;cstring&gt;</code>
+(<a title="c.strings" href="c.strings.html">21.7</a>) are character sequences or <acronym>ntbs</acronym>s. The size of some of these character sequences is
+limited by a length value, maintained separately from the character sequence.</p>
+<p class="footnote" id="fn173">173) A string literal, such as <code class="sh_cpp">"abc"</code>, is a static <acronym>ntbs</acronym>.</p>
+</div>
+</body>
+</html>
+

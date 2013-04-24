@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Protected member access</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[class.protected]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[class.protected]"></object>11.4 Protected member access </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>An additional access check beyond those described earlier in Clause <a title="class.access" href="class.access.html">11</a> is applied when a non-static
+data member or non-static member function is a protected member of its naming class (<a title="class.access.base" href="class.access.base.html">11.2</a>)<sup class="footnote"><a href="#fn118">118</a></sup> As
+described earlier, access to a protected member is granted because the reference occurs in a friend or member of some
+class <code class="sh_cpp">C</code>. If the access is to form a pointer to member (<a title="expr.unary.op" href="expr.unary.op.html">5.3.1</a>), the
+<i class="nonterminal">nested-name-specifier</i> shall denote <code class="sh_cpp">C</code> or a class derived from <code class="sh_cpp">C</code>. All other accesses
+involve a (possibly implicit) object expression (<a title="expr.ref " href=".html"></a>). In this case, the class of the object expression
+shall be <code class="sh_cpp">C</code> or a class derived from <code class="sh_cpp">C</code>.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">class B {
+protected:
+  int i;
+  static int j;
+};
+
+class D1 : public B {
+};
+
+class D2 : public B {
+  friend void fr(B*,D1*,D2*);
+  void mem(B*,D1*);
+};
+
+void fr(B* pb, D1* p1, D2* p2) {
+  pb-&gt;i = 1;                // ill-formed
+  p1-&gt;i = 2;                // ill-formed
+  p2-&gt;i = 3;                // OK (access through a D2)
+  p2-&gt;B::i = 4;             // OK (access through a D2, even though
+                            // naming class is B)
+  int B::* pmi_B = &amp;B::i;   // ill-formed
+  int B::* pmi_B2 = &amp;D2::i; // OK (type of &amp;D2::i is int B::*)
+  B::j = 5;                 // OK (because refers to static member)
+  D2::j =6;                 // OK (because refers to static member)
+}
+
+void D2::mem(B* pb, D1* p1) {
+  pb-&gt;i = 1;                // ill-formed
+  p1-&gt;i = 2;                // ill-formed
+  i = 3;                    // OK (access through this)
+  B::i = 4;                 // OK (access through this, qualification ignored)
+  int B::* pmi_B = &amp;B::i;   // ill-formed
+  int B::* pmi_B2 = &amp;D2::i; // OK
+  j = 5;                    // OK (because j refers to static member)
+  B::j = 6;                 // OK (because B::j refers to static member)
+}
+
+void g(B* pb, D1* p1, D2* p2) {
+  pb-&gt;i = 1;                // ill-formed
+  p1-&gt;i = 2;                // ill-formed
+  p2-&gt;i = 3;                // ill-formed
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+
+<div><p class="footnote" id="fn118">118) This additional check does not apply to other members, e.g., static data members or enumerator member
+constants.</p></div>
+</body>
+</html>
+

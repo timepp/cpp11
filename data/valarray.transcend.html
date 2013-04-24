@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>valarray transcendentals</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[valarray.transcend]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[valarray.transcend]"></object>26.6.3.3 <code class="sh_cpp">valarray</code> transcendentals </h4>
+
+<pre><code class="sh_cpp">template&lt;class T&gt; valarray&lt;T&gt; <dfn>abs</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="abs"></object> (const valarray&lt;T&gt;&amp;);
+template&lt;class T&gt; valarray&lt;T&gt; <dfn>acos</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="acos"></object> (const valarray&lt;T&gt;&amp;);
+template&lt;class T&gt; valarray&lt;T&gt; <dfn>asin</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="asin"></object> (const valarray&lt;T&gt;&amp;);
+template&lt;class T&gt; valarray&lt;T&gt; <dfn>atan</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="atan"></object> (const valarray&lt;T&gt;&amp;);
+template&lt;class T&gt; valarray&lt;T&gt; <dfn>atan2</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="atan2"></object>
+    (const valarray&lt;T&gt;&amp;, const valarray&lt;T&gt;&amp;);
+template&lt;class T&gt; valarray&lt;T&gt; atan2(const valarray&lt;T&gt;&amp;, const T&amp;);
+template&lt;class T&gt; valarray&lt;T&gt; atan2(const T&amp;, const valarray&lt;T&gt;&amp;);
+template&lt;class T&gt; valarray&lt;T&gt; <dfn>cos</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="cos"></object> (const valarray&lt;T&gt;&amp;);
+template&lt;class T&gt; valarray&lt;T&gt; <dfn>cosh</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="cosh"></object> (const valarray&lt;T&gt;&amp;);
+template&lt;class T&gt; valarray&lt;T&gt; <dfn>exp</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="exp"></object> (const valarray&lt;T&gt;&amp;);
+template&lt;class T&gt; valarray&lt;T&gt; <dfn>log</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="log"></object> (const valarray&lt;T&gt;&amp;);
+template&lt;class T&gt; valarray&lt;T&gt; <dfn>log10</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="log10"></object>(const valarray&lt;T&gt;&amp;);
+template&lt;class T&gt; valarray&lt;T&gt; <dfn>pow</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="pow"></object>
+    (const valarray&lt;T&gt;&amp;, const valarray&lt;T&gt;&amp;);
+template&lt;class T&gt; valarray&lt;T&gt; pow (const valarray&lt;T&gt;&amp;, const T&amp;);
+template&lt;class T&gt; valarray&lt;T&gt; pow (const T&amp;, const valarray&lt;T&gt;&amp;);
+template&lt;class T&gt; valarray&lt;T&gt; <dfn>sin</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="sin"></object> (const valarray&lt;T&gt;&amp;);
+template&lt;class T&gt; valarray&lt;T&gt; <dfn>sinh</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="sinh"></object> (const valarray&lt;T&gt;&amp;);
+template&lt;class T&gt; valarray&lt;T&gt; <dfn>sqrt</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="sqrt"></object> (const valarray&lt;T&gt;&amp;);
+template&lt;class T&gt; valarray&lt;T&gt; <dfn>tan</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="tan"></object> (const valarray&lt;T&gt;&amp;);
+template&lt;class T&gt; valarray&lt;T&gt; <dfn>tanh</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="tanh"></object> (const valarray&lt;T&gt;&amp;);</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Each of these functions may only be instantiated for a type <code class="sh_cpp">T</code> to which a unique function with the
+indicated name can be applied (unqualified). This function shall return a value which is of type <code class="sh_cpp">T</code> or which
+can be unambiguously implicitly converted to type <code class="sh_cpp">T</code>.</p>
+</body>
+</html>
+

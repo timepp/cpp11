@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Clause 8: declarators</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[diff.decl]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[diff.decl]"></object>C.1.7 Clause <a title="dcl.decl" href="dcl.decl.html">8</a>: declarators </h3>
+
+<h4><a title="dcl.fct" href="dcl.fct.html">8.3.5</a></h4>
+
+<p><strong>Change:</strong> In C++, a function declared with an empty parameter list takes no arguments. In C, an empty
+parameter list means that the number and type of the function arguments are unknown.</p>
+
+<p>Example:</p>
+
+<pre><code class="sh_cpp">int f();    // means int f(void) in C++
+            // int f( unknown ) in C</code></pre>
+
+<p><strong>Rationale:</strong> This is to avoid erroneous function calls (i.e., function calls with the wrong number or type of
+arguments).</p>
+
+<p><strong>Effect on original feature:</strong> Change to semantics of well-defined feature. This feature was marked as “obsolescent” in C.</p>
+
+<p><strong>Difficulty of converting:</strong> Syntactic transformation. The function declarations using C incomplete declaration style must be
+completed to become full prototype declarations. A program may need to be updated further if different calls to the same
+(non-prototype) function have different numbers of arguments or if the type of corresponding arguments
+differed.</p>
+
+<p><strong>How widely used:</strong> Common.</p>
+
+
+<h4>
+<a title="dcl.fct" href="dcl.fct.html">8.3.5</a> [see <a title="expr.sizeof" href="expr.sizeof.html">5.3.3</a>]</h4>
+
+<p><strong>Change:</strong> In C++, types may not be defined in return or parameter types. In C, these type definitions are allowed</p>
+
+<p>Example:</p>
+
+<pre><code class="sh_cpp">void f( struct S { int a; } arg ) {}    // valid C, invalid C++
+enum E { A, B, C } f() {}               // valid C, invalid C++</code></pre>
+
+<p><strong>Rationale:</strong> When comparing types in different compilation units, C++ relies on name equivalence when C relies on
+structural equivalence. Regarding parameter types: since the type defined in an parameter list would be in the scope of
+the function, the only legal calls in C++ would be from within the function itself.</p>
+
+<p><strong>Effect on original feature:</strong> Deletion of semantically well-defined feature.</p>
+
+<p><strong>Difficulty of converting:</strong> Semantic transformation. The type definitions must be moved to file scope, or in header
+files.</p>
+
+<p><strong>How widely used:</strong> Seldom. This style of type definitions is seen as poor coding style.</p>
+
+
+<h4><a title="dcl.fct.def" href="dcl.fct.def.general.html">8.4</a></h4>
+
+<p><strong>Change:</strong> In C++, the syntax for function definition excludes the “old-style” C function. In C, “old-style” syntax is
+allowed, but deprecated as “obsolescent”.</p>
+
+<p><strong>Rationale:</strong> Prototypes are essential to type safety.</p>
+
+<p><strong>Effect on original feature:</strong> Deletion of semantically well-defined feature.</p>
+
+<p><strong>Difficulty of converting:</strong> Syntactic transformation.</p>
+
+<p><strong>How widely used:</strong> Common in old programs, but already known to be obsolescent.</p>
+
+
+<h4><a title="dcl.init.string" href="dcl.init.string.html">8.5.2</a></h4>
+
+<p><strong>Change:</strong> In C++, when initializing an array of character with a string, the number of characters in the string
+(including the terminating <code class="sh_cpp">'\0'</code>) must not exceed the number of elements in the array. In C, an array can be
+initialized with a string even if the array is not large enough to contain the string-terminating <code class="sh_cpp">'\0'</code></p>
+
+<p>Example:</p>
+
+<pre><code class="sh_cpp">char array[4] = "abcd";     // valid C, invalid C++</code></pre>
+
+<p><strong>Rationale:</strong> When these non-terminated arrays are manipulated by standard string routines, there is potential for major
+catastrophe.</p>
+
+<p><strong>Effect on original feature:</strong> Deletion of semantically well-defined feature.</p>
+
+<p><strong>Difficulty of converting:</strong> Semantic transformation. The arrays must be declared one element bigger to contain the string
+terminating <code class="sh_cpp">'\0'</code>.</p>
+
+<p><strong>How widely used:</strong> Seldom. This style of array initialization is seen as poor coding style.</p>
+
+</body>
+</html>
+

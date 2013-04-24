@@ -1,0 +1,145 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Attribute syntax and semantics</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[dcl.attr]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[dcl.attr]"></object>7.6 Attributes </h2>
+
+<h3>
+<dfn class="label">[dcl.attr.grammar]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[dcl.attr.grammar]"></object>7.6.1 Attribute syntax and semantics </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Attributes specify additional information for various source constructs such as types, variables, names,
+blocks, or translation units.</p>
+
+<dl>
+<dt>
+<i class="nonterminal"><dfn>attribute-specifier-seq</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="attribute-specifier-seq"></object></i>:</dt>
+	<dd>
+<i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub> <i class="nonterminal">attribute-specifier</i>
+</dd>
+<dt>
+<i class="nonterminal"><dfn>attribute-specifier</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="attribute-specifier"></object></i>:</dt>
+	<dd>
+<code class="sh_cpp">[</code> <code class="sh_cpp">[</code> <i class="nonterminal">attribute-list</i> <code class="sh_cpp">]</code> <code class="sh_cpp">]</code>
+</dd>
+	<dd><i class="nonterminal">alignment-specifier</i></dd>
+<dt>
+<i class="nonterminal"><dfn>alignment-specifier</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="alignment-specifier"></object></i>:</dt>
+	<dd>
+<code class="sh_cpp">alignas</code> <code class="sh_cpp">(</code> <i class="nonterminal">type-id</i> <code class="sh_cpp">...</code><sub class="opt">opt</sub> <code class="sh_cpp">)</code>
+</dd>
+	<dd>
+<code class="sh_cpp">alignas</code> <code class="sh_cpp">(</code> <i class="nonterminal">alignment-expression</i> <code class="sh_cpp">...</code><sub class="opt">opt</sub> <code class="sh_cpp">)</code>
+</dd>
+<dt>
+<i class="nonterminal"><dfn>attribute-list</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="attribute-list"></object></i>:</dt>
+	<dd>
+<i class="nonterminal">attribute</i><sub class="opt">opt</sub>
+</dd>
+	<dd>
+<i class="nonterminal">attribute-list</i> <code class="sh_cpp">,</code> <i class="nonterminal">attribute</i><sub class="opt">opt</sub>
+</dd>
+	<dd>
+<i class="nonterminal">attribute</i> <code class="sh_cpp">...</code>
+</dd>
+	<dd>
+<i class="nonterminal">attribute-list</i> <code class="sh_cpp">,</code> <i class="nonterminal">attribute</i> <code class="sh_cpp">...</code>
+</dd>
+<dt>
+<i class="nonterminal"><dfn>attribute</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="attribute"></object></i>:</dt>
+	<dd>
+<i class="nonterminal">attribute-token</i> <i class="nonterminal">attribute-argument-clause</i><sub class="opt">opt</sub>
+</dd>
+<dt>
+<i class="nonterminal"><dfn>attribute-token</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="attribute-token"></object></i>:</dt>
+	<dd><i class="nonterminal">identifier</i></dd>
+	<dd><i class="nonterminal">attribute-scoped-token</i></dd>
+<dt>
+<i class="nonterminal"><dfn>attribute-scoped-token</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="attribute-scoped-token"></object></i>:</dt>
+	<dd>
+<i class="nonterminal">attribute-namespace</i> <code class="sh_cpp">::</code> <i class="nonterminal">identifier</i>
+</dd>
+<dt>
+<i class="nonterminal"><dfn>attribute-namespace</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="attribute-namespace"></object></i>:</dt>
+	<dd><i class="nonterminal">identifier</i></dd>
+<dt>
+<i class="nonterminal"><dfn>attribute-argument-clause</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="attribute-argument-clause"></object></i>:</dt>
+	<dd>
+<code class="sh_cpp">(</code> <i class="nonterminal">balanced-token-seq</i> <code class="sh_cpp">)</code>
+</dd>
+<dt>
+<i class="nonterminal"><dfn>balanced-token-seq</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="balanced-token-seq"></object></i>:</dt>
+	<dd>
+<i class="nonterminal">balanced-token</i><sub class="opt">opt</sub>
+</dd>
+	<dd>
+<i class="nonterminal">balanced-token-seq</i> <i class="nonterminal">balanced-token</i>
+</dd>
+<dt>
+<i class="nonterminal"><dfn>balanced-token</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="balanced-token"></object></i>:</dt>
+	<dd>
+<code class="sh_cpp">(</code> <i class="nonterminal">balanced-token-seq</i> <code class="sh_cpp">)</code>
+</dd>
+	<dd>
+<code class="sh_cpp">[</code> <i class="nonterminal">balanced-token-seq</i> <code class="sh_cpp">]</code>
+</dd>
+	<dd>
+<code class="sh_cpp">{</code> <i class="nonterminal">balanced-token-seq</i> <code class="sh_cpp">}</code>
+</dd>
+	<dd>any <i class="nonterminal">token</i> other than a parenthesis, a bracket, or a brace</dd>
+</dl>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><span class="note">[ <em>Note:</em> For each individual attribute, the form of the <i class="nonterminal">balanced-token-seq</i> will be specified. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>In an <i class="nonterminal">attribute-list</i>, an ellipsis may appear only if that <i class="nonterminal">attribute</i>’s specification permits
+it. An <i class="nonterminal">attribute</i> followed by an ellipsis is a pack expansion (<a title="temp.variadic" href="temp.variadic.html">14.5.3</a>). An
+<i class="nonterminal">attribute-specifier</i> that contains no <i class="nonterminal">attribute</i>s has no effect. The order in which the
+<i class="nonterminal">attribute-token</i>s appear in an <i class="nonterminal">attribute-list</i> is not significant. If a keyword (<a title="lex.key" href="lex.key.html">2.12</a>) or an
+alternative token (<a title="lex.digraph" href="lex.digraph.html">2.6</a>) that satisfies the syntactic requirements of an <i class="nonterminal">identifier</i> (<a title="lex.name" href="lex.name.html">2.11</a>)
+is contained in an <i class="nonterminal">attribute-token</i>, it is considered an identifier. No name lookup (<a title="basic.lookup" href="basic.lookup.html">3.4</a>) is
+performed on any of the identifiers contained in an <i class="nonterminal">attribute-token</i>. The <i class="nonterminal">attribute-token</i> determines
+additional requirements on the <i class="nonterminal">attribute-argument-clause</i> (if any). The use of an
+<i class="nonterminal">attribute-scoped-token</i> is conditionally-supported, with implementation-defined behavior. <span class="note">[ <em>Note:</em> Each
+implementation should choose a distinctive name for the <i class="nonterminal">attribute-namespace</i> in an
+<i class="nonterminal">attribute-scoped-token</i>. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>Each <i class="nonterminal">attribute-specifier-seq</i> is said to <dfn>appertain</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="appertain"></object> to some entity or statement, identified
+by the syntactic context where it appears (Clause <a title="stmt.stmt" href="stmt.stmt.html">6</a>, Clause <a title="dcl.dcl" href="dcl.dcl.html">7</a>, Clause <a title="dcl.decl" href="dcl.decl.html">8</a>). If an
+<i class="nonterminal">attribute-specifier-seq</i> that appertains to some entity or statement contains an <i class="nonterminal">attribute</i> that is not
+allowed to apply to that entity or statement, the program is ill-formed. If an <i class="nonterminal">attribute-specifier-seq</i>
+appertains to a friend declaration (<a title="class.friend" href="class.friend.html">11.3</a>), that declaration shall be a definition. No
+<i class="nonterminal">attribute-specifier-seq</i> shall appertain to an explicit instantiation (<a title="temp.explicit" href="temp.explicit.html">14.7.2</a>).</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>For an <i class="nonterminal">attribute-token</i> not specified in this International Standard, the behavior is
+implementation-defined.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>Two consecutive left square bracket tokens shall appear only when introducing an <i class="nonterminal">attribute-specifier</i>.
+<span class="note">[ <em>Note:</em> If two consecutive left square brackets appear where an <i class="nonterminal">attribute-specifier</i> is not allowed, the program
+is ill formed even if the brackets match an alternative grammar production. — <em>end note</em> ]</span></p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">int p[10];
+void f() {
+  int x = 42, y[5];
+  int(p[[x] { return x; }()]);  // error: malformed attribute on a nested
+                                // declarator-id and not a function-style cast of
+                                // an element of p.
+  y[[] { return 2; }()] = 2;    // error even though attributes are not allowed
+                                // in this context.
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+</body>
+</html>
+

@@ -1,0 +1,163 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class template unordered_set overview</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[unord.set]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[unord.set]"></object>23.5.6 Class template <code class="sh_cpp"><dfn>unordered_set</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="unordered_set"></object></code> </h3>
+
+<h4>
+<dfn class="label">[unord.set.overview]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[unord.set.overview]"></object>23.5.6.1 Class template <code class="sh_cpp">unordered_set</code> overview </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>An <code class="sh_cpp">unordered_set</code> is an unordered associative container that supports unique keys (an
+<code class="sh_cpp">unordered_set</code> contains at most one of each key value) and in which the elements’ keys are the elements
+themselves. The <code class="sh_cpp">unordered_set</code> class supports forward iterators.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>An <code class="sh_cpp">unordered_set</code> satisfies all of the requirements of a container, of an unordered associative
+container, and of an allocator-aware container (Table <a href="container.requirements.general.html#t99">99</a>). It provides the operations described in the
+preceding requirements table for unique keys; that is, an <code class="sh_cpp">unordered_set</code> supports the <code class="sh_cpp">a_uniq</code>
+operations in that table, not the <code class="sh_cpp">a_eq</code> operations. For an <code class="sh_cpp">unordered_set&lt;Key&gt;</code> the
+key type and the value type are both <code class="sh_cpp">Key</code>. The <code class="sh_cpp">iterator</code> and <code class="sh_cpp">const_iterator</code> types
+are both const iterator types. It is unspecified whether they are the same type.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>This section only describes operations on <code class="sh_cpp">unordered_set</code> that are not described in one of the
+requirement tables, or for which there is additional semantic information.</p>
+
+<pre><code class="sh_cpp">namespace std {
+  template &lt;class Key,
+            class Hash = hash&lt;Key&gt;,
+            class Pred = std::equal_to&lt;Key&gt;,
+            class Allocator = std::allocator&lt;Key&gt; &gt;
+  class unordered_set
+  {
+  public:
+    // types
+    typedef Key                                      key_type;
+    typedef Key                                      value_type;
+    typedef Hash                                     hasher;
+    typedef Pred                                     key_equal;
+    typedef Allocator                                allocator_type;
+    typedef typename allocator_type::pointer         pointer;
+    typedef typename allocator_type::const_pointer   const_pointer;
+    typedef typename allocator_type::reference       reference;
+    typedef typename allocator_type::const_reference const_reference;
+    typedef <em>implementation-defined</em>                   size_type;
+    typedef <em>implementation-defined</em>                   difference_type;
+
+    typedef <em>implementation-defined</em>                   iterator;
+    typedef <em>implementation-defined</em>                   const_iterator;
+    typedef <em>implementation-defined</em>                   local_iterator;
+    typedef <em>implementation-defined</em>                   const_local_iterator;
+
+    // construct/destroy/copy
+    explicit unordered_set(size_type n = <em>implementation-defined</em>,
+                           const hasher&amp; hf = hasher(),
+                           const key_equal&amp; eql = key_equal(),
+                           const allocator_type&amp; a = allocator_type());
+    template &lt;class InputIterator&gt;
+      unordered_set(InputIterator f, InputIterator l,
+                    size_type n = <em>see below</em>,
+                    const hasher&amp; hf = hasher(),
+                    const key_equal&amp; eql = key_equal(),
+                    const allocator_type&amp; a = allocator_type());
+    unordered_set(const unordered_set&amp;);
+    unordered_set(unordered_set&amp;&amp;);
+    explicit unordered_set(const Allocator&amp;);
+    unordered_set(const unordered_set&amp;, const Allocator&amp;);
+    unordered_set(unordered_set&amp;&amp;, const Allocator&amp;);
+    unordered_set(initializer_list&lt;value_type&gt;,
+      size_type = <em>see below</em>,
+      const hasher&amp; hf = hasher(),
+      const key_equal&amp; eql = key_equal(),
+      const allocator_type&amp; a = allocator_type());
+    ~unordered_set();
+    unordered_set&amp; operator=(const unordered_set&amp;);
+    unordered_set&amp; operator=(unordered_set&amp;&amp;);
+    unordered_set&amp; operator=(initializer_list&lt;value_type&gt;);
+    allocator_type get_allocator() const noexcept;
+
+    // size and capacity
+    bool empty() const noexcept;
+    size_type size() const noexcept;
+    size_type max_size() const noexcept;
+
+    // iterators
+    iterator       begin() noexcept;
+    const_iterator begin() const noexcept;
+    iterator       end() noexcept;
+    const_iterator end() const noexcept;
+    const_iterator cbegin() const noexcept;
+    const_iterator cend() const noexcept;
+
+    // modifiers
+    template &lt;class... Args&gt; pair&lt;iterator, bool&gt; emplace(Args&amp;&amp;... args);
+    template &lt;class... Args&gt; iterator emplace_hint(const_iterator position, Args&amp;&amp;... args);
+    pair&lt;iterator, bool&gt; insert(const value_type&amp; obj);
+    pair&lt;iterator, bool&gt; insert(value_type&amp;&amp; obj);
+    iterator insert(const_iterator hint, const value_type&amp; obj);
+    iterator insert(const_iterator hint, value_type&amp;&amp; obj);
+    template &lt;class InputIterator&gt; void insert(InputIterator first, InputIterator last);
+    void insert(initializer_list&lt;value_type&gt;);
+
+    iterator erase(const_iterator position);
+    size_type erase(const key_type&amp; k);
+    iterator erase(const_iterator first, const_iterator last);
+    void clear() noexcept;
+
+    void swap(unordered_set&amp;);
+
+    // observers
+    hasher hash_function() const;
+    key_equal key_eq() const;
+
+    // lookup
+    iterator       find(const key_type&amp; k);
+    const_iterator find(const key_type&amp; k) const;
+    size_type count(const key_type&amp; k) const;
+    std::pair&lt;iterator, iterator&gt;             equal_range(const key_type&amp; k);
+    std::pair&lt;const_iterator, const_iterator&gt; equal_range(const key_type&amp; k) const;
+
+    // bucket interface
+    size_type bucket_count() const noexcept;
+    size_type max_bucket_count() const noexcept;
+    size_type bucket_size(size_type n) const;
+    size_type bucket(const key_type&amp; k) const;
+    local_iterator begin(size_type n);
+    const_local_iterator begin(size_type n) const;
+    local_iterator end(size_type n);
+    const_local_iterator end(size_type n) const;
+    const_local_iterator cbegin(size_type n) const;
+    const_local_iterator cend(size_type n) const;
+
+    // hash policy
+    float load_factor() const noexcept;
+    float max_load_factor() const noexcept;
+    void max_load_factor(float z);
+
+    void rehash(size_type n);
+    void reserve(size_type n);
+  };
+
+  template &lt;class Key, class Hash, class Pred, class Alloc&gt;
+    void swap(unordered_set&lt;Key, Hash, Pred, Alloc&gt;&amp; x,
+              unordered_set&lt;Key, Hash, Pred, Alloc&gt;&amp; y);
+
+  template &lt;class Key, class T, class Hash, class Pred, class Alloc&gt;
+    bool operator==(const unordered_set&lt;Key, T, Hash, Pred, Alloc&gt;&amp; a,
+                    const unordered_set&lt;Key, T, Hash, Pred, Alloc&gt;&amp; b);
+  template &lt;class Key, class T, class Hash, class Pred, class Alloc&gt;
+    bool operator!=(const unordered_set&lt;Key, T, Hash, Pred, Alloc&gt;&amp; a,
+                    const unordered_set&lt;Key, T, Hash, Pred, Alloc&gt;&amp; b);
+}</code></pre>
+</body>
+</html>
+

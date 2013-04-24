@@ -1,0 +1,279 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>New</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[expr.new]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[expr.new]"></object>5.3.4 New </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The <i class="nonterminal">new-expression</i> attempts to create an object of the <i class="nonterminal">type-id</i> (<a title="dcl.name" href="dcl.name.html">8.1</a>) or
+<i class="nonterminal">new-type-id</i> to which it is applied. The type of that object is the <dfn>allocated type</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="allocated type"></object>. This type shall
+be a complete object type, but not an abstract class type or array thereof (<a title="intro.object" href="intro.object.html">1.8</a>, <a title="basic.types" href="basic.types.html">3.9</a>,
+<a title="class.abstract" href="class.abstract.html">10.4</a>). It is implementation-defined whether over-aligned types are supported (<a title="basic.align" href="basic.align.html">3.11</a>). <span class="note">[ <em>Note:</em> because
+references are not objects, references cannot be created by <i class="nonterminal">new-expression</i>s. — <em>end note</em> ]</span> <span class="note">[ <em>Note:</em> the <i class="nonterminal">type-id</i>
+may be a cv-qualified type, in which case the object created by the <i class="nonterminal">new-expression</i> has a cv-qualified
+type. — <em>end note</em> ]</span></p>
+
+<dl>
+<dt>
+<i class="nonterminal"><dfn>new-expression</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="new-expression"></object></i>:</dt>
+	<dd>
+<code class="sh_cpp">::</code><sub class="opt">opt</sub> <code class="sh_cpp">new</code> <i class="nonterminal">new-placement</i><sub class="opt">opt</sub> <i class="nonterminal">new-type-id</i> <i class="nonterminal">new-initializer</i><sub class="opt">opt</sub>
+</dd>
+	<dd>
+<code class="sh_cpp">::</code><sub class="opt">opt</sub> <code class="sh_cpp">new</code> <i class="nonterminal">new-placement</i><sub class="opt">opt</sub> <code class="sh_cpp">(</code> <i class="nonterminal">type-id</i> <code class="sh_cpp">)</code> <i class="nonterminal">new-initializer</i><sub class="opt">opt</sub>
+</dd>
+<dt>
+<i class="nonterminal"><dfn>new-placement</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="new-placement"></object></i>:</dt>
+	<dd>
+<code class="sh_cpp">(</code> <i class="nonterminal">expression-list</i> <code class="sh_cpp">)</code>
+</dd>
+<dt>
+<i class="nonterminal"><dfn>new-type-id</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="new-type-id"></object></i>:</dt>
+	<dd>
+<i class="nonterminal">type-specifier-seq</i> <i class="nonterminal">new-declarator</i><sub class="opt">opt</sub>
+</dd>
+<dt>
+<i class="nonterminal"><dfn>new-declarator</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="new-declarator"></object></i>:</dt>
+	<dd>
+<i class="nonterminal">ptr-operator</i> <i class="nonterminal">new-declarator</i><sub class="opt">opt</sub>
+</dd>
+	<dd><i class="nonterminal">noptr-new-declarator</i></dd>
+<dt>
+<i class="nonterminal"><dfn>noptr-new-declarator</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="noptr-new-declarator"></object></i>:</dt>
+	<dd>
+<code class="sh_cpp">[</code> <i class="nonterminal">expression</i> <code class="sh_cpp">]</code> <i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub>
+</dd>
+	<dd>
+<i class="nonterminal">noptr-new-declarator</i> <code class="sh_cpp">[</code> <i class="nonterminal">constant-expression</i> <code class="sh_cpp">]</code> <i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub>
+</dd>
+<dt>
+<i class="nonterminal"><dfn>new-initializer</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="new-initializer"></object></i>:</dt>
+	<dd>
+<code class="sh_cpp">(</code> <i class="nonterminal">expression-list</i><sub class="opt">opt</sub> <code class="sh_cpp">)</code>
+</dd>
+	<dd><i class="nonterminal">braced-init-list</i></dd>
+</dl>
+
+<p>Entities created by a <i class="nonterminal">new-expression</i> have dynamic storage duration (<a title="basic.stc.dynamic" href="basic.stc.dynamic.html">3.7.4</a>). <span class="note">[ <em>Note:</em> the lifetime of
+such an entity is not necessarily restricted to the scope in which it is created. — <em>end note</em> ]</span> If the entity is a non-array
+object, the <i class="nonterminal">new-expression</i> returns a pointer to the object created. If it is an array, the
+<i class="nonterminal">new-expression</i> returns a pointer to the initial element of the array.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>If the <code class="sh_cpp">auto</code> <i class="nonterminal">type-specifier</i> appears in the <i class="nonterminal">type-specifier-seq</i> of a
+<i class="nonterminal">new-type-id</i> or <i class="nonterminal">type-id</i> of a <i class="nonterminal">new-expression</i>, the <i class="nonterminal">new-expression</i> shall contain a
+<i class="nonterminal">new-initializer</i> of the form</p>
+
+<dl><dd>
+<code class="sh_cpp">(</code> <i class="nonterminal">assignment-expression</i> <code class="sh_cpp">)</code>
+</dd></dl>
+
+<p>The allocated type is deduced from the <i class="nonterminal">new-initializer</i> as follows: Let <code class="sh_cpp">e</code> be the
+<i class="nonterminal">assignment-expression</i> in the <i class="nonterminal">new-initializer</i> and <code class="sh_cpp">T</code> be the <i class="nonterminal">new-type-id</i> or
+<i class="nonterminal">type-id</i> of the <i class="nonterminal">new-expression</i>, then the allocated type is the type deduced for the variable
+<code class="sh_cpp">x</code> in the invented declaration (<a title="dcl.spec.auto" href="dcl.spec.auto.html">7.1.6.4</a>):</p>
+
+<pre><code class="sh_cpp">T x(e);</code></pre>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">new auto(1);            // allocated type is int
+auto x = new auto('a'); // allocated type is char, x is of type char*</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>The <i class="nonterminal">new-type-id</i> in a <i class="nonterminal">new-expression</i> is the longest possible sequence of
+<i class="nonterminal">new-declarator</i>s. <span class="note">[ <em>Note:</em> this prevents ambiguities between the declarator operators <code class="sh_cpp">&amp;</code>,
+<code class="sh_cpp">&amp;&amp;</code>, <code class="sh_cpp">*</code>, and <code class="sh_cpp">[]</code> and their expression counterparts. — <em>end note</em> ]</span></p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">new int * i;            // syntax error: parsed as (new int*) i, not as (new int)*i</code></pre>
+
+<p>The <code class="sh_cpp">*</code> is the pointer declarator and not the multiplication operator. — <em>end example</em> ]</p>
+</div>
+
+<div class="note">
+<p><a class="anchor" id="p4" href="#p4">4</a>[ <em>Note:</em> parentheses in a <i class="nonterminal">new-type-id</i> of a <i class="nonterminal">new-expression</i> can have surprising effects.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">new int(*[10])();       // error</code></pre>
+
+<p>is ill-formed because the binding is</p>
+
+<pre><code class="sh_cpp">(new int) (*[10])();    // error</code></pre>
+
+<p>Instead, the explicitly parenthesized version of the <code class="sh_cpp">new</code> operator can be used to create objects of
+compound types (<a title="basic.compound" href="basic.compound.html">3.9.2</a>):</p>
+
+<pre><code class="sh_cpp">new (int (*[10])());</code></pre>
+
+<p>allocates an array of <code class="sh_cpp">10</code> pointers to functions (taking no argument and returning
+<code class="sh_cpp">int</code>). — <em>end example</em> ]</p>
+</div>
+<p> — <em>end note</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>When the allocated object is an array (that is, the <i class="nonterminal">noptr-new-declarator</i> syntax is used or the
+<i class="nonterminal">new-type-id</i> or <i class="nonterminal">type-id</i> denotes an array type), the <i class="nonterminal">new-expression</i> yields a pointer to the
+initial element (if any) of the array. <span class="note">[ <em>Note:</em> both <code class="sh_cpp">new int</code> and <code class="sh_cpp">new int[10]</code> have type
+<code class="sh_cpp">int*</code> and the type of <code class="sh_cpp">new int[i][10]</code> is <code class="sh_cpp">int (*)[10]</code> — <em>end note</em> ]</span> The
+<i class="nonterminal">attribute-specifier-seq</i> in a <i class="nonterminal">noptr-new-declarator</i> appertains to the associated array type.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>Every <i class="nonterminal">constant-expression</i> in a <i class="nonterminal">noptr-new-declarator</i> shall be an integral constant expression
+(<a title="expr.const" href="expr.const.html">5.19</a>) and evaluate to a strictly positive value. The <i class="nonterminal">expression</i> in a <i class="nonterminal">noptr-new-declarator</i>
+shall be of integral type, unscoped enumeration type, or a class type for which a single non-explicit conversion
+function to integral or unscoped enumeration type exists (<a title="class.conv" href="class.conv.html">12.3</a>). If the expression is of class type, the
+expression is converted by calling that conversion function, and the result of the conversion is used in place of the
+original expression. <span class="example">[ <em>Example:</em> given the definition <code class="sh_cpp">int n = 42</code>, <code class="sh_cpp">new float[n][5]</code> is well-formed
+(because <code class="sh_cpp">n</code> is the expression of a <i class="nonterminal">noptr-new-declarator</i>), but <code class="sh_cpp">new float[5][n]</code> is
+ill-formed (because <code class="sh_cpp">n</code> is not a constant expression). — <em>end example</em> ]</span></p>
+
+<p><a class="anchor" id="p7" href="#p7">7</a>When the value of the <i class="nonterminal">expression</i> in a <i class="nonterminal">noptr-new-declarator</i> is zero, the allocation function
+is called to allocate an array with no elements. If the value of that <i class="nonterminal">expression</i> is less than zero or such that
+the size of the allocated object would exceed the implementation-defined limit, or if the <i class="nonterminal">new-initializer</i> is a
+<i class="nonterminal">braced-init-list</i> for which the number of <i class="nonterminal">initializer-clause</i>s exceeds the number of elements to
+initialize, no storage is obtained and the <i class="nonterminal">new-expression</i> terminates by throwing an exception of a type that
+would match a handler (<a title="except.handle" href="except.handle.html">15.3</a>) of type <code class="sh_cpp">std::bad_array_new_length</code> (<a title="new.badlength" href="new.badlength.html">18.6.2.2</a>).</p>
+
+<p><a class="anchor" id="p8" href="#p8">8</a>A <i class="nonterminal">new-expression</i> obtains storage for the object by calling an allocation function
+(<a title="basic.stc.dynamic.allocation" href="basic.stc.dynamic.allocation.html">3.7.4.1</a>). If the <i class="nonterminal">new-expression</i> terminates by throwing an exception, it may release storage by
+calling a deallocation function (<a title="basic.stc.dynamic.deallocation" href="basic.stc.dynamic.deallocation.html">3.7.4.2</a>). If the allocated type is a non-array type, the allocation
+function’s name is <code class="sh_cpp">operator new</code> and the deallocation function’s name is <code class="sh_cpp">operator delete</code>. If
+the allocated type is an array type, the allocation function’s name is <code class="sh_cpp">operator new[]</code> and the deallocation
+function’s name is <code class="sh_cpp">operator delete[]</code>. <span class="note">[ <em>Note:</em> an implementation shall provide default definitions for the
+global allocation functions (<a title="basic.stc.dynamic" href="basic.stc.dynamic.html">3.7.4</a>, <a title="new.delete.single" href="new.delete.single.html">18.6.1.1</a>, <a title="new.delete.array" href="new.delete.array.html">18.6.1.2</a>). A C++ program can provide
+alternative definitions of these functions (<a title="replacement.functions" href="replacement.functions.html">17.6.4.6</a>) and/or class-specific versions
+(<a title="class.free" href="class.free.html">12.5</a>). — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p9" href="#p9">9</a>If the <i class="nonterminal">new-expression</i> begins with a unary <code class="sh_cpp">::</code> operator, the allocation function’s name is
+looked up in the global scope. Otherwise, if the allocated type is a class type <code class="sh_cpp">T</code> or array thereof, the
+allocation function’s name is looked up in the scope of <code class="sh_cpp">T</code>. If this lookup fails to find the name, or if the
+allocated type is not a class type, the allocation function’s name is looked up in the global scope.</p>
+
+<p><a class="anchor" id="p10" href="#p10">10</a>A <i class="nonterminal">new-expression</i> passes the amount of space requested to the allocation function as the first
+argument of type <code class="sh_cpp">std::size_t</code>. That argument shall be no less than the size of the object being created; it
+may be greater than the size of the object being created only if the object is an array. For arrays of <code class="sh_cpp">char</code>
+and <code class="sh_cpp">unsigned char</code>, the difference between the result of the <i class="nonterminal">new-expression</i> and the address
+returned by the allocation function shall be an integral multiple of the strictest fundamental alignment requirement
+(<a title="basic.align" href="basic.align.html">3.11</a>) of any object type whose size is no greater than the size of the array being created. <span class="note">[ <em>Note:</em> Because
+allocation functions are assumed to return pointers to storage that is appropriately aligned for objects of any type
+with fundamental alignment, this constraint on array allocation overhead permits the common idiom of allocating
+character arrays into which objects of other types will later be placed. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p11" href="#p11">11</a>The <i class="nonterminal">new-placement</i> syntax is used to supply additional arguments to an allocation function. If used,
+overload resolution is performed on a function call created by assembling an argument list consisting of the amount of
+space requested (the first argument) and the expressions in the <i class="nonterminal">new-placement</i> part of the
+<i class="nonterminal">new-expression</i> (the second and succeeding arguments). The first of these arguments has type
+<code class="sh_cpp">std::size_t</code> and the remaining arguments have the corresponding types of the expressions in the
+<i class="nonterminal">new-placement</i>.</p>
+
+<div class="example">
+<p><a class="anchor" id="p12" href="#p12">12</a>[ <em>Example:</em> </p>
+<ul>
+<li>
+<code class="sh_cpp">new T</code> results in a call of <code class="sh_cpp">operator new(sizeof(T))</code>,</li>
+<li>
+<code class="sh_cpp">new(2,f) T</code> results in a call of <code class="sh_cpp">operator new(sizeof(T),2,f)</code>,</li>
+<li>
+<code class="sh_cpp">new T[5]</code> results in a call of <code class="sh_cpp">operator new[](sizeof(T)*5+x)</code>, and</li>
+<li>
+<code class="sh_cpp">new(2,f) T[5]</code> results in a call of <code class="sh_cpp">operator new[](sizeof(T)*5+y,2,f)</code>.</li>
+</ul>
+<p>Here, <code class="sh_cpp">x</code> and <code class="sh_cpp">y</code> are non-negative unspecified values representing array allocation overhead;
+the result of the <i class="nonterminal">new-expression</i> will be offset by this amount from the value returned by <code class="sh_cpp">operator
+new[]</code>. This overhead may be applied in all array <i class="nonterminal">new-expression</i>s, including those referencing the
+library function <code class="sh_cpp">operator new[](std::size_t, void*)</code> and other placement allocation functions. The amount of
+overhead may vary from one invocation of new to another. — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p13" href="#p13">13</a><span class="note">[ <em>Note:</em> unless an allocation function is declared with a non-throwing <i class="nonterminal">exception-specification</i>
+(<a title="except.spec" href="except.spec.html">15.4</a>), it indicates failure to allocate storage by throwing a <code class="sh_cpp">std::bad_alloc</code> exception (Clause
+<a title="except" href="except.html">15</a>, <a title="bad.alloc" href="bad.alloc.html">18.6.2.1</a>); it returns a non-null pointer otherwise. If the allocation function is declared
+with a non-throwing <i class="nonterminal">exception-specification</i>, it returns null to indicate failure to allocate storage and a
+non-null pointer otherwise. — <em>end note</em> ]</span> If the allocation function returns null, initialization shall not be done, the
+deallocation function shall not be called, and the value of the <i class="nonterminal">new-expression</i> shall be null.</p>
+
+<p><a class="anchor" id="p14" href="#p14">14</a><span class="note">[ <em>Note:</em> when the allocation function returns a value other than null, it must be a pointer to a block of storage
+in which space for the object has been reserved. The block of storage is assumed to be appropriately aligned and of the
+requested size. The address of the created object will not necessarily be the same as that of the block if the object is
+an array. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p15" href="#p15">15</a>A <i class="nonterminal">new-expression</i> that creates an object of type <code class="sh_cpp">T</code> initializes that object as
+follows:</p>
+<ul>
+<li>If the <i class="nonterminal">new-initializer</i> is omitted, the object is default-initialized (<a title="dcl.init" href="dcl.init.html">8.5</a>); if no initialization
+	is performed, the object has indeterminate value.</li>
+<li>Otherwise, the <i class="nonterminal">new-initializer</i> is interpreted according to the initialization rules of <a title="dcl.init" href="dcl.init.html">8.5</a> for
+	direct-initialization.</li>
+</ul>
+
+<p><a class="anchor" id="p16" href="#p16">16</a>The invocation of the allocation function is indeterminately sequenced with respect to the evaluations of
+expressions in the <i class="nonterminal">new-initializer</i>. Initialization of the allocated object is sequenced before the value
+computation of the <i class="nonterminal">new-expression</i>. It is unspecified whether expressions in the <i class="nonterminal">new-initializer</i> are
+evaluated if the allocation function returns the null pointer or exits using an exception.</p>
+
+<p><a class="anchor" id="p17" href="#p17">17</a>If the <i class="nonterminal">new-expression</i> creates an object or an array of objects of class type, access and ambiguity
+control are done for the allocation function, the deallocation function (<a title="class.free" href="class.free.html">12.5</a>), and the constructor
+(<a title="class.ctor" href="class.ctor.html">12.1</a>). If the new expression creates an array of objects of class type, access and ambiguity control are
+done for the destructor (<a title="class.dtor" href="class.dtor.html">12.4</a>).</p>
+
+<p><a class="anchor" id="p18" href="#p18">18</a>If any part of the object initialization described above<sup class="footnote"><a href="#fn77">77</a></sup> terminates by throwing an exception and
+a suitable deallocation function can be found, the deallocation function is called to free the memory in which the
+object was being constructed, after which the exception continues to propagate in the context of the
+<i class="nonterminal">new-expression</i>. If no unambiguous matching deallocation function can be found, propagating the exception does
+not cause the object’s memory to be freed. <span class="note">[ <em>Note:</em> This is appropriate when the called allocation function does not
+allocate memory; otherwise, it is likely to result in a memory leak. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p19" href="#p19">19</a>If the <i class="nonterminal">new-expression</i> begins with a unary <code class="sh_cpp">::</code> operator, the deallocation function’s name
+is looked up in the global scope. Otherwise, if the allocated type is a class type <code class="sh_cpp">T</code> or an array thereof,
+the deallocation function’s name is looked up in the scope of <code class="sh_cpp">T</code>. If this lookup fails to find the name, or
+if the allocated type is not a class type or array thereof, the deallocation function’s name is looked up in the global
+scope.</p>
+
+<p><a class="anchor" id="p20" href="#p20">20</a>A declaration of a placement deallocation function matches the declaration of a placement allocation function
+if it has the same number of parameters and, after parameter transformations (<a title="dcl.fct" href="dcl.fct.html">8.3.5</a>), all parameter types
+except the first are identical. Any non-placement deallocation function matches a non-placement allocation function. If
+the lookup finds a single matching deallocation function, that function will be called; otherwise, no deallocation
+function will be called. If the lookup finds the two-parameter form of a usual deallocation function
+(<a title="basic.stc.dynamic.deallocation" href="basic.stc.dynamic.deallocation.html">3.7.4.2</a>) and that function, considered as a placement deallocation function, would have been selected as a
+match for the allocation function, the program is ill-formed.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct S {
+  // Placement allocation function:
+  static void* operator new(std::size_t, std::size_t);
+
+  // Usual (non-placement) deallocation function:
+  static void operator delete(void*, std::size_t);
+};
+
+S* p = new (0) S;       // ill-formed: non-placement deallocation function matches
+                        // placement allocation function</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p21" href="#p21">21</a>If a <i class="nonterminal">new-expression</i> calls a deallocation function, it passes the value returned from the allocation
+function call as the first argument of type <code class="sh_cpp">void*</code>. If a placement deallocation function is called, it is
+passed the same additional arguments as were passed to the placement allocation function, that is, the same arguments as
+those specified with the <i class="nonterminal">new-placement</i> syntax. If the implementation is allowed to make a copy of any argument
+as part of the call to the allocation function, it is allowed to make a copy (of the same original value) as part of the
+call to the deallocation function or to reuse the copy made as part of the call to the allocation function. If the copy
+is elided in one place, it need not be elided in the other.</p>
+
+
+<div><p class="footnote" id="fn77">77) This may include evaluating a <i class="nonterminal">new-initializer</i> and/or calling a constructor.</p></div>
+</body>
+</html>
+

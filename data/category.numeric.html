@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>The numeric category</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[category.numeric]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[category.numeric]"></object>22.4.2 The numeric category </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The classes <code class="sh_cpp">num_get&lt;&gt;</code> and <code class="sh_cpp">num_put&lt;&gt;</code> handle numeric formatting
+and parsing. Virtual functions are provided for several numeric types. Implementations may (but are not required to)
+delegate extraction of smaller types to extractors for larger types.<sup class="footnote"><a href="#fn248">248</a></sup></p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>All specifications of member functions for <code class="sh_cpp">num_put</code> and <code class="sh_cpp">num_get</code> in the subclauses of
+<a title="category.numeric" href="category.numeric.html">22.4.2</a> only apply to the specializations required in Tables <a href="locale.category.html#t81">81</a> and <a href="locale.category.html#t82">82</a> (<a title="locale.category" href="locale.category.html">22.3.1.1.1</a>), namely <code class="sh_cpp">num_get&lt;char&gt;</code>,
+<code class="sh_cpp">num_get&lt;wchar_t&gt;</code>, <code class="sh_cpp">num_get&lt;C, InputIterator&gt;</code>,
+<code class="sh_cpp">num_put&lt;char&gt;</code>, <code class="sh_cpp">num_put&lt;wchar_t&gt;</code>, and <code class="sh_cpp">num_put&lt;C,
+OutputIterator&gt;</code>. These specializations refer to the <code class="sh_cpp">ios_base&amp;</code> argument for formatting
+specifications (<a title="locale.categories" href="locale.categories.html">22.4</a>), and to its imbued locale for the <code class="sh_cpp">numpunct&lt;&gt;</code> facet to identify
+all numeric punctuation preferences, and also for the <code class="sh_cpp">ctype&lt;&gt;</code> facet to perform character
+classification.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>Extractor and inserter members of the standard iostreams use <code class="sh_cpp">num_get&lt;&gt;</code> and
+<code class="sh_cpp">num_put&lt;&gt;</code> member functions for formatting and parsing numeric values (<a title="istream.formatted.reqmts" href="istream.formatted.reqmts.html">27.7.2.2.1</a>,
+<a title="ostream.formatted.reqmts" href="ostream.formatted.reqmts.html">27.7.3.6.1</a>).</p>
+
+
+<div><p class="footnote" id="fn248">248) Parsing <code class="sh_cpp">"-1"</code> correctly into, e.g., an <code class="sh_cpp">unsigned short</code> requires that the
+corresponding member <code class="sh_cpp">get()</code> at least extract the sign before delegating.</p></div>
+</body>
+</html>
+

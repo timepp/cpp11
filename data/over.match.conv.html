@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Initialization by conversion function</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[over.match.conv]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[over.match.conv]"></object>13.3.1.5 Initialization by conversion function </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Under the conditions specified in <a title="dcl.init" href="dcl.init.html">8.5</a>, as part of an initialization of an object of nonclass type, a
+conversion function can be invoked to convert an initializer expression of class type to the type of the object being
+initialized. Overload resolution is used to select the conversion function to be invoked. Assuming that “<var>cv1</var>
+<code class="sh_cpp">T</code>” is the type of the object being initialized, and “<var>cv</var> <code class="sh_cpp">S</code>” is the type of the
+initializer expression, with <code class="sh_cpp">S</code> a class type, the candidate functions are selected as follows:</p>
+
+<ul>
+<li>The conversion functions of <code class="sh_cpp">S</code> and its base classes are considered. Those non-explicit conversion
+	functions that are not hidden within <code class="sh_cpp">S</code> and yield type <code class="sh_cpp">T</code> or a type that can be converted to
+	type <code class="sh_cpp">T</code> via a standard conversion sequence (<a title="over.ics.scs" href="over.ics.scs.html">13.3.3.1.1</a>) are candidate functions. For
+	direct-initialization, those explicit conversion functions that are not hidden within <code class="sh_cpp">S</code> and yield type
+	<code class="sh_cpp">T</code> or a type that can be converted to type <code class="sh_cpp">T</code> with a qualification conversion
+	(<a title="conv.qual" href="conv.qual.html">4.4</a>) are also candidate functions. Conversion functions that return a cv-qualified type are considered
+	to yield the cv-unqualified version of that type for this process of selecting candidate functions. Conversion
+	functions that return “reference to <var>cv2</var> <code class="sh_cpp">X</code>” return lvalues or xvalues, depending on the type
+	of reference, of type “<var>cv2</var> <code class="sh_cpp">X</code>” and are therefore considered to yield <code class="sh_cpp">X</code> for this
+	process of selecting candidate functions.</li>
+</ul>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The argument list has one argument, which is the initializer expression. <span class="note">[ <em>Note:</em> This argument will be compared
+against the implicit object parameter of the conversion functions. — <em>end note</em> ]</span></p>
+</body>
+</html>
+

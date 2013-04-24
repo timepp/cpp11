@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>The std::unexpected() function</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[except.unexpected]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[except.unexpected]"></object>15.5.2 The <code class="sh_cpp">std::unexpected()</code> function </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>If a function with a <i class="nonterminal">dynamic-exception-specification</i> throws an exception that is not listed in the
+<i class="nonterminal">dynamic-exception-specification</i>, the function <code class="sh_cpp">std::unexpected()</code> is called (<a title="exception.unexpected" href="unexpected.handler.html">D.11</a>)
+immediately after completing the stack unwinding for the former function.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><span class="note">[ <em>Note:</em> By default, <code class="sh_cpp">std::unexpected()</code> calls <code class="sh_cpp">std::terminate()</code>, but a program can install
+its own handler function (<a title="set.unexpected" href="set.unexpected.html">D.11.2</a>). In either case, the constraints in the following paragraph
+apply. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>The <code class="sh_cpp">std::unexpected()</code> function shall not return, but it can throw (or re-throw) an exception. If
+it throws a new exception which is allowed by the exception specification which previously was violated, then the search
+for another handler will continue at the call of the function whose exception specification was violated. If it throws
+or rethrows an exception that the <i class="nonterminal">dynamic-exception-specification</i> does not allow then the following happens: If
+the <i class="nonterminal">dynamic-exception-specification</i> does not include the class <code class="sh_cpp">std::bad_exception</code>
+(<a title="bad.exception" href="bad.exception.html">18.8.2</a>) then the function <code class="sh_cpp">std::terminate()</code> is called, otherwise the thrown exception is
+replaced by an implementation-defined object of the type <code class="sh_cpp">std::bad_exception</code> and the search for another
+handler will continue at the call of the function whose <i class="nonterminal">dynamic-exception-specification</i> was violated.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>Thus, a <i class="nonterminal">dynamic-exception-specification</i> guarantees that only the listed exceptions will be thrown. If
+the <i class="nonterminal">dynamic-exception-specification</i> includes the type <code class="sh_cpp">std::bad_exception</code> then any exception not on
+the list may be replaced by <code class="sh_cpp">std::bad_exception</code> within the function <code class="sh_cpp">std::unexpected()</code>.</p>
+</body>
+</html>
+

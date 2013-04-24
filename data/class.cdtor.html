@@ -1,0 +1,174 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Construction and destruction</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[class.cdtor]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[class.cdtor]"></object>12.7 Construction and destruction </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>For an object with a non-trivial constructor, referring to any non-static member or base class of the object
+before the constructor begins execution results in undefined behavior. For an object with a non-trivial destructor,
+referring to any non-static member or base class of the object after the destructor finishes execution results in
+undefined behavior.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct X { int i; };
+struct Y : X { Y(); };                  // non-trivial
+struct A { int a; };
+struct B : public A { int j; Y y; };    // non-trivial
+
+extern B bobj;
+B* pb = &amp;bobj;                          // OK
+int* p1 = &amp;bobj.a;                      // undefined, refers to base class member
+int* p2 = &amp;bobj.y.i;                    // undefined, refers to member’s member
+A* pa = &amp;bobj;                          // undefined, upcast to a base class type
+B bobj;                                 // definition of bobj
+
+extern X xobj;
+int* p3 = &amp;xobj.i;                      // OK, X is a trivial class
+X xobj;</code></pre>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>For another example,</p>
+
+<pre><code class="sh_cpp">struct W { int j; };
+struct X : public virtual W { };
+struct Y {
+  int *p;
+  X x;
+  Y() : p(&amp;x.j) {    // undefined, x is not yet constructed
+    }
+};</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>To explicitly or implicitly convert a pointer (a glvalue) referring to an object of class <code class="sh_cpp">X</code> to a
+pointer (reference) to a direct or indirect base class <code class="sh_cpp">B</code> of <code class="sh_cpp">X</code>, the construction of
+<code class="sh_cpp">X</code> and the construction of all of its direct or indirect bases that directly or indirectly derive from
+<code class="sh_cpp">B</code> shall have started and the destruction of these classes shall not have completed, otherwise the
+conversion results in undefined behavior. To form a pointer to (or access the value of) a direct non-static member of an
+object <code class="sh_cpp">obj</code>, the construction of <code class="sh_cpp">obj</code> shall have started and its destruction shall not have
+completed, otherwise the computation of the pointer value (or accessing the member value) results in undefined
+behavior.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct A { };
+struct B : virtual A { };
+struct C : B { };
+struct D : virtual A { D(A*); };
+struct X { X(A*); };
+
+struct E : C, D, X {
+  E() : D(this),    // undefined: upcast from E* to A*
+                    // might use path E* → D* → A*
+                    // but D is not constructed
+  // D((C*)this),   // defined:
+                    // E* → C* defined because E() has started
+                    // and C* → A* defined because
+                    // C fully constructed
+  X(this) {         // defined: upon construction of X,
+                    // C/B/D/A sublattice is fully constructed
+  }
+};</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>Member functions, including virtual functions (<a title="class.virtual" href="class.virtual.html">10.3</a>), can be called during construction or
+destruction (<a title="class.base.init" href="class.base.init.html">12.6.2</a>). When a virtual function is called directly or indirectly from a constructor or from a
+destructor, including during the construction or destruction of the class’s non-static data members, and the object to
+which the call applies is the object (call it <code class="sh_cpp">x</code>) under construction or destruction, the function called is
+the final overrider in the constructor’s or destructor’s class and not the one overriding it in a more-derived class. If
+the virtual function call uses an explicit class member access (<a title="expr.ref " href=".html"></a>) and the object expression refers to
+the complete object of <code class="sh_cpp">x</code> or one of that object’s base class subobjects but not <code class="sh_cpp">x</code> or one of its
+base class subobjects, the behavior is undefined.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct V {
+  virtual void f();
+  virtual void g();
+};
+
+struct A : virtual V {
+  virtual void f();
+};
+
+struct B : virtual V {
+  virtual void g();
+  B(V*, A*);
+};
+
+struct D : A, B {
+  virtual void f();
+  virtual void g();
+  D() : B((A*)this, this) { }
+};
+
+B::B(V* v, A* a) {
+  f();                  // calls V::f, not A::f
+  g();                  // calls B::g, not D::g
+  v-&gt;g();               // v is base of B, the call is well-defined, calls B::g
+  a-&gt;f();               // undefined behavior, a’s type not a base of B
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>The <code class="sh_cpp">typeid</code> operator (<a title="expr.typeid" href="expr.typeid.html">5.2.8</a>) can be used during construction or destruction
+(<a title="class.base.init" href="class.base.init.html">12.6.2</a>). When <code class="sh_cpp">typeid</code> is used in a constructor (including the <i class="nonterminal">mem-initializer</i> or
+<i class="nonterminal">brace-or-equal-initializer</i> for a non-static data member) or in a destructor, or used in a function called
+(directly or indirectly) from a constructor or destructor, if the operand of <code class="sh_cpp">typeid</code> refers to the object
+under construction or destruction, <code class="sh_cpp">typeid</code> yields the <code class="sh_cpp">std::type_info</code> object representing the
+constructor or destructor’s class. If the operand of <code class="sh_cpp">typeid</code> refers to the object under construction or
+destruction and the static type of the operand is neither the constructor or destructor’s class nor one of its bases,
+the result of <code class="sh_cpp">typeid</code> is undefined.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a><code class="sh_cpp">dynamic_cast</code>s (<a title="expr.dynamic.cast" href="expr.dynamic.cast.html">5.2.7</a>) can be used during construction or destruction
+(<a title="class.base.init" href="class.base.init.html">12.6.2</a>). When a <code class="sh_cpp">dynamic_cast</code> is used in a constructor (including the <i class="nonterminal">mem-initializer</i>
+or <i class="nonterminal">brace-or-equal-initializer</i> for a non-static data member) or in a destructor, or used in a function called
+(directly or indirectly) from a constructor or destructor, if the operand of the <code class="sh_cpp">dynamic_cast</code> refers to the
+object under construction or destruction, this object is considered to be a most derived object that has the type of the
+constructor or destructor’s class. If the operand of the <code class="sh_cpp">dynamic_cast</code> refers to the object under
+construction or destruction and the static type of the operand is not a pointer to or object of the constructor or
+destructor’s own class or one of its bases, the <code class="sh_cpp">dynamic_cast</code> results in undefined behavior.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct V {
+  virtual void f();
+};
+
+struct A : virtual V { };
+
+struct B : virtual V {
+  B(V*, A*);
+};
+
+struct D : A, B {
+  D() : B((A*)this, this) { }
+};
+
+B::B(V* v, A* a) {
+  typeid(*this);        // type_info for B
+  typeid(*v);           // well-defined: *v has type V, a base of B
+                        // yields type_info for B
+  typeid(*a);           // undefined behavior: type A not a base of B
+  dynamic_cast&lt;B*&gt;(v);  // well-defined: v of type V*, V base of B
+                        // results in B*
+  dynamic_cast&lt;B*&gt;(a);  // undefined behavior,
+                        // a has type A*, A not a base of B
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+</body>
+</html>
+

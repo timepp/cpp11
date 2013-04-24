@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Restrictions on exception handling</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[res.on.exception.handling]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[res.on.exception.handling]"></object>17.6.5.12 Restrictions on exception handling </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Any of the functions defined in the C++ standard library can report a failure by throwing an exception of a
+type described in its <em>Throws:</em> paragraph. An implementation may strengthen the <i class="nonterminal">exception-specification</i>
+for a non-virtual function by adding a non-throwing <i class="nonterminal">noexcept-specification</i>.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>A function may throw an object of a type not listed in its <em>Throws</em> clause if its type is derived from a
+type named in the <em>Throws</em> clause and would be caught by an exception handler for the base type.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>Functions from the C standard library shall not throw exceptions<sup class="footnote"><a href="#fn193">193</a></sup> except when such a function
+calls a program-supplied function that throws an exception.<sup class="footnote"><a href="#fn194">194</a></sup></p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>Destructor operations defined in the C++ standard library shall not throw exceptions. Every destructor in the
+    C++ standard library shall behave as if it had a non-throwing exception specification. Any other functions
+defined in the C++ standard library that do not have an <i class="nonterminal">exception-specification</i> may throw
+implementation-defined exceptions unless otherwise specified.<sup class="footnote"><a href="#fn195">195</a></sup> An implementation may strengthen this
+implicit <i class="nonterminal">exception- specification</i> by adding an explicit one.<sup class="footnote"><a href="#fn196">196</a></sup></p>
+
+
+
+
+
+
+
+
+<div>
+<p class="footnote" id="fn193">193) That is, the C library functions can all be treated as if they are marked <code class="sh_cpp">noexcept</code>. This
+allows implementations to make performance optimizations based on the absence of exceptions at runtime.</p>
+<p class="footnote" id="fn194">194) The functions <code class="sh_cpp">qsort()</code> and <code class="sh_cpp">bsearch()</code> (<a title="alg.c.library" href="alg.c.library.html">25.5</a>) meet this
+condition.</p>
+<p class="footnote" id="fn195">195) In particular, they can report a failure to allocate storage by throwing an exception of type
+<code class="sh_cpp">bad_alloc</code>, or a class derived from <code class="sh_cpp">bad_alloc</code> (<a title="bad.alloc" href="bad.alloc.html">18.6.2.1</a>). Library implementations
+should report errors by throwing exceptions of or derived from the standard exception classes (<a title="bad.alloc" href="bad.alloc.html">18.6.2.1</a>,
+<a title="support.exception" href="support.exception.html">18.8</a>, <a title="std.exceptions" href="std.exceptions.html">19.2</a>).</p>
+<p class="footnote" id="fn196">196) That is, an implementation may provide an explicit <i class="nonterminal">exception-specification</i> that defines the
+subset of “any” exceptions thrown by that function. This implies that the implementation may list implementation-defined
+types in such an <i class="nonterminal">exception-specification</i>.</p>
+</div>
+</body>
+</html>
+

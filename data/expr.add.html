@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Additive operators</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[expr.add]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[expr.add]"></object>5.7 Additive operators </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The additive operators <code class="sh_cpp">+</code> and <code class="sh_cpp">-</code> group left-to-right. The usual arithmetic conversions
+are performed for operands of arithmetic or enumeration type.</p>
+
+<dl>
+<dt>
+<i class="nonterminal"><dfn>additive-expression</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="additive-expression"></object></i>:</dt>
+	<dd><i class="nonterminal">multiplicative-expression</i></dd>
+	<dd>
+<i class="nonterminal">additive-expression</i> + <i class="nonterminal">multiplicative-expression</i>
+</dd>
+	<dd>
+<i class="nonterminal">additive-expression</i> - <i class="nonterminal">multiplicative-expression</i>
+</dd>
+</dl>
+
+<p>For addition, either both operands shall have arithmetic or unscoped enumeration type, or one operand shall be a
+pointer to a completely-defined object type and the other shall have integral or unscoped enumeration type.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>For subtraction, one of the following shall hold:</p>
+<ul>
+<li>both operands have arithmetic or unscoped enumeration type; or</li>
+<li>both operands are pointers to cv-qualified or cv-unqualified versions of the same completely-defined object type;
+	or</li>
+<li>the left operand is a pointer to a completely-defined object type and the right operand has integral or unscoped
+	enumeration type.</li>
+</ul>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>The result of the binary <code class="sh_cpp">+</code> operator is the sum of the operands. The result of the binary
+<code class="sh_cpp">-</code> operator is the difference resulting from the subtraction of the second operand from the first.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>For the purposes of these operators, a pointer to a nonarray object behaves the same as a pointer to the first
+element of an array of length one with the type of the object as its element type.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>When an expression that has integral type is added to or subtracted from a pointer, the result has the type of
+the pointer operand. If the pointer operand points to an element of an array object, and the array is large enough, the
+result points to an element offset from the original element such that the difference of the subscripts of the resulting
+and original array elements equals the integral expression. In other words, if the expression <code class="sh_cpp">P</code> points to
+the <var>i</var>-th element of an array object, the expressions <code class="sh_cpp">(P)+N</code> (equivalently, <code class="sh_cpp">N+(P)</code>)
+and <code class="sh_cpp">(P)-N</code> (where <code class="sh_cpp">N</code> has the value <var>n</var>) point to, respectively, the <var>i</var> +
+<var>n</var>-th and <var>i</var> − <var>n</var>-th elements of the array object, provided they exist. Moreover, if the
+expression <code class="sh_cpp">P</code> points to the last element of an array object, the expression <code class="sh_cpp">(P)+1</code> points one
+past the last element of the array object, and if the expression <code class="sh_cpp">Q</code> points one past the last element of an
+array object, the expression <code class="sh_cpp">(Q)-1</code> points to the last element of the array object. If both the pointer
+operand and the result point to elements of the same array object, or one past the last element of the array object, the
+evaluation shall not produce an overflow; otherwise, the behavior is undefined.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>When two pointers to elements of the same array object are subtracted, the result is the difference of the
+subscripts of the two array elements. The type of the result is an implementation-defined signed integral type; this
+type shall be the same type that is defined as <code class="sh_cpp">std::ptrdiff_t</code> in the <code class="header">&lt;cstddef&gt;</code> header
+(<a title="support.types" href="support.types.html">18.2</a>). As with any other arithmetic overflow, if the result does not fit in the space provided, the behavior
+is undefined. In other words, if the expressions <code class="sh_cpp">P</code> and <code class="sh_cpp">Q</code> point to, respectively, the
+<var>i</var>-th and <var>j</var>-th elements of an array object, the expression <code class="sh_cpp">(P)-(Q)</code> has the value
+<var>i</var> − <var>j</var> provided the value fits in an object of type <code class="sh_cpp">std::ptrdiff_t</code>. Moreover, if the
+expression <code class="sh_cpp">P</code> points either to an element of an array object or one past the last element of an array
+object, and the expression <code class="sh_cpp">Q</code> points to the last element of the same array object, the expression
+<code class="sh_cpp">((Q)+1)-(P)</code> has the same value as <code class="sh_cpp">((Q)-(P))+1</code> and as <code class="sh_cpp">-((P)-((Q)+1))</code>, and has the
+value zero if the expression <code class="sh_cpp">P</code> points one past the last element of the array object, even though the
+expression <code class="sh_cpp">(Q)+1</code> does not point to an element of the array object. Unless both pointers point to elements
+of the same array object, or one past the last element of the array object, the behavior is undefined.<sup class="footnote"><a href="#fn83">83</a></sup></p>
+
+<p><a class="anchor" id="p7" href="#p7">7</a>If the value 0 is added to or subtracted from a pointer value, the result compares equal to the original
+pointer value. If two pointers point to the same object or both point one past the end of the same array or both are
+null, and the two pointers are subtracted, the result compares equal to the value 0 converted to the type
+<code class="sh_cpp">std::ptrdiff_t</code>.</p>
+
+
+<div><div class="footnote" id="fn83">
+<p>83) Another way to approach pointer arithmetic is first to convert the pointer(s) to character
+pointer(s): In this scheme the integral value of the expression added to or subtracted from the converted pointer is
+first multiplied by the size of the object originally pointed to, and the resulting pointer is converted back to the
+original type. For pointer subtraction, the result of the difference between the character pointers is similarly divided
+by the size of the object originally pointed to.</p>
+
+<p>When viewed in this way, an implementation need only provide one extra byte (which might overlap another object in
+the program) just after the end of the object in order to satisfy the “one past the last element”
+requirements.</p>
+</div></div>
+</body>
+</html>
+

@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Compound types</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[basic.compound]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[basic.compound]"></object>3.9.2 Compound types </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Compound types can be constructed in the following ways:</p>
+<ul>
+<li>
+<em>arrays</em> of objects of a given type, <a title="dcl.array" href="dcl.array.html">8.3.4</a>;</li>
+<li>
+<em>functions</em>, which have parameters of given types and return <code class="sh_cpp">void</code> or references or objects of a
+	given type, <a title="dcl.fct" href="dcl.fct.html">8.3.5</a>;</li>
+<li>
+<em>pointers</em> to <code class="sh_cpp">void</code> or objects or functions (including static members of classes) of a given
+	type, <a title="dcl.ptr" href="dcl.ptr.html">8.3.1</a>;</li>
+<li>
+<em>references</em> to objects or functions of a given type, <a title="dcl.ref" href="dcl.ref.html">8.3.2</a>. There are two types of references:
+	<ul>
+	<li><em>lvalue reference</em></li>
+	<li><em>rvalue reference</em></li>
+	</ul>
+</li>
+<li>
+<em>classes</em> containing a sequence of objects of various types (Clause <a title="class" href="class.html">9</a>), a set of types,
+	enumerations and functions for manipulating these objects (<a title="class.mfct" href="class.mfct.html">9.3</a>), and a set of restrictions on the access to
+	these entities (Clause <a title="class.access" href="class.access.html">11</a>);</li>
+<li>
+<em>unions</em>, which are classes capable of containing objects of different types at different times,
+	<a title="class.union" href="class.union.html">9.5</a>;</li>
+<li>
+<em>enumerations</em>, which comprise a set of named constant values. Each distinct enumeration constitutes a
+	different <em>enumerated type</em>, <a title="dcl.enum" href="dcl.enum.html">7.2</a>;</li>
+<li>
+<em>pointers to non-static<sup class="footnote"><a href="#fn50">50</a></sup> class members</em>, which identify members of a given type within objects
+	of a given class, <a title="dcl.mptr" href="dcl.mptr.html">8.3.3</a>.</li>
+</ul>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>These methods of constructing types can be applied recursively; restrictions are mentioned in <a title="dcl.ptr" href="dcl.ptr.html">8.3.1</a>,
+<a title="dcl.array" href="dcl.array.html">8.3.4</a>, <a title="dcl.fct" href="dcl.fct.html">8.3.5</a>, and <a title="dcl.ref" href="dcl.ref.html">8.3.2</a>.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>The type of a pointer to <code class="sh_cpp">void</code> or a pointer to an object type is called an <dfn>object pointer
+type</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="object pointer
+type"></object>. <span class="note">[ <em>Note:</em> A pointer to <code class="sh_cpp">void</code> does not have a pointer-to-object type, however, because
+<code class="sh_cpp">void</code> is not an object type. — <em>end note</em> ]</span> The type of a pointer that can designate a function is called a
+<dfn>function pointer type</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="function pointer type"></object>. A pointer to objects of type <code class="sh_cpp">T</code> is referred to as a “pointer to
+<code class="sh_cpp">T</code>”. <span class="example">[ <em>Example:</em> a pointer to an object of type <code class="sh_cpp">int</code> is referred to as “pointer to
+<code class="sh_cpp">int</code>” and a pointer to an object of class <code class="sh_cpp">X</code> is called a “pointer to <code class="sh_cpp">X</code>”. — <em>end example</em> ]</span>
+Except for pointers to static members, text referring to “pointers” does not apply to pointers to members. Pointers to
+incomplete types are allowed although there are restrictions on what can be done with them (<a title="basic.align" href="basic.align.html">3.11</a>). A valid
+value of an object pointer type represents either the address of a byte in memory (<a title="intro.memory" href="intro.memory.html">1.7</a>) or a null pointer
+(<a title="conv.ptr" href="conv.ptr.html">4.10</a>). If an object of type <code class="sh_cpp">T</code> is located at an address <code class="sh_cpp">A</code>, a pointer of type
+<var>cv</var> <code class="sh_cpp">T*</code> whose value is the address <code class="sh_cpp">A</code> is said to <dfn>point to</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="point to"></object> that object,
+regardless of how the value was obtained. <span class="note">[ <em>Note:</em> For instance, the address one past the end of an array (<a title="expr.add" href="expr.add.html">5.7</a>)
+would be considered to point to an unrelated object of the array’s element type that might be located at that address.
+There are further restrictions on pointers to objects with dynamic storage duration; see <a title="basic.stc.dynamic.safety" href="basic.stc.dynamic.safety.html">3.7.4.3</a>. — <em>end note</em> ]</span> The
+value representation of pointer types is implementation-defined. Pointers to cv-qualified and cv-unqualified versions
+(<a title="basic.type.qualifier" href="basic.type.qualifier.html">3.9.3</a>) of layout-compatible types shall have the same value representation and alignment requirements
+(<a title="basic.align" href="basic.align.html">3.11</a>). <span class="note">[ <em>Note:</em> Pointers to over-aligned types (<a title="basic.align" href="basic.align.html">3.11</a>) have no special representation, but their
+range of valid values is restricted by the extended alignment requirement. This International Standard specifies only
+two ways of obtaining such a pointer: taking the address of a valid object with an over-aligned type, and using one of
+the runtime pointer alignment functions. An implementation may provide other means of obtaining a valid pointer value
+for an over-aligned type. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>A pointer to cv-qualified (<a title="basic.type.qualifier" href="basic.type.qualifier.html">3.9.3</a>) or cv-unqualified <code class="sh_cpp">void</code> can be used to point to
+objects of unknown type. Such a pointer shall be able to hold any object pointer. An object of type <var>cv</var>
+<code class="sh_cpp">void*</code> shall have the same representation and alignment requirements as <var>cv</var>
+<code class="sh_cpp">char*</code>.</p>
+
+
+<div><p class="footnote" id="fn50">50) Static class members are objects or functions, and pointers to them are ordinary pointers to objects or
+functions.</p></div>
+</body>
+</html>
+

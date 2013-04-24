@@ -1,0 +1,162 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class template multiset overview</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[multiset]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[multiset]"></object>23.4.7 Class template <code class="sh_cpp"><dfn>multiset</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="multiset"></object></code> </h3>
+
+<h4>
+<dfn class="label">[multiset.overview]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[multiset.overview]"></object>23.4.7.1 Class template <code class="sh_cpp">multiset</code> overview </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A <code class="sh_cpp">multiset</code> is an associative container that supports equivalent keys (possibly contains multiple
+copies of the same key value) and provides for fast retrieval of the keys themselves. The <code class="sh_cpp">multiset</code> class
+supports bidirectional iterators.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>A <code class="sh_cpp">multiset</code> satisfies all of the requirements of a container, of a reversible container
+(<a title="container.requirements" href="container.requirements.general.html">23.2</a>), of an associative container (<a title="associative.reqmts" href="associative.reqmts.html">23.2.4</a>), and of an allocator-aware container (Table <a href="container.requirements.general.html#t99">99</a>). <code class="sh_cpp">multiset</code> also provides most operations described in (<a title="associative.reqmts" href="associative.reqmts.html">23.2.4</a>) for duplicate keys.
+This means that a <code class="sh_cpp">multiset</code> supports the <code class="sh_cpp">a_eq</code> operations in (<a title="associative.reqmts" href="associative.reqmts.html">23.2.4</a>) but not the
+<code class="sh_cpp">a_uniq</code> operations. For a <code class="sh_cpp">multiset&lt;Key&gt;</code> both the <code class="sh_cpp">key_type</code> and
+<code class="sh_cpp">value_type</code> are <code class="sh_cpp">Key</code>. Descriptions are provided here only for operations on
+<code class="sh_cpp">multiset</code> that are not described in one of these tables and for operations where there is additional
+semantic information.</p>
+
+<pre><code class="sh_cpp">namespace std {
+  template &lt;class Key, class Compare = less&lt;Key&gt;,
+            class Allocator = allocator&lt;Key&gt; &gt;
+  class multiset {
+  public:
+    // types:
+    typedef Key                                   key_type;
+    typedef Key                                   value_type;
+    typedef Compare                               key_compare;
+    typedef Compare                               value_compare;
+    typedef Allocator                             allocator_type;
+    typedef value_type&amp;                           reference;
+    typedef const value_type&amp;                     const_reference;
+    typedef <em>implementation-defined</em>                iterator;         // see <a title="container.requirements" href="container.requirements.general.html">23.2</a>
+    typedef <em>implementation-defined</em>                const_iterator;   // see <a title="container.requirements" href="container.requirements.general.html">23.2</a>
+    typedef <em>implementation-defined</em>                size_type;        // see <a title="container.requirements" href="container.requirements.general.html">23.2</a>
+    typedef <em>implementation-defined</em>                difference_type;  // see <a title="container.requirements" href="container.requirements.general.html">23.2</a>
+    typedef typename allocator_traits&lt;Allocator&gt;::pointer           pointer;
+    typedef typename allocator_traits&lt;Allocator&gt;::const_pointer     const_pointer;
+    typedef std::reverse_iterator&lt;iterator&gt;       reverse_iterator;
+    typedef std::reverse_iterator&lt;const_iterator&gt; const_reverse_iterator;
+
+    // construct/copy/destroy:
+    explicit multiset(const Compare&amp; comp = Compare(),
+                     const Allocator&amp; = Allocator());
+    template &lt;class InputIterator&gt;
+      multiset(InputIterator first, InputIterator last,
+               const Compare&amp; comp = Compare(),
+               const Allocator&amp; = Allocator());
+    multiset(const multiset&lt;Key, Compare, Allocator&gt;&amp; x);
+    multiset(multiset&lt;Key, Compare, Allocator&gt;&amp;&amp; x);
+    explicit multiset(const Allocator&amp;);
+    multiset(const multiset&amp;, const Allocator&amp;);
+    multiset(multiset&amp;&amp;, const Allocator&amp;);
+    multiset(initializer_list&lt;value_type&gt;,
+             const Compare&amp; = Compare(),
+             const Allocator&amp; = Allocator());
+    ~multiset();
+    multiset&lt;Key, Compare, Allocator&gt;&amp;
+      operator=(const multiset&lt;Key, Compare, Allocator&gt;&amp; x);
+    multiset&lt;Key, Compare, Allocator&gt;&amp;
+      operator=(multiset&lt;Key, Compare, Allocator&gt;&amp;&amp; x);
+    multiset&amp; operator=(initializer_list&lt;value_type&gt;);
+    allocator_type get_allocator() const noexcept;
+
+    // iterators:
+    iterator               begin() noexcept;
+    const_iterator         begin() const noexcept;
+    iterator               end() noexcept;
+    const_iterator         end() const noexcept;
+
+    reverse_iterator       rbegin() noexcept;
+    const_reverse_iterator rbegin() const noexcept;
+    reverse_iterator       rend() noexcept;
+    const_reverse_iterator rend() const noexcept;
+
+    const_iterator         cbegin() const noexcept;
+    const_iterator         cend() const noexcept;
+    const_reverse_iterator crbegin() const noexcept;
+    const_reverse_iterator crend() const noexcept;
+
+    // capacity:
+    bool      empty() const noexcept;
+    size_type size() const noexcept;
+    size_type max_size() const noexcept;
+
+    // modifiers:
+    template &lt;class... Args&gt; iterator emplace(Args&amp;&amp;... args);
+    template &lt;class... Args&gt; iterator emplace_hint(const_iterator position, Args&amp;&amp;... args);
+    iterator insert(const value_type&amp; x);
+    iterator insert(value_type&amp;&amp; x);
+    iterator insert(const_iterator position, const value_type&amp; x);
+    iterator insert(const_iterator position, value_type&amp;&amp; x);
+    template &lt;class InputIterator&gt;
+      void insert(InputIterator first, InputIterator last);
+    void insert(initializer_list&lt;value_type&gt;);
+
+    iterator  erase(const_iterator position);
+    size_type erase(const key_type&amp; x);
+    iterator  erase(const_iterator first, const_iterator last);
+    void swap(multiset&lt;Key, Compare, Allocator&gt;&amp;);
+    void clear() noexcept;
+
+    // observers:
+    key_compare   key_comp() const;
+    value_compare value_comp() const;
+
+    // set operations:
+    iterator       find(const key_type&amp; x);
+    const_iterator find(const key_type&amp; x) const;
+
+    size_type count(const key_type&amp; x) const;
+
+    iterator       lower_bound(const key_type&amp; x);
+    const_iterator lower_bound(const key_type&amp; x) const;
+
+    iterator       upper_bound(const key_type&amp; x);
+    const_iterator upper_bound(const key_type&amp; x) const;
+
+    pair&lt;iterator,iterator&gt;             equal_range(const key_type&amp; x);
+    pair&lt;const_iterator,const_iterator&gt; equal_range(const key_type&amp; x) const;
+  };
+
+  template &lt;class Key, class Compare, class Allocator&gt;
+    bool operator==(const multiset&lt;Key, Compare, Allocator&gt;&amp; x,
+                    const multiset&lt;Key, Compare, Allocator&gt;&amp; y);
+  template &lt;class Key, class Compare, class Allocator&gt;
+    bool operator&lt; (const multiset&lt;Key, Compare, Allocator&gt;&amp; x,
+                    const multiset&lt;Key, Compare, Allocator&gt;&amp; y);
+  template &lt;class Key, class Compare, class Allocator&gt;
+    bool operator!=(const multiset&lt;Key, Compare, Allocator&gt;&amp; x,
+                    const multiset&lt;Key, Compare, Allocator&gt;&amp; y);
+  template &lt;class Key, class Compare, class Allocator&gt;
+    bool operator&gt; (const multiset&lt;Key, Compare, Allocator&gt;&amp; x,
+                    const multiset&lt;Key, Compare, Allocator&gt;&amp; y);
+  template &lt;class Key, class Compare, class Allocator&gt;
+    bool operator&gt;=(const multiset&lt;Key, Compare, Allocator&gt;&amp; x,
+                    const multiset&lt;Key, Compare, Allocator&gt;&amp; y);
+  template &lt;class Key, class Compare, class Allocator&gt;
+    bool operator&lt;=(const multiset&lt;Key, Compare, Allocator&gt;&amp; x,
+                    const multiset&lt;Key, Compare, Allocator&gt;&amp; y);
+
+  // specialized algorithms:
+  template &lt;class Key, class Compare, class Allocator&gt;
+    void swap(multiset&lt;Key, Compare, Allocator&gt;&amp; x,
+              multiset&lt;Key, Compare, Allocator&gt;&amp; y);
+}</code></pre>
+</body>
+</html>
+

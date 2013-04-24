@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class template duration</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[time.duration]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[time.duration]"></object>20.11.5 Class template <code class="sh_cpp"><dfn>duration</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="duration"></object></code> </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A <code class="sh_cpp">duration</code> type measures time between two points in time (<code class="sh_cpp">time_point</code>s). A
+<code class="sh_cpp">duration</code> has a representation which holds a count of ticks and a tick period. The tick period is the amount
+of time which occurs from one tick to the next, in units of seconds. It is expressed as a rational constant using the
+template <code class="sh_cpp">ratio</code>.</p>
+
+<pre><code class="sh_cpp">template &lt;class Rep, class Period = ratio&lt;1&gt;&gt;
+class duration {
+public:
+  typedef Rep    rep;
+  typedef Period period;
+private:
+  rep rep_; // exposition only
+public:
+  // <a title="time.duration.cons" href="time.duration.cons.html">20.11.5.1</a>, construct/copy/destroy:
+  constexpr duration() = default;
+  template &lt;class Rep2&gt;
+    constexpr explicit duration(const Rep2&amp; r);
+  template &lt;class Rep2, class Period2&gt;
+    constexpr duration(const duration&lt;Rep2, Period2&gt;&amp; d);
+  ~duration() = default;
+  duration(const duration&amp;) = default;
+  duration&amp; operator=(const duration&amp;) = default;
+
+  // <a title="time.duration.observer" href="time.duration.observer.html">20.11.5.2</a>, observer:
+  constexpr rep count() const;
+
+  // <a title="time.duration.arithmetic" href="time.duration.arithmetic.html">20.11.5.3</a>, arithmetic:
+  constexpr duration operator+() const;
+  constexpr duration operator-() const;
+  duration&amp; operator++();
+  duration  operator++(int);
+  duration&amp; operator--();
+  duration  operator--(int);
+
+  duration&amp; operator+=(const duration&amp; d);
+  duration&amp; operator-=(const duration&amp; d);
+  duration&amp; operator*=(const rep&amp; rhs);
+  duration&amp; operator/=(const rep&amp; rhs);
+  duration&amp; operator%=(const rep&amp; rhs);
+  duration&amp; operator%=(const duration&amp; rhs);
+
+  // <a title="time.duration.special" href="time.duration.special.html">20.11.5.4</a>, special values:
+  static constexpr duration zero();
+  static constexpr duration min();
+  static constexpr duration max();
+};</code></pre>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Requires:</em> <code class="sh_cpp">Rep</code> shall be an arithmetic type or a class emulating an arithmetic type.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Remarks:</em> If <code class="sh_cpp">duration</code> is instantiated with a <code class="sh_cpp">duration</code> type for the template argument
+<code class="sh_cpp">Rep</code>, the program is ill-formed.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><em>Remarks:</em> If <code class="sh_cpp">Period</code> is not a specialization of <code class="sh_cpp">ratio</code>, the program is
+ill-formed.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><em>Remarks:</em> If <code class="sh_cpp">Period::num</code> is not positive, the program is ill-formed.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a><em>Requires:</em> Members of <code class="sh_cpp">duration</code> shall not throw exceptions other than those thrown by the indicated
+         operations on their representations.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">duration&lt;long, ratio&lt;60&gt;&gt; d0;       // holds a count of minutes using a long
+duration&lt;long long, milli&gt; d1;      // holds a count of milliseconds using a long long
+duration&lt;double, ratio&lt;1, 30&gt;&gt; d2;  // holds a count with a tick period of 1/30 of a second
+                                    // (30 Hz) using a double</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+</body>
+</html>
+

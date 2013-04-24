@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Primary type categories</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[meta.unary.cat]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[meta.unary.cat]"></object>20.9.4.1 Primary type categories </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The primary type categories correspond to the descriptions given in section <a title="basic.types" href="basic.types.html">3.9</a> of the C++
+standard.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>For any given type <code class="sh_cpp">T</code>, the result of applying one of these templates to <code class="sh_cpp">T</code> and to
+cv-qualified <code class="sh_cpp">T</code> shall yield the same result.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><span class="note">[ <em>Note:</em> For any given type <code class="sh_cpp">T</code>, exactly one of the primary type categories has a value member that
+evaluates to <code class="sh_cpp">true</code>. — <em>end note</em> ]</span></p>
+
+<table id="t47" class="type_traits">
+<caption>Table 47 — Primary type category predicates</caption>
+<thead><tr>
+<th>Template</th>
+<th>Condition</th>
+<th>Comments</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>is_­void</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_void"></object>;</code></pre></td>
+	<td>
+<code class="sh_cpp">T</code> is <code class="sh_cpp">void</code>
+</td>
+	<td></td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>is_­integral</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_integral"></object>;</code></pre></td>
+	<td>
+<code class="sh_cpp">T</code> is an integral type (<a title="basic.fundamental" href="basic.fundamental.html">3.9.1</a>)</td>
+	<td></td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>is_­floating_­point</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_floating_point"></object>;</code></pre></td>
+	<td>
+<code class="sh_cpp">T</code> is a floating point type (<a title="basic.fundamental" href="basic.fundamental.html">3.9.1</a>)</td>
+	<td></td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>is_­array</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_array"></object>;</code></pre></td>
+	<td>
+<code class="sh_cpp">T</code> is an array type (<a title="basic.compound" href="basic.compound.html">3.9.2</a>) of known or unknown extent</td>
+	<td>Class template <code class="sh_cpp">array</code> (<a title="array" href="array.overview.html">23.3.2</a>) is not an array type.</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>is_­pointer</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_pointer"></object>;</code></pre></td>
+	<td>
+<code class="sh_cpp">T</code> is a pointer type (<a title="basic.compound" href="basic.compound.html">3.9.2</a>)</td>
+	<td>Includes pointers to functions but not pointers to non-static members.</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>is_­lvalue_­reference</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_lvalue_reference"></object>;</code></pre></td>
+	<td>
+<code class="sh_cpp">T</code> is an lvalue reference type (<a title="dcl.ref" href="dcl.ref.html">8.3.2</a>)</td>
+	<td></td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>is_­rvalue_­reference</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_rvalue_reference"></object>;</code></pre></td>
+	<td>
+<code class="sh_cpp">T</code> is an rvalue reference type (<a title="dcl.ref" href="dcl.ref.html">8.3.2</a>)</td>
+	<td></td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>is_­member_­object_­pointer</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_member_object_pointer"></object>;</code></pre></td>
+	<td>
+<code class="sh_cpp">T</code> is a pointer to non-static data member</td>
+	<td></td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>is_­member_­function_­pointer</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_member_function_pointer"></object>;</code></pre></td>
+	<td>
+<code class="sh_cpp">T</code> is a pointer to non-static member function</td>
+	<td></td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>is_­enum</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_enum"></object>;</code></pre></td>
+	<td>
+<code class="sh_cpp">T</code> is an enumeration type (<a title="basic.compound" href="basic.compound.html">3.9.2</a>)</td>
+	<td></td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>is_­union</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_union"></object>;</code></pre></td>
+	<td>
+<code class="sh_cpp">T</code> is a union type (<a title="basic.compound" href="basic.compound.html">3.9.2</a>)</td>
+	<td></td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>is_­class</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_class"></object>;</code></pre></td>
+	<td>
+<code class="sh_cpp">T</code> is a class type but not a union type (<a title="basic.compound" href="basic.compound.html">3.9.2</a>)</td>
+	<td></td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>is_­function</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="is_function"></object>;</code></pre></td>
+	<td>
+<code class="sh_cpp">T</code> is a function type (<a title="basic.compound" href="basic.compound.html">3.9.2</a>)</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>
+

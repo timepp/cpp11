@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class template mask_array overview</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[template.mask.array]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[template.mask.array]"></object>26.6.8 Class template <code class="sh_cpp"><dfn>mask_array</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="mask_array"></object></code> </h3>
+
+<h4>
+<dfn class="label">[template.mask.array.overview]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[template.mask.array.overview]"></object>26.6.8.1 Class template <code class="sh_cpp">mask_array</code> overview </h4>
+
+<pre><code class="sh_cpp">namespace std {
+  template &lt;class T&gt; class mask_array {
+  public:
+    typedef T value_type;
+
+    void operator=  (const valarray&lt;T&gt;&amp;) const;
+    void operator*= (const valarray&lt;T&gt;&amp;) const;
+    void operator/= (const valarray&lt;T&gt;&amp;) const;
+    void operator%= (const valarray&lt;T&gt;&amp;) const;
+    void operator+= (const valarray&lt;T&gt;&amp;) const;
+    void operator-= (const valarray&lt;T&gt;&amp;) const;
+    void operator^= (const valarray&lt;T&gt;&amp;) const;
+    void operator&amp;= (const valarray&lt;T&gt;&amp;) const;
+    void operator|= (const valarray&lt;T&gt;&amp;) const;
+    void operator&lt;&lt;=(const valarray&lt;T&gt;&amp;) const;
+    void operator&gt;&gt;=(const valarray&lt;T&gt;&amp;) const;
+
+    mask_array(const mask_array&amp;);
+    ~mask_array();
+    const mask_array&amp; operator=(const mask_array&amp;) const;
+    void operator=(const T&amp;) const;
+
+    mask_array() = delete;          // as implied by declaring copy constructor above
+  };
+}</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>This template is a helper template used by the mask subscript operator:</p>
+
+<pre><code class="sh_cpp">mask_array&lt;T&gt; valarray&lt;T&gt;::operator[](const valarray&lt;bool&gt;&amp;).</code></pre>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>It has reference semantics to a subset of an array specified by a boolean mask. Thus, the expression
+<code class="sh_cpp">a[mask] = b;</code> has the effect of assigning the elements of <code class="sh_cpp">b</code> to the masked elements in
+<code class="sh_cpp">a</code> (those for which the corresponding element in <code class="sh_cpp">mask</code> is <code class="sh_cpp">true</code>.)</p>
+</body>
+</html>
+

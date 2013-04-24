@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>locale operators</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[locale.operators]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[locale.operators]"></object>22.3.1.4 <code class="sh_cpp">locale</code> operators </h4>
+
+<h5><code class="sh_cpp">bool <dfn>operator==</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator=="></object>(const locale&amp; other) const;</code></h5>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Returns:</em> <code class="sh_cpp">true</code> if both arguments are the same locale, or one is a copy of the other, or each has a
+name and the names are identical; <code class="sh_cpp">false</code> otherwise.</p>
+
+<h5><code class="sh_cpp">bool <dfn>operator!=</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator!="></object>(const locale&amp; other) const;</code></h5>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Returns:</em> The result of the expression: <code class="sh_cpp">!(*this == other)</code>.</p>
+
+<h5><code class="sh_cpp">template &lt;class charT, class traits, class Allocator&gt;
+  bool <dfn>operator()</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator()"></object>(const basic_string&lt;charT,traits,Allocator&gt;&amp; s1,
+                  const basic_string&lt;charT,traits,Allocator&gt;&amp; s2) const;</code></h5>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Effects:</em> Compares two strings according to the <code class="sh_cpp">collate&lt;charT&gt;</code> facet.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><em>Remarks:</em> This member operator template (and therefore <code class="sh_cpp">locale</code> itself) satisfies requirements for a
+comparator predicate template argument (Clause <a title="algorithms" href="algorithms.general.html">25</a>) applied to strings.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><em>Returns:</em> The result of the following expression:</p>
+
+<pre><code class="sh_cpp">use_facet&lt; collate&lt;charT&gt; &gt;(*this).compare
+  (s1.data(), s1.data()+s1.size(), s2.data(), s2.data()+s2.size()) &lt; 0;</code></pre>
+
+<div class="example">
+<p><a class="anchor" id="p6" href="#p6">6</a>[ <em>Example:</em> A vector of strings <code class="sh_cpp">v</code> can be collated according to collation rules in locale
+<code class="sh_cpp">loc</code> simply by (<a title="alg.sort" href="sort.html">25.4.1</a>, <a title="vector" href="vector.overview.html">23.3.6</a>):</p>
+
+<pre><code class="sh_cpp">std::sort(v.begin(), v.end(), loc);</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+</body>
+</html>
+

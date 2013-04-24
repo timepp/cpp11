@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Align</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[ptr.align]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[ptr.align]"></object>20.6.5 Align </h3>
+
+<h4><code class="sh_cpp">void *<dfn>align</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="align"></object>(std::size_t alignment, std::size_t size,
+            void *&amp;ptr, std::size_t&amp; space);</code></h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Effects:</em> If it is possible to fit <code class="sh_cpp">size</code> bytes of storage aligned by <code class="sh_cpp">alignment</code> into the
+buffer pointed to by <code class="sh_cpp">ptr</code> with length <code class="sh_cpp">space</code>, the function updates <code class="sh_cpp">ptr</code> to point to
+the first possible address of such storage and decreases <code class="sh_cpp">space</code> by the number of bytes used for alignment.
+Otherwise, the function does nothing.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Requires:</em> </p>
+
+<ul>
+<li>
+<code class="sh_cpp">alignment</code> shall be a fundamental alignment value or an extended alignment value supported by the
+	implementation in this context</li>
+<li>
+<code class="sh_cpp">ptr</code> shall point to contiguous storage of at least <code class="sh_cpp">space</code> bytes</li>
+</ul>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Returns:</em> a null pointer if the requested aligned buffer would not fit into the available space, otherwise the
+adjusted value of <code class="sh_cpp">ptr</code>.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><span class="note">[ <em>Note:</em> the function updates its <code class="sh_cpp">ptr</code> and <code class="sh_cpp">space</code> arguments so that it can be called
+repeatedly with possibly different <code class="sh_cpp">alignment</code> and <code class="sh_cpp">size</code> arguments for the same
+buffer. — <em>end note</em> ]</span></p>
+</body>
+</html>
+

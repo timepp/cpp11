@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class timed_mutex</title>
+</head>
+<body>
+<h5>
+<dfn class="label">[thread.timedmutex.class]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[thread.timedmutex.class]"></object>30.4.1.3.1 Class <code class="sh_cpp"><dfn>timed_mutex</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="timed_mutex"></object></code> </h5>
+
+<pre><code class="sh_cpp">namespace std {
+  class timed_mutex {
+  public:
+    timed_mutex();
+    ~timed_mutex();
+
+    timed_mutex(const timed_mutex&amp;) = delete;
+    timed_mutex&amp; operator=(const timed_mutex&amp;) = delete;
+
+    void lock();
+    bool try_lock();
+    template &lt;class Rep, class Period&gt;
+      bool try_lock_for(const chrono::duration&lt;Rep, Period&gt;&amp; rel_time);
+    template &lt;class Clock, class Duration&gt;
+      bool try_lock_until(const chrono::time_point&lt;Clock, Duration&gt;&amp; abs_time);
+    void unlock();
+
+    typedef <em>implementation-defined</em> native_handle_type;  // See <a title="thread.req.native" href="thread.req.native.html">30.2.3</a>
+    native_handle_type native_handle();                 // See <a title="thread.req.native" href="thread.req.native.html">30.2.3</a>
+  };
+}</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The class <code class="sh_cpp">timed_mutex</code> provides a non-recursive mutex with exclusive ownership semantics. If one
+thread owns a <code class="sh_cpp">timed_mutex</code> object, attempts by another thread to acquire ownership of that object will fail
+(for <code class="sh_cpp">try_lock()</code>) or block (for <code class="sh_cpp">lock()</code>, <code class="sh_cpp">try_lock_for()</code>, and
+<code class="sh_cpp">try_lock_until()</code>) until the owning thread has released ownership with a call to <code class="sh_cpp">unlock()</code> or
+the call to <code class="sh_cpp">try_lock_for()</code> or <code class="sh_cpp">try_lock_until()</code> times out (having failed to obtain
+ownership).</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The class <code class="sh_cpp">timed_mutex</code> shall satisfy all of the <code class="concept">TimedMutex</code> requirements
+(<a title="thread.timedmutex.requirements" href="thread.timedmutex.class.html">30.4.1.3</a>). It shall be a standard-layout class (Clause <a title="class" href="class.html">9</a>).</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>The behavior of a program is undefined if:</p>
+<ul>
+<li>it destroys a <code class="sh_cpp">timed_mutex</code> object owned by any thread,</li>
+<li>a thread that owns a <code class="sh_cpp">timed_mutex</code> object calls <code class="sh_cpp">lock()</code>, <code class="sh_cpp">try_lock()</code>,
+	<code class="sh_cpp">try_lock_for()</code>, or <code class="sh_cpp">try_lock_until()</code> on that object, or</li>
+<li>a thread terminates while owning a <code class="sh_cpp">timed_mutex</code> object.</li>
+</ul>
+</body>
+</html>
+

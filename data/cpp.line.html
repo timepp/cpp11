@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Line control</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[cpp.line]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[cpp.line]"></object>16.4 Line control </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The string literal of a <code class="sh_cpp">#line</code> directive, if present, shall be a character string literal.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The <dfn>line number</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="line number"></object> of the current source line is one greater than the number of new-line characters
+read or introduced in translation phase 1 (<a title="lex.phases" href="lex.phases.html">2.2</a>) while processing the source file to the current token.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>A preprocessing directive of the form</p>
+
+<dl><dd>
+<code class="sh_cpp">#</code> <code class="sh_cpp">line</code> <i class="nonterminal">digit-sequence</i> <i class="nonterminal">new-line</i>
+</dd></dl>
+
+<p>causes the implementation to behave as if the following sequence of source lines begins with a source line that has a
+line number as specified by the digit sequence (interpreted as a decimal integer). If the digit sequence specifies zero
+or a number greater than 2147483647, the behavior is undefined.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>A preprocessing directive of the form</p>
+
+<dl><dd>
+<code class="sh_cpp">#</code> <code class="sh_cpp">line</code> <i class="nonterminal">digit-sequence</i> <code class="sh_cpp">"</code> <i class="nonterminal">s-char-sequence</i><sub class="opt">opt</sub> <code class="sh_cpp">"</code> <i class="nonterminal">new-line</i>
+</dd></dl>
+
+<p>sets the presumed line number similarly and changes the presumed name of the source file to be the contents of the
+character string literal.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>A preprocessing directive of the form</p>
+
+<dl><dd>
+<code class="sh_cpp">#</code> <code class="sh_cpp">line</code> <i class="nonterminal">pp-tokens</i> <i class="nonterminal">new-line</i>
+</dd></dl>
+
+<p>(that does not match one of the two previous forms) is permitted. The preprocessing tokens after <code class="sh_cpp">line</code> on
+the directive are processed just as in normal text (each identifier currently defined as a macro name is replaced by its
+replacement list of preprocessing tokens). If the directive resulting after all replacements does not match one of the
+two previous forms, the behavior is undefined; otherwise, the result is processed as appropriate.</p>
+</body>
+</html>
+

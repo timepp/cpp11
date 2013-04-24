@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>complex specializations</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[complex.special]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[complex.special]"></object>26.4.3 <code class="sh_cpp">complex</code> specializations </h3>
+
+<pre><code class="sh_cpp">namespace std {
+  template&lt;&gt; class <dfn>complex&lt;float&gt;</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="complex&lt;float&gt;"></object> {
+  public:
+    typedef float value_type;
+
+    constexpr complex(float re = 0.0f, float im = 0.0f);
+    explicit constexpr complex(const complex&lt;double&gt;&amp;);
+    explicit constexpr complex(const complex&lt;long double&gt;&amp;);
+
+    constexpr float real();
+    void real(float);
+    constexpr float imag();
+    void imag(float);
+
+    complex&lt;float&gt;&amp; operator= (float);
+    complex&lt;float&gt;&amp; operator+=(float);
+    complex&lt;float&gt;&amp; operator-=(float);
+    complex&lt;float&gt;&amp; operator*=(float);
+    complex&lt;float&gt;&amp; operator/=(float);
+
+    complex&lt;float&gt;&amp; operator=(const complex&lt;float&gt;&amp;);
+    template&lt;class X&gt; complex&lt;float&gt;&amp; operator= (const complex&lt;X&gt;&amp;);
+    template&lt;class X&gt; complex&lt;float&gt;&amp; operator+=(const complex&lt;X&gt;&amp;);
+    template&lt;class X&gt; complex&lt;float&gt;&amp; operator-=(const complex&lt;X&gt;&amp;);
+    template&lt;class X&gt; complex&lt;float&gt;&amp; operator*=(const complex&lt;X&gt;&amp;);
+    template&lt;class X&gt; complex&lt;float&gt;&amp; operator/=(const complex&lt;X&gt;&amp;);
+  };
+
+  template&lt;&gt; class <dfn>complex&lt;double&gt;</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="complex&lt;double&gt;"></object> {
+  public:
+    typedef double value_type;
+
+    constexpr complex(double re = 0.0, double im = 0.0);
+    constexpr complex(const complex&lt;float&gt;&amp;);
+    explicit constexpr complex(const complex&lt;long double&gt;&amp;);
+
+    constexpr double real();
+    void real(double);
+    constexpr double imag();
+    void imag(double);
+
+    complex&lt;double&gt;&amp; operator= (double);
+    complex&lt;double&gt;&amp; operator+=(double);
+    complex&lt;double&gt;&amp; operator-=(double);
+    complex&lt;double&gt;&amp; operator*=(double);
+    complex&lt;double&gt;&amp; operator/=(double);
+
+    complex&lt;double&gt;&amp; operator=(const complex&lt;double&gt;&amp;);
+    template&lt;class X&gt; complex&lt;double&gt;&amp; operator= (const complex&lt;X&gt;&amp;);
+    template&lt;class X&gt; complex&lt;double&gt;&amp; operator+=(const complex&lt;X&gt;&amp;);
+    template&lt;class X&gt; complex&lt;double&gt;&amp; operator-=(const complex&lt;X&gt;&amp;);
+    template&lt;class X&gt; complex&lt;double&gt;&amp; operator*=(const complex&lt;X&gt;&amp;);
+    template&lt;class X&gt; complex&lt;double&gt;&amp; operator/=(const complex&lt;X&gt;&amp;);
+  };
+
+  template&lt;&gt; class <dfn>complex&lt;long double&gt;</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="complex&lt;long double&gt;"></object> {
+  public:
+    typedef long double value_type;
+
+    constexpr complex(long double re = 0.0L, long double im = 0.0L);
+    constexpr complex(const complex&lt;float&gt;&amp;);
+    constexpr complex(const complex&lt;double&gt;&amp;);
+
+    constexpr long double real();
+    void real(long double);
+    constexpr long double imag();
+    void imag(long double);
+
+    complex&lt;long double&gt;&amp; operator=(const complex&lt;long double&gt;&amp;);
+    complex&lt;long double&gt;&amp; operator= (long double);
+    complex&lt;long double&gt;&amp; operator+=(long double);
+    complex&lt;long double&gt;&amp; operator-=(long double);
+    complex&lt;long double&gt;&amp; operator*=(long double);
+    complex&lt;long double&gt;&amp; operator/=(long double);
+
+    template&lt;class X&gt; complex&lt;long double&gt;&amp; operator= (const complex&lt;X&gt;&amp;);
+    template&lt;class X&gt; complex&lt;long double&gt;&amp; operator+=(const complex&lt;X&gt;&amp;);
+    template&lt;class X&gt; complex&lt;long double&gt;&amp; operator-=(const complex&lt;X&gt;&amp;);
+    template&lt;class X&gt; complex&lt;long double&gt;&amp; operator*=(const complex&lt;X&gt;&amp;);
+    template&lt;class X&gt; complex&lt;long double&gt;&amp; operator/=(const complex&lt;X&gt;&amp;);
+  };
+}</code></pre>
+
+</body>
+</html>
+

@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Member functions</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[depr.strstreambuf.members]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[depr.strstreambuf.members]"></object>D.7.1.2 Member functions </h4>
+
+<h5><code class="sh_cpp">void <dfn>freeze</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="freeze"></object>(bool freezefl = true);</code></h5>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Effects:</em> If <code class="sh_cpp">strmode &amp; dynamic</code> is non-zero, alters the freeze status of the dynamic array
+object as follows:</p>
+
+<ul>
+<li>If <code class="sh_cpp">freezefl</code> is <code class="sh_cpp">true</code>, the function sets <code class="sh_cpp">frozen</code> in <code class="sh_cpp">strmode</code>.</li>
+<li>Otherwise, it clears <code class="sh_cpp">frozen</code> in <code class="sh_cpp">strmode</code>.</li>
+</ul>
+
+<h5><code class="sh_cpp">char* <dfn>str</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="str"></object>();</code></h5>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Effects:</em> Calls <code class="sh_cpp">freeze()</code>, then returns the beginning pointer for the input sequence,
+<code class="sh_cpp">gbeg</code>.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Remarks:</em> The return value can be a null pointer.</p>
+
+<h5><code class="sh_cpp">int <code class="sh_cpp">pcount</code>() const;</code></h5>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><em>Effects:</em> If the next pointer for the output sequence, <code class="sh_cpp">pnext</code>, is a null pointer, returns zero.
+Otherwise, returns the current effective length of the array object as the next pointer minus the beginning pointer for
+the output sequence, <code class="sh_cpp">pnext - pbeg</code>.</p>
+</body>
+</html>
+

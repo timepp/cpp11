@@ -1,0 +1,170 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Other transformations</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[meta.trans.other]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[meta.trans.other]"></object>20.9.7.6 Other transformations </h4>
+
+<table id="t57" class="type_traits">
+<caption>Table 57 — Other transformations</caption>
+<thead><tr>
+<th>Template</th>
+<th>Condition</th>
+<th>Comments</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;std::size_t Len, std::size_t Align = <var>default-alignment</var>&gt;
+struct <dfn>aligned_­storage</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="aligned_storage"></object>;</code></pre></td>
+	<td>
+<code class="sh_cpp">Len</code> shall not be zero. <code class="sh_cpp">Align</code> shall be equal to <code class="sh_cpp">alignof(T)</code> for some type
+		<code class="sh_cpp">T</code> or to <var>default-alignment</var>.</td>
+	<td>The value of <var>default-alignment</var> shall be the most stringent alignment requirement for any C++ object
+		type whose size is no greater than <code class="sh_cpp">Len</code> (<a title="basic.types" href="basic.types.html">3.9</a>). The member typedef <code class="sh_cpp">type</code> shall
+		be a POD type suitable for use as uninitialized storage for any object whose size is at most <code class="sh_cpp">Len</code>
+		and whose alignment is a divisor of <code class="sh_cpp">Align</code>.</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;std::size_t Len, class... Types&gt;
+struct <dfn>aligned_­union</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="aligned_union"></object>;</code></pre></td>
+	<td>At least one type is provided.</td>
+	<td>The member typedef <code class="sh_cpp">type</code> shall be a POD type suitable for use as uninitialized storage for any
+		object whose type is listed in <code class="sh_cpp">Types</code>; its size shall be at least <code class="sh_cpp">Len</code>. The static
+		member <code class="sh_cpp">align­ment_­value</code> shall be an integral constant of type
+		<code class="sh_cpp">std​::​size_t</code> whose value is the strictest alignment of all types listed in
+		<code class="sh_cpp">Types</code>.</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>decay</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="decay"></object>;</code></pre></td>
+	<td></td>
+	<td>Let <code class="sh_cpp">U</code> be <code class="sh_cpp">remove_­reference​&lt;T&gt;​::​type</code>. If
+		<code class="sh_cpp">is_­array​&lt;U&gt;​::​value</code> is <code class="sh_cpp">true</code>, the member typedef
+		<code class="sh_cpp">type</code> shall equal <code class="sh_cpp">remove_­extent​&lt;U&gt;​::​type*</code>. If
+		<code class="sh_cpp">is_­function​&lt;U&gt;​::​value</code> is <code class="sh_cpp">true</code>, the member typedef
+		<code class="sh_cpp">type</code> shall equal <code class="sh_cpp">add_­pointer​&lt;U&gt;​::​type</code>. Otherwise the
+		member typedef <code class="sh_cpp">type</code> equals <code class="sh_cpp">remove_­cv​&lt;U&gt;​::​type</code>.
+		<span class="note">[ <em>Note:</em> This behavior is similar to the lvalue-to-rvalue (<a title="conv.lval" href="conv.lval.html">4.1</a>), array-to-pointer (<a title="conv.array" href="conv.array.html">4.2</a>), and
+		function-to-pointer (<a title="conv.func" href="conv.func.html">4.3</a>) conversions applied when an lvalue expression is used as an rvalue, but
+		also strips cv-qualifiers from class types in order to more closely model by-value argument
+		passing. — <em>end note</em> ]</span>
+</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;bool B, class T = void&gt;
+struct <dfn>enable_­if</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="enable_if"></object>;</code></pre></td>
+	<td></td>
+	<td>If <code class="sh_cpp">B</code> is <code class="sh_cpp">true</code>, the member typedef <code class="sh_cpp">type</code> shall equal <code class="sh_cpp">T</code>;
+		otherwise, there shall be no member typedef <code class="sh_cpp">type</code>.</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;bool B, class T, class F&gt;
+struct <dfn>conditional</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="conditional"></object>;</code></pre></td>
+	<td></td>
+	<td>If <code class="sh_cpp">B</code> is <code class="sh_cpp">true</code>, the member typedef <code class="sh_cpp">type</code> shall equal <code class="sh_cpp">T</code>. If
+		<code class="sh_cpp">B</code> is <code class="sh_cpp">false</code>, the member typedef <code class="sh_cpp">type</code> shall equal <code class="sh_cpp">F</code>.</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class... T&gt;
+struct <dfn>common_­type</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="common_type"></object>;</code></pre></td>
+	<td></td>
+	<td>The member typedef <code class="sh_cpp">type</code> shall be defined as set out below. All types in the parameter pack
+		<code class="sh_cpp">T</code> shall be complete or (possibly cv) <code class="sh_cpp">void</code>. A program may specialize this trait if at
+		least one template parameter in the specialization is a user-defined type. <span class="note">[ <em>Note:</em> Such specializations are needed
+		when only explicit conversions are desired among the template arguments. — <em>end note</em> ]</span>
+</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>underlying_­type</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="underlying_type"></object>;</code></pre></td>
+	<td>
+<code class="sh_cpp">T</code> shall be an enumeration type (<a title="dcl.enum" href="dcl.enum.html">7.2</a>)</td>
+	<td>The member typedef <code class="sh_cpp">type</code> shall name the underlying type of <code class="sh_cpp">T</code>.</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class Fn, class... ArgTypes&gt;
+struct <dfn>result_­of​&lt;Fn​(ArgTypes...)&gt;</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="result_of&lt;Fn(ArgTypes...)&gt;"></object>;</code></pre></td>
+	<td>
+<code class="sh_cpp">Fn</code> shall be a callable type (<a title="func.def" href="func.def.html">20.8.1</a>), reference to function, or reference to callable
+		type. The expression <code class="sh_cpp">decltype​(INVOKE​(declval​&lt;Fn&gt;(),
+		declval​&lt;ArgTypes&gt;()...))</code> shall be well formed.</td>
+	<td>The member typedef <code class="sh_cpp">type</code> shall name the type
+		<code class="sh_cpp">decltype​(INVOKE​(declval​&lt;Fn&gt;(),
+		declval​&lt;ArgTypes&gt;()...))</code>
+</td>
+</tr>
+</tbody>
+</table>
+
+<div class="note">
+<p><a class="anchor" id="p1" href="#p1">1</a>[ <em>Note:</em> A typical implementation would define <code class="sh_cpp">aligned_storage</code> as:</p>
+
+<pre><code class="sh_cpp">template &lt;std::size_t Len, std::size_t Alignment&gt;
+struct aligned_storage {
+  typedef struct {
+    alignas(Alignment) unsigned char __data[Len];
+  } type;
+};</code></pre>
+<p> — <em>end note</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>It is implementation-defined whether any extended alignment is supported (<a title="basic.align" href="basic.align.html">3.11</a>).</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>The nested typedef <code class="sh_cpp">common_type::type</code> shall be defined as follows:</p>
+
+<pre><code class="sh_cpp">template &lt;class ...T&gt; struct common_type;
+
+template &lt;class T&gt;
+struct common_type&lt;T&gt; {
+  typedef T type;
+};
+
+template &lt;class T, class U&gt;
+struct common_type&lt;T, U&gt; {
+  typedef decltype(true ? declval&lt;T&gt;() : declval&lt;U&gt;()) type;
+};
+
+template &lt;class T, class U, class... V&gt;
+struct common_type&lt;T, U, V...&gt; {
+  typedef typename common_type&lt;typename common_type&lt;T, U&gt;::type, V...&gt;::type type;
+};</code></pre>
+
+<div class="example">
+<p><a class="anchor" id="p4" href="#p4">4</a>[ <em>Example:</em> Given these definitions:</p>
+
+<pre><code class="sh_cpp">typedef bool (&amp;PF1)();
+typedef short (*PF2)(long);
+
+struct S {
+  operator PF2() const;
+  double operator()(char, int&amp;);
+  void fn(long) const;
+  char data;
+};
+
+typedef void (S::*PMF)(long) const;
+typedef char S::*PMD;</code></pre>
+
+<p>the following assertions will hold:</p>
+
+<pre><code class="sh_cpp">static_assert(is_same&lt;result_of&lt;S(int)&gt;::type, short&gt;::value, "Error!");
+static_assert(is_same&lt;result_of&lt;S&amp;(unsigned char, int&amp;)&gt;::type, double&gt;::value, "Error!");
+static_assert(is_same&lt;result_of&lt;PF1()&gt;::type, bool&gt;::value, "Error!");
+static_assert(is_same&lt;result_of&lt;PMF(unique_ptr&lt;S&gt;, int)&gt;::type, void&gt;::value, "Error!");
+static_assert(is_same&lt;result_of&lt;PMD(S)&gt;::type, char&amp;&amp;&gt;::value, "Error!");
+static_assert(is_same&lt;result_of&lt;PMD(const S*)&gt;::type, const char&amp;&gt;::value, "Error!");</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+</body>
+</html>
+

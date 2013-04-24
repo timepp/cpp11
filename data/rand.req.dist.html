@@ -1,0 +1,229 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Random number distribution requirements</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[rand.req.dist]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[rand.req.dist]"></object>26.5.1.6 Random number distribution requirements </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A <dfn>random number distribution</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="random number distribution"></object> (commonly shortened to <dfn>distribution</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="distribution"></object>) <code class="sh_cpp">d</code> of type
+<code class="sh_cpp">D</code> is a function object returning values that are distributed according to an associated mathematical
+<dfn>probability density function</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="probability density function"></object> <var>p</var>(<var>z</var>) or according to an associated <dfn>discrete
+probability function</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="discrete
+probability function"></object> <var>P</var>(<var>z</var><sub><var>i</var></sub>). A distribution’s specification identifies
+its associated probability function <var>p</var>(<var>z</var>) or <var>P</var>(<var>z</var><sub><var>i</var></sub>).</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>An associated probability function is typically expressed using certain externally-supplied quantities known as
+the <dfn>parameters of the distribution</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="parameters of the distribution"></object>. Such distribution parameters are identified in this context by writing,
+for example, <var>p</var>(<var>z</var> | <var>a</var>, <var>b</var>) or <var>P</var>(<var>z</var><sub><var>i</var></sub>
+| <var>a</var>, <var>b</var>), to name specific parameters, or by writing, for example, <var>p</var>(<var>z</var> |
+{<code class="sh_cpp">p</code>}) or <var>P</var>(<var>z</var><sub><var>i</var></sub> | {<code class="sh_cpp">p</code>}), to denote a distribution’s
+parameters <code class="sh_cpp">p</code> taken as a whole.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>A class <code class="sh_cpp">D</code> satisfies the requirements of a random number distribution if the expressions shown in
+Table <a href="rand.req.dist.html#t118">118</a> are valid and have the indicated semantics, and if <code class="sh_cpp">D</code> and its associated types also
+satisfy all other requirements of this section <a title="rand.req.dist" href="rand.req.dist.html">26.5.1.6</a>. In that Table and throughout this section,</p>
+
+<ol class="lettered">
+<li>
+<code class="sh_cpp">T</code> is the type named by <code class="sh_cpp">D</code>’s associated <code class="sh_cpp">result_type</code>;</li>
+<li>
+<code class="sh_cpp">P</code> is the type named by <code class="sh_cpp">D</code>’s associated <code class="sh_cpp">param_type</code>;</li>
+<li>
+<code class="sh_cpp">d</code> is a value of <code class="sh_cpp">D</code>, and <code class="sh_cpp">x</code> and <code class="sh_cpp">y</code> are (possibly <code class="sh_cpp">const</code>)
+	values of <code class="sh_cpp">D</code>;</li>
+<li>
+<code class="sh_cpp">glb</code> and <code class="sh_cpp">lub</code> are values of <code class="sh_cpp">T</code> respectively corresponding to the greatest lower
+	bound and the least upper bound on the values potentially returned by <code class="sh_cpp">d</code>’s <code class="sh_cpp">operator()</code>, as
+	determined by the current values of <code class="sh_cpp">d</code>’s parameters;</li>
+<li>
+<code class="sh_cpp">p</code> is a (possibly <code class="sh_cpp">const</code>) value of <code class="sh_cpp">P</code>;</li>
+<li>
+<code class="sh_cpp">g</code>, <code class="sh_cpp">g1</code>, and <code class="sh_cpp">g2</code> are lvalues of a type satisfing the requirements of a uniform
+	random number generator [<a title="rand.req.urng" href="rand.req.urng.html">26.5.1.3</a>];</li>
+<li>
+<code class="sh_cpp">os</code> is an lvalue of the type of some class template specialization <code class="sh_cpp">basic_ostream&lt;charT,
+	traits&gt;</code>; and</li>
+<li>
+<code class="sh_cpp">is</code> is an lvalue of the type of some class template specialization <code class="sh_cpp">basic_istream&lt;charT,
+	traits&gt;</code>;</li>
+</ol>
+
+<p>where <code class="sh_cpp">charT</code> and <code class="sh_cpp">traits</code> are constrained according to Clauses <a title="strings" href="strings.general.html">21</a> and
+<a title="input.output" href="input.output.general.html">27</a>.</p>
+
+<table id="t118" class="requirements">
+<caption>Table 118 — Random number distribution requirements</caption>
+<thead><tr>
+<th>Expression</th>
+<th>Return type</th>
+<th>Pre/post-condition</th>
+<th>Complexity</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code class="sh_cpp">D::​result_­type</code></td>
+<td><code class="sh_cpp">T</code></td>
+	<td>
+<code class="sh_cpp">T</code> is an arithmetic type (<a title="basic.fundamental" href="basic.fundamental.html">3.9.1</a>).</td>
+	<td>compile-time</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">D::​param_­type</code></td>
+<td><code class="sh_cpp">P</code></td>
+	<td></td>
+	<td>compile-time</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">D()</code></td>
+<td></td>
+	<td>Creates a distribution whose behavior is indistinguishable from that of any other newly default-constructed
+		distribution of type <code class="sh_cpp">D</code>.</td>
+	<td>constant</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">D(p)</code></td>
+<td></td>
+	<td>Creates a distribution whose behavior is indistinguishable from that of a distribution newly constructed
+		directly from the values used to construct <code class="sh_cpp">p</code>.</td>
+	<td>same as <code class="sh_cpp">p</code>’s</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">d.​reset()</code></td>
+<td><code class="sh_cpp">void</code></td>
+	<td>Subsequent uses of <code class="sh_cpp">d</code> do not depend on values produced by any engine prior to invoking
+		<code class="sh_cpp">reset</code>.</td>
+	<td>constant</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">x.​param()</code></td>
+<td><code class="sh_cpp">P</code></td>
+	<td>Returns a value <code class="sh_cpp">p</code> such that <code class="sh_cpp">D(p).​param() == p</code>.</td>
+	<td>no worse than the complexity of <code class="sh_cpp">D(p)</code>
+</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">d.​param​(p)</code></td>
+<td><code class="sh_cpp">void</code></td>
+	<td>post: <code class="sh_cpp">d.​param() == p</code>.</td>
+	<td>no worse than the complexity of <code class="sh_cpp">D(p)</code>
+</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">d(g)</code></td>
+<td><code class="sh_cpp">T</code></td>
+	<td>With <code class="sh_cpp">p = d.​param()</code>, the sequence of numbers returned by successive invocations with the same
+		object <code class="sh_cpp">g</code> is randomly distributed according to the associated <var>p</var>(<var>z</var> |
+		{<code class="sh_cpp">p</code>}) or <var>P</var>(<var>z</var><sub><var>i</var></sub> | {<code class="sh_cpp">p</code>}) function.</td>
+	<td>amortized constant number of invocations of <code class="sh_cpp">g</code>
+</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">d(g, p)</code></td>
+<td><code class="sh_cpp">T</code></td>
+	<td>The sequence of numbers returned by successive invocations with the same objects <code class="sh_cpp">g</code> and
+		<code class="sh_cpp">p</code> is randomly distributed according to the associated <var>p</var>(<var>z</var> | {<code class="sh_cpp">p</code>})
+		or <var>P</var>(<var>z</var><sub><var>i</var></sub> | {<code class="sh_cpp">p</code>}) function.</td>
+	<td>amortized constant number of invocations of <code class="sh_cpp">g</code>
+</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">x.​min()</code></td>
+<td><code class="sh_cpp">T</code></td>
+	<td>Returns <code class="sh_cpp">glb</code>.</td>
+	<td>constant</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">x.​max()</code></td>
+<td><code class="sh_cpp">T</code></td>
+	<td>Returns <code class="sh_cpp">lub</code>.</td>
+	<td>constant</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">x == y</code></td>
+<td><code class="sh_cpp">bool</code></td>
+	<td>This operator is an equivalence relation. Returns true if <code class="sh_cpp">x.param() == y.param()</code> and
+		<var>S</var><sub>1</sub> = <var>S</var><sub>2</sub>, where <var>S</var><sub>1</sub> and <var>S</var><sub>2</sub>
+		are the infinite sequences of values that would be generated, respectively, by repeated future calls to
+		<code class="sh_cpp">x(g1)</code> and <code class="sh_cpp">y(g2)</code> whenever <code class="sh_cpp">g1 == g2</code>. Otherwise returns
+		<code class="sh_cpp">false</code>.</td>
+	<td>constant</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">x != y</code></td>
+<td><code class="sh_cpp">bool</code></td>
+	<td>
+<code class="sh_cpp">!(x == y)</code>.</td>
+	<td>same as <code class="sh_cpp">x == y</code>.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">os &lt;&lt; x</code></td>
+<td>reference to the type of <code class="sh_cpp">os</code>
+</td>
+	<td>
+<p>Writes to <code class="sh_cpp">os</code> a textual representation for the parameters and the additional internal data of
+		<code class="sh_cpp">x</code>.</p>
+		<p>post: The <code class="sh_cpp">os.​fmtflags</code> and fill character are unchanged.</p>
+</td>
+	<td></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">is &gt;&gt; d</code></td>
+<td>reference to the type of <code class="sh_cpp">is</code>
+</td>
+	<td>
+<p>Restores from <code class="sh_cpp">is</code> the parameters and additional internal data of the lvalue <code class="sh_cpp">d</code>. If
+		bad input is encountered, ensures that <code class="sh_cpp">d</code> is unchanged by the operation and calls
+		<code class="sh_cpp">is.​setstate​(ios​::​failbit)</code> (which may throw
+		<code class="sh_cpp">ios​::​failure</code> [<a title="iostate.flags" href="iostate.flags.html">27.5.5.4</a>]).</p>
+		<p>pre: <code class="sh_cpp">is</code> provides a textual representation that was previously written using an <code class="sh_cpp">os</code>
+		whose imbued locale and whose type’s template specialization arguments <code class="sh_cpp">charT</code> and
+		<code class="sh_cpp">traits</code> were the same as those of <code class="sh_cpp">is</code>.</p>
+		<p>post: The <code class="sh_cpp">is.​fmtflags</code> are unchanged.</p>
+</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><code class="sh_cpp">D</code> shall satisfy the requirements of <code class="concept">CopyConstructible</code> (Table <a href="utility.arg.requirements.html#t21">21</a>) and
+<code class="concept">CopyAssignable</code> (Table <a href="utility.arg.requirements.html#t23">23</a>) types.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>The sequence of numbers produced by repeated invocations of <code class="sh_cpp">d(g)</code> shall be independent of any
+invocation of <code class="sh_cpp">os &lt;&lt; d</code> or of any <code class="sh_cpp">const</code> member function of <code class="sh_cpp">D</code> between any of
+the invocations <code class="sh_cpp">d(g)</code>.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>If a textual representation is written using <code class="sh_cpp">os &lt;&lt; x</code> and that representation is restored
+into the same or a different object <code class="sh_cpp">y</code> of the same type using <code class="sh_cpp">is &gt;&gt; y</code>, repeated
+invocations of <code class="sh_cpp">y(g)</code> shall produce the same sequence of numbers as would repeated invocations of
+<code class="sh_cpp">x(g)</code>.</p>
+
+<p><a class="anchor" id="p7" href="#p7">7</a>It is unspecified whether <code class="sh_cpp">D::param_type</code> is declared as a (nested) <code class="sh_cpp">class</code> or via a
+<code class="sh_cpp">typedef</code>. In this subclause <a title="rand" href="rand.req.html">26.5</a>, declarations of <code class="sh_cpp">D::param_type</code> are in the form of
+<code class="sh_cpp">typedef</code>s for convenience of exposition only.</p>
+
+<p><a class="anchor" id="p8" href="#p8">8</a><code class="sh_cpp">P</code> shall satisfy the requirements of <code class="concept">CopyConstructible</code> (Table <a href="utility.arg.requirements.html#t21">21</a>),
+<code class="concept">CopyAssignable</code> (Table <a href="utility.arg.requirements.html#t23">23</a>), and <code class="concept">EqualityComparable</code> (Table <a href="utility.arg.requirements.html#t17">17</a>)
+types.</p>
+
+<p><a class="anchor" id="p9" href="#p9">9</a>For each of the constructors of <code class="sh_cpp">D</code> taking arguments corresponding to parameters of the
+distribution, <code class="sh_cpp">P</code> shall have a corresponding constructor subject to the same requirements and taking
+arguments identical in number, type, and default values. Moreover, for each of the member functions of <code class="sh_cpp">D</code>
+that return values corresponding to parameters of the distribution, <code class="sh_cpp">P</code> shall have a corresponding member
+function with the identical name, type, and semantics.</p>
+
+<p><a class="anchor" id="p10" href="#p10">10</a><code class="sh_cpp">P</code> shall have a declaration of the form</p>
+
+<pre><code class="sh_cpp">typedef D distribution_type;</code></pre>
+</body>
+</html>
+

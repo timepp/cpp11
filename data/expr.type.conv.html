@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Explicit type conversion (functional notation)</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[expr.type.conv]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[expr.type.conv]"></object>5.2.3 Explicit type conversion (functional notation) </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A <i class="nonterminal">simple-type-specifier</i> (<a title="dcl.type.simple" href="dcl.type.simple.html">7.1.6.2</a>) or <i class="nonterminal">typename-specifier</i> (<a title="temp.res" href="temp.res.html">14.6</a>) followed
+by a parenthesized <i class="nonterminal">expression-list</i> constructs a value of the specified type given the expression list. If the
+expression list is a single expression, the type conversion expression is equivalent (in definedness, and if defined in
+meaning) to the corresponding cast expression (<a title="expr.cast" href="expr.cast.html">5.4</a>). If the type specified is a class type, the class type
+shall be complete. If the expression list specifies more than a single value, the type shall be a class with a suitably
+declared constructor (<a title="dcl.init" href="dcl.init.html">8.5</a>, <a title="class.ctor" href="class.ctor.html">12.1</a>), and the expression <code class="sh_cpp">T(x1, x2, ...)</code> is equivalent in
+effect to the declaration <code class="sh_cpp">T t(x1, x2, ...);</code> for some invented temporary variable <code class="sh_cpp">t</code>, with the
+result being the value of <code class="sh_cpp">t</code> as a prvalue.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The expression <code class="sh_cpp">T()</code>, where <code class="sh_cpp">T</code> is a <i class="nonterminal">simple-type-specifier</i> or
+<i class="nonterminal">typename-specifier</i> for a non-array complete object type or the (possibly cv-qualified) <code class="sh_cpp">void</code> type,
+creates a prvalue of the specified type, which is value-initialized (<a title="dcl.init" href="dcl.init.html">8.5</a>; no initialization is done for the
+<code class="sh_cpp">void()</code> case). <span class="note">[ <em>Note:</em> if <code class="sh_cpp">T</code> is a non-class type that is cv-qualified, the cv-qualifiers are
+ignored when determining the type of the resulting prvalue (<a title="basic.lval" href="basic.lval.html">3.10</a>). — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>Similarly, a <i class="nonterminal">simple-type-specifier</i> or <i class="nonterminal">typename-specifier</i> followed by a
+<i class="nonterminal">braced-init-list</i> creates a temporary object of the specified type direct-list-initialized (<a title="dcl.init.list" href="dcl.init.list.html">8.5.4</a>)
+with the specified <i class="nonterminal">braced-init-list</i>, and its value is that temporary object as a prvalue.</p>
+</body>
+</html>
+

@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Negators</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[negators]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[negators]"></object>20.8.8 Negators </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Negators <code class="sh_cpp">not1</code> and <code class="sh_cpp">not2</code> take a unary and a binary predicate,
+respectively, and return their complements (<a title="expr.unary.op" href="expr.unary.op.html">5.3.1</a>).</p>
+
+<h4><code class="sh_cpp">template &lt;class Predicate&gt;
+class <dfn>unary_negate</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="unary_negate"></object> {
+public:
+  explicit unary_negate(const Predicate&amp; pred);
+  bool operator()(const typename Predicate::argument_type&amp; x) const;
+  typedef typename Predicate::argument_type argument_type;
+  typedef bool result_type;
+};</code></h4>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><code class="sh_cpp">operator()</code> returns <code class="sh_cpp">!pred(x)</code>.</p>
+
+<h4><code class="sh_cpp">template &lt;class Predicate&gt;
+  unary_negate&lt;Predicate&gt; <dfn>not1</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="not1"></object>(const Predicate&amp; pred);</code></h4>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Returns:</em> <code class="sh_cpp">unary_negate&lt;Predicate&gt;(pred)</code>.</p>
+
+<h4><code class="sh_cpp">template &lt;class Predicate&gt;
+class <dfn>binary_negate</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="binary_negate"></object> {
+public:
+  explicit binary_negate(const Predicate&amp; pred);
+  bool operator()(const typename Predicate::first_argument_type&amp; x,
+      const typename Predicate::second_argument_type&amp; y) const;
+  typedef typename Predicate::first_argument_type first_argument_type;
+  typedef typename Predicate::second_argument_type second_argument_type;
+  typedef bool result_type;
+};</code></h4>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><code class="sh_cpp">operator()</code> returns <code class="sh_cpp">!pred(x,y)</code>.</p>
+
+<h4><code class="sh_cpp">template &lt;class Predicate&gt;
+  binary_negate&lt;Predicate&gt; <dfn>not2</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="not2"></object>(const Predicate&amp; pred);</code></h4>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><em>Returns:</em> <code class="sh_cpp">binary_negate&lt;Predicate&gt;(pred)</code>.</p>
+</body>
+</html>
+

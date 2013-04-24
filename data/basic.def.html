@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Declarations and definitions</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[basic.def]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[basic.def]"></object>3.1 Declarations and definitions </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A declaration (Clause <a title="dcl.dcl" href="dcl.dcl.html">7</a>) may introduce one or more names into a translation unit or redeclare names
+introduced by previous declarations. If so, the declaration specifies the interpretation and attributes of these names.
+A declaration may also have effects including:</p>
+
+<ul>
+<li>a static assertion (Clause <a title="dcl.dcl" href="dcl.dcl.html">7</a>),</li>
+<li>controlling template instantiation (<a title="temp.explicit" href="temp.explicit.html">14.7.2</a>),</li>
+<li>use of attributes (Clause <a title="dcl.dcl" href="dcl.dcl.html">7</a>), and</li>
+<li>nothing (in the case of an <i class="nonterminal">empty-declaration</i>).</li>
+</ul>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>A declaration is a <dfn>definition</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="definition"></object> unless it declares a function without specifying the function’s body
+(<a title="dcl.fct.def" href="dcl.fct.def.general.html">8.4</a>), it contains the <code class="sh_cpp">extern</code> specifier (<a title="dcl.stc" href="dcl.stc.html">7.1.1</a>) or a
+<i class="nonterminal">linkage-specification</i><sup class="footnote"><a href="#fn25">25</a></sup> (<a title="dcl.link" href="dcl.link.html">7.5</a>) and neither an initializer nor a <i class="nonterminal">function-body</i>,
+it declares a static data member in a class definition (<a title="class.mem" href="class.mem.html">9.2</a>, <a title="class.static" href="class.static.html">9.4</a>), it is a class name declaration
+(<a title="class.name" href="class.name.html">9.1</a>), it is an <i class="nonterminal">opaque-enum-declaration</i> (<a title="dcl.enum" href="dcl.enum.html">7.2</a>), it is a <i class="nonterminal">template-parameter</i>
+(<a title="temp.param" href="temp.param.html">14.1</a>), it is a <i class="nonterminal">parameter-declaration</i> (<a title="dcl.fct" href="dcl.fct.html">8.3.5</a>) in a function declarator that is not the
+<i class="nonterminal">declarator</i> of a <i class="nonterminal">function-definition</i>, or it is a <code class="sh_cpp">typedef</code> declaration (<a title="dcl.typedef" href="dcl.typedef.html">7.1.3</a>),
+an <i class="nonterminal">alias-declaration</i> (<a title="dcl.typedef" href="dcl.typedef.html">7.1.3</a>), a <i class="nonterminal">using-declaration</i> (<a title="namespace.udecl" href="namespace.udecl.html">7.3.3</a>), a
+<i class="nonterminal">static_assert-declaration</i> (Clause <a title="dcl.dcl" href="dcl.dcl.html">7</a>), an <i class="nonterminal">attribute-declaration</i> (Clause <a title="dcl.dcl" href="dcl.dcl.html">7</a>), an
+<i class="nonterminal">empty-declaration</i> (Clause <a title="dcl.dcl" href="dcl.dcl.html">7</a>), or a <i class="nonterminal">using-directive</i> (<a title="namespace.udir" href="namespace.udir.html">7.3.4</a>).</p>
+
+<div class="example">
+<p>[ <em>Example:</em> all but one of the following are definitions:</p>
+
+<pre><code class="sh_cpp">int a;                          // defines a
+extern const int c = 1;         // defines c
+int f(int x) { return x+a; }    // defines f and defines x
+struct S { int a; int b; };     // defines S, S::a, and S::b
+struct X {                      // defines X
+  int x;                        // defines non-static data member x
+  static int y;                 // declares static data member y
+  X(): x(0) { }                 // defines a constructor of X
+};
+int X::y = 1;                   // defines X::y
+enum { up, down };              // defines up and down
+namespace N { int d; }          // defines N and N::d
+namespace N1 = N;               // defines N1
+X anX;                          // defines anX</code></pre>
+
+<p>whereas these are just declarations:</p>
+
+<pre><code class="sh_cpp">extern int a;                   // declares a
+extern const int c;             // declares c
+int f(int);                     // declares f
+struct S;                       // declares S
+typedef int Int;                // declares Int
+extern X anotherX;              // declares anotherX
+using N::d;                     // declares d</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><span class="note">[ <em>Note:</em> in some circumstances, C++ implementations implicitly define the default constructor (<a title="class.ctor" href="class.ctor.html">12.1</a>),
+copy constructor (<a title="class.copy" href="class.copy.html">12.8</a>), move constructor (<a title="class.copy" href="class.copy.html">12.8</a>), copy assignment operator (<a title="class.copy" href="class.copy.html">12.8</a>), move
+assignment operator (<a title="class.copy" href="class.copy.html">12.8</a>), or destructor (<a title="class.dtor" href="class.dtor.html">12.4</a>) member functions. — <em>end note</em> ]</span></p>
+
+<div class="example">
+<p>[ <em>Example:</em> given</p>
+
+<pre><code class="sh_cpp">#include &lt;string&gt;
+
+struct C {
+  std::string s;                // std::string is the standard library class (Clause <a title="strings" href="strings.general.html">21</a>)
+};
+
+int main() {
+  C a;
+  C b = a;
+  b = a;
+}</code></pre>
+
+<p>the implementation will implicitly define functions to make the definition of C equivalent to</p>
+
+<pre><code class="sh_cpp">struct C {
+  std::string s;
+  C() : s() { }
+  C(const C&amp; x): s(x.s) { }
+  C(C&amp;&amp; x): s(static_cast&lt;std::string&amp;&amp;&gt;(x.s)) { }
+    // : s(std::move(x.s)) { }
+  C&amp; operator=(const C&amp; x) { s = x.s; return *this; }
+  C&amp; operator=(C&amp;&amp; x) { s = static_cast&lt;std::string&amp;&amp;&gt;(x.s); return *this; }
+    // { s = std::move(x.s); return *this; }
+  ~C() { }
+};</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><span class="note">[ <em>Note:</em> A class name can also be implicitly declared by an <i class="nonterminal">elaborated-type-specifier</i>
+(<a title="dcl.type.elab" href="dcl.type.elab.html">7.1.6.3</a>). — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>A program is ill-formed if the definition of any object gives the object an incomplete type
+(<a title="basic.types" href="basic.types.html">3.9</a>).</p>
+
+
+<div><p class="footnote" id="fn25">25) Appearing inside the braced-enclosed <i class="nonterminal">declaration-seq</i> in a <i class="nonterminal">linkage-specification</i> does
+not affect whether a declaration is a definition.</p></div>
+</body>
+</html>
+

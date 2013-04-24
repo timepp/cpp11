@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class template ctype</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[locale.ctype]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[locale.ctype]"></object>22.4.1.1 Class template <code class="sh_cpp">ctype</code> </h4>
+
+<pre><code class="sh_cpp">namespace std {
+  template &lt;class charT&gt;
+  class <dfn>ctype</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="ctype"></object> : public locale::facet, public ctype_base {
+  public:
+    typedef charT char_type;
+
+    explicit ctype(size_t refs = 0);
+
+    bool         is(mask m, charT c) const;
+    const charT* is(const charT* low, const charT* high, mask* vec) const;
+    const charT* scan_is(mask m,
+                         const charT* low, const charT* high) const;
+    const charT* scan_not(mask m,
+                          const charT* low, const charT* high) const;
+    charT        toupper(charT c) const;
+    const charT* toupper(charT* low, const charT* high) const;
+    charT        tolower(charT c) const;
+    const charT* tolower(charT* low, const charT* high) const;
+
+    charT        widen(char c) const;
+    const char*  widen(const char* low, const char* high, charT* to) const;
+    char         narrow(charT c, char dfault) const;
+    const charT* narrow(const charT* low, const charT*, char dfault,
+                        char* to) const;
+
+    static locale::id id;
+  protected:
+    ~ctype();
+    virtual bool         do_is(mask m, charT c) const;
+    virtual const charT* do_is(const charT* low, const charT* high,
+                               mask* vec) const;
+    virtual const charT* do_scan_is(mask m,
+                                    const charT* low, const charT* high) const;
+    virtual const charT* do_scan_not(mask m,
+                                     const charT* low, const charT* high) const;
+    virtual charT        do_toupper(charT) const;
+    virtual const charT* do_toupper(charT* low, const charT* high) const;
+    virtual charT        do_tolower(charT) const;
+    virtual const charT* do_tolower(charT* low, const charT* high) const;
+    virtual charT        do_widen(char) const;
+    virtual const char*  do_widen(const char* low, const char* high,
+                                  charT* dest) const;
+    virtual char         do_narrow(charT, char dfault) const;
+    virtual const charT* do_narrow(const charT* low, const charT* high,
+                                   char dfault, char* dest) const;
+  };
+}</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Class <code class="sh_cpp">ctype</code> encapsulates the C library <code class="header">&lt;cctype&gt;</code> features. <code class="sh_cpp">istream</code>
+members are required to use <code class="sh_cpp">ctype&lt;&gt;</code> for character classing during input parsing.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The specializations required in Table <a href="locale.category.html#t81">81</a> (<a title="locale.category" href="locale.category.html">22.3.1.1.1</a>), namely
+<code class="sh_cpp">ctype&lt;char&gt;</code> and <code class="sh_cpp">ctype&lt;wchar_t&gt;</code>, implement character classing
+appropriate to the implementation’s native character set.</p>
+</body>
+</html>
+

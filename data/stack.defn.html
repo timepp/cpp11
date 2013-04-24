@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>stack definition</title>
+</head>
+<body>
+<h5>
+<dfn class="label">[stack.defn]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[stack.defn]"></object>23.6.5.2 <code class="sh_cpp"><dfn>stack</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="stack"></object></code> definition </h5>
+
+<pre><code class="sh_cpp">namespace std {
+  template &lt;class T, class Container = deque&lt;T&gt; &gt;
+  class stack {
+  public:
+    typedef typename Container::value_type      value_type;
+    typedef typename Container::reference       reference;
+    typedef typename Container::const_reference const_reference;
+    typedef typename Container::size_type       size_type;
+    typedef          Container                  container_type;
+  protected:
+    Container c;
+
+  public:
+    explicit stack(const Container&amp;);
+    explicit stack(Container&amp;&amp; = Container());
+    template &lt;class Alloc&gt; explicit stack(const Alloc&amp;);
+    template &lt;class Alloc&gt; stack(const Container&amp;, const Alloc&amp;);
+    template &lt;class Alloc&gt; stack(Container&amp;&amp;, const Alloc&amp;);
+    template &lt;class Alloc&gt; stack(const stack&amp;, const Alloc&amp;);
+    template &lt;class Alloc&gt; stack(stack&amp;&amp;, const Alloc&amp;);
+
+    bool      empty() const         { return c.empty(); }
+    size_type size()  const         { return c.size(); }
+    reference         top()         { return c.back(); }
+    const_reference   top() const   { return c.back(); }
+    void push(const value_type&amp; x)  { c.push_back(x); }
+    void push(value_type&amp;&amp; x)       { c.push_back(std::move(x)); }
+    template &lt;class... Args&gt; void emplace(Args&amp;&amp;... args)
+      { c.emplace_back(std::forward&lt;Args&gt;(args)...); }
+    void pop()                      { c.pop_back(); }
+    void swap(stack&amp; s) noexcept(noexcept(swap(c, s.c)))
+      { using std::swap; swap(c, s.c); }
+  };
+
+  template &lt;class T, class Container&gt;
+    bool operator==(const stack&lt;T, Container&gt;&amp; x, const stack&lt;T, Container&gt;&amp; y);
+  template &lt;class T, class Container&gt;
+    bool operator&lt; (const stack&lt;T, Container&gt;&amp; x, const stack&lt;T, Container&gt;&amp; y);
+  template &lt;class T, class Container&gt;
+    bool operator!=(const stack&lt;T, Container&gt;&amp; x, const stack&lt;T, Container&gt;&amp; y);
+  template &lt;class T, class Container&gt;
+    bool operator&gt; (const stack&lt;T, Container&gt;&amp; x, const stack&lt;T, Container&gt;&amp; y);
+  template &lt;class T, class Container&gt;
+    bool operator&gt;=(const stack&lt;T, Container&gt;&amp; x, const stack&lt;T, Container&gt;&amp; y);
+  template &lt;class T, class Container&gt;
+    bool operator&lt;=(const stack&lt;T, Container&gt;&amp; x, const stack&lt;T, Container&gt;&amp; y);
+  template &lt;class T, class Allocator&gt;
+    void swap(stack&lt;T, Allocator&gt;&amp; x, stack&lt;T, Allocator&gt;&amp; y);
+
+  template &lt;class T, class Container, class Alloc&gt;
+    struct uses_allocator&lt;stack&lt;T, Container&gt;, Alloc&gt;
+      : uses_allocator&lt;Container, Alloc&gt;::type { };
+}</code></pre>
+</body>
+</html>
+

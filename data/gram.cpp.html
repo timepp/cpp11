@@ -1,0 +1,145 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Preprocessing directives</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[gram.cpp]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[gram.cpp]"></object>A.14 Preprocessing directives </h2>
+<dl>
+<dt>
+<i class="nonterminal">preprocessing-file</i>:</dt>
+	<dd>
+<i class="nonterminal">group</i><sub class="opt">opt</sub>
+</dd>
+<dt>
+<i class="nonterminal">group</i>:</dt>
+	<dd><i class="nonterminal">group-part</i></dd>
+	<dd>
+<i class="nonterminal">group</i> <i class="nonterminal">group-part</i>
+</dd>
+<dt>
+<i class="nonterminal">group-part</i>:</dt>
+	<dd><i class="nonterminal">if-section</i></dd>
+	<dd><i class="nonterminal">control-line</i></dd>
+	<dd><i class="nonterminal">text-line</i></dd>
+	<dd>
+<code class="sh_cpp">#</code> <i class="nonterminal">non-directive</i>
+</dd>
+<dt>
+<i class="nonterminal">if-section</i>:</dt>
+	<dd>
+<i class="nonterminal">if-group</i> <i class="nonterminal">elif-groups</i><sub class="opt">opt</sub> <i class="nonterminal">else-group</i><sub class="opt">opt</sub> <i class="nonterminal">endif-line</i>
+</dd>
+<dt>
+<i class="nonterminal">if-group</i>:</dt>
+	<dd>
+<code class="sh_cpp">#</code> <code class="sh_cpp">if</code> <i class="nonterminal">constant-expression</i> <i class="nonterminal">new-line</i> <i class="nonterminal">group</i><sub class="opt">opt</sub>
+</dd>
+	<dd>
+<code class="sh_cpp">#</code> <code class="sh_cpp">ifdef</code> <i class="nonterminal">identifier</i> <i class="nonterminal">new-line</i> <i class="nonterminal">group</i><sub class="opt">opt</sub>
+</dd>
+	<dd>
+<code class="sh_cpp">#</code> <code class="sh_cpp">ifndef</code> <i class="nonterminal">identifier</i> <i class="nonterminal">new-line</i> <i class="nonterminal">group</i><sub class="opt">opt</sub>
+</dd>
+<dt>
+<i class="nonterminal">elif-groups</i>:</dt>
+	<dd><i class="nonterminal">elif-group</i></dd>
+	<dd>
+<i class="nonterminal">elif-groups</i> <i class="nonterminal">elif-group</i>
+</dd>
+<dt>
+<i class="nonterminal">elif-group</i>:</dt>
+	<dd>
+<code class="sh_cpp">#</code> <code class="sh_cpp">elif</code> <i class="nonterminal">constant-expression</i> <i class="nonterminal">new-line</i> <i class="nonterminal">group</i><sub class="opt">opt</sub>
+</dd>
+<dt>
+<i class="nonterminal">else-group</i>:</dt>
+	<dd>
+<code class="sh_cpp">#</code> <code class="sh_cpp">else</code> <i class="nonterminal">new-line</i> <i class="nonterminal">group</i><sub class="opt">opt</sub>
+</dd>
+<dt>
+<i class="nonterminal">endif-line</i>:</dt>
+	<dd>
+<code class="sh_cpp">#</code> <code class="sh_cpp">endif</code> <i class="nonterminal">new-line</i>
+</dd>
+<dt>
+<i class="nonterminal">control-line</i>:</dt>
+	<dd>
+<code class="sh_cpp">#</code> <code class="sh_cpp">include</code> <i class="nonterminal">pp-tokens</i> <i class="nonterminal">new-line</i>
+</dd>
+	<dd>
+<code class="sh_cpp">#</code> <code class="sh_cpp">define</code> <i class="nonterminal">identifier</i> <i class="nonterminal">replacement-list</i> <i class="nonterminal">new-line</i>
+</dd>
+	<dd>
+<code class="sh_cpp">#</code> <code class="sh_cpp">define</code> <i class="nonterminal">identifier</i> <i class="nonterminal">lparen</i> <i class="nonterminal">identifier-list</i><sub class="opt">opt</sub>
+		<code class="sh_cpp">)</code> <i class="nonterminal">replacement-list</i> <i class="nonterminal">new-line</i>
+</dd>
+	<dd>
+<code class="sh_cpp">#</code> <code class="sh_cpp">define</code> <i class="nonterminal">identifier</i> <i class="nonterminal">lparen</i> <code class="sh_cpp">...</code> <code class="sh_cpp">)</code>
+		<i class="nonterminal">replacement-list</i> <i class="nonterminal">new-line</i>
+</dd>
+	<dd>
+<code class="sh_cpp">#</code> <code class="sh_cpp">define</code> <i class="nonterminal">identifier</i> <i class="nonterminal">lparen</i> <i class="nonterminal">identifier-list</i> <code class="sh_cpp">,</code>
+		<code class="sh_cpp">...</code> <code class="sh_cpp">)</code> <i class="nonterminal">replacement-list</i> <i class="nonterminal">new-line</i>
+</dd>
+	<dd>
+<code class="sh_cpp">#</code> <code class="sh_cpp">undef</code> <i class="nonterminal">identifier</i> <i class="nonterminal">new-line</i>
+</dd>
+	<dd>
+<code class="sh_cpp">#</code> <code class="sh_cpp">line</code> <i class="nonterminal">pp-tokens</i> <i class="nonterminal">new-line</i>
+</dd>
+	<dd>
+<code class="sh_cpp">#</code> <code class="sh_cpp">error</code> <i class="nonterminal">pp-tokens</i><sub class="opt">opt</sub> <i class="nonterminal">new-line</i>
+</dd>
+	<dd>
+<code class="sh_cpp">#</code> <code class="sh_cpp">pragma</code> <i class="nonterminal">pp-tokens</i><sub class="opt">opt</sub> <i class="nonterminal">new-line</i>
+</dd>
+	<dd>
+<code class="sh_cpp">#</code> <i class="nonterminal">new-line</i>
+</dd>
+<dt>
+<i class="nonterminal">text-line</i>:</dt>
+	<dd>
+<i class="nonterminal">pp-tokens</i><sub class="opt">opt</sub> <i class="nonterminal">new-line</i>
+</dd>
+<dt>
+<i class="nonterminal">non-directive</i>:</dt>
+	<dd>
+<i class="nonterminal">pp-tokens</i> <i class="nonterminal">new-line</i>
+</dd>
+<dt>
+<i class="nonterminal">lparen</i>:</dt>
+	<dd>a <code class="sh_cpp">(</code> character not immediately preceded by white-space</dd>
+<dt>
+<i class="nonterminal">identifier-list</i>:</dt>
+	<dd><i class="nonterminal">identifier</i></dd>
+	<dd>
+<i class="nonterminal">identifier-list</i> <code class="sh_cpp">,</code> <i class="nonterminal">identifier</i>
+</dd>
+<dt>
+<i class="nonterminal">replacement-list</i>:</dt>
+	<dd>
+<i class="nonterminal">pp-tokens</i><sub class="opt">opt</sub>
+</dd>
+<dt>
+<i class="nonterminal">pp-tokens</i>:</dt>
+	<dd><i class="nonterminal">preprocessing-token</i></dd>
+	<dd>
+<i class="nonterminal">pp-tokens</i> <i class="nonterminal">preprocessing-token</i>
+</dd>
+<dt>
+<i class="nonterminal">new-line</i>:</dt>
+	<dd>the new-line character</dd>
+</dl>
+</body>
+</html>
+

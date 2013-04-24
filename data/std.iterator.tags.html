@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Standard iterator tags</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[std.iterator.tags]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[std.iterator.tags]"></object>24.4.3 Standard iterator tags </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>It is often desirable for a function template specialization to find out what is the most specific category of
+its iterator argument, so that the function can select the most efficient algorithm at compile time. To facilitate this,
+the library introduces <dfn>category tag</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="category tag"></object> classes which are used as compile time tags for algorithm selection. They
+are: <code class="sh_cpp"><dfn>input_iterator_tag</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="input_iterator_tag"></object></code>, <code class="sh_cpp"><dfn>output_iterator_tag</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="output_iterator_tag"></object></code>,
+<code class="sh_cpp"><dfn>forward_iterator_tag</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="forward_iterator_tag"></object></code>, <code class="sh_cpp"><dfn>bidirectional_iterator_tag</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="bidirectional_iterator_tag"></object></code> and
+<code class="sh_cpp"><dfn>random_access_iterator_tag</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="random_access_iterator_tag"></object></code>. For every iterator of type <code class="sh_cpp">Iterator</code>,
+<code class="sh_cpp">iterator_traits&lt;Iterator&gt;::iterator_category</code> shall be defined to be the most specific category
+tag that describes the iterator’s behavior.</p>
+
+<pre><code class="sh_cpp">namespace std {
+  struct input_iterator_tag { };
+  struct output_iterator_tag { };
+  struct forward_iterator_tag: public input_iterator_tag { };
+  struct bidirectional_iterator_tag: public forward_iterator_tag { };
+  struct random_access_iterator_tag: public bidirectional_iterator_tag { };
+}</code></pre>
+
+<div class="example">
+<p><a class="anchor" id="p2" href="#p2">2</a>[ <em>Example:</em> For a program-defined iterator <code class="sh_cpp">BinaryTreeIterator</code>, it could be included into the bidirectional
+    iterator category by specializing the <code class="sh_cpp">iterator_traits</code> template:</p>
+
+<pre><code class="sh_cpp">template&lt;class T&gt; struct iterator_traits&lt;BinaryTreeIterator&lt;T&gt; &gt; {
+  typedef std::ptrdiff_t difference_type;
+  typedef T value_type;
+  typedef T* pointer;
+  typedef T&amp; reference;
+  typedef bidirectional_iterator_tag iterator_category;
+};</code></pre>
+
+<p>Typically, however, it would be easier to derive <code class="sh_cpp">BinaryTreeIterator&lt;T&gt;</code> from 
+<code class="sh_cpp">iterator&lt;bidirectional_iterator_tag, T, ptrdiff_t, T*, T&amp;&gt;</code>. — <em>end example</em> ]</p>
+</div>
+
+<div class="example">
+<p><a class="anchor" id="p3" href="#p3">3</a>[ <em>Example:</em> If <code class="sh_cpp">evolve()</code> is well defined for bidirectional iterators, but can be implemented more
+efficiently for random access iterators, then the implementation is as follows:</p>
+
+<pre><code class="sh_cpp">template &lt;class BidirectionalIterator&gt;
+inline void
+evolve(BidirectionalIterator first, BidirectionalIterator last) {
+  evolve(first, last,
+    typename iterator_traits&lt;BidirectionalIterator&gt;::iterator_category());
+}
+
+template &lt;class BidirectionalIterator&gt;
+void evolve(BidirectionalIterator first, BidirectionalIterator last,
+  bidirectional_iterator_tag) {
+  // more generic, but less efficient algorithm
+}
+
+template &lt;class RandomAccessIterator&gt;
+void evolve(RandomAccessIterator first, RandomAccessIterator last,
+  random_access_iterator_tag) {
+  // more efficient, but less generic algorithm
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<div class="example">
+<p><a class="anchor" id="p4" href="#p4">4</a>[ <em>Example:</em> If a C++ program wants to define a bidirectional iterator for some data structure containing
+<code class="sh_cpp">double</code> and such that it works on a large memory model of the implementation, it can do so with:</p>
+
+<pre><code class="sh_cpp">class MyIterator :
+  public iterator&lt;bidirectional_iterator_tag, double, long, T*, T&amp;&gt; {
+  // code implementing ++, etc.
+};</code></pre>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>Then there is no need to specialize the <code class="sh_cpp">iterator_traits</code> template. — <em>end example</em> ]</p>
+</div>
+</body>
+</html>
+

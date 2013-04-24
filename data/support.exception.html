@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Exception handling</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[support.exception]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[support.exception]"></object>18.8 Exception handling </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The header <dfn><code class="header">&lt;exception&gt;</code></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="&lt;exception&gt;"></object> defines several types and functions related to the
+handling of exceptions in a C++ program.</p>
+
+<h3>Header <code class="header">&lt;exception&gt;</code> synopsis</h3>
+
+<pre><code class="sh_cpp">namespace std {
+  class exception;
+  class bad_exception;
+  class nested_exception;
+
+  typedef void (*unexpected_handler)();
+  unexpected_handler get_unexpected() noexcept;
+  unexpected_handler set_unexpected(unexpected_handler f) noexcept;
+  [[noreturn]] void unexpected();
+
+  typedef void (*terminate_handler)();
+  terminate_handler get_terminate() noexcept;
+  terminate_handler set_terminate(terminate_handler f) noexcept;
+  [[noreturn]] void terminate() noexcept;
+
+  bool uncaught_exception() noexcept;
+
+  typedef <em>unspecified</em> exception_ptr;
+
+  exception_ptr current_exception() noexcept;
+  [[noreturn]] void rethrow_exception(exception_ptr p);
+  template&lt;class E&gt; exception_ptr make_exception_ptr(E e) noexcept;
+
+  [[noreturn]] template &lt;class T&gt; void throw_with_nested(T&amp;&amp; t);
+  template &lt;class E&gt; void rethrow_if_nested(const E&amp; e);
+}</code></pre>
+
+<p><span class="seealso">See also:</span> <a title="except.special" href="except.special.html">15.5</a>.</p>
+</body>
+</html>
+

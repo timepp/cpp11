@@ -1,0 +1,268 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Template parameters</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[temp.param]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[temp.param]"></object>14.1 Template parameters </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The syntax for <i class="nonterminal">template-parameter</i>s is:</p>
+
+<dl>
+<dt>
+<dfn><i class="nonterminal">template-parameter</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="template-parameter"></object>:</dt>
+	<dd><i class="nonterminal">type-parameter</i></dd>
+	<dd><i class="nonterminal">parameter-declaration</i></dd>
+<dt>
+<dfn><i class="nonterminal">type-parameter</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="type-parameter"></object>:</dt>
+	<dd>
+<code class="sh_cpp">class</code> <code class="sh_cpp">...</code><sub class="opt">opt</sub> <i class="nonterminal">identifier</i><sub class="opt">opt</sub>
+</dd>
+	<dd>
+<code class="sh_cpp">class</code> <i class="nonterminal">identifier</i><sub class="opt">opt</sub> <code class="sh_cpp">=</code> <i class="nonterminal">type-id</i>
+</dd>
+	<dd>
+<code class="sh_cpp">typename</code> <code class="sh_cpp">...</code><sub class="opt">opt</sub> <i class="nonterminal">identifier</i><sub class="opt">opt</sub>
+</dd>
+	<dd>
+<code class="sh_cpp">typename</code> <i class="nonterminal">identifier</i><sub class="opt">opt</sub> <code class="sh_cpp">=</code> <i class="nonterminal">type-id</i>
+</dd>
+	<dd>
+<code class="sh_cpp">template</code> <code class="sh_cpp">&lt;</code> <i class="nonterminal">template-parameter-list</i> <code class="sh_cpp">&gt;</code> <code class="sh_cpp">class</code> <code class="sh_cpp">...</code><sub class="opt">opt</sub> <i class="nonterminal">identifier</i><sub class="opt">opt</sub>
+</dd>
+	<dd>
+<code class="sh_cpp">template</code> <code class="sh_cpp">&lt;</code> <i class="nonterminal">template-parameter-list</i> <code class="sh_cpp">&gt;</code> <code class="sh_cpp">class</code> <i class="nonterminal">identifier</i><sub class="opt">opt</sub> <code class="sh_cpp">=</code> <i class="nonterminal">id-expression</i>
+</dd>
+</dl>
+
+<p><span class="note">[ <em>Note:</em> The <code class="sh_cpp">&gt;</code> token following the <i class="nonterminal">template-parameter-list</i> of a <i class="nonterminal">type-parameter</i> may be
+the product of replacing a <code class="sh_cpp">&gt;&gt;</code> token by two consecutive <code class="sh_cpp">&gt;</code> tokens
+(<a title="temp.names" href="temp.names.html">14.2</a>). — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>There is no semantic difference between <code class="sh_cpp">class</code> and <code class="sh_cpp">typename</code> in a
+<i class="nonterminal">template-parameter</i>. <code class="sh_cpp">typename</code> followed by an <i class="nonterminal">unqualified-id</i> names a template type
+parameter. <code class="sh_cpp">typename</code> followed by a <i class="nonterminal">qualified-id</i> denotes the type in a non-type<sup class="footnote"><a href="#fn140">140</a></sup>
+<i class="nonterminal">parameter-declaration</i>. A storage class shall not be specified in a <i class="nonterminal">template-parameter</i> declaration.</p>
+
+<div class="note">
+<p>[ <em>Note:</em> A template parameter may be a class template. For example,</p>
+
+<pre><code class="sh_cpp">template&lt;class T&gt; class myarray { /* … */ };
+
+template&lt;class K, class V, template&lt;class T&gt; class C = myarray&gt;
+class Map {
+  C&lt;K&gt; key;
+  C&lt;V&gt; value;
+};</code></pre>
+<p> — <em>end note</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>A <i class="nonterminal">type-parameter</i> whose identifier does not follow an ellipsis defines its <i class="nonterminal">identifier</i> to be a
+<i class="nonterminal">typedef-name</i> (if declared with <code class="sh_cpp">class</code> or <code class="sh_cpp">typename</code>) or <i class="nonterminal">template-name</i> (if
+declared with <code class="sh_cpp">template</code>) in the scope of the template declaration.</p>
+
+<div class="note">
+<p>[ <em>Note:</em> Because of the name lookup rules, a <i class="nonterminal">template-parameter</i> that could be interpreted as either a non-type
+<i class="nonterminal">template-parameter</i> or a <i class="nonterminal">type-parameter</i> (because its <i class="nonterminal">identifier</i> is the name of an already
+existing class) is taken as a <i class="nonterminal">type-parameter</i>. For example,</p>
+
+<pre><code class="sh_cpp">class T { /* … */ };
+int i;
+
+template&lt;class T, T i&gt; void f(T t) {
+  T t1 = i;         // template-parameters T and i
+  ::T t2 = ::i;     // global namespace members T and i
+}</code></pre>
+
+<p>Here, the template <code class="sh_cpp">f</code> has a <i class="nonterminal">type-parameter</i> called <code class="sh_cpp">T</code>, rather than an unnamed
+non-type <i class="nonterminal">template-parameter</i> of class <code class="sh_cpp">T</code>. — <em>end note</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>A non-type <i class="nonterminal">template-parameter</i> shall have one of the following (optionally cv-qualified)
+types:</p>
+
+<ul>
+<li>integral or enumeration type,</li>
+<li>pointer to object or pointer to function,</li>
+<li>lvalue reference to object or lvalue reference to function,</li>
+<li>pointer to member,</li>
+<li>
+<code class="sh_cpp">std::nullptr_t</code>.</li>
+</ul>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><span class="note">[ <em>Note:</em> Other types are disallowed either explicitly below or implicitly by the rules governing the form of
+<i class="nonterminal">template-argument</i>s (<a title="temp.arg" href="temp.arg.html">14.3</a>). — <em>end note</em> ]</span> The top-level cv-qualifiers on the <i class="nonterminal">template-parameter</i> are
+ignored when determining its type.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>A non-type non-reference <i class="nonterminal">template-parameter</i> is a prvalue. It shall not be assigned to or in any other
+way have its value changed. A non-type non-reference <i class="nonterminal">template-parameter</i> cannot have its address taken. When a
+non-type non-reference <i class="nonterminal">template-parameter</i> is used as an initializer for a reference, a temporary is always
+used.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">template&lt;const X&amp; x, int i&gt; void f() {
+  i++;                  // error: change of template-parameter value
+
+  &amp;x;                   // OK
+  &amp;i;                   // error: address of non-reference template-parameter
+
+  int&amp; ri = i;          // error: non-const reference bound to temporary
+  const int&amp; cri = i;   // OK: const reference bound to temporary
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p7" href="#p7">7</a>A non-type <i class="nonterminal">template-parameter</i> shall not be declared to have floating point, class, or void type.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">template&lt;double d&gt; class X;     // error
+template&lt;double* pd&gt; class Y;   // OK
+template&lt;double&amp; rd&gt; class Z;   // OK</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p8" href="#p8">8</a>A non-type <i class="nonterminal">template-parameter</i> of type “array of <code class="sh_cpp">T</code>” or “function returning <code class="sh_cpp">T</code>”
+is adjusted to be of type “pointer to <code class="sh_cpp">T</code>” or “pointer to function returning <code class="sh_cpp">T</code>”,
+respectively.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">template&lt;int *a&gt;   struct R { /* … */ };
+template&lt;int b[5]&gt; struct S { /* … */ };
+int p;
+R&lt;&amp;p&gt; w;                // OK
+S&lt;&amp;p&gt; x;                // OK due to parameter adjustment
+int v[5];
+R&lt;v&gt; y;                 // OK due to implicit argument conversion
+S&lt;v&gt; z;                 // OK due to both adjustment and conversion</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p9" href="#p9">9</a>A <dfn>default template-argument</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="default template-argument"></object> is a <i class="nonterminal">template-argument</i> (<a title="temp.arg" href="temp.arg.html">14.3</a>) specified after
+<code class="sh_cpp">=</code> in a <i class="nonterminal">template-parameter</i>. A default <i class="nonterminal">template-argument</i> may be specified for any kind of
+<i class="nonterminal">template-parameter</i> (type, non-type, template) that is not a template parameter pack (<a title="temp.variadic" href="temp.variadic.html">14.5.3</a>). A
+default <i class="nonterminal">template-argument</i> may be specified in a template declaration. A default <i class="nonterminal">template-argument</i>
+shall not be specified in the <i class="nonterminal">template-parameter-list</i>s of the definition of a member of a class template that
+appears outside of the member’s class. A default <i class="nonterminal">template-argument</i> shall not be specified in a friend class
+template declaration. If a friend function template declaration specifies a default <i class="nonterminal">template-argument</i>, that
+declaration shall be a definition and shall be the only declaration of the function template in the translation
+unit.</p>
+
+<p><a class="anchor" id="p10" href="#p10">10</a>The set of default <i class="nonterminal">template-argument</i>s available for use with a template declaration or definition is
+obtained by merging the default arguments from the definition (if in scope) and all declarations in scope in the same
+way default function arguments are (<a title="dcl.fct.default" href="dcl.fct.default.html">8.3.6</a>).</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">template&lt;class T1, class T2 = int&gt; class A;
+template&lt;class T1 = int, class T2&gt; class A;</code></pre>
+
+<p>is equivalent to</p>
+
+<pre><code class="sh_cpp">template&lt;class T1 = int, class T2 = int&gt; class A;</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p11" href="#p11">11</a>If a <i class="nonterminal">template-parameter</i> of a class template or alias template has a default
+<i class="nonterminal">template-argument</i>, each subsequent <i class="nonterminal">template-parameter</i> shall either have a default
+<i class="nonterminal">template-argument</i> supplied or be a template parameter pack. If a <i class="nonterminal">template-parameter</i> of a primary class
+template or alias template is a template parameter pack, it shall be the last <i class="nonterminal">template-parameter</i>. A template
+parameter pack of a function template shall not be followed by another template parameter unless that template parameter
+can be deduced or has a default argument (<a title="temp.deduct" href="temp.deduct.html">14.8.2</a>).</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">template&lt;class T1 = int, class T2&gt; class B; // error
+
+// U cannot be deduced or specified
+template&lt;class... T, class... U&gt; void f() { }
+template&lt;class... T, class U&gt; void g() { }</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p12" href="#p12">12</a>A <i class="nonterminal">template-parameter</i> shall not be given default arguments by two different declarations in the same
+scope.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">template&lt;class T = int&gt; class X;
+template&lt;class T = int&gt; class X { /* … */ };    // error</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p13" href="#p13">13</a>When parsing a default <i class="nonterminal">template-argument</i> for a non-type <i class="nonterminal">template-parameter</i>, the first
+non-nested <code class="sh_cpp">&gt;</code> is taken as the end of the <i class="nonterminal">template-parameter-list</i> rather than a greater-than
+operator.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">template&lt;int i = 3 &gt; 4 &gt;    // syntax error
+class X { /* … */ };
+
+template&lt;int i = (3 &gt; 4) &gt;  // OK
+class Y { /* … */ };</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p14" href="#p14">14</a>A <i class="nonterminal">template-parameter</i> of a template <i class="nonterminal">template-parameter</i> is permitted to have a default
+<i class="nonterminal">template-argument</i>. When such default arguments are specified, they apply to the template
+<i class="nonterminal">template-parameter</i> in the scope of the template <i class="nonterminal">template-parameter</i>.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">template &lt;class T = float&gt; struct B {};
+template &lt;template &lt;class TT = float&gt; class T&gt; struct A {
+  inline void f();
+  inline void g();
+};
+template &lt;template &lt;class TT&gt; class T&gt; void A&lt;T&gt;::f() {
+  T&lt;&gt; t;            // error — TT has no default template argument
+}
+template &lt;template &lt;class TT = char&gt; class T&gt; void A&lt;T&gt;::g() {
+    T&lt;&gt; t;          // OK — T&lt;char&gt;
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p15" href="#p15">15</a>If a <i class="nonterminal">template-parameter</i> is a <i class="nonterminal">type-parameter</i> with an ellipsis prior to its optional
+<i class="nonterminal">identifier</i> or is a <i class="nonterminal">parameter-declaration</i> that declares a parameter pack (<a title="dcl.fct" href="dcl.fct.html">8.3.5</a>), then the
+<i class="nonterminal">template-parameter</i> is a template parameter pack (<a title="temp.variadic" href="temp.variadic.html">14.5.3</a>). A template parameter pack that is a
+<i class="nonterminal">parameter-declaration</i> whose type contains one or more unexpanded parameter packs is a pack expansion.
+Similarly, a template parameter pack that is a <i class="nonterminal">type-parameter</i> with a <i class="nonterminal">template-parameter-list</i>
+containing one or more unexpanded parameter packs is a pack expansion. A template parameter pack that is a pack
+expansion shall not expand a parameter pack declared in the same <i class="nonterminal">template-parameter-list</i>.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">
+template &lt;class... Types&gt; class Tuple;              // Types is a template type parameter pack
+                                                    // but not a pack expansion
+template &lt;class T, int... Dims&gt; struct multi_array; // Dims is a non-type template parameter pack
+                                                    // but not a pack expansion
+template&lt;class... T&gt; struct value_holder {
+  template&lt;T... Values&gt; apply { };                  // Values is a non-type template parameter pack
+                                                    // and a pack expansion
+};
+template&lt;class... T, T... Values&gt; struct static_array;  // error: Values expands template type parameter
+                                                        // pack T within the same template parameter list</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+
+<div><p class="footnote" id="fn140">140) Since template <i class="nonterminal">template-parameter</i>s and template <i class="nonterminal">template-argument</i>s are treated as
+types for descriptive purposes, the terms <em>non-type parameter</em> and <em>non-type argument</em> are used to refer
+to non-type, non-template parameters and arguments.</p></div>
+</body>
+</html>
+

@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Jump statements</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[stmt.jump]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[stmt.jump]"></object>6.6 Jump statements </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Jump statements unconditionally transfer control.</p>
+
+<dl>
+<dt>
+<i class="nonterminal"><dfn>jump-statement</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="jump-statement"></object></i>:</dt>
+	<dd>
+<code class="sh_cpp">break</code> <code class="sh_cpp">;</code>
+</dd>
+	<dd>
+<code class="sh_cpp">continue</code> <code class="sh_cpp">;</code>
+</dd>
+	<dd>
+<code class="sh_cpp">return</code> <i class="nonterminal">expression</i><sub class="opt">opt</sub> <code class="sh_cpp">;</code>
+</dd>
+	<dd>
+<code class="sh_cpp">return</code> <i class="nonterminal">braced-init-list</i> <code class="sh_cpp">;</code>
+</dd>
+	<dd>
+<code class="sh_cpp">goto</code> <i class="nonterminal">identifier</i> <code class="sh_cpp">;</code>
+</dd>
+</dl>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>On exit from a scope (however accomplished), objects with automatic storage duration (<a title="basic.stc.auto" href="basic.stc.auto.html">3.7.3</a>) that
+have been constructed in that scope are destroyed in the reverse order of their construction. <span class="note">[ <em>Note:</em> For temporaries, see
+<a title="class.temporary" href="class.temporary.html">12.2</a>. — <em>end note</em> ]</span> Transfer out of a loop, out of a block, or back past an initialized variable with automatic
+storage duration involves the destruction of objects with automatic storage duration that are in scope at the point
+transferred from but not at the point transferred to. (See <a title="stmt.dcl" href="stmt.dcl.html">6.7</a> for transfers into blocks). <span class="note">[ <em>Note:</em> However, the
+program can be terminated (by calling <code class="sh_cpp">std::exit()</code> or <code class="sh_cpp">std::abort()</code> (<a title="support.start.term" href="support.start.term.html">18.5</a>), for
+example) without destroying class objects with automatic storage duration. — <em>end note</em> ]</span></p>
+</body>
+</html>
+

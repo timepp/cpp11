@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Special member functions</title>
+</head>
+<body>
+<h1>
+<dfn class="label">[special]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[special]"></object>12 Special member functions </h1>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The default constructor (<a title="class.ctor" href="class.ctor.html">12.1</a>), copy constructor and copy assignment operator (<a title="class.copy" href="class.copy.html">12.8</a>),
+move constructor and move assignment operator (<a title="class.copy" href="class.copy.html">12.8</a>), and destructor (<a title="class.dtor" href="class.dtor.html">12.4</a>) are <dfn>special
+member functions</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="special
+member functions"></object>. <span class="note">[ <em>Note:</em> The implementation will implicitly declare these member functions for some class types
+when the program does not explicitly declare them. The implementation will implicitly define them if they are odr-used
+(<a title="basic.def.odr" href="basic.def.odr.html">3.2</a>). See <a title="class.ctor" href="class.ctor.html">12.1</a>, <a title="class.dtor" href="class.dtor.html">12.4</a> and <a title="class.copy" href="class.copy.html">12.8</a>. — <em>end note</em> ]</span> Programs shall not define
+implicitly-declared special member functions.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>Programs may explicitly refer to implicitly-declared special member functions.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> a program may explicitly call, take the address of or form a pointer to member to an implicitly-declared
+special member function.</p>
+
+<pre><code class="sh_cpp">struct A { };                   // implicitly declared A::operator=
+struct B : A {
+  B&amp; operator=(const B &amp;);
+};
+B&amp; B::operator=(const B&amp; s) {
+  this-&gt;A::operator=(s);        // well formed
+  return *this;
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><span class="note">[ <em>Note:</em> The special member functions affect the way objects of class type are created, copied, moved, and
+destroyed, and how values can be converted to values of other types. Often such special member functions are called
+implicitly. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>Special member functions obey the usual access rules (Clause <a title="class.access" href="class.access.html">11</a>). <span class="example">[ <em>Example:</em> declaring a constructor
+<code class="sh_cpp">protected</code> ensures that only derived classes and friends can create objects using it. — <em>end example</em> ]</span></p>
+</body>
+</html>
+

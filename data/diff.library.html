@@ -1,0 +1,528 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Standard C library</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[diff.library]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[diff.library]"></object>C.3 Standard C library </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>This subclause summarizes the contents of the C++ standard library included from the Standard C library. It
+also summarizes the explicit changes in definitions, declarations, or behavior from the Standard C library noted in
+other subclauses (<a title="headers" href="headers.html">17.6.1.2</a>, <a title="support.types" href="support.types.html">18.2</a>, <a title="c.strings" href="c.strings.html">21.7</a>).</p>
+
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The C++ standard library provides 57 standard macros from the C library, as shown in Table <a href="diff.cpp03.html#t149">149</a>.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>The header names (enclosed in <code class="sh_cpp">&lt;</code> and <code class="sh_cpp">&gt;</code>) indicate that the macro may be defined
+in more than one header. All such definitions are equivalent (<a title="basic.def.odr" href="basic.def.odr.html">3.2</a>).</p>
+
+<table id="t149" class="bordered padded">
+<caption>Table 149 — Standard macros</caption>
+<tbody>
+<tr>
+<td><code class="sh_cpp">assert</code></td>
+<td><code class="sh_cpp">HUGE_VAL</code></td>
+<td><code class="sh_cpp">NULL <code class="header">&lt;cstring&gt;</code></code></td>
+<td><code class="sh_cpp">SIGINT</code></td>
+<td><code class="sh_cpp">va_end</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">BUFSIZ</code></td>
+<td><code class="sh_cpp">LC_ALL</code></td>
+<td><code class="sh_cpp">NULL <code class="header">&lt;ctime&gt;</code></code></td>
+<td><code class="sh_cpp">SIGSEGV</code></td>
+<td><code class="sh_cpp">va_start</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">CLOCKS_PER_SEC</code></td>
+<td><code class="sh_cpp">LC_COLLATE</code></td>
+<td><code class="sh_cpp">NULL <code class="header">&lt;cwchar&gt;</code></code></td>
+<td><code class="sh_cpp">SIGTERM</code></td>
+<td><code class="sh_cpp">WCHAR_MAX</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">EDOM</code></td>
+<td><code class="sh_cpp">LC_CTYPE</code></td>
+<td><code class="sh_cpp">offsetof</code></td>
+<td><code class="sh_cpp">SIG_DFL</code></td>
+<td><code class="sh_cpp">WCHAR_MIN</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">EILSEQ</code></td>
+<td><code class="sh_cpp">LC_MONETARY</code></td>
+<td><code class="sh_cpp">RAND_MAX</code></td>
+<td><code class="sh_cpp">SIG_ERR</code></td>
+<td><code class="sh_cpp">WEOF <code class="header">&lt;cwchar&gt;</code></code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">EOF</code></td>
+<td><code class="sh_cpp">LC_NUMERIC</code></td>
+<td><code class="sh_cpp">SEEK_CUR</code></td>
+<td><code class="sh_cpp">SIG_IGN</code></td>
+<td><code class="sh_cpp">WEOF <code class="header">&lt;cwctype&gt;</code></code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">ERANGE</code></td>
+<td><code class="sh_cpp">LC_TIME</code></td>
+<td><code class="sh_cpp">SEEK_END</code></td>
+<td><code class="sh_cpp">stderr</code></td>
+<td><code class="sh_cpp">_IOFBF</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">errno</code></td>
+<td><code class="sh_cpp">L_tmpnam</code></td>
+<td><code class="sh_cpp">SEEK_SET</code></td>
+<td><code class="sh_cpp">stdin</code></td>
+<td><code class="sh_cpp">_IOLBF</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">EXIT_FAILURE</code></td>
+<td><code class="sh_cpp">MB_CUR_MAX</code></td>
+<td><code class="sh_cpp">setjmp</code></td>
+<td><code class="sh_cpp">stdout</code></td>
+<td><code class="sh_cpp">_IONBF</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">EXIT_SUCCESS</code></td>
+<td><code class="sh_cpp">NULL <code class="header">&lt;clocale&gt;</code></code></td>
+<td><code class="sh_cpp">SIGABRT</code></td>
+<td><code class="sh_cpp">TMP_MAX</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">FILENAME_MAX</code></td>
+<td><code class="sh_cpp">NULL <code class="header">&lt;cstddef&gt;</code></code></td>
+<td><code class="sh_cpp">SIGFPE</code></td>
+<td><code class="sh_cpp">va_arg</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">FOPEN_MAX</code></td>
+<td><code class="sh_cpp">NULL <code class="header">&lt;cstdlib&gt;</code></code></td>
+<td><code class="sh_cpp">SIGILL</code></td>
+<td><code class="sh_cpp">va_copy</code></td>
+</tr>
+</tbody>
+</table>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>The C++ standard library provides 57 standard values from the C library, as shown in Table <a href="diff.cpp03.html#t150">150</a>.</p>
+
+<table id="t150" class="bordered padded">
+<caption>Table 150 — Standard values</caption>
+<tbody>
+<tr>
+<td><code class="sh_cpp">CHAR_BIT</code></td>
+<td><code class="sh_cpp">FLT_DIG</code></td>
+<td><code class="sh_cpp">INT_MIN</code></td>
+<td><code class="sh_cpp">MB_LEN_MAX</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">CHAR_MAX</code></td>
+<td><code class="sh_cpp">FLT_EPSILON</code></td>
+<td><code class="sh_cpp">LDBL_DIG</code></td>
+<td><code class="sh_cpp">SCHAR_MAX</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">CHAR_MIN</code></td>
+<td><code class="sh_cpp">FLT_MANT_DIG</code></td>
+<td><code class="sh_cpp">LDBL_EPSILON</code></td>
+<td><code class="sh_cpp">SCHAR_MIN</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">DBL_DIG</code></td>
+<td><code class="sh_cpp">FLT_MAX</code></td>
+<td><code class="sh_cpp">LDBL_MANT_DIG</code></td>
+<td><code class="sh_cpp">SHRT_MAX</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">DBL_EPSILON</code></td>
+<td><code class="sh_cpp">FLT_MAX_10_EXP</code></td>
+<td><code class="sh_cpp">LDBL_MAX</code></td>
+<td><code class="sh_cpp">SHRT_MIN</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">DBL_MANT_DIG</code></td>
+<td><code class="sh_cpp">FLT_MAX_EXP</code></td>
+<td><code class="sh_cpp">LDBL_MAX_10_EXP</code></td>
+<td><code class="sh_cpp">UCHAR_MAX</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">DBL_MAX</code></td>
+<td><code class="sh_cpp">FLT_MIN</code></td>
+<td><code class="sh_cpp">LDBL_MAX_EXP</code></td>
+<td><code class="sh_cpp">UINT_MAX</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">DBL_MAX_10_EXP</code></td>
+<td><code class="sh_cpp">FLT_MIN_10_EXP</code></td>
+<td><code class="sh_cpp">LDBL_MIN</code></td>
+<td><code class="sh_cpp">ULONG_MAX</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">DBL_MAX_EXP</code></td>
+<td><code class="sh_cpp">FLT_MIN_EXP</code></td>
+<td><code class="sh_cpp">LDBL_MIN_10_EXP</code></td>
+<td><code class="sh_cpp">USRT_MAX</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">DBL_MIN</code></td>
+<td><code class="sh_cpp">FLT_RADIX</code></td>
+<td><code class="sh_cpp">LDBL_MIN_EXP</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">DBL_MIN_10_EXP</code></td>
+<td><code class="sh_cpp">FLT_ROUNDS</code></td>
+<td><code class="sh_cpp">LONG_MAX</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">DBL_MIN_EXP</code></td>
+<td><code class="sh_cpp">INT_MAX</code></td>
+<td><code class="sh_cpp">LONG_MIN</code></td>
+</tr>
+</tbody>
+</table>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>The C++ standard library provides 20 standard types from the C library, as shown in Table <a href="diff.cpp03.html#t151">151</a>.</p>
+
+<table id="t151" class="bordered padded">
+<caption>Table 151 — Standard types</caption>
+<tbody>
+<tr>
+<td><code class="sh_cpp">clock_t</code></td>
+<td><code class="sh_cpp">ldiv_t</code></td>
+<td><code class="sh_cpp">size_t <code class="header">&lt;cstdio&gt;</code></code></td>
+<td><code class="sh_cpp">va_list</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">div_t</code></td>
+<td><code class="sh_cpp">mbstate_t</code></td>
+<td><code class="sh_cpp">size_t <code class="header">&lt;cstdlib&gt;</code></code></td>
+<td><code class="sh_cpp">wctrans_t</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">FILE</code></td>
+<td><code class="sh_cpp">ptrdiff_t</code></td>
+<td><code class="sh_cpp">size_t <code class="header">&lt;cstring&gt;</code></code></td>
+<td><code class="sh_cpp">wctype_t</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">fpos_t</code></td>
+<td><code class="sh_cpp">sig_atomic_t</code></td>
+<td><code class="sh_cpp">size_t <code class="header">&lt;ctime&gt;</code></code></td>
+<td><code class="sh_cpp">wint_t <code class="header">&lt;cwchar&gt;</code></code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">jmp_buf</code></td>
+<td><code class="sh_cpp">size_t <code class="header">&lt;cstddef&gt;</code></code></td>
+<td><code class="sh_cpp">time_t</code></td>
+<td><code class="sh_cpp">wint_t <code class="header">&lt;cwctype&gt;</code></code></td>
+</tr>
+</tbody>
+</table>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>The C++ standard library provides 2 standard structs from the C library, as shown in Table <a href="diff.cpp03.html#t152">152</a>.</p>
+
+<table id="t152" class="bordered padded">
+<caption>Table 152 — Standard structs</caption>
+<tbody><tr>
+<td><code class="sh_cpp">lconv</code></td>
+<td><code class="sh_cpp">tm</code></td>
+</tr></tbody>
+</table>
+
+<p><a class="anchor" id="p7" href="#p7">7</a>The C++ standard library provides 209 standard functions from the C library, as shown in Table <a href="diff.cpp03.html#t153">153</a>.</p>
+
+<table id="t153" class="bordered padded">
+<caption>Table 153 — Standard functions</caption>
+<tbody>
+<tr>
+<td><code class="sh_cpp">abort</code></td>
+<td><code class="sh_cpp">fmod</code></td>
+<td><code class="sh_cpp">isupper</code></td>
+<td><code class="sh_cpp">mktime</code></td>
+<td><code class="sh_cpp">strftime</code></td>
+<td><code class="sh_cpp">wcrtomb</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">abs</code></td>
+<td><code class="sh_cpp">fopen</code></td>
+<td><code class="sh_cpp">iswalnum</code></td>
+<td><code class="sh_cpp">modf</code></td>
+<td><code class="sh_cpp">strlen</code></td>
+<td><code class="sh_cpp">wcscat</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">acos</code></td>
+<td><code class="sh_cpp">fprintf</code></td>
+<td><code class="sh_cpp">iswalpha</code></td>
+<td><code class="sh_cpp">perror</code></td>
+<td><code class="sh_cpp">strncat</code></td>
+<td><code class="sh_cpp">wcschr</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">asctime</code></td>
+<td><code class="sh_cpp">fputc</code></td>
+<td><code class="sh_cpp">iswcntrl</code></td>
+<td><code class="sh_cpp">pow</code></td>
+<td><code class="sh_cpp">strncmp</code></td>
+<td><code class="sh_cpp">wcscmp</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">asin</code></td>
+<td><code class="sh_cpp">fputs</code></td>
+<td><code class="sh_cpp">iswctype</code></td>
+<td><code class="sh_cpp">printf</code></td>
+<td><code class="sh_cpp">strncpy</code></td>
+<td><code class="sh_cpp">wcscoll</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">atan</code></td>
+<td><code class="sh_cpp">fputwc</code></td>
+<td><code class="sh_cpp">iswdigit</code></td>
+<td><code class="sh_cpp">putc</code></td>
+<td><code class="sh_cpp">strpbrk</code></td>
+<td><code class="sh_cpp">wcscpy</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">atan2</code></td>
+<td><code class="sh_cpp">fputws</code></td>
+<td><code class="sh_cpp">iswgraph</code></td>
+<td><code class="sh_cpp">putchar</code></td>
+<td><code class="sh_cpp">strrchr</code></td>
+<td><code class="sh_cpp">wcscspn</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">atexit</code></td>
+<td><code class="sh_cpp">fread</code></td>
+<td><code class="sh_cpp">iswlower</code></td>
+<td><code class="sh_cpp">puts</code></td>
+<td><code class="sh_cpp">strspn</code></td>
+<td><code class="sh_cpp">wcsftime</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">atof</code></td>
+<td><code class="sh_cpp">free</code></td>
+<td><code class="sh_cpp">iswprint</code></td>
+<td><code class="sh_cpp">putwc</code></td>
+<td><code class="sh_cpp">strstr</code></td>
+<td><code class="sh_cpp">wcslen</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">atoi</code></td>
+<td><code class="sh_cpp">freopen</code></td>
+<td><code class="sh_cpp">iswpunct</code></td>
+<td><code class="sh_cpp">putwchar</code></td>
+<td><code class="sh_cpp">strtod</code></td>
+<td><code class="sh_cpp">wcsncat</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">atol</code></td>
+<td><code class="sh_cpp">frexp</code></td>
+<td><code class="sh_cpp">iswspace</code></td>
+<td><code class="sh_cpp">qsort</code></td>
+<td><code class="sh_cpp">strtok</code></td>
+<td><code class="sh_cpp">wcsncmp</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">bsearch</code></td>
+<td><code class="sh_cpp">fscanf</code></td>
+<td><code class="sh_cpp">iswupper</code></td>
+<td><code class="sh_cpp">raise</code></td>
+<td><code class="sh_cpp">strtol</code></td>
+<td><code class="sh_cpp">wcsncpy</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">btowc</code></td>
+<td><code class="sh_cpp">fseek</code></td>
+<td><code class="sh_cpp">iswxdigit</code></td>
+<td><code class="sh_cpp">rand</code></td>
+<td><code class="sh_cpp">strtoul</code></td>
+<td><code class="sh_cpp">wcspbrk</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">calloc</code></td>
+<td><code class="sh_cpp">fsetpos</code></td>
+<td><code class="sh_cpp">isxdigit</code></td>
+<td><code class="sh_cpp">realloc</code></td>
+<td><code class="sh_cpp">strxfrm</code></td>
+<td><code class="sh_cpp">wcsrchr</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">ceil</code></td>
+<td><code class="sh_cpp">ftell</code></td>
+<td><code class="sh_cpp">labs</code></td>
+<td><code class="sh_cpp">remove</code></td>
+<td><code class="sh_cpp">swprintf</code></td>
+<td><code class="sh_cpp">wcsrtombs</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">clearerr</code></td>
+<td><code class="sh_cpp">fwide</code></td>
+<td><code class="sh_cpp">ldexp</code></td>
+<td><code class="sh_cpp">rename</code></td>
+<td><code class="sh_cpp">swscanf</code></td>
+<td><code class="sh_cpp">wcsspn</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">clock</code></td>
+<td><code class="sh_cpp">fwprintf</code></td>
+<td><code class="sh_cpp">ldiv</code></td>
+<td><code class="sh_cpp">rewind</code></td>
+<td><code class="sh_cpp">system</code></td>
+<td><code class="sh_cpp">wcsstr</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">cos</code></td>
+<td><code class="sh_cpp">fwrite</code></td>
+<td><code class="sh_cpp">localeconv</code></td>
+<td><code class="sh_cpp">scanf</code></td>
+<td><code class="sh_cpp">tan</code></td>
+<td><code class="sh_cpp">wcstod</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">cosh</code></td>
+<td><code class="sh_cpp">fwscanf</code></td>
+<td><code class="sh_cpp">localtime</code></td>
+<td><code class="sh_cpp">setbuf</code></td>
+<td><code class="sh_cpp">tanh</code></td>
+<td><code class="sh_cpp">wcstok</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">ctime</code></td>
+<td><code class="sh_cpp">getc</code></td>
+<td><code class="sh_cpp">log</code></td>
+<td><code class="sh_cpp">setlocale</code></td>
+<td><code class="sh_cpp">time</code></td>
+<td><code class="sh_cpp">wcstol</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">difftime</code></td>
+<td><code class="sh_cpp">getchar</code></td>
+<td><code class="sh_cpp">log10</code></td>
+<td><code class="sh_cpp">setvbuf</code></td>
+<td><code class="sh_cpp">tmpfile</code></td>
+<td><code class="sh_cpp">wcstombs</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">div</code></td>
+<td><code class="sh_cpp">getenv</code></td>
+<td><code class="sh_cpp">longjmp</code></td>
+<td><code class="sh_cpp">signal</code></td>
+<td><code class="sh_cpp">tmpnam</code></td>
+<td><code class="sh_cpp">wcstoul</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">exit</code></td>
+<td><code class="sh_cpp">gets</code></td>
+<td><code class="sh_cpp">malloc</code></td>
+<td><code class="sh_cpp">sin</code></td>
+<td><code class="sh_cpp">tolower</code></td>
+<td><code class="sh_cpp">wcsxfrm</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">exp</code></td>
+<td><code class="sh_cpp">getwc</code></td>
+<td><code class="sh_cpp">mblen</code></td>
+<td><code class="sh_cpp">sinh</code></td>
+<td><code class="sh_cpp">toupper</code></td>
+<td><code class="sh_cpp">wctob</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">fabs</code></td>
+<td><code class="sh_cpp">getwchar</code></td>
+<td><code class="sh_cpp">mbrlen</code></td>
+<td><code class="sh_cpp">sprintf</code></td>
+<td><code class="sh_cpp">towctrans</code></td>
+<td><code class="sh_cpp">wctomb</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">fclose</code></td>
+<td><code class="sh_cpp">gmtime</code></td>
+<td><code class="sh_cpp">mbrtowc</code></td>
+<td><code class="sh_cpp">sqrt</code></td>
+<td><code class="sh_cpp">towlower</code></td>
+<td><code class="sh_cpp">wctrans</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">feof</code></td>
+<td><code class="sh_cpp">isalnum</code></td>
+<td><code class="sh_cpp">mbsinit</code></td>
+<td><code class="sh_cpp">srand</code></td>
+<td><code class="sh_cpp">towupper</code></td>
+<td><code class="sh_cpp">wctype</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">ferror</code></td>
+<td><code class="sh_cpp">isalpha</code></td>
+<td><code class="sh_cpp">mbsrtowcs</code></td>
+<td><code class="sh_cpp">sscanf</code></td>
+<td><code class="sh_cpp">ungetc</code></td>
+<td><code class="sh_cpp">wmemchr</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">fflush</code></td>
+<td><code class="sh_cpp">iscntrl</code></td>
+<td><code class="sh_cpp">mbstowcs</code></td>
+<td><code class="sh_cpp">strcat</code></td>
+<td><code class="sh_cpp">ungetwc</code></td>
+<td><code class="sh_cpp">wmemcmp</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">fgetc</code></td>
+<td><code class="sh_cpp">isdigit</code></td>
+<td><code class="sh_cpp">mbtowc</code></td>
+<td><code class="sh_cpp">strchr</code></td>
+<td><code class="sh_cpp">vfprintf</code></td>
+<td><code class="sh_cpp">wmemcpy</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">fgetpos</code></td>
+<td><code class="sh_cpp">isgraph</code></td>
+<td><code class="sh_cpp">memchr</code></td>
+<td><code class="sh_cpp">strcmp</code></td>
+<td><code class="sh_cpp">vfwprintf</code></td>
+<td><code class="sh_cpp">wmemmove</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">fgets</code></td>
+<td><code class="sh_cpp">islower</code></td>
+<td><code class="sh_cpp">memcmp</code></td>
+<td><code class="sh_cpp">strcoll</code></td>
+<td><code class="sh_cpp">vprintf</code></td>
+<td><code class="sh_cpp">wmemset</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">fgetwc</code></td>
+<td><code class="sh_cpp">isprint</code></td>
+<td><code class="sh_cpp">memcpy</code></td>
+<td><code class="sh_cpp">strcpy</code></td>
+<td><code class="sh_cpp">vsprintf</code></td>
+<td><code class="sh_cpp">wprintf</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">fgetws</code></td>
+<td><code class="sh_cpp">ispunct</code></td>
+<td><code class="sh_cpp">memmove</code></td>
+<td><code class="sh_cpp">strcspn</code></td>
+<td><code class="sh_cpp">vswprintf</code></td>
+<td><code class="sh_cpp">wscanf</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">floor</code></td>
+<td><code class="sh_cpp">isspace</code></td>
+<td><code class="sh_cpp">memset</code></td>
+<td><code class="sh_cpp">strerror</code></td>
+<td><code class="sh_cpp">vwprintf</code></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>
+

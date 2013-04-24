@@ -1,0 +1,128 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>References</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[dcl.ref]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[dcl.ref]"></object>8.3.2 References </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>In a declaration <code class="sh_cpp">T</code> <code class="sh_cpp">D</code> where <code class="sh_cpp">D</code> has either of the forms</p>
+
+<dl>
+<dd>
+<code class="sh_cpp">&amp;</code> <i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub> <code class="sh_cpp">D1</code>
+</dd>
+<dd>
+<code class="sh_cpp">&amp;&amp;</code> <i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub> <code class="sh_cpp">D1</code>
+</dd>
+</dl>
+
+<p>and the type of the identifier in the declaration <code class="sh_cpp">T D1</code> is “<i class="nonterminal">derived-declarator-type-list</i>
+<code class="sh_cpp">T</code>”, then the type of the identifier of <code class="sh_cpp">D</code> is “<i class="nonterminal">derived-declarator-type-list</i> reference
+to <code class="sh_cpp">T</code>”. The optional <i class="nonterminal">attribute-specifier-seq</i> appertains to the reference type. Cv-qualified references
+are ill-formed except when the cv-qualifiers are introduced through the use of a typedef (<a title="dcl.typedef" href="dcl.typedef.html">7.1.3</a>) or of a
+template type argument (<a title="temp.arg" href="temp.arg.html">14.3</a>), in which case the cv-qualifiers are ignored.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">typedef int&amp; A;
+const A aref = 3;       // ill-formed; lvalue reference to non-const initialized with rvalue</code></pre>
+
+<p>The type of <code class="sh_cpp">aref</code> is “lvalue reference to <code class="sh_cpp">int</code>”, not “lvalue reference to <code class="sh_cpp">const
+int</code>”. — <em>end example</em> ]</p>
+</div>
+
+<p><span class="note">[ <em>Note:</em> A reference can be thought of as a name of an object. — <em>end note</em> ]</span> A declarator that specifies the type “reference to
+<var>cv</var> <code class="sh_cpp">void</code>” is ill-formed.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>A reference type that is declared using <code class="sh_cpp">&amp;</code> is called an <dfn>lvalue reference</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="lvalue reference"></object>, and a
+reference type that is declared using <code class="sh_cpp">&amp;&amp;</code> is called an <dfn>rvalue reference</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="rvalue reference"></object>. Lvalue
+references and rvalue references are distinct types. Except where explicitly noted, they are semantically equivalent and
+commonly referred to as references.</p>
+
+<div class="example">
+<p><a class="anchor" id="p3" href="#p3">3</a>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">void f(double&amp; a) { a += 3.14; }
+// …
+double d = 0;
+f(d);</code></pre>
+
+<p>declares <code class="sh_cpp">a</code> to be a reference parameter of <code class="sh_cpp">f</code> so the call <code class="sh_cpp">f(d)</code> will add
+<code class="sh_cpp">3.14</code> to <code class="sh_cpp">d</code>.</p>
+
+<pre><code class="sh_cpp">int v[20];
+// …
+int&amp; g(int i) { return v[i]; }
+// …
+g(3) = 7;</code></pre>
+
+<p>declares the function <code class="sh_cpp">g()</code> to return a reference to an integer so <code class="sh_cpp">g(3)=7</code> will assign
+<code class="sh_cpp">7</code> to the fourth element of the array <code class="sh_cpp">v</code>. For another example,</p>
+
+<pre><code class="sh_cpp">struct link {
+  link* next;
+};
+
+link* first;
+
+void h(link*&amp; p) {      // p is a reference to pointer
+  p-&gt;next = first;
+  first = p;
+  p = 0;
+}
+
+void k() {
+   link* q = new link;
+   h(q);
+}</code></pre>
+
+<p>declares <code class="sh_cpp">p</code> to be a reference to a pointer to <code class="sh_cpp">link</code> so <code class="sh_cpp">h(q)</code> will leave
+<code class="sh_cpp">q</code> with the value zero. See also <a title="dcl.init.ref" href="dcl.init.ref.html">8.5.3</a>. — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>It is unspecified whether or not a reference requires storage (<a title="basic.stc" href="basic.stc.html">3.7</a>).</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>There shall be no references to references, no arrays of references, and no pointers to references. The
+declaration of a reference shall contain an <i class="nonterminal">initializer</i> (<a title="dcl.init.ref" href="dcl.init.ref.html">8.5.3</a>) except when the declaration contains
+an explicit <code class="sh_cpp">extern</code> specifier (<a title="dcl.stc" href="dcl.stc.html">7.1.1</a>), is a class member (<a title="class.mem" href="class.mem.html">9.2</a>) declaration within a
+class definition, or is the declaration of a parameter or a return type (<a title="dcl.fct" href="dcl.fct.html">8.3.5</a>); see <a title="basic.def" href="basic.def.html">3.1</a>. A
+reference shall be initialized to refer to a valid object or function. <span class="note">[ <em>Note:</em> in particular, a null reference cannot
+exist in a well-defined program, because the only way to create such a reference would be to bind it to the “object”
+obtained by dereferencing a null pointer, which causes undefined behavior. As described in <a title="class.bit" href="class.bit.html">9.6</a>, a reference
+cannot be bound directly to a bit-field. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>If a typedef (<a title="dcl.typedef" href="dcl.typedef.html">7.1.3</a>), a type <i class="nonterminal">template-parameter</i> (<a title="temp.arg.type" href="temp.arg.type.html">14.3.1</a>), or a
+<i class="nonterminal">decltype-specifier</i> (<a title="dcl.type.simple" href="dcl.type.simple.html">7.1.6.2</a>) denotes a type <code class="sh_cpp">TR</code> that is a reference to a type
+<code class="sh_cpp">T</code>, an attempt to create the type “lvalue reference to <var>cv</var> <code class="sh_cpp">TR</code>” creates the type
+“lvalue reference to <code class="sh_cpp">T</code>”, while an attempt to create the type “rvalue reference to <var>cv</var>
+<code class="sh_cpp">TR</code>” creates the type <code class="sh_cpp">TR</code>.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">int i;
+typedef int&amp; LRI;
+typedef int&amp;&amp; RRI;
+
+LRI&amp; r1 = i;            // r1 has the type int&amp;
+const LRI&amp; r2 = i;      // r2 has the type int&amp;
+const LRI&amp;&amp; r3 = i;     // r3 has the type int&amp;
+
+RRI&amp; r4 = i;            // r4 has the type int&amp;
+RRI&amp;&amp; r5 = 5;           // r5 has the type int&amp;&amp;
+
+decltype(r2)&amp; r6 = i;   // r6 has the type int&amp;
+decltype(r2)&amp;&amp; r7 = i;  // r7 has the type int&amp;</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+</body>
+</html>
+

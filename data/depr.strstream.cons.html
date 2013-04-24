@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>strstream constructors</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[depr.strstream.cons]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[depr.strstream.cons]"></object>D.7.4.1 <code class="sh_cpp">strstream</code> constructors </h4>
+
+<h5><code class="sh_cpp"><dfn>strstream</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="strstream"></object>();</code></h5>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Effects:</em> Constructs an object of class <code class="sh_cpp">strstream</code>, initializing the base class with
+<code class="sh_cpp">iostream(&amp;sb)</code>.</p>
+
+<h5><code class="sh_cpp"><dfn>strstream</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="strstream"></object>(char* s, int n,
+          ios_base::openmode mode = ios_base::in|ios_base::out);</code></h5>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Effects:</em> Constructs an object of class <code class="sh_cpp">strstream</code>, initializing the base class with
+<code class="sh_cpp">iostream(&amp;sb)</code> and initializing <code class="sh_cpp">sb</code> with one of the two constructors:</p>
+
+<ul>
+<li>If <code class="sh_cpp">(mode &amp; app) == 0</code>, then <code class="sh_cpp">s</code> shall designate the first element of an array of
+	<code class="sh_cpp">n</code> elements. The constructor is <code class="sh_cpp">strstreambuf(s,n,s)</code>.</li>
+<li>If <code class="sh_cpp">(mode &amp; app) != 0</code>, then <code class="sh_cpp">s</code> shall designate the first element of an array of
+	<code class="sh_cpp">n</code> elements that contains an <acronym>ntbs</acronym> whose first element is designated by
+	<code class="sh_cpp">s</code>. The constructor is <code class="sh_cpp">strstreambuf(s,n,s + std::strlen(s))</code>.</li>
+</ul>
+</body>
+</html>
+

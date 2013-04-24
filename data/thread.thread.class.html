@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class thread</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[thread.thread.class]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[thread.thread.class]"></object>30.3.1 Class <code class="sh_cpp"><dfn>thread</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="thread"></object></code> </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The class <code class="sh_cpp">thread</code> provides a mechanism to create a new thread of execution, to join with a thread
+(i.e., wait for a thread to complete), and to perform other operations that manage and query the state of a thread. A
+<code class="sh_cpp">thread</code> object uniquely represents a particular thread of execution. That representation may be transferred
+to other <code class="sh_cpp">thread</code> objects in such a way that no two <code class="sh_cpp">thread</code> objects simultaneously represent the
+same thread of execution. A thread of execution is <dfn>detached</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="detached"></object> when no <code class="sh_cpp">thread</code> object represents
+that thread. Objects of class <code class="sh_cpp">thread</code> can be in a state that does not represent a thread of execution.
+<span class="note">[ <em>Note:</em> A <code class="sh_cpp">thread</code> object does not represent a thread of execution after default construction, after being
+moved from, or after a successful call to <code class="sh_cpp">detach</code> or <code class="sh_cpp">join</code>. — <em>end note</em> ]</span></p>
+
+<pre><code class="sh_cpp">namespace std {
+  class thread {
+  public:
+    // types:
+    class id;
+    typedef <var>implementation-defined</var> native_handle_type; // See <a title="thread.req.native" href="thread.req.native.html">30.2.3</a>
+
+    // construct/copy/destroy:
+    thread() noexcept;
+    template &lt;class F, class ...Args&gt; explicit thread(F&amp;&amp; f, Args&amp;&amp;... args);
+    ~thread();
+    thread(const thread&amp;) = delete;
+    thread(thread&amp;&amp;) noexcept;
+    thread&amp; operator=(const thread&amp;) = delete;
+    thread&amp; operator=(thread&amp;&amp;) noexcept;
+
+    // members:
+    void swap(thread&amp;) noexcept;
+    bool joinable() const noexcept;
+    void join();
+    void detach();
+    id get_id() const noexcept;
+    native_handle_type native_handle(); // See <a title="thread.req.native" href="thread.req.native.html">30.2.3</a>
+
+    // static members:
+    static unsigned hardware_concurrency() noexcept;
+  };
+}</code></pre>
+</body>
+</html>
+

@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Specifiers</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[dcl.spec]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[dcl.spec]"></object>7.1 Specifiers </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The specifiers that can be used in a declaration are</p>
+
+<dl>
+<dt>
+<i class="nonterminal"><dfn>decl-specifier</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="decl-specifier"></object></i>:</dt>
+	<dd><i class="nonterminal">storage-class-specifier</i></dd>
+	<dd><i class="nonterminal">type-specifier</i></dd>
+	<dd><i class="nonterminal">function-specifier</i></dd>
+	<dd><code class="sh_cpp">friend</code></dd>
+	<dd><code class="sh_cpp">typedef</code></dd>
+	<dd><code class="sh_cpp">constexpr</code></dd>
+<dt>
+<i class="nonterminal"><dfn>decl-specifier-seq</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="decl-specifier-seq"></object></i>:</dt>
+	<dd>
+<i class="nonterminal">decl-specifier</i> <i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub>
+</dd>
+	<dd>
+<i class="nonterminal">decl-specifier</i> <i class="nonterminal">decl-specifier-seq</i>
+</dd>
+</dl>
+
+<p>The optional <i class="nonterminal">attribute-specifier-seq</i> in a <i class="nonterminal">decl-specifier-seq</i> appertains to the type determined by
+the preceding <i class="nonterminal">decl-specifier</i>s (<a title="dcl.meaning" href="dcl.meaning.html">8.3</a>). The <i class="nonterminal">attribute-specifier-seq</i> affects the type only for the
+declaration it appears in, not other declarations involving the same type.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>If a <i class="nonterminal">type-name</i> is encountered while parsing a <i class="nonterminal">decl-specifier-seq</i>, it is interpreted as part
+of the <i class="nonterminal">decl-specifier-seq</i> if and only if there is no previous <i class="nonterminal">type-specifier</i> other than a
+<i class="nonterminal">cv-qualifier</i> in the <i class="nonterminal">decl-specifier-seq</i>. The sequence shall be self-consistent as described below.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">typedef char* Pc;
+static Pc;              // error: name missing</code></pre>
+
+<p>Here, the declaration <code class="sh_cpp">static Pc</code> is ill-formed because no name was specified for the static variable of
+type <code class="sh_cpp">Pc</code>. To get a variable called <code class="sh_cpp">Pc</code>, a <i class="nonterminal">type-specifier</i> (other than <code class="sh_cpp">const</code>
+or <code class="sh_cpp">volatile</code>) has to be present to indicate that the <i class="nonterminal">typedef-name</i> <code class="sh_cpp">Pc</code> is the name being
+(re)declared, rather than being part of the <i class="nonterminal">decl-specifier</i> sequence. For another example,</p>
+
+<pre><code class="sh_cpp">void f(const Pc);       // void f(char* const) (not const char*)
+void g(const int Pc);   // void g(const int)</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<div class="note">
+<p><a class="anchor" id="p3" href="#p3">3</a>[ <em>Note:</em> Since <code class="sh_cpp">signed</code>, <code class="sh_cpp">unsigned</code>, <code class="sh_cpp">long</code>, and <code class="sh_cpp">short</code> by default
+imply <code class="sh_cpp">int</code>, a <i class="nonterminal">type-name</i> appearing after one of those specifiers is treated as the name being
+(re)declared.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">void h(unsigned Pc);        // void h(unsigned int)
+void k(unsigned int Pc);    // void k(unsigned int)</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+<p> — <em>end note</em> ]</p>
+</div>
+</body>
+</html>
+

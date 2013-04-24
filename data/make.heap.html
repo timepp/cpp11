@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>make_heap</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[make.heap]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[make.heap]"></object>25.4.6.3 <code class="sh_cpp"><dfn>make_heap</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="make_heap"></object></code> </h4>
+
+<pre><code class="sh_cpp">template&lt;class RandomAccessIterator&gt;
+  void make_heap(RandomAccessIterator first, RandomAccessIterator last);
+
+template&lt;class RandomAccessIterator, class Compare&gt;
+  void make_heap(RandomAccessIterator first, RandomAccessIterator last,
+                 Compare comp);</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Effects:</em> Constructs a heap out of the range <code class="sh_cpp">[first, last)</code>.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Requires:</em> The type of <code class="sh_cpp">*first</code> shall satisfy the <code class="concept">MoveConstructible</code> requirements
+(Table <a href="utility.arg.requirements.html#t20">20</a>) and the the <code class="concept">MoveAssignable</code> requirements (Table <a href="utility.arg.requirements.html#t22">22</a>).</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Complexity:</em> At most <code class="sh_cpp">3 * (last - first)</code> comparisons.</p>
+</body>
+</html>
+

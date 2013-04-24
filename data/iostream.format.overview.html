@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Overview</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[iostream.format]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[iostream.format]"></object>27.7 Formatting and manipulators </h2>
+
+<h3>
+<dfn class="label">[iostream.format.overview]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[iostream.format.overview]"></object>27.7.1 Overview </h3>
+
+<h3>Header <dfn><code class="header">&lt;istream&gt;</code></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="&lt;istream&gt;"></object> synopsis</h3>
+
+<pre><code class="sh_cpp">namespace std {
+  template &lt;class charT, class traits = char_traits&lt;charT&gt; &gt;
+    class basic_istream;
+  typedef basic_istream&lt;char&gt;     istream;
+  typedef basic_istream&lt;wchar_t&gt; wistream;
+
+  template &lt;class charT, class traits = char_traits&lt;charT&gt; &gt;
+    class basic_iostream;
+  typedef basic_iostream&lt;char&gt;     iostream;
+  typedef basic_iostream&lt;wchar_t&gt; wiostream;
+
+  template &lt;class charT, class traits&gt;
+    basic_istream&lt;charT,traits&gt;&amp; ws(basic_istream&lt;charT,traits&gt;&amp; is);
+
+  template &lt;class charT, class traits, class T&gt;
+    basic_istream&lt;charT, traits&gt;&amp;
+      operator&gt;&gt;(basic_istream&lt;charT, traits&gt;&amp;&amp; is, T&amp; x);
+}</code></pre>
+
+<h3>Header <dfn><code class="header">&lt;ostream&gt;</code></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="&lt;ostream&gt;"></object> synopsis</h3>
+
+<pre><code class="sh_cpp">namespace std {
+  template &lt;class charT, class traits = char_traits&lt;charT&gt; &gt;
+    class basic_ostream;
+
+  typedef basic_ostream&lt;char&gt;     ostream;
+  typedef basic_ostream&lt;wchar_t&gt; wostream;
+
+  template &lt;class charT, class traits&gt;
+    basic_ostream&lt;charT,traits&gt;&amp; endl(basic_ostream&lt;charT,traits&gt;&amp; os);
+  template &lt;class charT, class traits&gt;
+    basic_ostream&lt;charT,traits&gt;&amp; ends(basic_ostream&lt;charT,traits&gt;&amp; os);
+  template &lt;class charT, class traits&gt;
+    basic_ostream&lt;charT,traits&gt;&amp; flush(basic_ostream&lt;charT,traits&gt;&amp; os);
+
+  template &lt;class charT, class traits, class T&gt;
+    basic_ostream&lt;charT, traits&gt;&amp;
+      operator&lt;&lt;(basic_ostream&lt;charT, traits&gt;&amp;&amp; os, const T&amp; x);
+}</code></pre>
+
+<h3>Header <dfn><code class="header">&lt;iomanip&gt;</code></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="&lt;iomanip&gt;"></object> synopsis</h3>
+
+<pre><code class="sh_cpp">namespace std {
+  // types T1, T2, … are unspecified implementation types
+  T1 resetiosflags(ios_base::fmtflags mask);
+  T2 setiosflags (ios_base::fmtflags mask);
+  T3 setbase(int base);
+  template&lt;charT&gt; T4 setfill(charT c);
+  T5 setprecision(int n);
+  T6 setw(int n);
+  template &lt;class moneyT&gt; T7 get_money(moneyT&amp; mon, bool intl = false);
+  template &lt;class moneyT&gt; T8 put_money(const moneyT&amp; mon, bool intl = false);
+  template &lt;class charT&gt; T9 get_time(struct tm* tmb, const charT* fmt);
+  template &lt;class charT&gt; T10 put_time(const struct tm* tmb, const charT* fmt);
+}</code></pre>
+
+</body>
+</html>
+

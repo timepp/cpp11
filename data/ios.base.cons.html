@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>ios_base constructors/destructor</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[ios.base.cons]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[ios.base.cons]"></object>27.5.3.7 <code class="sh_cpp">ios_base</code> constructors/destructor </h4>
+
+<h5><code class="sh_cpp"><dfn>ios_base</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="ios_base"></object>();</code></h5>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Effects:</em> Each <code class="sh_cpp">ios_base</code> member has an indeterminate value after construction. The object’s members
+shall be initialized by calling <code class="sh_cpp">basic_ios::init</code> before the object’s first use or before it is destroyed,
+whichever comes first; otherwise the behavior is undefined.</p>
+
+<h5><code class="sh_cpp"><dfn>~ios_base</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="~ios_base"></object>()</code></h5>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Effects:</em> Destroys an object of class <code class="sh_cpp">ios_base</code>. Calls each registered callback pair <code class="sh_cpp">(fn,
+index)</code> (<a title="ios.base.callback" href="ios.base.callback.html">27.5.3.6</a>) as <code class="sh_cpp">(*fn)(erase_event, *this, index)</code> at such time that any
+<code class="sh_cpp">ios_base</code> member function called from within <code class="sh_cpp">fn</code> has well defined results.</p>
+</body>
+</html>
+

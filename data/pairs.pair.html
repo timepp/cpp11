@@ -1,0 +1,174 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class template pair</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[pairs.pair]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[pairs.pair]"></object>20.3.2 Class template <code class="sh_cpp"><dfn>pair</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="pair"></object></code> </h4>
+
+<pre><code class="sh_cpp">namespace std {
+  template &lt;class T1, class T2&gt;
+  struct pair {
+    typedef T1 first_type;
+    typedef T2 second_type;
+
+    T1 first;
+    T2 second;
+    pair(const pair&amp;) = default;
+    pair(pair&amp;&amp;) = default;
+    constexpr pair();
+    pair(const T1&amp; x, const T2&amp; y);
+    template&lt;class U, class V&gt; pair(U&amp;&amp; x, V&amp;&amp; y);
+    template&lt;class U, class V&gt; pair(const pair&lt;U, V&gt;&amp; p);
+    template&lt;class U, class V&gt; pair(pair&lt;U, V&gt;&amp;&amp; p);
+    template &lt;class... Args1, class... Args2&gt;
+      pair(piecewise_construct_t,
+           tuple&lt;Args1...&gt; first_args, tuple&lt;Args2...&gt; second_args);
+
+    pair&amp; operator=(const pair&amp; p);
+    template&lt;class U, class V&gt; pair&amp; operator=(const pair&lt;U, V&gt;&amp; p);
+    pair&amp; operator=(pair&amp;&amp; p) noexcept(<em>see below</em>);
+    template&lt;class U, class V&gt; pair&amp; operator=(pair&lt;U, V&gt;&amp;&amp; p);
+
+    void swap(pair&amp; p) noexcept(<em>see below</em>);
+  };
+}</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Constructors and member function of <code class="sh_cpp">pair</code> shall not throw exceptions unless one of the element-wise
+operations specified to be called for that operation throws an exception.</p>
+
+<h5><code class="sh_cpp">constexpr <dfn>pair</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="pair"></object>();</code></h5>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Requires:</em> <code class="sh_cpp">is_default_constructible&lt;first_type&gt;::value</code> is <code class="sh_cpp">true</code> and
+<code class="sh_cpp">is_default_constructible&lt;second_type&gt;::value</code> is <code class="sh_cpp">true</code>.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Effects:</em> Value-initializes <code class="sh_cpp">first</code> and <code class="sh_cpp">second</code>.</p>
+
+<h5><code class="sh_cpp"><dfn>pair</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="pair"></object>(const T1&amp; x, const T2&amp; y);</code></h5>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><em>Requires:</em> <code class="sh_cpp">is_copy_constructible&lt;first_type&gt;::value</code> is <code class="sh_cpp">true</code> and
+<code class="sh_cpp">is_copy_constructible&lt;second_type&gt;::value</code> is <code class="sh_cpp">true</code>.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><em>Effects:</em> The constructor initializes <code class="sh_cpp">first</code> with <code class="sh_cpp">x</code> and <code class="sh_cpp">second</code> with
+<code class="sh_cpp">y</code>.</p>
+
+<h5><code class="sh_cpp">template&lt;class U, class V&gt; <dfn>pair</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="pair"></object>(U&amp;&amp; x, V&amp;&amp; y);</code></h5>
+
+<p><a class="anchor" id="p6" href="#p6">6</a><em>Requires:</em> <code class="sh_cpp">is_constructible&lt;first_type, U&amp;&amp;&gt;::value</code> is <code class="sh_cpp">true</code> and
+<code class="sh_cpp">is_constructible&lt;second_type, V&amp;&amp;&gt;::value</code> is <code class="sh_cpp">true</code>.</p>
+
+<p><a class="anchor" id="p7" href="#p7">7</a><em>Effects:</em> The constructor initializes <code class="sh_cpp">first</code> with <code class="sh_cpp">std::forward&lt;U&gt;(x)</code> and
+<code class="sh_cpp">second</code> with <code class="sh_cpp">std::forward&lt;V&gt;(y)</code>.</p>
+
+<p><a class="anchor" id="p8" href="#p8">8</a><em>Remarks:</em> If <code class="sh_cpp">U</code> is not implicitly convertible to <code class="sh_cpp">first_type</code> or <code class="sh_cpp">V</code> is not
+implicitly convertible to <code class="sh_cpp">second_type</code> this constructor shall not participate in overload
+resolution.</p>
+
+<h5><code class="sh_cpp">template&lt;class U, class V&gt; <dfn>pair</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="pair"></object>(const pair&lt;U, V&gt;&amp; p);</code></h5>
+
+<p><a class="anchor" id="p9" href="#p9">9</a><em>Requires:</em> <code class="sh_cpp">is_constructible&lt;first_type, const U&amp;&gt;::value</code> is <code class="sh_cpp">true</code> and
+<code class="sh_cpp">is_constructible&lt;second_type, const V&amp;&gt;::value</code> is <code class="sh_cpp">true</code>.</p>
+
+<p><a class="anchor" id="p10" href="#p10">10</a><em>Effects:</em> Initializes members from the corresponding members of the argument.</p>
+
+<p><a class="anchor" id="p11" href="#p11">11</a><em>Remarks:</em> This constructor shall not participate in overload resolution unless <code class="sh_cpp">const U&amp;</code> is
+implicitly convertible to <code class="sh_cpp">first_type</code> and <code class="sh_cpp">const V&amp;</code> is implicitly convertible to
+<code class="sh_cpp">second_type</code>.</p>
+
+<h5><code class="sh_cpp">template&lt;class U, class V&gt; <dfn>pair</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="pair"></object>(pair&lt;U, V&gt;&amp;&amp; p);</code></h5>
+
+<p><a class="anchor" id="p12" href="#p12">12</a><em>Requires:</em> <code class="sh_cpp">is_constructible&lt;first_type, U&amp;&amp;&gt;::value</code> is <code class="sh_cpp">true</code> and
+<code class="sh_cpp">is_constructible&lt;second_type, V&amp;&amp;&gt;::value</code> is <code class="sh_cpp">true</code>.</p>
+
+<p><a class="anchor" id="p13" href="#p13">13</a><em>Effects:</em> The constructor initializes <code class="sh_cpp">first</code> with <code class="sh_cpp">std::forward&lt;U&gt;(p.first)</code>
+and <code class="sh_cpp">second</code> with <code class="sh_cpp">std::forward&lt;V&gt;(p.second)</code>.</p>
+
+<p><a class="anchor" id="p14" href="#p14">14</a><em>Remarks:</em> This constructor shall not participate in overload resolution unless <code class="sh_cpp">U</code> is implicitly
+convertible to <code class="sh_cpp">first_type</code> and <code class="sh_cpp">V</code> is implicitly convertible to
+<code class="sh_cpp">second_type</code>.</p>
+
+<h5><code class="sh_cpp">template&lt;class... Args1, class... Args2&gt;
+  <dfn>pair</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="pair"></object>(piecewise_construct_t,
+       tuple&lt;Args1...&gt; first_args, tuple&lt;Args2...&gt; second_args);</code></h5>
+
+<p><a class="anchor" id="p15" href="#p15">15</a><em>Requires:</em> <code class="sh_cpp">is_constructible&lt;first_type, Args1&amp;&amp;...&gt;::value</code> is <code class="sh_cpp">true</code> and
+<code class="sh_cpp">is_constructible&lt;second_type, Args2&amp;&amp;...&gt;::value</code> is <code class="sh_cpp">true</code>.</p>
+
+<p><a class="anchor" id="p16" href="#p16">16</a><em>Effects:</em> The constructor initializes <code class="sh_cpp">first</code> with arguments of types <code class="sh_cpp">Args1...</code> obtained
+by forwarding the elements of <code class="sh_cpp">first_args</code> and initializes <code class="sh_cpp">second</code> with arguments of types
+<code class="sh_cpp">Args2...</code> obtained by forwarding the elements of <code class="sh_cpp">second_args</code>. (Here, forwarding an element
+<code class="sh_cpp">x</code> of type <code class="sh_cpp">U</code> within a <code class="sh_cpp">tuple</code> object means calling
+<code class="sh_cpp">std::forward&lt;U&gt;(x)</code>.) This form of construction, whereby constructor arguments for <code class="sh_cpp">first</code>
+and <code class="sh_cpp">second</code> are each provided in a separate <code class="sh_cpp">tuple</code> object, is called <dfn>piecewise
+construction</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="piecewise
+construction"></object>.</p>
+
+<h5><code class="sh_cpp">pair&amp; <dfn>operator=</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator="></object>(const pair&amp; p);</code></h5>
+
+<p><a class="anchor" id="p17" href="#p17">17</a><em>Requires:</em> <code class="sh_cpp">is_copy_assignable&lt;first_type&gt;::value</code> is <code class="sh_cpp">true</code> and
+<code class="sh_cpp">is_copy_assignable&lt;second_type&gt;::value</code> is <code class="sh_cpp">true</code>.</p>
+
+<p><a class="anchor" id="p18" href="#p18">18</a><em>Effects:</em> Assigns <code class="sh_cpp">p.first</code> to <code class="sh_cpp">first</code> and <code class="sh_cpp">p.second</code> to
+<code class="sh_cpp">second</code>.</p>
+
+<p><a class="anchor" id="p19" href="#p19">19</a><em>Returns:</em> <code class="sh_cpp">*this</code>.</p>
+
+<h5><code class="sh_cpp">template&lt;class U, class V&gt; pair&amp; <dfn>operator=</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator="></object>(const pair&lt;U, V&gt;&amp; p);</code></h5>
+
+<p><a class="anchor" id="p20" href="#p20">20</a><em>Requires:</em> <code class="sh_cpp">is_assignable&lt;first_type&amp;, const U&amp;&gt;::value</code> is <code class="sh_cpp">true</code> and
+<code class="sh_cpp">is_assignable&lt;second_type&amp;, const V&amp;&gt;::value</code> is <code class="sh_cpp">true</code>.</p>
+
+<p><a class="anchor" id="p21" href="#p21">21</a><em>Effects:</em> Assigns <code class="sh_cpp">p.first</code> to <code class="sh_cpp">first</code> and <code class="sh_cpp">p.second</code> to
+<code class="sh_cpp">second</code>.</p>
+
+<p><a class="anchor" id="p22" href="#p22">22</a><em>Returns:</em> <code class="sh_cpp">*this</code>.</p>
+
+<h5><code class="sh_cpp">pair&amp; <dfn>operator=</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator="></object>(pair&amp;&amp; p) noexcept;</code></h5>
+
+<p><a class="anchor" id="p23" href="#p23">23</a><em>Remarks:</em> The expression inside <code class="sh_cpp">noexcept</code> is equivalent to:</p>
+
+<pre><code class="sh_cpp">is_nothrow_move_assignable&lt;T1&gt;::value &amp;&amp;
+is_nothrow_move_assignable&lt;T2&gt;::value</code></pre>
+
+<p><a class="anchor" id="p24" href="#p24">24</a><em>Requires:</em> <code class="sh_cpp">is_move_assignable&lt;first_type&gt;::value</code> is <code class="sh_cpp">true</code> and
+<code class="sh_cpp">is_move_assignable&lt;second_type&gt;::value</code> is <code class="sh_cpp">true</code>.</p>
+
+<p><a class="anchor" id="p25" href="#p25">25</a><em>Effects:</em> Assigns to <code class="sh_cpp">first</code> with <code class="sh_cpp">std::forward&lt;first_type&gt;(p.first)</code> and to
+<code class="sh_cpp">second</code> with <code class="sh_cpp">std::forward&lt;second_type&gt;(p.second)</code>.</p>
+
+<p><a class="anchor" id="p26" href="#p26">26</a><em>Returns:</em> <code class="sh_cpp">*this</code>.</p>
+
+<h5><code class="sh_cpp">template&lt;class U, class V&gt; pair&amp; <dfn>operator=</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator="></object>(pair&lt;U, V&gt;&amp;&amp; p);</code></h5>
+
+<p><a class="anchor" id="p27" href="#p27">27</a><em>Requires:</em> <code class="sh_cpp">is_assignable&lt;first_type&amp;, U&amp;&amp;&gt;::value</code> is <code class="sh_cpp">true</code> and
+<code class="sh_cpp">is_assignable&lt;second_type&amp;, V&amp;&amp;&gt;::value</code> is <code class="sh_cpp">true</code>.</p>
+
+<p><a class="anchor" id="p28" href="#p28">28</a><em>Effects:</em> Assigns to <code class="sh_cpp">first</code> with <code class="sh_cpp">std::forward&lt;U&gt;(p.first)</code> and to
+<code class="sh_cpp">second</code> with <code class="sh_cpp">std::forward&lt;V&gt;(p.second)</code>.</p>
+
+<p><a class="anchor" id="p29" href="#p29">29</a><em>Returns:</em> <code class="sh_cpp">*this</code>.</p>
+
+<h5><code class="sh_cpp">void <dfn>swap</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="swap"></object>(pair&amp; p) noexcept(<em>see below</em>);</code></h5>
+
+<p><a class="anchor" id="p30" href="#p30">30</a><em>Remarks:</em> The expression inside <code class="sh_cpp">noexcept</code> is equivalent to:</p>
+
+<pre><code class="sh_cpp">noexcept(swap(first, p.first)) &amp;&amp;
+noexcept(swap(second, p.second))</code></pre>
+
+<p><a class="anchor" id="p31" href="#p31">31</a><em>Requires:</em> <code class="sh_cpp">first</code> shall be swappable with (<a title="swappable.requirements" href="swappable.requirements.html">17.6.3.2</a>) <code class="sh_cpp">p.first</code> and
+<code class="sh_cpp">second</code> shall be swappable with <code class="sh_cpp">p.second</code>.</p>
+
+<p><a class="anchor" id="p32" href="#p32">32</a><em>Effects:</em> Swaps <code class="sh_cpp">first</code> with <code class="sh_cpp">p.first</code> and <code class="sh_cpp">second</code> with
+<code class="sh_cpp">p.second</code>.</p>
+</body>
+</html>
+

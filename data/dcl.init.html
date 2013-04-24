@@ -1,0 +1,239 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Initializers</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[dcl.init]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[dcl.init]"></object>8.5 Initializers </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A declarator can specify an initial value for the identifier being declared. The identifier designates a
+variable being initialized. The process of initialization described in the remainder of <a title="dcl.init" href="dcl.init.html">8.5</a> applies also to
+initializations specified by other syntactic contexts, such as the initialization of function parameters with argument
+expressions (<a title="expr.call" href="expr.call.html">5.2.2</a>) or the initialization of return values (<a title="stmt.return" href="stmt.return.html">6.6.3</a>).</p>
+
+<dl>
+<dt>
+<dfn><i class="nonterminal">initializer</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="initializer"></object>:</dt>
+	<dd><i class="nonterminal">brace-or-equal-initializer</i></dd>
+	<dd>
+<code class="sh_cpp">(</code> <i class="nonterminal">expression-list</i> <code class="sh_cpp">)</code>
+</dd>
+<dt>
+<dfn><i class="nonterminal">brace-or-equal-initializer</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="brace-or-equal-initializer"></object>:</dt>
+	<dd>
+<code class="sh_cpp">=</code> <i class="nonterminal">initializer-clause</i>
+</dd>
+	<dd><i class="nonterminal">braced-init-list</i></dd>
+<dt>
+<dfn><i class="nonterminal">initializer-clause</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="initializer-clause"></object>:</dt>
+	<dd><i class="nonterminal">assignment-expression</i></dd>
+	<dd><i class="nonterminal">braced-init-list</i></dd>
+<dt>
+<dfn><i class="nonterminal">initializer-list</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="initializer-list"></object>:</dt>
+	<dd>
+<i class="nonterminal">initializer-clause</i> <code class="sh_cpp">...</code><sub class="opt">opt</sub>
+</dd>
+	<dd>
+<i class="nonterminal">initializer-list</i> <code class="sh_cpp">,</code> <i class="nonterminal">initializer-clause</i> <code class="sh_cpp">...</code><sub class="opt">opt</sub>
+</dd>
+<dt>
+<dfn><i class="nonterminal">braced-init-list</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="braced-init-list"></object>:</dt>
+	<dd>
+<code class="sh_cpp">{</code> <i class="nonterminal">initializer-list</i> <code class="sh_cpp">,</code><sub class="opt">opt</sub> <code class="sh_cpp">}</code>
+</dd>
+	<dd>
+<code class="sh_cpp">{</code> <code class="sh_cpp">}</code>
+</dd>
+</dl>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>Except for objects declared with the <code class="sh_cpp">constexpr</code> specifier, for which see <a title="dcl.constexpr" href="dcl.constexpr.html">7.1.5</a>, an
+<i class="nonterminal">initializer</i> in the definition of a variable can consist of arbitrary expressions involving literals and
+previously declared variables and functions, regardless of the variable’s storage duration.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">int f(int);
+int a = 2;
+int b = f(a);
+int c(b);</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<div class="note">
+<p><a class="anchor" id="p3" href="#p3">3</a>[ <em>Note:</em> Default arguments are more restricted; see <a title="dcl.fct.default" href="dcl.fct.default.html">8.3.6</a>.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>The order of initialization of variables with static storage duration is described in <a title="basic.start" href="basic.start.main.html">3.6</a> and
+<a title="stmt.dcl" href="stmt.dcl.html">6.7</a>. — <em>end note</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>To <dfn>zero-initialize</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="zero-initialize"></object> an object or reference of type <code class="sh_cpp">T</code> means:</p>
+<ul>
+<li>if <code class="sh_cpp">T</code> is a scalar type (<a title="basic.types" href="basic.types.html">3.9</a>), the object is set to the value <code class="sh_cpp">0</code> (zero), taken as
+	an integral constant expression, converted to <code class="sh_cpp">T</code>;<sup class="footnote"><a href="#fn106">106</a></sup>
+</li>
+<li>if <code class="sh_cpp">T</code> is a (possibly cv-qualified) non-union class type, each non-static data member and each base-class
+	subobject is zero-initialized and padding is initialized to zero bits;</li>
+<li>if <code class="sh_cpp">T</code> is a (possibly cv-qualified) union type, the object’s first non-static named data member is
+	zero-initialized and padding is initialized to zero bits;</li>
+<li>if <code class="sh_cpp">T</code> is an array type, each element is zero-initialized;</li>
+<li>if <code class="sh_cpp">T</code> is a reference type, no initialization is performed.</li>
+</ul>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>To <dfn>default-initialize</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="default-initialize"></object> an object of type <code class="sh_cpp">T</code> means:</p>
+<ul>
+<li>if <code class="sh_cpp">T</code> is a (possibly cv-qualified) class type (Clause <a title="class" href="class.html">9</a>), the default constructor for
+	<code class="sh_cpp">T</code> is called (and the initialization is ill-formed if <code class="sh_cpp">T</code> has no accessible default
+	constructor);</li>
+<li>if <code class="sh_cpp">T</code> is an array type, each element is default-initialized;</li>
+<li>otherwise, no initialization is performed.</li>
+</ul>
+
+<p>If a program calls for the default initialization of an object of a const-qualified type <code class="sh_cpp">T</code>,
+<code class="sh_cpp">T</code> shall be a class type with a user-provided default constructor.</p>
+
+<p><a class="anchor" id="p7" href="#p7">7</a>To <dfn>value-initialize</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="value-initialize"></object> an object of type <code class="sh_cpp">T</code> means:</p>
+<ul>
+<li>if <code class="sh_cpp">T</code> is a (possibly cv-qualified) class type (Clause <a title="class" href="class.html">9</a>) with a user-provided constructor
+	(<a title="class.ctor" href="class.ctor.html">12.1</a>), then the default constructor for <code class="sh_cpp">T</code> is called (and the initialization is ill-formed
+	if <code class="sh_cpp">T</code> has no accessible default constructor);</li>
+<li>if <code class="sh_cpp">T</code> is a (possibly cv-qualified) non-union class type without a user-provided constructor, then the
+	object is zero-initialized and, if <code class="sh_cpp">T</code>’s implicitly-declared default constructor is non-trivial, that
+	constructor is called;</li>
+<li>if <code class="sh_cpp">T</code> is an array type, then each element is value-initialized;</li>
+<li>otherwise, the object is zero-initialized.</li>
+</ul>
+
+<p>An object that is value-initialized is deemed to be constructed and thus subject to provisions of this International
+Standard applying to “constructed” objects, objects “for which the constructor has completed”, etc., even if no
+constructor is invoked for the object’s initialization.</p>
+
+<p><a class="anchor" id="p8" href="#p8">8</a>A program that calls for default-initialization or value-initialization of an entity of reference type is
+ill-formed.</p>
+
+<p><a class="anchor" id="p9" href="#p9">9</a><span class="note">[ <em>Note:</em> Every object of static storage duration is zero-initialized at program startup before any other
+initialization takes place. In some cases, additional initialization is done later. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p10" href="#p10">10</a>An object whose initializer is an empty set of parentheses, i.e., <code class="sh_cpp">()</code>, shall be
+value-initialized.</p>
+
+<div class="note">
+<p>[ <em>Note:</em> Since <code class="sh_cpp">()</code> is not permitted by the syntax for initializer,</p>
+
+<pre><code class="sh_cpp">X a();</code></pre>
+
+<p>is not the declaration of an object of class <code class="sh_cpp">X</code>, but the declaration of a function taking no argument and
+returning an <code class="sh_cpp">X</code>. The form <code class="sh_cpp">()</code> is permitted in certain other initialization contexts
+(<a title="expr.new" href="expr.new.html">5.3.4</a>, <a title="expr.type.conv" href="expr.type.conv.html">5.2.3</a>, <a title="class.base.init" href="class.base.init.html">12.6.2</a>). — <em>end note</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p11" href="#p11">11</a>If no initializer is specified for an object, the object is default-initialized; if no initialization is
+performed, an object with automatic or dynamic storage duration has indeterminate value. <span class="note">[ <em>Note:</em> Objects with static or
+thread storage duration are zero-initialized, see <a title="basic.start.init" href="basic.start.init.html">3.6.2</a>. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p12" href="#p12">12</a>An initializer for a static member is in the scope of the member’s class.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">int a;
+
+struct X {
+  static int a;
+  static int b;
+};
+
+int X::a = 1;
+int X::b = a;           // X::b = X::a</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p13" href="#p13">13</a>The form of initialization (using parentheses or <code class="sh_cpp">=</code>) is generally insignificant, but does matter
+when the initializer or the entity being initialized has a class type; see below. If the entity being initialized does
+not have class type, the <i class="nonterminal">expression-list</i> in a parenthesized initializer shall be a single expression.</p>
+
+<p><a class="anchor" id="p14" href="#p14">14</a>The initialization that occurs in the form</p>
+
+<pre><code class="sh_cpp">T x = a;</code></pre>
+
+<p>as well as in argument passing, function return, throwing an exception (<a title="except.throw" href="except.throw.html">15.1</a>), handling an exception
+(<a title="except.handle" href="except.handle.html">15.3</a>), and aggregate member initialization (<a title="dcl.init.aggr" href="dcl.init.aggr.html">8.5.1</a>) is called <dfn>copy-initialization</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="copy-initialization"></object>.
+<span class="note">[ <em>Note:</em> Copy-initialization may invoke a move (<a title="class.copy" href="class.copy.html">12.8</a>). — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p15" href="#p15">15</a>The initialization that occurs in the forms</p>
+
+<pre><code class="sh_cpp">T x(a);
+T x{a};</code></pre>
+
+<p>as well as in <code class="sh_cpp">new</code> expressions (<a title="expr.new" href="expr.new.html">5.3.4</a>), <code class="sh_cpp">static_cast</code> expressions
+(<a title="expr.static.cast" href="expr.static.cast.html">5.2.9</a>), functional notation type conversions (<a title="expr.type.conv" href="expr.type.conv.html">5.2.3</a>), and base and member initializers
+(<a title="class.base.init" href="class.base.init.html">12.6.2</a>) is called <dfn>direct-initialization</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="direct-initialization"></object>.</p>
+
+<p><a class="anchor" id="p16" href="#p16">16</a>The semantics of initializers are as follows. The <dfn>destination type</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="destination type"></object> is the type of the object or
+reference being initialized and the <dfn>source type</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="source type"></object> is the type of the initializer expression. If the initializer
+is not a single (possibly parenthesized) expression, the source type is not defined.</p>
+<ul>
+<li>If the initializer is a (non-parenthesized) <i class="nonterminal">braced-init-list</i>, the object or reference is list-initialized
+	(<a title="dcl.init.list" href="dcl.init.list.html">8.5.4</a>).</li>
+<li>If the destination type is a reference type, see <a title="dcl.init.ref" href="dcl.init.ref.html">8.5.3</a>.</li>
+<li>If the destination type is an array of characters, an array of <code class="sh_cpp">char16_t</code>, an array of
+	<code class="sh_cpp">char32_t</code>, or an array of <code class="sh_cpp">wchar_t</code>, and the initializer is a string literal, see
+	<a title="dcl.init.string" href="dcl.init.string.html">8.5.2</a>.</li>
+<li>If the initializer is <code class="sh_cpp">()</code>, the object is value-initialized.</li>
+<li>Otherwise, if the destination type is an array, the program is ill-formed.</li>
+<li>If the destination type is a (possibly cv-qualified) class type:
+	<ul>
+	<li>If the initialization is direct-initialization, or if it is copy-initialization where the cv-unqualified version
+		of the source type is the same class as, or a derived class of, the class of the destination, constructors are
+		considered. The applicable constructors are enumerated (<a title="over.match.ctor" href="over.match.ctor.html">13.3.1.3</a>), and the best one is chosen through
+		overload resolution (<a title="over.match" href="over.match.html">13.3</a>). The constructor so selected is called to initialize the object, with the
+		initializer expression or <i class="nonterminal">expression-list</i> as its argument(s). If no constructor applies, or the
+		overload resolution is ambiguous, the initialization is ill-formed.</li>
+	<li>Otherwise (i.e., for the remaining copy-initialization cases), user-defined conversion sequences that can
+		convert from the source type to the destination type or (when a conversion function is used) to a derived class
+		thereof are enumerated as described in <a title="over.match.copy" href="over.match.copy.html">13.3.1.4</a>, and the best one is chosen through overload
+		resolution (<a title="over.match" href="over.match.html">13.3</a>). If the conversion cannot be done or is ambiguous, the initialization is
+		ill-formed. The function selected is called with the initializer expression as its argument; if the function is
+		a constructor, the call initializes a temporary of the cv-unqualified version of the destination type. The
+		temporary is a prvalue. The result of the call (which is the temporary for the constructor case) is then used to
+		direct-initialize, according to the rules above, the object that is the destination of the copy-initialization.
+		In certain cases, an implementation is permitted to eliminate the copying inherent in this direct-initialization
+		by constructing the intermediate result directly into the object being initialized; see <a title="class.temporary" href="class.temporary.html">12.2</a>,
+		<a title="class.copy" href="class.copy.html">12.8</a>.</li>
+	</ul>
+</li>
+<li>Otherwise, if the source type is a (possibly cv-qualified) class type, conversion functions are considered. The
+	applicable conversion functions are enumerated (<a title="over.match.conv" href="over.match.conv.html">13.3.1.5</a>), and the best one is chosen through overload
+	resolution (<a title="over.match" href="over.match.html">13.3</a>). The user-defined conversion so selected is called to convert the initializer
+	expression into the object being initialized. If the conversion cannot be done or is ambiguous, the initialization
+	is ill-formed.</li>
+<li>Otherwise, the initial value of the object being initialized is the (possibly converted) value of the initializer
+	expression. Standard conversions (Clause <a title="conv" href="conv.html">4</a>) will be used, if necessary, to convert the initializer
+	expression to the cv-unqualified version of the destination type; no user-defined conversions are considered. If the
+	conversion cannot be done, the initialization is ill-formed. <div class="note">
+<p>[ <em>Note:</em> An expression of type “<var>cv1</var>
+	<code class="sh_cpp">T</code>” can initialize an object of type “<var>cv2</var> <code class="sh_cpp">T</code>” independently of the cv-qualifiers
+	<var>cv1</var> and <var>cv2</var>.</p>
+<pre><code class="sh_cpp">int a;
+const int b = a;
+int c = b;</code></pre>
+<p> — <em>end note</em> ]</p>
+</div>
+</li>
+</ul>
+
+<p><a class="anchor" id="p17" href="#p17">17</a>An <i class="nonterminal">initializer-clause</i> followed by an ellipsis is a pack expansion (<a title="temp.variadic" href="temp.variadic.html">14.5.3</a>).</p>
+
+
+<div><p class="footnote" id="fn106">106) As specified in <a title="conv.ptr" href="conv.ptr.html">4.10</a>, converting an integral constant expression whose value is
+<code class="sh_cpp">0</code> to a pointer type results in a null pointer value.</p></div>
+</body>
+</html>
+

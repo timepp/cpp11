@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Sizeof</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[expr.sizeof]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[expr.sizeof]"></object>5.3.3 Sizeof </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The <code class="sh_cpp">sizeof</code> operator yields the number of bytes in the object representation of its operand. The
+operand is either an expression, which is an unevaluated operand (Clause <a title="expr" href="expr.html">5</a>), or a parenthesized
+<i class="nonterminal">type-id</i>. The <code class="sh_cpp">sizeof</code> operator shall not be applied to an expression that has function or incomplete
+type, to an enumeration type whose underlying type is not fixed before all its enumerators have been declared, to the
+parenthesized name of such types, or to an lvalue that designates a bit-field. <code class="sh_cpp">sizeof(char)</code>,
+<code class="sh_cpp">sizeof(signed char)</code> and <code class="sh_cpp">sizeof(unsigned char)</code> are <code class="sh_cpp">1</code>. The result of
+<code class="sh_cpp">sizeof</code> applied to any other fundamental type (<a title="basic.fundamental" href="basic.fundamental.html">3.9.1</a>) is implementation-defined. <span class="note">[ <em>Note:</em> in
+particular, <code class="sh_cpp">sizeof(bool)</code>, <code class="sh_cpp">sizeof(char16_t)</code>, <code class="sh_cpp">sizeof(char32_t)</code>, and
+<code class="sh_cpp">sizeof(wchar_t)</code> are implementation-defined.<sup class="footnote"><a href="#fn75">75</a></sup> — <em>end note</em> ]</span> <span class="note">[ <em>Note:</em> See <a title="intro.memory" href="intro.memory.html">1.7</a> for the
+definition of <em>byte</em> and <a title="basic.types" href="basic.types.html">3.9</a> for the definition of <em>object representation</em>. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>When applied to a reference or a reference type, the result is the size of the referenced type. When applied to
+a class, the result is the number of bytes in an object of that class including any padding required for placing objects
+of that type in an array. The size of a most derived class shall be greater than zero (<a title="intro.object" href="intro.object.html">1.8</a>). The result of
+applying <code class="sh_cpp">sizeof</code> to a base class subobject is the size of the base class type.<sup class="footnote"><a href="#fn76">76</a></sup> When applied to
+an array, the result is the total number of bytes in the array. This implies that the size of an array of <var>n</var>
+elements is <var>n</var> times the size of an element.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>The <code class="sh_cpp">sizeof</code> operator can be applied to a pointer to a function, but shall not be applied directly
+to a function.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>The lvalue-to-rvalue (<a title="conv.lval" href="conv.lval.html">4.1</a>), array-to-pointer (<a title="conv.array" href="conv.array.html">4.2</a>), and function-to-pointer
+(<a title="conv.func" href="conv.func.html">4.3</a>) standard conversions are not applied to the operand of <code class="sh_cpp">sizeof</code>.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>The identifier in a <code class="sh_cpp">sizeof...</code> expression shall name a parameter pack. The <code class="sh_cpp">sizeof...</code>
+operator yields the number of arguments provided for the parameter pack identifier. A <code class="sh_cpp">sizeof...</code> expression
+is a pack expansion (<a title="temp.variadic" href="temp.variadic.html">14.5.3</a>).</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">template&lt;class... Types&gt;
+struct count {
+  static const std::size_t value = sizeof...(Types);
+};</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>The result of <code class="sh_cpp">sizeof</code> and <code class="sh_cpp">sizeof...</code> is a constant of type <code class="sh_cpp">std::size_t</code>.
+<span class="note">[ <em>Note:</em> <code class="sh_cpp">std::size_t</code> is defined in the standard header <code class="header">&lt;cstddef&gt;</code>
+(<a title="support.types" href="support.types.html">18.2</a>). — <em>end note</em> ]</span></p>
+
+
+
+
+<div>
+<p class="footnote" id="fn75">75) <code class="sh_cpp">sizeof(bool)</code> is not required to be <code class="sh_cpp">1</code>.</p>
+<p class="footnote" id="fn76">76) The actual size of a base class subobject may be less than the result of applying <code class="sh_cpp">sizeof</code>
+to the subobject, due to virtual base classes and less strict padding requirements on base class subobjects.</p>
+</div>
+</body>
+</html>
+

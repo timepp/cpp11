@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Noreturn attribute</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[dcl.attr.noreturn]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[dcl.attr.noreturn]"></object>7.6.3 Noreturn attribute </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The <i class="nonterminal">attribute-token</i> <code class="sh_cpp">noreturn</code> specifies that a function does not return. It shall appear
+at most once in each <i class="nonterminal">attribute-list</i> and no <i class="nonterminal">attribute-argument-clause</i> shall be present. The attribute
+may be applied to the <i class="nonterminal">declarator-id</i> in a function declaration. The first declaration of a function shall
+specify the <code class="sh_cpp">noreturn</code> attribute if any declaration of that function specifies the <code class="sh_cpp">noreturn</code>
+attribute. If a function is declared with the <code class="sh_cpp">noreturn</code> attribute in one translation unit and the same
+function is declared without the <code class="sh_cpp">noreturn</code> attribute in another translation unit, the program is ill-formed;
+no diagnostic required.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>If a function <code class="sh_cpp">f</code> is called where <code class="sh_cpp">f</code> was previously declared with the
+<code class="sh_cpp">noreturn</code> attribute and <code class="sh_cpp">f</code> eventually returns, the behavior is undefined. <span class="note">[ <em>Note:</em> The function may
+terminate by throwing an exception. — <em>end note</em> ]</span> <span class="note">[ <em>Note:</em> Implementations are encouraged to issue a warning if a function marked
+<code class="sh_cpp">[[noreturn]]</code> might return. — <em>end note</em> ]</span></p>
+
+<div class="example">
+<p><a class="anchor" id="p3" href="#p3">3</a>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">[[ noreturn ]] void f () {
+  throw "error";        // OK
+}
+
+[[ noreturn ]] void q (int i) { // behavior is undefined if called with an argument &lt;= 0
+  if (i &gt; 0)
+    throw "positive";
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+</body>
+</html>
+

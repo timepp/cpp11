@@ -1,0 +1,160 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Header &lt;iterator&gt; synopsis</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[iterator.synopsis]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[iterator.synopsis]"></object>24.3 Header <code class="header">&lt;iterator&gt;</code> synopsis </h2>
+
+<pre><code class="sh_cpp">namespace std {
+  // <a title="iterator.primitives" href="iterator.primitives.html">24.4</a>, primitives:
+  template&lt;class Iterator&gt; struct iterator_traits;
+  template&lt;class T&gt; struct iterator_traits&lt;T*&gt;;
+
+  template&lt;class Category, class T, class Distance = ptrdiff_t,
+           class Pointer = T*, class Reference = T&amp;&gt; struct iterator;
+
+  struct input_iterator_tag { };
+  struct output_iterator_tag { };
+  struct forward_iterator_tag: public input_iterator_tag { };
+  struct bidirectional_iterator_tag: public forward_iterator_tag { };
+  struct random_access_iterator_tag: public bidirectional_iterator_tag { };
+
+  // <a title="iterator.operations" href="iterator.operations.html">24.4.4</a>, iterator operations:
+  template &lt;class InputIterator, class Distance&gt;
+    void advance(InputIterator&amp; i, Distance n);
+  template &lt;class InputIterator&gt;
+    typename iterator_traits&lt;InputIterator&gt;::difference_type
+    distance(InputIterator first, InputIterator last);
+  template &lt;class ForwardIterator&gt;
+    ForwardIterator next(ForwardIterator x,
+      typename std::iterator_traits&lt;ForwardIterator&gt;::difference_type n = 1);
+  template &lt;class BidirectionalIterator&gt;
+    BidirectionalIterator prev(BidirectionalIterator x,
+      typename std::iterator_traits&lt;BidirectionalIterator&gt;::difference_type n = 1);
+
+  // <a title="predef.iterators" href="reverse.iterators.html">24.5</a>, predefined iterators:
+  template &lt;class Iterator&gt; class reverse_iterator;
+
+  template &lt;class Iterator1, class Iterator2&gt;
+    bool operator==(
+      const reverse_iterator&lt;Iterator1&gt;&amp; x,
+      const reverse_iterator&lt;Iterator2&gt;&amp; y);
+  template &lt;class Iterator1, class Iterator2&gt;
+    bool operator&lt;(
+      const reverse_iterator&lt;Iterator1&gt;&amp; x,
+      const reverse_iterator&lt;Iterator2&gt;&amp; y);
+  template &lt;class Iterator1, class Iterator2&gt;
+    bool operator!=(
+      const reverse_iterator&lt;Iterator1&gt;&amp; x,
+      const reverse_iterator&lt;Iterator2&gt;&amp; y);
+  template &lt;class Iterator1, class Iterator2&gt;
+    bool operator&gt;(
+      const reverse_iterator&lt;Iterator1&gt;&amp; x,
+      const reverse_iterator&lt;Iterator2&gt;&amp; y);
+  template &lt;class Iterator1, class Iterator2&gt;
+    bool operator&gt;=(
+      const reverse_iterator&lt;Iterator1&gt;&amp; x,
+      const reverse_iterator&lt;Iterator2&gt;&amp; y);
+  template &lt;class Iterator1, class Iterator2&gt;
+    bool operator&lt;=(
+      const reverse_iterator&lt;Iterator1&gt;&amp; x,
+      const reverse_iterator&lt;Iterator2&gt;&amp; y);
+
+  template &lt;class Iterator1, class Iterator2&gt;
+    auto operator-(
+      const reverse_iterator&lt;Iterator1&gt;&amp; x,
+      const reverse_iterator&lt;Iterator2&gt;&amp; y) -&gt; decltype(y.base() - x.base());
+  template &lt;class Iterator&gt;
+    reverse_iterator&lt;Iterator&gt; operator+(
+      typename reverse_iterator&lt;Iterator&gt;::difference_type n,
+      const reverse_iterator&lt;Iterator&gt;&amp; x);
+
+  template &lt;class Container&gt; class back_insert_iterator;
+  template &lt;class Container&gt;
+    back_insert_iterator&lt;Container&gt; back_inserter(Container&amp; x);
+
+  template &lt;class Container&gt; class front_insert_iterator;
+  template &lt;class Container&gt;
+    front_insert_iterator&lt;Container&gt; front_inserter(Container&amp; x);
+
+  template &lt;class Container&gt; class insert_iterator;
+  template &lt;class Container&gt;
+    insert_iterator&lt;Container&gt; inserter(Container&amp; x, typename Container::iterator i);
+
+  template &lt;class Iterator&gt; class move_iterator;
+  template &lt;class Iterator1, class Iterator2&gt;
+    bool operator==(
+      const move_iterator&lt;Iterator1&gt;&amp; x, const move_iterator&lt;Iterator2&gt;&amp; y);
+  template &lt;class Iterator1, class Iterator2&gt;
+    bool operator!=(
+      const move_iterator&lt;Iterator1&gt;&amp; x, const move_iterator&lt;Iterator2&gt;&amp; y);
+  template &lt;class Iterator1, class Iterator2&gt;
+    bool operator&lt;(
+      const move_iterator&lt;Iterator1&gt;&amp; x, const move_iterator&lt;Iterator2&gt;&amp; y);
+  template &lt;class Iterator1, class Iterator2&gt;
+    bool operator&lt;=(
+      const move_iterator&lt;Iterator1&gt;&amp; x, const move_iterator&lt;Iterator2&gt;&amp; y);
+  template &lt;class Iterator1, class Iterator2&gt;
+    bool operator&gt;(
+      const move_iterator&lt;Iterator1&gt;&amp; x, const move_iterator&lt;Iterator2&gt;&amp; y);
+  template &lt;class Iterator1, class Iterator2&gt;
+    bool operator&gt;=(
+      const move_iterator&lt;Iterator1&gt;&amp; x, const move_iterator&lt;Iterator2&gt;&amp; y);
+
+  template &lt;class Iterator1, class Iterator2&gt;
+    auto operator-(
+      const move_iterator&lt;Iterator1&gt;&amp; x,
+      const move_iterator&lt;Iterator2&gt;&amp; y) -&gt; decltype(x.base() - y.base());
+  template &lt;class Iterator&gt;
+    move_iterator&lt;Iterator&gt; operator+(
+      typename move_iterator&lt;Iterator&gt;::difference_type n, const move_iterator&lt;Iterator&gt;&amp; x);
+  template &lt;class Iterator&gt;
+    move_iterator&lt;Iterator&gt; make_move_iterator(const Iterator&amp; i);
+
+  // <a title="stream.iterators" href="stream.iterators.html">24.6</a>, stream iterators:
+  template &lt;class T, class charT = char, class traits = char_traits&lt;charT&gt;,
+            class Distance = ptrdiff_t&gt;
+    class istream_iterator;
+  template &lt;class T, class charT, class traits, class Distance&gt;
+    bool operator==(const istream_iterator&lt;T,charT,traits,Distance&gt;&amp; x,
+                    const istream_iterator&lt;T,charT,traits,Distance&gt;&amp; y);
+  template &lt;class T, class charT, class traits, class Distance&gt;
+    bool operator!=(const istream_iterator&lt;T,charT,traits,Distance&gt;&amp; x,
+                    const istream_iterator&lt;T,charT,traits,Distance&gt;&amp; y);
+
+  template &lt;class T, class charT = char, class traits = char_traits&lt;charT&gt; &gt;
+            class ostream_iterator;
+
+  template&lt;class charT, class traits = char_traits&lt;charT&gt; &gt;
+    class istreambuf_iterator;
+  template &lt;class charT, class traits&gt;
+    bool operator==(const istreambuf_iterator&lt;charT,traits&gt;&amp; a,
+                    const istreambuf_iterator&lt;charT,traits&gt;&amp; b);
+  template &lt;class charT, class traits&gt;
+    bool operator!=(const istreambuf_iterator&lt;charT,traits&gt;&amp; a,
+                    const istreambuf_iterator&lt;charT,traits&gt;&amp; b);
+
+  template &lt;class charT, class traits = char_traits&lt;charT&gt; &gt;
+            class ostreambuf_iterator;
+
+  // <a title="iterator.range" href="iterator.range.html">24.6.5</a>, range access:
+  template &lt;class C&gt; auto begin(C&amp; c) -&gt; decltype(c.begin());
+  template &lt;class C&gt; auto begin(const C&amp; c) -&gt; decltype(c.begin());
+  template &lt;class C&gt; auto end(C&amp; c) -&gt; decltype(c.end());
+  template &lt;class C&gt; auto end(const C&amp; c) -&gt; decltype(c.end());
+  template &lt;class T, size_t N&gt; T* begin(T (&amp;array)[N]);
+  template &lt;class T, size_t N&gt; T* end(T (&amp;array)[N]);
+}</code></pre>
+</body>
+</html>
+

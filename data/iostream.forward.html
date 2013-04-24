@@ -1,0 +1,158 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Header &lt;iosfwd&gt; synopsis</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[iostream.forward]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[iostream.forward]"></object>27.3 Forward declarations </h2>
+
+<h3>Header <dfn><code class="header">&lt;iosfwd&gt;</code></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="&lt;iosfwd&gt;"></object> synopsis</h3>
+
+<pre><code class="sh_cpp">namespace std {
+  template&lt;class charT&gt; class char_traits;
+  template&lt;&gt; class char_traits&lt;char&gt;;
+  template&lt;&gt; class char_traits&lt;char16_t&gt;;
+  template&lt;&gt; class char_traits&lt;char32_t&gt;;
+  template&lt;&gt; class char_traits&lt;wchar_t&gt;;
+
+  template&lt;class T&gt; class allocator;
+
+  template &lt;class charT, class traits = char_traits&lt;charT&gt; &gt;
+    class basic_ios;
+  template &lt;class charT, class traits = char_traits&lt;charT&gt; &gt;
+    class basic_streambuf;
+  template &lt;class charT, class traits = char_traits&lt;charT&gt; &gt;
+    class basic_istream;
+  template &lt;class charT, class traits = char_traits&lt;charT&gt; &gt;
+    class basic_ostream;
+  template &lt;class charT, class traits = char_traits&lt;charT&gt; &gt;
+    class basic_iostream;
+
+  template &lt;class charT, class traits = char_traits&lt;charT&gt;,
+      class Allocator = allocator&lt;charT&gt; &gt;
+    class basic_stringbuf;
+
+  template &lt;class charT, class traits = char_traits&lt;charT&gt;,
+      class Allocator = allocator&lt;charT&gt; &gt;
+    class basic_istringstream;
+  template &lt;class charT, class traits = char_traits&lt;charT&gt;,
+      class Allocator = allocator&lt;charT&gt; &gt;
+    class basic_ostringstream;
+  template &lt;class charT, class traits = char_traits&lt;charT&gt;,
+      class Allocator = allocator&lt;charT&gt; &gt;
+    class basic_stringstream;
+
+  template &lt;class charT, class traits = char_traits&lt;charT&gt; &gt;
+    class basic_filebuf;
+  template &lt;class charT, class traits = char_traits&lt;charT&gt; &gt;
+    class basic_ifstream;
+  template &lt;class charT, class traits = char_traits&lt;charT&gt; &gt;
+    class basic_ofstream;
+  template &lt;class charT, class traits = char_traits&lt;charT&gt; &gt;
+    class basic_fstream;
+
+  template &lt;class charT, class traits = char_traits&lt;charT&gt; &gt;
+    class istreambuf_iterator;
+  template &lt;class charT, class traits = char_traits&lt;charT&gt; &gt;
+    class ostreambuf_iterator;
+
+  typedef basic_ios&lt;char&gt;    ios;
+  typedef basic_ios&lt;wchar_t&gt; wios;
+
+  typedef basic_streambuf&lt;char&gt; streambuf;
+  typedef basic_istream&lt;char&gt;   istream;
+  typedef basic_ostream&lt;char&gt;   ostream;
+  typedef basic_iostream&lt;char&gt;  iostream;
+
+  typedef basic_stringbuf&lt;char&gt;     stringbuf;
+  typedef basic_istringstream&lt;char&gt; istringstream;
+  typedef basic_ostringstream&lt;char&gt; ostringstream;
+  typedef basic_stringstream&lt;char&gt;  stringstream;
+
+  typedef basic_filebuf&lt;char&gt;  filebuf;
+  typedef basic_ifstream&lt;char&gt; ifstream;
+  typedef basic_ofstream&lt;char&gt; ofstream;
+  typedef basic_fstream&lt;char&gt;  fstream;
+
+  typedef basic_streambuf&lt;wchar_t&gt; wstreambuf;
+  typedef basic_istream&lt;wchar_t&gt;   wistream;
+  typedef basic_ostream&lt;wchar_t&gt;   wostream;
+  typedef basic_iostream&lt;wchar_t&gt;  wiostream;
+
+  typedef basic_stringbuf&lt;wchar_t&gt;     wstringbuf;
+  typedef basic_istringstream&lt;wchar_t&gt; wistringstream;
+  typedef basic_ostringstream&lt;wchar_t&gt; wostringstream;
+  typedef basic_stringstream&lt;wchar_t&gt;  wstringstream;
+
+  typedef basic_filebuf&lt;wchar_t&gt;  wfilebuf;
+  typedef basic_ifstream&lt;wchar_t&gt; wifstream;
+  typedef basic_ofstream&lt;wchar_t&gt; wofstream;
+  typedef basic_fstream&lt;wchar_t&gt;  wfstream;
+
+  template &lt;class state&gt; class fpos;
+  typedef fpos&lt;char_traits&lt;char&gt;::state_type&gt;    streampos;
+  typedef fpos&lt;char_traits&lt;wchar_t&gt;::state_type&gt; wstreampos;
+}</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Default template arguments are described as appearing both in <code class="header">&lt;iosfwd&gt;</code> and in the synopsis of
+other headers but it is well-formed to include both <code class="header">&lt;iosfwd&gt;</code> and one or more of the other headers.<sup class="footnote"><a href="#fn297">297</a></sup></p>
+
+<div class="note">
+<p><a class="anchor" id="p2" href="#p2">2</a>[ <em>Note:</em> The class template specialization <code class="sh_cpp">basic_ios&lt;charT,traits&gt;</code> serves as a virtual
+base class for the class templates <code class="sh_cpp">basic_istream</code>, <code class="sh_cpp">basic_ostream</code>, and class templates derived
+from them. <code class="sh_cpp">basic_iostream</code> is a class template derived from both
+<code class="sh_cpp">basic_istream&lt;charT,traits&gt;</code> and <code class="sh_cpp">basic_ostream&lt;charT,traits&gt;</code>.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>The class template specialization <code class="sh_cpp">basic_streambuf&lt;charT,traits&gt;</code> serves as a base class
+for class templates <code class="sh_cpp">basic_stringbuf</code> and <code class="sh_cpp">basic_filebuf</code>.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>The class template specialization <code class="sh_cpp">basic_istream&lt;charT,traits&gt;</code> serves as a base class
+for class templates <code class="sh_cpp">basic_istringstream</code> and <code class="sh_cpp">basic_ifstream</code>.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>The class template specialization <code class="sh_cpp">basic_ostream&lt;charT,traits&gt;</code> serves as a base class
+for class templates <code class="sh_cpp">basic_ostringstream</code> and <code class="sh_cpp">basic_ofstream</code>.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>The class template specialization <code class="sh_cpp">basic_iostream&lt;charT,traits&gt;</code> serves as a base class
+for class templates <code class="sh_cpp">basic_stringstream</code> and <code class="sh_cpp">basic_fstream</code>.</p>
+
+<p><a class="anchor" id="p7" href="#p7">7</a>Other typedefs define instances of class templates specialized for <code class="sh_cpp">char</code> or <code class="sh_cpp">wchar_t</code>
+types.</p>
+
+<p><a class="anchor" id="p8" href="#p8">8</a>Specializations of the class template <code class="sh_cpp">fpos</code> are used for specifying file position information.</p>
+
+<p><a class="anchor" id="p9" href="#p9">9</a>The types <code class="sh_cpp">streampos</code> and <code class="sh_cpp">wstreampos</code> are used for positioning streams specialized on
+<code class="sh_cpp">char</code> and <code class="sh_cpp">wchar_t</code> respectively.</p>
+
+<p><a class="anchor" id="p10" href="#p10">10</a>This synopsis suggests a circularity between <code class="sh_cpp">streampos</code> and
+<code class="sh_cpp">char_traits&lt;char&gt;</code>. An implementation can avoid this circularity by substituting equivalent
+types. One way to do this might be</p>
+
+<pre><code class="sh_cpp">
+template&lt;class stateT&gt; class fpos { … };    // depends on nothing
+typedef … _STATE;           // implementation private declaration of stateT
+
+typedef fpos&lt;_STATE&gt; streampos;
+
+template&lt;&gt; struct char_traits&lt;char&gt; {
+  typedef streampos
+  pos_type;
+}</code></pre>
+<p> — <em>end note</em> ]</p>
+</div>
+
+
+<div><p class="footnote" id="fn296">296) It is the implementation’s responsibility to implement headers so that including
+<code class="header">&lt;iosfwd&gt;</code> and other headers does not violate the rules about multiple occurences of default
+arguments.</p></div>
+</body>
+</html>
+

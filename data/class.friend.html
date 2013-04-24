@@ -1,0 +1,231 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Friends</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[class.friend]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[class.friend]"></object>11.3 Friends </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A friend of a class is a function or class that is given permission to use the private and protected member
+names from the class. A class specifies its friends, if any, by way of friend declarations. Such declarations give
+special access rights to the friends, but they do not make the nominated friends members of the befriending class.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> the following example illustrates the differences between members and friends:</p>
+
+<pre><code class="sh_cpp">class X {
+  int a;
+  friend void friend_set(X*, int);
+public:
+  void member_set(int);
+};
+
+void friend_set(X* p, int i) { p-&gt;a = i; }
+void X::member_set(int i) { a = i; }
+
+void f() {
+  X obj;
+  friend_set(&amp;obj,10);
+  obj.member_set(10);
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>Declaring a class to be a friend implies that the names of private and protected members from the class
+granting friendship can be accessed in the <i class="nonterminal">base-specifier</i>s and member declarations of the befriended class.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">class A {
+  class B { };
+  friend class X;
+};
+
+struct X : A::B {       // OK: A::B accessible to friend
+  A::B mx;              // OK: A::B accessible to member of friend
+  class Y {
+     A::B my;           // OK: A::B accessible to nested member of friend
+  };
+};</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">class X {
+  enum { a=100 };
+  friend class Y;
+};
+
+class Y {
+  int v[X::a];          // OK, Y is a friend of X
+};
+
+class Z {
+  int v[X::a];          // error: X::a is private
+};</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p>A class shall not be defined in a friend declaration.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">class A {
+  friend class B { }; // error: cannot define class in friend declaration
+};</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>A friend declaration that does not declare a function shall have one of the following forms:</p>
+
+<dl>
+<dd>
+<code class="sh_cpp">friend</code> <i class="nonterminal">elaborated-type-specifier</i> <code class="sh_cpp">;</code>
+</dd>
+<dd>
+<code class="sh_cpp">friend</code> <i class="nonterminal">simple-type-specifier</i> <code class="sh_cpp">;</code>
+</dd>
+<dd>
+<code class="sh_cpp">friend</code> <i class="nonterminal">typename-specifier</i> <code class="sh_cpp">;</code>
+</dd>
+</dl>
+
+<p><span class="note">[ <em>Note:</em> A <code class="sh_cpp">friend</code> declaration may be the <i class="nonterminal">declaration</i> in a <i class="nonterminal">template-declaration</i> (Clause
+<a title="temp" href="temp.html">14</a>, <a title="temp.friend" href="temp.friend.html">14.5.4</a>). — <em>end note</em> ]</span> If the type specifier in a <code class="sh_cpp">friend</code> declaration designates a
+(possibly cv-qualified) class type, that class is declared as a friend; otherwise, the <code class="sh_cpp">friend</code> declaration
+is ignored.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">class C;
+typedef C Ct;
+
+class X1 {
+  friend C;             // OK: class C is a friend
+};
+
+class X2   {
+  friend   Ct;          // OK: class C is a friend
+  friend   D;           // error: no type-name D in scope
+  friend   class D;     // OK: elaborated-type-specifier declares new class
+};
+
+template &lt;typename T&gt; class R {
+  friend T;
+};
+
+R&lt;C&gt; rc;                // class C is a friend of R&lt;C&gt;
+R&lt;int&gt; Ri;              // OK: “friend int;” is ignored</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>A function first declared in a friend declaration has external linkage (<a title="basic.link" href="basic.link.html">3.5</a>). Otherwise, the
+function retains its previous linkage (<a title="dcl.stc" href="dcl.stc.html">7.1.1</a>).</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>When a <code class="sh_cpp">friend</code> declaration refers to an overloaded name or operator, only the function specified by
+the parameter types becomes a friend. A member function of a class <code class="sh_cpp">X</code> can be a friend of a class
+<code class="sh_cpp">Y</code>.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">class Y {
+  friend char* X::foo(int);
+  friend X::X(char);    // constructors can be friends
+  friend X::~X();       // destructors can be friends
+};</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>A function can be defined in a friend declaration of a class if and only if the class is a non-local class
+(<a title="class.local" href="class.local.html">9.8</a>), the function name is unqualified, and the function has namespace scope.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">class M {
+  friend void f() { }   // definition of global f, a friend of M,
+                        // not the definition of a member function
+};</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p7" href="#p7">7</a>Such a function is implicitly <code class="sh_cpp">inline</code>. A <code class="sh_cpp">friend</code> function defined in a class is in the
+(lexical) scope of the class in which it is defined. A friend function defined outside the class is not
+(<a title="basic.lookup.unqual" href="basic.lookup.unqual.html">3.4.1</a>).</p>
+
+<p><a class="anchor" id="p8" href="#p8">8</a>No <i class="nonterminal">storage-class-specifier</i> shall appear in the <i class="nonterminal">decl-specifier-seq</i> of a friend
+declaration.</p>
+
+<p><a class="anchor" id="p9" href="#p9">9</a>A name nominated by a friend declaration shall be accessible in the scope of the class containing the friend
+declaration. The meaning of the friend declaration is the same whether the friend declaration appears in the
+<code class="sh_cpp">private</code>, <code class="sh_cpp">protected</code> or <code class="sh_cpp">public</code> (<a title="class.mem" href="class.mem.html">9.2</a>) portion of the class
+<i class="nonterminal">member-specification</i>.</p>
+
+<p><a class="anchor" id="p10" href="#p10">10</a>Friendship is neither inherited nor transitive.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">class A {
+  friend class B;
+  int a;
+};
+
+class B {
+  friend class C;
+};
+
+class C {
+  void f(A* p) {
+    p-&gt;a++;             // error: C is not a friend of A
+                        // despite being a friend of a friend
+  }
+};
+
+class D : public B {
+  void f(A* p) {
+    p-&gt;a++;             // error: D is not a friend of A
+                        // despite being derived from a friend
+  }
+};</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p11" href="#p11">11</a>If a friend declaration appears in a local class (<a title="class.local" href="class.local.html">9.8</a>) and the name specified is an unqualified
+name, a prior declaration is looked up without considering scopes that are outside the innermost enclosing non-class
+scope. For a friend function declaration, if there is no prior declaration, the program is ill-formed. For a friend
+class declaration, if there is no prior declaration, the class that is specified belongs to the innermost enclosing
+non-class scope, but if it is subsequently referenced, its name is not found by name lookup until a matching declaration
+is provided in the innermost enclosing nonclass scope.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">class X;
+void a();
+void f() {
+  class Y;
+  extern void b();
+  class A {
+  friend class X;       // OK, but X is a local class, not ::X
+  friend class Y;       // OK
+  friend class Z;       // OK, introduces local class Z
+  friend void a();      // error, ::a is not considered
+  friend void b();      // OK
+  friend void c();      // error
+  };
+  X *px;                // OK, but ::X is found
+  Z *pz;                // error, no Z is found
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+</body>
+</html>
+

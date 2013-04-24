@@ -1,0 +1,214 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Template argument requirements</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[utility.arg.requirements]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[utility.arg.requirements]"></object>17.6.3.1 Template argument requirements </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The template definitions in the C++ standard library refer to various named requirements whose details are set
+out in tables <a href="utility.arg.requirements.html#t17">17</a>–<a href="utility.arg.requirements.html#t24">24</a>. In these tables, <code class="sh_cpp">T</code>
+is an object or reference type to be supplied by a C++ program instantiating a template; <code class="sh_cpp">a</code>, <code class="sh_cpp">b</code>,
+and <code class="sh_cpp">c</code> are values of type (possibly <code class="sh_cpp">const</code>) <code class="sh_cpp">T</code>; <code class="sh_cpp">s</code> and <code class="sh_cpp">t</code>
+are modifiable lvalues of type <code class="sh_cpp">T</code>; <code class="sh_cpp">u</code> denotes an identifier; <code class="sh_cpp">rv</code> is an rvalue of
+type <code class="sh_cpp">T</code>; and <code class="sh_cpp">v</code> is an lvalue of type (possibly <code class="sh_cpp">const</code>) <code class="sh_cpp">T</code> or an rvalue
+of type <code class="sh_cpp">const T</code>.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>In general, a default constructor is not required. Certain container class member function signatures specify
+<code class="sh_cpp">T()</code> as a default argument. <code class="sh_cpp">T()</code> shall be a well-defined expression (<a title="dcl.init" href="dcl.init.html">8.5</a>) if one of
+those signatures is called using the default argument (<a title="dcl.fct.default" href="dcl.fct.default.html">8.3.6</a>).</p>
+
+<table id="t17" class="requirements">
+<caption>Table 17 — <code class="concept"><dfn>EqualityComparable</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="EqualityComparable"></object></code> requirements
+<dfn class="label">[equalitycomparable]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[equalitycomparable]"></object>
+</caption>
+<thead><tr>
+<th>Expression</th>
+<th>Return type</th>
+<th>Requirement</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code class="sh_cpp">a == b</code></td>
+<td>convertible to <code class="sh_cpp">bool</code>
+</td>
+<td>
+<code class="sh_cpp">==</code> is an equivalence relation, that is, it has the following properties:
+<ul>
+<li>For all <code class="sh_cpp">a</code>, <code class="sh_cpp">a == a</code>.</li>
+<li>If <code class="sh_cpp">a == b</code>, then <code class="sh_cpp">b == a</code>.</li>
+<li>If <code class="sh_cpp">a == b</code> and <code class="sh_cpp">b == c</code>, then <code class="sh_cpp">a == c</code>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+
+<table id="t18" class="requirements">
+<caption>Table 18 — <code class="concept"><dfn>LessThanComparable</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="LessThanComparable"></object></code> requirements
+<dfn class="label">[lessthancomparable]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[lessthancomparable]"></object>
+</caption>
+<thead><tr>
+<th>Expression</th>
+<th>Return type</th>
+<th>Requirement</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code class="sh_cpp">a &lt; b</code></td>
+<td>convertible to <code class="sh_cpp">bool</code>
+</td>
+<td>
+<code class="sh_cpp">&lt;</code> is a strict weak ordering relation (<a title="alg.sorting" href="alg.sorting.html">25.4</a>)</td>
+</tr>
+</tbody>
+</table>
+
+<table id="t19" class="requirements">
+<caption>Table 19 — <code class="concept"><dfn>DefaultConstructible</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="DefaultConstructible"></object></code> requirements
+<dfn class="label">[defaultconstructible]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[defaultconstructible]"></object>
+</caption>
+<thead><tr>
+<th>Expression</th>
+<th>Post-condition</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code class="sh_cpp">T t;</code></td>
+<td>object <code class="sh_cpp">t</code> is default-initialized</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">T u{};</code></td>
+<td>object <code class="sh_cpp">u</code> is value-initialized</td>
+</tr>
+<tr>
+<td>
+<code class="sh_cpp">T()</code><br>
+<code class="sh_cpp">T{}</code>
+</td>
+<td>a temporary object of type <code class="sh_cpp">T</code> is value-initialized</td>
+</tr>
+</tbody>
+</table>
+
+<table id="t20" class="requirements">
+<caption>Table 20 — <code class="concept"><dfn>MoveConstructible</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="MoveConstructible"></object></code> requirements
+<dfn class="label">[moveconstructible]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[moveconstructible]"></object>
+</caption>
+<thead><tr>
+<th>Expression</th>
+<th>Post-condition</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code class="sh_cpp">T u = rv;</code></td>
+	<td>
+<code class="sh_cpp">u</code> is equivalent to the value of <code class="sh_cpp">rv</code> before the construction</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">T(rv)</code></td>
+	<td>
+<code class="sh_cpp">T(rv)</code> is equivalent to the value of <code class="sh_cpp">rv</code> before the construction</td>
+</tr>
+<tr><td colspan="2">
+<code class="sh_cpp">rv</code>’s state is unspecified <span class="note">[ <em>Note:</em> <code class="sh_cpp">rv</code> must still meet the requirements of the
+	library component that is using it. The operations listed in those requirements must work as specified whether
+	<code class="sh_cpp">rv</code> has been moved from or not. — <em>end note</em> ]</span>
+</td></tr>
+</tbody>
+</table>
+
+<table id="t21" class="requirements">
+<caption>Table 21 — <code class="concept"><dfn>CopyConstructible</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="CopyConstructible"></object></code> requirements (in addition to
+<code class="concept">MoveConstructible</code>) <dfn class="label">[copyconstructible]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[copyconstructible]"></object>
+</caption>
+<thead><tr>
+<th>Expression</th>
+<th>Post-condition</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code class="sh_cpp">T u = v;</code></td>
+	<td>the value of <code class="sh_cpp">v</code> is unchanged and is equivalent to <code class="sh_cpp">u</code>
+</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">T(v)</code></td>
+	<td>the value of <code class="sh_cpp">v</code> is unchanged and is equivalent to <code class="sh_cpp">T(v)</code>
+</td>
+</tr>
+</tbody>
+</table>
+
+<table id="t22" class="requirements">
+<caption>Table 22 — <code class="concept"><dfn>MoveAssignable</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="MoveAssignable"></object></code> requirements <dfn class="label">[moveassignable]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[moveassignable]"></object>
+</caption>
+<thead><tr>
+<th>Expression</th>
+<th>Return type</th>
+<th>Return value</th>
+<th>Post-condition</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code class="sh_cpp">t = rv</code></td>
+<td><code class="sh_cpp">T&amp;</code></td>
+<td><code class="sh_cpp">t</code></td>
+	<td>
+<code class="sh_cpp">t</code> is equivalent to the value of <code class="sh_cpp">rv</code> before the assignment</td>
+</tr>
+<tr><td colspan="4">
+<code class="sh_cpp">rv</code>’s state is unspecified. <span class="note">[ <em>Note:</em> <code class="sh_cpp">rv</code> must still meet the requirements of
+	the library component that is using it. The operations listed in those requirements must work as specified whether
+	<code class="sh_cpp">rv</code> has been moved from or not. — <em>end note</em> ]</span>
+</td></tr>
+</tbody>
+</table>
+
+<table id="t23" class="requirements">
+<caption>Table 23 — <code class="concept"><dfn>CopyAssignable</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="CopyAssignable"></object></code> requirements (in addition to
+<code class="concept">MoveAssignable</code>) <dfn class="label">[copyassignable]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[copyassignable]"></object>
+</caption>
+<thead><tr>
+<th>Expression</th>
+<th>Return type</th>
+<th>Return value</th>
+<th>Post-condition</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code class="sh_cpp">t = v</code></td>
+<td><code class="sh_cpp">T&amp;</code></td>
+<td><code class="sh_cpp">t</code></td>
+	<td>
+<code class="sh_cpp">t</code> is equivalent to <code class="sh_cpp">v</code>, the value of <code class="sh_cpp">v</code> is unchanged</td>
+</tr>
+</tbody>
+</table>
+
+<table id="t24" class="requirements">
+<caption>Table 24 — <code class="concept"><dfn>Destructible</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="Destructible"></object></code> requirements <dfn class="label">[destructible]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[destructible]"></object>
+</caption>
+<thead><tr>
+<th>Expression</th>
+<th>Post-condition</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code class="sh_cpp">u.~T()</code></td>
+	<td>All resources owned by <code class="sh_cpp">u</code> are reclaimed, no exception is propagated.</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>
+

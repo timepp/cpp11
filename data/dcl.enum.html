@@ -1,0 +1,241 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Enumeration declarations</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[dcl.enum]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[dcl.enum]"></object>7.2 Enumeration declarations </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>An enumeration is a distinct type (<a title="basic.compound" href="basic.compound.html">3.9.2</a>) with named constants. Its name becomes an
+<i class="nonterminal">enum-name</i>, within its scope.</p>
+
+<dl>
+<dt>
+<i class="nonterminal"><dfn>enum-name</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="enum-name"></object></i>:</dt>
+	<dd><i class="nonterminal">identifier</i></dd>
+<dt>
+<i class="nonterminal"><dfn>enum-specifier</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="enum-specifier"></object></i>:</dt>
+	<dd>
+<i class="nonterminal">enum-head</i> <code class="sh_cpp">{</code> <i class="nonterminal">enumerator-list</i><sub class="opt">opt</sub> <code class="sh_cpp">}</code>
+</dd>
+	<dd>
+<i class="nonterminal">enum-head</i> <code class="sh_cpp">{</code> <i class="nonterminal">enumerator-list</i> <code class="sh_cpp">,</code> <code class="sh_cpp">}</code>
+</dd>
+<dt>
+<i class="nonterminal"><dfn>enum-head</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="enum-head"></object></i>:</dt>
+	<dd>
+<i class="nonterminal">enum-key</i> <i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub> <i class="nonterminal">identifier</i><sub class="opt">opt</sub> <i class="nonterminal">enum-base</i><sub class="opt">opt</sub>
+</dd>
+	<dd>
+<i class="nonterminal">enum-key</i> <i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub> <i class="nonterminal">nested-name-specifier</i> <i class="nonterminal">identifier</i> <i class="nonterminal">enum-base</i><sub class="opt">opt</sub>
+</dd>
+<dt>
+<i class="nonterminal"><dfn>opaque-enum-declaration</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="opaque-enum-declaration"></object></i>:</dt>
+	<dd>
+<i class="nonterminal">enum-key</i> <i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub> <i class="nonterminal">identifier</i> <i class="nonterminal">enum-base</i><sub class="opt">opt</sub> <code class="sh_cpp">;</code>
+</dd>
+<dt>
+<i class="nonterminal"><dfn>enum-key</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="enum-key"></object></i>:</dt>
+	<dd><code class="sh_cpp">enum</code></dd>
+	<dd>
+<code class="sh_cpp">enum</code> <code class="sh_cpp">class</code>
+</dd>
+	<dd>
+<code class="sh_cpp">enum</code> <code class="sh_cpp">struct</code>
+</dd>
+<dt>
+<i class="nonterminal"><dfn>enum-base</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="enum-base"></object></i>:</dt>
+	<dd>
+<code class="sh_cpp">:</code> <i class="nonterminal">type-specifier-seq</i>
+</dd>
+<dt>
+<i class="nonterminal"><dfn>enumerator-list</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="enumerator-list"></object></i>:</dt>
+	<dd><i class="nonterminal">enumerator-definition</i></dd>
+	<dd>
+<i class="nonterminal">enumerator-list</i> <code class="sh_cpp">,</code> <i class="nonterminal">enumerator-definition</i>
+</dd>
+<dt>
+<i class="nonterminal"><dfn>enumerator-definition</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="enumerator-definition"></object></i>:</dt>
+	<dd><i class="nonterminal">enumerator</i></dd>
+	<dd>
+<i class="nonterminal">enumerator</i> <code class="sh_cpp">=</code> <i class="nonterminal">constant-expression</i>
+</dd>
+<dt>
+<i class="nonterminal"><dfn>enumerator</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="enumerator"></object></i>:</dt>
+	<dd><i class="nonterminal">identifier</i></dd>
+</dl>
+
+<p>The optional <i class="nonterminal">attribute-specifier-seq</i> in the <i class="nonterminal">enum-head</i> and the <i class="nonterminal">opaque-enum-declaration</i>
+appertains to the enumeration; the attributes in that <i class="nonterminal">attribute-specifier-seq</i> are thereafter considered
+attributes of the enumeration whenever it is named.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The enumeration type declared with an <i class="nonterminal">enum-key</i> of only <code class="sh_cpp">enum</code> is an <dfn>unscoped
+enumeration</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="unscoped
+enumeration"></object>, and its <i class="nonterminal">enumerator</i>s are <dfn>unscoped enumerator</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="unscoped enumerator"></object>s. The <i class="nonterminal">enum-key</i>s <code class="sh_cpp">enum
+class</code> and <code class="sh_cpp">enum struct</code> are semantically equivalent; an enumeration type declared with one of these is
+a <dfn>scoped enumeration</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="scoped enumeration"></object>, and its <i class="nonterminal">enumerator</i>s are <dfn>scoped enumerator</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="scoped enumerator"></object>s. The optional
+<i class="nonterminal">identifier</i> shall not be omitted in the declaration of a scoped enumeration. The <i class="nonterminal">type-specifier-seq</i> of
+an <i class="nonterminal">enum-base</i> shall name an integral type; any cv-qualification is ignored. An <i class="nonterminal">opaque-enum-declaration</i>
+declaring an unscoped enumeration shall not omit the <i class="nonterminal">enum-base</i>. The identifiers in an <i class="nonterminal">enumerator-list</i>
+are declared as constants, and can appear wherever constants are required. An <i class="nonterminal">enumerator-definition</i> with
+<code class="sh_cpp">=</code> gives the associated <i class="nonterminal">enumerator</i> the value indicated by the <i class="nonterminal">constant-expression</i>. If the
+first <i class="nonterminal">enumerator</i> has no <i class="nonterminal">initializer</i>, the value of the corresponding constant is zero. An
+<i class="nonterminal">enumerator-definition</i> without an <i class="nonterminal">initializer</i> gives the <i class="nonterminal">enumerator</i> the value obtained by
+increasing the value of the previous <i class="nonterminal">enumerator</i> by one.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">enum { a, b, c=0 };
+enum { d, e, f=e+2 };</code></pre>
+
+<p>defines <code class="sh_cpp">a</code>, <code class="sh_cpp">c</code>, and <code class="sh_cpp">d</code> to be zero, <code class="sh_cpp">b</code> and <code class="sh_cpp">e</code> to be
+<code class="sh_cpp">1</code>, and <code class="sh_cpp">f</code> to be <code class="sh_cpp">3</code>. — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>An <i class="nonterminal">opaque-enum-declaration</i> is either a redeclaration of an enumeration in the current scope or a
+declaration of a new enumeration. <span class="note">[ <em>Note:</em> An enumeration declared by an <i class="nonterminal">opaque-enum-declaration</i> has fixed
+underlying type and is a complete type. The list of enumerators can be provided in a later redeclaration with an
+<i class="nonterminal">enum-specifier</i>. — <em>end note</em> ]</span> A scoped enumeration shall not be later redeclared as unscoped or with a different
+underlying type. An unscoped enumeration shall not be later redeclared as scoped and each redeclaration shall include an
+<i class="nonterminal">enum-base</i> specifying the same underlying type as in the original declaration.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>If the <i class="nonterminal">enum-key</i> is followed by a <i class="nonterminal">nested-name-specifier</i>, the <i class="nonterminal">enum-specifier</i> shall
+refer to an enumeration that was previously declared directly in the class or namespace to which the
+<i class="nonterminal">nested-name-specifier</i> refers (i.e., neither inherited nor introduced by a <i class="nonterminal">using-declaration</i>), and the
+<i class="nonterminal">enum-specifier</i> shall appear in a namespace enclosing the previous declaration.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>Each enumeration defines a type that is different from all other types. Each enumeration also has an
+<dfn>underlying type</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="underlying type"></object>. The underlying type can be explicitly specified using <i class="nonterminal">enum-base</i>; if not explicitly
+specified, the underlying type of a scoped enumeration type is <code class="sh_cpp">int</code>. In these cases, the underlying type is
+said to be <dfn>fixed</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="fixed"></object>. Following the closing brace of an <i class="nonterminal">enum-specifier</i>, each enumerator has the type of
+its enumeration. If the underlying type is fixed, the type of each <i class="nonterminal">enumerator</i> prior to the closing brace is the
+underlying type and the <i class="nonterminal">constant-expression</i> in the <i class="nonterminal">enumerator-definition</i> shall be a converted constant
+expression of the underlying type (<a title="expr.const" href="expr.const.html">5.19</a>); if the initializing value of an <i class="nonterminal">enumerator</i> cannot be
+represented by the underlying type, the program is ill-formed. If the underlying type is not fixed, the type of each
+enumerator is the type of its initializing value:</p>
+
+<ul>
+<li>If an initializer is specified for an enumerator, the initializing value has the same type as the expression and the
+	<i class="nonterminal">constant-expression</i> shall be an integral constant expression (<a title="expr.const" href="expr.const.html">5.19</a>).</li>
+<li>If no initializer is specified for the first enumerator, the initializing value has an unspecified integral
+	type.</li>
+<li>Otherwise the type of the initializing value is the same as the type of the initializing value of the preceding
+	enumerator unless the incremented value is not representable in that type, in which case the type is an unspecified
+	integral type sufficient to contain the incremented value. If no such type exists, the program is ill-formed.</li>
+</ul>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>For an enumeration whose underlying type is not fixed, the underlying type is an integral type that can
+represent all the enumerator values defined in the enumeration. If no integral type can represent all the enumerator
+values, the enumeration is ill-formed. It is implementation-defined which integral type is used as the underlying type
+except that the underlying type shall not be larger than <code class="sh_cpp">int</code> unless the value of an enumerator cannot fit
+in an <code class="sh_cpp">int</code> or <code class="sh_cpp">unsigned int</code>. If the <i class="nonterminal">enumerator-list</i> is empty, the underlying type is as
+if the enumeration had a single enumerator with value 0.</p>
+
+<p><a class="anchor" id="p7" href="#p7">7</a>For an enumeration whose underlying type is fixed, the values of the enumeration are the values of the
+underlying type. Otherwise, for an enumeration where <var>e</var><sub>min</sub> is the smallest enumerator and
+<var>e</var><sub>max</sub> is the largest, the values of the enumeration are the values in the range
+<var>b</var><sub>min</sub> to <var>b</var><sub>max</sub>, defined as follows: Let <var>K</var> be 1 for a two’s
+complement representation and 0 for a one’s complement or sign-magnitude representation. <var>b</var><sub>max</sub> is
+the smallest value greater than or equal to max(|<var>e</var><sub>min</sub>| − <var>K</var>,
+|<var>e</var><sub>max</sub>|) and equal to 2<sup><var>M</var></sup> − 1, where <var>M</var> is a non-negative integer.
+<var>b</var><sub>min</sub> is zero if <var>e</var><sub>min</sub> is non-negative and −(<var>b</var><sub>max</sub> +
+<var>K</var>) otherwise. The size of the smallest bit-field large enough to hold all the values of the enumeration type
+is max(<var>M</var>, 1) if <var>b</var><sub>min</sub> is zero and <var>M</var> + 1 otherwise. It is possible to define
+an enumeration that has values not defined by any of its enumerators. If the <i class="nonterminal">enumerator-list</i> is empty, the
+values of the enumeration are as if the enumeration had a single enumerator with value 0.<sup class="footnote"><a href="#fn96">96</a></sup></p>
+
+<p><a class="anchor" id="p8" href="#p8">8</a>Two enumeration types are layout-compatible if they have the same underlying type.</p>
+
+<p><a class="anchor" id="p9" href="#p9">9</a>The value of an enumerator or an object of an unscoped enumeration type is converted to an integer by integral
+promotion (<a title="conv.prom" href="conv.prom.html">4.5</a>).</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">enum color { red, yellow, green=20, blue };
+color col = red;
+color* cp = &amp;col;
+if (*cp == blue)        // …</code></pre>
+
+<p>makes <code class="sh_cpp">color</code> a type describing various colors, and then declares <code class="sh_cpp">col</code> as an object of that
+type, and <code class="sh_cpp">cp</code> as a pointer to an object of that type. The possible values of an object of type
+<code class="sh_cpp">color</code> are <code class="sh_cpp">red</code>, <code class="sh_cpp">yellow</code>, <code class="sh_cpp">green</code>, <code class="sh_cpp">blue</code>; these values can be
+converted to the integral values <code class="sh_cpp">0</code>, <code class="sh_cpp">1</code>, <code class="sh_cpp">20</code>, and <code class="sh_cpp">21</code>. Since
+enumerations are distinct types, objects of type <code class="sh_cpp">color</code> can be assigned only values of type
+<code class="sh_cpp">color</code>.</p>
+
+<pre><code class="sh_cpp">color c = 1;            // error: type mismatch,
+                        // no conversion from int to color
+
+int i = yellow;         // OK: yellow converted to integral value 1
+                        // integral promotion</code></pre>
+
+<p>Note that this implicit <code class="sh_cpp">enum</code> to <code class="sh_cpp">int</code> conversion is not provided for a scoped
+enumeration:</p>
+
+<pre><code class="sh_cpp">enum class Col { red, yellow, green };
+int x = Col::red;       // error: no Col to int conversion
+Col y = Col::red;
+if (y) { }              // error: no Col to bool conversion</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p10" href="#p10">10</a>Each <i class="nonterminal">enum-name</i> and each unscoped <i class="nonterminal">enumerator</i> is declared in the scope that immediately
+contains the <i class="nonterminal">enum-specifier</i>. Each scoped <i class="nonterminal">enumerator</i> is declared in the scope of the enumeration. These
+names obey the scope rules defined for all names in (<a title="basic.scope" href="basic.scope.declarative.html">3.3</a>) and (<a title="basic.lookup" href="basic.lookup.html">3.4</a>).</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">enum direction { left='l', right='r' };
+
+void g() {
+  direction d;          // OK
+  d = left;             // OK
+  d = direction::right; // OK
+}
+
+enum class altitude { high='h', low='l' };
+
+void h() {
+  altitude a;           // OK
+  a = high;             // error: high not in scope
+  a = altitude::low;    // OK
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p>An enumerator declared in class scope can be referred to using the class member access operators (<code class="sh_cpp">::</code>,
+<code class="sh_cpp">.</code> (dot) and <code class="sh_cpp">-&gt;</code> (arrow)), see <a title="expr.ref " href=".html"></a>.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct X {
+  enum direction { left='l', right='r' };
+  int f(int i) { return i==left ? 0 : i==right ? 1 : 2; }
+};
+
+void g(X* p) {
+  direction d;          // error: direction not in scope
+  int i;
+  i = p-&gt;f(left);       // error: left not in scope
+  i = p-&gt;f(X::right);   // OK
+  i = p-&gt;f(p-&gt;left);    // OK
+  // …
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+
+<div><p class="footnote" id="fn96">96) This set of values is used to define promotion and conversion semantics for the enumeration type. It
+does not preclude an expression of enumeration type from having a value that falls outside this range.</p></div>
+</body>
+</html>
+

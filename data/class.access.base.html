@@ -1,0 +1,167 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Accessibility of base classes and base class members</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[class.access.base]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[class.access.base]"></object>11.2 Accessibility of base classes and base class members </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>If a class is declared to be a base class (Clause <a title="class.derived" href="class.derived.html">10</a>) for another class using the
+<code class="sh_cpp">public</code> access specifier, the <code class="sh_cpp">public</code> members of the base class are accessible as
+<code class="sh_cpp">public</code> members of the derived class and <code class="sh_cpp">protected</code> members of the base class are accessible as
+<code class="sh_cpp">protected</code> members of the derived class. If a class is declared to be a base class for another class using
+the <code class="sh_cpp">protected</code> access specifier, the <code class="sh_cpp">public</code> and <code class="sh_cpp">protected</code> members of the base
+class are accessible as <code class="sh_cpp">protected</code> members of the derived class. If a class is declared to be a base class
+for another class using the <code class="sh_cpp">private</code> access specifier, the <code class="sh_cpp">public</code> and <code class="sh_cpp">protected</code>
+members of the base class are accessible as <code class="sh_cpp">private</code> members of the derived class.<sup class="footnote"><a href="#fn117">117</a></sup></p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>In the absence of an <i class="nonterminal">access-specifier</i> for a base class, <code class="sh_cpp">public</code> is assumed when the
+derived class is defined with the <i class="nonterminal">class-key</i> <code class="sh_cpp">struct</code> and <code class="sh_cpp">private</code> is assumed when the
+class is defined with the <i class="nonterminal">class-key</i> <code class="sh_cpp">class</code>.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">class B { /* … */ };
+class D1 : private B { /* … */ };
+class D2 : public B { /* … */ };
+class D3 : B { /* … */ };               // B private by default
+struct D4 : public B { /* … */ };
+struct D5 : private B { /* … */ };
+struct D6 : B { /* … */ };              // B public by default
+class D7 : protected B { /* … */ };
+struct D8 : protected B { /* … */ };</code></pre>
+
+<p>Here <code class="sh_cpp">B</code> is a public base of <code class="sh_cpp">D2</code>, <code class="sh_cpp">D4</code>, and <code class="sh_cpp">D6</code>, a private base of
+<code class="sh_cpp">D1</code>, <code class="sh_cpp">D3</code>, and <code class="sh_cpp">D5</code>, and a protected base of <code class="sh_cpp">D7</code> and
+<code class="sh_cpp">D8</code>. — <em>end example</em> ]</p>
+</div>
+
+<div class="note">
+<p><a class="anchor" id="p3" href="#p3">3</a>[ <em>Note:</em> A member of a private base class might be inaccessible as an inherited member name, but accessible
+directly. Because of the rules on pointer conversions (<a title="conv.ptr" href="conv.ptr.html">4.10</a>) and explicit casts (<a title="expr.cast" href="expr.cast.html">5.4</a>), a
+conversion from a pointer to a derived class to a pointer to an inaccessible base class might be ill-formed if an
+implicit conversion is used, but well-formed if an explicit cast is used. For example,</p>
+
+<pre><code class="sh_cpp">class B {
+public:
+  int mi;                   // non-static member
+  static int si;            // static member
+};
+class D : private B {
+};
+class DD : public D {
+  void f();
+};
+
+void DD::f() {
+  mi = 3;                   // error: mi is private in D
+  si = 3;                   // error: si is private in D
+  ::B b;
+  b.mi = 3;                 // OK (b.mi is different from this-&gt;mi)
+  b.si = 3;                 // OK (b.si is different from this-&gt;si)
+  ::B::si = 3;              // OK
+  ::B* bp1 = this;          // error: B is a private base class
+  ::B* bp2 = (::B*)this;    // OK with cast
+  bp2-&gt;mi = 3;              // OK: access through a pointer to B.
+}</code></pre>
+<p> — <em>end note</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>A base class <code class="sh_cpp">B</code> of <code class="sh_cpp">N</code> is <dfn>accessible</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="accessible"></object> at <var>R</var>, if</p>
+
+<ul>
+<li>an invented public member of <code class="sh_cpp">B</code> would be a public member of <code class="sh_cpp">N</code>, or</li>
+<li>
+<var>R</var> occurs in a member or friend of class <code class="sh_cpp">N</code>, and an invented public member of <code class="sh_cpp">B</code>
+	would be a private or protected member of <code class="sh_cpp">N</code>, or</li>
+<li>
+<var>R</var> occurs in a member or friend of a class <code class="sh_cpp">P</code> derived from <code class="sh_cpp">N</code>, and an invented
+	public member of <code class="sh_cpp">B</code> would be a private or protected member of <code class="sh_cpp">P</code>, or</li>
+<li>there exists a class <code class="sh_cpp">S</code> such that <code class="sh_cpp">B</code> is a base class of <code class="sh_cpp">S</code> accessible at
+	<var>R</var> and <code class="sh_cpp">S</code> is a base class of <code class="sh_cpp">N</code> accessible at <var>R</var>.</li>
+</ul>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">class B {
+public:
+  int m;
+};
+
+class S: private B {
+  friend class N;
+};
+
+class N: private S {
+  void f() {
+    B* p = this;        // OK because class S satisfies the fourth condition
+                        // above: B is a base class of N accessible in f() because
+                        // B is an accessible base class of S and S is an accessible
+                        // base class of N.
+  }
+};</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>If a base class is accessible, one can implicitly convert a pointer to a derived class to a pointer to that
+base class (<a title="conv.ptr" href="conv.ptr.html">4.10</a>, <a title="conv.mem" href="conv.mem.html">4.11</a>). <span class="note">[ <em>Note:</em> It follows that members and friends of a class <code class="sh_cpp">X</code> can
+implicitly convert an <code class="sh_cpp">X*</code> to a pointer to a private or protected immediate base class of
+<code class="sh_cpp">X</code>. — <em>end note</em> ]</span> The access to a member is affected by the class in which the member is named. This naming class
+is the class in which the member name was looked up and found. <span class="note">[ <em>Note:</em> This class can be explicit, e.g., when a
+<i class="nonterminal">qualified-id</i> is used, or implicit, e.g., when a class member access operator (<a title="expr.ref " href=".html"></a>) is used
+(including cases where an implicit “<code class="sh_cpp">this-&gt;</code>” is added). If both a class member access operator and a
+<i class="nonterminal">qualified-id</i> are used to name the member (as in <code class="sh_cpp">p-&gt;T::m</code>), the class naming the member is the
+class denoted by the <i class="nonterminal">nested-name-specifier</i> of the <i class="nonterminal">qualified-id</i> (that is, <code class="sh_cpp">T</code>). — <em>end note</em> ]</span> A
+member <code class="sh_cpp">m</code> is accessible at the point <var>R</var> when named in class <code class="sh_cpp">N</code> if</p>
+
+<ul>
+<li>
+<code class="sh_cpp">m</code> as a member of <code class="sh_cpp">N</code> is public, or</li>
+<li>
+<code class="sh_cpp">m</code> as a member of <code class="sh_cpp">N</code> is private, and <var>R</var> occurs in a member or friend of class
+	<code class="sh_cpp">N</code>, or</li>
+<li>
+<code class="sh_cpp">m</code> as a member of <code class="sh_cpp">N</code> is protected, and <var>R</var> occurs in a member or friend of class
+	<code class="sh_cpp">N</code>, or in a member or friend of a class <code class="sh_cpp">P</code> derived from <code class="sh_cpp">N</code>, where <code class="sh_cpp">m</code>
+	as a member of <code class="sh_cpp">P</code> is public, private, or protected, or</li>
+<li>there exists a base class <code class="sh_cpp">B</code> of <code class="sh_cpp">N</code> that is accessible at <var>R</var>, and <code class="sh_cpp">m</code> is
+	accessible at <var>R</var> when named in class <code class="sh_cpp">B</code>.</li>
+</ul>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">class B;
+class A {
+private:
+  int i;
+  friend void f(B*);
+};
+class B : public A { };
+void f(B* p) {
+  p-&gt;i = 1;             // OK: B* can be implicitly converted to A*,
+                        // and f has access to i in A
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>If a class member access operator, including an implicit “<code class="sh_cpp">this-&gt;</code>”, is used to access a non-static
+data member or non-static member function, the reference is ill-formed if the left operand (considered as a pointer in
+the “<code class="sh_cpp">.</code>” operator case) cannot be implicitly converted to a pointer to the naming class of the right
+operand. <span class="note">[ <em>Note:</em> This requirement is in addition to the requirement that the member be accessible as named. — <em>end note</em> ]</span></p>
+
+
+<div><p class="footnote" id="fn117">117) As specified previously in Clause <a title="class.access" href="class.access.html">11</a>, private members of a base class remain inaccessible
+even to derived classes unless friend declarations within the base class definition are used to grant access
+explicitly.</p></div>
+</body>
+</html>
+

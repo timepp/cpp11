@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class template basic_iostream</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[iostreamclass]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[iostreamclass]"></object>27.7.2.5 Class template <code class="sh_cpp"><dfn>basic_iostream</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="basic_iostream"></object></code> </h4>
+
+<pre><code class="sh_cpp">namespace std {
+  template &lt;class charT, class traits = char_traits&lt;charT&gt; &gt;
+  class basic_iostream :
+    public basic_istream&lt;charT,traits&gt;,
+    public basic_ostream&lt;charT,traits&gt; {
+  public:
+    // types:
+    typedef charT                     char_type;
+    typedef typename traits::int_type int_type;
+    typedef typename traits::pos_type pos_type;
+    typedef typename traits::off_type off_type;
+    typedef traits                    traits_type;
+
+    // constructor/destructor
+    explicit basic_iostream(basic_streambuf&lt;charT,traits&gt;* sb);
+    virtual ~basic_iostream();
+
+  protected:
+    basic_iostream(const basic_iostream&amp; rhs) = delete;
+    basic_iostream(basic_iostream&amp;&amp; rhs);
+
+    // assign/swap
+    basic_iostream&amp; operator=(const basic_iostream&amp; rhs) = delete;
+    basic_iostream&amp; operator=(basic_iostream&amp;&amp; rhs);
+    void swap(basic_iostream&amp; rhs);
+  };
+}</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The class <code class="sh_cpp">basic_iostream</code> inherits a number of functions that allow reading input and writing
+output to sequences controlled by a stream buffer.</p>
+</body>
+</html>
+

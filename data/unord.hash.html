@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class template hash</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[unord.hash]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[unord.hash]"></object>20.8.12 Class template <code class="sh_cpp"><dfn>hash</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="hash"></object></code> </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The unordered associative containers defined in <a title="unord" href="unord.general.html">23.5</a> use specializations of the class
+template <code class="sh_cpp">hash</code> as the default hash function. For all object types <code class="sh_cpp">Key</code> for which there exists a
+specialization <code class="sh_cpp">hash&lt;Key&gt;</code>, the instantiation <code class="sh_cpp">hash&lt;Key&gt;</code> shall:</p>
+
+<ul>
+<li>satisfy the <code class="concept">Hash</code> requirements (<a title="hash.requirements" href="hash.requirements.html">17.6.3.4</a>), with <code class="sh_cpp">Key</code> as the function call
+	argument type, the <code class="concept">DefaultConstructible</code> requirements (Table <a href="utility.arg.requirements.html#t19">19</a>), the
+	<code class="concept">CopyAssignable</code> requirements (Table <a href="utility.arg.requirements.html#t23">23</a>),</li>
+<li>be swappable (<a title="swappable.requirements" href="swappable.requirements.html">17.6.3.2</a>) for lvalues,</li>
+<li>provide two nested types <code class="sh_cpp">result_type</code> and <code class="sh_cpp">argument_type</code> which shall be synonyms for
+	<code class="sh_cpp">size_t</code> and <code class="sh_cpp">Key</code>, respectively,</li>
+<li>satisfy the requirement that if <code class="sh_cpp">k1 == k2</code> is true, <code class="sh_cpp">h(k1) == h(k2)</code> is also true, where
+	<code class="sh_cpp">h</code> is an object of type <code class="sh_cpp">hash&lt;Key&gt;</code> and <code class="sh_cpp">k1</code> and <code class="sh_cpp">k2</code> are objects
+	of type <code class="sh_cpp">Key</code>;</li>
+<li>satisfy the requirement that the expression <code class="sh_cpp">h(k)</code>, where <code class="sh_cpp">h</code> is an object of type
+	<code class="sh_cpp">hash&lt;Key&gt;</code> and <code class="sh_cpp">k</code> is an object of type <code class="sh_cpp">Key</code>, shall not throw an exception
+	unless <code class="sh_cpp">hash&lt;Key&gt;</code> is a user-defined specialization that depends on at least one user-defined
+type.</li>
+</ul>
+
+<pre><code class="sh_cpp">template &lt;&gt; struct hash&lt;bool&gt;;
+template &lt;&gt; struct hash&lt;char&gt;;
+template &lt;&gt; struct hash&lt;signed char&gt;;
+template &lt;&gt; struct hash&lt;unsigned char&gt;;
+template &lt;&gt; struct hash&lt;char16_t&gt;;
+template &lt;&gt; struct hash&lt;char32_t&gt;;
+template &lt;&gt; struct hash&lt;wchar_t&gt;;
+template &lt;&gt; struct hash&lt;short&gt;;
+template &lt;&gt; struct hash&lt;unsigned short&gt;;
+template &lt;&gt; struct hash&lt;int&gt;;
+template &lt;&gt; struct hash&lt;unsigned int&gt;;
+template &lt;&gt; struct hash&lt;long&gt;;
+template &lt;&gt; struct hash&lt;unsigned long&gt;;
+template &lt;&gt; struct hash&lt;long long&gt;;
+template &lt;&gt; struct hash&lt;unsigned long long&gt;;
+template &lt;&gt; struct hash&lt;float&gt;;
+template &lt;&gt; struct hash&lt;double&gt;;
+template &lt;&gt; struct hash&lt;long double&gt;;
+template &lt;class T&gt; struct hash&lt;T*&gt;;</code></pre>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Requires:</em> the template specializations shall meet the requirements of class template <code class="sh_cpp">hash</code>
+(<a title="unord.hash" href="unord.hash.html">20.8.12</a>).</p>
+</body>
+</html>
+

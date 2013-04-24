@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class recursive_mutex</title>
+</head>
+<body>
+<h5>
+<dfn class="label">[thread.mutex.recursive]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[thread.mutex.recursive]"></object>30.4.1.2.2 Class <code class="sh_cpp"><dfn>recursive_mutex</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="recursive_mutex"></object></code> </h5>
+
+<pre><code class="sh_cpp">namespace std {
+  class recursive_mutex {
+  public:
+    recursive_mutex();
+    ~recursive_mutex();
+
+    recursive_mutex(const recursive_mutex&amp;) = delete;
+    recursive_mutex&amp; operator=(const recursive_mutex&amp;) = delete;
+
+    void lock();
+    bool try_lock() noexcept;
+    void unlock();
+
+    typedef <em>implementation-defined</em> native_handle_type;  // See <a title="thread.req.native" href="thread.req.native.html">30.2.3</a>
+    native_handle_type native_handle();                 // See <a title="thread.req.native" href="thread.req.native.html">30.2.3</a>
+  };
+}</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The class <code class="sh_cpp">recursive_mutex</code> provides a recursive mutex with exclusive ownership semantics. If one
+thread owns a <code class="sh_cpp">recursive_mutex</code> object, attempts by another thread to acquire ownership of that object will
+fail (for <code class="sh_cpp">try_lock()</code>) or block (for <code class="sh_cpp">lock()</code>) until the first thread has completely released
+ownership.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The class <code class="sh_cpp">recursive_mutex</code> shall satisfy all the <code class="concept">Mutex</code> requirements
+(<a title="thread.mutex.requirements" href="thread.mutex.requirements.general.html">30.4.1</a>). It shall be a standard-layout class (Clause <a title="class" href="class.html">9</a>).</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>A thread that owns a <code class="sh_cpp">recursive_mutex</code> object may acquire additional levels of ownership by calling
+<code class="sh_cpp">lock()</code> or <code class="sh_cpp">try_lock()</code> on that object. It is unspecified how many levels of ownership may be
+acquired by a single thread. If a thread has already acquired the maximum level of ownership for a
+<code class="sh_cpp">recursive_mutex</code> object, additional calls to <code class="sh_cpp">try_lock()</code> shall fail, and additional calls to
+<code class="sh_cpp">lock()</code> shall throw an exception of type <code class="sh_cpp">system_error</code>. A thread shall call
+<code class="sh_cpp">unlock()</code> once for each level of ownership acquired by calls to <code class="sh_cpp">lock()</code> and
+<code class="sh_cpp">try_lock()</code>. Only when all levels of ownership have been released may ownership be acquired by another
+thread.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>The behavior of a program is undefined if:</p>
+<ul>
+<li>it destroys a <code class="sh_cpp">recursive_mutex</code> object owned by any thread or</li>
+<li>a thread terminates while owning a <code class="sh_cpp">recursive_mutex</code> object.</li>
+</ul>
+</body>
+</html>
+

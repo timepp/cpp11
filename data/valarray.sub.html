@@ -1,0 +1,143 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>valarray subset operations</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[valarray.sub]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[valarray.sub]"></object>26.6.2.5 <code class="sh_cpp">valarray</code> subset operations </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The member <code class="sh_cpp">operator[]</code> is overloaded to provide several ways to select sequences of elements from
+among those controlled by <code class="sh_cpp">*this</code>. Each of these operations returns a subset of the array. The
+const-qualified versions return this subset as a new <code class="sh_cpp">valarray</code> object. The non-const versions return a class
+template object which has reference semantics to the orginal array, working in conjunction with various overloads of
+<code class="sh_cpp">operator=</code> and other assigning operators to allow selective replacement (slicing) of the controlled
+sequence. In each case the selected element(s) must exist.</p>
+
+<h5><code class="sh_cpp">valarray&lt;T&gt; <dfn>operator[]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator[]"></object>(slice slicearr) const;</code></h5>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Returns:</em> An object of class <code class="sh_cpp">valarray&lt;T&gt;</code> containing those elements of the controlled
+sequence designated by <code class="sh_cpp">slicearr</code>.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">const valarray&lt;char&gt; v0("abcdefghijklmnop", 16);
+// v0[slice(2, 5, 3)] returns valarray&lt;char&gt;("cfilo", 5)</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<h5><code class="sh_cpp">slice_array&lt;T&gt; operator[](slice slicearr);</code></h5>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Returns:</em> An object that holds references to elements of the controlled sequence selected by
+<code class="sh_cpp">slicearr</code>.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">valarray&lt;char&gt; v0("abcdefghijklmnop", 16);
+valarray&lt;char&gt; v1("ABCDE", 5);
+v0[slice(2, 5, 3)] = v1;
+// v0 == valarray&lt;char&gt;("abAdeBghCjkDmnEp", 16);</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<h5><code class="sh_cpp">valarray&lt;T&gt; operator[](const gslice&amp; gslicearr) const;</code></h5>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><em>Returns:</em> An object of class <code class="sh_cpp">valarray&lt;T&gt;</code> containing those elements of the controlled
+sequence designated by <code class="sh_cpp">gslicearr</code>.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">const valarray&lt;char&gt; v0("abcdefghijklmnop", 16);
+const size_t lv[] = { 2, 3 };
+const size_t dv[] = { 7, 2 };
+const valarray&lt;size_t&gt; len(lv, 2), str(dv, 2);
+// v0[gslice(3, len, str)] returns
+// valarray&lt;char&gt;("dfhkmo", 6)</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<h5><code class="sh_cpp">gslice_array&lt;T&gt; operator[](const gslice&amp; gslicearr);</code></h5>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><em>Returns:</em> An object that holds references to elements of the controlled sequence selected by
+<code class="sh_cpp">gslicearr</code>.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">valarray&lt;char&gt; v0("abcdefghijklmnop", 16);
+valarray&lt;char&gt; v1("ABCDE", 5);
+const size_t lv[] = { 2, 3 };
+const size_t dv[] = { 7, 2 };
+const valarray&lt;size_t&gt; len(lv, 2), str(dv, 2);
+v0[gslice(3, len, str)] = v1;
+// v0 == valarray&lt;char&gt;("abcAeBgCijDlEnFp", 16)</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<h5><code class="sh_cpp">valarray&lt;T&gt; operator[](const valarray&lt;bool&gt;&amp; boolarr) const;</code></h5>
+
+<p><a class="anchor" id="p6" href="#p6">6</a><em>Returns:</em> An object of class <code class="sh_cpp">valarray&lt;T&gt;</code> containing those elements of the controlled
+sequence designated by <code class="sh_cpp">boolarr</code>.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">const valarray&lt;char&gt; v0("abcdefghijklmnop", 16);
+const bool vb[] = { false, false, true, true, false, true };
+// v0[valarray&lt;bool&gt;(vb, 6)] returns
+// valarray&lt;char&gt;("cdf", 3)</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<h5><code class="sh_cpp">mask_array&lt;T&gt; operator[](const valarray&lt;bool&gt;&amp; boolarr);</code></h5>
+
+<p><a class="anchor" id="p7" href="#p7">7</a><em>Returns:</em> An object that holds references to elements of the controlled sequence selected by
+<code class="sh_cpp">boolarr</code>.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">valarray&lt;char&gt; v0("abcdefghijklmnop", 16);
+valarray&lt;char&gt; v1("ABC", 3);
+const bool vb[] = { false, false, true, true, false, true };
+v0[valarray&lt;bool&gt;(vb, 6)] = v1;
+// v0 == valarray&lt;char&gt;("abABeCghijklmnop", 16)</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<h5><code class="sh_cpp">valarray&lt;T&gt; operator[](const valarray&lt;size_t&gt;&amp; indarr) const;</code></h5>
+
+<p><a class="anchor" id="p8" href="#p8">8</a><em>Returns:</em> An object of class <code class="sh_cpp">valarray&lt;T&gt;</code> containing those elements of the controlled
+sequence designated by <code class="sh_cpp">indarr</code>.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">const valarray&lt;char&gt; v0("abcdefghijklmnop", 16);
+const size_t vi[] = { 7, 5, 2, 3, 8 };
+// v0[valarray&lt;size_t&gt;(vi, 5)] returns
+// valarray&lt;char&gt;("hfcdi", 5)</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<h5><code class="sh_cpp">indirect_array&lt;T&gt; operator[](const valarray&lt;size_t&gt;&amp; indarr);</code></h5>
+
+<p><a class="anchor" id="p9" href="#p9">9</a><em>Returns:</em> An object that holds references to elements of the controlled sequence selected by
+<code class="sh_cpp">indarr</code>.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">valarray&lt;char&gt; v0("abcdefghijklmnop", 16);
+valarray&lt;char&gt; v1("ABCDE", 5);
+const size_t vi[] = { 7, 5, 2, 3, 8 };
+v0[valarray&lt;size_t&gt;(vi, 5)] = v1;
+// v0 == valarray&lt;char&gt;("abCDeBgAEjklmnop", 16)</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+</body>
+</html>
+

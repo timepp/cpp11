@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class template num_put</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[locale.nm.put]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[locale.nm.put]"></object>22.4.2.2 Class template <code class="sh_cpp"><dfn>num_put</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="num_put"></object></code> </h4>
+
+<pre><code class="sh_cpp">namespace std {
+  template &lt;class charT, class OutputIterator = ostreambuf_iterator&lt;charT&gt; &gt;
+  class num_put : public locale::facet {
+  public:
+    typedef charT            char_type;
+    typedef OutputIterator   iter_type;
+
+    explicit num_put(size_t refs = 0);
+
+    iter_type put(iter_type s, ios_base&amp; f, char_type fill, bool v) const;
+    iter_type put(iter_type s, ios_base&amp; f, char_type fill, long v) const;
+    iter_type put(iter_type s, ios_base&amp; f, char_type fill, long long v) const;
+    iter_type put(iter_type s, ios_base&amp; f, char_type fill,
+                  unsigned long v) const;
+    iter_type put(iter_type s, ios_base&amp; f, char_type fill,
+                  unsigned long long v) const;
+    iter_type put(iter_type s, ios_base&amp; f, char_type fill,
+                  double v) const;
+    iter_type put(iter_type s, ios_base&amp; f, char_type fill,
+                  long double v) const;
+    iter_type put(iter_type s, ios_base&amp; f, char_type fill,
+                  const void* v) const;
+
+    static locale::id id;
+
+  protected:
+    ~num_put();
+    virtual iter_type do_put(iter_type, ios_base&amp;, char_type fill,
+                             bool v) const;
+    virtual iter_type do_put(iter_type, ios_base&amp;, char_type fill,
+                             long v) const;
+    virtual iter_type do_put(iter_type, ios_base&amp;, char_type fill,
+                             long long v) const;
+    virtual iter_type do_put(iter_type, ios_base&amp;, char_type fill,
+                             unsigned long) const;
+    virtual iter_type do_put(iter_type, ios_base&amp;, char_type fill,
+                             unsigned long long) const;
+    virtual iter_type do_put(iter_type, ios_base&amp;, char_type fill,
+                             double v) const;
+    virtual iter_type do_put(iter_type, ios_base&amp;, char_type fill,
+                             long double v) const;
+    virtual iter_type do_put(iter_type, ios_base&amp;, char_type fill,
+                             const void* v) const;
+  };
+}</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The facet <code class="sh_cpp">num_put</code> is used to format numeric values to a character sequence such as an ostream.</p>
+</body>
+</html>
+

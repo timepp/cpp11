@@ -1,0 +1,133 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Clause 23: containers library</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[diff.cpp03.containers]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[diff.cpp03.containers]"></object>C.2.12 Clause 23: containers library </h3>
+
+<h4><a title="container.requirements" href="container.requirements.general.html">23.2</a></h4>
+
+<p><strong>Change:</strong> Complexity of <code class="sh_cpp">size()</code> member functions now constant</p>
+
+<p><strong>Rationale:</strong> Lack of specification of complexity of <code class="sh_cpp">size()</code> resulted in divergent implementations with
+inconsistent performance characteristics.</p>
+
+<p><strong>Effect on original feature:</strong> Some container implementations that conform to C++ 2003 may not conform to the specified <code class="sh_cpp">size()</code>
+requirements in this International Standard. Adjusting containers such as <code class="sh_cpp">std::list</code> to the stricter
+requirements may require incompatible changes.</p>
+
+<h4><a title="container.requirements" href="container.requirements.general.html">23.2</a></h4>
+
+<p><strong>Change:</strong> Requirements change: relaxation</p>
+
+<p><strong>Rationale:</strong> Clarification.</p>
+
+<p><strong>Effect on original feature:</strong> Valid C++ 2003 code that attempts to meet the specified container requirements may now be over-specified.
+Code that attempted to be portable across containers may need to be adjusted as follows:</p>
+
+<ul>
+<li>not all containers provide <code class="sh_cpp">size()</code>; use <code class="sh_cpp">empty()</code> instead of <code class="sh_cpp">size() == 0</code>;</li>
+<li>not all containers are empty after construction (<code class="sh_cpp">array</code>);</li>
+<li>not all containers have constant complexity for <code class="sh_cpp">swap()</code> (<code class="sh_cpp">array</code>).</li>
+</ul>
+
+<h4><a title="container.requirements" href="container.requirements.general.html">23.2</a></h4>
+
+<p><strong>Change:</strong> Requirements change: default constructible</p>
+
+<p><strong>Rationale:</strong> Clarification of container requirements.</p>
+
+<p><strong>Effect on original feature:</strong> Valid C++ 2003 code that attempts to explicitly instantiate a container using a user-defined type with no default constructor may fail to compile.</p>
+
+<h4>
+<a title="sequence.reqmts" href="sequence.reqmts.html">23.2.3</a>, <a title="associative.reqmts" href="associative.reqmts.html">23.2.4</a>
+</h4>
+
+<p><strong>Change:</strong> Signature changes: from <code class="sh_cpp">void</code> return types</p>
+
+<p><strong>Rationale:</strong> Old signature threw away useful information that may be expensive to recalculate.</p>
+
+<p><strong>Effect on original feature:</strong> The following member functions have changed:</p>
+
+<ul>
+<li>
+<code class="sh_cpp">erase(iter)</code> for <code class="sh_cpp">set</code>, <code class="sh_cpp">multiset</code>, <code class="sh_cpp">map</code>, <code class="sh_cpp">multimap</code>
+</li>
+<li>
+<code class="sh_cpp">erase(begin, end)</code> for <code class="sh_cpp">set</code>, <code class="sh_cpp">multiset</code>, <code class="sh_cpp">map</code>,
+	<code class="sh_cpp">multimap</code>
+</li>
+<li>
+<code class="sh_cpp">insert(pos, num, val)</code> for <code class="sh_cpp">vector</code>, <code class="sh_cpp">deque</code>, <code class="sh_cpp">list</code>,
+	<code class="sh_cpp">forward_list</code>
+</li>
+<li>
+<code class="sh_cpp">insert(pos, beg, end)</code> for <code class="sh_cpp">vector</code>, <code class="sh_cpp">deque</code>, <code class="sh_cpp">list</code>,
+	<code class="sh_cpp">forward_list</code>
+</li>
+</ul>
+
+<p>Valid C++ 2003 code that relies on these functions returning <code class="sh_cpp">void</code> (e.g., code that creates a pointer to
+member function that points to one of these functions) will fail to compile with this International
+Standard.</p>
+
+<h4>
+<a title="sequence.reqmts" href="sequence.reqmts.html">23.2.3</a>, <a title="associative.reqmts" href="associative.reqmts.html">23.2.4</a>
+</h4>
+
+<p><strong>Change:</strong> Signature changes: from <code class="sh_cpp">iterator</code> to <code class="sh_cpp">const_iterator</code> parameters</p>
+
+<p><strong>Rationale:</strong> Overspecification.</p>
+
+<p><strong>Effect on original feature:</strong> The signatures of the following member functions changed from taking an <code class="sh_cpp">iterator</code> to taking a
+<code class="sh_cpp">const_iterator</code>:</p>
+
+<ul>
+<li>
+<code class="sh_cpp">insert(iter, val)</code> for <code class="sh_cpp">vector</code>, <code class="sh_cpp">deque</code>, <code class="sh_cpp">list</code>, <code class="sh_cpp">set</code>,
+	<code class="sh_cpp">multiset</code>, <code class="sh_cpp">map</code>, <code class="sh_cpp">multimap</code>
+</li>
+<li>
+<code class="sh_cpp">insert(pos, beg, end)</code> for <code class="sh_cpp">vector</code>, <code class="sh_cpp">deque</code>, <code class="sh_cpp">list</code>,
+	<code class="sh_cpp">forward_list</code>
+</li>
+<li>
+<code class="sh_cpp">erase(iter)</code> for <code class="sh_cpp">set</code>, <code class="sh_cpp">multiset</code>, <code class="sh_cpp">map</code>, <code class="sh_cpp">multimap</code>
+</li>
+<li>
+<code class="sh_cpp">erase(begin, end)</code> for <code class="sh_cpp">set</code>, <code class="sh_cpp">multiset</code>, <code class="sh_cpp">map</code>,
+	<code class="sh_cpp">multimap</code>
+</li>
+<li>all forms of <code class="sh_cpp">list::splice</code>
+</li>
+<li>all forms of <code class="sh_cpp">list::merge</code>
+</li>
+</ul>
+
+<p>Valid C++ 2003 code that uses these functions may fail to compile with this International Standard.</p>
+
+<h4>
+<a title="sequence.reqmts" href="sequence.reqmts.html">23.2.3</a>, <a title="associative.reqmts" href="associative.reqmts.html">23.2.4</a>
+</h4>
+
+<p><strong>Change:</strong> Signature changes: <code class="sh_cpp">resize</code></p>
+
+<p><strong>Rationale:</strong> Performance, compatibility with move semantics.</p>
+
+<p><strong>Effect on original feature:</strong> For <code class="sh_cpp">vector</code>, <code class="sh_cpp">deque</code>, and <code class="sh_cpp">list</code> the fill value passed to
+<code class="sh_cpp">resize</code> is now passed by reference instead of by value, and an additional overload of <code class="sh_cpp">resize</code>
+has been added. Valid C++ 2003 code that uses this function may fail to compile with this International
+Standard.</p>
+</body>
+</html>
+

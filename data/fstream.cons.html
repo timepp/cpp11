@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>basic_fstream constructors</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[fstream.cons]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[fstream.cons]"></object>27.9.1.15 <code class="sh_cpp">basic_fstream</code> constructors </h4>
+
+<h5><code class="sh_cpp"><dfn>basic_fstream</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="basic_fstream"></object>();</code></h5>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Effects:</em> Constructs an object of class <code class="sh_cpp">basic_fstream&lt;charT,traits&gt;</code>, initializing the
+base class with <code class="sh_cpp">basic_iostream(&amp;sb)</code> and initializing <code class="sh_cpp">sb</code> with
+<code class="sh_cpp">basic_filebuf&lt;charT,traits&gt;()</code>.</p>
+
+<h5><code class="sh_cpp">explicit <dfn>basic_fstream</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="basic_fstream"></object>(const char* s,
+    ios_base::openmode mode = ios_base::in|ios_base::out);</code></h5>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Effects:</em> Constructs an object of class <code class="sh_cpp">basic_fstream&lt;charT, traits&gt;</code>, initializing the
+base class with <code class="sh_cpp">basic_iostream(&amp;sb)</code> and initializing <code class="sh_cpp">sb</code> with
+<code class="sh_cpp">basic_filebuf&lt;charT, traits&gt;()</code>. Then calls <code class="sh_cpp">rdbuf()-&gt;open(s, mode)</code>. If that
+function returns a null pointer, calls <code class="sh_cpp">setstate(failbit)</code>.</p>
+
+<h5><code class="sh_cpp">explicit <dfn>basic_fstream</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="basic_fstream"></object>(const string&amp; s,
+    ios_base::openmode mode = ios_base::in|ios_base::out);</code></h5>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Effects:</em> the same as <code class="sh_cpp">basic_fstream(s.c_str(), mode);</code></p>
+
+<h5><code class="sh_cpp"><dfn>basic_fstream</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="basic_fstream"></object>(basic_fstream&amp;&amp; rhs);</code></h5>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><em>Effects:</em> Move constructs from the rvalue <code class="sh_cpp">rhs</code>. This is accomplished by move constructing the base
+class, and the contained <code class="sh_cpp">basic_filebuf</code>. Next
+<code class="sh_cpp">basic_istream&lt;charT,traits&gt;::set_rdbuf(&amp;sb)</code> is called to install the contained
+<code class="sh_cpp">basic_filebuf</code>.</p>
+</body>
+</html>
+

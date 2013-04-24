@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Identifiers</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[lex.name]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[lex.name]"></object>2.11 Identifiers </h2>
+<dl>
+<dt>
+<i class="nonterminal"><dfn>identifier</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="identifier"></object></i>:</dt>
+<dd><i class="nonterminal">identifier-nondigit</i></dd>
+<dd>
+<i class="nonterminal">identifier</i> <i class="nonterminal">identifier-nondigit</i>
+</dd>
+<dd>
+<i class="nonterminal">identifier</i> <i class="nonterminal">digit</i>
+</dd>
+<dt>
+<i class="nonterminal"><dfn>identifier-nondigit</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="identifier-nondigit"></object></i>:</dt>
+<dd><i class="nonterminal">nondigit</i></dd>
+<dd><i class="nonterminal">universal-character-name</i></dd>
+<dd>other implementation-defined characters</dd>
+<dt>
+<i class="nonterminal"><dfn>nondigit</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="nondigit"></object></i>: one of</dt>
+<dd><pre>a b c d e f g h i j k l m
+n o p q r s t u v w x y z
+A B C D E F G H I J K L M
+N O P Q R S T U V W X Y Z _</pre></dd>
+<dt>
+<i class="nonterminal"><dfn>digit</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="digit"></object></i>: one of</dt>
+<dd><pre>0 1 2 3 4 5 6 7 8 9</pre></dd>
+</dl>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>An identifier is an arbitrarily long sequence of letters and digits. Each universal-character-name in an
+identifier shall designate a character whose encoding in ISO 10646 falls into one of the ranges specified in
+<a title="charname.allowed" href="charname.allowed.html">E.1</a>. The initial element shall not be a universal-character-name designating a character whose encoding falls
+into one of the ranges specified in <a title="charname.disallowed" href="charname.disallowed.html">E.2</a>. Upper- and lower-case letters are different. All characters are
+significant.<sup class="footnote"><a href="#fn20">20</a></sup></p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The identifiers in Table <a href="lex.name.html#t3">3</a> have a special meaning when appearing in a certain context. When referred
+to in the grammar, these identifiers are used explicitly rather than using the <i class="nonterminal">identifier</i> grammar production.
+Any ambiguity as to whether a given <i class="nonterminal">identifier</i> has a special meaning is resolved to interpret the token as a
+regular <i class="nonterminal">identifier</i>.</p>
+
+<table id="t3" class="bordered">
+<caption>Table 3 — Identifiers with special meaning</caption>
+<tr><td><pre><code class="sh_cpp">override    final</code></pre></td></tr>
+</table>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>In addition, some identifiers are reserved for use by C++ implementations and standard libraries
+(<a title="global.names" href="global.names.html">17.6.4.3.2</a>) and shall not be used otherwise; no diagnostic is required.</p>
+
+
+
+<div><p class="footnote" id="fn20">20) On systems in which linkers cannot accept extended characters, an encoding of the
+universal-character-name may be used in forming valid external identifiers. For example, some otherwise unused character
+or sequence of characters may be used to encode the <code class="sh_cpp">\u</code> in a universal-character-name. Extended characters
+may produce a long external identifier, but C++ does not place a translation limit on significant characters for
+external identifiers. In C++, upper- and lower-case letters are considered different for all identifiers, including
+external identifiers.</p></div>
+</body>
+</html>
+

@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Implementation quantities</title>
+</head>
+<body>
+<h1>
+<dfn class="label">[implimits]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[implimits]"></object>Annex B (informative)<br>Implementation quantities </h1>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Because computers are finite, C++ implementations are inevitably limited in the size of the programs they can
+successfully process. Every implementation shall document those limitations where known. This documentation may cite
+fixed limits where they exist, say how to compute variable limits as a function of available resources, or say that
+fixed limits do not exist or are unknown.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The limits may constrain quantities that include those described below or others. The bracketed number
+following each quantity is recommended as the minimum for that quantity. However, these quantities are only guidelines
+and do not determine compliance.</p>
+
+<ul>
+<li>Nesting levels of compound statements, iteration control structures, and selection control structures [256].</li>
+<li>Nesting levels of conditional inclusion [256].</li>
+<li>Pointer, array, and function declarators (in any combination) modifying a class, arithmetic, or incomplete type in a
+	declaration [256].</li>
+<li>Nesting levels of parenthesized expressions within a full-expression [256].</li>
+<li>Number of characters in an internal identifier or macro name [1024].</li>
+<li>Number of characters in an external identifier [1024].</li>
+<li>External identifiers in one translation unit [65536].</li>
+<li>Identifiers with block scope declared in one block [1024].</li>
+<li>Macro identifiers simultaneously defined in one translation unit [65536].</li>
+<li>Parameters in one function definition [256].</li>
+<li>Arguments in one function call [256].</li>
+<li>Parameters in one macro definition [256].</li>
+<li>Arguments in one macro invocation [256].</li>
+<li>Characters in one logical source line [65536].</li>
+<li>Characters in a string literal (after concatenation) [65536].</li>
+<li>Size of an object [262144].</li>
+<li>Nesting levels for <code class="sh_cpp">#include</code> files [256].</li>
+<li>Case labels for a <code class="sh_cpp">switch</code> statement (excluding those for any nested <code class="sh_cpp">switch</code> statements)
+	[16384].</li>
+<li>Data members in a single class [16384].</li>
+<li>Enumeration constants in a single enumeration [4096].</li>
+<li>Levels of nested class definitions in a single <i class="nonterminal">member-specification</i> [256].</li>
+<li>Functions registered by <code class="sh_cpp">atexit()</code> [32].</li>
+<li>Functions registered by <code class="sh_cpp">at_quick_exit()</code> [32].</li>
+<li>Direct and indirect base classes [16384].</li>
+<li>Direct base classes for a single class [1024].</li>
+<li>Members declared in a single class [4096].</li>
+<li>Final overriding virtual functions in a class, accessible or not [16384].</li>
+<li>Direct and indirect virtual bases of a class [1024].</li>
+<li>Static members of a class [1024].</li>
+<li>Friend declarations in a class [4096].</li>
+<li>Access control declarations in a class [4096].</li>
+<li>Member initializers in a constructor definition [6144].</li>
+<li>Scope qualifications of one identifier [256].</li>
+<li>Nested external specifications [1024].</li>
+<li>Recursive <code class="sh_cpp">constexpr</code> function invocations [512].</li>
+<li>Template arguments in a template declaration [1024].</li>
+<li>Recursively nested template instantiations [1024].</li>
+<li>Handlers per <code class="sh_cpp">try</code> block [256].</li>
+<li>Throw specifications on a single function declaration [256].</li>
+<li>Number of placeholders (<a title="func.bind.place" href="func.bind.place.html">20.8.9.1.3</a>) [10].</li>
+</ul>
+</body>
+</html>
+

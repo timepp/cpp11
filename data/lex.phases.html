@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Phases of translation</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[lex.phases]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[lex.phases]"></object>2.2 Phases of translation </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The precedence among the syntax rules of translation is specified by the following phases.<sup class="footnote"><a href="#fn11">11</a></sup></p>
+
+<ol>
+<li>Physical source file characters are mapped, in an implementation-defined manner, to the basic source character set
+(introducing new-line characters for end-of-line indicators) if necessary. The set of physical source file characters
+accepted is implementation-defined. Trigraph sequences (<a title="lex.trigraph" href="lex.trigraph.html">2.4</a>) are replaced by corresponding single-character
+internal representations. Any source file character not in the basic source character set (<a title="lex.charset" href="lex.charset.html">2.3</a>) is replaced
+by the universal-character-name that designates that character. (An implementation may use any internal encoding, so
+long as an actual extended character encountered in the source file, and the same extended character expressed in the
+source file as a universal-character-name (i.e., using the <code class="sh_cpp">\uXXXX</code> notation), are handled
+equivalently except where this replacement is reverted in a raw string literal.)</li>
+
+<li>Each instance of a backslash character (<code class="sh_cpp">\</code>) immediately followed by a new-line character is deleted,
+splicing physical source lines to form logical source lines. Only the last backslash on any physical source line shall
+be eligible for being part of such a splice. If, as a result, a character sequence that matches the syntax of a
+universal-character-name is produced, the behavior is undefined. A source file that is not empty and that does not end in a
+new-line character, or that ends in a new-line character immediately preceded by a backslash character before any such
+splicing takes place, shall be processed as if an additional new-line character were appended to the file.</li>
+
+<li>The source file is decomposed into preprocessing tokens (<a title="lex.pptoken" href="lex.pptoken.html">2.5</a>) and sequences of white-space characters
+(including comments). A source file shall not end in a partial preprocessing token or in a partial comment.<sup class="footnote"><a href="#fn12">12</a></sup> Each comment is replaced by one space character. New-line characters are retained. Whether each nonempty
+sequence of white-space characters other than new-line is retained or replaced by one space character is unspecified.
+The process of dividing a source file’s characters into preprocessing tokens is context-dependent. <span class="example">[ <em>Example:</em> see the
+handling of <code class="sh_cpp">&lt;</code> within a <code class="sh_cpp">#include</code> preprocessing directive. — <em>end example</em> ]</span>
+</li>
+
+<li>Preprocessing directives are executed, macro invocations are expanded, and <code class="sh_cpp">_Pragma</code> unary operator
+expressions are executed. If a character sequence that matches the syntax of a universal-character-name is produced by
+token concatenation (<a title="cpp.concat" href="cpp.concat.html">16.3.3</a>), the behavior is undefined. A <code class="sh_cpp">#include</code> preprocessing directive
+causes the named header or source file to be processed from phase 1 through phase 4, recursively. All preprocessing
+directives are then deleted.</li>
+
+<li>Each source character set member in a character literal or a string literal, as well as each escape sequence and
+universal-character-name in a character literal or a non-raw string literal, is converted to the corresponding member of
+the execution character set (<a title="lex.ccon" href="lex.ccon.html">2.14.3</a>, <a title="lex.string" href="lex.string.html">2.14.5</a>); if there is no corresponding member, it is converted
+to an implementation-defined member other than the null (wide) character.<sup class="footnote"><a href="#fn13">13</a></sup>
+</li>
+
+<li>Adjacent string literal tokens are concatenated.</li>
+
+<li>White-space characters separating tokens are no longer significant. Each preprocessing token is converted into a
+token (<a title="lex.token" href="lex.token.html">2.7</a>). The resulting tokens are syntactically and semantically analyzed and translated as a translation
+unit. <span class="note">[ <em>Note:</em> The process of analyzing and translating the tokens may occasionally result in one token being replaced by a
+sequence of other tokens (<a title="temp.names" href="temp.names.html">14.2</a>). — <em>end note</em> ]</span> <span class="note">[ <em>Note:</em> Source files, translation units and translated translation
+units need not necessarily be stored as files, nor need there be any one-to-one correspondence between these entities
+and any external representation. The description is conceptual only, and does not specify any particular
+implementation. — <em>end note</em> ]</span>
+</li>
+
+<li>Translated translation units and instantiation units are combined as follows: <span class="note">[ <em>Note:</em> Some or all of these may be
+supplied from a library. — <em>end note</em> ]</span> Each translated translation unit is examined to produce a list of required
+instantiations. <span class="note">[ <em>Note:</em> This may include instantiations which have been explicitly requested (<a title="temp.explicit" href="temp.explicit.html">14.7.2</a>). — <em>end note</em> ]</span>
+The definitions of the required templates are located. It is implementation-defined whether the source of the
+translation units containing these definitions is required to be available. <span class="note">[ <em>Note:</em> An implementation could encode
+sufficient information into the translated translation unit so as to ensure the source is not required here. — <em>end note</em> ]</span> All
+the required instantiations are performed to produce <dfn>instantiation units</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="instantiation units"></object>. <span class="note">[ <em>Note:</em> These are similar to
+translated translation units, but contain no references to uninstantiated templates and no template definitions. — <em>end note</em> ]</span>
+The program is ill-formed if any instantiation fails.</li>
+
+<li>All external entity references are resolved. Library components are linked to satisfy external references to
+entities not defined in the current translation. All such translator output is collected into a program image which
+contains information needed for execution in its execution environment.</li>
+</ol>
+
+
+
+
+
+
+
+<div>
+<p class="footnote" id="fn11">11) Implementations must behave as if these separate phases occur, although in practice different phases
+might be folded together.</p>
+<p class="footnote" id="fn12">12) A partial preprocessing token would arise from a source file ending in the first portion of a
+multi-character token that requires a terminating sequence of characters, such as a <i class="nonterminal">header-name</i> that is missing
+the closing <code class="sh_cpp">"</code> or <code class="sh_cpp">&gt;</code>. A partial comment would arise from a source file ending with an unclosed
+<code class="sh_cpp">/*</code> comment.</p>
+<p class="footnote" id="fn13">13) An implementation need not convert all non-corresponding source characters to the same execution
+character.</p>
+</div>
+</body>
+</html>
+

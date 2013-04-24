@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Arithmetic extractors</title>
+</head>
+<body>
+<h5>
+<dfn class="label">[istream.formatted.arithmetic]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[istream.formatted.arithmetic]"></object>27.7.2.2.2 Arithmetic extractors </h5>
+
+<h6><code class="sh_cpp"><dfn>operator&gt;&gt;</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator&gt;&gt;"></object>(unsigned short&amp; val);
+operator&gt;&gt;(unsigned int&amp; val);
+operator&gt;&gt;(long&amp; val);
+operator&gt;&gt;(unsigned long&amp; val);
+operator&gt;&gt;(long long&amp; val);
+operator&gt;&gt;(unsigned long long&amp; val);
+operator&gt;&gt;(float&amp; val);
+operator&gt;&gt;(double&amp; val);
+operator&gt;&gt;(long double&amp; val);
+operator&gt;&gt;(bool&amp; val);
+operator&gt;&gt;(void*&amp; val);</code></h6>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>As in the case of the inserters, these extractors depend on the locale’s <code class="sh_cpp">num_get&lt;&gt;</code>
+(<a title="locale.num.get" href="locale.num.get.html">22.4.2.1</a>) object to perform parsing the input stream data. These extractors behave as formatted input
+functions (as described in <a title="istream.formatted.reqmts" href="istream.formatted.reqmts.html">27.7.2.2.1</a>). After a sentry object is constructed, the conversion occurs as if
+performed by the following code fragment:</p>
+
+<pre><code class="sh_cpp">typedef num_get&lt; charT,istreambuf_iterator&lt;charT,traits&gt; &gt; numget;
+iostate err = iostate::goodbit;
+use_facet&lt; numget &gt;(loc).get(*this, 0, *this, err, val);
+setstate(err);</code></pre>
+
+<p>In the above fragment, <code class="sh_cpp">loc</code> stands for the private member of the <code class="sh_cpp">basic_ios</code> class. <span class="note">[ <em>Note:</em> The
+first argument provides an object of the <code class="sh_cpp">istreambuf_iterator</code> class which is an iterator pointed to an input
+stream. It bypasses istreams and uses streambufs directly. — <em>end note</em> ]</span> Class <code class="sh_cpp">locale</code> relies on this type as its
+interface to <code class="sh_cpp">istream</code>, so that it does not need to depend directly on <code class="sh_cpp">istream</code>.</p>
+
+<h6><code class="sh_cpp"><dfn>operator&gt;&gt;</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator&gt;&gt;"></object>(short&amp; val);</code></h6>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The conversion occurs as if performed by the following code fragment (using the same notation as for the
+preceding code fragment):</p>
+
+<pre><code class="sh_cpp">typedef num_get&lt;charT,istreambuf_iterator&lt;charT,traits&gt; &gt; numget;
+iostate err = ios_base::goodbit;
+long lval;
+use_facet&lt;numget&gt;(loc).get(*this, 0, *this, err, lval);
+if (lval &lt; numeric_limits&lt;short&gt;::min()) {
+  err |= ios_base::failbit;
+  val = numeric_limits&lt;short&gt;::min();
+} else if (numeric_limits&lt;short&gt;::max() &lt; lval) {
+  err |= ios_base::failbit;
+  val = numeric_limits&lt;short&gt;::max();
+} else
+  val = static_cast&lt;short&gt;(lval);
+setstate(err);</code></pre>
+
+<h6><code class="sh_cpp"><dfn>operator&gt;&gt;</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator&gt;&gt;"></object>(int&amp; val);</code></h6>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>The conversion occurs as if performed by the following code fragment (using the same notation as for the
+preceding code fragment):</p>
+
+<pre><code class="sh_cpp">typedef num_get&lt;charT,istreambuf_iterator&lt;charT,traits&gt; &gt; numget;
+iostate err = ios_base::goodbit;
+long lval;
+use_facet&lt;numget&gt;(loc).get(*this, 0, *this, err, lval);
+if (lval &lt; numeric_limits&lt;int&gt;::min()) {
+  err |= ios_base::failbit;
+  val = numeric_limits&lt;int&gt;::min();
+} else if (numeric_limits&lt;int&gt;::max() &lt; lval) {
+  err |= ios_base::failbit;
+  val = numeric_limits&lt;int&gt;::max();
+} else
+  val = static_cast&lt;int&gt;(lval);
+setstate(err);</code></pre>
+</body>
+</html>
+

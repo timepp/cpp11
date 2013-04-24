@@ -1,0 +1,154 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Header &lt;random&gt; synopsis</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[rand.synopsis]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[rand.synopsis]"></object>26.5.2 Header <code class="header">&lt;random&gt;</code> synopsis </h3>
+
+<pre><code class="sh_cpp">#include &lt;initializer_list&gt;
+
+namespace std {
+
+  // <a title="rand.eng.lcong" href="rand.eng.lcong.html">26.5.3.1</a>, class template linear_congruential_engine
+  template&lt;class UIntType, UIntType a, UIntType c, UIntType m&gt;
+    class linear_congruential_engine;
+
+  // <a title="rand.eng.mers" href="rand.eng.mers.html">26.5.3.2</a>, class template mersenne_twister_engine
+  template&lt;class UIntType, size_t w, size_t n, size_t m, size_t r,
+           UIntType a, size_t u, UintType d, size_t s,
+           UIntType b, size_t t,
+           UIntType c, size_t l, UintType f&gt;
+    class mersenne_twister_engine;
+
+  // <a title="rand.eng.sub" href="rand.eng.sub.html">26.5.3.3</a>, class template subtract_with_carry_engine
+  template&lt;class UIntType, size_t w, size_t s, size_t r&gt;
+    class subtract_with_carry_engine;
+
+  // <a title="rand.adapt.disc" href="rand.adapt.disc.html">26.5.4.2</a>, class template discard_block_engine
+  template&lt;class Engine, size_t p, size_t r&gt;
+    class discard_block_engine;
+
+  // <a title="rand.adapt.ibits" href="rand.adapt.ibits.html">26.5.4.3</a>, class template independent_bits_engine
+  template&lt;class Engine, size_t w, UnsignedIntegralLikeclass UIntType&gt;
+    class independent_bits_engine;
+
+  // <a title="rand.adapt.shuf" href="rand.adapt.shuf.html">26.5.4.4</a>, class template shuffle_order_engine
+  template&lt;class Engine, size_t k&gt;
+    class shuffle_order_engine;
+
+  // <a title="rand.predef" href="rand.predef.html">26.5.5</a>, engines and engine adaptors with predefined parameters
+  typedef <em>see below</em> minstd_rand0;
+  typedef <em>see below</em> minstd_rand;
+  typedef <em>see below</em> mt19937;
+  typedef <em>see below</em> mt19937_64;
+  typedef <em>see below</em> ranlux24_base;
+  typedef <em>see below</em> ranlux48_base;
+  typedef <em>see below</em> ranlux24;
+  typedef <em>see below</em> ranlux48;
+  typedef <em>see below</em> knuth_b;
+  typedef <em>see below</em> default_random_engine;
+
+  // <a title="rand.device" href="rand.device.html">26.5.6</a>, class random_device
+  class random_device;
+
+  // <a title="rand.util.seedseq" href="rand.util.seedseq.html">26.5.7.1</a>, class seed_seq
+  class seed_seq;
+
+  // <a title="rand.util.canonical" href="rand.util.canonical.html">26.5.7.2</a>, function template generate_canonical
+  template&lt;class RealType, size_t bits, UniformRandomNumberGeneratorclass URNG&gt;
+    RealType generate_canonical(URNG&amp; g);
+
+  // <a title="rand.dist.uni.int" href="rand.dist.uni.int.html">26.5.8.2.1</a>, class template uniform_int_distribution
+  template&lt;class IntType = int&gt;
+    class uniform_int_distribution;
+
+  // <a title="rand.dist.uni.real" href="rand.dist.uni.real.html">26.5.8.2.2</a>, class template uniform_real_distribution
+  template&lt;class RealType = double&gt;
+    class uniform_real_distribution;
+
+  // <a title="rand.dist.bern.bernoulli" href="rand.dist.bern.bernoulli.html">26.5.8.3.1</a>, class bernoulli_distribution
+  class bernoulli_distribution;
+
+  // <a title="rand.dist.bern.bin" href="rand.dist.bern.bin.html">26.5.8.3.2</a>, class template binomial_distribution
+  template&lt;class IntType = int&gt;
+    class binomial_distribution;
+
+  // <a title="rand.dist.bern.geo" href="rand.dist.bern.geo.html">26.5.8.3.3</a>, class template geometric_distribution
+  template&lt;class IntType = int&gt;
+    class geometric_distribution;
+
+  // <a title="rand.dist.bern.negbin" href="rand.dist.bern.negbin.html">26.5.8.3.4</a>, class template negative_binomial_distribution
+  template&lt;class IntType = int&gt;
+    class negative_binomial_distribution;
+
+  // <a title="rand.dist.pois.poisson" href="rand.dist.pois.poisson.html">26.5.8.4.1</a>, class template poisson_distribution
+  template&lt;class IntType = int&gt;
+    class poisson_distribution;
+
+  // <a title="rand.dist.pois.exp" href="rand.dist.pois.exp.html">26.5.8.4.2</a>, class template exponential_distribution
+  template&lt;class RealType = double&gt;
+    class exponential_distribution;
+
+  // <a title="rand.dist.pois.gamma" href="rand.dist.pois.gamma.html">26.5.8.4.3</a>, class template gamma_distribution
+  template&lt;class RealType = double&gt;
+    class gamma_distribution;
+
+  // <a title="rand.dist.pois.weibull" href="rand.dist.pois.weibull.html">26.5.8.4.4</a>, class template weibull_distribution
+  template&lt;class RealType = double&gt;
+    class weibull_distribution;
+
+  // <a title="rand.dist.pois.extreme" href="rand.dist.pois.extreme.html">26.5.8.4.5</a>, class template extreme_value_distribution
+  template&lt;class RealType = double&gt;
+    class extreme_value_distribution;
+
+  // <a title="rand.dist.norm.normal" href="rand.dist.norm.normal.html">26.5.8.5.1</a>, class template normal_distribution
+  template&lt;class RealType = double&gt;
+    class normal_distribution;
+
+  // <a title="rand.dist.norm.lognormal" href="rand.dist.norm.lognormal.html">26.5.8.5.2</a>, class template lognormal_distribution
+  template&lt;class RealType = double&gt;
+    class lognormal_distribution;
+
+  // <a title="rand.dist.norm.chisq" href="rand.dist.norm.chisq.html">26.5.8.5.3</a>, class template chi_squared_distribution
+  template&lt;class RealType = double&gt;
+    class chi_squared_distribution;
+
+  // <a title="rand.dist.norm.cauchy" href="rand.dist.norm.cauchy.html">26.5.8.5.4</a>, class template cauchy_distribution
+  template&lt;class RealType = double&gt;
+    class cauchy_distribution;
+
+  // <a title="rand.dist.norm.f " href=".html"></a>, class template fisher_f_distribution
+  template&lt;class RealType = double&gt;
+    class fisher_f_distribution;
+
+  // <a title="rand.dist.norm.t" href="rand.dist.norm.t.html">26.5.8.5.6</a>, class template student_t_distribution
+  template&lt;class RealType = double&gt;
+    class student_t_distribution;
+
+  // <a title="rand.dist.samp.discrete" href="rand.dist.samp.discrete.html">26.5.8.6.1</a>, class template discrete_distribution
+  template&lt;class IntType = int&gt;
+    class discrete_distribution;
+
+  // <a title="rand.dist.samp.pconst" href="rand.dist.samp.pconst.html">26.5.8.6.2</a>, class template piecewise_constant_distribution
+  template&lt;class RealType = double&gt;
+    class piecewise_constant_distribution;
+
+  // <a title="rand.dist.samp.plinear" href="rand.dist.samp.plinear.html">26.5.8.6.3</a>, class template piecewise_linear_distribution
+  template&lt;class RealType = double&gt;
+    class piecewise_linear_distribution;
+
+} // namespace std</code></pre>
+
+</body>
+</html>
+

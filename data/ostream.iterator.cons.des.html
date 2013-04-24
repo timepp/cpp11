@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>ostream_iterator constructors and destructor</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[ostream.iterator.cons.des]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[ostream.iterator.cons.des]"></object>24.6.2.1 <code class="sh_cpp">ostream_iterator</code> constructors and destructor </h4>
+
+<h5><code class="sh_cpp"><dfn>ostream_iterator</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="ostream_iterator"></object>(ostream_type&amp; s);</code></h5>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Effects:</em> Initializes <code class="sh_cpp">out_stream</code> with <code class="sh_cpp">&amp;s</code> and <code class="sh_cpp">delim</code> with
+null.</p>
+
+<h5><code class="sh_cpp"><dfn>ostream_iterator</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="ostream_iterator"></object>(ostream_type&amp; s, const charT* delimiter);</code></h5>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Effects:</em> Initializes <code class="sh_cpp">out_stream</code> with <code class="sh_cpp">&amp;s</code> and <code class="sh_cpp">delim</code> with
+<code class="sh_cpp">delimiter</code>.</p>
+
+<h5><code class="sh_cpp"><dfn>ostream_iterator</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="ostream_iterator"></object>(const ostream_iterator&amp; x);</code></h5>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Effects:</em> Constructs a copy of <code class="sh_cpp">x</code>.</p>
+
+<h5><code class="sh_cpp"><dfn>~ostream_iterator</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="~ostream_iterator"></object>();</code></h5>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><em>Effects:</em> The iterator is destroyed.</p>
+</body>
+</html>
+

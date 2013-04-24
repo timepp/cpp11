@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>ios_base storage functions</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[ios.base.storage]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[ios.base.storage]"></object>27.5.3.5 <code class="sh_cpp">ios_base</code> storage functions </h4>
+
+<h5><code class="sh_cpp">static int <dfn>xalloc</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="xalloc"></object>();</code></h5>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Returns:</em> <code class="sh_cpp">index++</code>.</p>
+
+<h5><code class="sh_cpp">long&amp; <dfn>iword</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="iword"></object>(int idx);</code></h5>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Effects:</em> If <code class="sh_cpp">iarray</code> is a null pointer, allocates an array of <code class="sh_cpp">long</code> of unspecified size
+and stores a pointer to its first element in <code class="sh_cpp">iarray</code>. The function then extends the array pointed at by
+<code class="sh_cpp">iarray</code> as necessary to include the element <code class="sh_cpp">iarray[idx]</code>. Each newly allocated element of the
+array is initialized to zero. The reference returned is invalid after any other operations on the object.<sup class="footnote"><a href="#fn302">302</a></sup>
+However, the value of the storage referred to is retained, so that until the next call to <code class="sh_cpp">copyfmt</code>, calling
+<code class="sh_cpp">iword</code> with the same index yields another reference to the same value. If the function fails<sup class="footnote"><a href="#fn303">303</a></sup>
+and <code class="sh_cpp">*this</code> is a base subobject of a <code class="sh_cpp">basic_ios&lt;&gt;</code> object or subobject, the effect is
+equivalent to calling <code class="sh_cpp">basic_ios&lt;&gt;::setstate(badbit)</code> on the derived object (which may throw
+<code class="sh_cpp">failure</code>).</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Returns:</em> On success <code class="sh_cpp">iarray[idx]</code>. On failure, a valid <code class="sh_cpp">long&amp;</code> initialized to
+0.</p>
+
+<h5><code class="sh_cpp">void*&amp; <dfn>pword</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="pword"></object>(int idx);</code></h5>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><em>Effects:</em> If <code class="sh_cpp">parray</code> is a null pointer, allocates an array of pointers to <code class="sh_cpp">void</code> of
+unspecified size and stores a pointer to its first element in <code class="sh_cpp">parray</code>. The function then extends the array
+pointed at by <code class="sh_cpp">parray</code> as necessary to include the element <code class="sh_cpp">parray[idx]</code>. Each newly allocated
+element of the array is initialized to a null pointer. The reference returned is invalid after any other operations on
+the object. However, the value of the storage referred to is retained, so that until the next call to
+<code class="sh_cpp">copyfmt</code>, calling <code class="sh_cpp">pword</code> with the same index yields another reference to the same value. If the
+function fails<sup class="footnote"><a href="#fn304">304</a></sup> and <code class="sh_cpp">*this</code> is a base subobject of a <code class="sh_cpp">basic_ios&lt;&gt;</code>
+object or subobject, the effect is equivalent to calling <code class="sh_cpp">basic_ios&lt;&gt;::setstate(badbit)</code> on the
+derived object (which may throw <code class="sh_cpp">failure</code>).</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><em>Returns:</em> On success <code class="sh_cpp">parray[idx]</code>. On failure a valid <code class="sh_cpp">void*&amp;</code> initialized to
+0.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a><em>Remarks:</em> After a subsequent call to <code class="sh_cpp">pword(int)</code> for the same object, the earlier return value may
+no longer be valid.</p>
+
+
+
+
+
+
+<div>
+<p class="footnote" id="fn302">302) An implementation is free to implement both the integer array pointed at by <code class="sh_cpp">iarray</code> and
+the pointer array pointed at by <code class="sh_cpp">parray</code> as sparse data structures, possibly with a one-element cache for
+each.</p>
+<p class="footnote" id="fn303">303) for example, because it cannot allocate space.</p>
+<p class="footnote" id="fn304">304) for example, because it cannot allocate space.</p>
+</div>
+</body>
+</html>
+

@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class template linear_congruential_engine</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[rand.eng.lcong]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[rand.eng.lcong]"></object>26.5.3.1 Class template <code class="sh_cpp"><dfn>linear_congruential_engine</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="linear_congruential_engine"></object></code> </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A <code class="sh_cpp">linear_congruential_engine</code> random number engine produces unsigned integer random numbers. The
+state <code class="sh_cpp">x</code><sub><var>i</var></sub> of a <code class="sh_cpp">linear_congruential_engine</code> object <code class="sh_cpp">x</code> is of
+size 1 and consists of a single integer. The transition algorithm is a modular linear function of the form
+<code class="sh_cpp">TA</code>(<code class="sh_cpp">x</code><sub><var>i</var></sub>) = (<var>a</var>⋅<code class="sh_cpp">x</code><sub><var>i</var></sub> +
+<var>c</var>) mod <var>m</var>; the generation algorithm is <code class="sh_cpp">GA</code>(<code class="sh_cpp">x</code><sub><var>i</var></sub>) =
+<code class="sh_cpp">x</code><sub><var>i</var>+1</sub>.</p>
+
+<pre><code class="sh_cpp">template&lt;class UIntType, UIntType a, UIntType c, UIntType m&gt;
+  class linear_congruential_engine
+{
+public:
+  // types
+  typedef UIntType result_type;
+
+  // engine characteristics
+  static constexpr result_type multiplier = a;
+  static constexpr result_type increment = c;
+  static constexpr result_type modulus = m;
+  static constexpr result_type min() { return c == 0u ? 1u: 0u };
+  static constexpr result_type max() { return m - 1u };
+  static constexpr result_type default_seed = 1u;
+
+  // constructors and seeding functions
+  explicit linear_congruential_engine(result_type s = default_seed);
+  template&lt;class Sseq&gt; explicit linear_congruential_engine(Sseq&amp; q);
+  void seed(result_type s = default_seed);
+  template&lt;class Sseq&gt; void seed(Sseq&amp; q);
+
+  // generating functions
+  result_type operator()();
+  void discard(unsigned long long z);
+};</code></pre>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>If the template parameter <code class="sh_cpp">m</code> is 0, the modulus <var>m</var> used throughout this section
+<a title="rand.eng.lcong" href="rand.eng.lcong.html">26.5.3.1</a> is <code class="sh_cpp">numeric_limits&lt;result_type&gt;::max()</code> plus 1. <span class="note">[ <em>Note:</em> <var>m</var> need not
+be representable as a value of type <code class="sh_cpp">result_type</code>. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>If the template parameter <code class="sh_cpp">m</code> is not 0, the following relations shall hold: <code class="sh_cpp">a &lt; m</code>
+and <code class="sh_cpp">c &lt; m</code>.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>The textual representation consists of the value of <code class="sh_cpp">x</code><sub><var>i</var></sub>.</p>
+
+<h5><code class="sh_cpp">explicit linear_congruential_engine(result_type s = default_seed);</code></h5>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><em>Effects:</em> Constructs a <code class="sh_cpp">linear_congruential_engine</code> object. If <var>c</var> mod <var>m</var> is 0 and
+<code class="sh_cpp">s</code> mod <var>m</var> is 0, sets the engine’s state to 1, otherwise sets the engine’s state to <code class="sh_cpp">s</code>
+mod <var>m</var>.</p>
+
+<h5><code class="sh_cpp">template&lt;class Sseq&gt; explicit linear_congruential_engine(Sseq&amp; q);</code></h5>
+
+<p><a class="anchor" id="p6" href="#p6">6</a><em>Effects:</em> Constructs a <code class="sh_cpp">linear_congruential_engine</code> object. With <span class="math"><var>k</var> =
+⌈(log<sub>2</sub><var>m</var>)/32⌉</span> and <var>a</var> an array (or equivalent) of length <var>k</var> +
+3, invokes <code class="sh_cpp">q.generate(<var>a</var> + 0, <var>a</var> + <var>k</var> + 3)</code> and then computes <span class="math"><var>S</var> = ∑<sub><var>j</var>=0…<var>k</var>−1</sub>
+<var>a</var><sub><var>j</var>+3</sub>⋅2<sup>32<var>j</var></sup> mod <var>m</var></span>. If <var>c</var> mod
+<var>m</var> is 0 and <var>S</var> is 0, sets the engine’s state to 1, else sets the engine’s state to
+<var>S</var>.</p>
+</body>
+</html>
+

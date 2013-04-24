@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Array modifications</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[meta.trans.arr]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[meta.trans.arr]"></object>20.9.7.4 Array modifications </h4>
+
+<table id="t55" class="type_traits">
+<caption>Table 55 — Array modifications</caption>
+<thead><tr>
+<th>Template</th>
+<th>Comments</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>remove_­extent</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="remove_extent"></object>;</code></pre></td>
+	<td>If <code class="sh_cpp">T</code> names a type “array of <code class="sh_cpp">U</code>”, the member typedef <code class="sh_cpp">type</code> shall be
+		<code class="sh_cpp">U</code>, otherwise <code class="sh_cpp">T</code>. <span class="note">[ <em>Note:</em> For multidimensional arrays, only the first array dimension is
+		removed. For a type “array of <code class="sh_cpp">const U</code>”, the resulting type is <code class="sh_cpp">const
+		U</code>. — <em>end note</em> ]</span>
+</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>remove_­all_­extents</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="remove_all_extents"></object>;</code></pre></td>
+	<td>If <code class="sh_cpp">T</code> is “multi-dimensional array of <code class="sh_cpp">U</code>”, the resulting member typedef
+	<code class="sh_cpp">type</code> is <code class="sh_cpp">U</code>, otherwise <code class="sh_cpp">T</code>.</td>
+</tr>
+</tbody>
+</table>
+
+<div class="example">
+<p><a class="anchor" id="p1" href="#p1">1</a>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">// the following assertions hold:
+assert((is_same&lt;remove_extent&lt;int&gt;::type, int&gt;::value));
+assert((is_same&lt;remove_extent&lt;int[2]&gt;::type, int&gt;::value));
+assert((is_same&lt;remove_extent&lt;int[2][3]&gt;::type, int[3]&gt;::value));
+assert((is_same&lt;remove_extent&lt;int[][3]&gt;::type, int[3]&gt;::value));</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<div class="example">
+<p><a class="anchor" id="p2" href="#p2">2</a>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">// the following assertions hold:
+assert((is_same&lt;remove_all_extents&lt;int&gt;::type, int&gt;::value));
+assert((is_same&lt;remove_all_extents&lt;int[2]&gt;::type, int&gt;::value));
+assert((is_same&lt;remove_all_extents&lt;int[2][3]&gt;::type, int&gt;::value));
+assert((is_same&lt;remove_all_extents&lt;int[][3]&gt;::type, int&gt;::value));</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+</body>
+</html>
+

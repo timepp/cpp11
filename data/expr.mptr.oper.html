@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Pointer-to-member operators</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[expr.mptr.oper]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[expr.mptr.oper]"></object>5.5 Pointer-to-member operators </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The pointer-to-member operators <code class="sh_cpp">-&gt;*</code> and <code class="sh_cpp">.*</code> group left-to-right.</p>
+
+<dl>
+<dt>
+<i class="nonterminal"><dfn>pm-expression</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="pm-expression"></object></i>:</dt>
+	<dd><i class="nonterminal">cast-expression</i></dd>
+	<dd>
+<i class="nonterminal">pm-expression</i> <code class="sh_cpp">.*</code> <i class="nonterminal">cast-expression</i>
+</dd>
+	<dd>
+<i class="nonterminal">pm-expression</i> <code class="sh_cpp">-&gt;*</code> <i class="nonterminal">cast-expression</i>
+</dd>
+</dl>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The binary operator <code class="sh_cpp">.*</code> binds its second operand, which shall be of type “pointer to member of
+<code class="sh_cpp">T</code>” (where <code class="sh_cpp">T</code> is a completely-defined class type) to its first operand, which shall be of class
+<code class="sh_cpp">T</code> or of a class of which <code class="sh_cpp">T</code> is an unambiguous and accessible base class. The result is an
+object or a function of the type specified by the second operand.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>The binary operator <code class="sh_cpp">-&gt;*</code> binds its second operand, which shall be of type “pointer to member of
+<code class="sh_cpp">T</code>” (where <code class="sh_cpp">T</code> is a completely-defined class type) to its first operand, which shall be of type
+“pointer to <code class="sh_cpp">T</code>” or “pointer to a class of which <code class="sh_cpp">T</code> is an unambiguous and accessible base class”.
+The expression <code class="sh_cpp">E1-&gt;*E2</code> is converted into the equivalent form <code class="sh_cpp">(*(E1)).*E2</code>.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>Abbreviating <i class="nonterminal">pm-expression</i><code class="sh_cpp">.*</code><i class="nonterminal">cast-expression</i> as <code class="sh_cpp">E1.*E2</code>,
+<code class="sh_cpp">E1</code> is called the <dfn>object expression</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="object expression"></object>. If the dynamic type of <code class="sh_cpp">E1</code> does not contain the
+member to which <code class="sh_cpp">E2</code> refers, the behavior is undefined.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>The restrictions on cv-qualification, and the manner in which the cv-qualifiers of the operands are combined to
+produce the cv-qualifiers of the result, are the same as the rules for <code class="sh_cpp">E1.E2</code> given in <a title="expr.ref " href=".html"></a>.</p>
+
+<div class="note">
+<p>[ <em>Note:</em> it is not possible to use a pointer to member that refers to a <code class="sh_cpp">mutable</code> member to modify a
+<code class="sh_cpp">const</code> class object. For example,</p>
+
+<pre><code class="sh_cpp">struct S {
+  S() : i(0) { }
+  mutable int i;
+};
+void f()
+{
+const S cs;
+int S::* pm = &amp;S::i;    // pm refers to mutable member S::i
+cs.*pm = 88;            // ill-formed: cs is a const object
+}</code></pre>
+<p> — <em>end note</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>If the result of <code class="sh_cpp">.*</code> or <code class="sh_cpp">-&gt;*</code> is a function, then that result can be used only as the
+operand for the function call operator <code class="sh_cpp">()</code>.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">(ptr_to_obj-&gt;*ptr_to_mfct)(10);</code></pre>
+
+<p>calls the member function denoted by <code class="sh_cpp">ptr_to_mfct</code> for the object pointed to by
+<code class="sh_cpp">ptr_to_obj</code>. — <em>end example</em> ]</p>
+</div>
+
+<p>In a <code class="sh_cpp">.*</code> expression whose object expression is an rvalue, the program is ill-formed if the second operand
+is a pointer to member function with <i class="nonterminal">ref-qualifier</i> <code class="sh_cpp">&amp;</code>. In a <code class="sh_cpp">.*</code> expression whose
+object expression is an lvalue, the program is ill-formed if the second operand is a pointer to member function with
+<i class="nonterminal">ref-qualifier</i> <code class="sh_cpp">&amp;&amp;</code>. The result of a <code class="sh_cpp">.*</code> expression whose second operand is a
+pointer to a data member is of the same value category (<a title="basic.lval" href="basic.lval.html">3.10</a>) as its first operand. The result of a
+<code class="sh_cpp">.*</code> expression whose second operand is a pointer to a member function is a prvalue. If the second operand is
+the null pointer to member value (<a title="conv.mem" href="conv.mem.html">4.11</a>), the behavior is undefined.</p>
+</body>
+</html>
+

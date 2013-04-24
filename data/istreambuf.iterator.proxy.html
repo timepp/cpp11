@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class template istreambuf_iterator::proxy</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[istreambuf.iterator::proxy]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[istreambuf.iterator::proxy]"></object>24.6.3.1 Class template <code class="sh_cpp">istreambuf_iterator::<dfn>proxy</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="proxy"></object></code> </h4>
+
+<pre><code class="sh_cpp">namespace std {
+  template &lt;class charT, class traits = char_traits&lt;charT&gt; &gt;
+  class istreambuf_iterator&lt;charT, traits&gt;::proxy {
+    charT keep_;
+    basic_streambuf&lt;charT,traits&gt;* sbuf_;
+    proxy(charT c,
+      basic_streambuf&lt;charT,traits&gt;* sbuf)
+      : keep_(c), sbuf_(sbuf) { }
+  public:
+    charT operator*() { return keep_; }
+  };
+}</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Class <code class="sh_cpp">istreambuf_iterator&lt;charT,traits&gt;::proxy</code> is for exposition only. An
+implementation is permitted to provide equivalent functionality without providing a class with this name. Class
+<code class="sh_cpp">istreambuf_iterator&lt;charT, traits&gt;::proxy</code> provides a temporary placeholder as the return value
+of the postincrement operator (<code class="sh_cpp">operator++</code>). It keeps the character pointed to by the previous value of the
+iterator for some possible future access to get the character.</p>
+</body>
+</html>
+

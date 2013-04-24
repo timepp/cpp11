@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Type property queries</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[meta.unary.prop.query]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[meta.unary.prop.query]"></object>20.9.5 Type property queries </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>This sub-clause contains templates that may be used to query properties of types at compile time.</p>
+
+<table id="t50" class="type_traits">
+<caption>Table 50 — Type property queries</caption>
+<thead><tr>
+<th>Template</th>
+<th>Value</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>alignment_­of</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="alignment_of"></object>;</code></pre></td>
+	<td>
+<p><code class="sh_cpp">alignof(T)</code>.</p>
+		<p><em>Requires:</em> <code class="sh_cpp">alignof(T)</code> shall be a valid expression (<a title="expr.alignof" href="expr.alignof.html">5.3.6</a>)</p>
+</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>rank</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="rank"></object>;</code></pre></td>
+	<td>If <code class="sh_cpp">T</code> names an array type, an integer value representing the number of dimensions of
+		<code class="sh_cpp">T</code>; otherwise, 0.</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T,
+unsigned I = 0&gt;
+struct <dfn>extent</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="extent"></object>;</code></pre></td>
+	<td>If <code class="sh_cpp">T</code> is not an array type, or if it has rank less than or equal to <code class="sh_cpp">I</code>, or if
+		<code class="sh_cpp">I</code> is 0 and <code class="sh_cpp">T</code> has type “array of unknown bound of <code class="sh_cpp">U</code>”, then 0; otherwise,
+		the bound (<a title="dcl.array" href="dcl.array.html">8.3.4</a>) of the <code class="sh_cpp">I</code>’th dimension of <code class="sh_cpp">T</code>, where indexing of
+		<code class="sh_cpp">I</code> is zero-based</td>
+</tr>
+</tbody>
+</table>
+
+<div class="example">
+<p><a class="anchor" id="p2" href="#p2">2</a>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">// the following assertions hold:
+assert(rank&lt;int&gt;::value == 0);
+assert(rank&lt;int[2]&gt;::value == 1);
+assert(rank&lt;int[][4]&gt;::value == 2);</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<div class="example">
+<p><a class="anchor" id="p3" href="#p3">3</a>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">// the following assertions hold:
+assert(extent&lt;int&gt;::value == 0);
+assert(extent&lt;int[2]&gt;::value == 2);
+assert(extent&lt;int[2][4]&gt;::value == 2);
+assert(extent&lt;int[][4]&gt;::value == 0);
+assert((extent&lt;int, 1&gt;::value) == 0);
+assert((extent&lt;int[2], 1&gt;::value) == 0);
+assert((extent&lt;int[2][4], 1&gt;::value) == 4);
+assert((extent&lt;int[][4], 1&gt;::value) == 4);</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+</body>
+</html>
+

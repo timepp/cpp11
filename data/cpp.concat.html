@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>The ## operator</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[cpp.concat]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[cpp.concat]"></object>16.3.3 The <code class="sh_cpp">##</code> operator </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A <code class="sh_cpp">##</code> preprocessing token shall not occur at the beginning or at the end of a replacement list for
+either form of macro definition.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>If, in the replacement list of a function-like macro, a parameter is immediately preceded or followed by a
+<code class="sh_cpp">##</code> preprocessing token, the parameter is replaced by the corresponding argument’s preprocessing token
+sequence; however, if an argument consists of no preprocessing tokens, the parameter is replaced by a placemarker
+preprocessing token instead.<sup class="footnote"><a href="#fn159">159</a></sup></p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>For both object-like and function-like macro invocations, before the replacement list is reexamined for more
+macro names to replace, each instance of a <code class="sh_cpp">##</code> preprocessing token in the replacement list (not from an
+argument) is deleted and the preceding preprocessing token is concatenated with the following preprocessing token.
+Placemarker preprocessing tokens are handled specially: concatenation of two placemarkers results in a single
+placemarker preprocessing token, and concatenation of a placemarker with a non-placemarker preprocessing token results
+in the non-placemarker preprocessing token. If the result is not a valid preprocessing token, the behavior is undefined.
+The resulting token is available for further macro replacement. The order of evaluation of <code class="sh_cpp">##</code> operators is
+unspecified.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> In the following fragment:</p>
+
+<pre><code class="sh_cpp">#define hash_hash # ## #
+#define mkstr(a) # a
+#define in_between(a) mkstr(a)
+#define join(c, d) in_between(c hash_hash d)
+char p[] = join(x, y);          // equivalent to
+                                // char p[] = "x ## y";</code></pre>
+
+<p>The expansion produces, at various stages:</p>
+
+<pre><code class="sh_cpp">join(x, y)
+in_between(x hash_hash y)
+in_between(x ## y)
+mkstr(x ## y)
+"x ## y"</code></pre>
+
+<p>In other words, expanding <code class="sh_cpp">hash_hash</code> produces a new token, consisting of two adjacent sharp signs, but this new token
+is not the <code class="sh_cpp">##</code> operator. — <em>end example</em> ]</p>
+</div>
+
+
+<div><p class="footnote" id="fn159">159) Placemarker preprocessing tokens do not appear in the syntax because they are temporary entities that
+exist only within translation phase 4.</p></div>
+</body>
+</html>
+

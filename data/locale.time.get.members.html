@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>time_get members</title>
+</head>
+<body>
+<h5>
+<dfn class="label">[locale.time.get.members]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[locale.time.get.members]"></object>22.4.5.1.1 <code class="sh_cpp">time_get</code> members </h5>
+
+<h6><code class="sh_cpp">dateorder <dfn>date_order</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="date_order"></object>() const;</code></h6>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Returns:</em> <code class="sh_cpp">do_date_order()</code>.</p>
+
+<h6><code class="sh_cpp">iter_type <dfn>get_time</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="get_time"></object>(iter_type s, iter_type end, ios_base&amp; str,
+                   ios_base::iostate&amp; err, tm* t) const;</code></h6>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Returns:</em> <code class="sh_cpp">do_get_time(s, end, str, err, t)</code>.</p>
+
+<h6><code class="sh_cpp">iter_type <dfn>get_date</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="get_date"></object>(iter_type s, iter_type end, ios_base&amp; str,
+                   ios_base::iostate&amp; err, tm* t) const;</code></h6>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Returns:</em> <code class="sh_cpp">do_get_date(s, end, str, err, t)</code>.</p>
+
+<h6><code class="sh_cpp">iter_type <dfn>get_weekday</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="get_weekday"></object>(iter_type s, iter_type end, ios_base&amp; str,
+                      ios_base::iostate&amp; err, tm* t) const;
+iter_type <dfn>get_monthname</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="get_monthname"></object>(iter_type s, iter_type end, ios_base&amp; str,
+                        ios_base::iostate&amp; err, tm* t) const;</code></h6>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><em>Returns:</em> <code class="sh_cpp">do_get_weekday(s, end, str, err, t)</code> or <code class="sh_cpp">do_get_monthname(s, end, str, err,
+t)</code>.</p>
+
+<h6><code class="sh_cpp">iter_type <dfn>get_year</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="get_year"></object>(iter_type s, iter_type end, ios_base&amp; str,
+                   ios_base::iostate&amp; err, tm* t) const;</code></h6>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><em>Returns:</em> <code class="sh_cpp">do_get_year(s, end, str, err, t)</code>.</p>
+
+<h6><code class="sh_cpp">iter_type <dfn>get</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="get"></object>(iter_type s, iter_type end, ios_base&amp; f,
+              ios_base::iostate&amp; err, tm *t, char format, char modifier = 0) const;</code></h6>
+
+<p><a class="anchor" id="p6" href="#p6">6</a><em>Returns:</em> <code class="sh_cpp">do_get(s, end, f, err, t, format, modifier)</code>.</p>
+
+<h6><code class="sh_cpp">iter_type <dfn>get</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="get"></object>(iter_type s, iter_type end, ios_base&amp; f,
+              ios_base::iostate&amp; err, tm *t, const char_type *fmt, const char_type *fmtend) const;</code></h6>
+
+<p><a class="anchor" id="p7" href="#p7">7</a><em>Requires:</em> <code class="sh_cpp">[fmt,fmtend)</code> shall be a valid range.</p>
+
+<p><a class="anchor" id="p8" href="#p8">8</a><em>Effects:</em> The function starts by evaluating <code class="sh_cpp">err = ios_base::goodbit</code>. It then enters a loop, reading
+zero or more characters from <code class="sh_cpp">s</code> at each iteration. Unless otherwise specified below, the loop terminates
+when the first of the following conditions holds:</p>
+
+<ul>
+<li>The expression <code class="sh_cpp">fmt == fmtend</code> evaluates to true.</li>
+<li>The expression <code class="sh_cpp">err == ios_base::goodbit</code> evaluates to false.</li>
+<li>The expression <code class="sh_cpp">s == end</code> evaluates to true, in which case the function evaluates <code class="sh_cpp">err =
+	ios_base::eofbit | ios_base::failbit</code>.</li>
+<li>The next element of <code class="sh_cpp">fmt</code> is equal to <code class="sh_cpp">'%'</code>, optionally followed by a modifier character,
+	followed by a conversion specifier character, <code class="sh_cpp">format</code>, together forming a conversion specification valid
+	for the ISO/IEC 9945 function <code class="sh_cpp">strptime</code>. If the number of elements in the range
+	<code class="sh_cpp">[fmt,fmtend)</code> is not sufficient to unambiguously determine whether the conversion specification is
+	complete and valid, the function evaluates <code class="sh_cpp">err = ios_base::failbit</code>. Otherwise, the function evaluates
+	<code class="sh_cpp">s = do_get(s, end, f, err, t, format, modifier)</code>, where the value of modifier is <code class="sh_cpp">'\0'</code> when
+	the optional modifier is absent from the conversion specification. If <code class="sh_cpp">err == ios_base::goodbit</code> holds
+	after the evaluation of the expression, the function increments <code class="sh_cpp">fmt</code> to point just past the end of the
+	conversion specification and continues looping.</li>
+<li>The expression <code class="sh_cpp">isspace(*fmt, f.getloc())</code> evaluates to true, in which case the function first increments
+	<code class="sh_cpp">fmt</code> until <code class="sh_cpp">fmt == fmtend || !isspace(*fmt, f.getloc())</code> evaluates to true, then advances
+	<code class="sh_cpp">s</code> until <code class="sh_cpp">s == end || !isspace(*s, f.getloc())</code> is true, and finally resumes looping.</li>
+<li>The next character read from <code class="sh_cpp">s</code> matches the element pointed to by <code class="sh_cpp">fmt</code> in a case-insensitive
+	comparison, in which case the function evaluates <code class="sh_cpp">++fmt, ++s</code> and continues looping. Otherwise, the
+	function evaluates <code class="sh_cpp">err = ios_base::failbit</code>.</li>
+</ul>
+
+<p><a class="anchor" id="p9" href="#p9">9</a><span class="note">[ <em>Note:</em> The function uses the <code class="sh_cpp">ctype&lt;charT&gt;</code> facet installed in <code class="sh_cpp">f</code>’s locale to
+determine valid whitespace characters. It is unspecified by what means the function performs case-insensitive comparison
+or whether multi-character sequences are considered while doing so. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p10" href="#p10">10</a><em>Returns:</em> <code class="sh_cpp">s</code>.</p>
+</body>
+</html>
+

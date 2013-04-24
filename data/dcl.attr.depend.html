@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Carries dependency attribute</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[dcl.attr.depend]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[dcl.attr.depend]"></object>7.6.4 Carries dependency attribute </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The <i class="nonterminal">attribute-token</i> <code class="sh_cpp">carries_dependency</code> specifies dependency propagation into and out of
+functions. It shall appear at most once in each <i class="nonterminal">attribute-list</i> and no <i class="nonterminal">attribute-argument-clause</i> shall
+be present. The attribute may be applied to the <i class="nonterminal">declarator-id</i> of a <i class="nonterminal">parameter-declaration</i> in a function
+declaration or lambda, in which case it specifies that the initialization of the parameter carries a dependency to
+(<a title="intro.multithread" href="intro.multithread.html">1.10</a>) each lvalue-to-rvalue conversion (<a title="conv.lval" href="conv.lval.html">4.1</a>) of that object. The attribute may also be applied to
+the <i class="nonterminal">declarator-id</i> of a function declaration, in which case it specifies that the return value, if any, carries
+a dependency to the evaluation of the function call expression.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The first declaration of a function shall specify the <code class="sh_cpp">carries_dependency</code> attribute for its
+<i class="nonterminal">declarator-id</i> if any declaration of the function specifies the <code class="sh_cpp">carries_dependency</code> attribute.
+Furthermore, the first declaration of a function shall specify the <code class="sh_cpp">carries_dependency</code> attribute for a
+parameter if any declaration of that function specifies the <code class="sh_cpp">carries_dependency</code> attribute for that
+parameter. If a function or one of its parameters is declared with the <code class="sh_cpp">carries_dependency</code> attribute in its
+first declaration in one translation unit and the same function or one of its parameters is declared without the
+<code class="sh_cpp">carries_dependency</code> attribute in its first declaration in another translation unit, the program is
+ill-formed; no diagnostic required.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><span class="note">[ <em>Note:</em> The <code class="sh_cpp">carries_dependency</code> attribute does not change the meaning of the program, but may result
+in generation of more efficient code. — <em>end note</em> ]</span></p>
+
+<div class="example">
+<p><a class="anchor" id="p4" href="#p4">4</a>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">/* Translation unit A. */
+
+struct foo { int* a; int* b; };
+std::atomic&lt;struct foo *&gt; foo_head[10];
+int foo_array[10][10];
+
+[[carries_dependency]] struct foo* f(int i) {
+  return foo_head[i].load(memory_order_consume);
+}
+
+[[carries_dependency]] int g(int* x, int* y) {
+  return kill_dependency(foo_array[*x][*y]);
+}
+
+/* Translation unit B. */
+
+[[carries_dependency]] struct foo* f (int i);
+[[carries_dependency]] int* g(int* x, int* y);
+
+int c = 3;
+
+void h(int i) {
+    struct foo* p;
+
+    p = f(i);
+    do_something_with(g(&amp;c, p-&gt;a));
+    do_something_with(g(p-&gt;a, &amp;c));
+}</code></pre>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>The <code class="sh_cpp">carries_dependency</code> attribute on function <code class="sh_cpp">f</code> means that the return value carries a
+dependency out of <code class="sh_cpp">f</code>, so that the implementation need not constrain ordering upon return from
+<code class="sh_cpp">f</code>. Implementations of <code class="sh_cpp">f</code> and its caller may choose to preserve dependencies instead of emitting
+hardware memory ordering instructions (a.k.a. fences).</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>Function <code class="sh_cpp">g</code>’s second argument has a <code class="sh_cpp">carries_dependency</code> attribute, but its first
+argument does not. Therefore, function <code class="sh_cpp">h</code>’s first call to <code class="sh_cpp">g</code> carries a dependency into
+<code class="sh_cpp">g</code>, but its second call does not. The implementation might need to insert a fence prior to the second call
+to <code class="sh_cpp">g</code>. — <em>end example</em> ]</p>
+</div>
+</body>
+</html>
+

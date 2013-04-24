@@ -1,0 +1,185 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Preprocessing directives</title>
+</head>
+<body>
+<h1>
+<dfn class="label">[cpp]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[cpp]"></object>16 Preprocessing directives </h1>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A <dfn>preprocessing directive</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="preprocessing directive"></object> consists of a sequence of preprocessing tokens that satisfies the
+following constraints: The first token in the sequence is a <code class="sh_cpp">#</code> preprocessing token that (at the start of
+translation phase 4) is either the first character in the source file (optionally after white space containing no
+new-line characters) or that follows white space containing at least one new-line character. The last token in the
+sequence is the first new-line character that follows the first token in the sequence.<sup class="footnote"><a href="#fn149">149</a></sup> A new-line
+character ends the preprocessing directive even if it occurs within what would otherwise be an invocation of a
+function-like macro.</p>
+
+<dl>
+<dt>
+<dfn><i class="nonterminal">preprocessing-file</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="preprocessing-file"></object>:</dt>
+	<dd>
+<i class="nonterminal">group</i><sub class="opt">opt</sub>
+</dd>
+<dt>
+<dfn><i class="nonterminal">group</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="group"></object>:</dt>
+	<dd><i class="nonterminal">group-part</i></dd>
+	<dd>
+<i class="nonterminal">group</i> <i class="nonterminal">group-part</i>
+</dd>
+<dt>
+<dfn><i class="nonterminal">group-part</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="group-part"></object>:</dt>
+	<dd><i class="nonterminal">if-section</i></dd>
+	<dd><i class="nonterminal">control-line</i></dd>
+	<dd><i class="nonterminal">text-line</i></dd>
+	<dd>
+<code class="sh_cpp">#</code> <i class="nonterminal">non-directive</i>
+</dd>
+<dt>
+<dfn><i class="nonterminal">if-section</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="if-section"></object>:</dt>
+	<dd>
+<i class="nonterminal">if-group</i> <i class="nonterminal">elif-groups</i><sub class="opt">opt</sub> <i class="nonterminal">else-group</i><sub class="opt">opt</sub> <i class="nonterminal">endif-line</i>
+</dd>
+<dt>
+<dfn><i class="nonterminal">if-group</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="if-group"></object>:</dt>
+	<dd>
+<code class="sh_cpp">#</code> <code class="sh_cpp">if</code> <i class="nonterminal">constant-expression</i> <i class="nonterminal">new-line</i> <i class="nonterminal">group</i><sub class="opt">opt</sub>
+</dd>
+	<dd>
+<code class="sh_cpp">#</code> <code class="sh_cpp">ifdef</code> <i class="nonterminal">identifier</i> <i class="nonterminal">new-line</i> <i class="nonterminal">group</i><sub class="opt">opt</sub>
+</dd>
+	<dd>
+<code class="sh_cpp">#</code> <code class="sh_cpp">ifndef</code> <i class="nonterminal">identifier</i> <i class="nonterminal">new-line</i> <i class="nonterminal">group</i><sub class="opt">opt</sub>
+</dd>
+<dt>
+<dfn><i class="nonterminal">elif-groups</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="elif-groups"></object>:</dt>
+	<dd><i class="nonterminal">elif-group</i></dd>
+	<dd>
+<i class="nonterminal">elif-groups</i> <i class="nonterminal">elif-group</i>
+</dd>
+<dt>
+<dfn><i class="nonterminal">elif-group</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="elif-group"></object>:</dt>
+	<dd>
+<code class="sh_cpp">#</code> <code class="sh_cpp">elif</code> <i class="nonterminal">constant-expression</i> <i class="nonterminal">new-line</i> <i class="nonterminal">group</i><sub class="opt">opt</sub>
+</dd>
+<dt>
+<dfn><i class="nonterminal">else-group</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="else-group"></object>:</dt>
+	<dd>
+<code class="sh_cpp">#</code> <code class="sh_cpp">else</code> <i class="nonterminal">new-line</i> <i class="nonterminal">group</i><sub class="opt">opt</sub>
+</dd>
+<dt>
+<dfn><i class="nonterminal">endif-line</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="endif-line"></object>:</dt>
+	<dd>
+<code class="sh_cpp">#</code> <code class="sh_cpp">endif</code> <i class="nonterminal">new-line</i>
+</dd>
+<dt>
+<dfn><i class="nonterminal">control-line</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="control-line"></object>:</dt>
+	<dd>
+<code class="sh_cpp">#</code> <code class="sh_cpp">include</code> <i class="nonterminal">pp-tokens</i> <i class="nonterminal">new-line</i>
+</dd>
+	<dd>
+<code class="sh_cpp">#</code> <code class="sh_cpp">define</code> <i class="nonterminal">identifier</i> <i class="nonterminal">replacement-list</i> <i class="nonterminal">new-line</i>
+</dd>
+	<dd>
+<code class="sh_cpp">#</code> <code class="sh_cpp">define</code> <i class="nonterminal">identifier</i> <i class="nonterminal">lparen</i> <i class="nonterminal">identifier-list</i><sub class="opt">opt</sub> <code class="sh_cpp">)</code> <i class="nonterminal">replacement-list</i> <i class="nonterminal">new-line</i>
+</dd>
+	<dd>
+<code class="sh_cpp">#</code> <code class="sh_cpp">define</code> <i class="nonterminal">identifier</i> <i class="nonterminal">lparen</i> <code class="sh_cpp">...</code> <code class="sh_cpp">)</code> <i class="nonterminal">replacement-list</i> <i class="nonterminal">new-line</i>
+</dd>
+	<dd>
+<code class="sh_cpp">#</code> <code class="sh_cpp">define</code> <i class="nonterminal">identifier</i> <i class="nonterminal">lparen</i> <i class="nonterminal">identifier-list</i> <code class="sh_cpp">,</code> <code class="sh_cpp">...</code> <code class="sh_cpp">)</code> <i class="nonterminal">replacement-list</i> <i class="nonterminal">new-line</i>
+</dd>
+	<dd>
+<code class="sh_cpp">#</code> <code class="sh_cpp">undef</code> <i class="nonterminal">identifier</i> <i class="nonterminal">new-line</i>
+</dd>
+	<dd>
+<code class="sh_cpp">#</code> <code class="sh_cpp">line</code> <i class="nonterminal">pp-tokens</i> <i class="nonterminal">new-line</i>
+</dd>
+	<dd>
+<code class="sh_cpp">#</code> <code class="sh_cpp">error</code> <i class="nonterminal">pp-tokens</i><sub class="opt">opt</sub> <i class="nonterminal">new-line</i>
+</dd>
+	<dd>
+<code class="sh_cpp">#</code> <code class="sh_cpp">pragma</code> <i class="nonterminal">pp-tokens</i><sub class="opt">opt</sub> <i class="nonterminal">new-line</i>
+</dd>
+	<dd>
+<code class="sh_cpp">#</code> <i class="nonterminal">new-line</i>
+</dd>
+<dt>
+<dfn><i class="nonterminal">text-line</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="text-line"></object>:</dt>
+	<dd>
+<i class="nonterminal">pp-tokens</i><sub class="opt">opt</sub> <i class="nonterminal">new-line</i>
+</dd>
+<dt>
+<dfn><i class="nonterminal">non-directive</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="non-directive"></object>:</dt>
+	<dd>
+<i class="nonterminal">pp-tokens</i> <i class="nonterminal">new-line</i>
+</dd>
+<dt>
+<dfn><i class="nonterminal">lparen</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="lparen"></object>:</dt>
+	<dd>a <code class="sh_cpp">(</code> character not immediately preceded by white-space</dd>
+<dt>
+<dfn><i class="nonterminal">identifier-list</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="identifier-list"></object>:</dt>
+	<dd><i class="nonterminal">identifier</i></dd>
+	<dd>
+<i class="nonterminal">identifier-list</i> <code class="sh_cpp">,</code> <i class="nonterminal">identifier</i>
+</dd>
+<dt>
+<dfn><i class="nonterminal">replacement-list</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="replacement-list"></object>:</dt>
+	<dd>
+<i class="nonterminal">pp-tokens</i><sub class="opt">opt</sub>
+</dd>
+<dt>
+<dfn><i class="nonterminal">pp-tokens</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="pp-tokens"></object>:</dt>
+	<dd><i class="nonterminal">preprocessing-token</i></dd>
+	<dd>
+<i class="nonterminal">pp-tokens</i> <i class="nonterminal">preprocessing-token</i>
+</dd>
+<dt>
+<dfn><i class="nonterminal">new-line</i></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="new-line"></object>:</dt>
+	<dd>the new-line character</dd>
+</dl>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>A text line shall not begin with a <code class="sh_cpp">#</code> preprocessing token. A non-directive shall not begin with any
+of the directive names appearing in the syntax.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>When in a group that is skipped (<a title="cpp.cond" href="cpp.cond.html">16.1</a>), the directive syntax is relaxed to allow any sequence of
+preprocessing tokens to occur between the directive name and the following new-line character.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>The only white-space characters that shall appear between preprocessing tokens within a preprocessing directive
+(from just after the introducing <code class="sh_cpp">#</code> preprocessing token through just before the terminating new-line
+character) are space and horizontal-tab (including spaces that have replaced comments or possibly other white-space
+characters in translation phase 3).</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>The implementation can process and skip sections of source files conditionally, include other source files, and
+replace macros. These capabilities are called <dfn>preprocessing</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="preprocessing"></object>, because conceptually they occur before
+translation of the resulting translation unit.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>The preprocessing tokens within a preprocessing directive are not subject to macro expansion unless otherwise
+stated.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> In:</p>
+
+<pre><code class="sh_cpp">#define EMPTY
+EMPTY   #   include &lt;file.h&gt;</code></pre>
+
+<p>the sequence of preprocessing tokens on the second line is <em>not</em> a preprocessing directive, because it does
+not begin with a <code class="sh_cpp">#</code> at the start of translation phase 4, even though it will do so after the macro
+<code class="sh_cpp">EMPTY</code> has been replaced. — <em>end example</em> ]</p>
+</div>
+
+
+<div><p class="footnote" id="fn149">149) Thus, preprocessing directives are commonly called “lines”. These “lines” have no other syntactic
+significance, as all white space is equivalent except in certain situations during preprocessing (see the <code class="sh_cpp">#</code>
+character string literal creation operator in <a title="cpp.stringize" href="cpp.stringize.html">16.3.2</a>, for example).</p></div>
+</body>
+</html>
+

@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Data races</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[new.delete.dataraces]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[new.delete.dataraces]"></object>18.6.1.4 Data races </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>For purposes of determining the existence of data races, the library versions of <code class="sh_cpp">operator new</code>,
+user replacement versions of global <code class="sh_cpp">operator new</code>, and the C standard library functions <code class="sh_cpp">calloc</code>
+and <code class="sh_cpp">malloc</code> shall behave as though they accessed and modified only the storage referenced by the return
+value. The library versions of <code class="sh_cpp">operator delete</code>, user replacement versions of <code class="sh_cpp">operator delete</code>,
+and the C standard library function <code class="sh_cpp">free</code> shall behave as though they accessed and modified only the storage
+referenced by their first argument. The C standard library function <code class="sh_cpp">realloc</code> shall behave as though it
+accessed and modified only the storage referenced by its first argument and by its return value. Calls to these
+functions that allocate or deallocate a particular unit of storage shall occur in a single total order, and each such
+deallocation call shall happen before the next allocation (if any) in this order.</p>
+</body>
+</html>
+

@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Comma operator</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[expr.comma]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[expr.comma]"></object>5.18 Comma operator </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The comma operator groups left-to-right.</p>
+
+<dl>
+<dt>
+<i class="nonterminal"><dfn>expression</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="expression"></object></i>:</dt>
+	<dd><i class="nonterminal">assignment-expression</i></dd>
+	<dd>
+<i class="nonterminal">expression</i> <code class="sh_cpp">,</code> <i class="nonterminal">assignment-expression</i>
+</dd>
+</dl>
+
+<p>A pair of expressions separated by a comma is evaluated left-to-right; the left expression is a discarded-value
+expression (Clause <a title="expr" href="expr.html">5</a>).<sup class="footnote"><a href="#fn84">84</a></sup> Every value computation and side effect associated with the left
+expression is sequenced before every value computation and side effect associated with the right expression. The type
+and value of the result are the type and value of the right operand; the result is of the same value category as its
+right operand, and is a bit-field if its right operand is a glvalue and a bit-field.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>In contexts where comma is given a special meaning, <span class="example">[ <em>Example:</em> in lists of arguments to functions
+(<a title="expr.call" href="expr.call.html">5.2.2</a>) and lists of initializers (<a title="dcl.init" href="dcl.init.html">8.5</a>) — <em>end example</em> ]</span> the comma operator as described in Clause
+<a title="expr" href="expr.html">5</a> can appear only in parentheses.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">f(a, (t=3, t+2), c);</code></pre>
+
+<p>has three arguments, the second of which has the value 5. — <em>end example</em> ]</p>
+</div>
+
+
+<div><p class="footnote" id="fn84">84) However, an invocation of an overloaded comma operator is an ordinary function call; hence, the
+evaluations of its argument expressions are unsequenced relative to one another (see <a title="intro.execution" href="intro.execution.html">1.9</a>).</p></div>
+</body>
+</html>
+

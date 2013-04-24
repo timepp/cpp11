@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Header names</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[lex.header]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[lex.header]"></object>2.9 Header names </h2>
+
+<dl>
+<dt>
+<i class="nonterminal"><dfn>header-name</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="header-name"></object></i>:</dt>
+<dd>
+<code class="sh_cpp">&lt;</code> <i class="nonterminal">h-char-sequence</i> <code class="sh_cpp">&gt;</code>
+</dd>
+<dd>
+<code class="sh_cpp">"</code> <i class="nonterminal">q-char-sequence</i> <code class="sh_cpp">"</code>
+</dd>
+<dt>
+<i class="nonterminal"><dfn>h-char-sequence</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="h-char-sequence"></object></i>:</dt>
+<dd><i class="nonterminal">h-char</i></dd>
+<dd>
+<i class="nonterminal">h-char-sequence</i> <i class="nonterminal">h-char</i>
+</dd>
+<dt>
+<i class="nonterminal"><dfn>h-char</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="h-char"></object></i>:</dt>
+<dd>any member of the source character set except new-line and <code class="sh_cpp">&gt;</code>
+</dd>
+<dt>
+<i class="nonterminal"><dfn>q-char-sequence</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="q-char-sequence"></object></i>:</dt>
+<dd><i class="nonterminal">q-char</i></dd>
+<dd>
+<i class="nonterminal">q-char-sequence</i> <i class="nonterminal">q-char</i>
+</dd>
+<dt>
+<i class="nonterminal"><dfn>q-char</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="q-char"></object></i>:</dt>
+<dd>any member of the source character set except new-line and <code class="sh_cpp">"</code>
+</dd>
+</dl>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Header name preprocessing tokens shall only appear within a <code class="sh_cpp">#include</code> preprocessing directive
+(<a title="cpp.include" href="cpp.include.html">16.2</a>). The sequences in both forms of <i class="nonterminal">header-name</i>s are mapped in an implementation-defined manner
+to headers or to external source file names as specified in <a title="cpp.include" href="cpp.include.html">16.2</a>.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The appearance of either of the characters <code class="sh_cpp">'</code> or <code class="sh_cpp">\</code> or of either of the character
+sequences <code class="sh_cpp">/*</code> or <code class="sh_cpp">//</code> in a <i class="nonterminal">q-char-sequence</i> or an <i class="nonterminal">h-char-sequence</i> is
+conditionally supported with implementation-defined semantics, as is the appearance of the character <code class="sh_cpp">"</code> in
+an <i class="nonterminal">h-char-sequence</i>.<sup class="footnote"><a href="#fn19">19</a></sup></p>
+
+
+<div><p class="footnote" id="fn19">19) Thus, a sequence of characters that resembles an escape sequence might result in an error, be
+interpreted as the character corresponding to the escape sequence, or have a completely different meaning, depending on
+the implementation.</p></div>
+</body>
+</html>
+

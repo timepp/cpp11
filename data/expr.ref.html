@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class member access</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[expr.ref]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[expr.ref]"></object>5.2.5 Class member access </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A postfix expression followed by a dot <code class="sh_cpp">.</code> or an arrow <code class="sh_cpp">-&gt;</code>, optionally followed by
+the keyword <code class="sh_cpp">template</code> (<a title="temp.names" href="temp.names.html">14.2</a>), and then followed by an <i class="nonterminal">id-expression</i>, is a postfix
+expression. The postfix expression before the dot or arrow is evaluated;<sup class="footnote"><a href="#fn64">64</a></sup> the result of that evaluation,
+together with the <i class="nonterminal">id-expression</i>, determines the result of the entire postfix expression.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>For the first option (dot) the first expression shall have complete class type. For the second option (arrow)
+the first expression shall have pointer to complete class type. The expression <code class="sh_cpp">E1-&gt;E2</code> is converted to
+the equivalent form <code class="sh_cpp">(*(E1)).E2</code>; the remainder of <a title="expr.ref " href=".html"></a> will address only the first option
+(dot).<sup class="footnote"><a href="#fn65">65</a></sup> In either case, the <i class="nonterminal">id-expression</i> shall name a member of the class or of one of its base
+classes. <span class="note">[ <em>Note:</em> because the name of a class is inserted in its class scope (Clause <a title="class" href="class.html">9</a>), the name of a class is
+also considered a nested member of that class. — <em>end note</em> ]</span> <span class="note">[ <em>Note:</em> <a title="basic.lookup.classref " href=".html"></a> describes how names are looked up after the
+<code class="sh_cpp">.</code> and <code class="sh_cpp">-&gt;</code> operators. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>Abbreviating <i class="nonterminal">postfix-expression</i><code class="sh_cpp">.</code><i class="nonterminal">id-expression</i> as <code class="sh_cpp">E1.E2</code>,
+<code class="sh_cpp">E1</code> is called the <dfn>object expression</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="object expression"></object>. The type and value category of <code class="sh_cpp">E1.E2</code> are
+determined as follows. In the remainder of <a title="expr.ref " href=".html"></a>, <var>cq</var> represents either <code class="sh_cpp">const</code> or the
+absence of <code class="sh_cpp">const</code> and <var>vq</var> represents either <code class="sh_cpp">volatile</code> or the absence of
+<code class="sh_cpp">volatile</code>. <var>cv</var> represents an arbitrary set of cv-qualifiers, as defined in <a title="basic.type.qualifier" href="basic.type.qualifier.html">3.9.3</a>.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>If <code class="sh_cpp">E2</code> is declared to have type “reference to <code class="sh_cpp">T</code>”, then <code class="sh_cpp">E1.E2</code> is an
+lvalue; the type of <code class="sh_cpp">E1.E2</code> is <code class="sh_cpp">T</code>. Otherwise, one of the following rules applies.</p>
+<ul>
+<li>If <code class="sh_cpp">E2</code> is a static data member and the type of <code class="sh_cpp">E2</code> is <code class="sh_cpp">T</code>, then
+	<code class="sh_cpp">E1.E2</code> is an lvalue; the expression designates the named member of the class. The type of
+	<code class="sh_cpp">E1.E2</code> is <code class="sh_cpp">T</code>.</li>
+<li>If <code class="sh_cpp">E2</code> is a non-static data member and the type of <code class="sh_cpp">E1</code> is “<var>cq1</var> <var>vq1</var>
+	<code class="sh_cpp">X</code>”, and the type of <code class="sh_cpp">E2</code> is “<var>cq2</var> <var>vq2</var> <code class="sh_cpp">T</code>”, the expression
+	designates the named member of the object designated by the first expression. If <code class="sh_cpp">E1</code> is an lvalue, then
+	<code class="sh_cpp">E1.E2</code> is an lvalue; if <code class="sh_cpp">E1</code> is an xvalue, then <code class="sh_cpp">E1.E2</code> is an xvalue; otherwise,
+	it is a prvalue. Let the notation <var>vq12</var> stand for the “union” of <var>vq1</var> and <var>vq2</var>; that
+	is, if <var>vq1</var> or <var>vq2</var> is <code class="sh_cpp">volatile</code>, then <var>vq12</var> is <code class="sh_cpp">volatile</code>.
+	Similarly, let the notation <var>cq12</var> stand for the “union” of <var>cq1</var> and <var>cq2</var>; that is, if
+	<var>cq1</var> or <var>cq2</var> is <code class="sh_cpp">const</code>, then <var>cq12</var> is <code class="sh_cpp">const</code>. If
+	<code class="sh_cpp">E2</code> is declared to be a <code class="sh_cpp">mutable</code> member, then the type of <code class="sh_cpp">E1.E2</code> is
+	“<var>vq12</var> <code class="sh_cpp">T</code>”. If <code class="sh_cpp">E2</code> is not declared to be a <code class="sh_cpp">mutable</code> member, then the
+	type of <code class="sh_cpp">E1.E2</code> is “<var>cq12</var> <var>vq12</var> <code class="sh_cpp">T</code>”.</li>
+<li>If <code class="sh_cpp">E2</code> is a (possibly overloaded) member function, function overload resolution (<a title="over.match" href="over.match.html">13.3</a>) is
+	used to determine whether <code class="sh_cpp">E1.E2</code> refers to a static or a non-static member function.
+	<ul>
+	<li>If it refers to a static member function and the type of <code class="sh_cpp">E2</code> is “function of
+		<i class="nonterminal">parameter-type-list</i> returning <code class="sh_cpp">T</code>”, then <code class="sh_cpp">E1.E2</code> is an lvalue; the expression
+		designates the static member function. The type of <code class="sh_cpp">E1.E2</code> is the same type as that of
+		<code class="sh_cpp">E2</code>, namely “function of <i class="nonterminal">parameter-type-list</i> returning <code class="sh_cpp">T</code>”.</li>
+	<li>Otherwise, if <code class="sh_cpp">E1.E2</code> refers to a non-static member function and the type of <code class="sh_cpp">E2</code> is
+		“function of <i class="nonterminal">parameter-type-list</i> <var>cv</var> <i class="nonterminal">ref-qualifier</i><sub class="opt">opt</sub> returning
+		<code class="sh_cpp">T</code>”, then <code class="sh_cpp">E1.E2</code> is a prvalue. The expression designates a non-static member function.
+		The expression can be used only as the left-hand operand of a member function call (<a title="class.mfct" href="class.mfct.html">9.3</a>). <span class="note">[ <em>Note:</em> Any
+		redundant set of parentheses surrounding the expression is ignored (<a title="expr.prim" href="expr.prim.general.html">5.1</a>). — <em>end note</em> ]</span> The type of
+		<code class="sh_cpp">E1.E2</code> is “function of <i class="nonterminal">parameter-type-list</i> <var>cv</var> returning <code class="sh_cpp">T</code>”.</li>
+	</ul>
+</li>
+<li>If <code class="sh_cpp">E2</code> is a nested type, the expression <code class="sh_cpp">E1.E2</code> is ill-formed.</li>
+<li>If <code class="sh_cpp">E2</code> is a member enumerator and the type of <code class="sh_cpp">E2</code> is <code class="sh_cpp">T</code>, the expression
+	<code class="sh_cpp">E1.E2</code> is a prvalue. The type of <code class="sh_cpp">E1.E2</code> is <code class="sh_cpp">T</code>.</li>
+</ul>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>If <code class="sh_cpp">E2</code> is a non-static data member or a non-static member function, the program is ill-formed if
+the class of which <code class="sh_cpp">E2</code> is directly a member is an ambiguous base (<a title="class.member.lookup" href="class.member.lookup.html">10.2</a>) of the naming class
+(<a title="class.access.base" href="class.access.base.html">11.2</a>) of <code class="sh_cpp">E2</code>. <span class="note">[ <em>Note:</em> The program is also ill-formed if the naming class is an ambiguous base of
+the class type of the object expression; see <a title="class.access.base" href="class.access.base.html">11.2</a>. — <em>end note</em> ]</span></p>
+
+
+
+
+<div>
+<p class="footnote" id="fn64">64) If the class member access expression is evaluated, the subexpression evaluation happens even if the
+result is unnecessary to determine the value of the entire postfix expression, for example if the <i class="nonterminal">id-expression</i>
+denotes a static member.</p>
+<p class="footnote" id="fn65">65) Note that <code class="sh_cpp">(*(E1))</code> is an lvalue.</p>
+</div>
+</body>
+</html>
+

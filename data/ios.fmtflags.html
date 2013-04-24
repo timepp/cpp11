@@ -1,0 +1,119 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Type ios_base::fmtflags</title>
+</head>
+<body>
+<h5>
+<dfn class="label">[ios::fmtflags]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[ios::fmtflags]"></object>27.5.3.1.2 Type <code class="sh_cpp">ios_base::<dfn>fmtflags</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="fmtflags"></object></code> </h5>
+
+<h6><code class="sh_cpp">typedef <var>T1</var> fmtflags;</code></h6>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The type <code class="sh_cpp">fmtflags</code> is a bitmask type (<a title="bitmask.types" href="bitmask.types.html">17.5.2.1.3</a>). Setting its elements has the effects
+indicated in Table <a href="ios.fmtflags.html#t122">122</a>.</p>
+
+<table id="t122" class="bordered headed">
+<caption>Table 122 — <code class="sh_cpp">fmtflags</code> effects</caption>
+<thead><tr>
+<th>Element</th>
+<th>Effect(s) if set</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code class="sh_cpp"><dfn>boolalpha</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="boolalpha"></object></code></td>
+	<td>insert and extract <code class="sh_cpp">bool</code> type in alphabetic format</td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>dec</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="dec"></object></code></td>
+	<td>converts integer input or generates integer output in decimal base</td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>fixed</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="fixed"></object></code></td>
+	<td>generate floating-point output in fixed-point notation</td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>hex</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="hex"></object></code></td>
+	<td>converts integer input or generates integer output in hexadecimal base</td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>internal</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="internal"></object></code></td>
+	<td>adds fill characters at a designated internal point in certain generated output, or identical to
+		<code class="sh_cpp">right</code> if no such point is designated</td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>left</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="left"></object></code></td>
+	<td>adds fill characters on the right (final positions) of certain generated output</td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>oct</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="oct"></object></code></td>
+	<td>converts integer input or generates integer output in octal base</td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>right</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="right"></object></code></td>
+	<td>adds fill characters on the left (initial positions) of certain generated output</td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>scientific</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="scientific"></object></code></td>
+	<td>generates floating-point output in scientific notation</td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>showbase</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="showbase"></object></code></td>
+	<td>generates a prefix indicating the numeric base of generated integer output</td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>showpoint</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="showpoint"></object></code></td>
+	<td>generates a decimal-point character unconditionally in generated floating-point output</td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>showpos</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="showpos"></object></code></td>
+	<td>generates a <samp>+</samp> sign in non-negative generated numeric output</td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>skipws</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="skipws"></object></code></td>
+	<td>skips leading whitespace before certain input operations</td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>unitbuf</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="unitbuf"></object></code></td>
+	<td>flushes output after each output operation</td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>uppercase</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="uppercase"></object></code></td>
+	<td>replaces certain lowercase letters with their uppercase equivalents in generated output</td>
+</tr>
+</tbody>
+</table>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>Type <code class="sh_cpp">fmtflags</code> also defines the constants indicated in Table <a href="ios.fmtflags.html#t123">123</a>.</p>
+
+<table id="t123" class="bordered headed">
+<caption>Table 123 — <code class="sh_cpp">fmtflags</code> constants</caption>
+<thead><tr>
+<th>Constant</th>
+<th>Allowable values</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code class="sh_cpp"><dfn>adjustfield</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="adjustfield"></object></code></td>
+<td><code class="sh_cpp">left | right | internal</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>basefield</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="basefield"></object></code></td>
+<td><code class="sh_cpp">dec | oct | hex</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>floatfield</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="floatfield"></object></code></td>
+<td><code class="sh_cpp">scientific | fixed</code></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>
+

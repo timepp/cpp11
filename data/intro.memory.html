@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>The C++ memory model</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[intro.memory]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[intro.memory]"></object>1.7 The C++ memory model </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The fundamental storage unit in the C++ memory model is the <dfn>byte</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="byte"></object>. A byte is at least large enough to
+contain any member of the basic execution character set (<a title="lex.charset" href="lex.charset.html">2.3</a>) and the eight-bit code units of the Unicode
+UTF-8 encoding form and is composed of a contiguous sequence of bits, the number of which is implementation-defined. The
+least significant bit is called the <dfn>low-order bit</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="low-order bit"></object>; the most significant bit is called the <dfn>high-order
+bit</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="high-order
+bit"></object>. The memory available to a C++ program consists of one or more sequences of contiguous bytes. Every byte has a
+unique address.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><span class="note">[ <em>Note:</em> The representation of types is described in <a title="basic.types" href="basic.types.html">3.9</a>. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>A <dfn>memory location</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="memory location"></object> is either an object of scalar type or a maximal sequence of adjacent bit-fields
+all having non-zero width. <span class="note">[ <em>Note:</em> Various features of the language, such as references and virtual functions, might
+involve additional memory locations that are not accessible to programs but are managed by the implementation. — <em>end note</em> ]</span>
+Two threads of execution (<a title="intro.multithread" href="intro.multithread.html">1.10</a>) can update and access separate memory locations without interfering with each
+other.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><span class="note">[ <em>Note:</em> Thus a bit-field and an adjacent non-bit-field are in separate memory locations, and therefore can be
+concurrently updated by two threads of execution without interference. The same applies to two bit-fields, if one is
+declared inside a nested struct declaration and the other is not, or if the two are separated by a zero-length bit-field
+declaration, or if they are separated by a non-bit-field declaration. It is not safe to concurrently update two
+bit-fields in the same struct if all fields between them are also bit-fields of non-zero width. — <em>end note</em> ]</span></p>
+
+<div class="example">
+<p><a class="anchor" id="p5" href="#p5">5</a>[ <em>Example:</em> A structure declared as</p>
+
+<pre><code class="sh_cpp">struct {
+  char a;
+  int b:5,
+  c:11,
+  :0,
+  d:8;
+  struct {int ee:8;} e;
+}</code></pre>
+
+<p>contains four separate memory locations: The field <code class="sh_cpp">a</code> and bit-fields <code class="sh_cpp">d</code> and <code class="sh_cpp">e.ee</code>
+are each separate memory locations, and can be modified concurrently without interfering with each other. The bit-fields
+<code class="sh_cpp">b</code> and <code class="sh_cpp">c</code> together constitute the fourth memory location. The bit-fields <code class="sh_cpp">b</code> and
+<code class="sh_cpp">c</code> cannot be concurrently modified, but <code class="sh_cpp">b</code> and <code class="sh_cpp">a</code>, for example, can
+be. — <em>end example</em> ]</p>
+</div>
+
+</body>
+</html>
+

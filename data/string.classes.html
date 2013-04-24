@@ -1,0 +1,228 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>String classes</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[string.classes]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[string.classes]"></object>21.3 String classes </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The header <code class="header">&lt;string&gt;</code> defines the <code class="sh_cpp">basic_string</code> class template for manipulating
+varying-length sequences of char-like objects and four typedefs, <code class="sh_cpp">string</code>, <code class="sh_cpp">u16string</code>,
+<code class="sh_cpp">u32string</code>, and <code class="sh_cpp">wstring</code>, that name the specializations
+<code class="sh_cpp">basic_string&lt;char&gt;</code>, <code class="sh_cpp">basic_string&lt;char16_t&gt;</code>,
+<code class="sh_cpp">basic_string&lt;char32_t&gt;</code>, and <code class="sh_cpp">basic_string&lt;wchar_t&gt;</code>, respectively.</p>
+
+<h3>Header <dfn><code class="header">&lt;string&gt;</code></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="&lt;string&gt;"></object> synopsis</h3>
+
+<pre><code class="sh_cpp">namespace std {
+  #include &lt;initializer_list&gt;
+
+  // <a title="char.traits" href="char.traits.html">21.2</a>, character traits:
+  template&lt;class charT&gt; struct char_traits;
+  template &lt;&gt; struct char_traits&lt;char&gt;;
+  template &lt;&gt; struct char_traits&lt;char16_t&gt;;
+  template &lt;&gt; struct char_traits&lt;char32_t&gt;;
+  template &lt;&gt; struct char_traits&lt;wchar_t&gt;;
+
+  // <a title="basic.string" href=".html"></a>, basic_string:
+  template&lt;class charT, class traits = char_traits&lt;charT&gt;,
+    class Allocator = allocator&lt;charT&gt; &gt;
+      class basic_string;
+
+  template&lt;class charT, class traits, class Allocator&gt;
+    basic_string&lt;charT,traits,Allocator&gt;
+      operator+(const basic_string&lt;charT,traits,Allocator&gt;&amp; lhs,
+                const basic_string&lt;charT,traits,Allocator&gt;&amp; rhs);
+  template&lt;class charT, class traits, class Allocator&gt;
+    basic_string&lt;charT,traits,Allocator&gt;
+      operator+(basic_string&lt;charT,traits,Allocator&gt;&amp;&amp; lhs,
+                const basic_string&lt;charT,traits,Allocator&gt;&amp; rhs);
+  template&lt;class charT, class traits, class Allocator&gt;
+    basic_string&lt;charT,traits,Allocator&gt;
+      operator+(const basic_string&lt;charT,traits,Allocator&gt;&amp; lhs,
+                basic_string&lt;charT,traits,Allocator&gt;&amp;&amp; rhs);
+  template&lt;class charT, class traits, class Allocator&gt;
+    basic_string&lt;charT,traits,Allocator&gt;
+      operator+(basic_string&lt;charT,traits,Allocator&gt;&amp;&amp; lhs,
+                basic_string&lt;charT,traits,Allocator&gt;&amp;&amp; rhs);
+  template&lt;class charT, class traits, class Allocator&gt;
+    basic_string&lt;charT,traits,Allocator&gt;
+      operator+(const charT* lhs,
+            const basic_string&lt;charT,traits,Allocator&gt;&amp; rhs);
+  template&lt;class charT, class traits, class Allocator&gt;
+    basic_string&lt;charT,traits,Allocator&gt;
+      operator+(const charT* lhs,
+                basic_string&lt;charT,traits,Allocator&gt;&amp;&amp; rhs);
+  template&lt;class charT, class traits, class Allocator&gt;
+    basic_string&lt;charT,traits,Allocator&gt;
+      operator+(charT lhs, const basic_string&lt;charT,traits,Allocator&gt;&amp; rhs);
+  template&lt;class charT, class traits, class Allocator&gt;
+    basic_string&lt;charT,traits,Allocator&gt;
+      operator+(charT lhs, basic_string&lt;charT,traits,Allocator&gt;&amp;&amp; rhs);
+  template&lt;class charT, class traits, class Allocator&gt;
+    basic_string&lt;charT,traits,Allocator&gt;
+      operator+(const basic_string&lt;charT,traits,Allocator&gt;&amp; lhs,
+                const charT* rhs);
+  template&lt;class charT, class traits, class Allocator&gt;
+    basic_string&lt;charT,traits,Allocator&gt;
+      operator+(basic_string&lt;charT,traits,Allocator&gt;&amp;&amp; lhs,
+                const charT* rhs);
+  template&lt;class charT, class traits, class Allocator&gt;
+    basic_string&lt;charT,traits,Allocator&gt;
+      operator+(const basic_string&lt;charT,traits,Allocator&gt;&amp; lhs, charT rhs);
+  template&lt;class charT, class traits, class Allocator&gt;
+    basic_string&lt;charT,traits,Allocator&gt;
+      operator+(basic_string&lt;charT,traits,Allocator&gt;&amp;&amp; lhs, charT rhs);
+
+  template&lt;class charT, class traits, class Allocator&gt;
+    bool operator==(const basic_string&lt;charT,traits,Allocator&gt;&amp; lhs,
+                    const basic_string&lt;charT,traits,Allocator&gt;&amp; rhs);
+  template&lt;class charT, class traits, class Allocator&gt;
+    bool operator==(const charT* lhs,
+                    const basic_string&lt;charT,traits,Allocator&gt;&amp; rhs);
+  template&lt;class charT, class traits, class Allocator&gt;
+    bool operator==(const basic_string&lt;charT,traits,Allocator&gt;&amp; lhs,
+                    const charT* rhs);
+  template&lt;class charT, class traits, class Allocator&gt;
+    bool operator!=(const basic_string&lt;charT,traits,Allocator&gt;&amp; lhs,
+                    const basic_string&lt;charT,traits,Allocator&gt;&amp; rhs);
+  template&lt;class charT, class traits, class Allocator&gt;
+    bool operator!=(const charT* lhs,
+                    const basic_string&lt;charT,traits,Allocator&gt;&amp; rhs);
+  template&lt;class charT, class traits, class Allocator&gt;
+    bool operator!=(const basic_string&lt;charT,traits,Allocator&gt;&amp; lhs,
+                    const charT* rhs);
+
+  template&lt;class charT, class traits, class Allocator&gt;
+    bool operator&lt; (const basic_string&lt;charT,traits,Allocator&gt;&amp; lhs,
+                    const basic_string&lt;charT,traits,Allocator&gt;&amp; rhs);
+  template&lt;class charT, class traits, class Allocator&gt;
+    bool operator&lt; (const basic_string&lt;charT,traits,Allocator&gt;&amp; lhs,
+                    const charT* rhs);
+  template&lt;class charT, class traits, class Allocator&gt;
+    bool operator&lt; (const charT* lhs,
+                    const basic_string&lt;charT,traits,Allocator&gt;&amp; rhs);
+  template&lt;class charT, class traits, class Allocator&gt;
+    bool operator&gt; (const basic_string&lt;charT,traits,Allocator&gt;&amp; lhs,
+                    const basic_string&lt;charT,traits,Allocator&gt;&amp; rhs);
+  template&lt;class charT, class traits, class Allocator&gt;
+    bool operator&gt; (const basic_string&lt;charT,traits,Allocator&gt;&amp; lhs,
+                    const charT* rhs);
+  template&lt;class charT, class traits, class Allocator&gt;
+    bool operator&gt; (const charT* lhs,
+                    const basic_string&lt;charT,traits,Allocator&gt;&amp; rhs);
+
+  template&lt;class charT, class traits, class Allocator&gt;
+    bool operator&lt;=(const basic_string&lt;charT,traits,Allocator&gt;&amp; lhs,
+                    const basic_string&lt;charT,traits,Allocator&gt;&amp; rhs);
+  template&lt;class charT, class traits, class Allocator&gt;
+    bool operator&lt;=(const basic_string&lt;charT,traits,Allocator&gt;&amp; lhs,
+                    const charT* rhs);
+  template&lt;class charT, class traits, class Allocator&gt;
+    bool operator&lt;=(const charT* lhs,
+                    const basic_string&lt;charT,traits,Allocator&gt;&amp; rhs);
+  template&lt;class charT, class traits, class Allocator&gt;
+    bool operator&gt;=(const basic_string&lt;charT,traits,Allocator&gt;&amp; lhs,
+                    const basic_string&lt;charT,traits,Allocator&gt;&amp; rhs);
+  template&lt;class charT, class traits, class Allocator&gt;
+    bool operator&gt;=(const basic_string&lt;charT,traits,Allocator&gt;&amp; lhs,
+                    const charT* rhs);
+  template&lt;class charT, class traits, class Allocator&gt;
+    bool operator&gt;=(const charT* lhs,
+                    const basic_string&lt;charT,traits,Allocator&gt;&amp; rhs);
+
+  // <a title="string.special" href="string.special.html">21.4.8.8</a>, swap:
+  template&lt;class charT, class traits, class Allocator&gt;
+    void swap(basic_string&lt;charT,traits,Allocator&gt;&amp; lhs,
+      basic_string&lt;charT,traits,Allocator&gt;&amp; rhs);
+
+  // <a title="string.io" href="string.io.html">21.4.8.9</a>, inserters and extractors:
+  template&lt;class charT, class traits, class Allocator&gt;
+    basic_istream&lt;charT,traits&gt;&amp;
+      operator&gt;&gt;(basic_istream&lt;charT,traits&gt;&amp;&amp; is,
+                 basic_string&lt;charT,traits,Allocator&gt;&amp; str);
+  template&lt;class charT, class traits, class Allocator&gt;
+    basic_ostream&lt;charT, traits&gt;&amp;
+      operator&lt;&lt;(basic_ostream&lt;charT, traits&gt;&amp;&amp; os,
+                 const basic_string&lt;charT,traits,Allocator&gt;&amp; str);
+  template&lt;class charT, class traits, class Allocator&gt;
+    basic_istream&lt;charT,traits&gt;&amp;
+      getline(basic_istream&lt;charT,traits&gt;&amp; is,
+              basic_string&lt;charT,traits,Allocator&gt;&amp; str,
+              charT delim);
+  template&lt;class charT, class traits, class Allocator&gt;
+    basic_istream&lt;charT,traits&gt;&amp;
+      getline(basic_istream&lt;charT,traits&gt;&amp;&amp; is,
+              basic_string&lt;charT,traits,Allocator&gt;&amp; str,
+              charT delim);
+  template&lt;class charT, class traits, class Allocator&gt;
+    basic_istream&lt;charT,traits&gt;&amp;
+      getline(basic_istream&lt;charT,traits&gt;&amp; is,
+              basic_string&lt;charT,traits,Allocator&gt;&amp; str);
+  template&lt;class charT, class traits, class Allocator&gt;
+    basic_istream&lt;charT,traits&gt;&amp;
+      getline(basic_istream&lt;charT,traits&gt;&amp;&amp; is,
+              basic_string&lt;charT,traits,Allocator&gt;&amp; str);
+
+  // basic_string typedef names
+  typedef basic_string&lt;char&gt; string;
+  typedef basic_string&lt;char16_t&gt; u16string;
+  typedef basic_string&lt;char32_t&gt; u32string;
+  typedef basic_string&lt;wchar_t&gt; wstring;
+
+  // <a title="string.conversions" href="string.conversions.html">21.5</a>, numeric conversions:
+  int stoi(const string&amp; str, size_t *idx = 0, int base = 10);
+  long stol(const string&amp; str, size_t *idx = 0, int base = 10);
+  unsigned long stoul(const string&amp; str, size_t *idx = 0, int base = 10);
+  long long stoll(const string&amp; str, size_t *idx = 0, int base = 10);
+  unsigned long long stoull(const string&amp; str, size_t *idx = 0, int base = 10);
+  float stof(const string&amp; str, size_t *idx = 0);
+  double stod(const string&amp; str, size_t *idx = 0);
+  long double stold(const string&amp; str, size_t *idx = 0);
+  string to_string(int val);
+  string to_string(unsigned val);
+  string to_string(long val);
+  string to_string(unsigned long val);
+  string to_string(long long val);
+  string to_string(unsigned long long val);
+  string to_string(float val);
+  string to_string(double val);
+  string to_string(long double val);
+
+  int stoi(const wstring&amp; str, size_t *idx = 0, int base = 10);
+  long stol(const wstring&amp; str, size_t *idx = 0, int base = 10);
+  unsigned long stoul(const wstring&amp; str, size_t *idx = 0, int base = 10);
+  long long stoll(const wstring&amp; str, size_t *idx = 0, int base = 10);
+  unsigned long long stoull(const wstring&amp; str, size_t *idx = 0, int base = 10);
+  float stof(const wstring&amp; str, size_t *idx = 0);
+  double stod(const wstring&amp; str, size_t *idx = 0);
+  long double stold(const wstring&amp; str, size_t *idx = 0);
+  wstring to_wstring(int val);
+  wstring to_wstring(unsigned val);
+  wstring to_wstring(long val);
+  wstring to_wstring(unsigned long val);
+  wstring to_wstring(long long val);
+  wstring to_wstring(unsigned long long val);
+  wstring to_wstring(float val);
+  wstring to_wstring(double val);
+  wstring to_wstring(long double val);
+
+  // <a title="basic.string.hash" href="basic.string.hash.html">21.6</a>, hash support:
+  template &lt;class T&gt; struct hash;
+  template &lt;&gt; struct hash&lt;string&gt;;
+  template &lt;&gt; struct hash&lt;u16string&gt;;
+  template &lt;&gt; struct hash&lt;u32string&gt;;
+  template &lt;&gt; struct hash&lt;wstring&gt;;
+}</code></pre>
+</body>
+</html>
+

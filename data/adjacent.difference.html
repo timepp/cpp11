@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Adjacent difference</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[adjacent.difference]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[adjacent.difference]"></object>26.7.5 Adjacent difference </h3>
+
+<pre><code class="sh_cpp">template &lt;class InputIterator, class OutputIterator&gt;
+  OutputIterator <dfn>adjacent_difference</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="adjacent_difference"></object>(
+    InputIterator first, InputIterator last,
+    OutputIterator result);
+template &lt;class InputIterator, class OutputIterator, class BinaryOperation&gt;
+  OutputIterator adjacent_difference(
+    InputIterator first, InputIterator last,
+    OutputIterator result,
+    BinaryOperation binary_op);</code></pre>
+
+<p><em>Effects:</em> For a non-empty range, the function creates an accumulator <code class="sh_cpp">acc</code> whose type is
+<code class="sh_cpp">InputIterator</code>’s value type, initializes it with <code class="sh_cpp">*first</code>, and assigns the result to
+<code class="sh_cpp">*result</code>. For every iterator <code class="sh_cpp">i</code> in [<code class="sh_cpp">first + 1</code>, <code class="sh_cpp">last</code>) in order, creates
+an object <code class="sh_cpp">val</code> whose type is <code class="sh_cpp">InputIterator</code>’s value type, initializes it with <code class="sh_cpp">*i</code>,
+computes <code class="sh_cpp">val - acc</code> or <code class="sh_cpp">binary_op(val, acc)</code>, assigns the result to <code class="sh_cpp">*(result + (i -
+first))</code>, and move assigns from <code class="sh_cpp">val</code> to <code class="sh_cpp">acc</code>.</p>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Requires:</em> <code class="sh_cpp">InputIterator</code>’s value type shall be <code class="concept">MoveAssignable</code> (Table <a href="utility.arg.requirements.html#t22">22</a>) and shall be constructible from the type of <code class="sh_cpp">*first</code>. <code class="sh_cpp">acc</code> shall be writable to the
+<code class="sh_cpp">result</code> output iterator. The result of the expression <code class="sh_cpp">val - acc</code> or <code class="sh_cpp">binary_op(val,
+acc)</code> shall be writable to the <code class="sh_cpp">result</code> output iterator. In the ranges [<code class="sh_cpp">first</code>,
+<code class="sh_cpp">last</code>] and [<code class="sh_cpp">result</code>, <code class="sh_cpp">result + (last - first)</code>], <code class="sh_cpp">binary_op</code> shall neither
+modify elements nor invalidate iterators or subranges.<sup class="footnote"><a href="#fn295">295</a></sup></p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Remarks:</em> <code class="sh_cpp">result</code> may be equal to <code class="sh_cpp">first</code>.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Returns:</em> <code class="sh_cpp">result + (last - first)</code>.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><em>Complexity:</em> Exactly <code class="sh_cpp">(last - first) - 1</code> applications of the binary operation.</p>
+
+
+<div><p class="footnote" id="fn295">295) The use of fully closed ranges is intentional.</p></div>
+</body>
+</html>
+

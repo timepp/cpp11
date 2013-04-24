@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Character classification</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[locale.convenience]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[locale.convenience]"></object>22.3.3 Convenience interfaces </h3>
+<h4>
+<dfn class="label">[classification]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[classification]"></object>22.3.3.1 Character classification </h4>
+
+<h5><code class="sh_cpp">template &lt;class charT&gt; bool <dfn>isspace</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="isspace"></object> (charT c, const locale&amp; loc);
+template &lt;class charT&gt; bool <dfn>isprint</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="isprint"></object> (charT c, const locale&amp; loc);
+template &lt;class charT&gt; bool <dfn>iscntrl</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="iscntrl"></object> (charT c, const locale&amp; loc);
+template &lt;class charT&gt; bool <dfn>isupper</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="isupper"></object> (charT c, const locale&amp; loc);
+template &lt;class charT&gt; bool <dfn>islower</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="islower"></object> (charT c, const locale&amp; loc);
+template &lt;class charT&gt; bool <dfn>isalpha</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="isalpha"></object> (charT c, const locale&amp; loc);
+template &lt;class charT&gt; bool <dfn>isdigit</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="isdigit"></object> (charT c, const locale&amp; loc);
+template &lt;class charT&gt; bool <dfn>ispunct</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="ispunct"></object> (charT c, const locale&amp; loc);
+template &lt;class charT&gt; bool <dfn>isxdigit</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="isxdigit"></object>(charT c, const locale&amp; loc);
+template &lt;class charT&gt; bool <dfn>isalnum</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="isalnum"></object> (charT c, const locale&amp; loc);
+template &lt;class charT&gt; bool <dfn>isgraph</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="isgraph"></object> (charT c, const locale&amp; loc);
+template &lt;class charT&gt; bool <dfn>isblank</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="isblank"></object> (charT c, const locale&amp; loc);</code></h5>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Each of these functions <code class="sh_cpp">is<var>F</var></code> returns the result of the expression:</p>
+
+<pre><code class="sh_cpp">use_facet&lt; ctype&lt;charT&gt; &gt;(loc).is(ctype_base::<var>F</var>, c)</code></pre>
+
+<p>where <var>F</var> is the <code class="sh_cpp">ctype_base::mask</code> value corresponding to that function
+(<a title="category.ctype" href="category.ctype.html">22.4.1</a>).<sup class="footnote"><a href="#fn241">241</a></sup></p>
+
+
+<div><p class="footnote" id="fn241">241) When used in a loop, it is faster to cache the <code class="sh_cpp">ctype&lt;&gt;</code> facet and use it
+directly, or use the vector form of <code class="sh_cpp">ctype&lt;&gt;::is</code>.</p></div>
+</body>
+</html>
+

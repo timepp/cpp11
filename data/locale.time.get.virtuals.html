@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>time_get virtual functions</title>
+</head>
+<body>
+<h5>
+<dfn class="label">[locale.time.get.virtuals]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[locale.time.get.virtuals]"></object>22.4.5.1.2 <code class="sh_cpp">time_get</code> virtual functions </h5>
+
+<h6><code class="sh_cpp">dateorder <dfn>do_date_order</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="do_date_order"></object>() const;</code></h6>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Returns:</em> An enumeration value indicating the preferred order of components for those date formats that are
+composed of day, month, and year.<sup class="footnote"><a href="#fn253">253</a></sup> Returns <code class="sh_cpp">no_order</code> if the date format specified by
+<code class="sh_cpp">'x'</code> contains other variable components (e.g., Julian day, week number, week day).</p>
+
+<h6><code class="sh_cpp">iter_type <dfn>do_get_time</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="do_get_time"></object>(iter_type s, iter_type end, ios_base&amp; str,
+                      ios_base::iostate&amp; err, tm* t) const;</code></h6>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Effects:</em> Reads characters starting at <code class="sh_cpp">s</code> until it has extracted those <code class="sh_cpp">struct tm</code>
+members, and remaining format characters, used by <code class="sh_cpp">time_put&lt;&gt;::put</code> to produce the format
+specified by <code class="sh_cpp">"%H:%M:%S"</code>, or until it encounters an error or end of sequence.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Returns:</em> An iterator pointing immediately beyond the last character recognized as possibly part of a valid
+time.</p>
+
+<h6><code class="sh_cpp">iter_type <dfn>do_get_date</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="do_get_date"></object>(iter_type s, iter_type end, ios_base&amp; str,
+                      ios_base::iostate&amp; err, tm* t) const;</code></h6>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><em>Effects:</em> Reads characters starting at <code class="sh_cpp">s</code> until it has extracted those <code class="sh_cpp">struct tm</code>
+members and remaining format characters used by <code class="sh_cpp">time_put&lt;&gt;::put</code> to produce one of the following
+formats, or until it encounters an error. The format depends on the value returned by <code class="sh_cpp">date_order()</code> as shown
+in Table <a href="locale.time.get.virtuals.html#t92">92</a>.</p>
+
+<table id="t92" class="bordered headed padded">
+<caption>Table 92 — <code class="sh_cpp">do_get_date</code> effects</caption>
+<thead><tr>
+<th><code class="sh_cpp">date_order()</code></th>
+<th>Format</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code class="sh_cpp">no_order</code></td>
+<td><code class="sh_cpp">"%m%d%y"</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">dmy</code></td>
+<td><code class="sh_cpp">"%d%m%y"</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">mdy</code></td>
+<td><code class="sh_cpp">"%m%d%y"</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">ymd</code></td>
+<td><code class="sh_cpp">"%y%m%d"</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">ydm</code></td>
+<td><code class="sh_cpp">"%y%d%m"</code></td>
+</tr>
+</tbody>
+</table>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>An implementation may also accept additional implementation-defined formats.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a><em>Returns:</em> An iterator pointing immediately beyond the last character recognized as possibly part of a valid
+date.</p>
+
+<h6><code class="sh_cpp">iter_type <dfn>do_get_weekday</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="do_get_weekday"></object>(iter_type s, iter_type end, ios_base&amp; str,
+                         ios_base::iostate&amp; err, tm* t) const;
+iter_type <dfn>do_get_monthname</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="do_get_monthname"></object>(iter_type s, iter_type end, ios_base&amp; str,
+                           ios_base::iostate&amp; err, tm* t) const;</code></h6>
+
+<p><a class="anchor" id="p7" href="#p7">7</a><em>Effects:</em> Reads characters starting at <code class="sh_cpp">s</code> until it has extracted the (perhaps abbreviated) name of a
+weekday or month. If it finds an abbreviation that is followed by characters that could match a full name, it continues
+reading until it matches the full name or fails. It sets the appropriate <code class="sh_cpp">struct tm</code> member
+accordingly.</p>
+
+<p><a class="anchor" id="p8" href="#p8">8</a><em>Returns:</em> An iterator pointing immediately beyond the last character recognized as part of a valid
+name.</p>
+
+<h6><code class="sh_cpp">iter_type <dfn>do_get_year</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="do_get_year"></object>(iter_type s, iter_type end, ios_base&amp; str,
+                      ios_base::iostate&amp; err, tm* t) const;</code></h6>
+
+<p><a class="anchor" id="p9" href="#p9">9</a><em>Effects:</em> Reads characters starting at <code class="sh_cpp">s</code> until it has extracted an unambiguous year identifier. It
+is implementation-defined whether two-digit year numbers are accepted, and (if so) what century they are assumed to lie
+in. Sets the <code class="sh_cpp">t-&gt;tm_year</code> member accordingly.</p>
+
+<p><a class="anchor" id="p10" href="#p10">10</a><em>Returns:</em> An iterator pointing immediately beyond the last character recognized as part of a valid year
+identifier.</p>
+
+<h6><code class="sh_cpp">iter_type <dfn>do_get</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="do_get"></object>(iter_type s, iter_type end, ios_base&amp; f,
+                 ios_base::iostate&amp; err, tm *t, char format, char modifier) const;</code></h6>
+
+<p><a class="anchor" id="p11" href="#p11">11</a><em>Requires:</em> <code class="sh_cpp">t</code> shall be dereferenceable.</p>
+
+<p><a class="anchor" id="p12" href="#p12">12</a><em>Effects:</em> The function starts by evaluating <code class="sh_cpp">err = ios_base::goodbit</code>. It then reads characters
+starting at <code class="sh_cpp">s</code> until it encounters an error, or until it has extracted and assigned those <code class="sh_cpp">struct
+tm</code> members, and any remaining format characters, corresponding to a conversion directive appropriate for the
+ISO/IEC 9945 function <code class="sh_cpp">strptime</code>, formed by concatenating <code class="sh_cpp">'%'</code>, the modifier character, when
+non-NUL, and the <code class="sh_cpp">format</code> character. When the concatenation fails to yield a complete valid directive the
+function leaves the object pointed to by <code class="sh_cpp">t</code> unchanged and evaluates <code class="sh_cpp">err |= ios_base::failbit</code>.
+When <code class="sh_cpp">s == end</code> evaluates to true after reading a character the function evaluates <code class="sh_cpp">err |=
+ios_base::eofbit</code>.</p>
+
+<p><a class="anchor" id="p13" href="#p13">13</a>For complex conversion directives such as <code class="sh_cpp">%c</code>, <code class="sh_cpp">%x</code>, or <code class="sh_cpp">%X</code>, or directives
+that involve the optional modifiers <code class="sh_cpp">E</code> or <code class="sh_cpp">O</code>, when the function is unable to unambiguously
+determine some or all <code class="sh_cpp">struct tm</code> members from the input sequence <code class="sh_cpp">[s,end)</code>, it evaluates
+<code class="sh_cpp">err |= ios_base::eofbit</code>. In such cases the values of those <code class="sh_cpp">struct tm</code> members are unspecified
+and may be outside their valid range.</p>
+
+<p><a class="anchor" id="p14" href="#p14">14</a><em>Remarks:</em> It is unspecified whether multiple calls to <code class="sh_cpp">do_get()</code> with the address of the same
+<code class="sh_cpp">struct tm</code> object will update the current contents of the object or simply overwrite its members. Portable
+programs must zero out the object before invoking the function.</p>
+
+<p><a class="anchor" id="p15" href="#p15">15</a><em>Returns:</em> An iterator pointing immediately beyond the last character recognized as possibly part of a valid
+input sequence for the given <code class="sh_cpp">format</code> and <code class="sh_cpp">modifier</code>.</p>
+
+
+<div><p class="footnote" id="fn253">253) This function is intended as a convenience only, for common formats, and may return
+<code class="sh_cpp">no_order</code> in valid locales.</p></div>
+</body>
+</html>
+

@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Library contents</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[contents]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[contents]"></object>17.6.1.1 Library contents </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The C++ standard library provides definitions for the following types of entities: macros, values, types,
+templates, classes, functions, objects.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>All library entities except macros, <code class="sh_cpp">operator new</code> and <code class="sh_cpp">operator delete</code> are defined
+within the namespace <code class="sh_cpp">std</code> or namespaces nested within namespace <code class="sh_cpp">std</code>.<sup class="footnote"><a href="#fn175">175</a></sup> It is
+unspecified whether names declared in a specific namespace are declared directly in that namespace or in an inline
+namespace inside that namespace.<sup class="footnote"><a href="#fn176">176</a></sup></p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>Whenever a name <code class="sh_cpp">x</code> defined in the standard library is mentioned, the name <code class="sh_cpp">x</code> is assumed
+to be fully qualified as <code class="sh_cpp">::std::x</code>, unless explicitly described otherwise. For example, if the Effects
+section for library function <code class="sh_cpp">F</code> is described as calling library function <code class="sh_cpp">G</code>, the function
+<code class="sh_cpp">::std::G</code> is meant.</p>
+
+
+
+
+<div>
+<p class="footnote" id="fn175">175) The C standard library headers (Annex <a title="depr.c.headers" href="depr.c.headers.html">D.5</a>) also define names within the global namespace,
+while the C++ headers for C library facilities (<a title="headers" href="headers.html">17.6.1.2</a>) may also define names within the global
+namespace.</p>
+<p class="footnote" id="fn176">176) This gives implementors freedom to use inline namespaces to support multiple configurations of the
+library.</p>
+</div>
+</body>
+</html>
+

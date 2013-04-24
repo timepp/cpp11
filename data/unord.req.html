@@ -1,0 +1,587 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Unordered associative containers</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[unord.req]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[unord.req]"></object>23.2.5 Unordered associative containers </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Unordered associative containers provide an ability for fast retrieval of data based on keys. The worst-case
+complexity for most operations is linear, but the average case is much faster. The library provides four unordered
+associative containers: <code class="sh_cpp">unordered_set</code>, <code class="sh_cpp">unordered_map</code>, <code class="sh_cpp">unordered_multiset</code>, and
+<code class="sh_cpp">unordered_multimap</code>.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>Unordered associative containers conform to the requirements for Containers (<a title="container.requirements" href="container.requirements.general.html">23.2</a>), except that the
+expressions <code class="sh_cpp">a == b</code> and <code class="sh_cpp">a != b</code> have different semantics than for the other container types.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>Each unordered associative container is parameterized by <code class="sh_cpp">Key</code>, by a function object type
+<code class="sh_cpp">Hash</code> that meets the <code class="concept">Hash</code> requirements (<a title="hash.requirements" href="hash.requirements.html">17.6.3.4</a>) and acts as a hash function
+for argument values of type <code class="sh_cpp">Key</code>, and by a binary predicate <code class="sh_cpp">Pred</code> that induces an equivalence
+relation on values of type <code class="sh_cpp">Key</code>. Additionally, <code class="sh_cpp">unordered_map</code> and
+<code class="sh_cpp">unordered_multimap</code> associate an arbitrary <dfn>mapped type</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="mapped type"></object> <code class="sh_cpp">T</code> with the
+<code class="sh_cpp">Key</code>.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>A hash function is a function object that takes a single argument of type <code class="sh_cpp">Key</code> and returns a value
+of type <code class="sh_cpp">std::size_t</code>.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>Two values <code class="sh_cpp">k1</code> and <code class="sh_cpp">k2</code> of type <code class="sh_cpp">Key</code> are considered equivalent if the
+container’s <code class="sh_cpp">key_equal</code> function object returns <code class="sh_cpp">true</code> when passed those values. If
+<code class="sh_cpp">k1</code> and <code class="sh_cpp">k2</code> are equivalent, the hash function shall return the same value for both. <span class="note">[ <em>Note:</em> Thus,
+when an unordered associative container is instantiated with a non-default <code class="sh_cpp">Pred</code> parameter it usually needs
+a non-default <code class="sh_cpp">Hash</code> parameter as well. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>An unordered associative container supports <dfn>unique keys</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="unique keys"></object> if it may contain at most one element for
+each key. Otherwise, it supports <dfn>equivalent keys</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="equivalent keys"></object>. <code class="sh_cpp">unordered_set</code> and <code class="sh_cpp">unordered_map</code>
+support unique keys. <code class="sh_cpp">unordered_multiset</code> and <code class="sh_cpp">unordered_multimap</code> support equivalent keys. In
+containers that support equivalent keys, elements with equivalent keys are adjacent to each other in the iteration order
+of the container. Thus, although the absolute order of elements in an unordered container is not specified, its elements
+are grouped into <dfn>equivalent-key group</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="equivalent-key group"></object>s such that all elements of each group have equivalent keys. Mutating
+operations on unordered containers shall preserve the relative order of elements within each equivalent-key group unless
+otherwise specified.</p>
+
+<p><a class="anchor" id="p7" href="#p7">7</a>For <code class="sh_cpp">unordered_set</code> and <code class="sh_cpp">unordered_multiset</code> the value type is the same as the key type.
+For <code class="sh_cpp">unordered_map</code> and <code class="sh_cpp">unordered_multimap</code> it is <code class="sh_cpp">std::pair&lt;const Key,
+T&gt;</code>.</p>
+
+<p><a class="anchor" id="p8" href="#p8">8</a>The elements of an unordered associative container are organized into <dfn>buckets</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="buckets"></object>. Keys with the same
+hash code appear in the same bucket. The number of buckets is automatically increased as elements are added to an
+unordered associative container, so that the average number of elements per bucket is kept below a bound. Rehashing
+invalidates iterators, changes ordering between elements, and changes which buckets elements appear in, but does not
+invalidate pointers or references to elements. For <code class="sh_cpp">unordered_multiset</code> and <code class="sh_cpp">unordered_multimap</code>,
+rehashing preserves the relative ordering of equivalent elements.</p>
+
+<p><a class="anchor" id="p9" href="#p9">9</a>The unordered associative containers meet all the requirements of Allocator-aware containers
+(<a title="container.requirements.general" href="container.requirements.general.html">23.2.1</a>), except that for <code class="sh_cpp">unordered_map</code> and <code class="sh_cpp">unordered_multimap</code>, the requirements
+placed on <code class="sh_cpp">value_type</code> in Table <a href="container.requirements.general.html#t96">96</a> apply instead to <code class="sh_cpp">key_type</code> and
+<code class="sh_cpp">mapped_type</code>. <span class="note">[ <em>Note:</em> For example, <code class="sh_cpp">key_type</code> and <code class="sh_cpp">mapped_type</code> are sometimes required
+to be <code class="concept">CopyAssignable</code> even though the associated <code class="sh_cpp">value_type</code>, <code class="sh_cpp">pair&lt;const
+key_type, mapped_type&gt;</code>, is not <code class="concept">CopyAssignable</code>. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p10" href="#p10">10</a>In Table <a href="unord.req.html#t103">103</a>: <code class="sh_cpp">X</code> is an unordered associative container class, <code class="sh_cpp">a</code> is an object
+of type <code class="sh_cpp">X</code>, <code class="sh_cpp">b</code> is a possibly const object of type <code class="sh_cpp">X</code>, <code class="sh_cpp">a_uniq</code> is an
+object of type <code class="sh_cpp">X</code> when <code class="sh_cpp">X</code> supports unique keys, <code class="sh_cpp">a_eq</code> is an object of type
+<code class="sh_cpp">X</code> when <code class="sh_cpp">X</code> supports equivalent keys, <code class="sh_cpp">i</code> and <code class="sh_cpp">j</code> are input iterators that
+refer to <code class="sh_cpp">value_type</code>, <code class="sh_cpp">[i, j)</code> is a valid range, <code class="sh_cpp">p</code> and <code class="sh_cpp">q2</code> are valid
+const iterators to <code class="sh_cpp">a</code>, <code class="sh_cpp">q</code> and <code class="sh_cpp">q1</code> are valid dereferenceable const iterators to
+<code class="sh_cpp">a</code>, <code class="sh_cpp">[q1, q2)</code> is a valid range in <code class="sh_cpp">a</code>, <code class="sh_cpp">il</code> designates an object of type
+<code class="sh_cpp">initializer_list&lt;value_type&gt;</code>, <code class="sh_cpp">t</code> is a value of type <code class="sh_cpp">X::value_type</code>,
+<code class="sh_cpp">k</code> is a value of type <code class="sh_cpp">key_type</code>, <code class="sh_cpp">hf</code> is a possibly const value of type
+<code class="sh_cpp">hasher</code>, <code class="sh_cpp">eq</code> is a possibly const value of type <code class="sh_cpp">key_equal</code>, <code class="sh_cpp">n</code> is a value
+of type <code class="sh_cpp">size_type</code>, and <code class="sh_cpp">z</code> is a value of type <code class="sh_cpp">float</code>.</p>
+
+<table id="t103" class="requirements">
+<caption>Table 103 — Unordered associative container requirements (in addition to container)</caption>
+<thead><tr>
+<th>Expression</th>
+	<th>Return type</th>
+	<th>Assertion/note<br>pre-/post-condition</th>
+	<th>Complexity</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code class="sh_cpp">X::​key_­type</code></td>
+	<td><code class="sh_cpp">Key</code></td>
+	<td><p><em>Requires:</em> <code class="sh_cpp">Key</code> shall be <code class="concept">Destruct­ible</code>.</p></td>
+	<td>compile time</td>
+</tr>
+<tr>
+<td>
+<code class="sh_cpp">X::​mapped_­type</code> (<code class="sh_cpp">unordered_­map</code> and <code class="sh_cpp">unordered_­multimap</code>
+		only)</td>
+	<td><code class="sh_cpp">T</code></td>
+	<td><p><em>Requires:</em> <code class="sh_cpp">T</code> is <code class="concept">Destruct­ible</code>.</p></td>
+	<td>compile time</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">X::​hasher</code></td>
+	<td><code class="sh_cpp">Hash</code></td>
+	<td>
+<code class="sh_cpp">Hash</code> shall be a unary function object type such that the expression <code class="sh_cpp">hf(k)</code> has type
+		<code class="sh_cpp">std​::​size_t</code>.</td>
+	<td>compile time</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">X::​key_­equal</code></td>
+	<td><code class="sh_cpp">Pred</code></td>
+	<td>
+<code class="sh_cpp">Pred</code> shall be a binary predicate that takes two arguments of type <code class="sh_cpp">Key</code>.
+		<code class="sh_cpp">Pred</code> is an equivalence relation.</td>
+	<td>compile time</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">X::​local_­iterator</code></td>
+	<td>An iterator type whose category, value type, difference type, and pointer and reference types are the same as
+		<code class="sh_cpp">X::​iterator</code>’s.</td>
+	<td>A <code class="sh_cpp">local_­iterator</code> object may be used to iterate through a single bucket, but may not be used to
+		iterate across buckets.</td>
+	<td>compile time</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">X::​const_­local_­iterator</code></td>
+	<td>An iterator type whose category, value type, difference type, and pointer and reference types are the same as
+		<code class="sh_cpp">X::​const_­iterator</code>’s.</td>
+	<td>A <code class="sh_cpp">const_­local_­iterator</code> object may be used to iterate through a single bucket, but may not
+		be used to iterate across buckets.</td>
+	<td>compile time</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">X(n, hf, eq)
+X a(n, hf, eq)</code></pre></td>
+	<td><code class="sh_cpp">X</code></td>
+	<td>
+<p><em>Requires:</em> <code class="sh_cpp">hasher</code> and <code class="sh_cpp">key_­equal</code> are
+			<code class="concept">Copy­Construct­ible</code>.</p>
+		<p><em>Effects:</em> Constructs an empty container with at least <code class="sh_cpp">n</code> buckets, using <code class="sh_cpp">hf</code> as the
+			hash function and <code class="sh_cpp">eq</code> as the key equality predicate.</p>
+</td>
+	<td>
+<var>O</var>(<var>n</var>)</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">X(n, hf)
+X a(n, hf)</code></pre></td>
+	<td><code class="sh_cpp">X</code></td>
+	<td>
+<p><em>Requires:</em> <code class="sh_cpp">hasher</code> is <code class="concept">Copy­Construct­ible</code> and
+			<code class="sh_cpp">key_­equal</code> is <code class="concept">Default­Construct­ible</code>.</p>
+		<p><em>Effects:</em> Constructs an empty container with at least <code class="sh_cpp">n</code> buckets, using <code class="sh_cpp">hf</code> as the
+			hash function and <code class="sh_cpp">key_­equal()</code> as the key equality predicate.</p>
+</td>
+	<td>
+<var>O</var>(<var>n</var>)</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">X(n)
+X a(n)</code></pre></td>
+	<td><code class="sh_cpp">X</code></td>
+	<td>
+<p><em>Requires:</em> <code class="sh_cpp">hasher</code> and <code class="sh_cpp">key_­equal</code> are
+			<code class="concept">Default­Construct­ible</code>.</p>
+		<p><em>Effects:</em> Constructs an empty container with at least <code class="sh_cpp">n</code> buckets, using <code class="sh_cpp">hasher()</code> as
+			the hash function and <code class="sh_cpp">key_­equal()</code> as the key equality predicate.</p>
+</td>
+	<td>
+<var>O</var>(<var>n</var>)</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">X()
+X a</code></pre></td>
+	<td><code class="sh_cpp">X</code></td>
+	<td>
+<p><em>Requires:</em> <code class="sh_cpp">hasher</code> and <code class="sh_cpp">key_­equal</code> are
+			<code class="concept">Default­Construct­ible</code>.</p>
+		<p><em>Effects:</em> Constructs an empty container with an unspecified number of buckets, using <code class="sh_cpp">hasher()</code> as
+			the hash function and <code class="sh_cpp">key_­equal()</code> as the key equality predicate.</p>
+</td>
+	<td>constant</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">X(i, j, n, hf, eq)
+X a(i, j, n, hf, eq)</code></pre></td>
+	<td><code class="sh_cpp">X</code></td>
+	<td>
+<p><em>Requires:</em> <code class="sh_cpp">hasher</code> and <code class="sh_cpp">key_­equal</code> are
+			<code class="concept">Copy­Construct­ible</code>. <code class="sh_cpp">value_­type</code> is
+			<code class="concept">Emplace­Construct­ible</code> into <code class="sh_cpp">X</code> from <code class="sh_cpp">*i</code>.</p>
+		<p><em>Effects:</em> Constructs an empty container with at least <code class="sh_cpp">n</code> buckets, using <code class="sh_cpp">hf</code> as the
+			hash function and <code class="sh_cpp">eq</code> as the key equality predicate, and inserts elements from <code class="sh_cpp">[i,
+			j)</code> into it.</p>
+</td>
+	<td>Average case <var>O</var>(<var>N</var>) (<var>N</var> is <code class="sh_cpp">distance​(i, j)</code>), worst case
+		<var>O</var>(<var>N</var><sup>2</sup>)</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">X(i, j, n, hf)
+X a(i, j, n, hf)</code></pre></td>
+	<td><code class="sh_cpp">X</code></td>
+	<td>
+<p><em>Requires:</em> <code class="sh_cpp">hasher</code> is <code class="concept">Copy­Construct­ible</code> and
+			<code class="sh_cpp">key_­equal</code> is <code class="concept">Default­Construct­ible</code>.
+			<code class="sh_cpp">value_­type</code> is <code class="concept">Emplace­Construct­ible</code> into <code class="sh_cpp">X</code> from
+			<code class="sh_cpp">*i</code>.</p>
+		<p><em>Effects:</em> Constructs an empty container with at least <code class="sh_cpp">n</code> buckets, using <code class="sh_cpp">hf</code> as the
+			hash function and <code class="sh_cpp">key_­equal()</code> as the key equality predicate, and inserts elements from
+			<code class="sh_cpp">[i, j)</code> into it.</p>
+</td>
+	<td>Average case <var>O</var>(<var>N</var>) (<var>N</var> is <code class="sh_cpp">distance​(i, j)</code>), worst case
+		<var>O</var>(<var>N</var><sup>2</sup>)</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">X(i, j, n)
+X a(i, j, n)</code></pre></td>
+	<td><code class="sh_cpp">X</code></td>
+	<td>
+<p><em>Requires:</em> <code class="sh_cpp">hasher</code> and <code class="sh_cpp">key_­equal</code> are
+			<code class="concept">Default­Construct­ible</code>. <code class="sh_cpp">value_­type</code> is
+			<code class="concept">Emplace­Construct­ible</code> into <code class="sh_cpp">X</code> from <code class="sh_cpp">*i</code>.</p>
+		<p><em>Effects:</em> Constructs an empty container with at least <code class="sh_cpp">n</code> buckets, using <code class="sh_cpp">hasher()</code> as
+			the hash function and <code class="sh_cpp">key_­equal()</code> as the key equality predicate, and inserts elements from
+			<code class="sh_cpp">[i, j)</code> into it.</p>
+</td>
+	<td>Average case <var>O</var>(<var>N</var>) (<var>N</var> is <code class="sh_cpp">distance​(i, j)</code>), worst case
+		<var>O</var>(<var>N</var><sup>2</sup>)</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">X(i, j)
+X a(i, j)</code></pre></td>
+	<td><code class="sh_cpp">X</code></td>
+	<td>
+<p><em>Requires:</em> <code class="sh_cpp">hasher</code> and <code class="sh_cpp">key_­equal</code> are
+			<code class="concept">Default­Construct­ible</code>. <code class="sh_cpp">value_­type</code> is
+			<code class="concept">Emplace­Construct­ible</code> into <code class="sh_cpp">X</code> from <code class="sh_cpp">*i</code>.</p>
+		<p><em>Effects:</em> Constructs an empty container with an unspecified number of buckets, using <code class="sh_cpp">hasher()</code> as
+			the hash function and <code class="sh_cpp">key_­equal()</code> as the key equality predicate, and inserts elements from
+			<code class="sh_cpp">[i, j)</code> into it.</p>
+</td>
+	<td>Average case <var>O</var>(<var>N</var>) (<var>N</var> is <code class="sh_cpp">distance​(i, j)</code>), worst case
+		<var>O</var>(<var>N</var><sup>2</sup>)</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">X(il)</code></td>
+	<td><code class="sh_cpp">X</code></td>
+	<td>Same as <code class="sh_cpp">X(il.​begin(), il.​end())</code>.</td>
+	<td>Same as <code class="sh_cpp">X(il.​begin(), il.​end())</code>.</td>
+</tr>
+<tr>
+<td><pre><code class="sh_cpp">X(b)
+X a(b)</code></pre></td>
+	<td><code class="sh_cpp">X</code></td>
+	<td>Copy constructor. In addition to the requirements of Table <a href="container.requirements.general.html#t96">96</a>, copies the hash function, predicate, and
+		maximum load factor.</td>
+	<td>Average case linear in <code class="sh_cpp">b.​size()</code>, worst case quadratic.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">a = b</code></td>
+	<td><code class="sh_cpp">X&amp;</code></td>
+	<td>Copy assignment operator. In addition to the requirements of Table <a href="container.requirements.general.html#t96">96</a>, copies the hash function,
+		predicate, and maximum load factor.</td>
+	<td>Average case linear in <code class="sh_cpp">b.​size()</code>, worst case quadratic.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">a = il</code></td>
+	<td><code class="sh_cpp">X&amp;</code></td>
+	<td>
+<p><em>Requires:</em> <code class="sh_cpp">T</code> is <code class="concept">Copy­Insert­able</code> into <code class="sh_cpp">X</code> and
+			<code class="concept">Copy­Assign­able</code>.</p>
+		<p><em>Effects:</em> Assigns the range <code class="sh_cpp">[il.​begin(), il.​end())</code> into <code class="sh_cpp">a</code>. All existing
+			elements of <code class="sh_cpp">a</code> are either assigned to or destroyed.</p>
+</td>
+	<td>Same as <code class="sh_cpp">a = X(il)</code>.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">b.​hash_­function()</code></td>
+	<td><code class="sh_cpp">hasher</code></td>
+	<td>Returns <code class="sh_cpp">b</code>’s hash function.</td>
+	<td>constant</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">b.​key_­eq()</code></td>
+	<td>​<code class="sh_cpp">key_­equal</code>
+</td>
+	<td>Returns <code class="sh_cpp">b</code>’s key equality predicate.</td>
+	<td>constant</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">a_uniq.​emplace​(args)</code></td>
+	<td><code class="sh_cpp">pair​&lt;iterator, bool&gt;</code></td>
+	<td>
+<p><em>Requires:</em> <code class="sh_cpp">T</code> shall be <code class="concept">Emplace­Construct­ible</code> into <code class="sh_cpp">X</code> from
+			<code class="sh_cpp">args</code>.</p>
+		<p><em>Effects:</em> Inserts a <code class="sh_cpp">T</code> object <code class="sh_cpp">t</code> constructed with
+			<code class="sh_cpp">std​::​forward​&lt;Args&gt;​(args)...</code> if and only if there is no element in
+			the container with key equivalent to the key of <code class="sh_cpp">t</code>. The <code class="sh_cpp">bool</code> component of the
+			returned pair is true if and only if the insertion takes place, and the <code class="sh_cpp">iterator</code> component of
+			the pair points to the element with key equivalent to the key of <code class="sh_cpp">t</code>.</p>
+</td>
+	<td>Average case <var>O</var>(1), worst case <var>O</var>(<code class="sh_cpp">a_uniq.​size()</code>).</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">a_eq.​emplace​(args)</code></td>
+	<td><code class="sh_cpp">iterator</code></td>
+	<td>
+<p><em>Requires:</em> <code class="sh_cpp">T</code> shall be <code class="concept">Emplace­Construct­ible</code> into <code class="sh_cpp">X</code> from
+			<code class="sh_cpp">args</code>.</p>
+		<p><em>Effects:</em> Inserts a <code class="sh_cpp">T</code> object <code class="sh_cpp">t</code> constructed with
+			<code class="sh_cpp">std​::​forward​&lt;Args&gt;​(args)...</code> and returns the iterator pointing to
+			the newly inserted element.</p>
+</td>
+	<td>Average case <var>O</var>(1), worst case <var>O</var>(<code class="sh_cpp">a_eq.​size()</code>).</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">a.emplace_hint(p, args)</code></td>
+	<td><code class="sh_cpp">iterator</code></td>
+	<td>
+<p><em>Requires:</em> <code class="sh_cpp">T</code> shall be <code class="concept">Emplace­Construct­ible</code> into <code class="sh_cpp">X</code> from
+			<code class="sh_cpp">args</code>.</p>
+		<p><em>Effects:</em> Equivalent to
+			<code class="sh_cpp">a.emplace​(std​::​forward​&lt;Args&gt;​(args)...)</code>. Return value is an
+			iterator pointing to the element with the key equivalent to the newly inserted element. The
+			<code class="sh_cpp">const_­iterator p</code> is a hint pointing to where the search should start. Implementations are
+			permitted to ignore the hint.</p>
+</td>
+	<td>Average case <var>O</var>(1), worst case <var>O</var>(<code class="sh_cpp">a.size()</code>).</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">a_uniq.​insert​(t)</code></td>
+	<td><code class="sh_cpp">pair​&lt;iterator, bool&gt;</code></td>
+	<td>
+<p><em>Requires:</em> If <code class="sh_cpp">t</code> is a non-const rvalue expression, <code class="sh_cpp">T</code> shall be
+			<code class="concept">Move­Insert­able</code> into <code class="sh_cpp">X</code>; otherwise, <code class="sh_cpp">T</code> shall be
+			<code class="concept">Copy­Insert­able</code> into <code class="sh_cpp">X</code>.</p>
+		<p><em>Effects:</em> Inserts <code class="sh_cpp">t</code> if and only if there is no element in the container with key equivalent to
+			the key of <code class="sh_cpp">t</code>. The <code class="sh_cpp">bool</code> component of the returned pair indicates whether the
+			insertion takes place, and the iterator component points to the element with key equivalent to the key of
+			<code class="sh_cpp">t</code>.</p>
+</td>
+	<td>Average case <var>O</var>(1), worst case <var>O</var>(<code class="sh_cpp">a_uniq.​size()</code>).</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">a_eq.​insert​(t)</code></td>
+	<td><code class="sh_cpp">iterator</code></td>
+	<td>
+<p><em>Requires:</em> If <code class="sh_cpp">t</code> is a non-const rvalue expression, <code class="sh_cpp">T</code> shall be
+			<code class="concept">Move­Insert­able</code> into <code class="sh_cpp">X</code>; otherwise, <code class="sh_cpp">T</code> shall be
+			<code class="concept">Copy­Insert­able</code> into <code class="sh_cpp">X</code>.</p>
+		<p><em>Effects:</em> Inserts <code class="sh_cpp">t</code>, and returns an iterator pointing to the newly inserted
+			element.</p>
+</td>
+	<td>Average case <var>O</var>(1), worst case <var>O</var>(<code class="sh_cpp">a_eq.​size()</code>).</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">a.​insert​(q, t)</code></td>
+	<td><code class="sh_cpp">iterator</code></td>
+	<td>
+<p><em>Requires:</em> If <code class="sh_cpp">t</code> is a non-const rvalue expression, <code class="sh_cpp">T</code> shall be
+			<code class="concept">Move­Insert­able</code> into <code class="sh_cpp">X</code>; otherwise, <code class="sh_cpp">T</code> shall be
+			<code class="concept">Copy­Insert­able</code> into <code class="sh_cpp">X</code>.</p>
+		<p><em>Effects:</em> Equivalent to <code class="sh_cpp">a.​insert​(t)</code>. Return value is an iterator pointing to the
+			element with the key equivalent to that of <code class="sh_cpp">t</code>. The iterator <code class="sh_cpp">q</code> is a hint pointing
+			to where the search should start. Implementations are permitted to ignore the hint.</p>
+</td>
+	<td>Average case <var>O</var>(1), worst case <var>O</var>(<code class="sh_cpp">a.​size()</code>).</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">a.​insert​(i, j)</code></td>
+	<td><code class="sh_cpp">void</code></td>
+	<td>
+<p><em>Requires:</em> <code class="sh_cpp">T</code> shall be <code class="concept">Emplace­Construct­ible</code> into <code class="sh_cpp">X</code> from
+			<code class="sh_cpp">*i</code>.</p>
+		<p>Pre: <code class="sh_cpp">i</code> and <code class="sh_cpp">j</code> are not iterators in <code class="sh_cpp">a</code>. Equivalent to
+			<code class="sh_cpp">a.​insert​(t)</code> for each element in <code class="sh_cpp">[i, j)</code>.</p>
+</td>
+	<td>Average case <var>O</var>(<var>N</var>), where <var>N</var> is <code class="sh_cpp">distance​(i, j)</code>. Worst case
+		<var>O</var>(<var>N</var> * (<code class="sh_cpp">a.​size()</code>) + <var>N</var>).</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">a.​insert​(il)</code></td>
+	<td><code class="sh_cpp">void</code></td>
+	<td>Same as <code class="sh_cpp">a.​insert​(il.​begin(), il.​end())</code>.</td>
+	<td>Same as <code class="sh_cpp">a.​insert(il.​begin(), il.​end())</code>.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">a.​erase​(k)</code></td>
+	<td>​<code class="sh_cpp">size_­type</code>
+</td>
+	<td>Erases all elements with key equivalent to <code class="sh_cpp">k</code>. Returns the number of elements erased.</td>
+	<td>Average case <var>O</var>(<code class="sh_cpp">a.​count​(k)</code>). Worst case
+		<var>O</var>(<code class="sh_cpp">a.​size()</code>).</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">a.​erase​(q)</code></td>
+	<td><code class="sh_cpp">iterator</code></td>
+	<td>Erases the element pointed to by <code class="sh_cpp">q</code>. Return value is the iterator immediately following
+		<code class="sh_cpp">q</code> prior to the erasure.</td>
+	<td>Average case <var>O</var>(1), worst case <var>O</var>(<code class="sh_cpp">a.​size()</code>).</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">a.​erase​(q1, q2)</code></td>
+	<td><code class="sh_cpp">iterator</code></td>
+	<td>Erases all elements in the range <code class="sh_cpp">[q1, q2)</code>. Return value is the iterator immediately following the
+		erased elements prior to the erasure.</td>
+	<td>Average case linear in <code class="sh_cpp">distance​(q1, q2)</code>, worst case
+		<var>O</var>(<code class="sh_cpp">a.​size()</code>).</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">a.​clear()</code></td>
+	<td><code class="sh_cpp">void</code></td>
+	<td>Erases all elements in the container. Post: <code class="sh_cpp">a.​empty()</code> returns <code class="sh_cpp">true</code>
+</td>
+	<td>Linear.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">b.​find​(k)</code></td>
+	<td>
+<code class="sh_cpp">iterator</code>; <code class="sh_cpp">const_­iterator</code> for const <code class="sh_cpp">b</code>.</td>
+	<td>Returns an iterator pointing to an element with key equivalent to <code class="sh_cpp">k</code>, or <code class="sh_cpp">b.​end()</code>
+		if no such element exists.</td>
+	<td>Average case <var>O</var>(1), worst case <var>O</var>(<code class="sh_cpp">b.​size()</code>).</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">b.​count​(k)</code></td>
+	<td>​<code class="sh_cpp">size_­type</code>
+</td>
+	<td>Returns the number of elements with key equivalent to <code class="sh_cpp">k</code>.</td>
+	<td>Average case <var>O</var>(1), worst case <var>O</var>(<code class="sh_cpp">b.​size()</code>).</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">b.​equal_­range​(k)</code></td>
+	<td>
+<code class="sh_cpp">pair​&lt;iterator, iterator&gt;</code>; <code class="sh_cpp">pair​&lt;const_­iterator,
+		const_­iterator&gt;</code> for const <code class="sh_cpp">b</code>.</td>
+	<td>Returns a range containing all elements with keys equivalent to <code class="sh_cpp">k</code>. Returns
+		<code class="sh_cpp">make_­pair​(b.​end(), b.​end())</code> if no such elements exist.</td>
+	<td>Average case <var>O</var>(<code class="sh_cpp">b.​count​(k)</code>). Worst case
+		<var>O</var>(<code class="sh_cpp">b.​size()</code>).</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">b.​bucket_­count()</code></td>
+	<td>​<code class="sh_cpp">size_­type</code>
+</td>
+	<td>Returns the number of buckets that <code class="sh_cpp">b</code> contains.</td>
+	<td>Constant</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">b.​max_­bucket_­count()</code></td>
+	<td>​<code class="sh_cpp">size_­type</code>
+</td>
+	<td>Returns an upper bound on the number of buckets that <code class="sh_cpp">b</code> might ever contain.</td>
+	<td>Constant</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">b.​bucket​(k)</code></td>
+	<td>​<code class="sh_cpp">size_­type</code>
+</td>
+	<td>Pre: <code class="sh_cpp">b.​bucket_­count() &gt; 0</code>. Returns the index of the bucket in which elements with
+		keys equivalent to <code class="sh_cpp">k</code> would be found, if any such element existed. Post: the return value shall be
+		in the range <code class="sh_cpp">[0, b.​bucket_­count())</code>.</td>
+	<td>Constant</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">b.​bucket_­size​(n)</code></td>
+	<td>​<code class="sh_cpp">size_­type</code>
+</td>
+	<td>Pre: <code class="sh_cpp">n</code> shall be in the range <code class="sh_cpp">[0, b.​bucket_­count())</code>. Returns the number of
+		elements in the <code class="sh_cpp">n</code>th bucket.</td>
+	<td>
+<var>O</var>(<code class="sh_cpp">b.​bucket_­size​(n)</code>)</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">b.​begin​(n)</code></td>
+	<td>​<code class="sh_cpp">local_­iterator</code>; <code class="sh_cpp">const_­local_­iterator</code> for const
+		<code class="sh_cpp">b</code>.</td>
+	<td>Pre: <code class="sh_cpp">n</code> shall be in the range <code class="sh_cpp">[0, b.​bucket_­count())</code>.
+		<code class="sh_cpp">b.​begin​(n)</code> returns an iterator referring to the first element in the bucket. If the
+		bucket is empty, then <code class="sh_cpp">b.​begin(n) == b.​end(n)</code>.</td>
+	<td>Constant</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">b.​end​(n)</code></td>
+	<td>​<code class="sh_cpp">local_­iterator</code>; <code class="sh_cpp">const_­local_­iterator</code> for const
+		<code class="sh_cpp">b</code>.</td>
+	<td>Pre: <code class="sh_cpp">n</code> shall be in the range <code class="sh_cpp">[0, b.​bucket_­count())</code>.
+		<code class="sh_cpp">b.​end​(n)</code> returns an iterator which is the past-the-end value for the bucket.</td>
+	<td>Constant</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">b.​cbegin​(n)</code></td>
+	<td>​<code class="sh_cpp">const_­local_­iterator</code>
+</td>
+	<td>Pre: <code class="sh_cpp">n</code> shall be in the range <code class="sh_cpp">[0, b.​bucket_­count())</code>. Note:
+		<code class="sh_cpp">[b.​cbegin​(n), b.​cend​(n))</code> is a valid range containing all of the elements
+		in the <code class="sh_cpp">n</code>th bucket.</td>
+	<td>Constant</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">b.​cend​(n)</code></td>
+	<td>​<code class="sh_cpp">const_­local_­iterator</code>
+</td>
+	<td>Pre: <code class="sh_cpp">n</code> shall be in the range <code class="sh_cpp">[0, b.​bucket_­count())</code>.</td>
+	<td>Constant</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">b.​load_­factor()</code></td>
+	<td><code class="sh_cpp">float</code></td>
+	<td>Returns the average number of elements per bucket.</td>
+	<td>Constant</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">b.​max_­load_­factor()</code></td>
+	<td><code class="sh_cpp">float</code></td>
+	<td>Returns a positive number that the container attempts to keep the load factor less than or equal to. The
+		container automatically increases the number of buckets as necessary to keep the load factor below this
+		number.</td>
+	<td>Constant</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">a.​max_­load_­factor​(z)</code></td>
+	<td><code class="sh_cpp">void</code></td>
+	<td>Pre: <code class="sh_cpp">z</code> shall be positive. May change the container’s maximum load factor, using <code class="sh_cpp">z</code> as
+		a hint.</td>
+	<td>Constant</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">a.​rehash​(n)</code></td>
+	<td><code class="sh_cpp">void</code></td>
+	<td>Post: <code class="sh_cpp">a.​bucket_­count() &gt; a.​size() / a.​max_­load_­factor()</code> and
+		<code class="sh_cpp">a.​bucket_­count() &gt;= n</code>.</td>
+	<td>Average case linear in <code class="sh_cpp">a.​size()</code>, worst case quadratic.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">a.​reserve​(n)</code></td>
+	<td><code class="sh_cpp">void</code></td>
+	<td>Same as <code class="sh_cpp">a.​rehash​(ceil​(n / a.​max_­load_­factor()))</code>.</td>
+	<td>Average case linear in <code class="sh_cpp">a.​size()</code>, worst case quadratic.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a class="anchor" id="p11" href="#p11">11</a>Two unordered containers <code class="sh_cpp">a</code> and <code class="sh_cpp">b</code> compare equal if <code class="sh_cpp">a.size() == b.size()</code>
+and, for every equivalent-key group <code class="sh_cpp">[Ea1, Ea2)</code> obtained from <code class="sh_cpp">a.equal_range(Ea1)</code>, there exists
+an equivalent-key group <code class="sh_cpp">[Eb1, Eb2)</code> obtained from <code class="sh_cpp">b.equal_range(Ea1)</code>, such that
+<code class="sh_cpp">distance(Ea1, Ea2) == distance(Eb1, Eb2)</code> and <code class="sh_cpp">is_permutation(Ea1, Ea2, Eb1)</code> returns
+<code class="sh_cpp">true</code>. For <code class="sh_cpp">unordered_set</code> and <code class="sh_cpp">unordered_map</code>, the complexity of
+<code class="sh_cpp">operator==</code> (i.e., the number of calls to the <code class="sh_cpp">==</code> operator of the <code class="sh_cpp">value_type</code>, to
+the predicate returned by <code class="sh_cpp">key_equal()</code>, and to the hasher returned by <code class="sh_cpp">hash_function()</code>) is
+proportional to <var>N</var> in the average case and to <var>N</var><sup>2</sup> in the worst case, where <var>N</var>
+is <code class="sh_cpp">a.size()</code>. For <code class="sh_cpp">unordered_multiset</code> and <code class="sh_cpp">unordered_multimap</code>, the complexity of
+<code class="sh_cpp">operator==</code> is proportional to <span class="math">∑<var>E</var><sub><var>i</var></sub><sup>2</sup></span> in
+the average case and to <var>N</var><sup>2</sup> in the worst case, where <var>N</var> is <code class="sh_cpp">a.size()</code>, and
+<var>E</var><sub><var>i</var></sub> is the size of the <var>i</var><sup>th</sup> equivalent-key group in <code class="sh_cpp">a</code>.
+However, if the respective elements of each corresponding pair of equivalent-key groups
+<var>Ea</var><sub><var>i</var></sub> and <var>Eb</var><sub><var>i</var></sub> are arranged in the same order (as is
+commonly the case, e.g., if <code class="sh_cpp">a</code> and <code class="sh_cpp">b</code> are unmodified copies of the same container), then the
+average-case complexity for <code class="sh_cpp">unordered_multiset</code> and <code class="sh_cpp">unordered_multimap</code> becomes proportional to
+<var>N</var> (but worst-case complexity remains <var>O</var>(<var>N</var><sup>2</sup>), e.g., for a pathologically bad
+hash function). The behavior of a program that uses <code class="sh_cpp">operator==</code> or <code class="sh_cpp">operator!=</code> on unordered
+containers is undefined unless the <code class="sh_cpp">Hash</code> and <code class="sh_cpp">Pred</code> function objects respectively have the same
+behavior for both containers and the equality comparison operator for <code class="sh_cpp">Key</code> is a refinement<sup class="footnote"><a href="#fn266">266</a></sup> of
+the partition into equivalent-key groups produced by <code class="sh_cpp">Pred</code>.</p>
+
+<p><a class="anchor" id="p12" href="#p12">12</a>The iterator types <code class="sh_cpp">iterator</code> and <code class="sh_cpp">const_iterator</code> of an unordered associative container
+are of at least the forward iterator category. For unordered associative containers where the key type and value type
+are the same, both <code class="sh_cpp">iterator</code> and <code class="sh_cpp">const_iterator</code> are const iterators.</p>
+
+<p><a class="anchor" id="p13" href="#p13">13</a>The <code class="sh_cpp">insert</code> and <code class="sh_cpp">emplace</code> members shall not affect the validity of references to
+container elements, but may invalidate all iterators to the container. The <code class="sh_cpp">erase</code> members shall invalidate
+only iterators and references to the erased elements.</p>
+
+<p><a class="anchor" id="p14" href="#p14">14</a>The <code class="sh_cpp">insert</code> and <code class="sh_cpp">emplace</code> members shall not affect the validity of iterators if
+<code class="sh_cpp">(N+n) &lt; z * B</code>, where <code class="sh_cpp">N</code> is the number of elements in the container prior to the insert
+operation, <code class="sh_cpp">n</code> is the number of elements inserted, <code class="sh_cpp">B</code> is the container’s bucket count, and
+<code class="sh_cpp">z</code> is the container’s maximum load factor.</p>
+
+
+<div><p class="footnote" id="fn266">266) Equality comparison is a refinement of partitioning if no two objects that compare equal fall into
+different partitions.</p></div>
+</body>
+</html>
+

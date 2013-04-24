@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class template time_get</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[locale.time.get]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[locale.time.get]"></object>22.4.5.1 Class template <code class="sh_cpp"><dfn>time_get</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="time_get"></object></code> </h4>
+
+<pre><code class="sh_cpp">namespace std {
+  class <dfn>time_base</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="time_base"></object> {
+  public:
+     enum dateorder { no_order, dmy, mdy, ymd, ydm };
+  };
+
+  template &lt;class charT, class InputIterator = istreambuf_iterator&lt;charT&gt; &gt;
+  class time_get : public locale::facet, public time_base {
+  public:
+    typedef charT            char_type;
+    typedef InputIterator    iter_type;
+
+    explicit time_get(size_t refs = 0);
+
+    dateorder date_order() const { return do_date_order(); }
+    iter_type get_time(iter_type s, iter_type end, ios_base&amp; f,
+                       ios_base::iostate&amp; err, tm* t) const;
+    iter_type get_date(iter_type s, iter_type end, ios_base&amp; f,
+                       ios_base::iostate&amp; err, tm* t) const;
+    iter_type get_weekday(iter_type s, iter_type end, ios_base&amp; f,
+                       ios_base::iostate&amp; err, tm* t) const;
+    iter_type get_monthname(iter_type s, iter_type end, ios_base&amp; f,
+                       ios_base::iostate&amp; err, tm* t) const;
+    iter_type get_year(iter_type s, iter_type end, ios_base&amp; f,
+                       ios_base::iostate&amp; err, tm* t) const;
+    iter_type get(iter_type s, iter_type end, ios_base&amp; f,
+                  ios_base::iostate&amp; err, tm *t, char format, char modifier = 0) const;
+    iter_type get(iter_type s, iter_type end, ios_base&amp; f,
+                  ios_base::iostate&amp; err, tm *t, const char_type *fmt, const char_type *fmtend) const;
+
+    static locale::id id;
+
+  protected:
+    ~time_get();
+    virtual dateorder do_date_order() const;
+    virtual iter_type do_get_time(iter_type s, iter_type end, ios_base&amp;,
+                                  ios_base::iostate&amp; err, tm* t) const;
+    virtual iter_type do_get_date(iter_type s, iter_type end, ios_base&amp;,
+                                  ios_base::iostate&amp; err, tm* t) const;
+    virtual iter_type do_get_weekday(iter_type s, iter_type end, ios_base&amp;,
+                                     ios_base::iostate&amp; err, tm* t) const;
+    virtual iter_type do_get_monthname(iter_type s, iter_type end, ios_base&amp;,
+                                       ios_base::iostate&amp; err, tm* t) const;
+    virtual iter_type do_get_year(iter_type s, iter_type end, ios_base&amp;,
+                                  ios_base::iostate&amp; err, tm* t) const;
+    virtual iter_type do_get(iter_type s, iter_type end, ios_base&amp; f,
+                             ios_base::iostate&amp; err, tm *t, char format, char modifier) const;
+  };
+}</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><code class="sh_cpp">time_get</code> is used to parse a character sequence, extracting components of a time or date into a
+<code class="sh_cpp">struct tm</code> record. Each <code class="sh_cpp">get</code> member parses a format as produced by a corresponding format
+specifier to <code class="sh_cpp">time_put&lt;&gt;::put</code>. If the sequence being parsed matches the correct format, the
+corresponding members of the <code class="sh_cpp">struct tm</code> argument are set to the values used to produce the sequence;
+otherwise either an error is reported or unspecified values are assigned.<sup class="footnote"><a href="#fn252">252</a></sup></p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>If the end iterator is reached during parsing by any of the <code class="sh_cpp">get()</code> member functions, the member
+sets <code class="sh_cpp">ios_base::eofbit</code> in <code class="sh_cpp">err</code>.</p>
+
+
+<div><p class="footnote" id="fn252">252) In other words, user confirmation is required for reliable parsing of user-entered dates and times,
+but machine-generated formats can be parsed reliably. This allows parsers to be aggressive about interpreting user
+variations on standard formats.</p></div>
+</body>
+</html>
+

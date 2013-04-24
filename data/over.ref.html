@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class member access</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[over.ref]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[over.ref]"></object>13.5.6 Class member access </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><code class="sh_cpp">operator-&gt;</code> shall be a non-static member function taking no parameters. It implements the class
+member access syntax that uses <code class="sh_cpp">-&gt;</code>.</p>
+
+<dl>
+<dd>
+<i class="nonterminal">postfix-expression</i> <code class="sh_cpp">-&gt;</code> <code class="sh_cpp">template</code><sub class="opt">opt</sub> <i class="nonterminal">id-expression</i>
+</dd>
+<dd>
+<i class="nonterminal">postfix-expression</i> <code class="sh_cpp">-&gt;</code> <i class="nonterminal">pseudo-destructor-name</i>
+</dd>
+</dl>
+
+<p>An expression <code class="sh_cpp">x-&gt;m</code> is interpreted as <code class="sh_cpp">(x.operator-&gt;())-&gt;m</code> for a class object
+<code class="sh_cpp">x</code> of type <code class="sh_cpp">T</code> if <code class="sh_cpp">T::operator-&gt;()</code> exists and if the operator is selected as the
+best match function by the overload resolution mechanism (<a title="over.match" href="over.match.html">13.3</a>).</p>
+</body>
+</html>
+

@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>complex member operators</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[complex.member.ops]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[complex.member.ops]"></object>26.4.5 <code class="sh_cpp">complex</code> member operators </h3>
+
+<h4><code class="sh_cpp">complex&lt;T&gt;&amp; <dfn>operator+=</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator+="></object>(const T&amp; rhs);</code></h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Effects:</em> Adds the scalar value <code class="sh_cpp">rhs</code> to the real part of the complex value <code class="sh_cpp">*this</code> and
+stores the result in the real part of <code class="sh_cpp">*this</code>, leaving the imaginary part unchanged.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Returns:</em> <code class="sh_cpp">*this</code>.</p>
+
+<h4><code class="sh_cpp">complex&lt;T&gt;&amp; <dfn>operator-=</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator-="></object>(const T&amp; rhs);</code></h4>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Effects:</em> Subtracts the scalar value <code class="sh_cpp">rhs</code> from the real part of the complex value <code class="sh_cpp">*this</code>
+and stores the result in the real part of <code class="sh_cpp">*this</code>, leaving the imaginary part unchanged.</p>
+<p><a class="anchor" id="p4" href="#p4">4</a><em>Returns:</em> *this.</p>
+
+<h4><code class="sh_cpp">complex&lt;T&gt;&amp; <dfn>operator*=</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator*="></object>(const T&amp; rhs);</code></h4>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><em>Effects:</em> Multiplies the scalar value <code class="sh_cpp">rhs</code> by the complex value <code class="sh_cpp">*this</code> and stores the
+result in <code class="sh_cpp">*this</code>.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a><em>Returns:</em> <code class="sh_cpp">*this</code>.</p>
+
+<h4><code class="sh_cpp">complex&lt;T&gt;&amp; <dfn>operator/=</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator/="></object>(const T&amp; rhs);</code></h4>
+
+<p><a class="anchor" id="p7" href="#p7">7</a><em>Effects:</em> Divides the scalar value <code class="sh_cpp">rhs</code> into the complex value <code class="sh_cpp">*this</code> and stores the
+result in <code class="sh_cpp">*this</code>.</p>
+
+<p><a class="anchor" id="p8" href="#p8">8</a><em>Returns:</em> <code class="sh_cpp">*this</code>.</p>
+
+<h4><code class="sh_cpp">complex&lt;T&gt;&amp; <dfn>operator+=</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator+="></object>(const complex&lt;T&gt;&amp; rhs);</code></h4>
+
+<p><a class="anchor" id="p9" href="#p9">9</a><em>Effects:</em> Adds the complex value <code class="sh_cpp">rhs</code> to the complex value <code class="sh_cpp">*this</code> and stores the sum in
+<code class="sh_cpp">*this</code>.</p>
+
+<p><a class="anchor" id="p10" href="#p10">10</a><em>Returns:</em> <code class="sh_cpp">*this</code>.</p>
+
+<h4><code class="sh_cpp">complex&lt;T&gt;&amp; <dfn>operator-=</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator-="></object>(const complex&lt;T&gt;&amp; rhs);</code></h4>
+
+<p><a class="anchor" id="p11" href="#p11">11</a><em>Effects:</em> Subtracts the complex value <code class="sh_cpp">rhs</code> from the complex value <code class="sh_cpp">*this</code> and stores the
+difference in <code class="sh_cpp">*this</code>.</p>
+
+<p><a class="anchor" id="p12" href="#p12">12</a><em>Returns:</em> <code class="sh_cpp">*this</code>.</p>
+
+<h4><code class="sh_cpp">complex&lt;T&gt;&amp; <dfn>operator*=</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator*="></object>(const complex&lt;T&gt;&amp; rhs);</code></h4>
+
+<p><a class="anchor" id="p13" href="#p13">13</a><em>Effects:</em> Multiplies the complex value <code class="sh_cpp">rhs</code> by the complex value <code class="sh_cpp">*this</code> and stores the
+product in <code class="sh_cpp">*this</code>.</p>
+
+<p><em>Returns:</em> <code class="sh_cpp">*this</code>.</p>
+
+<h4><code class="sh_cpp">complex&lt;T&gt;&amp; <dfn>operator/=</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator/="></object>(const complex&lt;T&gt;&amp; rhs);</code></h4>
+
+<p><a class="anchor" id="p14" href="#p14">14</a><em>Effects:</em> Divides the complex value <code class="sh_cpp">rhs</code> into the complex value <code class="sh_cpp">*this</code> and stores the quotient in <code class="sh_cpp">*this</code>.</p>
+
+<p><a class="anchor" id="p15" href="#p15">15</a><em>Returns:</em> <code class="sh_cpp">*this</code>.</p>
+</body>
+</html>
+

@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Requirements</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[func.require]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[func.require]"></object>20.8.2 Requirements </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Define <code class="sh_cpp"><dfn>INVOKE</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="INVOKE"></object>(f, t1, t2, …, tN)</code> as follows:</p>
+
+<ul>
+<li>
+<code class="sh_cpp">(t1.*f)(t2, …, tN)</code> when <code class="sh_cpp">f</code> is a pointer to a member function of a class <code class="sh_cpp">T</code>
+	and <code class="sh_cpp">t1</code> is an object of type <code class="sh_cpp">T</code> or a reference to an object of type <code class="sh_cpp">T</code> or a
+	reference to an object of a type derived from <code class="sh_cpp">T</code>;</li>
+<li>
+<code class="sh_cpp">((*t1).*f)(t2, …, tN)</code> when <code class="sh_cpp">f</code> is a pointer to a member function of a class <code class="sh_cpp">T</code>
+	and <code class="sh_cpp">t1</code> is not one of the types described in the previous item;</li>
+<li>
+<code class="sh_cpp">t1.*f</code> when <code class="sh_cpp">N == 1</code> and <code class="sh_cpp">f</code> is a pointer to member data of a class <code class="sh_cpp">T</code>
+	and <code class="sh_cpp">t1</code> is an object of type <code class="sh_cpp">T</code> or a reference to an object of type <code class="sh_cpp">T</code> or a
+	reference to an object of a type derived from <code class="sh_cpp">T</code>;</li>
+<li>
+<code class="sh_cpp">(*t1).*f</code> when <code class="sh_cpp">N == 1</code> and <code class="sh_cpp">f</code> is a pointer to member data of a class
+	<code class="sh_cpp">T</code> and <code class="sh_cpp">t1</code> is not one of the types described in the previous item;</li>
+<li>
+<code class="sh_cpp">f(t1, t2, …, tN)</code> in all other cases.</li>
+</ul>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>Define <code class="sh_cpp"><dfn>INVOKE</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="INVOKE"></object>(f, t1, t2, …, tN, R)</code> as <code class="sh_cpp">INVOKE(f, t1, t2, …, tN)</code>
+implicitly converted to <code class="sh_cpp">R</code>.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>If a call wrapper (<a title="func.def" href="func.def.html">20.8.1</a>) has a <dfn>weak result type</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="weak result type"></object> the type of its member type
+<code class="sh_cpp">result_type</code> is based on the type <code class="sh_cpp">T</code> of the wrapper’s target object (<a title="func.def" href="func.def.html">20.8.1</a>):</p>
+
+<ul>
+<li>if <code class="sh_cpp">T</code> is a pointer to function type, <code class="sh_cpp">result_type</code> shall be a synonym for the return type of
+	<code class="sh_cpp">T</code>;</li>
+<li>if <code class="sh_cpp">T</code> is a pointer to member function, <code class="sh_cpp">result_type</code> shall be a synonym for the return type
+	of <code class="sh_cpp">T</code>;</li>
+<li>if <code class="sh_cpp">T</code> is a class type with a member type <code class="sh_cpp">result_type</code>, then <code class="sh_cpp">result_type</code> shall
+	be a synonym for <code class="sh_cpp">T::result_type</code>;</li>
+<li>otherwise <code class="sh_cpp">result_type</code> shall not be defined.</li>
+</ul>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>Every call wrapper (<a title="func.def" href="func.def.html">20.8.1</a>) shall be <code class="concept">MoveConstructible</code>. A <dfn>simple call
+wrapper</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="simple call
+wrapper"></object> is a call wrapper that is <code class="concept">CopyConstructible</code> and <code class="concept">CopyAssignable</code> and
+whose copy constructor, move constructor, and assignment operator do not throw exceptions. A <dfn>forwarding call
+wrapper</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="forwarding call
+wrapper"></object> is a call wrapper that can be called with an arbitrary argument list and delivers the arguments to the
+wrapped callable object as references. This forwarding step shall ensure that rvalue arguments are delivered as
+rvalue-references and lvalue arguments are delivered as lvalue-references.</p>
+
+<div class="note">
+<p>[ <em>Note:</em> In a typical implementation forwarding call wrappers have an overloaded function call operator of the form</p>
+
+<pre><code class="sh_cpp">template&lt;class... UnBoundArgs&gt;
+R operator()(UnBoundArgs&amp;&amp;... unbound_args) <var>cv-qual</var>;</code></pre>
+<p> — <em>end note</em> ]</p>
+</div>
+</body>
+</html>
+

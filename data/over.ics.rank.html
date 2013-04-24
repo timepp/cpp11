@@ -1,0 +1,215 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Ranking implicit conversion sequences</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[over.ics.rank]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[over.ics.rank]"></object>13.3.3.2 Ranking implicit conversion sequences </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><a title="over.ics.rank" href="over.ics.rank.html">13.3.3.2</a> defines a partial ordering of implicit conversion sequences based on the relationships
+<dfn>better conversion sequence</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="better conversion sequence"></object> and <dfn>better conversion</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="better conversion"></object>. If an implicit conversion sequence
+<code class="sh_cpp">S1</code> is defined by these rules to be a better conversion sequence than <code class="sh_cpp">S2</code>, then it is also the
+case that <code class="sh_cpp">S2</code> is a <dfn>worse conversion sequence</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="worse conversion sequence"></object> than <code class="sh_cpp">S1</code>. If conversion sequence
+<code class="sh_cpp">S1</code> is neither better than nor worse than conversion sequence <code class="sh_cpp">S2</code>, <code class="sh_cpp">S1</code> and
+<code class="sh_cpp">S2</code> are said to be <dfn>indistinguishable conversion sequences</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="indistinguishable conversion sequences"></object>.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>When comparing the basic forms of implicit conversion sequences (as defined in <a title="over.best.ics" href="over.best.ics.html">13.3.3.1</a>)</p>
+
+<ul>
+<li>a standard conversion sequence (<a title="over.ics.scs" href="over.ics.scs.html">13.3.3.1.1</a>) is a better conversion sequence than a user-defined
+	conversion sequence or an ellipsis conversion sequence, and</li>
+<li>a user-defined conversion sequence (<a title="over.ics.user" href="over.ics.user.html">13.3.3.1.2</a>) is a better conversion sequence than an ellipsis
+	conversion sequence (<a title="over.ics.ellipsis" href="over.ics.ellipsis.html">13.3.3.1.3</a>).</li>
+</ul>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>Two implicit conversion sequences of the same form are indistinguishable conversion sequences unless one of the
+following rules applies:</p>
+
+<ul>
+<li>Standard conversion sequence <code class="sh_cpp">S1</code> is a better conversion sequence than standard conversion sequence
+	<code class="sh_cpp">S2</code> if
+	<ul>
+	<li>
+<code class="sh_cpp">S1</code> is a proper subsequence of <code class="sh_cpp">S2</code> (comparing the conversion sequences in the canonical
+		form defined by <a title="over.ics.scs" href="over.ics.scs.html">13.3.3.1.1</a>, excluding any Lvalue Transformation; the identity conversion sequence is
+		considered to be a subsequence of any non-identity conversion sequence) or, if not that,</li>
+	<li>the rank of <code class="sh_cpp">S1</code> is better than the rank of <code class="sh_cpp">S2</code>, or <code class="sh_cpp">S1</code> and <code class="sh_cpp">S2</code>
+		have the same rank and are distinguishable by the rules in the paragraph below, or, if not that,</li>
+	<li>
+<code class="sh_cpp">S1</code> and <code class="sh_cpp">S2</code> differ only in their qualification conversion and yield similar types
+		<code class="sh_cpp">T1</code> and <code class="sh_cpp">T2</code> (<a title="conv.qual" href="conv.qual.html">4.4</a>), respectively, and the cv-qualification signature of type
+		<code class="sh_cpp">T1</code> is a proper subset of the cv-qualification signature of type <code class="sh_cpp">T2</code>.
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">int f(const int *);
+int f(int *);
+int i;
+int j = f(&amp;i);          // calls f(int*)</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+		or, if not that,</li>
+
+	<li>
+<code class="sh_cpp">S1</code> and <code class="sh_cpp">S2</code> are reference bindings (<a title="dcl.init.ref" href="dcl.init.ref.html">8.5.3</a>) and neither refers to an implicit
+		object parameter of a non-static member function declared without a <i class="nonterminal">ref-qualifier</i>, and <code class="sh_cpp">S1</code>
+		binds an rvalue reference to an rvalue and <code class="sh_cpp">S2</code> binds an lvalue reference.
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">int i;
+int f1();
+int&amp;&amp; f2();
+int g(const int&amp;);
+int g(const int&amp;&amp;);
+int j = g(i);           // calls g(const int&amp;)
+int k = g(f1());        // calls g(const int&amp;&amp;)
+int l = g(f2());        // calls g(const int&amp;&amp;)
+
+struct A {
+  A&amp; operator&lt;&lt;(int);
+  void p() &amp;;
+  void p() &amp;&amp;;
+};
+A&amp; operator&lt;&lt;(A&amp;&amp;, char);
+A() &lt;&lt; 1;               // calls A::operator&lt;&lt;(int)
+A() &lt;&lt; 'c';             // calls operator&lt;&lt;(A&amp;&amp;, char)
+A a;
+a &lt;&lt; 1;                 // calls A::operator&lt;&lt;(int)
+a &lt;&lt; 'c';               // calls A::operator&lt;&lt;(int)
+A().p();                // calls A::p()&amp;&amp;
+a.p();                  // calls A::p()&amp;</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+		or, if not that,</li>
+
+<li>
+<code class="sh_cpp">S1</code> and <code class="sh_cpp">S2</code> are reference bindings (<a title="dcl.init.ref" href="dcl.init.ref.html">8.5.3</a>) and <code class="sh_cpp">S1</code> binds an lvalue
+	reference to a function lvalue and <code class="sh_cpp">S2</code> binds an rvalue reference to a function lvalue.
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">template&lt;class T&gt; int f(T&amp;);
+template&lt;class T&gt; int f(T&amp;&amp;);
+void g();
+int i1 = f(g);          // calls f(T&amp;)</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+</li>
+
+	<li>
+<code class="sh_cpp">S1</code> and <code class="sh_cpp">S2</code> are reference bindings (<a title="dcl.init.ref" href="dcl.init.ref.html">8.5.3</a>), and the types to which the
+		references refer are the same type except for top-level cv-qualifiers, and the type to which the reference
+		initialized by <code class="sh_cpp">S2</code> refers is more cv-qualified than the type to which the reference initialized by
+		<code class="sh_cpp">S1</code> refers.
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">int f(const int &amp;);
+int f(int &amp;);
+int g(const int &amp;);
+int g(int);
+int i;
+int j = f(i);           // calls f(int &amp;)
+int k = g(i);           // ambiguous
+struct X {
+  void f() const;
+  void f();
+};
+void g(const X&amp; a, X b) {
+  a.f();               // calls X::f() const
+  b.f();               // calls X::f()
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+</li>
+
+	</ul>
+</li>
+
+<li>User-defined conversion sequence <code class="sh_cpp">U1</code> is a better conversion sequence than another user-defined
+conversion sequence <code class="sh_cpp">U2</code> if they contain the same user-defined conversion function or constructor or
+aggregate initialization and the second standard conversion sequence of <code class="sh_cpp">U1</code> is better than the second
+standard conversion sequence of <code class="sh_cpp">U2</code>.
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct A {
+  operator short();
+} a;
+int f(int);
+int f(float);
+int i = f(a);           // calls f(int), because short → int is
+                        // better than short → float.</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+</li>
+
+<li>List-initialization sequence <code class="sh_cpp">L1</code> is a better conversion sequence than list-initialization sequence
+	<code class="sh_cpp">L2</code> if <code class="sh_cpp">L1</code> converts to <code class="sh_cpp">std::initializer_list&lt;X&gt;</code> for some <code class="sh_cpp">X</code>
+	and <code class="sh_cpp">L2</code> does not.</li>
+</ul>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>Standard conversion sequences are ordered by their ranks: an Exact Match is a better conversion than a
+Promotion, which is a better conversion than a Conversion. Two conversion sequences with the same rank are
+indistinguishable unless one of the following rules applies:</p>
+
+<ul>
+<li>A conversion that does not convert a pointer, a pointer to member, or <code class="sh_cpp">std::nullptr_t</code> to
+	<code class="sh_cpp">bool</code> is better than one that does.</li>
+<li>If class <code class="sh_cpp">B</code> is derived directly or indirectly from class <code class="sh_cpp">A</code>, conversion of <code class="sh_cpp">B*</code>
+	to <code class="sh_cpp">A*</code> is better than conversion of <code class="sh_cpp">B*</code> to <code class="sh_cpp">void*</code>, and conversion of
+	<code class="sh_cpp">A*</code> to <code class="sh_cpp">void*</code> is better than conversion of <code class="sh_cpp">B*</code> to <code class="sh_cpp">void*</code>.</li>
+<li>If class <code class="sh_cpp">B</code> is derived directly or indirectly from class <code class="sh_cpp">A</code> and class <code class="sh_cpp">C</code> is
+	derived directly or indirectly from <code class="sh_cpp">B</code>,
+	<ul>
+	<li>conversion of <code class="sh_cpp">C*</code> to <code class="sh_cpp">B*</code> is better than conversion of <code class="sh_cpp">C*</code> to <code class="sh_cpp">A*</code>,
+	
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct A {};
+struct B : public A {};
+struct C : public B {};
+C *pc;
+int f(A *);
+int f(B *);
+int i = f(pc);          // calls f(B*)</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+</li>
+
+	<li>binding of an expression of type <code class="sh_cpp">C</code> to a reference of type <code class="sh_cpp">B&amp;</code> is better than
+		binding an expression of type <code class="sh_cpp">C</code> to a reference of type <code class="sh_cpp">A&amp;</code>,</li>
+	<li>conversion of <code class="sh_cpp">A::*</code> to <code class="sh_cpp">B::*</code> is better than conversion of <code class="sh_cpp">A::*</code> to
+		<code class="sh_cpp">C::*</code>,</li>
+	<li>conversion of <code class="sh_cpp">C</code> to <code class="sh_cpp">B</code> is better than conversion of <code class="sh_cpp">C</code> to
+		<code class="sh_cpp">A</code>,</li>
+	<li>conversion of <code class="sh_cpp">B*</code> to <code class="sh_cpp">A*</code> is better than conversion of <code class="sh_cpp">C*</code> to
+		<code class="sh_cpp">A*</code>,</li>
+	<li>binding of an expression of type <code class="sh_cpp">B</code> to a reference of type <code class="sh_cpp">A&amp;</code> is better than
+		binding an expression of type <code class="sh_cpp">C</code> to a reference of type <code class="sh_cpp">A&amp;</code>,</li>
+	<li>conversion of <code class="sh_cpp">B::*</code> to <code class="sh_cpp">C::*</code> is better than conversion of <code class="sh_cpp">A::*</code> to
+		<code class="sh_cpp">C::*</code>, and</li>
+	<li>conversion of <code class="sh_cpp">B</code> to <code class="sh_cpp">A</code> is better than conversion of <code class="sh_cpp">C</code> to
+		<code class="sh_cpp">A</code>.</li>
+	</ul>
+
+	<span class="note">[ <em>Note:</em> Compared conversion sequences will have different source types only in the context of comparing the second
+	standard conversion sequence of an initialization by user-defined conversion (see <a title="over.match.best" href="over.match.best.html">13.3.3</a>); in all other
+	contexts, the source types will be the same and the target types will be different. — <em>end note</em> ]</span>
+</li>
+</ul>
+</body>
+</html>
+

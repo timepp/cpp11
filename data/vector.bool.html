@@ -1,0 +1,155 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class vector&lt;bool&gt;</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[vector.bool]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[vector.bool]"></object>23.3.7 Class <code class="sh_cpp"><dfn>vector&lt;bool&gt;</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="vector&lt;bool&gt;"></object></code> </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>To optimize space allocation, a specialization of <code class="sh_cpp">vector</code> for <code class="sh_cpp">bool</code> elements is
+provided:</p>
+
+<pre><code class="sh_cpp">namespace std {
+  template &lt;class Allocator&gt; class vector&lt;bool, Allocator&gt; {
+  public:
+    // types:
+    typedef bool                                  const_reference;
+    typedef <em>implementation-defined</em>                iterator;         // see <a title="container.requirements" href="container.requirements.general.html">23.2</a>
+    typedef <em>implementation-defined</em>                const_iterator;   // see <a title="container.requirements" href="container.requirements.general.html">23.2</a>
+    typedef <em>implementation-defined</em>                size_type;        // see <a title="container.requirements" href="container.requirements.general.html">23.2</a>
+    typedef <em>implementation-defined</em>                difference_type;  // see <a title="container.requirements" href="container.requirements.general.html">23.2</a>
+    typedef bool                                  value_type;
+    typedef Allocator                             allocator_type;
+    typedef <em>implementation-defined</em>                pointer;
+    typedef <em>implementation-defined</em>                const_pointer;
+    typedef std::reverse_iterator&lt;iterator&gt;       reverse_iterator;
+    typedef std::reverse_iterator&lt;const_iterator&gt; const_reverse_iterator;
+
+    // bit reference:
+    class reference {
+      friend class vector;
+      reference() noexcept;
+    public:
+      ~reference();
+      operator bool() const noexcept;
+      reference&amp; operator=(const bool x) noexcept;
+      reference&amp; operator=(const reference&amp; x) noexcept;
+      void flip() noexcept;     // flips the bit
+    };
+
+    // construct/copy/destroy:
+    explicit vector(const Allocator&amp; = Allocator());
+    explicit vector(size_type n, const bool&amp; value = bool(),
+                    const Allocator&amp; = Allocator());
+    template &lt;class InputIterator&gt;
+      vector(InputIterator first, InputIterator last,
+             const Allocator&amp; = Allocator());
+    vector(const vector&lt;bool, Allocator&gt;&amp; x);
+    vector(vector&lt;bool, Allocator&gt;&amp;&amp; x);
+    vector(const vector&amp;, const Allocator&amp;);
+    vector(vector&amp;&amp;, const Allocator&amp;);
+    vector(initializer_list&lt;bool&gt;, const Allocator&amp; = Allocator()));
+    ~vector();
+    vector&lt;bool, Allocator&gt;&amp; operator=(const vector&lt;bool, Allocator&gt;&amp; x);
+    vector&lt;bool, Allocator&gt;&amp; operator=(vector&lt;bool, Allocator&gt;&amp;&amp; x);
+    vector operator=(initializer_list&lt;bool&gt;);
+    template &lt;class InputIterator&gt;
+      void assign(InputIterator first, InputIterator last);
+    void assign(size_type n, const bool&amp; t);
+    void assign(initializer_list&lt;bool&gt;;
+    allocator_type get_allocator() const noexcept;
+
+    // iterators:
+    iterator               begin() noexcept;
+    const_iterator         begin() const noexcept;
+    iterator               end() noexcept;
+    const_iterator         end() const noexcept;
+    reverse_iterator       rbegin() noexcept;
+    const_reverse_iterator rbegin() const noexcept;
+    reverse_iterator       rend() noexcept;
+    const_reverse_iterator rend() const noexcept;
+
+    const_iterator         cbegin() const noexcept;
+    const_iterator         cend() const noexcept;
+    const_reverse_iterator crbegin() const noexcept;
+    const_reverse_iterator crend() const noexcept;
+
+    // capacity:
+    size_type size() const noexcept;
+    size_type max_size() const noexcept;
+    void      resize(size_type sz, bool c = false);
+    size_type capacity() const noexcept;
+    bool      empty() const noexcept;
+    void      reserve(size_type n);
+    void      shrink_to_fit();
+
+    // element access:
+    reference       operator[](size_type n);
+    const_reference operator[](size_type n) const;
+    const_reference at(size_type n) const;
+    reference       at(size_type n);
+    reference       front();
+    const_reference front() const;
+    reference       back();
+    const_reference back() const;
+
+    // modifiers:
+    void push_back(const bool&amp; x);
+    void pop_back();
+    iterator insert(const_iterator position, const bool&amp; x);
+    iterator insert(const_iterator position, size_type n, const bool&amp; x);
+    template &lt;class InputIterator&gt;
+      iterator insert(const_iterator position,
+                      InputIterator first, InputIterator last);
+    iterator insert(const_iterator position, initializer_list&lt;bool&gt; il);
+
+    iterator erase(const_iterator position);
+    iterator erase(const_iterator first, const_iterator last);
+    void swap(vector&lt;bool, Allocator&gt;&amp;);
+    static void swap(reference x, reference y) noexcept;
+    void flip() noexcept;       // flips all bits
+    void clear() noexcept;
+  };
+}</code></pre>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>Unless described below, all operations have the same requirements and semantics as the primary
+<code class="sh_cpp">vector</code> template, except that operations dealing with the <code class="sh_cpp">bool</code> value type map to bit values in
+the container storage and <code class="sh_cpp">allocator_traits::construct</code> (<a title="allocator.traits.members" href="allocator.traits.members.html">20.6.8.2</a>) is not used to construct these
+values.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>There is no requirement that the data be stored as a contiguous allocation of <code class="sh_cpp">bool</code> values. A
+space-optimized representation of bits is recommended instead.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><code class="sh_cpp">reference</code> is a class that simulates the behavior of references of a single bit in
+<code class="sh_cpp">vector&lt;bool&gt;</code>. The conversion operator returns <code class="sh_cpp">true</code> when the bit is set, and
+<code class="sh_cpp">false</code> otherwise. The assignment operator sets the bit when the argument is (convertible to)
+<code class="sh_cpp">true</code> and clears it otherwise. <code class="sh_cpp">flip</code> reverses the state of the bit.</p>
+
+<h4><code class="sh_cpp">void <dfn>flip</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="flip"></object>() noexcept;</code></h4>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><em>Effects:</em> Replaces each element in the container with its complement.</p>
+
+<h4><code class="sh_cpp">static void <dfn>swap</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="swap"></object>(reference x, reference y) noexcept;</code></h4>
+
+<p><a class="anchor" id="p6" href="#p6">6</a><em>Effects:</em> exchanges the contents of <code class="sh_cpp">x</code> and <code class="sh_cpp">y</code> as if by</p>
+
+<pre><code class="sh_cpp">bool b = x;
+x = y;
+y = b;</code></pre>
+
+<h4><code class="sh_cpp">template &lt;class Allocator&gt; struct <dfn>hash&lt;vector&lt;bool, Allocator&gt; &gt;</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="hash&lt;vector&lt;bool, Allocator&gt; &gt;"></object>;</code></h4>
+
+<p><a class="anchor" id="p7" href="#p7">7</a><em>Requires:</em> the template specialization shall meet the requirements of class template <code class="sh_cpp">hash</code>
+(<a title="unord.hash" href="unord.hash.html">20.8.12</a>).</p>
+</body>
+</html>
+

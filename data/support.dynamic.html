@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Dynamic memory management</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[support.dynamic]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[support.dynamic]"></object>18.6 Dynamic memory management </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The header <dfn><code class="header">&lt;new&gt;</code></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="&lt;new&gt;"></object> defines several functions that manage the allocation of dynamic
+storage in a program. It also defines components for reporting storage management errors.</p>
+
+<h3>Header <code class="header">&lt;new&gt;</code> synopsis</h3>
+
+<pre><code class="sh_cpp">namespace std {
+  class bad_alloc;
+  class bad_array_new_length;
+  struct nothrow_t {};
+  extern const nothrow_t nothrow;
+  typedef void (*new_handler)();
+  new_handler get_new_handler() noexcept;
+  new_handler set_new_handler(new_handler new_p) noexcept;
+}
+
+void* operator new(std::size_t size);
+void* operator new(std::size_t size, const std::nothrow_t&amp;) noexcept;
+void  operator delete(void* ptr) noexcept;
+void  operator delete(void* ptr, const std::nothrow_t&amp;) noexcept;
+void* operator new[](std::size_t size);
+void* operator new[](std::size_t size, const std::nothrow_t&amp;) noexcept;
+void  operator delete[](void* ptr) noexcept;
+void  operator delete[](void* ptr, const std::nothrow_t&amp;) noexcept;
+
+void* operator new (std::size_t size, void* ptr) noexcept;
+void* operator new[](std::size_t size, void* ptr) noexcept;
+void  operator delete (void* ptr, void*) noexcept;
+void  operator delete[](void* ptr, void*) noexcept;</code></pre>
+
+<p><span class="seealso">See also:</span> <a title="intro.memory" href="intro.memory.html">1.7</a>, <a title="basic.stc.dynamic" href="basic.stc.dynamic.html">3.7.4</a>, <a title="expr.new" href="expr.new.html">5.3.4</a>, <a title="expr.delete" href="expr.delete.html">5.3.5</a>, <a title="class.free" href="class.free.html">12.5</a>,
+<a title="meta" href="meta.html">20.9</a>.</p>
+</body>
+</html>
+

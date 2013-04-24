@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Comparison of ratios</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[ratio.comparison]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[ratio.comparison]"></object>20.10.5 Comparison of <code class="sh_cpp">ratio</code>s </h3>
+
+<h4><code class="sh_cpp">template &lt;class R1, class R2&gt; struct <dfn>ratio_equal</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="ratio_equal"></object>
+  : integral_constant&lt;bool, <em>see below</em>&gt; { };</code></h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>If <code class="sh_cpp">R1::num == R2::num</code> and <code class="sh_cpp">R1::den == R2::den</code>, <code class="sh_cpp">ratio_equal&lt;R1,
+R2&gt;</code> shall be derived from <code class="sh_cpp">integral_constant&lt;bool, true&gt;</code>; otherwise it shall be
+derived from <code class="sh_cpp">integral_constant&lt;bool, false&gt;</code>.</p>
+
+<h4><code class="sh_cpp">template &lt;class R1, class R2&gt; struct <dfn>ratio_not_equal</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="ratio_not_equal"></object>
+  : integral_constant&lt;bool, !ratio_equal&lt;R1, R2&gt;::value&gt; { };</code></h4>
+
+<h4><code class="sh_cpp">template &lt;class R1, class R2&gt; struct <dfn>ratio_less</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="ratio_less"></object>
+  : integral_constant&lt;bool, <em>see below</em>&gt; { };</code></h4>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>If <code class="sh_cpp">R1::num * R2::den &lt; R2::num * R1::den</code>, <code class="sh_cpp">ratio_less&lt;R1, R2&gt;</code>
+shall be derived from <code class="sh_cpp">integral_constant&lt;bool, true&gt;</code>; otherwise it shall be derived from
+<code class="sh_cpp">integral_constant&lt;bool, false&gt;</code>. Implementations may use other algorithms to compute this
+relationship to avoid overflow. If overflow occurs, the program is ill-formed.</p>
+
+<h4><code class="sh_cpp">template &lt;class R1, class R2&gt; struct <dfn>ratio_less_equal</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="ratio_less_equal"></object>
+  : integral_constant&lt;bool, !ratio_less&lt;R2, R1&gt;::value&gt; { };</code></h4>
+
+<h4><code class="sh_cpp">template &lt;class R1, class R2&gt; struct <dfn>ratio_greater</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="ratio_greater"></object>
+  : integral_constant&lt;bool, ratio_less&lt;R2, R1&gt;::value&gt; { };</code></h4>
+
+<h4><code class="sh_cpp">template &lt;class R1, class R2&gt; struct <dfn>ratio_greater_equal</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="ratio_greater_equal"></object>
+  : integral_constant&lt;bool, !ratio_less&lt;R1, R2&gt;::value&gt; { };</code></h4>
+
+</body>
+</html>
+

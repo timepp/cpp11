@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Bidirectional iterators</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[bidirectional.iterators]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[bidirectional.iterators]"></object>24.2.6 Bidirectional iterators </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A class or a pointer type <code class="sh_cpp">X</code> satisfies the requirements of a bidirectional iterator if, in
+addition to satisfying the requirements for forward iterators, the following expressions are valid as shown in Table <a href="bidirectional.iterators.html#t110">110</a>.</p>
+
+<table id="t110" class="requirements">
+<caption>Table 110 — Bidirectional iterator requirements (in addition to forward iterator)</caption>
+<thead><tr>
+<th>Expression</th>
+<th>Return type</th>
+<th>Operational semantics</th>
+	<th>Assertion/note<br>pre-/post-condition</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code class="sh_cpp">--r</code></td>
+<td><code class="sh_cpp">X&amp;</code></td>
+<td></td>
+	<td>
+<p>pre: there exists <code class="sh_cpp">s</code> such that <code class="sh_cpp">r == ++s</code>.</p>
+		<p>post: <code class="sh_cpp">r</code> is dereferenceable.</p>
+		<p><code class="sh_cpp">--(++r) == r</code>.</p>
+		<p><code class="sh_cpp">--r == --s</code> implies <code class="sh_cpp">r == s</code>.</p>
+		<p><code class="sh_cpp">&amp;r == &amp;--r</code>.</p>
+</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">r--</code></td>
+<td><code class="sh_cpp">convertible to const X&amp;</code></td>
+	<td><code class="sh_cpp">{ X tmp = r; --r; return tmp; }</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code class="sh_cpp">*r--</code></td>
+<td><code class="sh_cpp">reference</code></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><span class="note">[ <em>Note:</em> Bidirectional iterators allow algorithms to move iterators backward as well as forward. — <em>end note</em> ]</span></p>
+</body>
+</html>
+

@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>forward_list constructors, copy, assignment</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[forwardlist.cons]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[forwardlist.cons]"></object>23.3.4.2 <code class="sh_cpp">forward_list</code> constructors, copy, assignment </h4>
+
+<h5><code class="sh_cpp">explicit <dfn>forward_list</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="forward_list"></object>(const Allocator&amp; = Allocator());</code></h5>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Effects:</em> Constructs an empty <code class="sh_cpp">forward_list</code> object using the specified allocator.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Complexity:</em> Constant.</p>
+
+<h5><code class="sh_cpp">explicit <dfn>forward_list</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="forward_list"></object>(size_type n);</code></h5>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Effects:</em> Constructs a <code class="sh_cpp">forward_list</code> object with <code class="sh_cpp">n</code> value-initialized
+elements.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><em>Requires:</em> <code class="sh_cpp">T</code> shall be <code class="concept">DefaultConstructible</code>.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><em>Complexity:</em> Linear in <code class="sh_cpp">n</code>.</p>
+
+<h5><code class="sh_cpp"><dfn>forward_list</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="forward_list"></object>(size_type n, const T&amp; value, const Allocator&amp; = Allocator());</code></h5>
+
+<p><a class="anchor" id="p6" href="#p6">6</a><em>Effects:</em> Constructs a <code class="sh_cpp">forward_list</code> object with <code class="sh_cpp">n</code> copies of <code class="sh_cpp">value</code> using
+the specified allocator.</p>
+
+<p><a class="anchor" id="p7" href="#p7">7</a><em>Requires:</em> <code class="sh_cpp">T</code> shall be <code class="concept">CopyInsertable</code> into <code class="sh_cpp">*this</code>.</p>
+
+<p><a class="anchor" id="p8" href="#p8">8</a><em>Complexity:</em> Linear in <code class="sh_cpp">n</code>.</p>
+
+<h5><code class="sh_cpp">template &lt;class InputIterator&gt;
+  <dfn>forward_list</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="forward_list"></object>(InputIterator first, InputIterator last, const Allocator&amp; = Allocator());</code></h5>
+
+<p><a class="anchor" id="p9" href="#p9">9</a><em>Effects:</em> Constructs a <code class="sh_cpp">forward_list</code> object equal to the range <code class="sh_cpp">[first,
+last)</code>.</p>
+
+<p><a class="anchor" id="p10" href="#p10">10</a><em>Complexity:</em> Linear in <code class="sh_cpp">distance(first, last)</code>.</p>
+
+<h5><code class="sh_cpp">template &lt;class InputIterator&gt;
+  void <dfn>assign</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="assign"></object>(InputIterator first, InputIterator last);</code></h5>
+
+<p><a class="anchor" id="p11" href="#p11">11</a><em>Effects:</em> <code class="sh_cpp">clear(); insert_after(before_begin(), first, last);</code></p>
+
+<h5><code class="sh_cpp">void <dfn>assign</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="assign"></object>(size_type n, const T&amp; t);</code></h5>
+
+<p><a class="anchor" id="p12" href="#p12">12</a><em>Effects:</em> <code class="sh_cpp">clear(); insert_after(before_begin(), n, t);</code></p>
+</body>
+</html>
+

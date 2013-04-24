@@ -1,0 +1,160 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>In general</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[sequences]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[sequences]"></object>23.3 Sequence containers </h2>
+
+<h3>
+<dfn class="label">[sequences.general]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[sequences.general]"></object>23.3.1 In general </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The headers <code class="header">&lt;array&gt;</code>, <code class="header">&lt;deque&gt;</code>, <code class="header">&lt;forward_list&gt;</code>,
+<code class="header">&lt;list&gt;</code>, and <code class="header">&lt;vector&gt;</code> define template classes that meet the requirements for sequence
+containers.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The headers <code class="header">&lt;queue&gt;</code> and <code class="header">&lt;stack&gt;</code> define container adaptors (<a title="container.adaptors" href="container.adaptors.general.html">23.6</a>) that
+also meet the requirements for sequence containers.</p>
+
+<h3>Header <dfn><code class="header">&lt;array&gt;</code></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="&lt;array&gt;"></object> synopsis</h3>
+
+<pre><code class="sh_cpp">#include &lt;initializer_list&gt;
+
+namespace std {
+
+  template &lt;class T, size_t N&gt; struct array;
+  template &lt;class T, size_t N&gt;
+    bool operator==(const array&lt;T, N&gt;&amp; x, const array&lt;T, N&gt;&amp; y);
+  template &lt;class T, size_t N&gt;
+    bool operator!=(const array&lt;T, N&gt;&amp; x, const array&lt;T, N&gt;&amp; y);
+  template &lt;class T, size_t N&gt;
+    bool operator&lt; (const array&lt;T, N&gt;&amp; x, const array&lt;T, N&gt;&amp; y);
+  template &lt;class T, size_t N&gt;
+    bool operator&gt; (const array&lt;T, N&gt;&amp; x, const array&lt;T, N&gt;&amp; y);
+  template &lt;class T, size_t N&gt;
+    bool operator&lt;=(const array&lt;T, N&gt;&amp; x, const array&lt;T, N&gt;&amp; y);
+  template &lt;class T, size_t N&gt;
+    bool operator&gt;=(const array&lt;T, N&gt;&amp; x, const array&lt;T, N&gt;&amp; y);
+  template &lt;class T, size_t N&gt;
+    void swap(array&lt;T, N&gt;&amp; x, array&lt;T, N&gt;&amp; y) noexcept(noexcept(x.swap(y)));
+
+  template &lt;class T&gt; class tuple_size;
+  template &lt;size_t I, class T&gt; class tuple_element;
+  template &lt;class T, size_t N&gt;
+    struct tuple_size&lt;array&lt;T, N&gt; &gt;;
+  template &lt;size_t I, class T, size_t N&gt;
+    struct tuple_element&lt;I, array&lt;T, N&gt; &gt;;
+  template &lt;size_t I, class T, size_t N&gt;
+    T&amp; get(array&lt;T, N&gt;&amp;) noexcept;
+  template &lt;size_t I, class T, size_t N&gt;
+    T&amp;&amp; get(array&lt;T, N&gt;&amp;&amp;) noexcept;
+  template &lt;size_t I, class T, size_t N&gt;
+    const T&amp; get(const array&lt;T, N&gt;&amp;) noexcept;
+}</code></pre>
+
+<h3>Header <dfn><code class="header">&lt;deque&gt;</code></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="&lt;deque&gt;"></object> synopsis</h3>
+
+<pre><code class="sh_cpp">namespace std {
+  #include &lt;initializer_list&gt;
+
+  template &lt;class T, class Allocator = allocator&lt;T&gt; &gt; class deque;
+  template &lt;class T, class Allocator&gt;
+    bool operator==(const deque&lt;T, Allocator&gt;&amp; x, const deque&lt;T, Allocator&gt;&amp; y);
+  template &lt;class T, class Allocator&gt;
+    bool operator&lt; (const deque&lt;T, Allocator&gt;&amp; x, const deque&lt;T, Allocator&gt;&amp; y);
+  template &lt;class T, class Allocator&gt;
+    bool operator!=(const deque&lt;T, Allocator&gt;&amp; x, const deque&lt;T, Allocator&gt;&amp; y);
+  template &lt;class T, class Allocator&gt;
+    bool operator&gt; (const deque&lt;T, Allocator&gt;&amp; x, const deque&lt;T, Allocator&gt;&amp; y);
+  template &lt;class T, class Allocator&gt;
+    bool operator&gt;=(const deque&lt;T, Allocator&gt;&amp; x, const deque&lt;T, Allocator&gt;&amp; y);
+  template &lt;class T, class Allocator&gt;
+    bool operator&lt;=(const deque&lt;T, Allocator&gt;&amp; x, const deque&lt;T, Allocator&gt;&amp; y);
+  template &lt;class T, class Allocator&gt;
+    void swap(deque&lt;T, Allocator&gt;&amp; x, deque&lt;T, Allocator&gt;&amp; y);
+}</code></pre>
+
+<h3>Header <dfn><code class="header">&lt;forward_list&gt;</code></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="&lt;forward_list&gt;"></object> synopsis</h3>
+
+<pre><code class="sh_cpp">namespace std {
+  #include &lt;initializer_list&gt;
+
+  template &lt;class T, class Allocator = allocator&lt;T&gt; &gt; class forward_list;
+  template &lt;class T, class Allocator&gt;
+    bool operator==(const forward_list&lt;T, Allocator&gt;&amp; x, const forward_list&lt;T, Allocator&gt;&amp; y);
+  template &lt;class T, class Allocator&gt;
+    bool operator&lt; (const forward_list&lt;T, Allocator&gt;&amp; x, const forward_list&lt;T, Allocator&gt;&amp; y);
+  template &lt;class T, class Allocator&gt;
+    bool operator!=(const forward_list&lt;T, Allocator&gt;&amp; x, const forward_list&lt;T, Allocator&gt;&amp; y);
+  template &lt;class T, class Allocator&gt;
+    bool operator&gt; (const forward_list&lt;T, Allocator&gt;&amp; x, const forward_list&lt;T, Allocator&gt;&amp; y);
+  template &lt;class T, class Allocator&gt;
+    bool operator&gt;=(const forward_list&lt;T, Allocator&gt;&amp; x, const forward_list&lt;T, Allocator&gt;&amp; y);
+  template &lt;class T, class Allocator&gt;
+    bool operator&lt;=(const forward_list&lt;T, Allocator&gt;&amp; x, const forward_list&lt;T, Allocator&gt;&amp; y);
+  template &lt;class T, class Allocator&gt;
+    void swap(forward_list&lt;T, Allocator&gt;&amp; x, forward_list&lt;T, Allocator&gt;&amp; y);
+}</code></pre>
+
+<h3>Header <dfn><code class="header">&lt;list&gt;</code></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="&lt;list&gt;"></object> synopsis</h3>
+
+<pre><code class="sh_cpp">namespace std {
+  #include &lt;initializer_list&gt;
+
+  template &lt;class T, class Allocator = allocator&lt;T&gt; &gt; class list;
+  template &lt;class T, class Allocator&gt;
+    bool operator==(const list&lt;T, Allocator&gt;&amp; x, const list&lt;T, Allocator&gt;&amp; y);
+  template &lt;class T, class Allocator&gt;
+    bool operator&lt; (const list&lt;T, Allocator&gt;&amp; x, const list&lt;T, Allocator&gt;&amp; y);
+  template &lt;class T, class Allocator&gt;
+    bool operator!=(const list&lt;T, Allocator&gt;&amp; x, const list&lt;T, Allocator&gt;&amp; y);
+  template &lt;class T, class Allocator&gt;
+    bool operator&gt; (const list&lt;T, Allocator&gt;&amp; x, const list&lt;T, Allocator&gt;&amp; y);
+  template &lt;class T, class Allocator&gt;
+    bool operator&gt;=(const list&lt;T, Allocator&gt;&amp; x, const list&lt;T, Allocator&gt;&amp; y);
+  template &lt;class T, class Allocator&gt;
+    bool operator&lt;=(const list&lt;T, Allocator&gt;&amp; x, const list&lt;T, Allocator&gt;&amp; y);
+  template &lt;class T, class Allocator&gt;
+    void swap(list&lt;T, Allocator&gt;&amp; x, list&lt;T, Allocator&gt;&amp; y);
+}</code></pre>
+
+<h3>Header <dfn><code class="header">&lt;vector&gt;</code></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="&lt;vector&gt;"></object> synopsis</h3>
+
+<pre><code class="sh_cpp">#include &lt;initializer_list&gt;
+
+namespace std {
+
+  template &lt;class T, class Allocator = allocator&lt;T&gt; &gt; class vector;
+  template &lt;class T, class Allocator&gt;
+    bool operator==(const vector&lt;T, Allocator&gt;&amp; x, const vector&lt;T, Allocator&gt;&amp; y);
+  template &lt;class T, class Allocator&gt;
+    bool operator&lt; (const vector&lt;T, Allocator&gt;&amp; x, const vector&lt;T, Allocator&gt;&amp; y);
+  template &lt;class T, class Allocator&gt;
+    bool operator!=(const vector&lt;T, Allocator&gt;&amp; x, const vector&lt;T, Allocator&gt;&amp; y);
+  template &lt;class T, class Allocator&gt;
+    bool operator&gt; (const vector&lt;T, Allocator&gt;&amp; x, const vector&lt;T, Allocator&gt;&amp; y);
+  template &lt;class T, class Allocator&gt;
+    bool operator&gt;=(const vector&lt;T, Allocator&gt;&amp; x, const vector&lt;T, Allocator&gt;&amp; y);
+  template &lt;class T, class Allocator&gt;
+    bool operator&lt;=(const vector&lt;T, Allocator&gt;&amp; x, const vector&lt;T, Allocator&gt;&amp; y);
+  template &lt;class T, class Allocator&gt;
+    void swap(vector&lt;T, Allocator&gt;&amp; x, vector&lt;T, Allocator&gt;&amp; y);
+
+  template &lt;class Allocator&gt; class vector&lt;bool,Allocator&gt;;
+
+  // hash support
+  template &lt;class T&gt; struct hash;
+  template &lt;class Allocator&gt; struct hash&lt;vector&lt;bool, Allocator&gt; &gt;;
+}</code></pre>
+</body>
+</html>
+

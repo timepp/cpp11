@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Shared objects and the library</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[res.on.objects]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[res.on.objects]"></object>17.6.4.10 Shared objects and the library </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The behavior of a program is undefined if calls to standard library functions from different threads may
+introduce a data race. The conditions under which this may occur are specified in <a title="res.on.data.races" href="res.on.data.races.html">17.6.5.9</a>. <span class="note">[ <em>Note:</em> Modifying
+an object of a standard library type that is shared between threads risks undefined behavior unless objects of that type
+are explicitly specified as being sharable without data races or the user supplies a locking mechanism. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><span class="note">[ <em>Note:</em> In particular, the program is required to ensure that completion of the constructor of any object of a
+class type defined in the standard library happens before any other member function invocation on that object and,
+unless otherwise specified, to ensure that completion of any member function invocation other than destruction on such
+an object happens before destruction of that object. This applies even to objects such as mutexes intended for thread
+synchronization. — <em>end note</em> ]</span></p>
+</body>
+</html>
+

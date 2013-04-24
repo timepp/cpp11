@@ -1,0 +1,176 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Character traits requirements</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[char.traits.require]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[char.traits.require]"></object>21.2.1 Character traits requirements </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>In Table <a href="char.traits.require.html#t62">62</a>, <code class="sh_cpp">X</code> denotes a Traits class defining types and functions for the character
+container type <code class="sh_cpp">CharT</code>; <code class="sh_cpp">c</code> and <code class="sh_cpp">d</code> denote values of type <code class="sh_cpp">CharT</code>;
+<code class="sh_cpp">p</code> and <code class="sh_cpp">q</code> denote values of type <code class="sh_cpp">const CharT*</code>; <code class="sh_cpp">s</code> denotes a value of
+type <code class="sh_cpp">CharT*</code>; <code class="sh_cpp">n</code>, <code class="sh_cpp">i</code> and <code class="sh_cpp">j</code> denote values of type
+<code class="sh_cpp">std::size_t</code>; <code class="sh_cpp">e</code> and <code class="sh_cpp">f</code> denote values of type <code class="sh_cpp">X::int_type</code>;
+<code class="sh_cpp">pos</code> denotes a value of type <code class="sh_cpp">X::pos_type</code>; <code class="sh_cpp">state</code> denotes a value of type
+<code class="sh_cpp">X::state_type</code>; and <code class="sh_cpp">r</code> denotes an lvalue of type <code class="sh_cpp">CharT</code>. Operations on Traits shall
+not throw exceptions.</p>
+
+<table id="t62" class="requirements">
+<caption>Table 62 — Character traits requirements</caption>
+<thead>
+<tr>
+<th>Expression</th>
+	<th>Return type</th>
+	<th>Assertion/note<br>pre-/post-condition</th>
+	<th>Complexity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code class="sh_cpp">X::char_type</code></td>
+	<td><code class="sh_cpp">charT</code></td>
+	<td>(described in <a title="char.traits.typedefs" href="char.traits.typedefs.html">21.2.2</a>)</td>
+	<td>compile-time</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">X::int_type</code></td>
+	<td></td>
+	<td>(described in <a title="char.traits.typedefs" href="char.traits.typedefs.html">21.2.2</a>)</td>
+	<td>compile-time</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">X::off_type</code></td>
+	<td></td>
+	<td>(described in <a title="char.traits.typedefs" href="char.traits.typedefs.html">21.2.2</a>)</td>
+	<td>compile-time</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">X::pos_type</code></td>
+	<td></td>
+	<td>(described in <a title="char.traits.typedefs" href="char.traits.typedefs.html">21.2.2</a>)</td>
+	<td>compile-time</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">X::state_type</code></td>
+	<td></td>
+	<td>(described in <a title="char.traits.typedefs" href="char.traits.typedefs.html">21.2.2</a>)</td>
+	<td>compile-time</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">X::eq(c,d)</code></td>
+	<td><code class="sh_cpp">bool</code></td>
+	<td>yields: whether <code class="sh_cpp">c</code> is to be treated as equal to <code class="sh_cpp">d</code>.</td>
+	<td>constant</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">X::lt(c,d)</code></td>
+	<td><code class="sh_cpp">bool</code></td>
+	<td>yields: whether <code class="sh_cpp">c</code> is to be treated as less than <code class="sh_cpp">d</code>.</td>
+	<td>constant</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">X::compare(p,q,n)</code></td>
+	<td><code class="sh_cpp">int</code></td>
+	<td>yields: <code class="sh_cpp">0</code> if for each <code class="sh_cpp">i</code> in <code class="sh_cpp">[0,n)</code>, <code class="sh_cpp">X::eq(p[i], q[i])</code> is true;
+		else, a negative value if, for some <code class="sh_cpp">j</code> in <code class="sh_cpp">[0,n)</code>, <code class="sh_cpp">X::lt(p[j], q[j])</code> is true
+		and for each <code class="sh_cpp">i</code> in <code class="sh_cpp">[0,j)</code> <code class="sh_cpp">X::eq(p[i], q[i])</code> is true; else a positive
+		value.</td>
+	<td>linear</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">X::length(p)</code></td>
+	<td><code class="sh_cpp">std::size_t</code></td>
+	<td>yields: the smallest <code class="sh_cpp">i</code> such that <code class="sh_cpp">X::eq(p[i], charT())</code> is true.</td>
+	<td>linear</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">X::find(p,n,c)</code></td>
+	<td><code class="sh_cpp">const X::char_type*</code></td>
+	<td>yields: the smallest <code class="sh_cpp">q</code> in <code class="sh_cpp">[p,p+n)</code> such that <code class="sh_cpp">X::eq(*q,c)</code> is true, zero
+		otherwise.</td>
+	<td>linear</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">X::move(s,p,n)</code></td>
+	<td><code class="sh_cpp">X::char_type*</code></td>
+	<td>for each <code class="sh_cpp">i</code> in <code class="sh_cpp">[0,n)</code>, performs <code class="sh_cpp">X::assign(s[i], p[i])</code>. Copies correctly
+		even where the ranges <code class="sh_cpp">[p,p+n)</code> and <code class="sh_cpp">[s,s+n)</code> overlap. yields: <code class="sh_cpp">s</code>.</td>
+	<td>linear</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">X::copy(s,p,n)</code></td>
+	<td><code class="sh_cpp">X::char_type*</code></td>
+	<td>pre: <code class="sh_cpp">p</code> not in <code class="sh_cpp">[s,s+n)</code>. yields: <code class="sh_cpp">s</code>. for each <code class="sh_cpp">i</code> in
+		<code class="sh_cpp">[0,n)</code>, performs <code class="sh_cpp">X::assign(s[i], p[i])</code>.</td>
+	<td>linear</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">X::assign(r,d)</code></td>
+	<td>(not used)</td>
+	<td>assigns <code class="sh_cpp">r=d</code>.</td>
+	<td>constant</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">X::assign(s,n,c)</code></td>
+	<td><code class="sh_cpp">X::char_type*</code></td>
+	<td>for each <code class="sh_cpp">i</code> in <code class="sh_cpp">[0,n)</code>, performs <code class="sh_cpp">X::assign(s[i], c)</code>. yields:
+		<code class="sh_cpp">s</code>.</td>
+	<td>linear</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">X::not_eof(e)</code></td>
+	<td><code class="sh_cpp">int_type</code></td>
+	<td>yields: <code class="sh_cpp">e</code> if <code class="sh_cpp">X::eq_int_type(e, X::eof())</code> is false, otherwise a value <code class="sh_cpp">f</code>
+		such that <code class="sh_cpp">X::eq_int_type(f, X::eof())</code> is false.</td>
+	<td>constant</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">X::to_char_type(e)</code></td>
+	<td><code class="sh_cpp">X::char_type</code></td>
+	<td>yields: if for some <code class="sh_cpp">c</code>, <code class="sh_cpp">X::eq_int_type(e, X::to_int_type(c))</code> is true, <code class="sh_cpp">c</code>;
+		else some unspecified value.</td>
+	<td>constant</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">X::to_int_type(c)</code></td>
+	<td><code class="sh_cpp">X::int_type</code></td>
+	<td>yields: some value <code class="sh_cpp">e</code>, constrained by the definitions of <code class="sh_cpp">to_char_type</code> and
+		<code class="sh_cpp">eq_int_type</code>.</td>
+	<td>constant</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">X::eq_int_type(e,f)</code></td>
+	<td><code class="sh_cpp">bool</code></td>
+	<td>yields: for all <code class="sh_cpp">c</code> and <code class="sh_cpp">d</code>, <code class="sh_cpp">X::eq(c,d)</code> is equal to
+		<code class="sh_cpp">X::eq_int_type​(X::to_int_type(c), X::to_int_type(d))</code>; otherwise, yields true if <code class="sh_cpp">e</code> and
+		<code class="sh_cpp">f</code> are both copies of <code class="sh_cpp">X::eof()</code>; otherwise, yields false if one of <code class="sh_cpp">e</code> and
+		<code class="sh_cpp">f</code> is a copy of <code class="sh_cpp">X::eof()</code> and the other is not; otherwise the value is unspecified.</td>
+	<td>constant</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">X::eof()</code></td>
+	<td><code class="sh_cpp">X::int_type</code></td>
+	<td>yields: a value <code class="sh_cpp">e</code> such that <code class="sh_cpp">X::eq_int_type(e, X::to_int_type(c))</code> is false for all
+		values <code class="sh_cpp">c</code>.</td>
+	<td>constant</td>
+</tr>
+</tbody>
+</table>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The struct template</p>
+
+<pre><code class="sh_cpp">template&lt;class charT&gt; struct char_traits;</code></pre>
+
+<p>shall be provided in the header <code class="header">&lt;string&gt;</code> as a basis for explicit specializations.</p>
+</body>
+</html>
+

@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Overload resolution</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[temp.over]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[temp.over]"></object>14.8.3 Overload resolution </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A function template can be overloaded either by (non-template) functions of its name or by (other) function
+templates of the same name. When a call to that name is written (explicitly, or implicitly using the operator notation),
+template argument deduction (<a title="temp.deduct" href="temp.deduct.html">14.8.2</a>) and checking of any explicit template arguments (<a title="temp.arg" href="temp.arg.html">14.3</a>) are
+performed for each function template to find the template argument values (if any) that can be used with that function
+template to instantiate a function template specialization that can be invoked with the call arguments. For each
+function template, if the argument deduction and checking succeeds, the <i class="nonterminal">template-argument</i>s (deduced and/or
+explicit) are used to synthesize the declaration of a single function template specialization which is added to the
+candidate functions set to be used in overload resolution. If, for a given function template, argument deduction fails,
+no such function is added to the set of candidate functions for that template. The complete set of candidate functions
+includes all the synthesized declarations and all of the non-template overloaded functions of the same name. The
+synthesized declarations are treated like any other functions in the remainder of overload resolution, except as
+explicitly noted in <a title="over.match.best" href="over.match.best.html">13.3.3</a>.<sup class="footnote"><a href="#fn148">148</a></sup></p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">template&lt;class T&gt; T max(T a, T b) { return a&gt;b?a:b; }
+
+void f(int a, int b, char c, char d) {
+  int m1 = max(a,b);            // max(int a, int b)
+  char m2 = max(c,d);           // max(char a, char b)
+  int m3 = max(a,c);            // error: cannot generate max(int,char)
+}</code></pre>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>Adding the non-template function</p>
+
+<pre><code class="sh_cpp">int max(int,int);</code></pre>
+
+<p>to the example above would resolve the third call, by providing a function that could be called for
+<code class="sh_cpp">max(a,c)</code> after using the standard conversion of <code class="sh_cpp">char</code> to <code class="sh_cpp">int</code> for
+<code class="sh_cpp">c</code>.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>Here is an example involving conversions on a function argument involved in <i class="nonterminal">template-argument</i> deduction:</p>
+
+<pre><code class="sh_cpp">template&lt;class T&gt; struct B { /* … */ };
+template&lt;class T&gt; struct D : public B&lt;T&gt; { /* … */ };
+template&lt;class T&gt; void f(B&lt;T&gt;&amp;);
+
+void g(B&lt;int&gt;&amp; bi, D&lt;int&gt;&amp; di) {
+  f(bi);            // f(bi)
+  f(di);            // f((B&lt;int&gt;&amp;)di)
+}</code></pre>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>Here is an example involving conversions on a function argument not involved in <i class="nonterminal">template-parameter</i>
+deduction:</p>
+
+<pre><code class="sh_cpp">template&lt;class T&gt; void f(T*,int);       // #1
+template&lt;class T&gt; void f(T,char);       // #2
+
+void h(int* pi, int i, char c) {
+  f(pi,i);          // #1: f&lt;int&gt;(pi,i)
+  f(pi,c);          // #2: f&lt;int*&gt;(pi,c)
+  
+  f(i,c);           // #2: f&lt;int&gt;(i,c);
+  f(i,i);           // #2: f&lt;int&gt;(i,char(i))
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>Only the signature of a function template specialization is needed to enter the specialization in a set of
+candidate functions. Therefore only the function template declaration is needed to resolve a call for which a template
+specialization is a candidate.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">template&lt;class T&gt; void f(T);    // declaration
+
+void g() {
+  f("Annemarie");               // call of f&lt;const char*&gt;
+}</code></pre>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>The call of <code class="sh_cpp">f</code> is well-formed even if the template <code class="sh_cpp">f</code> is only declared and not defined
+at the point of the call. The program will be ill-formed unless a specialization for <code class="sh_cpp">f&lt;const
+char*&gt;</code>, either implicitly or explicitly generated, is present in some translation unit. — <em>end example</em> ]</p>
+</div>
+
+
+<div><p class="footnote" id="fn148">148) The parameters of function template specializations contain no template parameter types. The set of
+conversions allowed on deduced arguments is limited, because the argument deduction process produces function templates
+with parameters that either match the call arguments exactly or differ only in ways that can be bridged by the allowed
+limited conversions. Non-deduced arguments allow the full range of conversions. Note also that <a title="over.match.best" href="over.match.best.html">13.3.3</a>
+specifies that a non-template function will be given preference over a template specialization if the two functions are
+otherwise equally good candidates for an overload match.</p></div>
+</body>
+</html>
+

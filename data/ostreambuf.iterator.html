@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class template ostreambuf_iterator</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[ostreambuf.iterator]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[ostreambuf.iterator]"></object>24.6.4 Class template <code class="sh_cpp"><dfn>ostreambuf_iterator</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="ostreambuf_iterator"></object></code> </h3>
+
+<pre><code class="sh_cpp">namespace std {
+  template &lt;class charT, class traits = char_traits&lt;charT&gt; &gt;
+  class ostreambuf_iterator :
+    public iterator&lt;output_iterator_tag, void, void, void, void&gt; {
+  public:
+    typedef charT                          char_type;
+    typedef traits                         traits_type;
+    typedef basic_streambuf&lt;charT, traits&gt; streambuf_type;
+    typedef basic_ostream&lt;charT, traits&gt;   ostream_type;
+
+  public:
+    ostreambuf_iterator(ostream_type&amp; s) noexcept;
+    ostreambuf_iterator(streambuf_type* s) noexcept;
+    ostreambuf_iterator&amp; operator=(charT c);
+
+    ostreambuf_iterator&amp; operator*();
+    ostreambuf_iterator&amp; operator++();
+    ostreambuf_iterator&amp; operator++(int);
+    bool failed() const noexcept;
+
+  private:
+    streambuf_type* sbuf_;                 // exposition only
+  };
+}</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The class template <code class="sh_cpp">ostreambuf_iterator</code> writes successive characters onto the output stream from
+which it was constructed. It is not possible to get a character value out of the output iterator.</p>
+</body>
+</html>
+

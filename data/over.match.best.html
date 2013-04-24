@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Best viable function</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[over.match.best]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[over.match.best]"></object>13.3.3 Best viable function </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Define ICS<sub><var>i</var></sub>(<code class="sh_cpp">F</code>) as follows:</p>
+
+<ul>
+<li>if <code class="sh_cpp">F</code> is a static member function, ICS<sub>1</sub>(<code class="sh_cpp">F</code>) is defined such that
+	ICS<sub>1</sub>(<code class="sh_cpp">F</code>) is neither better nor worse than ICS<sub>1</sub>(<code class="sh_cpp">G</code>) for any function
+	<code class="sh_cpp">G</code>, and, symmetrically, ICS<sub>1</sub>(<code class="sh_cpp">G</code>) is neither better nor worse than
+	ICS<sub>1</sub>(<code class="sh_cpp">F</code>)<sup class="footnote"><a href="#fn135">135</a></sup>; otherwise,</li>
+<li>let ICS<sub><var>i</var></sub>(<code class="sh_cpp">F</code>) denote the implicit conversion sequence that converts the
+	<var>i</var>-th argument in the list to the type of the <var>i</var>-th parameter of viable function <code class="sh_cpp">F</code>.
+	<a title="over.best.ics" href="over.best.ics.html">13.3.3.1</a> defines the implicit conversion sequences and <a title="over.ics.rank" href="over.ics.rank.html">13.3.3.2</a> defines what it means for one
+	implicit conversion sequence to be a better conversion sequence or worse conversion sequence than another.</li>
+</ul>
+
+<p>Given these definitions, a viable function <code class="sh_cpp">F1</code> is defined to be a <dfn>better</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="better"></object> function than another
+viable function <code class="sh_cpp">F2</code> if for all arguments <var>i</var>, ICS<sub><var>i</var></sub>(<code class="sh_cpp">F1</code>) is not a
+worse conversion sequence than ICS<sub><var>i</var></sub>(<code class="sh_cpp">F2</code>), and then</p>
+
+<ul>
+<li>for some argument <var>j</var>, ICS<sub><var>j</var></sub>(<code class="sh_cpp">F1</code>) is a better conversion sequence than
+	ICS<sub><var>j</var></sub>(<code class="sh_cpp">F2</code>), or, if not that,</li>
+<li>the context is an initialization by user-defined conversion (see <a title="dcl.init" href="dcl.init.html">8.5</a>, <a title="over.match.conv" href="over.match.conv.html">13.3.1.5</a>, and
+	<a title="over.match.ref " href=".html"></a>) and the standard conversion sequence from the return type of <code class="sh_cpp">F1</code> to the destination
+	type (i.e., the type of the entity being initialized) is a better conversion sequence than the standard conversion
+	sequence from the return type of <code class="sh_cpp">F2</code> to the destination type.
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct A {
+  A();
+  operator int();
+  operator double();
+} a;
+int i = a;              // a.operator int() followed by no conversion
+                        // is better than a.operator double() followed by
+                        // a conversion to int
+float x = a;            // ambiguous: both possibilities require conversions,
+                        // and neither is better than the other</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+	or, if not that,</li>
+
+<li>
+<code class="sh_cpp">F1</code> is a non-template function and <code class="sh_cpp">F2</code> is a function template specialization, or, if not
+	that,</li>
+<li>
+<code class="sh_cpp">F1</code> and <code class="sh_cpp">F2</code> are function template specializations, and the function template for
+	<code class="sh_cpp">F1</code> is more specialized than the template for <code class="sh_cpp">F2</code> according to the partial ordering rules
+	described in <a title="temp.func.order" href="temp.func.order.html">14.5.6.2</a>.</li>
+</ul>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>If there is exactly one viable function that is a better function than all other viable functions, then it is
+the one selected by overload resolution; otherwise the call is ill-formed.<sup class="footnote"><a href="#fn136">136</a></sup></p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">void Fcn(const int*, short);
+void Fcn(int*, int);
+
+int i;
+short s = 0;
+
+void f() {
+  Fcn(&amp;i, s);           // is ambiguous because
+                        // &amp;i → int* is better than &amp;i → const int*
+                        // but s → short is also better than s → int
+
+  Fcn(&amp;i, 1L);          // calls Fcn(int*, int), because
+                        // &amp;i → int* is better than &amp;i → const int*
+                        // and 1L → short and 1L → int are indistinguishable
+
+  Fcn(&amp;i,'c');          // calls Fcn(int*, int), because
+                        // &amp;i → int* is better than &amp;i → const int*
+                        // and c → int is better than c → short
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>If the best viable function resolves to a function for which multiple declarations were found, and if at least
+two of these declarations — or the declarations they refer to in the case of <i class="nonterminal">using-declaration</i>s — specify a
+default argument that made the function viable, the program is ill-formed.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">namespace A {
+  extern "C" void f(int = 5);
+}
+namespace B {
+  extern "C" void f(int = 5);
+}
+
+using A::f;
+using B::f;
+
+void use() {
+  f(3);                 // OK, default argument was not used for viability
+  f();                  // Error: found default argument twice
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+
+
+
+<div>
+<p class="footnote" id="fn135">135) If a function is a static member function, this definition means that the first argument, the implied
+object argument, has no effect in the determination of whether the function is better or worse than any other
+function.</p>
+<p class="footnote" id="fn136">136) The algorithm for selecting the best viable function is linear in the number of viable functions. Run
+a simple tournament to find a function <code class="sh_cpp">W</code> that is not worse than any opponent it faced. Although another
+function <code class="sh_cpp">F</code> that <code class="sh_cpp">W</code> did not face might be at least as good as <code class="sh_cpp">W</code>, <code class="sh_cpp">F</code>
+cannot be the best function because at some point in the tournament <code class="sh_cpp">F</code> encountered another function
+<code class="sh_cpp">G</code> such that <code class="sh_cpp">F</code> was not better than <code class="sh_cpp">G</code>. Hence, <code class="sh_cpp">W</code> is either the best
+function or there is no best function. So, make a second pass over the viable functions to verify that <code class="sh_cpp">W</code> is
+better than all other functions.</p>
+</div>
+</body>
+</html>
+

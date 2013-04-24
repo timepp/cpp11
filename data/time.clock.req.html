@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Clock requirements</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[time.clock.req]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[time.clock.req]"></object>20.11.3 Clock requirements </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A clock is a bundle consisting of a <code class="sh_cpp">duration</code>, a <code class="sh_cpp">time_point</code>, and a
+function <code class="sh_cpp">now()</code> to get the current <code class="sh_cpp">time_point</code>. The origin of the clock’s
+<code class="sh_cpp">time_point</code> is referred to as the clock’s <dfn>epoch</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="epoch"></object>. A clock shall meet the requirements in
+Table <a href="time.clock.req.html#t59">59</a>.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>In Table <a href="time.clock.req.html#t59">59</a> <code class="sh_cpp">C1</code> and <code class="sh_cpp">C2</code> denote clock types. <code class="sh_cpp">t1</code> and
+<code class="sh_cpp">t2</code> are values returned by <code class="sh_cpp">C1::now()</code> where the call returning <code class="sh_cpp">t1</code> happens before
+(<a title="intro.multithread" href="intro.multithread.html">1.10</a>) the call returning <code class="sh_cpp">t2</code> and both of these calls occur before
+<code class="sh_cpp">C1::time_point::max()</code>. <span class="note">[ <em>Note:</em> this means <code class="sh_cpp">C1</code> did not wrap around between <code class="sh_cpp">t1</code> and
+<code class="sh_cpp">t2</code>. — <em>end note</em> ]</span></p>
+
+<table id="t59" class="requirements">
+<caption>Table 59 — Clock requirements</caption>
+<thead><tr>
+<th>Expression</th>
+<th>Return type</th>
+<th>Operational semantics</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code class="sh_cpp">C1::rep</code></td>
+	<td>An arithmetic type or a class emulating an arithmetic type</td>
+	<td>The representation type of <code class="sh_cpp">C1::duration</code>.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">C1::period</code></td>
+	<td>a specialization of <code class="sh_cpp">ratio</code>
+</td>
+	<td>The tick period of the clock in seconds.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">C1::duration</code></td>
+	<td><code class="sh_cpp">chrono::duration&lt;C1::rep, C1::period&gt;</code></td>
+	<td>The <code class="sh_cpp">duration</code> type of the clock.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">C1::time_point</code></td>
+	<td>
+<code class="sh_cpp">chrono::time_point&lt;C1&gt;</code> or <code class="sh_cpp">chrono::time_point&lt;C2,
+		C1::duration&gt;</code>
+</td>
+	<td>The <code class="sh_cpp">time_point</code> type of the clock. <code class="sh_cpp">C1</code> and <code class="sh_cpp">C2</code> shall refer to the same
+		epoch.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">C1::is_steady</code></td>
+	<td><code class="sh_cpp">const bool</code></td>
+	<td>
+<code class="sh_cpp">true</code> if <code class="sh_cpp">t1 &lt;= t2</code> is always <code class="sh_cpp">true</code> and the time between clock ticks is
+		constant, otherwise <code class="sh_cpp">false</code>.</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">C1::now()</code></td>
+	<td><code class="sh_cpp">C1::time_point</code></td>
+	<td>Returns a <code class="sh_cpp">time_point</code> object representing the current point in time.</td>
+</tr>
+</tbody>
+</table>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><span class="note">[ <em>Note:</em> The relative difference in durations between those reported by a given clock and the SI definition is a
+measure of the quality of implementation. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>A type <code class="sh_cpp">TC</code> meets the <code class="concept">TrivialClock</code> requirements if:</p>
+<ul>
+<li>
+<code class="sh_cpp">TC</code> satisfies the <code class="concept">Clock</code> requirements (<a title="time.clock.req" href="time.clock.req.html">20.11.3</a>),</li>
+<li>the types <code class="sh_cpp">TC::rep</code>, <code class="sh_cpp">TC::duration</code>, and <code class="sh_cpp">TC::time_point</code> satisfy the requirements
+	of <code class="concept">EqualityComparable</code> (Table <a href="utility.arg.requirements.html#t17">17</a>), <code class="concept">LessThanComparable</code> (Table <a href="utility.arg.requirements.html#t18">18</a>), <code class="concept">DefaultConstructible</code> (Table <a href="utility.arg.requirements.html#t19">19</a>), <code class="concept">CopyConstructible</code>
+	(Table <a href="utility.arg.requirements.html#t21">21</a>), <code class="concept">CopyAssignable</code> (Table <a href="utility.arg.requirements.html#t23">23</a>), <code class="concept">Destructible</code> (Table <a href="utility.arg.requirements.html#t24">24</a>), and the requirements of numeric types (<a title="numeric.requirements" href="numeric.requirements.html">26.2</a>). <span class="note">[ <em>Note:</em> this means, in particular, that
+	operations on these types will not throw exceptions. — <em>end note</em> ]</span>
+</li>
+<li>lvalues of the types <code class="sh_cpp">TC::rep</code>, <code class="sh_cpp">TC::duration</code>, and <code class="sh_cpp">TC::time_point</code> are swappable
+	(<a title="swappable.requirements" href="swappable.requirements.html">17.6.3.2</a>),</li>
+<li>the function <code class="sh_cpp">TC::now()</code> does not throw exceptions, and</li>
+<li>the type <code class="sh_cpp">TC::time_point::clock</code> meets the <code class="concept">TrivialClock</code> requirements,
+	recursively.</li>
+</ul>
+</body>
+</html>
+

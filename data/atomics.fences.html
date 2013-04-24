@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Fences</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[atomics.fences]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[atomics.fences]"></object>29.8 Fences </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>This section introduces synchronization primitives called <dfn>fences</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="fences"></object>. Fences can have acquire semantics,
+release semantics, or both. A fence with acquire semantics is called an <dfn>acquire fence</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="acquire fence"></object>. A fence with release
+semantics is called a <dfn>release fence</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="release fence"></object>.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>A release fence <var>A</var> synchronizes with an acquire fence <var>B</var> if there exist atomic operations
+<var>X</var> and <var>Y</var>, both operating on some atomic object <var>M</var>, such that <var>A</var> is sequenced
+before <var>X</var>, <var>X</var> modifies <var>M</var>, <var>Y</var> is sequenced before <var>B</var>, and <var>Y</var>
+reads the value written by <var>X</var> or a value written by any side effect in the hypothetical release sequence
+<var>X</var> would head if it were a release operation.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>A release fence <var>A</var> synchronizes with an atomic operation <var>B</var> that performs an acquire
+operation on an atomic object <var>M</var> if there exists an atomic operation <var>X</var> such that <var>A</var> is
+sequenced before <var>X</var>, <var>X</var> modifies <var>M</var>, and <var>B</var> reads the value written by
+<var>X</var> or a value written by any side effect in the hypothetical release sequence <var>X</var> would head if it
+were a release operation.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>An atomic operation <var>A</var> that is a release operation on an atomic object <var>M</var> synchronizes with
+an acquire fence <var>B</var> if there exists some atomic operation <var>X</var> on <var>M</var> such that <var>X</var>
+is sequenced before <var>B</var> and reads the value written by <var>A</var> or a value written by any side effect in
+the release sequence headed by <var>A</var>.</p>
+
+<h3><code class="sh_cpp">extern "C" void <dfn>atomic_thread_fence</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="atomic_thread_fence"></object>(memory_order order) noexcept;</code></h3>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><em>Effects:</em> depending on the value of <code class="sh_cpp">order</code>, this operation:</p>
+<ul>
+<li>has no effects, if <code class="sh_cpp">order == memory_order_relaxed</code>;</li>
+<li>is an acquire fence, if <code class="sh_cpp">order == memory_order_acquire || order == memory_order_consume</code>;</li>
+<li>is a release fence, if <code class="sh_cpp">order == memory_order_release</code>;</li>
+<li>is both an acquire fence and a release fence, if <code class="sh_cpp">order == memory_order_acq_rel</code>;</li>
+<li>is a sequentially consistent acquire and release fence, if <code class="sh_cpp">order == memory_order_seq_cst</code>.</li>
+</ul>
+
+<h3><code class="sh_cpp">extern "C" void <dfn>atomic_signal_fence</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="atomic_signal_fence"></object>(memory_order order) noexcept;</code></h3>
+
+<p><a class="anchor" id="p6" href="#p6">6</a><em>Effects:</em> equivalent to <code class="sh_cpp">atomic_thread_fence(order)</code>, except that the resulting ordering constraints
+are established only between a thread and a signal handler executed in the same thread.</p>
+
+<p><a class="anchor" id="p7" href="#p7">7</a><em>Notes:</em> <code class="sh_cpp">atomic_signal_fence</code> can be used to specify the order in which actions performed by the
+thread become visible to the signal handler.</p>
+
+<p><a class="anchor" id="p8" href="#p8">8</a><em>Notes:</em> compiler optimizations and reorderings of loads and stores are inhibited in the same way as with
+<code class="sh_cpp">atomic_thread_fence</code>, but the hardware fence instructions that <code class="sh_cpp">atomic_thread_fence</code> would have
+inserted are not emitted.</p>
+</body>
+</html>
+

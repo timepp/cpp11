@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>General</title>
+</head>
+<body>
+<h1>
+<dfn class="label">[input.output]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[input.output]"></object>27 Input/output library </h1>
+
+<h2>
+<dfn class="label">[input.output.general]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[input.output.general]"></object>27.1 General </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>This Clause describes components that C++ programs may use to perform input/output operations.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The following subclauses describe requirements for stream parameters, and components for forward
+declarations of iostreams, predefined iostreams objects, base iostreams classes, stream buffering, stream formatting
+    and manipulators, string streams, and file streams, as summarized in Table <a href="input.output.general.html#t121">121</a>.</p>
+
+<table id="t121" class="library_summary">
+<caption>Table 121 — Input/output library summary</caption>
+<thead><tr>
+<th colspan="2">Subclause</th>
+<th>Header(s)</th>
+</tr></thead>
+<tbody><tr>
+<td><a title="iostreams.requirements" href=".html"></a></td>
+<td>Requirements</td>
+<td></td>
+</tr></tbody>
+<tbody><tr>
+<td><a title="iostream.forward" href="iostream.forward.html">27.3</a></td>
+<td>Forward declarations</td>
+<td><code class="header">&lt;iosfwd&gt;</code></td>
+</tr></tbody>
+<tbody><tr>
+<td><a title="iostream.objects" href="iostream.objects.overview.html">27.4</a></td>
+<td>Standard iostream objects</td>
+<td><code class="header">&lt;iostream&gt;</code></td>
+</tr></tbody>
+<tbody><tr>
+<td><a title="iostreams.base" href="iostreams.base.overview.html">27.5</a></td>
+<td>Iostreams base classes</td>
+<td><code class="header">&lt;ios&gt;</code></td>
+</tr></tbody>
+<tbody><tr>
+<td><a title="stream.buffers" href="stream.buffers.overview.html">27.6</a></td>
+<td>Stream buffers</td>
+<td><code class="header">&lt;streambuf&gt;</code></td>
+</tr></tbody>
+<tbody><tr>
+<td><a title="iostream.format" href="iostream.format.overview.html">27.7</a></td>
+<td>Formatting and manipulators</td>
+<td><ul class="unbulleted">
+<li><code class="header">&lt;istream&gt;</code></li>
+<li><code class="header">&lt;ostream&gt;</code></li>
+<li><code class="header">&lt;iomanip&gt;</code></li>
+</ul></td>
+</tr></tbody>
+<tbody><tr>
+<td><a title="string.streams" href="string.streams.overview.html">27.8</a></td>
+<td>String streams</td>
+<td><code class="header">&lt;sstream&gt;</code></td>
+</tr></tbody>
+<tbody><tr>
+<td><a title="file.streams" href="fstreams.html">27.9</a></td>
+<td>File streams</td>
+<td><ul class="unbulleted">
+<li><code class="header">&lt;fstream&gt;</code></li>
+<li><code class="header">&lt;cstdio&gt;</code></li>
+<li><code class="header">&lt;cinttypes&gt;</code></li>
+</ul></td>
+</tr></tbody>
+</table>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>Figure 7 illustrates relationships among various types described in ths clause. A line from <var>A</var> to
+<var>B</var> indicates that <var>A</var> is an alias (e.g. a typedef) for <var>B</var> or that <var>A</var> is defined
+in terms of <var>B</var>.</p>
+
+<table id="f7" class="figure">
+<caption>Figure 7 — Stream position, offset, and size types [non-normative]</caption>
+<tr><td><pre><code class="sh_cpp">char_traits&lt;char&gt;             char_traits&lt;wchar_t&gt;              char_traits&lt;char&gt;             char_traits&lt;wchar_t&gt;            streamsize
+   ::pos_type                      ::pos_type                      ::off_type                      ::off_type                     │
+        │                               │                               │                               │                         │stream.types
+        │iostreams.limits.pos           │iostreams.limits.pos           │iostreams.limits.pos           │iostreams.limits.pos     │
+        │                               │                               │                               │                         ↓
+        ↓                               ↓                               ↓                               │                signed integer type
+    streampos                      wstreampos                       streamoff ←─────────────────────────┘           represents characters xfered
+        │                               │                               │                                                  or buffer sizes
+        │                               │                               │                                
+        │iostream.forward               │iostream.forward               │stream.types
+        │                               │                               │
+        │                               │                               ↓
+        │                               │                      signed integer type
+        └─────→ fpos&lt;mbstate_t&gt; ←───────┘                         sufficient for
+                                                              O/S maximum file size</code></pre></td></tr>
+</table>
+
+</body>
+</html>
+

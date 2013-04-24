@@ -1,0 +1,119 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class template basic_regex</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[re.regex]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[re.regex]"></object>28.8 Class template <code class="sh_cpp"><dfn>basic_regex</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="basic_regex"></object></code> </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>For a char-like type <code class="sh_cpp">charT</code>, specializations of class template <code class="sh_cpp">basic_regex</code> represent
+regular expressions constructed from character sequences of <code class="sh_cpp">charT</code> characters. In the rest of
+<a title="re.regex" href="re.regex.html">28.8</a>, <code class="sh_cpp">charT</code> denotes a given char-like type. Storage for a regular expression is allocated and
+freed as necessary by the member functions of class <code class="sh_cpp">basic_regex</code>.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>Objects of type specialization of <code class="sh_cpp">basic_regex</code> are responsible for converting the sequence of
+<code class="sh_cpp">charT</code> objects to an internal representation. It is not specified what form this representation takes, nor
+how it is accessed by algorithms that operate on regular expressions. <span class="note">[ <em>Note:</em> Implementations will typically declare some
+function templates as friends of <code class="sh_cpp">basic_regex</code> to achieve this — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>The functions described in this Clause report errors by throwing exceptions of type
+<code class="sh_cpp">regex_error</code>.</p>
+
+<pre><code class="sh_cpp">namespace std {
+  template &lt;class charT,
+            class traits = regex_traits&lt;charT&gt; &gt;
+  class basic_regex {
+  public:
+    // types:
+    typedef          charT                      value_type;
+    typedef          traits                     traits_type;
+    typedef typename traits::string_type        string_type;
+    typedef regex_constants::syntax_option_type flag_type;
+    typedef typename traits::locale_type        locale_type;
+
+    // <a title="re.regex.const" href="re.regex.const.html">28.8.1</a>, constants:
+    static constexpr regex_constants::syntax_option_type
+      icase = regex_constants::icase;
+    static constexpr regex_constants::syntax_option_type
+      nosubs = regex_constants::nosubs;
+    static constexpr regex_constants::syntax_option_type
+      optimize = regex_constants::optimize;
+    static constexpr regex_constants::syntax_option_type
+      collate = regex_constants::collate;
+    static constexpr regex_constants::syntax_option_type
+      ECMAScript = regex_constants::ECMAScript;
+    static constexpr regex_constants::syntax_option_type
+      basic = regex_constants::basic;
+    static constexpr regex_constants::syntax_option_type
+      extended = regex_constants::extended;
+    static constexpr regex_constants::syntax_option_type
+      awk = regex_constants::awk;
+    static constexpr regex_constants::syntax_option_type
+      grep = regex_constants::grep;
+    static constexpr regex_constants::syntax_option_type
+      egrep = regex_constants::egrep;
+
+    // <a title="re.regex.construct" href="re.regex.construct.html">28.8.2</a>, construct/copy/destroy:
+    basic_regex();
+    explicit basic_regex(const charT* p,
+      flag_type f = regex_constants::ECMAScript);
+    basic_regex(const charT* p, size_t len, flag_type f = regex_constants::ECMAScript);
+    basic_regex(const basic_regex&amp;);
+    basic_regex(basic_regex&amp;&amp;) noexcept;
+    template &lt;class ST, class SA&gt;
+      explicit basic_regex(const basic_string&lt;charT, ST, SA&gt;&amp; p,
+                           flag_type f = regex_constants::ECMAScript);
+    template &lt;class ForwardIterator&gt;
+      basic_regex(ForwardIterator first, ForwardIterator last,
+                  flag_type f = regex_constants::ECMAScript);
+    basic_regex(initializer_list&lt;charT&gt;,
+      flag_type = regex_constants::ECMAScript);
+
+    ~basic_regex();
+
+    basic_regex&amp; operator=(const basic_regex&amp;);
+    basic_regex&amp; operator=(basic_regex&amp;&amp;) noexcept;
+    basic_regex&amp; operator=(const charT* ptr);
+    basic_regex&amp; operator=(initializer_list&lt;charT&gt; il);
+    template &lt;class ST, class SA&gt;
+      basic_regex&amp; operator=(const basic_string&lt;charT, ST, SA&gt;&amp; p);
+
+    // <a title="re.regex.assign" href="re.regex.assign.html">28.8.3</a>, assign:
+    basic_regex&amp; assign(const basic_regex&amp; that);
+    basic_regex&amp; assign(basic_regex&amp;&amp; that) noexcept;
+    basic_regex&amp; assign(const charT* ptr,
+      flag_type f = regex_constants::ECMAScript);
+    basic_regex&amp; assign(const charT* p, size_t len, flag_type f);
+    template &lt;class string_traits, class A&gt;
+      basic_regex&amp; assign(const basic_string&lt;charT, string_traits, A&gt;&amp; s,
+                          flag_type f = regex_constants::ECMAScript);
+    template &lt;class InputIterator&gt;
+      basic_regex&amp; assign(InputIterator first, InputIterator last,
+                          flag_type f = regex_constants::ECMAScript);
+    basic_regex&amp; assign(initializer_list&lt;charT&gt;,
+                        flag_type = regex_constants::ECMAScript);
+
+    // <a title="re.regex.operations" href="re.regex.operations.html">28.8.4</a>, const operations:
+    unsigned mark_count() const;
+    flag_type flags() const;
+
+    // <a title="re.regex.locale" href="re.regex.locale.html">28.8.5</a>, locale:
+    locale_type imbue(locale_type loc);
+    locale_type getloc() const;
+
+    // <a title="re.regex.swap" href="re.regex.swap.html">28.8.6</a>, swap:
+    void swap(basic_regex&amp;);
+   };
+}</code></pre>
+</body>
+</html>
+

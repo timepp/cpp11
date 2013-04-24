@@ -1,0 +1,294 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Virtual functions</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[class.virtual]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[class.virtual]"></object>10.3 Virtual functions </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Virtual functions support dynamic binding and object-oriented programming. A class that declares or inherits a
+virtual function is called a <dfn>polymorphic class</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="polymorphic class"></object>.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>If a virtual member function <code class="sh_cpp">vf</code> is declared in a class <code class="sh_cpp">Base</code> and in a class
+<code class="sh_cpp">Derived</code>, derived directly or indirectly from <code class="sh_cpp">Base</code>, a member function <code class="sh_cpp">vf</code> with the
+same name, parameter-type-list (<a title="dcl.fct" href="dcl.fct.html">8.3.5</a>), cv-qualification, and ref-qualifier (or absence of same) as
+<code class="sh_cpp">Base::vf</code> is declared, then <code class="sh_cpp">Derived::vf</code> is also virtual (whether or not it is so declared) and
+it <dfn>overrides</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="overrides"></object><sup class="footnote"><a href="#fn114">114</a></sup> <code class="sh_cpp">Base::vf</code>. For convenience we say that any virtual function overrides
+itself. A virtual member function <code class="sh_cpp">C::vf</code> of a class object <code class="sh_cpp">S</code> is a <dfn>final overrider</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="final overrider"></object>
+unless the most derived class (<a title="intro.object" href="intro.object.html">1.8</a>) of which <code class="sh_cpp">S</code> is a base class subobject (if any) declares or
+inherits another member function that overrides <code class="sh_cpp">vf</code>. In a derived class, if a virtual member function of a
+base class subobject has more than one final overrider the program is ill-formed.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct A {
+  virtual void f();
+};
+struct B : virtual A {
+  virtual void f();
+};
+struct C : B , virtual A {
+  using A::f;
+};
+
+void foo() {
+  C c;
+  c.f();                // calls B::f, the final overrider
+  c.C::f();             // calls A::f because of the using-declaration
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct A { virtual void f(); };
+struct B : A { };
+struct C : A { void f(); };
+struct D : B, C { };    // OK: A::f and C::f are the final overriders
+                        // for the B and C subobjects, respectively</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<div class="note">
+<p><a class="anchor" id="p3" href="#p3">3</a>[ <em>Note:</em> A virtual member function does not have to be visible to be overridden, for example,</p>
+
+<pre><code class="sh_cpp">struct B {
+  virtual void f();
+};
+struct D : B {
+  void f(int);
+};
+struct D2 : D {
+  void f();
+};</code></pre>
+
+<p>the function <code class="sh_cpp">f(int)</code> in class <code class="sh_cpp">D</code> hides the virtual function <code class="sh_cpp">f()</code> in its base
+class <code class="sh_cpp">B</code>; <code class="sh_cpp">D::f(int)</code> is not a virtual function. However, <code class="sh_cpp">f()</code> declared in class
+<code class="sh_cpp">D2</code> has the same name and the same parameter list as <code class="sh_cpp">B::f()</code>, and therefore is a virtual
+function that overrides the function <code class="sh_cpp">B::f()</code> even though <code class="sh_cpp">B::f()</code> is not visible in class
+<code class="sh_cpp">D2</code>. — <em>end note</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>If a virtual function <code class="sh_cpp">f</code> in some class <code class="sh_cpp">B</code> is marked with the <i class="nonterminal">virt-specifier</i>
+<code class="sh_cpp">final</code> and in a class <code class="sh_cpp">D</code> derived from <code class="sh_cpp">B</code> a function <code class="sh_cpp">D::f</code> overrides
+<code class="sh_cpp">B::f</code>, the program is ill-formed.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct B {
+  virtual void f() const final;
+};
+
+struct D : B {
+  void f() const;   // error: D::f attempts to override final B::f
+};</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>If a virtual function is marked with the <i class="nonterminal">virt-specifier</i> <code class="sh_cpp">override</code> and does not override a
+member function of a base class, the program is ill-formed.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct B {
+  virtual void f(int);
+};
+
+struct D : B {
+  void f(long) override;    // error: wrong signature overriding B::f
+  void f(int) override;     // OK
+};</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>Even though destructors are not inherited, a destructor in a derived class overrides a base class destructor
+declared virtual; see <a title="class.dtor" href="class.dtor.html">12.4</a> and <a title="class.free" href="class.free.html">12.5</a>.</p>
+
+<p><a class="anchor" id="p7" href="#p7">7</a>The return type of an overriding function shall be either identical to the return type of the overridden
+function or <dfn>covariant</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="covariant"></object> with the classes of the functions. If a function <code class="sh_cpp">D::f</code> overrides a function
+<code class="sh_cpp">B::f</code>, the return types of the functions are covariant if they satisfy the following criteria:</p>
+<ul>
+<li>both are pointers to classes, both are lvalue references to classes, or both are rvalue references to classes<sup class="footnote"><a href="#fn115">115</a></sup>
+</li>
+<li>the class in the return type of <code class="sh_cpp">B::f</code> is the same class as the class in the return type of
+	<code class="sh_cpp">D::f</code>, or is an unambiguous and accessible direct or indirect base class of the class in the return type
+	of <code class="sh_cpp">D::f</code>
+</li>
+<li>both pointers or references have the same cv-qualification and the class type in the return type of
+	<code class="sh_cpp">D::f</code> has the same cv-qualification as or less cv-qualification than the class type in the return type
+	of <code class="sh_cpp">B::f</code>.</li>
+</ul>
+
+<p><a class="anchor" id="p8" href="#p8">8</a>If the return type of <code class="sh_cpp">D::f</code> differs from the return type of <code class="sh_cpp">B::f</code>, the class type in
+the return type of <code class="sh_cpp">D::f</code> shall be complete at the point of declaration of <code class="sh_cpp">D::f</code> or shall be the
+class type <code class="sh_cpp">D</code>. When the overriding function is called as the final overrider of the overridden function, its
+result is converted to the type returned by the (statically chosen) overridden function (<a title="expr.call" href="expr.call.html">5.2.2</a>).</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">class B { };
+class D : private B { friend class Derived; };
+struct Base {
+  virtual void vf1();
+  virtual void vf2();
+  virtual void vf3();
+  virtual B*   vf4();
+  virtual B*   vf5();
+  void f();
+};
+
+struct No_good : public Base {
+  D* vf4();             // error: B (base class of D) inaccessible
+};
+
+class A;
+struct Derived : public Base {
+  void vf1();           // virtual and overrides Base::vf1()
+  void vf2(int);        // not virtual, hides Base::vf2()
+  char vf3();           // error: invalid difference in return type only
+  D* vf4();             // OK: returns pointer to derived class
+  A* vf5();             // error: returns pointer to incomplete class
+  void f();
+};
+
+void g() {
+  Derived d;
+  Base* bp = &amp;d;        // standard conversion:
+                        // Derived* to Base*
+  bp-&gt;vf1();            // calls Derived::vf1()
+  bp-&gt;vf2();            // calls Base::vf2()
+  bp-&gt;f();              // calls Base::f() (not virtual)
+  B* p = bp-&gt;vf4();     // calls Derived::pf() and converts the
+                        // result to B*
+  Derived* dp = &amp;d;
+  D* q = dp-&gt;vf4();     // calls Derived::pf() and does not
+                        // convert the result to B*
+  dp-&gt;vf2();            // ill-formed: argument mismatch
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p9" href="#p9">9</a><span class="note">[ <em>Note:</em> The interpretation of the call of a virtual function depends on the type of the object for which it is
+called (the dynamic type), whereas the interpretation of a call of a non-virtual member function depends only on the
+type of the pointer or reference denoting that object (the static type) (<a title="expr.call" href="expr.call.html">5.2.2</a>). — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p10" href="#p10">10</a><span class="note">[ <em>Note:</em> The <code class="sh_cpp">virtual</code> specifier implies membership, so a virtual function cannot be a nonmember
+(<a title="dcl.fct.spec" href="dcl.fct.spec.html">7.1.2</a>) function. Nor can a virtual function be a static member, since a virtual function call relies on a
+specific object for determining which function to invoke. A virtual function declared in one class can be declared a
+<code class="sh_cpp">friend</code> in another class. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p11" href="#p11">11</a>A virtual function declared in a class shall be defined, or declared pure (<a title="class.abstract" href="class.abstract.html">10.4</a>) in that class, or
+both; but no diagnostic is required (<a title="basic.def.odr" href="basic.def.odr.html">3.2</a>).</p>
+
+<div class="example">
+<p><a class="anchor" id="p12" href="#p12">12</a>[ <em>Example:</em> here are some uses of virtual functions with multiple base classes:</p>
+
+<pre><code class="sh_cpp">struct A {
+  virtual void f();
+};
+
+struct B1 : A {         // note non-virtual derivation
+  void f();
+};
+
+struct B2 : A {
+  void f();
+};
+
+struct D : B1, B2 {     // D has two separate A subobjects
+};
+
+void foo() {
+  D d;
+  // A* ap = &amp;d;          // would be ill-formed: ambiguous
+  B1* b1p = &amp;d;
+  A* ap = b1p;
+  D* dp = &amp;d;
+  ap-&gt;f();              // calls D::B1::f
+  dp-&gt;f();              // ill-formed: ambiguous
+}</code></pre>
+
+<p>In class <code class="sh_cpp">D</code> above there are two occurrences of class <code class="sh_cpp">A</code> and hence two occurrences of the
+virtual member function <code class="sh_cpp">A::f</code>. The final overrider of <code class="sh_cpp">B1::A::f</code> is <code class="sh_cpp">B1::f</code> and the
+final overrider of <code class="sh_cpp">B2::A::f</code> is <code class="sh_cpp">B2::f</code>.</p>
+
+<p><a class="anchor" id="p13" href="#p13">13</a>The following example shows a function that does not have a unique final overrider:</p>
+
+<pre><code class="sh_cpp">struct A {
+  virtual void f();
+};
+
+struct VB1 : virtual A {    // note virtual derivation
+  void f();
+};
+
+struct VB2 : virtual A {
+  void f();
+};
+
+struct Error : VB1, VB2 {   // ill-formed
+};
+
+struct Okay : VB1, VB2 {
+  void f();
+};</code></pre>
+
+<p>Both <code class="sh_cpp">VB1::f</code> and <code class="sh_cpp">VB2::f</code> override <code class="sh_cpp">A::f</code> but there is no overrider of both of them
+in class <code class="sh_cpp">Error</code>. This example is therefore ill-formed. Class <code class="sh_cpp">Okay</code> is well formed, however,
+because <code class="sh_cpp">Okay::f</code> is a final overrider.</p>
+
+<p><a class="anchor" id="p14" href="#p14">14</a>The following example uses the well-formed classes from above.</p>
+
+<pre><code class="sh_cpp">struct VB1a : virtual A {   // does not declare f
+};
+
+struct Da : VB1a, VB2 {
+};
+
+void foe() {
+  VB1a* vb1ap = new Da;
+  vb1ap-&gt;f();               // calls VB2::f
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p15" href="#p15">15</a>Explicit qualification with the scope operator (<a title="expr.prim" href="expr.prim.general.html">5.1</a>) suppresses the virtual call mechanism.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">class B { public: virtual void f(); };
+class D : public B { public: void f(); };
+
+void D::f() { /* … */ B::f(); }</code></pre>
+
+<p>Here, the function call in <code class="sh_cpp">D::f</code> really does call <code class="sh_cpp">B::f</code> and not
+<code class="sh_cpp">D::f</code>. — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p16" href="#p16">16</a>A function with a deleted definition (<a title="dcl.fct.def" href="dcl.fct.def.general.html">8.4</a>) shall not override a function that does not have a
+deleted definition. Likewise, a function that does not have a deleted definition shall not override a function with a
+deleted definition.</p>
+
+
+
+
+<div>
+<p class="footnote" id="fn114">114) A function with the same name but a different parameter list (Clause <a title="over" href="over.html">13</a>) as a virtual
+function is not necessarily virtual and does not override. The use of the <code class="sh_cpp">virtual</code> specifier in the
+declaration of an overriding function is legal but redundant (has empty semantics). Access control (Clause
+<a title="class.access" href="class.access.html">11</a>) is not considered in determining overriding.</p>
+<p class="footnote" id="fn115">115) Multi-level pointers to classes or references to multi-level pointers to classes are not
+allowed.</p>
+</div>
+</body>
+</html>
+

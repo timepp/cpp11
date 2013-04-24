@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Initialization</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[class.init]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[class.init]"></object>12.6 Initialization </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>When no initializer is specified for an object of (possibly cv-qualified) class type (or array thereof), or the
+initializer has the form <code class="sh_cpp">()</code>, the object is initialized as specified in <a title="dcl.init" href="dcl.init.html">8.5</a>.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>An object of class type (or array thereof) can be explicitly initialized; see <a title="class.expl.init" href="class.expl.init.html">12.6.1</a> and
+<a title="class.base.init" href="class.base.init.html">12.6.2</a>.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>When an array of class objects is initialized (either explicitly or implicitly) and the elements are
+initialized by constructor, the constructor shall be called for each element of the array, following the subscript
+order; see <a title="dcl.array" href="dcl.array.html">8.3.4</a>. <span class="note">[ <em>Note:</em> Destructors for the array elements are called in reverse order of their
+construction. — <em>end note</em> ]</span></p>
+</body>
+</html>
+

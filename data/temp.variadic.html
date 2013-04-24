@@ -1,0 +1,141 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Variadic templates</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[temp.variadic]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[temp.variadic]"></object>14.5.3 Variadic templates </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A <dfn>template parameter pack</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="template parameter pack"></object> is a template parameter that accepts zero or more template arguments.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">template&lt;class ... Types&gt; struct Tuple { };
+
+Tuple&lt;&gt; t0;             // Types contains no arguments
+Tuple&lt;int&gt; t1;          // Types contains one argument: int
+Tuple&lt;int, float&gt; t2;   // Types contains two arguments: int and float
+Tuple&lt;0&gt; error;         // error: 0 is not a type</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>A <dfn>function parameter pack</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="function parameter pack"></object> is a function parameter that accepts zero or more function arguments.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">template&lt;class ... Types&gt; void f(Types ... args);
+
+f();                    // OK: args contains no arguments
+f(1);                   // OK: args contains one argument: int
+f(2, 1.0);              // OK: args contains two arguments: int and double</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>A <dfn>parameter pack</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="parameter pack"></object> is either a template parameter pack or a function parameter pack.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>A <dfn>pack expansion</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="pack expansion"></object> consists of a <dfn>pattern</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="pattern"></object> and an ellipsis, the instantiation of which
+produces zero or more instantiations of the pattern in a list (described below). The form of the pattern depends on the
+context in which the expansion occurs. Pack expansions can occur in the following contexts:</p>
+
+<ul>
+<li>In a function parameter pack (<a title="dcl.fct" href="dcl.fct.html">8.3.5</a>); the pattern is the <i class="nonterminal">parameter-declaration</i> without the
+	ellipsis.</li>
+<li>In a template parameter pack that is a pack expansion (<a title="temp.param" href="temp.param.html">14.1</a>):
+	<ul>
+	<li>if the template parameter pack is a <i class="nonterminal">parameter-declaration</i>; the pattern is the
+		<i class="nonterminal">parameter-declaration</i> without the ellipsis;</li>
+	<li>if the template parameter pack is a <i class="nonterminal">type-parameter</i> with a <i class="nonterminal">template-parameter-list</i>; the pattern
+		is the corresponding <i class="nonterminal">type-parameter</i> without the ellipsis.</li>
+	</ul>
+</li>
+<li>In an <i class="nonterminal">initializer-list</i> (<a title="dcl.init" href="dcl.init.html">8.5</a>); the pattern is an <i class="nonterminal">initializer-clause</i>.</li>
+<li>In a <i class="nonterminal">base-specifier-list</i> (Clause <a title="class.derived" href="class.derived.html">10</a>); the pattern is a <i class="nonterminal">base-specifier</i>.</li>
+<li>In a <i class="nonterminal">mem-initializer-list</i> (<a title="class.base.init" href="class.base.init.html">12.6.2</a>); the pattern is a <i class="nonterminal">mem-initializer</i>.</li>
+<li>In a <i class="nonterminal">template-argument-list</i> (<a title="temp.arg" href="temp.arg.html">14.3</a>); the pat<i class="nonterminal">tern is a template-argument</i>.</li>
+<li>In a <i class="nonterminal">dynamic-exception-specification</i> (<a title="except.spec" href="except.spec.html">15.4</a>); the pattern is a <i class="nonterminal">type-id</i>.</li>
+<li>In an <i class="nonterminal">attribute-list</i> (<a title="dcl.attr.grammar" href="dcl.attr.grammar.html">7.6.1</a>); the pattern is an <i class="nonterminal">attribute</i>.</li>
+<li>In an <i class="nonterminal">alignment-specifier</i> (<a title="dcl.align" href="dcl.align.html">7.6.2</a>); the pattern is the <i class="nonterminal">alignment-specifier</i> without the
+	ellipsis.</li>
+<li>In a <i class="nonterminal">capture-list</i> (<a title="expr.prim.lambda" href="expr.prim.lambda.html">5.1.2</a>); the pattern is a <i class="nonterminal">capture</i>.</li>
+<li>In a <code class="sh_cpp">sizeof...</code> expression (<a title="expr.sizeof" href="expr.sizeof.html">5.3.3</a>); the pattern is an <i class="nonterminal">identifier</i>.</li>
+</ul>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">template&lt;class ... Types&gt; void f(Types ... rest);
+template&lt;class ... Types&gt; void g(Types ... rest) {
+  f(&amp;rest ...);     // “&amp;rest ...” is a pack expansion; “&amp;rest” is its pattern
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>A parameter pack whose name appears within the pattern of a pack expansion is expanded by that pack expansion.
+An appearance of the name of a parameter pack is only expanded by the innermost enclosing pack expansion. The pattern of
+a pack expansion shall name one or more parameter packs that are not expanded by a nested pack expansion; such parameter
+packs are called <dfn>unexpanded parameter pack</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="unexpanded parameter pack"></object>s in the pattern. All of the parameter packs expanded by a pack
+expansion shall have the same number of arguments specified. An appearance of a name of a parameter pack that is not
+expanded is ill-formed.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">template&lt;typename...&gt; struct Tuple {};
+template&lt;typename T1, typename T2&gt; struct Pair {};
+
+template&lt;class ... Args1&gt; struct zip {
+  template&lt;class ... Args2&gt; struct with {
+    typedef Tuple&lt;Pair&lt;Args1, Args2&gt; ... &gt; type;
+  };
+};
+
+typedef zip&lt;short, int&gt;::with&lt;unsigned short, unsigned&gt;::type T1;
+    // T1 is Tuple&lt;Pair&lt;short, unsigned short&gt;, Pair&lt;int, unsigned&gt;&gt;
+typedef zip&lt;short&gt;::with&lt;unsigned short, unsigned&gt;::type T2;
+    // error: different number of arguments specified for Args1 and Args2
+
+template&lt;class ... Args&gt;
+  void g(Args ... args) {               // OK: Args is expanded by the function parameter pack args
+  f(const_cast&lt;const Args*&gt;(&amp;args)...); // OK: “Args” and “args” are expanded
+  f(5 ...);                             // error: pattern does not contain any parameter packs
+  f(args);                              // error: parameter pack “args” is not expanded
+  f(h(args ...) + args ...);            // OK: first “args” expanded within h, second
+                                        // “args” expanded within f
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>The instantiation of a pack expansion that is not a <code class="sh_cpp">sizeof...</code> expression produces a list
+<code class="sh_cpp">E</code><sub>1</sub>, <code class="sh_cpp">E</code><sub>2</sub>, …, <code class="sh_cpp">E</code><sub><var>N</var></sub>, where <var>N</var> is
+the number of elements in the pack expansion parameters. Each <code class="sh_cpp">E</code><sub><var>i</var></sub> is generated by
+instantiating the pattern and replacing each pack expansion parameter with its <var>i</var>th element. All of the
+<code class="sh_cpp">E</code><sub><var>i</var></sub> become elements in the enclosing list. <span class="note">[ <em>Note:</em> The variety of list varies with the
+context: <i class="nonterminal">expression-list</i>, <i class="nonterminal">base-specifier-list</i>, <i class="nonterminal">template-argument-list</i>, etc. — <em>end note</em> ]</span> When
+<var>N</var> is zero, the instantiation of the expansion produces an empty list. Such an instantiation does not alter
+the syntactic interpretation of the enclosing construct, even in cases where omitting the list entirely would otherwise
+be ill-formed or would result in an ambiguity in the grammar.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">template&lt;class... T&gt; struct X : T... { };
+template&lt;class... T&gt; void f(T... values) {
+  X&lt;T...&gt; x(values...);
+}
+
+template void f&lt;&gt;();    // OK: X&lt;&gt; has no base classes
+                        // x is a variable of type X&lt;&gt; that is value-initialized</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p7" href="#p7">7</a>The instantiation of a <code class="sh_cpp">sizeof...</code> expression (<a title="expr.sizeof" href="expr.sizeof.html">5.3.3</a>) produces an integral constant
+containing the number of elements in the parameter pack it expands.</p>
+</body>
+</html>
+

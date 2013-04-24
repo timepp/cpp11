@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>basic_string general requirements</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[string.require]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[string.require]"></object>21.4.1 <code class="sh_cpp">basic_string</code> general requirements </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>If any operation would cause <code class="sh_cpp">size()</code> to exceed <code class="sh_cpp">max_size()</code>, that operation shall throw
+an exception object of type <code class="sh_cpp">length_error</code>.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>If any member function or operator of <code class="sh_cpp">basic_string</code> throws an exception, that function or operator
+shall have no other effect.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>No <code class="sh_cpp">erase()</code> or <code class="sh_cpp">pop_back()</code> member function shall throw any exceptions.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>In every specialization <code class="sh_cpp">basic_string&lt;charT, traits, Allocator&gt;</code>, the type
+<code class="sh_cpp">allocator_traits&lt;Allocator&gt;::value_type</code> shall name the same type as <code class="sh_cpp">charT</code>. Every
+object of type <code class="sh_cpp">basic_string&lt;charT, traits, Allocator&gt;</code> shall use an object of type
+<code class="sh_cpp">Allocator</code> to allocate and free storage for the contained <code class="sh_cpp">charT</code> objects as needed. The
+<code class="sh_cpp">Allocator</code> object used shall be obtained as described in <a title="container.requirements.general" href="container.requirements.general.html">23.2.1</a>.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>The char-like objects in a <code class="sh_cpp">basic_string</code> object shall be stored contiguously. That is, for any
+<code class="sh_cpp">basic_string</code> object <code class="sh_cpp">s</code>, the identity <code class="sh_cpp">&amp;*(s.begin() + n) == &amp;*s.begin() +
+n</code> shall hold for all values of <code class="sh_cpp">n</code> such that <code class="sh_cpp">0 &lt;= n &lt; s.size()</code>.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>References, pointers, and iterators referring to the elements of a <code class="sh_cpp">basic_string</code> sequence may be
+invalidated by the following uses of that <code class="sh_cpp">basic_string</code> object:</p>
+
+<ul>
+<li>as an argument to any standard library function taking a reference to non-const <code class="sh_cpp">basic_string</code> as an
+	argument.<sup class="footnote"><a href="#fn237">237</a></sup>
+</li>
+<li>Calling non-const member functions, except <code class="sh_cpp">operator[]</code>, <code class="sh_cpp">at</code>, <code class="sh_cpp">front</code>,
+	<code class="sh_cpp">back</code>, <code class="sh_cpp">begin</code>, <code class="sh_cpp">rbegin</code>, <code class="sh_cpp">end</code>, and <code class="sh_cpp">rend</code>.</li>
+</ul>
+
+
+<div><p class="footnote" id="fn237">237) For example, as an argument to non-member functions <code class="sh_cpp">swap()</code> (<a title="string.special" href="string.special.html">21.4.8.8</a>),
+<code class="sh_cpp">operator&gt;&gt;()</code> (<a title="string.io" href="string.io.html">21.4.8.9</a>), and <code class="sh_cpp">getline()</code> (<a title="string.io" href="string.io.html">21.4.8.9</a>), or as an
+argument to <code class="sh_cpp">basic_string::swap()</code>.</p></div>
+</body>
+</html>
+

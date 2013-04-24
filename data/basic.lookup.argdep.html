@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Argument-dependent name lookup</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[basic.lookup.argdep]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[basic.lookup.argdep]"></object>3.4.2 Argument-dependent name lookup </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>When the <i class="nonterminal">postfix-expression</i> in a function call (<a title="expr.call" href="expr.call.html">5.2.2</a>) is an <i class="nonterminal">unqualified-id</i>, other
+namespaces not considered during the usual unqualified lookup (<a title="basic.lookup.unqual" href="basic.lookup.unqual.html">3.4.1</a>) may be searched, and in those
+namespaces, namespace-scope friend function declarations (<a title="class.friend" href="class.friend.html">11.3</a>) not otherwise visible may be found. These
+modifications to the search depend on the types of the arguments (and for template template arguments, the namespace of
+the template argument).</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">namespace N {
+  struct S { };
+  void f(S);
+}
+
+void g() {
+  N::S s;
+  f(s);                 // OK: calls N::f
+  (f)(s);               // error: N::f not considered; parentheses
+                        // prevent argument-dependent lookup
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>For each argument type <code class="sh_cpp">T</code> in the function call, there is a set of zero or more associated
+namespaces and a set of zero or more associated classes to be considered. The sets of namespaces and classes is
+determined entirely by the types of the function arguments (and the namespace of any template template argument).
+Typedef names and <i class="nonterminal">using-declaration</i>s used to specify the types do not contribute to this set. The sets of
+namespaces and classes are determined in the following way:</p>
+<ul>
+<li>If <code class="sh_cpp">T</code> is a fundamental type, its associated sets of namespaces and classes are both empty.</li>
+<li>If <code class="sh_cpp">T</code> is a class type (including unions), its associated classes are: the class itself; the class of
+	which it is a member, if any; and its direct and indirect base classes. Its associated namespaces are the namespaces
+	of which its associated classes are members. Furthermore, if <code class="sh_cpp">T</code> is a class template specialization, its
+	associated namespaces and classes also include: the namespaces and classes associated with the types of the template
+	arguments provided for template type parameters (excluding template template parameters); the namespaces of which
+	any template template arguments are members; and the classes of which any member templates used as template template
+	arguments are members. <span class="note">[ <em>Note:</em> Non-type template arguments do not contribute to the set of associated
+	namespaces. — <em>end note</em> ]</span>
+</li>
+<li>If <code class="sh_cpp">T</code> is an enumeration type, its associated namespace is the namespace in which it is defined. If it is
+	class member, its associated class is the member’s class; else it has no associated class.</li>
+<li>If <code class="sh_cpp">T</code> is a pointer to <code class="sh_cpp">U</code> or an array of <code class="sh_cpp">U</code>, its associated namespaces and
+	classes are those associated with <code class="sh_cpp">U</code>.</li>
+<li>If <code class="sh_cpp">U</code> is a function type, its associated namespaces and classes are those associated with the function
+	parameter types and those associated with the return type.</li>
+<li>If <code class="sh_cpp">U</code> is a pointer to a member function of a class <code class="sh_cpp">X</code>, its associated namespaces and classes
+	are those associated with the function parameter types and return type, together with those associated with
+	<code class="sh_cpp">X</code>.</li>
+<li>If <code class="sh_cpp">T</code> is a pointer to a data member of class <code class="sh_cpp">X</code>, its associated namespaces and classes are
+	those associated with the member type together with those associated with <code class="sh_cpp">X</code>.</li>
+</ul>
+<p>If an associated namespace is an inline namespace (<a title="namespace.def" href="namespace.def.html">7.3.1</a>), its enclosing namespace is also included in the
+set. If an associated namespace directly contains inline namespaces, those inline namespaces are also included in the
+set. In addition, if the argument is the name or address of a set of overloaded functions and/or function templates, its
+associated classes and namespaces are the union of those associated with each of the members of the set, i.e., the
+classes and namespaces associated with its parameter types and return type. Additionally, if the aforementioned set of
+overloaded functions is named with a <i class="nonterminal">template-id</i>, its associated classes and namespaces also include those of
+its type <i class="nonterminal">template-argument</i>s and its template <i class="nonterminal">template-arguments</i>.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>Let <var>X</var> be the lookup set produced by unqualified lookup (<a title="basic.lookup.unqual" href="basic.lookup.unqual.html">3.4.1</a>) and let <var>Y</var>
+be the lookup set produced by argument dependent lookup (defined as follows). If <var>X</var> contains</p>
+<ul>
+<li>a declaration of a class member, or</li>
+<li>a block-scope function declaration that is not a <i class="nonterminal">using-declaration</i>, or</li>
+<li>a declaration that is neither a function or a function template</li>
+</ul>
+<p>then <var>Y</var> is empty. Otherwise <var>Y</var> is the set of declarations found in the namespaces associated with
+the argument types as described below. The set of declarations found by the lookup of the name is the union of
+<var>X</var> and <var>Y</var>. <span class="note">[ <em>Note:</em> The namespaces and classes associated with the argument types can include
+namespaces and classes already considered by the ordinary unqualified lookup. — <em>end note</em> ]</span></p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">namespace NS {
+  class T { };
+  void f(T);
+  void g(T, int);
+}
+NS::T parm;
+void g(NS::T, float);
+int main() {
+  f(parm);                      // OK: calls NS::f
+  extern void g(NS::T, float);
+  g(parm, 1);                   // OK: calls g(NS::T, float)
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>When considering an associated namespace, the lookup is the same as the lookup performed when the associated
+namespace is used as a qualifier (<a title="namespace.qual" href="namespace.qual.html">3.4.3.2</a>) except that:</p>
+<ul>
+<li>Any <i class="nonterminal">using-directive</i>s in the associated namespace are ignored.</li>
+<li>Any namespace-scope friend functions or friend function templates declared in associated classes are visible within
+	their respective namespaces even if they are not visible during an ordinary lookup (<a title="class.friend" href="class.friend.html">11.3</a>).</li>
+<li>All names except those of (possibly overloaded) functions and function templates are ignored.</li>
+</ul>
+</body>
+</html>
+

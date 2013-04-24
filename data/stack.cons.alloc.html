@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>stack constructors with allocators</title>
+</head>
+<body>
+<h5>
+<dfn class="label">[stack.cons.alloc]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[stack.cons.alloc]"></object>23.6.5.4 <code class="sh_cpp">stack</code> constructors with allocators </h5>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>If <code class="sh_cpp">uses_allocator&lt;container_type, Alloc&gt;::value</code> is <code class="sh_cpp">false</code> the constructors
+in this subclause shall not participate in overload resolution.</p>
+
+<h6><code class="sh_cpp">template &lt;class Alloc&gt;
+  explicit <dfn>stack</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="stack"></object>(const Alloc&amp; a);</code></h6>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Effects:</em> Initializes <code class="sh_cpp">c</code> with <code class="sh_cpp">a</code>.</p>
+
+<h6><code class="sh_cpp">template &lt;class Alloc&gt;
+  <dfn>stack</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="stack"></object>(const container_type&amp; cont, const Alloc&amp; a);</code></h6>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Effects:</em> Initializes <code class="sh_cpp">c</code> with <code class="sh_cpp">cont</code> as the first argument and <code class="sh_cpp">a</code> as the
+second argument.</p>
+
+<h6><code class="sh_cpp">template &lt;class Alloc&gt;
+  &lt;dfn&gt;stack&lt;/dfn&gt;(container_type&amp;&amp; cont, const Alloc&amp; a);</code></h6>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><em>Effects:</em> Initializes <code class="sh_cpp">c</code> with <code class="sh_cpp">std::move(cont)</code> as the first argument and <code class="sh_cpp">a</code>
+as the second argument.</p>
+
+<h6><code class="sh_cpp">template &lt;class Alloc&gt;
+  <dfn>stack</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="stack"></object>(const stack&amp; s, const Alloc&amp; a);</code></h6>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><em>Effects:</em> Initializes <code class="sh_cpp">c</code> with <code class="sh_cpp">s.c</code> as the first argument and <code class="sh_cpp">a</code> as the
+second argument.</p>
+
+<h6><code class="sh_cpp">template &lt;class Alloc&gt;
+  <dfn>stack</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="stack"></object>(stack&amp;&amp; s, const Alloc&amp; a);</code></h6>
+
+<p><a class="anchor" id="p6" href="#p6">6</a><em>Effects:</em> Initializes <code class="sh_cpp">c</code> with <code class="sh_cpp">std::move(s.c)</code> as the first argument and <code class="sh_cpp">a</code>
+as the second argument.</p>
+</body>
+</html>
+

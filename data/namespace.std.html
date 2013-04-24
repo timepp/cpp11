@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Namespace std</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[namespace.constraints]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[namespace.constraints]"></object>17.6.4.2 Namespace use </h4>
+
+<h5>
+<dfn class="label">[namespace.std]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[namespace.std]"></object>17.6.4.2.1 Namespace <code class="sh_cpp">std</code> </h5>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The behavior of a C++ program is undefined if it adds declarations or definitions to namespace <code class="sh_cpp">std</code>
+or to a namespace within namespace <code class="sh_cpp">std</code> unless otherwise specified. A program may add a template
+specialization for any standard library template to namespace <code class="sh_cpp">std</code> only if the declaration depends on a
+user-defined type and the specialization meets the standard library requirements for the original template and is not
+explicitly prohibited.<sup class="footnote"><a href="#fn184">184</a></sup></p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The behavior of a C++ program is undefined if it declares</p>
+
+<ul>
+<li>an explicit specialization of any member function of a standard library class template, or</li>
+<li>an explicit specialization of any member function template of a standard library class or class template, or</li>
+<li>an explicit or partial specialization of any member class template of a standard library class or class
+template.</li>
+</ul>
+
+<p>A program may explicitly instantiate a template defined in the standard library only if the declaration depends on
+the name of a user-defined type and the instantiation meets the standard library requirements for the original
+template.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>A translation unit shall not declare namespace <code class="sh_cpp">std</code> to be an inline namespace
+(<a title="namespace.def" href="namespace.def.html">7.3.1</a>).</p>
+
+
+<div><p class="footnote" id="fn184">184) Any library code that instantiates other library templates must be prepared to work adequately with
+any user-supplied specialization that meets the minimum requirements of the Standard.</p></div>
+</body>
+</html>
+

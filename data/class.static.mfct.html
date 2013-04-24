@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Static member functions</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[class.static.mfct]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[class.static.mfct]"></object>9.4.1 Static member functions </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><span class="note">[ <em>Note:</em> The rules described in <a title="class.mfct" href="class.mfct.html">9.3</a> apply to <code class="sh_cpp">static</code> member functions. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><span class="note">[ <em>Note:</em> A <code class="sh_cpp">static</code> member function does not have a <code class="sh_cpp">this</code> pointer
+(<a title="class.this" href="class.this.html">9.3.2</a>). — <em>end note</em> ]</span> A <code class="sh_cpp">static</code> member function shall not be <code class="sh_cpp">virtual</code>. There shall not be a
+<code class="sh_cpp">static</code> and a non-static member function with the same name and the same parameter types (<a title="over.load" href="over.load.html">13.1</a>).
+A <code class="sh_cpp">static</code> member function shall not be declared <code class="sh_cpp">const</code>, <code class="sh_cpp">volatile</code>, or <code class="sh_cpp">const
+volatile</code>.</p>
+</body>
+</html>
+

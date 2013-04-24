@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class scope</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[basic.scope.class]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[basic.scope.class]"></object>3.3.7 Class scope </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The following rules describe the scope of names declared in classes.</p>
+
+<ol>
+<li>The potential scope of a name declared in a class consists not only of the declarative region following the name’s
+	point of declaration, but also of all function bodies, <i class="nonterminal">brace-or-equal-initializers</i> of non-static data members,
+	and default arguments in that class (including such things in nested classes).</li>
+<li>A name <code class="sh_cpp">N</code> used in a class <code class="sh_cpp">S</code> shall refer to the same declaration in its context and when re-evaluated in
+	the completed scope of <code class="sh_cpp">S</code>. No diagnostic is required for a violation of this rule.</li>
+<li>If reordering member declarations in a class yields an alternate valid program under (1) and (2), the
+	program is ill-formed, no diagnostic is required.</li>
+<li>A name declared within a member function hides a declaration of the same name whose scope extends
+	to or past the end of the member function’s class.</li>
+<li>The potential scope of a declaration that extends to or past the end of a class definition also extends to the
+regions defined by its member definitions, even if the members are defined lexically outside the class (this includes
+static data member definitions, nested class definitions, member function definitions (including the member function
+body and any portion of the declarator part of such definitions which follows the <i class="nonterminal">declarator-id</i>, including a
+<i class="nonterminal">parameter-declaration-clause</i> and any default arguments (<a title="dcl.fct.default" href="dcl.fct.default.html">8.3.6</a>). <div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">typedef int c;
+enum { i = 1 };
+
+class X {
+  char v[i];                        // error: i refers to ::i
+                                    // but when reevaluated is X::i
+  int f() { return sizeof(c); }     // OK: X::c
+  char c;
+  enum { i = 2 };
+};
+
+typedef char* T;
+struct Y {
+  T a;                              // error: T refers to ::T
+                                    // but when reevaluated is Y::T
+  typedef long    T;
+  T b;
+};
+
+typedef int I;
+class D {
+  typedef I I;                      // error, even though no reordering involved
+};</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+</li>
+</ol>
+<p><a class="anchor" id="p2" href="#p2">2</a>The name of a class member shall only be used as follows:</p>
+<ul>
+<li>in the scope of its class (as described above) or a class derived (Clause <a title="class.derived" href="class.derived.html">10</a>) from its class,</li>
+<li>after the <code class="sh_cpp">.</code> operator applied to an expression of the type of its class (<a title="expr.ref " href=".html"></a>) or a class
+	derived from its class,</li>
+<li>after the <code class="sh_cpp">-&gt;</code> operator applied to a pointer to an object of its class (<a title="expr.ref " href=".html"></a>) or a class
+	derived from its class,</li>
+<li>after the <code class="sh_cpp">::</code> scope resolution operator (<a title="expr.prim" href="expr.prim.general.html">5.1</a>) applied to the name of its class or a class
+	derived from its class.</li>
+</ul>
+</body>
+</html>
+

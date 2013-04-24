@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Reference modifications</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[meta.trans.ref]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[meta.trans.ref]"></object>20.9.7.2 Reference modifications </h4>
+
+<table id="t53" class="type_traits">
+<caption>Table 53 — Reference modifications</caption>
+<thead><tr>
+<th>Template</th>
+<th>Comments</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>remove_­reference</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="remove_reference"></object>;</code></pre></td>
+
+	<td>If <code class="sh_cpp">T</code> has type “reference to <code class="sh_cpp">T1</code>” then the member typedef <code class="sh_cpp">type</code> shall name
+		<code class="sh_cpp">T1</code>; otherwise, <code class="sh_cpp">type</code> shall name <code class="sh_cpp">T</code>.</td>
+</tr>
+
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>add_­lvalue_­reference</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="add_lvalue_reference"></object>;</code></pre></td>
+
+	<td>If <code class="sh_cpp">T</code> names an object or function type then the member typedef <code class="sh_cpp">type</code> shall name
+		<code class="sh_cpp">T&amp;</code>; otherwise, if <code class="sh_cpp">T</code> names a type “rvalue reference to <code class="sh_cpp">T1</code>” then the
+		member typedef <code class="sh_cpp">type</code> shall name <code class="sh_cpp">T1&amp;</code>; otherwise, <code class="sh_cpp">type</code> shall name
+		<code class="sh_cpp">T</code>.</td>
+</tr>
+
+<tr>
+<td><pre><code class="sh_cpp">template &lt;class T&gt;
+struct <dfn>add_­rvalue_­reference</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="add_rvalue_reference"></object>;</code></pre></td>
+
+	<td>If <code class="sh_cpp">T</code> names an object or function type then the member typedef <code class="sh_cpp">type</code> shall name
+		<code class="sh_cpp">T&amp;&amp;</code>; otherwise, <code class="sh_cpp">type</code> shall name <code class="sh_cpp">T</code>. <span class="note">[ <em>Note:</em> This rule reflects the
+		semantics of reference collapsing (<a title="dcl.ref" href="dcl.ref.html">8.3.2</a>). For example, when a type <code class="sh_cpp">T</code> names a type
+		<code class="sh_cpp">T1&amp;</code>, the type <code class="sh_cpp">add_­rvalue_­reference​&lt;T&gt;​::​type</code> is
+		not an rvalue reference. — <em>end note</em> ]</span>
+</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>
+

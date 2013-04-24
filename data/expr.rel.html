@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Relational operators</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[expr.rel]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[expr.rel]"></object>5.9 Relational operators </h2>
+<p><a class="anchor" id="p1" href="#p1">1</a>The relational operators group left-to-right. <span class="example">[ <em>Example:</em> <code class="sh_cpp">a&lt;b&lt;c</code> means
+<code class="sh_cpp">(a&lt;b)&lt;c</code> and not <code class="sh_cpp">(a&lt;b)&amp;&amp;(b&lt;c)</code>. — <em>end example</em> ]</span></p>
+
+<dl>
+<dt>
+<i class="nonterminal"><dfn>relational-expression</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="relational-expression"></object></i>:</dt>
+	<dd><i class="nonterminal">shift-expression</i></dd>
+	<dd>
+<i class="nonterminal">relational-expression</i> <code class="sh_cpp">&lt;</code> <i class="nonterminal">shift-expression</i>
+</dd>
+	<dd>
+<i class="nonterminal">relational-expression</i> <code class="sh_cpp">&gt;</code> <i class="nonterminal">shift-expression</i>
+</dd>
+	<dd>
+<i class="nonterminal">relational-expression</i> <code class="sh_cpp">&lt;=</code> <i class="nonterminal">shift-expression</i>
+</dd>
+	<dd>
+<i class="nonterminal">relational-expression</i> <code class="sh_cpp">&gt;=</code> <i class="nonterminal">shift-expression</i>
+</dd>
+</dl>
+
+<p>The operands shall have arithmetic, enumeration, or pointer type, or type <code class="sh_cpp">std::nullptr_t</code>. The operators
+<code class="sh_cpp">&lt;</code> (less than), <code class="sh_cpp">&gt;</code> (greater than), <code class="sh_cpp">&lt;=</code> (less than or equal to), and
+<code class="sh_cpp">&gt;=</code> (greater than or equal to) all yield <code class="sh_cpp">false</code> or <code class="sh_cpp">true</code>. The type of the result
+is <code class="sh_cpp">bool</code>.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The usual arithmetic conversions are performed on operands of arithmetic or enumeration type. Pointer
+conversions (<a title="conv.ptr" href="conv.ptr.html">4.10</a>) and qualification conversions (<a title="conv.qual" href="conv.qual.html">4.4</a>) are performed on pointer operands (or on a
+pointer operand and a null pointer constant, or on two null pointer constants, at least one of which is non-integral) to
+bring them to their <dfn>composite pointer type</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="composite pointer type"></object>. If one operand is a null pointer constant, the composite pointer
+type is <code class="sh_cpp">std::nullptr_t</code> if the other operand is also a null pointer constant or, if the other operand is a
+pointer, the type of the other operand. Otherwise, if one of the operands has type “pointer to <var>cv1</var>
+<code class="sh_cpp">void</code>”, then the other has type “pointer to <var>cv2</var> <code class="sh_cpp">T</code>” and the composite pointer type is
+“pointer to <var>cv12</var> <code class="sh_cpp">void</code>”, where <var>cv12</var> is the union of <var>cv1</var> and <var>cv2</var>.
+Otherwise, the composite pointer type is a pointer type similar (<a title="conv.qual" href="conv.qual.html">4.4</a>) to the type of one of the operands,
+with a cv-qualification signature (<a title="conv.qual" href="conv.qual.html">4.4</a>) that is the union of the cv-qualification signatures of the operand
+types. <span class="note">[ <em>Note:</em> this implies that any pointer can be compared to a null pointer constant and that any object pointer can be
+compared to a pointer to (possibly cv-qualified) <code class="sh_cpp">void</code>. — <em>end note</em> ]</span></p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">void *p;
+const int *q;
+int **pi;
+const int *const *pci;
+void ct() {
+  p &lt;= q;               // Both converted to const void* before comparison
+  pi &lt;= pci;            // Both converted to const int *const * before comparison
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p>Pointers to objects or functions of the same type (after pointer conversions) can be compared, with a result defined
+as follows:</p>
+<ul>
+<li>If two pointers <code class="sh_cpp">p</code> and <code class="sh_cpp">q</code> of the same type point to the same object or function, or both
+	point one past the end of the same array, or are both null, then <code class="sh_cpp">p&lt;=q</code> and <code class="sh_cpp">p&gt;=q</code> both
+	yield true and <code class="sh_cpp">p&lt;q</code> and <code class="sh_cpp">p&gt;q</code> both yield <code class="sh_cpp">false</code>.</li>
+<li>If two pointers <code class="sh_cpp">p</code> and <code class="sh_cpp">q</code> of the same type point to different objects that are not members
+	of the same object or elements of the same array or to different functions, or if only one of them is null, the
+	results of <code class="sh_cpp">p&lt;q</code>, <code class="sh_cpp">p&gt;q</code>, <code class="sh_cpp">p&lt;=q</code>, and <code class="sh_cpp">p&gt;=q</code> are
+	unspecified.</li>
+<li>If two pointers point to non-static data members of the same object, or to subobjects or array elements of such
+	members, recursively, the pointer to the later declared member compares greater provided the two members have the
+	same access control (Clause <a title="class.access" href="class.access.html">11</a>) and provided their class is not a union.</li>
+<li>If two pointers point to non-static data members of the same object with different access control (Clause
+	<a title="class.access" href="class.access.html">11</a>) the result is unspecified.</li>
+<li>If two pointers point to non-static data members of the same union object, they compare equal (after conversion to
+	<code class="sh_cpp">void*</code>, if necessary). If two pointers point to elements of the same array or one beyond the end of the
+	array, the pointer to the object with the higher subscript compares higher.</li>
+<li>Other pointer comparisons are unspecified.</li>
+</ul>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>Pointers to <code class="sh_cpp">void</code> (after pointer conversions) can be compared, with a result defined as follows: If
+both pointers represent the same address or are both the null pointer value, the result is <code class="sh_cpp">true</code> if the
+operator is <code class="sh_cpp">&lt;=</code> or <code class="sh_cpp">&gt;=</code> and false otherwise; otherwise the result is unspecified.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>If two operands of type <code class="sh_cpp">std::nullptr_t</code> are compared, the result is <code class="sh_cpp">true</code> if the
+operator is <code class="sh_cpp">&lt;=</code> or <code class="sh_cpp">&gt;=</code>, and <code class="sh_cpp">false</code> otherwise.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>If both operands (after conversions) are of arithmetic or enumeration type, each of the operators shall yield
+<code class="sh_cpp">true</code> if the specified relationship is <code class="sh_cpp">true</code> and <code class="sh_cpp">false</code> if it is
+<code class="sh_cpp">false</code>.</p>
+</body>
+</html>
+

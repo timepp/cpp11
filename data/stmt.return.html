@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>The return statement</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[stmt.return]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[stmt.return]"></object>6.6.3 The <code class="sh_cpp">return</code> statement </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A function returns to its caller by the <code class="sh_cpp">return</code> statement.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>A return statement with neither an <i class="nonterminal">expression</i> nor a <i class="nonterminal">braced-init-list</i> can be used only in
+functions that do not return a value, that is, a function with the return type <code class="sh_cpp">void</code>, a constructor
+(<a title="class.ctor" href="class.ctor.html">12.1</a>), or a destructor (<a title="class.dtor" href="class.dtor.html">12.4</a>). A return statement with an expression of non-void type can be used
+only in functions returning a value; the value of the expression is returned to the caller of the function. The value of
+the expression is implicitly converted to the return type of the function in which it appears. A return statement can
+involve the construction and copy or move of a temporary object (<a title="class.temporary" href="class.temporary.html">12.2</a>). <span class="note">[ <em>Note:</em> A copy or move operation
+associated with a return statement may be elided or considered as an rvalue for the purpose of overload resolution in
+selecting a constructor (<a title="class.copy" href="class.copy.html">12.8</a>). — <em>end note</em> ]</span> A return statement with a <i class="nonterminal">braced-init-list</i> initializes the
+object or reference to be returned from the function by copy-list-initialization (<a title="dcl.init.list" href="dcl.init.list.html">8.5.4</a>) from the specified
+initializer list.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">std::pair&lt;std::string,int&gt; f(const char* p, int x) {
+  return {p,x};
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p>Flowing off the end of a function is equivalent to a <code class="sh_cpp">return</code> with no value; this results in undefined
+behavior in a value-returning function.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>A return statement with an expression of type <code class="sh_cpp">void</code> can be used only in functions with a return
+type of <var>cv</var> <code class="sh_cpp">void</code>; the expression is evaluated just before the function returns to its caller.</p>
+</body>
+</html>
+

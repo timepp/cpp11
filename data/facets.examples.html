@@ -1,0 +1,188 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Program-defined facets</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[facets.examples]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[facets.examples]"></object>22.4.8 Program-defined facets </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A C++ program may define facets to be added to a locale and used identically as the built-in facets. To create
+a new facet interface, C++ programs simply derive from <code class="sh_cpp">locale::facet</code> a class containing a static member:
+<code class="sh_cpp">static locale::id id</code>.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><span class="note">[ <em>Note:</em> The locale member function templates verify its type and storage class. — <em>end note</em> ]</span></p>
+
+<div class="example">
+<p><a class="anchor" id="p3" href="#p3">3</a>[ <em>Example:</em> Traditional global localization is still easy:</p>
+
+<pre><code class="sh_cpp">#include &lt;iostream&gt;
+#include &lt;locale&gt;
+int main(int argc, char** argv) {
+  using namespace std;
+  locale::global(locale(""));       // set the global locale
+                                    // imbue it on all the std streams
+  cin.imbue(locale());
+  cout.imbue(locale());
+  cerr.imbue(locale());
+  wcin.imbue(locale());
+  wcout.imbue(locale());
+  wcerr.imbue(locale());
+
+  return MyObject(argc, argv).doit();
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<div class="example">
+<p><a class="anchor" id="p4" href="#p4">4</a>[ <em>Example:</em> Greater flexibility is possible:</p>
+<pre><code class="sh_cpp">#include &lt;iostream&gt;
+#include &lt;locale&gt;
+int main() {
+  using namespace std;
+  cin.imbue(locale(""));            // the user’s preferred locale
+  cout.imbue(locale::classic());
+  double f;
+
+  while (cin &gt;&gt; f) cout &lt;&lt; f &lt;&lt; endl;
+    return (cin.fail() != 0);
+}</code></pre>
+
+<p>In a European locale, with input <code class="sh_cpp">3.456,78</code>, output is <code class="sh_cpp">3456.78</code>. — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>This can be important even for simple programs, which may need to write a data file in a fixed format,
+regardless of a user’s preference.</p>
+
+<div class="example">
+<p><a class="anchor" id="p6" href="#p6">6</a>[ <em>Example:</em> Here is an example of the use of locales in a library interface.</p>
+
+<pre><code class="sh_cpp">// file: Date.h
+#include &lt;iosfwd&gt;
+#include &lt;string&gt;
+#include &lt;locale&gt;
+
+class Date {
+public:
+  Date(unsigned day, unsigned month, unsigned year);
+  std::string asString(const std::locale&amp; = std::locale());
+};
+
+std::istream&amp; operator&gt;&gt;(std::istream&amp; s, Date&amp; d);
+std::ostream&amp; operator&lt;&lt;(std::ostream&amp; s, Date d);</code></pre>
+
+<p><a class="anchor" id="p7" href="#p7">7</a>This example illustrates two architectural uses of class <code class="sh_cpp">locale</code>.</p>
+
+<p><a class="anchor" id="p8" href="#p8">8</a>The first is as a default argument in <code class="sh_cpp">Date::asString()</code>, where the default is the global
+(presumably user-preferred) locale.</p>
+
+<p><a class="anchor" id="p9" href="#p9">9</a>The second is in the operators <code class="sh_cpp">&lt;&lt;</code> and <code class="sh_cpp">&gt;&gt;</code>, where a locale “hitchhikes” on
+another object, in this case a stream, to the point where it is needed.</p>
+
+<pre><code class="sh_cpp">// file: Date.C
+#include "Date"                 // includes &lt;ctime&gt;
+#include &lt;sstream&gt;
+std::string Date::asString(const std::locale&amp; l) {
+  using namespace std;
+  ostringstream s; s.imbue(l);
+  s &lt;&lt; *this; return s.str();
+}
+
+std::istream&amp; operator&gt;&gt;(std::istream&amp; s, Date&amp; d) {
+  using namespace std;
+  istream::sentry cerberos(s);
+  if (cerberos) {
+    ios_base::iostate err = goodbit;
+    struct tm t;
+    use_facet&lt; time_get&lt;char&gt; &gt;(s.getloc()).get_date(s, 0, s, err, &amp;t);
+    if (!err) d = Date(t.tm_day, t.tm_mon + 1, t.tm_year + 1900);
+    s.setstate(err);
+  }
+  return s;
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p10" href="#p10">10</a>A locale object may be extended with a new facet simply by constructing it with an instance of a class derived
+from <code class="sh_cpp">locale::facet</code>. The only member a C++ program must define is the static member <code class="sh_cpp">id</code>, which
+identifies your class interface as a new facet.</p>
+
+<div class="example">
+<p><a class="anchor" id="p11" href="#p11">11</a>[ <em>Example:</em> Classifying Japanese characters:</p>
+
+<pre><code class="sh_cpp">// file: &lt;jctype&gt;
+#include &lt;locale&gt;
+namespace My {
+  using namespace std;
+  class JCtype : public locale::facet {
+  public:
+    static locale::id id;       // required for use as a new locale facet
+    bool is_kanji (wchar_t c) const;
+    JCtype() { }
+  protected:
+    ~JCtype() { }
+  };
+}
+
+// file: filt.C
+#include &lt;iostream&gt;
+#include &lt;locale&gt;
+#include "jctype"               // above
+std::locale::id My::JCtype::id; // the static JCtype member declared above.
+
+int main() {
+  using namespace std;
+  typedef ctype&lt;wchar_t&gt; wctype;
+  locale loc(locale(""),        // the user’s preferred locale…
+         new My::JCtype);       // and a new feature…
+  wchar_t c = use_facet&lt;wctype&gt;(loc).widen('!');
+  if (!use_facet&lt;My::JCtype&gt;(loc).is_kanji(c))
+    cout &lt;&lt; "no it isn't!" &lt;&lt; endl;
+  return 0;
+}</code></pre>
+
+<p><a class="anchor" id="p12" href="#p12">12</a>The new facet is used exactly like the built-in facets. — <em>end example</em> ]</p>
+</div>
+
+<div class="example">
+<p><a class="anchor" id="p13" href="#p13">13</a>[ <em>Example:</em> Replacing an existing facet is even easier. The code does not define a member <code class="sh_cpp">id</code> because
+it is reusing the <code class="sh_cpp">numpunct&lt;charT&gt;</code> facet interface:</p>
+
+<pre><code class="sh_cpp">// file: my_bool.C
+#include &lt;iostream&gt;
+#include &lt;locale&gt;
+#include &lt;string&gt;
+namespace My {
+  using namespace std;
+  typedef numpunct_byname&lt;char&gt; cnumpunct;
+  class BoolNames : public cnumpunct {
+  protected:
+    string do_truename() const { return "Oui Oui!"; }
+    string do_falsename() const { return "Mais Non!"; }
+    ~BoolNames() { }
+  public:
+    BoolNames(const char* name) : cnumpunct(name) { }
+  };
+}
+
+int main(int argc, char** argv) {
+  using namespace std;
+  // make the user’s preferred locale, except for…
+  locale loc(locale(""), new My::BoolNames(""));
+  cout.imbue(loc);
+  cout &lt;&lt; boolalpha &lt;&lt; "Any arguments today? " &lt;&lt; (argc &gt; 1) &lt;&lt; endl;
+  return 0;
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+</body>
+</html>
+

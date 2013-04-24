@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Lvalue-to-rvalue conversion</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[conv.lval]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[conv.lval]"></object>4.1 Lvalue-to-rvalue conversion </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A glvalue (<a title="basic.lval" href="basic.lval.html">3.10</a>) of a non-function, non-array type <code class="sh_cpp">T</code> can be converted to a prvalue.<sup class="footnote"><a href="#fn53">53</a></sup> If <code class="sh_cpp">T</code> is an incomplete type, a program that necessitates this conversion is ill-formed. If the
+object to which the glvalue refers is not an object of type <code class="sh_cpp">T</code> and is not an object of a type derived from
+<code class="sh_cpp">T</code>, or if the object is uninitialized, a program that necessitates this conversion has undefined behavior.
+If <code class="sh_cpp">T</code> is a non-class type, the type of the prvalue is the cv-unqualified version of <code class="sh_cpp">T</code>.
+Otherwise, the type of the prvalue is <code class="sh_cpp">T</code>.<sup class="footnote"><a href="#fn54">54</a></sup></p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>When an lvalue-to-rvalue conversion occurs in an unevaluated operand or a subexpression thereof (Clause
+<a title="expr" href="expr.html">5</a>) the value contained in the referenced object is not accessed. Otherwise, if the glvalue has a class type,
+the conversion copy-initializes a temporary of type <code class="sh_cpp">T</code> from the glvalue and the result of the conversion is
+a prvalue for the temporary. Otherwise, if the glvalue has (possibly cv-qualified) type <code class="sh_cpp">std::nullptr_t</code>, the
+prvalue result is a null pointer constant (<a title="conv.ptr" href="conv.ptr.html">4.10</a>). Otherwise, the value contained in the object indicated by
+the glvalue is the prvalue result.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><span class="note">[ <em>Note:</em> See also <a title="basic.lval" href="basic.lval.html">3.10</a>. — <em>end note</em> ]</span></p>
+
+
+
+
+<div>
+<p class="footnote" id="fn53">53) For historical reasons, this conversion is called the “lvalue-to-rvalue” conversion, even though that
+name does not accurately reflect the taxonomy of expressions described in <a title="basic.lval" href="basic.lval.html">3.10</a>.</p>
+<p class="footnote" id="fn54">54) In C++ class prvalues can have cv-qualified types (because they are objects). This differs from ISO C,
+in which non-lvalues never have cv-qualified types.</p>
+</div>
+</body>
+</html>
+

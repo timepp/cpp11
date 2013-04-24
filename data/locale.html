@@ -1,0 +1,133 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class locale</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[locales]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[locales]"></object>22.3 Locales </h2>
+
+<h3>
+<dfn class="label">[locale]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[locale]"></object>22.3.1 Class <code class="sh_cpp"><dfn>locale</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="locale"></object></code> </h3>
+
+<pre><code class="sh_cpp">namespace std {
+  class locale {
+  public:
+    // types:
+    class facet;
+    class id;
+    typedef int category;
+
+    static const category   // values assigned here are for exposition only
+      none     = 0,
+      collate  = 0x010, ctype    = 0x020,
+      monetary = 0x040, numeric  = 0x080,
+      time     = 0x100, messages = 0x200,
+      all = collate | ctype | monetary | numeric | time | messages;
+
+    // construct/copy/destroy:
+    locale() noexcept;
+    locale(const locale&amp; other) noexcept;
+    explicit locale(const char* std_name);
+    explicit locale(const string&amp; std_name);
+    locale(const locale&amp; other, const char* std_name, category);
+    locale(const locale&amp; other, const string&amp; std_name, category);
+    template &lt;class Facet&gt; locale(const locale&amp; other, Facet* f);
+    locale(const locale&amp; other, const locale&amp; one, category);
+    ~locale();                  // not virtual
+    const locale&amp; operator=(const locale&amp; other) noexcept;
+    template &lt;class Facet&gt; locale combine(const locale&amp; other) const;
+
+    // locale operations:
+    basic_string&lt;char&gt; name() const;
+
+    bool operator==(const locale&amp; other) const;
+    bool operator!=(const locale&amp; other) const;
+
+    template &lt;class charT, class traits, class Allocator&gt;
+      bool operator()(const basic_string&lt;charT,traits,Allocator&gt;&amp; s1,
+                      const basic_string&lt;charT,traits,Allocator&gt;&amp; s2) const;
+
+    // global locale objects:
+    static       locale global(const locale&amp;);
+    static const locale&amp; classic();
+  };
+}</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Class <code class="sh_cpp">locale</code> implements a type-safe polymorphic set of facets, indexed by facet <dfn>type</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="type"></object>.
+In other words, a facet has a dual role: in one sense, it’s just a class interface; at the same time, it’s an index into
+a locale’s set of facets.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>Access to the facets of a <code class="sh_cpp">locale</code> is via two function templates,
+<code class="sh_cpp">use_facet&lt;&gt;</code> and <code class="sh_cpp">has_facet&lt;&gt;</code>.</p>
+
+<div class="example">
+<p><a class="anchor" id="p3" href="#p3">3</a>[ <em>Example:</em> An iostream <code class="sh_cpp">operator&lt;&lt;</code> might be implemented as:<sup class="footnote"><a href="#fn240">240</a></sup></p>
+
+<pre><code class="sh_cpp">template &lt;class charT, class traits&gt;
+basic_ostream&lt;charT,traits&gt;&amp;
+operator&lt;&lt; (basic_ostream&lt;charT,traits&gt;&amp; s, Date d) {
+  typename basic_ostream&lt;charT,traits&gt;::sentry cerberos(s);
+  if (cerberos) {
+    ios_base::iostate err = ios_base::iostate::goodbit;
+    tm tmbuf; d.extract(tmbuf);
+    use_facet&lt; time_put&lt;charT,ostreambuf_iterator&lt;charT,traits&gt; &gt; &gt;(
+      s.getloc()).put(s, s, s.fill(), err, &amp;tmbuf, 'x');
+    s.setstate(err);            // might throw
+    }
+    return s;
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>In the call to <code class="sh_cpp">use_facet&lt;Facet&gt;(loc)</code>, the type argument chooses a facet, making
+available all members of the named type. If <code class="sh_cpp">Facet</code> is not present in a locale, it throws the standard
+exception <code class="sh_cpp">bad_cast</code>. A C++ program can check if a locale implements a particular facet with the function
+template <code class="sh_cpp">has_facet&lt;Facet&gt;()</code>. User-defined facets may be installed in a locale, and used
+identically as may standard facets (<a title="facets.examples" href="facets.examples.html">22.4.8</a>).</p>
+
+<div class="note">
+<p><a class="anchor" id="p5" href="#p5">5</a>[ <em>Note:</em> All locale semantics are accessed via <code class="sh_cpp">use_facet&lt;&gt;</code> and
+<code class="sh_cpp">has_facet&lt;&gt;</code>, except that:</p>
+
+<ul>
+<li>A member operator template <code class="sh_cpp">operator()(const basic_string&lt;C,T,A&gt;&amp;, const
+	basic_string&lt;C,T,A&gt;&amp;)</code> is provided so that a locale may be used as a predicate argument to the standard
+	collections, to collate strings.</li>
+<li>Convenient global interfaces are provided for traditional <code class="sh_cpp">ctype</code> functions such as
+	<code class="sh_cpp">isdigit()</code> and <code class="sh_cpp">isspace()</code>, so that given a <code class="sh_cpp">loc</code>ale object loc a C++ program can
+	call <code class="sh_cpp">isspace(c,loc)</code>. (This eases upgrading existing extractors (<a title="istream.formatted" href="istream.formatted.reqmts.html">27.7.2.2</a>).)</li>
+</ul>
+<p> — <em>end note</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>Once a facet reference is obtained from a locale object by calling <code class="sh_cpp">use_facet&lt;&gt;</code>, that
+reference remains usable, and the results from member functions of it may be cached and re-used, as long as some locale
+object refers to that facet.</p>
+
+<p><a class="anchor" id="p7" href="#p7">7</a>In successive calls to a locale facet member function on a facet object installed in the same locale, the
+returned result shall be identical.</p>
+
+<p><a class="anchor" id="p8" href="#p8">8</a>A <code class="sh_cpp">locale</code> constructed from a name string (such as <code class="sh_cpp">"POSIX"</code>), or from parts of two named
+locales, has a name; all others do not. Named locales may be compared for equality; an unnamed locale is equal only to
+(copies of) itself. For an unnamed locale, <code class="sh_cpp">locale::name()</code> returns the string <code class="sh_cpp">"*"</code>.</p>
+
+<p><a class="anchor" id="p9" href="#p9">9</a>Whether there is one global locale object for the entire program or one global locale object per thread is
+implementation-defined. Implementations should provide one global locale object per thread. If there is a single global
+locale object for the entire program, implementations are not required to avoid data races on it
+(<a title="res.on.data.races" href="res.on.data.races.html">17.6.5.9</a>).</p>
+
+
+<div><p class="footnote" id="fn240">240) Note that in the call to <code class="sh_cpp">put</code> the stream is implicitly converted to an
+<code class="sh_cpp">ostreambuf_iterator&lt;charT,traits&gt;</code>.</p></div>
+</body>
+</html>
+

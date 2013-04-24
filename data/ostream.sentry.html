@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class basic_ostream::sentry</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[ostream::sentry]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[ostream::sentry]"></object>27.7.3.4 Class <code class="sh_cpp">basic_ostream::<dfn>sentry</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="sentry"></object></code> </h4>
+
+<pre><code class="sh_cpp">namespace std {
+  template &lt;class charT,class traits = char_traits&lt;charT&gt; &gt;
+  class basic_ostream&lt;charT,traits&gt;::sentry {
+    bool ok_;   // exposition only
+  public:
+    explicit sentry(basic_ostream&lt;charT,traits&gt;&amp; os);
+    ~sentry();
+    explicit operator bool() const { return ok_; }
+
+    sentry(const sentry&amp;) = delete;
+    sentry&amp; operator=(const sentry&amp;) = delete;
+  };
+}</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The class <code class="sh_cpp">sentry</code> defines a class that is responsible for doing exception safe prefix and suffix
+operations.</p>
+
+<h5><code class="sh_cpp">explicit <dfn>sentry</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="sentry"></object>(basic_ostream&lt;charT,traits&gt;&amp; os);</code></h5>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>If <code class="sh_cpp">os.good()</code> is nonzero, prepares for formatted or unformatted output. If <code class="sh_cpp">os.tie()</code> is
+not a null pointer, calls <code class="sh_cpp">os.tie()-&gt;flush()</code>.<sup class="footnote"><a href="#fn327">327</a></sup></p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>If, after any preparation is completed, <code class="sh_cpp">os.good()</code> is <code class="sh_cpp">true</code>, <code class="sh_cpp">ok_ == true</code>
+otherwise, <code class="sh_cpp">ok_ == false</code>. During preparation, the constructor may call <code class="sh_cpp">setstate(failbit)</code> (which
+may throw <code class="sh_cpp">ios_base::failure</code> (<a title="iostate.flags" href="iostate.flags.html">27.5.5.4</a>))<sup class="footnote"><a href="#fn328">328</a></sup></p>
+
+<h5><code class="sh_cpp"><dfn>~sentry</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="~sentry"></object>();</code></h5>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>If <code class="sh_cpp">((os.flags() &amp; ios_base::unitbuf) &amp;&amp; !uncaught_exception() &amp;&amp; os.good())</code> is
+<code class="sh_cpp">true</code>, calls <code class="sh_cpp">os.rdbuf()-&gt;pubsync()</code>. If that function returns −1, sets <code class="sh_cpp">badbit</code> in
+<code class="sh_cpp">os.rdstate()</code> without propagating an exception.</p>
+
+<h5><code class="sh_cpp">explicit <dfn>operator bool</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator bool"></object>() const;</code></h5>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><em>Effects:</em> Returns <code class="sh_cpp">ok_</code>.</p>
+
+
+
+
+<div>
+<p class="footnote" id="fn327">327) The call <code class="sh_cpp">os.tie()-&gt;flush()</code> does not necessarily occur if the function can determine
+that no synchronization is necessary.</p>
+<p class="footnote" id="fn328">328) The <code class="sh_cpp">sentry</code> constructor and destructor can also perform additional
+implementation-dependent operations.</p>
+</div>
+</body>
+</html>
+

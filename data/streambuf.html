@@ -1,0 +1,122 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class template basic_streambuf&lt;charT, traits&gt;</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[streambuf]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[streambuf]"></object>27.6.3 Class template <code class="sh_cpp"><dfn>basic_streambuf</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="basic_streambuf"></object>&lt;charT, traits&gt;</code> </h3>
+
+<pre><code class="sh_cpp">namespace std {
+  template &lt;class charT, class traits = char_traits&lt;charT&gt; &gt;
+  class basic_streambuf {
+  public:
+
+    // types:
+    typedef charT                     char_type;
+    typedef typename traits::int_type int_type;
+    typedef typename traits::pos_type pos_type;
+    typedef typename traits::off_type off_type;
+    typedef traits                    traits_type;
+
+    virtual ~basic_streambuf();
+
+    // <a title="streambuf.locales" href="streambuf.locales.html">27.6.3.2.1</a> locales:
+    locale pubimbue(const locale&amp; loc);
+    locale getloc() const;
+
+    // <a title="streambuf.buffer" href="streambuf.buffer.html">27.6.3.2.2</a> buffer and positioning:
+    basic_streambuf&lt;char_type,traits&gt;*
+      pubsetbuf(char_type* s, streamsize n);
+    pos_type pubseekoff(off_type off, ios_base::seekdir way,
+      ios_base::openmode which =
+          ios_base::in | ios_base::out);
+    pos_type pubseekpos(pos_type sp,
+      ios_base::openmode which =
+          ios_base::in | ios_base::out);
+    int pubsync();
+
+    // Get and put areas:
+    // <a title="streambuf.pub.get" href="streambuf.pub.get.html">27.6.3.2.3</a> Get area:
+    streamsize in_avail();
+    int_type snextc();
+    int_type sbumpc();
+    int_type sgetc();
+    streamsize sgetn(char_type* s, streamsize n);
+
+    // <a title="streambuf.pub.pback" href="streambuf.pub.pback.html">27.6.3.2.4</a> Putback:
+    int_type sputbackc(char_type c);
+    int_type sungetc();
+
+    // <a title="streambuf.pub.put" href="streambuf.pub.put.html">27.6.3.2.5</a> Put area:
+    int_type   sputc(char_type c);
+    streamsize sputn(const char_type* s, streamsize n);
+
+  protected:
+    basic_streambuf();
+    basic_streambuf(const basic_streambuf&amp; rhs);
+    basic_streambuf&amp; operator=(const basic_streambuf&amp; rhs);
+
+    void swap(basic_streambuf&amp; rhs);
+
+    // <a title="streambuf.get.area" href="streambuf.get.area.html">27.6.3.3.2</a> Get area:
+    char_type* eback() const;
+    char_type* gptr() const;
+    char_type* egptr() const;
+    void       gbump(int n);
+    void       setg(char_type* gbeg, char_type* gnext, char_type* gend);
+
+    // <a title="streambuf.put.area" href="streambuf.put.area.html">27.6.3.3.3</a> Put area:
+    char_type* pbase() const;
+    char_type* pptr() const;
+    char_type* epptr() const;
+    void       pbump(int n);
+    void       setp(char_type* pbeg, char_type* pend);
+
+    // <a title="streambuf.virtuals" href="streambuf.virt.locales.html">27.6.3.4</a> virtual functions:
+    // <a title="streambuf.virt.locales" href="streambuf.virt.locales.html">27.6.3.4.1</a> Locales:
+    virtual void imbue(const locale&amp; loc);
+
+    // <a title="streambuf.virt.buffer" href="streambuf.virt.buffer.html">27.6.3.4.2</a> Buffer management and positioning:
+    virtual basic_streambuf&lt;char_type,traits&gt;*
+      setbuf(char_type* s, streamsize n);
+    virtual pos_type seekoff(off_type off, ios_base::seekdir way,
+      ios_base::openmode which = ios_base::in | ios_base::out);
+    virtual pos_type seekpos(pos_type sp,
+      ios_base::openmode which = ios_base::in | ios_base::out);
+    virtual int sync();
+
+    // <a title="streambuf.virt.get" href="streambuf.virt.get.html">27.6.3.4.3</a> Get area:
+    virtual streamsize showmanyc();
+    virtual streamsize xsgetn(char_type* s, streamsize n);
+    virtual int_type   underflow();
+    virtual int_type   uflow();
+
+    // <a title="streambuf.virt.pback" href="streambuf.virt.pback.html">27.6.3.4.4</a> Putback:
+    virtual int_type   pbackfail(int_type c = traits::eof());
+
+    // <a title="streambuf.virt.put" href="streambuf.virt.put.html">27.6.3.4.5</a> Put area:
+    virtual streamsize xsputn(const char_type* s, streamsize n);
+    virtual int_type   overflow (int_type c = traits::eof());
+  };
+}</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The class template <code class="sh_cpp">basic_streambuf&lt;charT,traits&gt;</code> serves as an abstract base class for
+deriving various stream buffers whose objects each control two character sequences:</p>
+
+<ul>
+<li>a character input sequence;</li>
+<li>a character output sequence.</li>
+</ul>
+
+</body>
+</html>
+

@@ -1,0 +1,143 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>shared_ptr atomic access</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[util.smartptr.shared.atomic]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[util.smartptr.shared.atomic]"></object>20.7.2.5 <code class="sh_cpp">shared_ptr</code> atomic access </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Concurrent access to a <code class="sh_cpp">shared_ptr</code> object from multiple threads does not introduce a data race if
+the access is done exclusively via the functions in this section and the instance is passed as their first argument.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The meaning of the arguments of type <code class="sh_cpp">memory_order</code> is explained in <a title="atomics.order" href="atomics.order.html">29.3</a>.</p>
+
+<h5><code class="sh_cpp">template&lt;class T&gt;
+  bool <dfn>atomic_is_lock_free</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="atomic_is_lock_free"></object>(const shared_ptr&lt;T&gt;* p);</code></h5>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Requires:</em> <code class="sh_cpp">p</code> shall not be null.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><em>Returns:</em> <code class="sh_cpp">true</code> if atomic access to <code class="sh_cpp">*p</code> is lock-free, <code class="sh_cpp">false</code>
+otherwise.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><em>Throws:</em> Nothing.</p>
+
+<h5><code class="sh_cpp">template&lt;class T&gt;
+  shared_ptr&lt;T&gt; <dfn>atomic_load</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="atomic_load"></object>(const shared_ptr&lt;T&gt;* p);</code></h5>
+
+<p><a class="anchor" id="p6" href="#p6">6</a><em>Requires:</em> <code class="sh_cpp">p</code> shall not be null.</p>
+
+<p><a class="anchor" id="p7" href="#p7">7</a><em>Returns:</em> <code class="sh_cpp">atomic_load_explicit(p, memory_order_seq_cst)</code>.</p>
+
+<p><a class="anchor" id="p8" href="#p8">8</a><em>Throws:</em> Nothing.</p>
+
+<h5><code class="sh_cpp">template&lt;class T&gt;
+  shared_ptr&lt;T&gt; <dfn>atomic_load_explicit</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="atomic_load_explicit"></object>(const shared_ptr&lt;T&gt;* p, memory_order mo);</code></h5>
+
+<p><a class="anchor" id="p9" href="#p9">9</a><em>Requires:</em> <code class="sh_cpp">p</code> shall not be null.</p>
+
+<p><a class="anchor" id="p10" href="#p10">10</a><em>Requires:</em> <code class="sh_cpp">mo</code> shall not be <code class="sh_cpp">memory_order_release</code> or
+<code class="sh_cpp">memory_order_acq_rel</code>.</p>
+
+<p><a class="anchor" id="p11" href="#p11">11</a><em>Returns:</em> <code class="sh_cpp">*p</code>.</p>
+
+<p><a class="anchor" id="p12" href="#p12">12</a><em>Throws:</em> Nothing.</p>
+
+<h5><code class="sh_cpp">template&lt;class T&gt;
+  void <dfn>atomic_store</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="atomic_store"></object>(shared_ptr&lt;T&gt;* p, shared_ptr&lt;T&gt; r);</code></h5>
+
+<p><a class="anchor" id="p13" href="#p13">13</a><em>Requires:</em> <code class="sh_cpp">p</code> shall not be null.</p>
+
+<p><a class="anchor" id="p14" href="#p14">14</a><em>Effects:</em> <code class="sh_cpp">atomic_store_explicit(p, r, memory_order_seq_cst)</code>.</p>
+
+<p><a class="anchor" id="p15" href="#p15">15</a><em>Throws:</em> Nothing.</p>
+
+<h5><code class="sh_cpp">template&lt;class T&gt;
+  void <dfn>atomic_store_explicit</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="atomic_store_explicit"></object>(shared_ptr&lt;T&gt;* p, shared_ptr&lt;T&gt; r, memory_order mo);</code></h5>
+
+<p><a class="anchor" id="p16" href="#p16">16</a><em>Requires:</em> <code class="sh_cpp">p</code> shall not be null.</p>
+
+<p><a class="anchor" id="p17" href="#p17">17</a><em>Requires:</em> <code class="sh_cpp">mo</code> shall not be <code class="sh_cpp">memory_order_acquire</code> or
+<code class="sh_cpp">memory_order_acq_rel</code>.</p>
+
+<p><a class="anchor" id="p18" href="#p18">18</a><em>Effects:</em> <code class="sh_cpp">p-&gt;swap(r)</code>.</p>
+
+<p><a class="anchor" id="p19" href="#p19">19</a><em>Throws:</em> Nothing.</p>
+
+<h5><code class="sh_cpp">template&lt;class T&gt;
+  shared_ptr&lt;T&gt; <dfn>atomic_exchange</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="atomic_exchange"></object>(shared_ptr&lt;T&gt;* p, shared_ptr&lt;T&gt; r);</code></h5>
+
+<p><a class="anchor" id="p20" href="#p20">20</a><em>Requires:</em> <code class="sh_cpp">p</code> shall not be null.</p>
+
+<p><a class="anchor" id="p21" href="#p21">21</a><em>Returns:</em> <code class="sh_cpp">atomic_exchange_explicit(p, r, memory_order_seq_cst)</code>.</p>
+
+<p><a class="anchor" id="p22" href="#p22">22</a><em>Throws:</em> Nothing.</p>
+
+<h5><code class="sh_cpp">template&lt;class T&gt;
+  shared_ptr&lt;T&gt; <dfn>atomic_exchange_explicit</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="atomic_exchange_explicit"></object>(shared_ptr&lt;T&gt;* p, shared_ptr&lt;T&gt; r,
+                                         memory_order mo);</code></h5>
+
+<p><a class="anchor" id="p23" href="#p23">23</a><em>Requires:</em> <code class="sh_cpp">p</code> shall not be null.</p>
+
+<p><a class="anchor" id="p24" href="#p24">24</a><em>Effects:</em> <code class="sh_cpp">p-&gt;swap(r)</code>.</p>
+
+<p><a class="anchor" id="p25" href="#p25">25</a><em>Returns:</em> The previous value of <code class="sh_cpp">*p</code>.</p>
+
+<p><a class="anchor" id="p26" href="#p26">26</a><em>Throws:</em> Nothing.</p>
+
+<h5><code class="sh_cpp">template&lt;class T&gt;
+  bool <dfn>atomic_compare_exchange_weak</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="atomic_compare_exchange_weak"></object>(
+    shared_ptr&lt;T&gt;* p, shared_ptr&lt;T&gt;* v, shared_ptr&lt;T&gt; w);</code></h5>
+
+<p><a class="anchor" id="p27" href="#p27">27</a><em>Requires:</em> <code class="sh_cpp">p</code> shall not be null.</p>
+
+<p><a class="anchor" id="p28" href="#p28">28</a><em>Returns:</em> <code class="sh_cpp">atomic_compare_exchange_weak_explicit(p, v, w, memory_order_seq_cst,
+memory_order_seq_cst)</code>.</p>
+
+<p><a class="anchor" id="p29" href="#p29">29</a><em>Throws:</em> Nothing.</p>
+
+<h5><code class="sh_cpp">template&lt;class T&gt;
+  bool <dfn>atomic_compare_exchange_strong</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="atomic_compare_exchange_strong"></object>(
+    shared_ptr&lt;T&gt;* p, shared_ptr&lt;T&gt;* v, shared_ptr&lt;T&gt; w);</code></h5>
+
+<p><a class="anchor" id="p30" href="#p30">30</a><em>Returns:</em> <code class="sh_cpp">atomic_compare_exchange_strong_explicit(p, v, w, memory_order_seq_cst,
+memory_order_seq_cst)</code>.</p>
+
+<h5><code class="sh_cpp">template&lt;class T&gt;
+  bool <dfn>atomic_compare_exchange_weak_explicit</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="atomic_compare_exchange_weak_explicit"></object>(
+    shared_ptr&lt;T&gt;* p, shared_ptr&lt;T&gt;* v, shared_ptr&lt;T&gt; w,
+    memory_order success, memory_order failure);
+template&lt;class T&gt;
+  bool <dfn>atomic_compare_exchange_strong_explicit</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="atomic_compare_exchange_strong_explicit"></object>(
+    shared_ptr&lt;T&gt;* p, shared_ptr&lt;T&gt;* v, shared_ptr&lt;T&gt; w,
+    memory_order success, memory_order failure);</code></h5>
+
+<p><a class="anchor" id="p31" href="#p31">31</a><em>Requires:</em> <code class="sh_cpp">p</code> shall not be null.</p>
+
+<p><a class="anchor" id="p32" href="#p32">32</a><em>Requires:</em> <code class="sh_cpp">failure</code> shall not be <code class="sh_cpp">memory_order_release</code>,
+<code class="sh_cpp">memory_order_acq_rel</code>, or stronger than <code class="sh_cpp">success</code>.</p>
+
+<p><a class="anchor" id="p33" href="#p33">33</a><em>Effects:</em> If <code class="sh_cpp">*p</code> is equivalent to <code class="sh_cpp">*v</code>, assigns <code class="sh_cpp">w</code> to <code class="sh_cpp">*p</code> and
+has synchronization semantics corresponding to the value of <code class="sh_cpp">success</code>, otherwise assigns <code class="sh_cpp">*p</code> to
+<code class="sh_cpp">*v</code> and has synchronization semantics corresponding to the value of <code class="sh_cpp">failure</code>.</p>
+
+<p><a class="anchor" id="p34" href="#p34">34</a><em>Returns:</em> <code class="sh_cpp">true</code> if <code class="sh_cpp">*p</code> was equivalent to <code class="sh_cpp">*v</code>, false
+otherwise.</p>
+
+<p><a class="anchor" id="p35" href="#p35">35</a><em>Throws:</em> Nothing.</p>
+
+<p><a class="anchor" id="p36" href="#p36">36</a><em>Remarks:</em> two <code class="sh_cpp">shared_ptr</code> objects are equivalent if they store the same pointer value and share
+ownership.</p>
+
+<p><a class="anchor" id="p37" href="#p37">37</a><em>Remarks:</em> the <code class="sh_cpp">weak</code> forms may fail spuriously. See <a title="atomics.types.operations" href="atomics.types.operations.html">29.6</a>.</p>
+</body>
+</html>
+

@@ -1,0 +1,180 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>References</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[dcl.init.ref]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[dcl.init.ref]"></object>8.5.3 References </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A variable declared to be a <code class="sh_cpp">T&amp;</code> or <code class="sh_cpp">T&amp;&amp;</code>, that is, “reference to type
+<code class="sh_cpp">T</code>” (<a title="dcl.ref" href="dcl.ref.html">8.3.2</a>), shall be initialized by an object, or function, of type <code class="sh_cpp">T</code> or by an
+object that can be converted into a <code class="sh_cpp">T</code>.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">int g(int);
+void f() {
+  int i;
+  int&amp; r = i;           // r refers to i
+  r = 1;                // the value of i becomes 1
+  int* p = &amp;r;          // p points to i
+  int&amp; rr = r;          // rr refers to what r refers to, that is, to i
+  int (&amp;rg)(int) = g;   // rg refers to the function g
+  rg(i);                // calls function g
+  int a[3];
+  int (&amp;ra)[3] = a;     // ra refers to the array a
+  ra[1] = i;            // modifies a[1]
+}</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>A reference cannot be changed to refer to another object after initialization. Note that initialization of a
+reference is treated very differently from assignment to it. Argument passing (<a title="expr.call" href="expr.call.html">5.2.2</a>) and function value
+return (<a title="stmt.return" href="stmt.return.html">6.6.3</a>) are initializations.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>The initializer can be omitted for a reference only in a parameter declaration (<a title="dcl.fct" href="dcl.fct.html">8.3.5</a>), in the
+declaration of a function return type, in the declaration of a class member within its class definition
+(<a title="class.mem" href="class.mem.html">9.2</a>), and where the <code class="sh_cpp">extern</code> specifier is explicitly used.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">int&amp; r1;                // error: initializer missing
+extern int&amp; r2;         // OK</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>Given types “<var>cv1</var> <code class="sh_cpp">T1</code>” and “<var>cv2</var> <code class="sh_cpp">T2</code>”, “<var>cv1</var>
+<code class="sh_cpp">T1</code>” is <dfn>reference-related</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="reference-related"></object> to “<var>cv2</var> <code class="sh_cpp">T2</code>” if <code class="sh_cpp">T1</code> is the same type
+as <code class="sh_cpp">T2</code>, or <code class="sh_cpp">T1</code> is a base class of <code class="sh_cpp">T2</code>. “<var>cv1</var> <code class="sh_cpp">T1</code>” is
+<dfn>reference-compatible</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="reference-compatible"></object> with “<var>cv2</var> <code class="sh_cpp">T2</code>” if <code class="sh_cpp">T1</code> is reference-related to
+<code class="sh_cpp">T2</code> and <var>cv1</var> is the same cv-qualification as, or greater cv-qualification than, <var>cv2</var>.
+For purposes of overload resolution, cases for which <var>cv1</var> is greater cv-qualification than <var>cv2</var> are
+identified as <dfn>reference-compatible with added qualification</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="reference-compatible with added qualification"></object> (see <a title="over.ics.rank" href="over.ics.rank.html">13.3.3.2</a>). In all cases where the
+reference-related or reference-compatible relationship of two types is used to establish the validity of a reference
+binding, and <code class="sh_cpp">T1</code> is a base class of <code class="sh_cpp">T2</code>, a program that necessitates such a binding is
+ill-formed if <code class="sh_cpp">T1</code> is an inaccessible (Clause <a title="class.access" href="class.access.html">11</a>) or ambiguous (<a title="class.member.lookup" href="class.member.lookup.html">10.2</a>) base class of
+<code class="sh_cpp">T2</code>.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>A reference to type “<var>cv1</var> <code class="sh_cpp">T1</code>” is initialized by an expression of type “<var>cv2</var>
+<code class="sh_cpp">T2</code>” as follows:</p>
+<ul>
+<li>If the reference is an lvalue reference and the initializer expression
+	<ul>
+	<li>is an lvalue (but is not a bit-field), and “<var>cv1</var> <code class="sh_cpp">T1</code>” is reference-compatible with
+		“<var>cv2</var> <code class="sh_cpp">T2</code>”, or</li>
+	<li>has a class type (i.e., <code class="sh_cpp">T2</code> is a class type), where <code class="sh_cpp">T1</code> is not reference-related to
+		<code class="sh_cpp">T2</code>, and can be implicitly converted to an lvalue of type “<var>cv3</var> <code class="sh_cpp">T3</code>”, where
+		“<var>cv1</var> <code class="sh_cpp">T1</code>” is reference-compatible with “<var>cv3</var> <code class="sh_cpp">T3</code>”<sup class="footnote"><a href="#fn109">109</a></sup>
+		(this conversion is selected by enumerating the applicable conversion functions (<a title="over.match.ref " href=".html"></a>) and
+		choosing the best one through overload resolution (<a title="over.match" href="over.match.html">13.3</a>)),</li>
+	</ul>
+	then the reference is bound to the initializer expression lvalue in the first case and to the lvalue result of the
+	conversion in the second case (or, in either case, to the appropriate base class subobject of the object). <span class="note">[ <em>Note:</em> The
+	usual lvalue-to-rvalue (<a title="conv.lval" href="conv.lval.html">4.1</a>), array-to-pointer (<a title="conv.array" href="conv.array.html">4.2</a>), and function-to-pointer (<a title="conv.func" href="conv.func.html">4.3</a>)
+	standard conversions are not needed, and therefore are suppressed, when such direct bindings to lvalues are
+	done. — <em>end note</em> ]</span>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">double d = 2.0;
+double&amp; rd = d;         // rd refers to d
+const double&amp; rcd = d;  // rcd refers to d
+
+struct A { };
+struct B : A { operator int&amp;(); } b;
+A&amp; ra = b;              // ra refers to A subobject in b
+const A&amp; rca = b;       // rca refers to A subobject in b
+int&amp; ir = B();          // ir refers to the result of B::operator int&amp;</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+</li>
+
+<li>Otherwise, the reference shall be an lvalue reference to a non-volatile const type (i.e., <var>cv1</var> shall be
+	<code class="sh_cpp">const</code>), or the reference shall be an rvalue reference.
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">double&amp; rd2 = 2.0;      // error: not an lvalue and reference not const
+int i = 2;
+double&amp; rd3 = i;        // error: type mismatch and reference not const</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+	<ul>
+	<li>If the initializer expression
+		<ul>
+		<li>is an xvalue, class prvalue, array prvalue or function lvalue and “<var>cv1</var> <code class="sh_cpp">T1</code>” is
+			reference-compatible with “<var>cv2</var> <code class="sh_cpp">T2</code>”, or</li>
+		<li>has a class type (i.e., <code class="sh_cpp">T2</code> is a class type), where <code class="sh_cpp">T1</code> is not reference-related to
+			<code class="sh_cpp">T2</code>, and can be implicitly converted to an xvalue, class prvalue, or function lvalue of type
+			“<var>cv3</var> <code class="sh_cpp">T3</code>”, where “<var>cv1</var> <code class="sh_cpp">T1</code>” is reference-compatible with
+			“<var>cv3</var> <code class="sh_cpp">T3</code>”,</li>
+		</ul>
+		then the reference is bound to the value of the initializer expression in the first case and to the result of
+		the conversion in the second case (or, in either case, to an appropriate base class subobject). In the second
+		case, if the reference is an rvalue reference and the second standard conversion sequence of the user-defined
+		conversion sequence includes an lvalue-to-rvalue conversion, the program is ill-formed.
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct A { };
+struct B : A { } b;
+extern B f();
+const A&amp; rca2 = f();                // bound to the A subobject of the B rvalue.
+A&amp;&amp; rra = f();                      // same as above
+struct X {
+  operator B();
+  operator int&amp;();
+} x;
+const A&amp; r = x;                     // bound to the A subobject of the result of the conversion
+int i2 = 42;
+int&amp;&amp; rri = static_cast&lt;int&amp;&amp;&gt;(i2); // bound directly to i2
+B&amp;&amp; rrb = x;                        // bound directly to the result of operator B
+int&amp;&amp; rri2 = X();                   // error: lvalue-to-rvalue conversion applied to the
+                                    // result of operator int&amp;</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+</li>
+
+	<li>Otherwise, a temporary of type “<var>cv1</var> <code class="sh_cpp">T1</code>” is created and initialized from the initializer
+		expression using the rules for a non-reference copy-initialization (<a title="dcl.init" href="dcl.init.html">8.5</a>). The reference is then bound
+		to the temporary. If <code class="sh_cpp">T1</code> is reference-related to <code class="sh_cpp">T2</code>, <var>cv1</var> must be the same
+		cv-qualification as, or greater cv-qualification than, <var>cv2</var>. If <code class="sh_cpp">T1</code> is reference-related
+		to <code class="sh_cpp">T2</code> and the reference is an rvalue reference, the initializer expression shall not be an lvalue.
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">const double&amp; rcd2 = 2;     // rcd2 refers to temporary with value 2.0
+double&amp;&amp; rrd = 2;           // rrd refers to temporary with value 2.0
+const volatile int cvi = 1;
+const int&amp; r2 = cvi;        // error: type qualifiers dropped
+double d2 = 1.0;
+double&amp;&amp; rrd2 = d2;         // error: copying lvalue of related type
+int i3 = 2;
+double&amp;&amp; rrd3 = i3;         // rrd3 refers to temporary with value 2.0</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+</li>
+	</ul>
+</li>
+</ul>
+
+<p>In all cases except the last (i.e., creating and initializing a temporary from the initializer expression), the
+reference is said to <dfn>bind directly</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="bind directly"></object> to the initializer expression.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a><span class="note">[ <em>Note:</em> <a title="class.temporary" href="class.temporary.html">12.2</a> describes the lifetime of temporaries bound to references. — <em>end note</em> ]</span></p>
+
+
+<div><p class="footnote" id="fn109">109) This requires a conversion function (<a title="class.conv.fct" href="class.conv.fct.html">12.3.2</a>) returning a reference type.</p></div>
+</body>
+</html>
+

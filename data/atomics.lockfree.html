@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Lock-free property</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[atomics.lockfree]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[atomics.lockfree]"></object>29.4 Lock-free property </h2>
+
+<pre><code class="sh_cpp">#define <dfn>ATOMIC_BOOL_LOCK_FREE</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="ATOMIC_BOOL_LOCK_FREE"></object> <em>unspecified</em>
+#define <dfn>ATOMIC_CHAR_LOCK_FREE</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="ATOMIC_CHAR_LOCK_FREE"></object> <em>unspecified</em>
+#define <dfn>ATOMIC_CHAR16_T_LOCK_FREE</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="ATOMIC_CHAR16_T_LOCK_FREE"></object> <em>unspecified</em>
+#define <dfn>ATOMIC_CHAR32_T_LOCK_FREE</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="ATOMIC_CHAR32_T_LOCK_FREE"></object> <em>unspecified</em>
+#define <dfn>ATOMIC_WCHAR_T_LOCK_FREE</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="ATOMIC_WCHAR_T_LOCK_FREE"></object> <em>unspecified</em>
+#define <dfn>ATOMIC_SHORT_LOCK_FREE</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="ATOMIC_SHORT_LOCK_FREE"></object> <em>unspecified</em>
+#define <dfn>ATOMIC_INT_LOCK_FREE</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="ATOMIC_INT_LOCK_FREE"></object> <em>unspecified</em>
+#define <dfn>ATOMIC_LONG_LOCK_FREE</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="ATOMIC_LONG_LOCK_FREE"></object> <em>unspecified</em>
+#define <dfn>ATOMIC_LLONG_LOCK_FREE</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="ATOMIC_LLONG_LOCK_FREE"></object> <em>unspecified</em>
+#define <dfn>ATOMIC_ADDRESS_LOCK_FREE</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="ATOMIC_ADDRESS_LOCK_FREE"></object> <em>unspecified</em>
+#define <dfn>ATOMIC_POINTER_LOCK_FREE</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="ATOMIC_POINTER_LOCK_FREE"></object> <em>unspecified</em></code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The <code class="sh_cpp">ATOMIC_…_LOCK_FREE</code> macros indicate the lock-free property of the corresponding atomic types,
+with the signed and unsigned variants grouped together. The properties also apply to the corresponding (partial)
+specializations of the <code class="sh_cpp">atomic</code> template. A value of 0 indicates that the types are never lock-free. A value of 1
+indicates that the types are sometimes lock-free. A value of 2 indicates that the types are always lock-free.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The function <code class="sh_cpp">atomic_is_lock_free</code> (<a title="atomics.types.operations" href="atomics.types.operations.html">29.6</a>) indicates whether the object is lock-free. In
+any given program execution, the result of the lock-free query shall be consistent for all pointers of the same
+type.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><span class="note">[ <em>Note:</em> Operations that are lock-free should also be address-free. That is, atomic operations on the same memory
+location via two different addresses will communicate atomically. The implementation should not depend on any
+per-process state. This restriction enables communication by memory that is mapped into a process more than once and by
+memory that is shared between two processes. — <em>end note</em> ]</span></p>
+</body>
+</html>
+

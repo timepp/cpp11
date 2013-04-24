@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>basic_string accessors</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[string.ops]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[string.ops]"></object>21.4.7 <code class="sh_cpp">basic_string</code> string operations </h3>
+
+<h4>
+<dfn class="label">[string.accessors]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[string.accessors]"></object>21.4.7.1 <code class="sh_cpp">basic_string</code> accessors </h4>
+
+<h5><code class="sh_cpp">const charT* <dfn>c_str</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="c_str"></object>() const noexcept;
+const charT* <dfn>data</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="data"></object>() const noexcept;</code></h5>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Returns:</em> A pointer <code class="sh_cpp">p</code> such that <code class="sh_cpp">p + i == &amp;operator[](i)</code> for each <code class="sh_cpp">i</code> in
+<code class="sh_cpp">[0,size()]</code>.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Complexity:</em> constant time.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Requires:</em> The program shall not alter any of the values stored in the character array.</p>
+
+<h5><code class="sh_cpp">allocator_type <dfn>get_allocator</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="get_allocator"></object>() const noexcept;</code></h5>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><em>Returns:</em> A copy of the <code class="sh_cpp">Allocator</code> object used to construct the string or, if that allocator has
+been replaced, a copy of the most recent replacement.</p>
+</body>
+</html>
+

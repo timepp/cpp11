@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Utility components</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[utility]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[utility]"></object>20.2 Utility components </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>This subclause contains some basic function and class templates that are used throughout the rest of the
+library.</p>
+
+<h3>Header <dfn><code class="header">&lt;utility&gt;</code></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="&lt;utility&gt;"></object> synopsis</h3>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The header <code class="header">&lt;utility&gt;</code> defines several types and function templates that are described in this
+Clause. It also defines the template <code class="sh_cpp">pair</code> and various function templates that operate on <code class="sh_cpp">pair</code>
+objects.</p>
+
+<pre><code class="sh_cpp">#include &lt;initializer_list&gt;
+
+namespace std {
+  // <a title="operators" href="operators.html">20.2.1</a>, operators:
+  namespace rel_ops {
+    template&lt;class T&gt; bool operator!=(const T&amp;, const T&amp;);
+    template&lt;class T&gt; bool operator&gt; (const T&amp;, const T&amp;);
+    template&lt;class T&gt; bool operator&lt;=(const T&amp;, const T&amp;);
+    template&lt;class T&gt; bool operator&gt;=(const T&amp;, const T&amp;);
+  }
+
+  // <a title="utility.swap" href="utility.swap.html">20.2.2</a>, swap:
+  template&lt;class T&gt; void swap(T&amp; a, T&amp; b) noexcept(<em>see below</em>);
+  template &lt;class T, size_t N&gt; void swap(T (&amp;a)[N], T (&amp;b)[N]) noexcept(noexcept(swap(*a, *b)));
+
+  // <a title="forward" href="forward.html">20.2.3</a>, forward/move:
+  template &lt;class T&gt; T&amp;&amp; forward(typename remove_reference&lt;T&gt;::type&amp; t) noexcept;
+  template &lt;class T&gt; T&amp;&amp; forward(typename remove_reference&lt;T&gt;::type&amp;&amp; t) noexcept;
+  template &lt;class T&gt; typename remove_reference&lt;T&gt;::type&amp;&amp; move(T&amp;&amp;) noexcept;
+  template &lt;class T&gt; typename conditional&lt;
+    !is_nothrow_move_constructible&lt;T&gt;::value &amp;&amp; is_copy_constructible&lt;T&gt;::value,
+    const T&amp;, T&amp;&amp;&gt;::type move_if_noexcept(T&amp; x) noexcept;
+
+  // <a title="declval" href="declval.html">20.2.4</a>, declval:
+  template &lt;class T&gt;
+    typename add_rvalue_reference&lt;T&gt;::type declval() noexcept;    // as unevaluated operand
+
+  // <a title="pairs" href="pairs.general.html">20.3</a>, pairs:
+  template &lt;class T1, class T2&gt; struct pair;
+
+  // <a title="pairs.spec" href="pairs.spec.html">20.3.3</a>, pair specialized algorithms:
+  template &lt;class T1, class T2&gt;
+    bool operator==(const pair&lt;T1,T2&gt;&amp;, const pair&lt;T1,T2&gt;&amp;);
+  template &lt;class T1, class T2&gt;
+    bool operator&lt; (const pair&lt;T1,T2&gt;&amp;, const pair&lt;T1,T2&gt;&amp;);
+  template &lt;class T1, class T2&gt;
+    bool operator!=(const pair&lt;T1,T2&gt;&amp;, const pair&lt;T1,T2&gt;&amp;);
+  template &lt;class T1, class T2&gt;
+    bool operator&gt; (const pair&lt;T1,T2&gt;&amp;, const pair&lt;T1,T2&gt;&amp;);
+  template &lt;class T1, class T2&gt;
+    bool operator&gt;=(const pair&lt;T1,T2&gt;&amp;, const pair&lt;T1,T2&gt;&amp;);
+  template &lt;class T1, class T2&gt;
+    bool operator&lt;=(const pair&lt;T1,T2&gt;&amp;, const pair&lt;T1,T2&gt;&amp;);
+  template &lt;class T1, class T2&gt;
+    void swap(pair&lt;T1,T2&gt;&amp; x, pair&lt;T1,T2&gt;&amp; y) noexcept(noexcept(x.swap(y)));
+
+  template &lt;class T1, class T2&gt;
+    <em>see below</em> make_pair(T1&amp;&amp;, T2&amp;&amp;);
+
+  // <a title="pair.astuple" href="pair.astuple.html">20.3.4</a>, tuple-like access to pair:
+  template &lt;class T&gt; class tuple_size;
+  template &lt;size_t I, class T&gt; class tuple_element;
+
+  template &lt;class T1, class T2&gt; struct tuple_size&lt;std::pair&lt;T1, T2&gt; &gt;;
+  template &lt;class T1, class T2&gt; struct tuple_element&lt;0, std::pair&lt;T1, T2&gt; &gt;;
+  template &lt;class T1, class T2&gt; struct tuple_element&lt;1, std::pair&lt;T1, T2&gt; &gt;;
+
+  template&lt;size_t I, class T1, class T2&gt;
+    typename tuple_element&lt;I, std::pair&lt;T1, T2&gt; &gt;::type&amp; get(std::pair&lt;T1, T2&gt;&amp;) noexcept;
+  template&lt;size_t I, class T1, class T2&gt;
+    typename tuple_element&lt;I, std::pair&lt;T1, T2&gt; &gt;::type&amp;&amp; get(std::pair&lt;T1, T2&gt;&amp;&amp;) noexcept;
+  template&lt;size_t I, class T1, class T2&gt; const
+    const typename tuple_element&lt;I, std::pair&lt;T1, T2&gt; &gt;::type&amp; get(const std::pair&lt;T1, T2&gt;&amp;) noexcept;
+
+  // <a title="pair.piecewise" href="pair.piecewise.html">20.3.5</a>, pair piecewise construction
+  struct piecewise_construct_t { };
+  constexpr piecewise_construct_t piecewise_construct = piecewise_construct_t();
+  template &lt;class... Types&gt; class tuple; // defined in &lt;tuple&gt;
+
+}</code></pre>
+</body>
+</html>
+

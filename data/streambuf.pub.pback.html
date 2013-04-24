@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Putback</title>
+</head>
+<body>
+<h5>
+<dfn class="label">[streambuf.pub.pback]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[streambuf.pub.pback]"></object>27.6.3.2.4 Putback </h5>
+
+<h6><code class="sh_cpp">int_type <dfn>sputbackc</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="sputbackc"></object>(char_type c);</code></h6>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Returns:</em> If the input sequence putback position is not available, or if <code class="sh_cpp">traits::eq(c,gptr()[-1])</code>
+is false, returns <code class="sh_cpp">pbackfail(traits::to_int_type(c))</code>. Otherwise, decrements the next pointer for the input
+sequence and returns <code class="sh_cpp">traits::to_int_type(*gptr())</code>.</p>
+
+<h6><code class="sh_cpp">int_type <dfn>sungetc</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="sungetc"></object>();</code></h6>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Returns:</em> If the input sequence putback position is not available, returns <code class="sh_cpp">pbackfail()</code>. Otherwise,
+decrements the next pointer for the input sequence and returns <code class="sh_cpp">traits::to_int_type(*gptr())</code>.</p>
+</body>
+</html>
+

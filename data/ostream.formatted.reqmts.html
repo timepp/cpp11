@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Common requirements</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[ostream.formatted]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[ostream.formatted]"></object>27.7.3.6 Formatted output functions </h4>
+
+<h5>
+<dfn class="label">[ostream.formatted.reqmts]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[ostream.formatted.reqmts]"></object>27.7.3.6.1 Common requirements </h5>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Each formatted output function begins execution by constructing an object of class <code class="sh_cpp">sentry</code>. If this
+object returns <code class="sh_cpp">true</code> when converted to a value of type <code class="sh_cpp">bool</code>, the function endeavors to generate
+the requested output. If the generation fails, then the formatted output function does
+<code class="sh_cpp">setstate(ios_base::failbit)</code>, which might throw an exception. If an exception is thrown during output, then
+<code class="sh_cpp">ios::badbit</code> is turned on<sup class="footnote"><a href="#fn329">329</a></sup> in <code class="sh_cpp">*this</code>’s error state. If
+<code class="sh_cpp">(exceptions()&amp;badbit) != 0</code> then the exception is rethrown. Whether or not an exception is thrown, the
+<code class="sh_cpp">sentry</code> object is destroyed before leaving the formatted output function. If no exception is thrown, the
+result of the formatted output function is <code class="sh_cpp">*this</code>.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The descriptions of the individual formatted output operations describe how they perform output and do not
+mention the <code class="sh_cpp">sentry</code> object.</p>
+
+
+<div><p class="footnote" id="fn329">329) without causing an ios::failure to be thrown.</p></div>
+</body>
+</html>
+

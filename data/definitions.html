@@ -1,0 +1,373 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Definitions</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[definitions]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[definitions]"></object>17.3 Definitions </h2>
+
+<h3>
+<dfn class="label">[defns.arbitrary.stream]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[defns.arbitrary.stream]"></object>17.3.1 </h3>
+
+<dl>
+<dt>
+<dfn>arbitrary-positional stream</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="arbitrary-positional stream"></object>
+</dt>
+	<dd>
+<p>a stream (described in Clause <a title="input.output" href="input.output.general.html">27</a>) that can seek to any integral position within the length of the
+		stream</p>
+
+		<p><span class="note">[ <em>Note:</em> Every arbitrary-positional stream is also a repositional stream. — <em>end note</em> ]</span></p>
+	</dd>
+</dl>
+
+
+<h3>
+<dfn class="label">[defns.block]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[defns.block]"></object>17.3.2 </h3>
+
+<dl>
+<dt>
+<dfn>block</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="block"></object>
+</dt>
+	<dd>place a thread in the blocked state</dd>
+</dl>
+
+<h3>
+<dfn class="label">[defns.blocked]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[defns.blocked]"></object>17.3.3 </h3>
+
+<dl>
+<dt>
+<dfn>blocked thread</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="blocked thread"></object>
+</dt>
+	<dd>a thread that is waiting for some condition (other than the availability of a processor) to be satisfied before
+	it can continue execution<sup class="footnote"><a href="#fn162">162</a></sup>
+</dd>
+</dl>
+
+<h3>
+<dfn class="label">[defns.character]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[defns.character]"></object>17.3.4 </h3>
+
+<dl>
+<dt>
+<dfn>character</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="character"></object>
+</dt>
+	<dd>
+<p>&lt;Clauses <a title="strings" href="strings.general.html">21</a>, <a title="localization" href="localization.general.html">22</a>, <a title="input.output" href="input.output.general.html">27</a>, and <a title="re" href="re.general.html">28</a>&gt; any object which, when treated
+		sequentially, can represent text</p>
+
+		<p><span class="note">[ <em>Note:</em> The term does not mean only <code class="sh_cpp">char</code>, <code class="sh_cpp">char16_t</code>, <code class="sh_cpp">char32_t</code>, and
+		<code class="sh_cpp">wchar_t</code> objects, but any value that can be represented by a type that provides the definitions
+		specified in these Clauses. — <em>end note</em> ]</span></p>
+	</dd>
+</dl>
+
+<h3>
+<dfn class="label">[defns.character.container]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[defns.character.container]"></object>17.3.5 </h3>
+
+<dl>
+<dt>
+<dfn>character container type</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="character container type"></object>
+</dt>
+	<dd>
+<p>a class or a type used to represent a <em>character</em></p>
+
+		<p><span class="note">[ <em>Note:</em> It is used for one of the template parameters of the string, iostream, and regular expression class
+		templates. A character container type is a POD (<a title="basic.types" href="basic.types.html">3.9</a>) type. — <em>end note</em> ]</span></p>
+	</dd>
+</dl>
+
+<h3>
+<dfn class="label">[defns.comparison]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[defns.comparison]"></object>17.3.6 </h3>
+
+<dl>
+<dt>
+<dfn>comparison function</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="comparison function"></object>
+</dt>
+	<dd>an operator function (<a title="over.oper" href="over.oper.html">13.5</a>) for any of the equality (<a title="expr.eq" href="expr.eq.html">5.10</a>) or relational (<a title="expr.rel" href="expr.rel.html">5.9</a>)
+	operators</dd>
+</dl>
+
+<h3>
+<dfn class="label">[defns.component]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[defns.component]"></object>17.3.7 </h3>
+
+<dl>
+<dt>
+<dfn>component</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="component"></object>
+</dt>
+	<dd>
+<p>a group of library entities directly related as members, parameters, or return types</p>
+
+		<p><span class="note">[ <em>Note:</em> For example, the class template <code class="sh_cpp">basic_string</code> and the non-member function templates that
+		operate on strings are referred to as the <em>string component</em>. — <em>end note</em> ]</span></p>
+	</dd>
+</dl>
+
+<h3>
+<dfn class="label">[defns.deadlock]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[defns.deadlock]"></object>17.3.8 </h3>
+
+<dl>
+<dt>
+<dfn>deadlock</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="deadlock"></object>
+</dt>
+	<dd>one or more threads are unable to continue execution because each is blocked waiting for one or more of the
+	others to satisfy some condition.</dd>
+</dl>
+
+<h3>
+<dfn class="label">[defns.default.behavior.impl]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[defns.default.behavior.impl]"></object>17.3.9 </h3>
+
+<dl>
+<dt>
+<dfn>default behavior</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="default behavior"></object>
+</dt>
+	<dd>&lt;implementation&gt; any specific behavior provided by the implementation, within the scope of the
+	<em>required behavior</em>.</dd>
+</dl>
+
+<h3>
+<dfn class="label">[defns.default.behavior.func]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[defns.default.behavior.func]"></object>17.3.10 </h3>
+
+<dl>
+<dt>
+<dfn>default behavior</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="default behavior"></object>
+</dt>
+	<dd>&lt;specification&gt; a description of <em>replacement function</em> and <em>handler function</em>
+	semantics</dd>
+</dl>
+
+<h3>
+<dfn class="label">[defns.handler]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[defns.handler]"></object>17.3.11 </h3>
+
+<dl>
+<dt>
+<dfn>handler function</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="handler function"></object>
+</dt>
+	<dd>
+<p>a <em>non-reserved function</em> whose definition may be provided by a C++ program</p>
+
+		<p><span class="note">[ <em>Note:</em> A C++ program may designate a handler function at various points in its execution, by supplying a
+		pointer to the function when calling any of the library functions that install handler functions (Clause
+		<a title="language.support" href="support.general.html">18</a>). — <em>end note</em> ]</span></p>
+	</dd>
+</dl>
+
+<h3>
+<dfn class="label">[defns.iostream.templates]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[defns.iostream.templates]"></object>17.3.12 </h3>
+
+<dl>
+<dt>
+<dfn>iostream class templates</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="iostream class templates"></object>
+</dt>
+	<dd>
+<p>templates, defined in Clause <a title="input.output" href="input.output.general.html">27</a>, that take two template arguments</p>
+
+		<p><span class="note">[ <em>Note:</em> The arguments are named <code class="sh_cpp">charT</code> and <code class="sh_cpp">traits</code>. The argument <code class="sh_cpp">charT</code> is
+		a character container class, and the argument <code class="sh_cpp">traits</code> is a class which defines additional
+		characteristics and functions of the character type represented by <code class="sh_cpp">charT</code> necessary to implement the
+		iostream class templates. — <em>end note</em> ]</span></p>
+	</dd>
+</dl>
+
+<h3>
+<dfn class="label">[defns.modifier]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[defns.modifier]"></object>17.3.13 </h3>
+
+<dl>
+<dt>
+<dfn>modifier function</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="modifier function"></object>
+</dt>
+	<dd>a class member function (<a title="class.mfct" href="class.mfct.html">9.3</a>), other than a constructor, assignment operator, or destructor that
+	alters the state of an object of the class</dd>
+</dl>
+
+<h3>
+<dfn class="label">[defns.move.constr]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[defns.move.constr]"></object>17.3.14 </h3>
+
+<dl>
+<dt>
+<dfn>move construction</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="move construction"></object>
+</dt>
+	<dd>direct-initialization of an object of some type with an rvalue of the same type</dd>
+</dl>
+
+<h3>
+<dfn class="label">[defns.move.assign]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[defns.move.assign]"></object>17.3.15 </h3>
+
+<dl>
+<dt>
+<dfn>move assignment</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="move assignment"></object>
+</dt>
+	<dd>assignment of an rvalue of some object type to a modifiable lvalue of the same type</dd>
+</dl>
+
+<h3>
+<dfn class="label">[defns.obj.state]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[defns.obj.state]"></object>17.3.16 </h3>
+
+<dl>
+<dt>
+<dfn>object state</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="object state"></object>
+</dt>
+	<dd>
+<p>the current value of all non-static class members of an object (<a title="class.mem" href="class.mem.html">9.2</a>)</p>
+
+		<p><span class="note">[ <em>Note:</em> The state of an object can be obtained by using one or more <em>observer functions</em>. — <em>end note</em> ]</span></p>
+	</dd>
+</dl>
+
+<h3>
+<dfn class="label">[defns.ntcts]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[defns.ntcts]"></object>17.3.17 </h3>
+
+<dl>
+<dt>
+<dfn><acronym>ntcts</acronym></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="ntcts"></object>
+</dt>
+	<dd>a sequence of values that have <em>character type</em> that precede the terminating null character type value
+	<code class="sh_cpp">charT()</code>
+</dd>
+</dl>
+
+<h3>
+<dfn class="label">[defns.observer]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[defns.observer]"></object>17.3.18 </h3>
+
+<dl>
+<dt>
+<dfn>observer function</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="observer function"></object>
+</dt>
+	<dd>
+<p>a class member function (<a title="class.mfct" href="class.mfct.html">9.3</a>) that accesses the state of an object of the class, but does not alter
+		that state</p>
+
+		<p><span class="note">[ <em>Note:</em> Observer functions are specified as <code class="sh_cpp">const</code> member functions (<a title="class.this" href="class.this.html">9.3.2</a>). — <em>end note</em> ]</span></p>
+	</dd>
+</dl>
+
+<h3>
+<dfn class="label">[defns.replacement]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[defns.replacement]"></object>17.3.19 </h3>
+
+<dl>
+<dt>
+<dfn>replacement function</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="replacement function"></object>
+</dt>
+	<dd>
+<p>a <em>non-reserved function</em> whose definition is provided by a C++ program</p>
+
+		<p><span class="note">[ <em>Note:</em> Only one definition for such a function is in effect for the duration of the program’s execution, as
+		the result of creating the program (<a title="lex.phases" href="lex.phases.html">2.2</a>) and resolving the definitions of all translation units
+		(<a title="basic.link" href="basic.link.html">3.5</a>). — <em>end note</em> ]</span></p>
+	</dd>
+</dl>
+
+<h3>
+<dfn class="label">[defns.repositional.stream]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[defns.repositional.stream]"></object>17.3.20 </h3>
+
+<dl>
+<dt>
+<dfn>repositional stream</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="repositional stream"></object>
+</dt>
+	<dd>a stream (described in Clause <a title="input.output" href="input.output.general.html">27</a>) that can seek to a position that was previously encountered</dd>
+</dl>
+
+<h3>
+<dfn class="label">[defns.required.behavior]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[defns.required.behavior]"></object>17.3.21 </h3>
+
+<dl>
+<dt>
+<dfn>required behavior</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="required behavior"></object>
+</dt>
+	<dd>
+<p>a description of <em>replacement function</em> and <em>handler function</em> semantics, applicable to both
+		the behavior provided by the implementation and the behavior of any such function definition in the program</p>
+
+		<p><span class="note">[ <em>Note:</em> If such a function defined in a C++ program fails to meet the required behavior when it executes, the
+		behavior is undefined. — <em>end note</em> ]</span></p>
+	</dd>
+</dl>
+
+<h3>
+<dfn class="label">[defns.reserved.function]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[defns.reserved.function]"></object>17.3.22 </h3>
+
+<dl>
+<dt>
+<dfn>reserved function</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="reserved function"></object>
+</dt>
+	<dd>
+<p>a function, specified as part of the C++ standard library, that must be defined by the implementation</p>
+
+		<p><span class="note">[ <em>Note:</em> If a C++ program provides a definition for any reserved function, the results are undefined. — <em>end note</em> ]</span></p>
+	</dd>
+</dl>
+
+<h3>
+<dfn class="label">[defns.stable]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[defns.stable]"></object>17.3.23 </h3>
+
+<dl>
+<dt>
+<dfn>stable algorithm</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="stable algorithm"></object>
+</dt>
+	<dd>
+<p>an algorithm that preserves, as appropriate to the particular algorithm, the order of elements</p>
+
+		<p><span class="note">[ <em>Note:</em> Requirements for stable algorithms are given in <a title="handler.functions" href="handler.functions.html">17.6.4.7</a>. — <em>end note</em> ]</span></p>
+	</dd>
+</dl>
+
+<h3>
+<dfn class="label">[defns.traits]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[defns.traits]"></object>17.3.24 </h3>
+
+<dl>
+<dt>
+<dfn>traits class</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="traits class"></object>
+</dt>
+	<dd>
+<p>a class that encapsulates a set of types and functions necessary for class templates and function templates
+		to manipulate objects of types for which they are instantiated</p>
+
+		<p><span class="note">[ <em>Note:</em> Traits classes defined in Clauses <a title="strings" href="strings.general.html">21</a>, <a title="localization" href="localization.general.html">22</a> and <a title="input.output" href="input.output.general.html">27</a> are <dfn>character
+		traits</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="character
+		traits"></object>, which provide the character handling support needed by the string and iostream classes. — <em>end note</em> ]</span></p>
+	</dd>
+</dl>
+
+<h3>
+<dfn class="label">[defns.unblock]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[defns.unblock]"></object>17.3.25 </h3>
+
+<dl>
+<dt>
+<dfn>unblock</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="unblock"></object>
+</dt>
+	<dd>place a thread in the unblocked state</dd>
+</dl>
+
+<h3>
+<dfn class="label">[defns.valid]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[defns.valid]"></object>17.3.26 </h3>
+
+<dl>
+<dt>valid but unspecified state</dt>
+	<dd>
+<p>an object state that is not specified except that the object's invariants are met and operations on the object
+		behave as specified for its type</p>
+
+		<div class="example">
+<p>[ <em>Example:</em> If an object <code class="sh_cpp">x</code> of type <code class="sh_cpp">std::vector&lt;int&gt;</code> is in a valid but
+		unspecified state, <code class="sh_cpp">x.empty()</code> can be called unconditionally, and <code class="sh_cpp">x.front()</code> can be
+		called only if <code class="sh_cpp">x.empty()</code> returns <code class="sh_cpp">false</code>.</p>
+<p>If an object <code class="sh_cpp">x</code> of type <code class="sh_cpp">std::vector&lt;int&gt;</code> is in a valid but
+		unspecified state, <code class="sh_cpp">x.empty()</code> can be called unconditionally, and <code class="sh_cpp">x.front()</code> can be
+		called only if <code class="sh_cpp">x.empty()</code> returns <code class="sh_cpp">false</code>. — <em>end example</em> ]</p>
+</div>
+	</dd>
+</dl>
+
+
+<div><p class="footnote" id="fn162">162) This definition is taken from POSIX.</p></div>
+</body>
+</html>
+

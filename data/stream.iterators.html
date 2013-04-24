@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Stream iterators</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[stream.iterators]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[stream.iterators]"></object>24.6 Stream iterators </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>To make it possible for algorithmic templates to work directly with input/output streams, appropriate
+iterator-like class templates are provided.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">partial_sum_copy(istream_iterator&lt;double, char&gt;(cin),
+  istream_iterator&lt;double, char&gt;(),
+  ostream_iterator&lt;double, char&gt;(cout, "\n"));</code></pre>
+
+<p>reads a file containing floating point numbers from <code class="sh_cpp">cin</code>, and prints the partial sums onto
+<code class="sh_cpp">cout</code>. — <em>end example</em> ]</p>
+</div>
+</body>
+</html>
+

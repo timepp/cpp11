@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Derived classes</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[derivation]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[derivation]"></object>17.6.5.11 Derived classes </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>An implementation may derive any class in the C++ standard library from a class with a name reserved to the
+implementation.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>Certain classes defined in the C++ standard library are required to be derived from other classes in the C++
+standard library. An implementation may derive such a class directly from the required base or indirectly through a
+hierarchy of base classes with names reserved to the implementation.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>In any case:</p>
+
+<ul>
+<li>Every base class described as <code class="sh_cpp">virtual</code> shall be virtual;</li>
+<li>Every base class described as non-<code class="sh_cpp">virtual</code> shall not be virtual;</li>
+<li>Unless explicitly stated otherwise, types with distinct names shall be distinct types.<sup class="footnote"><a href="#fn192">192</a></sup>
+</li>
+</ul>
+
+
+<div><p class="footnote" id="fn192">192) There is an implicit exception to this rule for types that are described as synonyms for basic
+integral types, such as <code class="sh_cpp">size_t</code> (<a title="support.types" href="support.types.html">18.2</a>) and <code class="sh_cpp">streamoff</code> (<a title="stream.types" href="stream.types.html">27.5.2</a>).</p></div>
+</body>
+</html>
+

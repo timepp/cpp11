@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Allocation functions</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[basic.stc.dynamic.allocation]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[basic.stc.dynamic.allocation]"></object>3.7.4.1 Allocation functions </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>An allocation function shall be a class member function or a global function; a program is ill-formed if an
+allocation function is declared in a namespace scope other than global scope or declared static in global scope. The
+return type shall be <code class="sh_cpp">void*</code>. The first parameter shall have type <code class="sh_cpp">std::size_t</code> (<a title="support.types" href="support.types.html">18.2</a>).
+The first parameter shall not have an associated default argument (<a title="dcl.fct.default" href="dcl.fct.default.html">8.3.6</a>). The value of the first parameter
+shall be interpreted as the requested size of the allocation. An allocation function can be a function template. Such a
+template shall declare its return type and first parameter as specified above (that is, template parameter types shall
+not be used in the return type and first parameter type). Template allocation functions shall have two or more
+parameters.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The allocation function attempts to allocate the requested amount of storage. If it is successful, it shall
+return the address of the start of a block of storage whose length in bytes shall be at least as large as the requested
+size. There are no constraints on the contents of the allocated storage on return from the allocation function. The
+order, contiguity, and initial value of storage allocated by successive calls to an allocation function are unspecified.
+The pointer returned shall be suitably aligned so that it can be converted to a pointer of any complete object type with
+a fundamental alignment requirement (<a title="basic.align" href="basic.align.html">3.11</a>) and then used to access the object or array in the storage
+allocated (until the storage is explicitly deallocated by a call to a corresponding deallocation function). Even if the
+size of the space requested is zero, the request can fail. If the request succeeds, the value returned shall be a
+non-null pointer value (<a title="conv.ptr" href="conv.ptr.html">4.10</a>) <code class="sh_cpp">p0</code> different from any previously returned value <code class="sh_cpp">p1</code>,
+unless that value <code class="sh_cpp">p1</code> was subsequently passed to an <code class="sh_cpp">operator delete</code>. The effect of
+dereferencing a pointer returned as a request for zero size is undefined.<sup class="footnote"><a href="#fn35">35</a></sup></p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>An allocation function that fails to allocate storage can invoke the currently installed new-handler function
+(<a title="new.handler" href="new.handler.html">18.6.2.3</a>), if any. <span class="note">[ <em>Note:</em> A program-supplied allocation function can obtain the address of the currently
+installed <code class="sh_cpp">new_handler</code> using the <code class="sh_cpp">std::get_new_handler</code> function (<a title="set.new.handler" href="set.new.handler.html">18.6.2.4</a>). — <em>end note</em> ]</span> If
+an allocation function declared with a non-throwing <i class="nonterminal">exception-specification</i> (<a title="except.spec" href="except.spec.html">15.4</a>),
+fails to allocate storage, it shall return a null pointer. Any other allocation function that fails to allocate storage
+shall indicate failure only by throwing an exception of a type that would match a handler (<a title="except.handle" href="except.handle.html">15.3</a>) of type
+<code class="sh_cpp">std::bad_alloc</code> (<a title="bad.alloc" href="bad.alloc.html">18.6.2.1</a>).</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>A global allocation function is only called as the result of a new expression (<a title="expr.new" href="expr.new.html">5.3.4</a>), or called
+directly using the function call syntax (<a title="expr.call" href="expr.call.html">5.2.2</a>), or called indirectly through calls to the functions in the
+C++ standard library. <span class="note">[ <em>Note:</em> In particular, a global allocation function is not called to allocate storage for objects
+with static storage duration (<a title="basic.stc.static" href="basic.stc.static.html">3.7.1</a>), for objects or references with thread storage duration
+(<a title="basic.stc.thread" href="basic.stc.thread.html">3.7.2</a>), for objects of type <code class="sh_cpp">std::type_info</code> (<a title="expr.typeid" href="expr.typeid.html">5.2.8</a>), or for the copy of an object
+thrown by a <code class="sh_cpp">throw</code> expression (<a title="except.throw" href="except.throw.html">15.1</a>). — <em>end note</em> ]</span></p>
+
+
+<div><p class="footnote" id="fn35">35) The intent is to have <code class="sh_cpp">operator new()</code> implementable by calling <code class="sh_cpp">std::malloc()</code>
+or <code class="sh_cpp">std::calloc()</code>, so the rules are substantially the same. C++ differs from C in requiring a zero request
+to return a non-null pointer.</p></div>
+</body>
+</html>
+

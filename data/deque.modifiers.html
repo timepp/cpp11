@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>deque modifiers</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[deque.modifiers]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[deque.modifiers]"></object>23.3.3.4 <code class="sh_cpp">deque</code> modifiers </h4>
+
+<h5><code class="sh_cpp">iterator <dfn>insert</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="insert"></object>(const_iterator position, const T&amp; x);
+iterator insert(const_iterator position, T&amp;&amp; x);
+iterator insert(const_iterator position, size_type n, const T&amp; x);
+template &lt;class InputIterator&gt;
+  iterator insert(const_iterator position,
+                  InputIterator first, InputIterator last);
+iterator insert(const_iterator position, initializer_list&lt;T&gt;);
+
+template &lt;class... Args&gt; void <dfn>emplace_front</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="emplace_front"></object>(Args&amp;&amp;... args);
+template &lt;class... Args&gt; void <dfn>emplace_back</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="emplace_back"></object>(Args&amp;&amp;... args);
+template &lt;class... Args&gt; iterator <dfn>emplace</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="emplace"></object>(const_iterator position, Args&amp;&amp;... args);
+void <dfn>push_front</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="push_front"></object>(const T&amp; x);
+void push_front(T&amp;&amp; x);
+void <dfn>push_back</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="push_back"></object>(const T&amp; x);
+void push_back(T&amp;&amp; x);</code></h5>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Effects:</em> An insertion in the middle of the deque invalidates all the iterators and references to elements of
+the deque. An insertion at either end of the deque invalidates all the iterators to the deque, but has no effect on the
+validity of references to elements of the deque.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Remarks:</em> If an exception is thrown other than by the copy constructor, move constructor, assignment
+operator, or move assignment operator of <code class="sh_cpp">T</code> there are no effects. If an exception is thrown by the move
+constructor of a non-<code class="concept">CopyInsertable</code> <code class="sh_cpp">T</code>, the effects are unspecified.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Complexity:</em> The complexity is linear in the number of elements inserted plus the lesser of the distances to the
+beginning and end of the deque. Inserting a single element either at the beginning or end of a deque always takes
+constant time and causes a single call to a constructor of <code class="sh_cpp">T</code>.</p>
+
+<h5><code class="sh_cpp">iterator <dfn>erase</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="erase"></object>(const_iterator position);
+iterator erase(const_iterator first, const_iterator last);</code></h5>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><em>Effects:</em> An erase operation that erases the last element of a deque invalidates only the past-the-end iterator
+and all iterators and references to the erased elements. An erase operation that erases the first element of a deque but
+not the last element invalidates only the erased elements. An erase operation that erases neither the first element nor
+the last element of a deque invalidates the past-the-end iterator and all iterators and references to all the elements
+of the deque.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><em>Complexity:</em> The number of calls to the destructor is the same as the number of elements erased, but the number
+of calls to the assignment operator is no more than the lesser of the number of elements before the erased elements and
+the number of elements after the erased elements.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a><em>Throws:</em> Nothing unless an exception is thrown by the copy constructor, move constructor, assignment
+operator, or move assignment operator of <code class="sh_cpp">T</code>.</p>
+</body>
+</html>
+

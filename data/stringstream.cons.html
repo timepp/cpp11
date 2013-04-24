@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>basic_stringstream constructors</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[stringstream.cons]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[stringstream.cons]"></object>27.8.6 <code class="sh_cpp">basic_stringstream</code> constructors </h3>
+
+<h4><code class="sh_cpp">explicit <dfn>basic_stringstream</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="basic_stringstream"></object>(
+    ios_base::openmode which = ios_base::out|ios_base::in);</code></h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Effects:</em> Constructs an object of class <code class="sh_cpp">basic_stringstream&lt;charT,traits&gt;</code>, initializing
+the base class with <code class="sh_cpp">basic_iostream(&amp;sb)</code> and initializing <code class="sh_cpp">sb</code> with
+<code class="sh_cpp">basic_stringbuf&lt;charT,traits,Allocator&gt;(which)</code>.</p>
+
+<h4><code class="sh_cpp">explicit <dfn>basic_stringstream</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="basic_stringstream"></object>(
+    const basic_string&lt;charT,traits,Allocator&gt;&amp; str,
+    ios_base::openmode which = ios_base::out|ios_base::in);</code></h4>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Effects:</em> Constructs an object of class <code class="sh_cpp">basic_stringstream&lt;charT, traits&gt;</code>, initializing
+the base class with <code class="sh_cpp">basic_iostream(&amp;sb)</code> and initializing <code class="sh_cpp">sb</code> with
+<code class="sh_cpp">basic_stringbuf&lt;charT, traits, Allocator&gt;(str, which)</code>.</p>
+
+<h4><code class="sh_cpp"><dfn>basic_stringstream</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="basic_stringstream"></object>(basic_stringstream&amp;&amp; rhs);</code></h4>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Effects:</em> Move constructs from the rvalue <code class="sh_cpp">rhs</code>. This is accomplished by move constructing the base
+class, and the contained <code class="sh_cpp">basic_stringbuf</code>. Next
+<code class="sh_cpp">basic_istream&lt;charT,traits&gt;::set_rdbuf(&amp;sb)</code> is called to install the contained
+<code class="sh_cpp">basic_stringbuf</code>.</p>
+</body>
+</html>
+

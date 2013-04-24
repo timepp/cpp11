@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Partial ordering of class template specializations</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[temp.class.order]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[temp.class.order]"></object>14.5.5.2 Partial ordering of class template specializations </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>For two class template partial specializations, the first is at least as specialized as the second if, given
+the following rewrite to two function templates, the first function template is at least as specialized as the second
+according to the ordering rules for function templates (<a title="temp.func.order" href="temp.func.order.html">14.5.6.2</a>):</p>
+
+<ul>
+<li>the first function template has the same template parameters as the first partial specialization and has a single
+	function parameter whose type is a class template specialization with the template arguments of the first partial
+	specialization, and</li>
+<li>the second function template has the same template parameters as the second partial specialization and has a single
+	function parameter whose type is a class template specialization with the template arguments of the second partial
+	specialization.</li>
+</ul>
+
+<div class="example">
+<p><a class="anchor" id="p2" href="#p2">2</a>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">template&lt;int I, int J, class T&gt; class X { };
+template&lt;int I, int J&gt;          class X&lt;I, J, int&gt; { }; // #1
+template&lt;int I&gt;                 class X&lt;I, I, int&gt; { }; // #2
+template&lt;int I, int J&gt; void f(X&lt;I, J, int&gt;);            // A
+template&lt;int I&gt;        void f(X&lt;I, I, int&gt;);            // B</code></pre>
+
+<p>The partial specialization <code class="sh_cpp">#2</code> is more specialized than the partial specialization <code class="sh_cpp">#1</code>
+because the function template <code class="sh_cpp">B</code> is more specialized than the function template <code class="sh_cpp">A</code> according to
+the ordering rules for function templates. — <em>end example</em> ]</p>
+</div>
+</body>
+</html>
+

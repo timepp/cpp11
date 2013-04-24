@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Global and non-member functions</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[global.functions]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[global.functions]"></object>17.6.5.4 Global and non-member functions </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>It is unspecified whether any global or non-member functions in the C++ standard library are defined as
+<code class="sh_cpp">inline</code> (<a title="dcl.fct.spec" href="dcl.fct.spec.html">7.1.2</a>).</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>A call to a global or non-member function signature described in Clauses <a title="language.support" href="support.general.html">18</a> through <a title="thread" href="thread.general.html">30</a>
+and Annex <a title="depr" href="depr.html">D</a> shall behave as if the implementation declared no additional global or non-member function
+signatures.<sup class="footnote"><a href="#fn189">189</a></sup></p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>An implementation shall not declare a global or non-member function signature with additional default
+arguments.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>Unless otherwise specified, global and non-member functions in the standard library shall not use functions
+from another namespace which are found through <em>argument-dependent name lookup</em> (<a title="basic.lookup.argdep" href="basic.lookup.argdep.html">3.4.2</a>).</p>
+
+<div class="note">
+<p>[ <em>Note:</em> The phrase “unless otherwise specified” is intended to allow argument-dependent lookup in cases like that of
+<code class="sh_cpp">ostream_iterator</code>s: <em>Effects:</em></p>
+
+<pre><code class="sh_cpp">*out_stream &lt;&lt; value;
+if (delim != 0)
+  *out_stream &lt;&lt; delim;
+return (*this);</code></pre>
+<p> — <em>end note</em> ]</p>
+</div>
+
+
+<div><p class="footnote" id="fn189">189) A valid C++ program always calls the expected library global or non-member function. An implementation
+may also define additional global or non-member functions that would otherwise not be called by a valid C++
+program.</p></div>
+</body>
+</html>
+

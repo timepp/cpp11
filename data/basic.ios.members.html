@@ -1,0 +1,177 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Member functions</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[basic.ios.members]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[basic.ios.members]"></object>27.5.5.3 Member functions </h4>
+
+<h5><code class="sh_cpp">basic_ostream&lt;charT,traits&gt;* <dfn>tie</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="tie"></object>() const;</code></h5>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><em>Returns:</em> An output sequence that is <dfn>tied</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="tied"></object> to (synchronized with) the sequence controlled by the
+stream buffer.</p>
+
+<h5><code class="sh_cpp">basic_ostream&lt;charT,traits&gt;* <dfn>tie</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="tie"></object>(basic_ostream&lt;charT,traits&gt;* tiestr);</code></h5>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Requires:</em> If <code class="sh_cpp">tiestr</code> is not null, <code class="sh_cpp">tiestr</code> must not be reachable by traversing the
+linked list of tied stream objects starting from <code class="sh_cpp">tiestr-&gt;tie()</code>.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Postconditions:</em> <code class="sh_cpp">tiestr == tie()</code>.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><em>Returns:</em> The previous value of <code class="sh_cpp">tie()</code>.</p>
+
+<h5><code class="sh_cpp">basic_streambuf&lt;charT,traits&gt;* <dfn>rdbuf</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="rdbuf"></object>() const;</code></h5>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><em>Returns:</em> A pointer to the <code class="sh_cpp">streambuf</code> associated with the stream.</p>
+
+<h5><code class="sh_cpp">basic_streambuf&lt;charT,traits&gt;* <dfn>rdbuf</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="rdbuf"></object>(basic_streambuf&lt;charT,traits&gt;* sb);</code></h5>
+
+<p><a class="anchor" id="p6" href="#p6">6</a><em>Postconditions:</em> <code class="sh_cpp">sb == rdbuf()</code>.</p>
+
+<p><a class="anchor" id="p7" href="#p7">7</a><em>Effects:</em> Calls <code class="sh_cpp">clear()</code>.</p>
+
+<p><a class="anchor" id="p8" href="#p8">8</a><em>Returns:</em> The previous value of <code class="sh_cpp">rdbuf()</code>.</p>
+
+<h5><code class="sh_cpp">locale <dfn>imbue</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="imbue"></object>(const locale&amp; loc);</code></h5>
+
+<p><a class="anchor" id="p9" href="#p9">9</a><em>Effects:</em> Calls <code class="sh_cpp">ios_base::imbue(loc)</code> (<a title="ios.base.locales" href="ios.base.locales.html">27.5.3.3</a>) and if <code class="sh_cpp">rdbuf()!=0</code> then
+<code class="sh_cpp">rdbuf()-&gt;pubimbue(loc)</code> (<a title="streambuf.locales" href="streambuf.locales.html">27.6.3.2.1</a>).</p>
+
+<p><a class="anchor" id="p10" href="#p10">10</a><em>Returns:</em> The prior value of <code class="sh_cpp">ios_base::imbue()</code>.</p>
+
+<h5><code class="sh_cpp">char <dfn>narrow</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="narrow"></object>(char_type c, char dfault) const;</code></h5>
+
+<p><a class="anchor" id="p11" href="#p11">11</a><em>Returns:</em> <code class="sh_cpp">use_facet&lt; ctype&lt;char_type&gt; &gt;(getloc()).narrow(c,dfault)</code></p>
+
+<h5><code class="sh_cpp">char_type <dfn>widen</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="widen"></object>(char c) const;</code></h5>
+
+<p><a class="anchor" id="p12" href="#p12">12</a><em>Returns:</em> <code class="sh_cpp">use_facet&lt; ctype&lt;char_type&gt; &gt;(getloc()).widen(c)</code></p>
+
+<h5><code class="sh_cpp">char_type <dfn>fill</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="fill"></object>() const;</code></h5>
+
+<p><a class="anchor" id="p13" href="#p13">13</a><em>Returns:</em> The character used to pad (fill) an output conversion to the specified field width.</p>
+
+<h5><code class="sh_cpp">char_type <dfn>fill</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="fill"></object>(char_type fillch);</code></h5>
+
+<p><a class="anchor" id="p14" href="#p14">14</a><em>Postconditions:</em> <code class="sh_cpp">traits::eq(fillch, fill())</code></p>
+
+<p><a class="anchor" id="p15" href="#p15">15</a><em>Returns:</em> The previous value of <code class="sh_cpp">fill()</code>.</p>
+
+<h5><code class="sh_cpp">basic_ios&amp; <dfn>copyfmt</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="copyfmt"></object>(const basic_ios&amp; rhs);</code></h5>
+
+<p><a class="anchor" id="p16" href="#p16">16</a><em>Effects:</em> If <code class="sh_cpp">(this == &amp;rhs)</code> does nothing. Otherwise assigns to the member objects of
+<code class="sh_cpp">*this</code> the corresponding member objects of <code class="sh_cpp">rhs</code> as follows:</p>
+
+<ul>
+<li>calls each registered callback pair <code class="sh_cpp">(fn, index)</code> as <code class="sh_cpp">(*fn)(erase_event, *this, index)</code>;</li>
+<li>assigns to the member objects of <code class="sh_cpp">*this</code> the corresponding member objects of <code class="sh_cpp">rhs</code>, except
+	that
+	<ul>
+	<li>
+<code class="sh_cpp">rdstate()</code>, <code class="sh_cpp">rdbuf()</code>, and <code class="sh_cpp">exceptions()</code> are left unchanged;</li>
+	<li>the contents of arrays pointed at by <code class="sh_cpp">pword</code> and <code class="sh_cpp">iword</code> are copied, not the pointers
+		themselves;<sup class="footnote"><a href="#fn305">305</a></sup> and</li>
+	<li>if any newly stored pointer values in <code class="sh_cpp">*this</code> point at objects stored outside the object
+		<code class="sh_cpp">rhs</code> and those objects are destroyed when <code class="sh_cpp">rhs</code> is destroyed, the newly stored pointer
+		values are altered to point at newly constructed copies of the objects;</li>
+	</ul>
+</li>
+<li>calls each callback pair that was copied from <code class="sh_cpp">rhs</code> as <code class="sh_cpp">(*fn)(copyfmt_event, *this,
+	index)</code>;</li>
+<li>calls <code class="sh_cpp">exceptions(rhs.except())</code>.</li>
+</ul>
+
+
+<p><a class="anchor" id="p17" href="#p17">17</a><em>Notes:</em> The second pass through the callback pairs permits a copied <code class="sh_cpp">pword</code> value to be zeroed, or
+to have its referent deep copied or reference counted, or to have other special action taken.</p>
+
+<p><a class="anchor" id="p18" href="#p18">18</a><em>Postconditions:</em> The postconditions of this function are indicated in Table <a href="basic.ios.cons.html#t129">129</a>.</p>
+
+<table id="t129" class="bordered headed">
+<caption>Table 129 — <code class="sh_cpp">basic_ios::copyfmt()</code> effects</caption>
+<thead><tr>
+<th>Element</th>
+<th>Value</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code class="sh_cpp"><dfn>rdbuf()</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="rdbuf()"></object></code></td>
+<td>unchanged</td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>tie()</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="tie()"></object></code></td>
+<td><code class="sh_cpp">rhs.tie()</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>rdstate()</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="rdstate()"></object></code></td>
+<td>unchanged</td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>exceptions()</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="exceptions()"></object></code></td>
+<td><code class="sh_cpp">rhs.exceptions()</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>flags()</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="flags()"></object></code></td>
+<td><code class="sh_cpp">rhs.flags()</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>width()</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="width()"></object></code></td>
+<td><code class="sh_cpp">rhs.width()</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>precision()</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="precision()"></object></code></td>
+<td><code class="sh_cpp">rhs.precision()</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>fill()</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="fill()"></object></code></td>
+<td><code class="sh_cpp">rhs.fill()</code></td>
+</tr>
+<tr>
+<td><code class="sh_cpp"><dfn>getloc()</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="getloc()"></object></code></td>
+<td><code class="sh_cpp">rhs.getloc()</code></td>
+</tr>
+</tbody>
+</table>
+
+<p><a class="anchor" id="p19" href="#p19">19</a><em>Returns:</em> <code class="sh_cpp">*this</code>.</p>
+
+<h5><code class="sh_cpp">void <dfn>move</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="move"></object>(basic_ios&amp; rhs);
+void move(basic_ios&amp;&amp; rhs);</code></h5>
+
+<p><a class="anchor" id="p20" href="#p20">20</a><em>Postconditions:</em> <code class="sh_cpp">*this</code> shall have the state that <code class="sh_cpp">rhs</code> had before the function call,
+except that <code class="sh_cpp">rdbuf()</code> shall return 0. <code class="sh_cpp">rhs</code> shall be in a valid but unspecified state, except that
+<code class="sh_cpp">rhs.rdbuf()</code> shall return the same value as it returned before the function call, and <code class="sh_cpp">rhs.tie()</code>
+shall return 0.</p>
+
+<h5><code class="sh_cpp">void <dfn>swap</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="swap"></object>(basic_ios&amp; rhs) noexcept;</code></h5>
+
+<p><a class="anchor" id="p21" href="#p21">21</a><em>Effects:</em> The states of <code class="sh_cpp">*this</code> and <code class="sh_cpp">rhs</code> shall be exchanged, except that
+<code class="sh_cpp">rdbuf()</code> shall return the same value as it returned before the function call, and <code class="sh_cpp">rhs.rdbuf()</code>
+shall return the same value as it returned before the function call.</p>
+
+<h5><code class="sh_cpp">void <dfn>set_rdbuf</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="set_rdbuf"></object>(basic_streambuf&lt;charT, traits&gt;* sb);</code></h5>
+
+<p><a class="anchor" id="p22" href="#p22">22</a><em>Requires:</em> <code class="sh_cpp">sb != nullptr</code>.</p>
+
+<p><a class="anchor" id="p23" href="#p23">23</a><em>Effects:</em> Associates the <code class="sh_cpp">basic_streambuf</code> object pointed to by <code class="sh_cpp">sb</code> with this stream
+without calling <code class="sh_cpp">clear()</code>.</p>
+
+<p><a class="anchor" id="p24" href="#p24">24</a><em>Postconditions:</em> <code class="sh_cpp">rdbuf() == sb</code>.</p>
+
+<p><a class="anchor" id="p25" href="#p25">25</a><em>Throws:</em> Nothing.</p>
+
+
+<div><p class="footnote" id="fn305">305) This suggests an infinite amount of copying, but the implementation can keep track of the maximum
+element of the arrays that is non-zero.</p></div>
+</body>
+</html>
+

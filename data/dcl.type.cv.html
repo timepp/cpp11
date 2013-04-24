@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>The cv-qualifiers</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[dcl.type.cv]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[dcl.type.cv]"></object>7.1.6.1 The <i class="nonterminal">cv-qualifiers</i> </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>There are two <i class="nonterminal">cv-qualifiers</i>, <code class="sh_cpp">const</code> and <code class="sh_cpp">volatile</code>. If a <i class="nonterminal">cv-qualifier</i>
+appears in a <i class="nonterminal">decl-specifier-seq</i>, the <i class="nonterminal">init-declarator-list</i> of the declaration shall not be empty.
+<span class="note">[ <em>Note:</em> <a title="basic.type.qualifier" href="basic.type.qualifier.html">3.9.3</a> and <a title="dcl.fct" href="dcl.fct.html">8.3.5</a> describe how cv-qualifiers affect object and function types. — <em>end note</em> ]</span>
+Redundant cv-qualifications are ignored. <span class="note">[ <em>Note:</em> For example, these could be introduced by typedefs. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><span class="note">[ <em>Note:</em> Declaring a variable <code class="sh_cpp">const</code> can affect its linkage (<a title="dcl.stc" href="dcl.stc.html">7.1.1</a>) and its usability in
+constant expressions (<a title="expr.const" href="expr.const.html">5.19</a>). As as described in <a title="dcl.init" href="dcl.init.html">8.5</a>, the definition of an object or subobject of
+const-qualified type must specify an initializer or be subject to default-initialization. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>A pointer or reference to a cv-qualified type need not actually point or refer to a cv-qualified object, but it
+is treated as if it does; a const-qualified access path cannot be used to modify an object even if the object referenced
+is a non-const object and can be modified through some other access path. <span class="note">[ <em>Note:</em> Cv-qualifiers are supported by the type
+system so that they cannot be subverted without casting (<a title="expr.const.cast" href="expr.const.cast.html">5.2.11</a>). — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>Except that any class member declared <code class="sh_cpp">mutable</code> (<a title="dcl.stc" href="dcl.stc.html">7.1.1</a>) can be modified, any attempt to
+modify a <code class="sh_cpp">const</code> object during its lifetime (<a title="basic.life" href="basic.life.html">3.8</a>) results in undefined behavior.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">const int ci = 3;                   // cv-qualified (initialized as required)
+ci = 4;                             // ill-formed: attempt to modify const
+
+int i = 2;                          // not cv-qualified
+const int* cip;                     // pointer to const int
+cip = &amp;i;                           // OK: cv-qualified access path to unqualified
+*cip = 4;                           // ill-formed: attempt to modify through ptr to const
+
+int* ip;
+ip = const_cast&lt;int*&gt;(cip);         // cast needed to convert const int* to int*
+*ip = 4;                            // defined: *ip points to i, a non-const object
+
+const int* ciq = new const int (3); // initialized as required
+int* iq = const_cast&lt;int*&gt;(ciq);    // cast required
+*iq = 4;                            // undefined: modifies a const object</code></pre>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>For another example</p>
+
+<pre><code class="sh_cpp">struct X {
+  mutable int i;
+  int j;
+};
+struct Y {
+  X x;
+  Y();
+};
+
+const Y y;
+y.x.i++;                            // well-formed: mutable member can be modified
+y.x.j++;                            // ill-formed: const-qualified member modified
+Y* p = const_cast&lt;Y*&gt;(&amp;y);          // cast away const-ness of y
+
+p-&gt;x.i = 99;                        // well-formed: mutable member can be modified
+p-&gt;x.j = 99;                        // undefined: modifies a const member</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>If an attempt is made to refer to an object defined with a volatile-qualified type through the use of a glvalue
+with a non-volatile-qualified type, the program behavior is undefined.</p>
+
+<p><a class="anchor" id="p7" href="#p7">7</a><span class="note">[ <em>Note:</em> <code class="sh_cpp">volatile</code> is a hint to the implementation to avoid aggressive optimization involving the
+object because the value of the object might be changed by means undetectable by an implementation. See <a title="intro.execution" href="intro.execution.html">1.9</a>
+for detailed semantics. In general, the semantics of <code class="sh_cpp">volatile</code> are intended to be the same in C++ as they
+are in C. — <em>end note</em> ]</span></p>
+</body>
+</html>
+

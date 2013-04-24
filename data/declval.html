@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Function template declval</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[declval]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[declval]"></object>20.2.4 Function template <code class="sh_cpp">declval</code> </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The library provides the function template <code class="sh_cpp">declval</code> to simplify the definition of expressions which
+occur as unevaluated operands (Clause <a title="expr" href="expr.html">5</a>).</p>
+
+<h4><code class="sh_cpp">template &lt;class T&gt;
+  typename add_rvalue_reference&lt;T&gt;::type <dfn>declval</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="declval"></object>() noexcept;    // as unevaluated operand</code></h4>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Remarks:</em> If this function is odr-used (<a title="basic.def.odr" href="basic.def.odr.html">3.2</a>), the program is ill-formed.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Remarks:</em> The template parameter <code class="sh_cpp">T</code> of <code class="sh_cpp">declval</code> may be an incomplete type.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">template &lt;class To, class From&gt;
+  decltype(static_cast&lt;To&gt;(declval&lt;From&gt;())) convert(From&amp;&amp;);</code></pre>
+
+<p>declares a function template <code class="sh_cpp">convert</code> which only participates in overloading if the type <code class="sh_cpp">From</code>
+can be explicitly converted to type <code class="sh_cpp">To</code>. For another example see class template <code class="sh_cpp">common_type</code>
+(<a title="meta.trans.other" href="meta.trans.other.html">20.9.7.6</a>). — <em>end example</em> ]</p>
+</div>
+</body>
+</html>
+

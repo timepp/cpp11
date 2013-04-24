@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Other functions</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[res.on.functions]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[res.on.functions]"></object>17.6.4.8 Other functions </h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>In certain cases (replacement functions, handler functions, operations on types used to instantiate standard
+library template components), the C++ standard library depends on components supplied by a C++ program. If these
+components do not meet their requirements, the Standard places no requirements on the implementation.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>In particular, the effects are undefined in the following cases:</p>
+
+<ul>
+<li>for replacement functions (<a title="new.delete" href="new.delete.html">18.6.1</a>), if the installed replacement function does not implement the
+	semantics of the applicable <em>Required behavior:</em> paragraph.</li>
+<li>for handler functions (<a title="new.handler" href="new.handler.html">18.6.2.3</a>, <a title="terminate.handler" href="terminate.handler.html">18.8.3.1</a>, <a title="unexpected.handler" href="unexpected.handler.html">D.11.1</a>), if the installed handler
+	function does not implement the semantics of the applicable <em>Required behavior:</em> paragraph.</li>
+<li>for types used as template arguments when instantiating a template component, if the operations on the type do not
+	implement the semantics of the applicable <em>Requirements</em> subclause (<a title="allocator.requirements" href="allocator.requirements.html">17.6.3.5</a>, <a title="container.requirements" href="container.requirements.general.html">23.2</a>,
+	<a title="iterator.requirements" href="iterator.requirements.general.html">24.2</a>, <a title="numeric.requirements" href="numeric.requirements.html">26.2</a>). Operations on such types can report a failure by throwing an exception unless
+	otherwise specified.</li>
+<li>if any replacement function or handler function or destructor operation exits via an exception, unless specifically
+	allowed in the applicable <em>Required behavior:</em> paragraph.</li>
+<li>if an incomplete type (<a title="basic.types" href="basic.types.html">3.9</a>) is used as a template argument when instantiating a template component,
+	unless specifically allowed for that component.</li>
+</ul>
+</body>
+</html>
+

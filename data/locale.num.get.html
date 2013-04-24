@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class template num_get</title>
+</head>
+<body>
+<h4>
+<dfn class="label">[locale.num.get]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[locale.num.get]"></object>22.4.2.1 Class template <code class="sh_cpp"><dfn>num_get</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="num_get"></object></code> </h4>
+
+<pre><code class="sh_cpp">namespace std {
+  template &lt;class charT, class InputIterator = istreambuf_iterator&lt;charT&gt; &gt;
+  class num_get : public locale::facet {
+  public:
+    typedef charT            char_type;
+    typedef InputIterator    iter_type;
+
+    explicit num_get(size_t refs = 0);
+
+    iter_type get(iter_type in, iter_type end, ios_base&amp;,
+                  ios_base::iostate&amp; err, bool&amp; v) const;
+    iter_type get(iter_type in, iter_type end, ios_base&amp; ,
+                  ios_base::iostate&amp; err, long&amp; v) const;
+    iter_type get(iter_type in, iter_type end, ios_base&amp; ,
+                  ios_base::iostate&amp; err, long long&amp; v) const;}
+    iter_type get(iter_type in, iter_type end, ios_base&amp;,
+                  ios_base::iostate&amp; err, unsigned short&amp; v) const;
+    iter_type get(iter_type in, iter_type end, ios_base&amp;,
+                  ios_base::iostate&amp; err, unsigned int&amp; v) const;
+    iter_type get(iter_type in, iter_type end, ios_base&amp;,
+                  ios_base::iostate&amp; err, unsigned long&amp; v) const;
+    iter_type get(iter_type in, iter_type end, ios_base&amp; ,
+                  ios_base::iostate&amp; err, unsigned long long&amp; v) const;
+    iter_type get(iter_type in, iter_type end, ios_base&amp;,
+                  ios_base::iostate&amp; err, float&amp; v) const;
+    iter_type get(iter_type in, iter_type end, ios_base&amp;,
+                  ios_base::iostate&amp; err, double&amp; v) const;
+    iter_type get(iter_type in, iter_type end, ios_base&amp;,
+                  ios_base::iostate&amp; err, long double&amp; v) const;
+    iter_type get(iter_type in, iter_type end, ios_base&amp;,
+                  ios_base::iostate&amp; err, void*&amp; v) const;
+
+    static locale::id id;
+
+  protected:
+    ~num_get();
+    virtual iter_type do_get(iter_type, iter_type, ios_base&amp;,
+                             ios_base::iostate&amp; err, bool&amp; v) const;
+    virtual iter_type do_get(iter_type, iter_type, ios_base&amp;,
+                             ios_base::iostate&amp; err, long&amp; v) const;
+    virtual iter_type do_get(iter_type, iter_type, ios_base&amp;,
+                             ios_base::iostate&amp; err, long long&amp; v) const;
+    virtual iter_type do_get(iter_type, iter_type, ios_base&amp;,
+                             ios_base::iostate&amp; err, unsigned short&amp; v) const;
+    virtual iter_type do_get(iter_type, iter_type, ios_base&amp;,
+                             ios_base::iostate&amp; err, unsigned int&amp; v) const;
+    virtual iter_type do_get(iter_type, iter_type, ios_base&amp;,
+                             ios_base::iostate&amp; err, unsigned long&amp; v) const;
+    virtual iter_type do_get(iter_type, iter_type, ios_base&amp;,
+                             ios_base::iostate&amp; err, unsigned long long&amp; v) const;
+    virtual iter_type do_get(iter_type, iter_type, ios_base&amp;,
+                             ios_base::iostate&amp; err, float&amp; v) const;
+    virtual iter_type do_get(iter_type, iter_type, ios_base&amp;,
+                             ios_base::iostate&amp; err, double&amp; v) const;
+    virtual iter_type do_get(iter_type, iter_type, ios_base&amp;,
+                             ios_base::iostate&amp; err, long double&amp; v) const;
+    virtual iter_type do_get(iter_type, iter_type, ios_base&amp;,
+                             ios_base::iostate&amp; err, void*&amp; v) const;
+  };
+}</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The facet <code class="sh_cpp">num_get</code> is used to parse numeric values from an input sequence such as an istream.</p>
+</body>
+</html>
+

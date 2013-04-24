@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Unary operators</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[over.unary]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[over.unary]"></object>13.5.1 Unary operators </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A prefix unary operator shall be implemented by a non-static member function (<a title="class.mfct" href="class.mfct.html">9.3</a>) with no
+parameters or a non-member function with one parameter. Thus, for any prefix unary operator <code class="sh_cpp">@</code>,
+<code class="sh_cpp">@x</code> can be interpreted as either <code class="sh_cpp">x.operator@()</code> or <code class="sh_cpp">operator@(x)</code>. If both forms of
+the operator function have been declared, the rules in <a title="over.match.oper" href="over.match.oper.html">13.3.1.2</a> determine which, if any, interpretation is
+used. See <a title="over.inc" href="over.inc.html">13.5.7</a> for an explanation of the postfix unary operators <code class="sh_cpp">++</code> and <code class="sh_cpp">--</code>.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The unary and binary forms of the same operator are considered to have the same name. <span class="note">[ <em>Note:</em> Consequently, a
+unary operator can hide a binary operator from an enclosing scope, and vice versa. — <em>end note</em> ]</span></p>
+</body>
+</html>
+

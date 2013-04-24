@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class template collate</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[category.collate]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[category.collate]"></object>22.4.4 The collate category </h3>
+<h4>
+<dfn class="label">[locale.collate]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[locale.collate]"></object>22.4.4.1 Class template <code class="sh_cpp"><dfn>collate</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="collate"></object></code> </h4>
+
+<pre><code class="sh_cpp">namespace std {
+  template &lt;class charT&gt;
+  class collate : public locale::facet {
+  public:
+    typedef charT               char_type;
+    typedef basic_string&lt;charT&gt; string_type;
+
+    explicit collate(size_t refs = 0);
+
+    int compare(const charT* low1, const charT* high1,
+                const charT* low2, const charT* high2) const;
+    string_type transform(const charT* low, const charT* high) const;
+    long hash(const charT* low, const charT* high) const;
+
+    static locale::id id;
+
+    protected:
+     ~collate();
+     virtual int do_compare(const charT* low1, const charT* high1,
+                            const charT* low2, const charT* high2) const;
+     virtual string_type do_transform(const charT* low, const charT* high) const;
+     virtual long do_hash (const charT* low, const charT* high) const;
+  };
+}</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The class <code class="sh_cpp">collate&lt;charT&gt;</code> provides features for use in the collation (comparison) and
+hashing of strings. A locale member function template, <code class="sh_cpp">operator()</code>, uses the collate facet to allow a locale
+to act directly as the predicate argument for standard algorithms (Clause <a title="algorithms" href="algorithms.general.html">25</a>) and containers operating on
+strings. The specializations required in Table <a href="locale.category.html#t81">81</a> (<a title="locale.category" href="locale.category.html">22.3.1.1.1</a>), namely
+<code class="sh_cpp">collate&lt;char&gt;</code> and <code class="sh_cpp">collate&lt;wchar_t&gt;</code>, apply lexicographic ordering
+(<a title="alg.lex.comparison" href="alg.lex.comparison.html">25.4.8</a>).</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>Each function compares a string of characters <code class="sh_cpp">*p</code> in the range <code class="sh_cpp">[low,high)</code>.</p>
+</body>
+</html>
+

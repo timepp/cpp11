@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Namespace alias</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[namespace.alias]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[namespace.alias]"></object>7.3.2 Namespace alias </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A <i class="nonterminal">namespace-alias-definition</i> declares an alternate name for a namespace according to the following
+grammar:</p>
+
+<dl>
+<dt>
+<i class="nonterminal"><dfn>namespace-alias</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="namespace-alias"></object></i>:</dt>
+	<dd><i class="nonterminal">identifier</i></dd>
+<dt>
+<i class="nonterminal"><dfn>namespace-alias-definition</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="namespace-alias-definition"></object></i>:</dt>
+	<dd>
+<code class="sh_cpp">namespace</code> <i class="nonterminal">identifier</i> <code class="sh_cpp">=</code> <i class="nonterminal">qualified-namespace-specifier</i> <code class="sh_cpp">;</code>
+</dd>
+<dt>
+<i class="nonterminal"><dfn>qualified-namespace-specifier</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="qualified-namespace-specifier"></object></i>:</dt>
+	<dd>
+<i class="nonterminal">nested-name-specifier</i><sub class="opt">opt</sub> <i class="nonterminal">namespace-name</i>
+</dd>
+</dl>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The <i class="nonterminal">identifier</i> in a <i class="nonterminal">namespace-alias-definition</i> is a synonym for the name of the namespace
+denoted by the <i class="nonterminal">qualified-namespace-specifier</i> and becomes a <i class="nonterminal">namespace-alias</i>. <span class="note">[ <em>Note:</em> When looking up a
+<i class="nonterminal">namespace-name</i> in a <i class="nonterminal">namespace-alias-definition</i>, only namespace names are considered, see
+<a title="basic.lookup.udir" href="basic.lookup.udir.html">3.4.6</a>. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>In a declarative region, a <i class="nonterminal">namespace-alias-definition</i> can be used to redefine a
+<i class="nonterminal">namespace-alias</i> declared in that declarative region to refer only to the namespace to which it already
+refers.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> the following declarations are well-formed:</p>
+
+<pre><code class="sh_cpp">namespace Company_with_very_long_name { /* … */ }
+namespace CWVLN = Company_with_very_long_name;
+namespace CWVLN = Company_with_very_long_name;  // OK: duplicate
+namespace CWVLN = CWVLN;</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>A <i class="nonterminal">namespace-name</i> or <i class="nonterminal">namespace-alias</i> shall not be declared as the name of any other entity in
+the same declarative region. A <i class="nonterminal">namespace-name</i> defined at global scope shall not be declared as the name of any
+other entity in any global scope of the program. No diagnostic is required for a violation of this rule by declarations
+in different translation units.</p>
+</body>
+</html>
+

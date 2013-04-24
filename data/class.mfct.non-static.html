@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Nonstatic member functions</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[class.mfct.non-static]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[class.mfct.non-static]"></object>9.3.1 Nonstatic member functions </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A <em>non-static</em> member function may be called for an object of its class type, or for an object of a
+class derived (Clause <a title="class.derived" href="class.derived.html">10</a>) from its class type, using the class member access syntax (<a title="expr.ref " href=".html"></a>,
+<a title="over.match.call" href="over.match.call.html">13.3.1.1</a>). A non-static member function may also be called directly using the function call syntax
+(<a title="expr.call" href="expr.call.html">5.2.2</a>, <a title="over.match.call" href="over.match.call.html">13.3.1.1</a>) from within the body of a member function of its class or of a class derived
+from its class.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>If a non-static member function of a class <code class="sh_cpp">X</code> is called for an object that is not of type
+<code class="sh_cpp">X</code>, or of a type derived from <code class="sh_cpp">X</code>, the behavior is undefined.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>When an <i class="nonterminal">id-expression</i> (<a title="expr.prim" href="expr.prim.general.html">5.1</a>) that is not part of a class member access syntax
+(<a title="expr.ref " href=".html"></a>) and not used to form a pointer to member (<a title="expr.unary.op" href="expr.unary.op.html">5.3.1</a>) is used a member of class <code class="sh_cpp">X</code>
+in a context where <code class="sh_cpp">this</code> can be used (<a title="expr.prim.general" href="expr.prim.general.html">5.1.1</a>), if name lookup (<a title="basic.lookup" href="basic.lookup.html">3.4</a>) resolves the name
+in the <i class="nonterminal">id-expression</i> to a non-static non-type member of some class <code class="sh_cpp">C</code>, and if either the
+<i class="nonterminal">id-expression</i> is potentially evaluated or <code class="sh_cpp">C</code> is <code class="sh_cpp">X</code> or a base class of <code class="sh_cpp">X</code>,
+the <i class="nonterminal">id-expression</i> is transformed into a class member access expression (<a title="expr.ref " href=".html"></a>) using
+<code class="sh_cpp">(*this)</code> (<a title="class.this" href="class.this.html">9.3.2</a>) as the <i class="nonterminal">postfix-expression</i> to the left of the <code class="sh_cpp">.</code> operator.
+<span class="note">[ <em>Note:</em> If <code class="sh_cpp">C</code> is not <code class="sh_cpp">X</code> or a base class of <code class="sh_cpp">X</code>, the class member access expression is
+ill-formed. — <em>end note</em> ]</span> Similarly during name lookup, when an <i class="nonterminal">unqualified-id</i> (<a title="expr.prim" href="expr.prim.general.html">5.1</a>) used in the definition
+of a member function for class <code class="sh_cpp">X</code> resolves to a <code class="sh_cpp">static</code> member, an enumerator or a nested type
+of class <code class="sh_cpp">X</code> or of a base class of <code class="sh_cpp">X</code>, the <i class="nonterminal">unqualified-id</i> is transformed into a
+<i class="nonterminal">qualified-id</i> (<a title="expr.prim" href="expr.prim.general.html">5.1</a>) in which the <i class="nonterminal">nested-name-specifier</i> names the class of the member
+function.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct tnode {
+  char tword[20];
+  int count;
+  tnode *left;
+  tnode *right;
+  void set(const char*, tnode* l, tnode* r);
+};
+
+void tnode::set(const char* w, tnode* l, tnode* r) {
+  count = strlen(w)+1;
+  if (sizeof(tword)&lt;=count)
+      perror("tnode string too long");
+  strcpy(tword,w);
+  left = l;
+  right = r;
+}
+
+void f(tnode n1, tnode n2) {
+  n1.set("abc",&amp;n2,0);
+  n2.set("def",0,0);
+}</code></pre>
+
+<p>In the body of the member function <code class="sh_cpp">tnode::set</code>, the member names <code class="sh_cpp">tword</code>, <code class="sh_cpp">count</code>,
+<code class="sh_cpp">left</code>, and <code class="sh_cpp">right</code> refer to members of the object for which the function is called. Thus, in the
+call <code class="sh_cpp">n1.set("abc",&amp;n2,0)</code>, <code class="sh_cpp">tword</code> refers to <code class="sh_cpp">n1.tword</code>, and in the call
+<code class="sh_cpp">n2.set("def",0,0)</code>, it refers to <code class="sh_cpp">n2.tword</code>. The functions <code class="sh_cpp">strlen</code>,
+<code class="sh_cpp">perror</code>, and <code class="sh_cpp">strcpy</code> are not members of the class <code class="sh_cpp">tnode</code> and should be declared
+elsewhere.<sup class="footnote"><a href="#fn113">113</a></sup> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>A non-static member function may be declared <code class="sh_cpp">const</code>, <code class="sh_cpp">volatile</code>, or <code class="sh_cpp">const
+volatile</code>. These <i class="nonterminal">cv-qualifier</i>s affect the type of the <code class="sh_cpp">this</code> pointer (<a title="class.this" href="class.this.html">9.3.2</a>). They
+also affect the function type (<a title="dcl.fct" href="dcl.fct.html">8.3.5</a>) of the member function; a member function declared <code class="sh_cpp">const</code>
+is a <dfn>const</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="const"></object> member function, a member function declared <code class="sh_cpp">volatile</code> is a <dfn>volatile</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="volatile"></object> member
+function and a member function declared <code class="sh_cpp">const volatile</code> is a <dfn>const volatile</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="const volatile"></object> member function.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct X {
+  void g() const;
+  void h() const volatile;
+};</code></pre>
+
+<p><code class="sh_cpp">X::g</code> is a <code class="sh_cpp">const</code> member function and <code class="sh_cpp">X::h</code> is a <code class="sh_cpp">const volatile</code>
+member function. — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>A non-static member function may be declared with a <i class="nonterminal">ref-qualifier</i> (<a title="dcl.fct" href="dcl.fct.html">8.3.5</a>); see
+<a title="over.match.funcs" href="over.match.funcs.html">13.3.1</a>.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>A non-static member function may be declared <em>virtual</em> (<a title="class.virtual" href="class.virtual.html">10.3</a>) or <em>pure virtual</em>
+(<a title="class.abstract" href="class.abstract.html">10.4</a>).</p>
+
+
+<div><p class="footnote" id="fn113">113) See, for example, <code class="header">&lt;cstring&gt;</code> (<a title="c.strings" href="c.strings.html">21.7</a>).</p></div>
+</body>
+</html>
+

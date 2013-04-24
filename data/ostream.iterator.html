@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class template ostream_iterator</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[ostream.iterator]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[ostream.iterator]"></object>24.6.2 Class template <code class="sh_cpp"><dfn>ostream_iterator</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="ostream_iterator"></object></code> </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a><code class="sh_cpp">ostream_iterator</code> writes (using <code class="sh_cpp">operator&lt;&lt;</code>) successive elements onto the output
+stream from which it was constructed. If it was constructed with <code class="sh_cpp">charT*</code> as a constructor argument, this
+string, called a <dfn>delimiter string</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="delimiter string"></object>, is written to the stream after every <code class="sh_cpp">T</code> is written. It is not
+possible to get a value out of the output iterator. Its only use is as an output iterator in situations like</p>
+
+<pre><code class="sh_cpp">while (first != last)
+  *result++ = *first++;</code></pre>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><code class="sh_cpp">ostream_iterator</code> is defined as:</p>
+
+<pre><code class="sh_cpp">namespace std {
+  template &lt;class T, class charT = char, class traits = char_traits&lt;charT&gt; &gt;
+  class ostream_iterator:
+    public iterator&lt;output_iterator_tag, void, void, void, void&gt; {
+  public:
+    typedef charT char_type;
+    typedef traits traits_type;
+    typedef basic_ostream&lt;charT,traits&gt; ostream_type;
+    ostream_iterator(ostream_type&amp; s);
+    ostream_iterator(ostream_type&amp; s, const charT* delimiter);
+    ostream_iterator(const ostream_iterator&lt;T,charT,traits&gt;&amp; x);
+    ~ostream_iterator();
+    ostream_iterator&lt;T,charT,traits&gt;&amp; operator=(const T&amp; value);
+
+    ostream_iterator&lt;T,charT,traits&gt;&amp; operator*();
+    ostream_iterator&lt;T,charT,traits&gt;&amp; operator++();
+    ostream_iterator&lt;T,charT,traits&gt;&amp; operator++(int);
+  private:
+    basic_ostream&lt;charT,traits&gt;* out_stream;    // exposition only
+    const charT* delim;                         // exposition only
+  };
+}</code></pre>
+</body>
+</html>
+

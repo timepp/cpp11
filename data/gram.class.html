@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Classes</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[gram.class]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[gram.class]"></object>A.8 Classes </h2>
+
+<dl>
+<dt>
+<i class="nonterminal">class-name</i>:</dt>
+	<dd><i class="nonterminal">identifier</i></dd>
+	<dd><i class="nonterminal">simple-template-id</i></dd>
+<dt>
+<i class="nonterminal">class-specifier</i>:</dt>
+	<dd>
+<i class="nonterminal">class-head</i> <code class="sh_cpp">{</code> <i class="nonterminal">member-specification</i><sub class="opt">opt</sub> <code class="sh_cpp">}</code>
+</dd>
+<dt>
+<i class="nonterminal">class-head</i>:</dt>
+	<dd>
+<i class="nonterminal">class-key</i> <i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub> <i class="nonterminal">class-head-name</i>
+		<i class="nonterminal">class-virt-specifier-seq</i><sub class="opt">opt</sub> <i class="nonterminal">base-clause</i><sub class="opt">opt</sub>
+</dd>
+	<dd>
+<i class="nonterminal">class-key</i> <i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub> <i class="nonterminal">base-clause</i><sub class="opt">opt</sub>
+</dd>
+<dt>
+<i class="nonterminal">class-head-name</i>:</dt>
+	<dd>
+<i class="nonterminal">nested-name-specifier</i><sub class="opt">opt</sub> <i class="nonterminal">class-name</i>
+</dd>
+<dt>
+<i class="nonterminal">class-virt-specifier-seq</i>:</dt>
+	<dd><i class="nonterminal">class-virt-specifier</i></dd>
+	<dd>
+<i class="nonterminal">class-virt-specifier-seq</i> <i class="nonterminal">class-virt-specifier</i>
+</dd>
+<dt>
+<i class="nonterminal">class-virt-specifier</i>:</dt>
+	<dd><code class="sh_cpp">final</code></dd>
+<dt>
+<i class="nonterminal">class-key</i>:</dt>
+	<dd><code class="sh_cpp">class</code></dd>
+	<dd><code class="sh_cpp">struct</code></dd>
+	<dd><code class="sh_cpp">union</code></dd>
+<dt>
+<i class="nonterminal">member-specification</i>:</dt>
+	<dd>
+<i class="nonterminal">member-declaration</i> <i class="nonterminal">member-specification</i><sub class="opt">opt</sub>
+</dd>
+	<dd>
+<i class="nonterminal">access-specifier</i> <code class="sh_cpp">:</code> <i class="nonterminal">member-specification</i><sub class="opt">opt</sub>
+</dd>
+<dt>
+<i class="nonterminal">member-declaration</i>:</dt>
+	<dd>
+<i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub> <i class="nonterminal">decl-specifier-seq</i><sub class="opt">opt</sub>
+		<i class="nonterminal">member-declarator-list</i><sub class="opt">opt</sub> <code class="sh_cpp">;</code>
+</dd>
+	<dd>
+<i class="nonterminal">function-definition</i> <code class="sh_cpp">;</code><sub class="opt">opt</sub>
+</dd>
+	<dd><i class="nonterminal">using-declaration</i></dd>
+	<dd><i class="nonterminal">static_assert-declaration</i></dd>
+	<dd><i class="nonterminal">template-declaration</i></dd>
+	<dd><i class="nonterminal">alias-declaration</i></dd>
+<dt>
+<i class="nonterminal">member-declarator-list</i>:</dt>
+	<dd><i class="nonterminal">member-declarator</i></dd>
+	<dd>
+<i class="nonterminal">member-declarator-list</i> <code class="sh_cpp">,</code> <i class="nonterminal">member-declarator</i>
+</dd>
+<dt>
+<i class="nonterminal">member-declarator</i>:</dt>
+	<dd>
+<i class="nonterminal">declarator</i> <i class="nonterminal">virt-specifier-seq</i><sub class="opt">opt</sub> <i class="nonterminal">pure-specifier</i><sub class="opt">opt</sub>
+</dd>
+	<dd>
+<i class="nonterminal">declarator</i> <i class="nonterminal">brace-or-equal-initializer</i><sub class="opt">opt</sub>
+</dd>
+	<dd>
+<i class="nonterminal">identifier</i><sub class="opt">opt</sub> <i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub>
+		<code class="sh_cpp">:</code> <i class="nonterminal">constant-expression</i>
+</dd>
+<dt>
+<i class="nonterminal">virt-specifier-seq</i>:</dt>
+	<dd><i class="nonterminal">virt-specifier</i></dd>
+	<dd>
+<i class="nonterminal">virt-specifier-seq</i> <i class="nonterminal">virt-specifier</i>
+</dd>
+<dt>
+<i class="nonterminal">virt-specifier</i>:</dt>
+	<dd><code class="sh_cpp">override</code></dd>
+	<dd><code class="sh_cpp">final</code></dd>
+<dt>
+<i class="nonterminal">pure-specifier</i>:</dt>
+	<dd>
+<code class="sh_cpp">=</code> <code class="sh_cpp">0</code>
+</dd>
+</dl>
+</body>
+</html>
+

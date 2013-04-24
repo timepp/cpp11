@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Standard conversion sequences</title>
+</head>
+<body>
+<h5>
+<dfn class="label">[over.ics.scs]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[over.ics.scs]"></object>13.3.3.1.1 Standard conversion sequences </h5>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Table <a href="over.ics.scs.html#t12">12</a> summarizes the conversions defined in Clause <a title="conv" href="conv.html">4</a> and partitions them into four
+disjoint categories: Lvalue Transformation, Qualification Adjustment, Promotion, and Conversion. <span class="note">[ <em>Note:</em> These categories
+are orthogonal with respect to value category, cv-qualification, and data representation: the Lvalue Transformations do
+not change the cv-qualification or data representation of the type; the Qualification Adjustments do not change the
+value category or data representation of the type; and the Promotions and Conversions do not change the value category
+or cv-qualification of the type. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><span class="note">[ <em>Note:</em> As described in Clause <a title="conv" href="conv.html">4</a>, a standard conversion sequence is either the Identity conversion by
+itself (that is, no conversion) or consists of one to three conversions from the other four categories. At most one
+conversion from each category is allowed in a single standard conversion sequence. If there are two or more conversions
+in the sequence, the conversions are applied in the canonical order: <strong>Lvalue Transformation</strong>,
+<strong>Promotion</strong> or <strong>Conversion</strong>, <strong>Qualification Adjustment</strong>. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>Each conversion in Table <a href="over.ics.scs.html#t12">12</a> also has an associated rank (Exact Match, Promotion, or Conversion). These
+are used to rank standard conversion sequences (<a title="over.ics.rank" href="over.ics.rank.html">13.3.3.2</a>). The rank of a conversion sequence is determined by
+considering the rank of each conversion in the sequence and the rank of any reference binding (<a title="over.ics.ref" href="over.ics.ref.html">13.3.3.1.4</a>).
+If any of those has Conversion rank, the sequence has Conversion rank; otherwise, if any of those has Promotion rank,
+the sequence has Promotion rank; otherwise, the sequence has Exact Match rank.</p>
+
+<table id="t12" class="ruled headed centered1">
+<caption>Table 12 — Conversions</caption>
+<tr>
+<th>Conversion</th>
+<th>Category</th>
+<th>Rank</th>
+<th>Subclause</th>
+</tr>
+<tr>
+<td>No conversions required</td>
+<td>Identity</td>
+<td rowspan="5">Exact Match</td>
+<td></td>
+</tr>
+<tr>
+<td>Lvalue-to-rvalue conversion</td>
+<td rowspan="3">Lvalue Transformation</td>
+<td><a title="conv.lval" href="conv.lval.html">4.1</a></td>
+</tr>
+<tr>
+<td>Array-to-pointer conversion</td>
+<td><a title="conv.array" href="conv.array.html">4.2</a></td>
+</tr>
+<tr>
+<td>Function-to-pointer conversion</td>
+<td><a title="conv.func" href="conv.func.html">4.3</a></td>
+</tr>
+<tr>
+<td>Qualification conversions</td>
+<td>Qualification Adjustment</td>
+<td><a title="conv.qual" href="conv.qual.html">4.4</a></td>
+</tr>
+<tr>
+<td>Integral promotions</td>
+<td rowspan="2">Promotion</td>
+<td rowspan="2">Promotion</td>
+<td><a title="conv.prom" href="conv.prom.html">4.5</a></td>
+</tr>
+<tr>
+<td>Floating point promotion</td>
+<td><a title="conv.fpprom" href="conv.fpprom.html">4.6</a></td>
+</tr>
+<tr>
+<td>Integral conversions</td>
+<td rowspan="6">Conversion</td>
+<td rowspan="6">Conversion</td>
+<td><a title="conv.integral" href="conv.integral.html">4.7</a></td>
+</tr>
+<tr>
+<td>Floating point conversions</td>
+<td><a title="conv.double" href="conv.double.html">4.8</a></td>
+</tr>
+<tr>
+<td>Floating-integral conversions</td>
+<td><a title="conv.fpint" href="conv.fpint.html">4.9</a></td>
+</tr>
+<tr>
+<td>Pointer conversions</td>
+<td><a title="conv.ptr" href="conv.ptr.html">4.10</a></td>
+</tr>
+<tr>
+<td>Pointer to member conversions</td>
+<td><a title="conv.mem" href="conv.mem.html">4.11</a></td>
+</tr>
+<tr>
+<td>Boolean conversions</td>
+<td><a title="conv.bool" href="conv.bool.html">4.12</a></td>
+</tr>
+</table>
+</body>
+</html>
+

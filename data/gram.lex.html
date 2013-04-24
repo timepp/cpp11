@@ -1,0 +1,402 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Lexical conventions</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[gram.lex]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[gram.lex]"></object>A.2 Lexical conventions </h2>
+
+<dl>
+<dt>
+<i class="nonterminal">hex-quad</i>:</dt>
+	<dd>
+<i class="nonterminal">hexadecimal-digit</i> <i class="nonterminal">hexadecimal-digit</i> <i class="nonterminal">hexadecimal-digit</i> <i class="nonterminal">hexadecimal-digit</i>
+</dd>
+<dt>
+<i class="nonterminal">universal-character-name</i>:</dt>
+	<dd>
+<code class="sh_cpp">\u</code> <i class="nonterminal">hex-quad</i>
+</dd>
+	<dd>
+<code class="sh_cpp">\U</code> <i class="nonterminal">hex-quad</i> <i class="nonterminal">hex-quad</i>
+</dd>
+<dt>
+<i class="nonterminal">preprocessing-token</i>:</dt>
+	<dd><i class="nonterminal">header-name</i></dd>
+	<dd><i class="nonterminal">identifier</i></dd>
+	<dd><i class="nonterminal">pp-number</i></dd>
+	<dd><i class="nonterminal">character-literal</i></dd>
+	<dd><i class="nonterminal">user-defined-character-literal</i></dd>
+	<dd><i class="nonterminal">string-literal</i></dd>
+	<dd><i class="nonterminal">user-defined-string-literal</i></dd>
+	<dd><i class="nonterminal">preprocessing-op-or-punc</i></dd>
+	<dd>each non-white-space character that cannot be one of the above</dd>
+<dt>
+<i class="nonterminal">token</i>:</dt>
+	<dd><i class="nonterminal">identifier</i></dd>
+	<dd><i class="nonterminal">keyword</i></dd>
+	<dd><i class="nonterminal">literal</i></dd>
+	<dd><i class="nonterminal">operator</i></dd>
+	<dd><i class="nonterminal">punctuator</i></dd>
+<dt>
+<i class="nonterminal">header-name</i>:</dt>
+	<dd>
+<code class="sh_cpp">&lt;</code> <i class="nonterminal">h-char-sequence</i> <code class="sh_cpp">&gt;</code>
+</dd>
+	<dd>
+<code class="sh_cpp">"</code> <i class="nonterminal">q-char-sequence</i> <code class="sh_cpp">"</code>
+</dd>
+<dt>
+<i class="nonterminal">h-char-sequence</i>:</dt>
+	<dd><i class="nonterminal">h-char</i></dd>
+	<dd>
+<i class="nonterminal">h-char-sequence</i> <i class="nonterminal">h-char</i>
+</dd>
+<dt>
+<i class="nonterminal">h-char</i>:</dt>
+	<dd>any member of the source character set except new-line and <code class="sh_cpp">&gt;</code>
+</dd>
+<dt>
+<i class="nonterminal">q-char-sequence</i>:</dt>
+	<dd><i class="nonterminal">q-char</i></dd>
+	<dd>
+<i class="nonterminal">q-char-sequence</i> <i class="nonterminal">q-char</i>
+</dd>
+<dt>
+<i class="nonterminal">q-char</i>:</dt>
+	<dd>any member of the source character set except new-line and <code class="sh_cpp">"</code>
+</dd>
+<dt>
+<i class="nonterminal">pp-number</i>:</dt>
+	<dd><i class="nonterminal">digit</i></dd>
+	<dd>
+<code class="sh_cpp">.</code> <i class="nonterminal">digit</i>
+</dd>
+	<dd>
+<i class="nonterminal">pp-number</i> <i class="nonterminal">digit</i>
+</dd>
+	<dd>
+<i class="nonterminal">pp-number</i> <i class="nonterminal">identifier-nondigit</i>
+</dd>
+	<dd>
+<i class="nonterminal">pp-number</i> <code class="sh_cpp">e</code> <i class="nonterminal">sign</i>
+</dd>
+	<dd>
+<i class="nonterminal">pp-number</i> <code class="sh_cpp">E</code> <i class="nonterminal">sign</i>
+</dd>
+	<dd>
+<i class="nonterminal">pp-number</i> <code class="sh_cpp">.</code>
+</dd>
+<dt>
+<i class="nonterminal">identifier</i>:</dt>
+	<dd><i class="nonterminal">identifier-nondigit</i></dd>
+	<dd>
+<i class="nonterminal">identifier</i> <i class="nonterminal">identifier-nondigit</i>
+</dd>
+	<dd>
+<i class="nonterminal">identifier</i> <i class="nonterminal">digit</i>
+</dd>
+<dt>
+<i class="nonterminal">identifier-nondigit</i>:</dt>
+	<dd><i class="nonterminal">nondigit</i></dd>
+	<dd><i class="nonterminal">universal-character-name</i></dd>
+	<dd>other implementation-defined characters</dd>
+<dt>
+<i class="nonterminal">nondigit</i>: one of</dt>
+	<dd><pre><code class="sh_cpp">a b c d e f g h i j k l m
+n o p q r s t u v w x y z
+A B C D E F G H I J K L M
+N O P Q R S T U V W X Y Z _</code></pre></dd>
+<dt>
+<i class="nonterminal">digit</i>: one of</dt>
+	<dd><pre><code class="sh_cpp">0 1 2 3 4 5 6 7 8 9</code></pre></dd>
+<dt>
+<i class="nonterminal">preprocessing-op-or-punc</i>: one of</dt>
+<dd><pre><code class="sh_cpp">{       }       [       ]       #       ##      (       )
+&lt;:      :&gt;      &lt;%      %&gt;      %:      %:%:    ;       :       ...
+new     delete  ?       ::      .       .*
++       -       *       /       %       ^       &amp;       |       ~
+!       =       &lt;       &gt;       +=      -=      *=      /=      %=
+^=      &amp;=      |=      &lt;&lt;      &gt;&gt;      &gt;&gt;=     &lt;&lt;=     ==      !=
+&lt;=      &gt;=      &amp;&amp;      ||      ++      --      ,       -&gt;*     -&gt;
+and     and_eq  bitand  bitor   compl   not     not_eq
+or      or_eq   xor     xor_eq</code></pre></dd>
+<dt>
+<i class="nonterminal">literal</i>:</dt>
+	<dd><i class="nonterminal">integer-literal</i></dd>
+	<dd><i class="nonterminal">character-literal</i></dd>
+	<dd><i class="nonterminal">floating-literal</i></dd>
+	<dd><i class="nonterminal">string-literal</i></dd>
+	<dd><i class="nonterminal">boolean-literal</i></dd>
+	<dd><i class="nonterminal">pointer-literal</i></dd>
+	<dd><i class="nonterminal">user-defined-literal</i></dd>
+<dt>
+<i class="nonterminal">integer-literal</i>:</dt>
+	<dd>
+<i class="nonterminal">decimal-literal</i> <i class="nonterminal">integer-suffix</i><sub class="opt">opt</sub>
+</dd>
+	<dd>
+<i class="nonterminal">octal-literal</i> <i class="nonterminal">integer-suffix</i><sub class="opt">opt</sub>
+</dd>
+	<dd>
+<i class="nonterminal">hexadecimal-literal</i> <i class="nonterminal">integer-suffix</i><sub class="opt">opt</sub>
+</dd>
+<dt>
+<i class="nonterminal">decimal-literal</i>:</dt>
+	<dd><i class="nonterminal">nonzero-digit</i></dd>
+	<dd>
+<i class="nonterminal">decimal-literal</i> <i class="nonterminal">digit</i>
+</dd>
+<dt>
+<i class="nonterminal">octal-literal</i>:</dt>
+	<dd><code class="sh_cpp">0</code></dd>
+	<dd>
+<i class="nonterminal">octal-literal</i> <i class="nonterminal">octal-digit</i>
+</dd>
+<dt>
+<i class="nonterminal">hexadecimal-literal</i>:</dt>
+	<dd>
+<code class="sh_cpp">0x</code> <i class="nonterminal">hexadecimal-digit</i>
+</dd>
+	<dd>
+<code class="sh_cpp">0X</code> <i class="nonterminal">hexadecimal-digit</i>
+</dd>
+	<dd>
+<i class="nonterminal">hexadecimal-literal</i> <i class="nonterminal">hexadecimal-digit</i>
+</dd>
+<dt>
+<i class="nonterminal">nonzero-digit</i>: one of</dt>
+	<dd><pre><code class="sh_cpp">1 2 3 4 5 6 7 8 9</code></pre></dd>
+<dt>
+<i class="nonterminal">octal-digit</i>: one of</dt>
+	<dd><pre><code class="sh_cpp">0 1 2 3 4 5 6 7</code></pre></dd>
+<dt>
+<i class="nonterminal">hexadecimal-digit</i>: one of</dt>
+	<dd><pre><code class="sh_cpp">0 1 2 3 4 5 6 7 8 9
+a b c d e f
+A B C D E F</code></pre></dd>
+<dt>
+<i class="nonterminal">integer-suffix</i>:</dt>
+	<dd>
+<i class="nonterminal">unsigned-suffix</i> <i class="nonterminal">long-suffix</i><sub class="opt">opt</sub>
+</dd>
+	<dd>
+<i class="nonterminal">unsigned-suffix</i> <i class="nonterminal">long-long-suffix</i><sub class="opt">opt</sub>
+</dd>
+	<dd>
+<i class="nonterminal">long-suffix</i> <i class="nonterminal">unsigned-suffix</i><sub class="opt">opt</sub>
+</dd>
+	<dd>
+<i class="nonterminal">long-long-suffix</i> <i class="nonterminal">unsigned-suffix</i><sub class="opt">opt</sub>
+</dd>
+<dt>
+<i class="nonterminal">unsigned-suffix</i>: one of</dt>
+	<dd><pre><code class="sh_cpp">u U</code></pre></dd>
+<dt>
+<i class="nonterminal">long-suffix</i>: one of</dt>
+	<dd><pre><code class="sh_cpp">l L</code></pre></dd>
+<dt>
+<i class="nonterminal">long-long-suffix</i>: one of</dt>
+	<dd><pre><code class="sh_cpp">ll LL</code></pre></dd>
+<dt>
+<i class="nonterminal">character-literal</i>:</dt>
+	<dd>
+<code class="sh_cpp">'</code> <i class="nonterminal">c-char-sequence</i> <code class="sh_cpp">'</code>
+</dd>
+	<dd>
+<code class="sh_cpp">u'</code> <i class="nonterminal">c-char-sequence</i> <code class="sh_cpp">'</code>
+</dd>
+	<dd>
+<code class="sh_cpp">U'</code> <i class="nonterminal">c-char-sequence</i> <code class="sh_cpp">'</code>
+</dd>
+	<dd>
+<code class="sh_cpp">L'</code> <i class="nonterminal">c-char-sequence</i> <code class="sh_cpp">'</code>
+</dd>
+<dt>
+<i class="nonterminal">c-char-sequence</i>:</dt>
+	<dd><i class="nonterminal">c-char</i></dd>
+	<dd>
+<i class="nonterminal">c-char-sequence</i> <i class="nonterminal">c-char</i>
+</dd>
+<dt>
+<i class="nonterminal">c-char</i>:</dt>
+	<dd>any member of the source character set except the single-quote <code class="sh_cpp">'</code>, backslash <code class="sh_cpp">\</code>, or
+		new-line character</dd>
+	<dd><i class="nonterminal">escape-sequence</i></dd>
+	<dd><i class="nonterminal">universal-character-name</i></dd>
+<dt>
+<i class="nonterminal">escape-sequence</i>:</dt>
+	<dd><i class="nonterminal">simple-escape-sequence</i></dd>
+	<dd><i class="nonterminal">octal-escape-sequence</i></dd>
+	<dd><i class="nonterminal">hexadecimal-escape-sequence</i></dd>
+<dt>
+<i class="nonterminal">simple-escape-sequence</i>: one of</dt>
+	<dd><pre><code class="sh_cpp">\' \" \? \\
+\a \b \f \n \r \t \v</code></pre></dd>
+<dt>
+<i class="nonterminal">octal-escape-sequence</i>:</dt>
+	<dd>
+<code class="sh_cpp">\</code> <i class="nonterminal">octal-digit</i>
+</dd>
+	<dd>
+<code class="sh_cpp">\</code> <i class="nonterminal">octal-digit</i> <i class="nonterminal">octal-digit</i>
+</dd>
+	<dd>
+<code class="sh_cpp">\</code> <i class="nonterminal">octal-digit</i> <i class="nonterminal">octal-digit</i> <i class="nonterminal">octal-digit</i>
+</dd>
+<dt>
+<i class="nonterminal">hexadecimal-escape-sequence</i>:</dt>
+	<dd>
+<code class="sh_cpp">\x</code> <i class="nonterminal">hexadecimal-digit</i>
+</dd>
+	<dd>
+<i class="nonterminal">hexadecimal-escape-sequence</i> <i class="nonterminal">hexadecimal-digit</i>
+</dd>
+<dt>
+<i class="nonterminal">floating-literal</i>:</dt>
+	<dd>
+<i class="nonterminal">fractional-constant</i> <i class="nonterminal">exponent-part</i><sub class="opt">opt</sub> <i class="nonterminal">floating-suffix</i><sub class="opt">opt</sub>
+</dd>
+	<dd>
+<i class="nonterminal">digit-sequence</i> <i class="nonterminal">exponent-part</i> <i class="nonterminal">floating-suffix</i><sub class="opt">opt</sub>
+</dd>
+<dt>
+<i class="nonterminal">fractional-constant</i>:</dt>
+	<dd>
+<i class="nonterminal">digit-sequence</i><sub class="opt">opt</sub> <code class="sh_cpp">.</code> <i class="nonterminal">digit-sequence</i>
+</dd>
+	<dd>
+<i class="nonterminal">digit-sequence</i> <code class="sh_cpp">.</code>
+</dd>
+<dt>
+<i class="nonterminal">exponent-part</i>:</dt>
+	<dd>
+<code class="sh_cpp">e</code> <i class="nonterminal">sign</i><sub class="opt">opt</sub> <i class="nonterminal">digit-sequence</i>
+</dd>
+	<dd>
+<code class="sh_cpp">E</code> <i class="nonterminal">sign</i><sub class="opt">opt</sub> <i class="nonterminal">digit-sequence</i>
+</dd>
+<dt>
+<i class="nonterminal">sign</i>: one of</dt>
+	<dd><pre><code class="sh_cpp">+ -</code></pre></dd>
+<dt>
+<i class="nonterminal">digit-sequence</i>:</dt>
+	<dd><i class="nonterminal">digit</i></dd>
+	<dd>
+<i class="nonterminal">digit-sequence</i> <i class="nonterminal">digit</i>
+</dd>
+<dt>
+<i class="nonterminal">floating-suffix</i>: one of</dt>
+	<dd><pre><code class="sh_cpp">f l F L</code></pre></dd>
+<dt>
+<i class="nonterminal">string-literal</i>:</dt>
+	<dd>
+<i class="nonterminal">encoding-prefix</i><sub class="opt">opt</sub> <code class="sh_cpp">"</code> <i class="nonterminal">s-char-sequence</i><sub class="opt">opt</sub> <code class="sh_cpp">"</code>
+</dd>
+	<dd>
+<i class="nonterminal">encoding-prefix</i><sub class="opt">opt</sub> <code class="sh_cpp">R</code> <i class="nonterminal">raw-string</i>
+</dd>
+<dt>
+<i class="nonterminal">encoding-prefix</i>:</dt>
+	<dd><code class="sh_cpp">u8</code></dd>
+	<dd><code class="sh_cpp">u</code></dd>
+	<dd><code class="sh_cpp">U</code></dd>
+	<dd><code class="sh_cpp">L</code></dd>
+<dt>
+<i class="nonterminal">s-char-sequence</i>:</dt>
+	<dd><i class="nonterminal">s-char</i></dd>
+	<dd>
+<i class="nonterminal">s-char-sequence</i> <i class="nonterminal">s-char</i>
+</dd>
+<dt>
+<i class="nonterminal">s-char</i>:</dt>
+	<dd>any member of the source character set except the double-quote <code class="sh_cpp">"</code>, backslash <code class="sh_cpp">\</code>, or
+		new-line character</dd>
+	<dd><i class="nonterminal">escape-sequence</i></dd>
+	<dd><i class="nonterminal">universal-character-name</i></dd>
+<dt>
+<i class="nonterminal">raw-string</i>:</dt>
+	<dd>
+<code class="sh_cpp">"</code> <i class="nonterminal">d-char-sequence</i><sub class="opt">opt</sub> <code class="sh_cpp">(</code> <i class="nonterminal">r-char-sequence</i><sub class="opt">opt</sub>
+		<code class="sh_cpp">)</code> <i class="nonterminal">d-char-sequence</i><sub class="opt">opt</sub> <code class="sh_cpp">"</code>
+</dd>
+<dt>
+<i class="nonterminal">r-char-sequence</i>:</dt>
+	<dd><i class="nonterminal">r-char</i></dd>
+	<dd>
+<i class="nonterminal">r-char-sequence</i> <i class="nonterminal">r-char</i>
+</dd>
+<dt>
+<i class="nonterminal">r-char</i>:</dt>
+	<dd>any member of the source character set, except a right parenthesis <code class="sh_cpp">)</code> followed by the initial
+		<i class="nonterminal">d-char-sequence</i> (which may be empty) followed by a double quote <code class="sh_cpp">"</code>
+</dd>
+<dt>
+<i class="nonterminal">d-char-sequence</i>:</dt>
+	<dd><i class="nonterminal">d-char</i></dd>
+	<dd>
+<i class="nonterminal">d-char-sequence</i> <i class="nonterminal">d-char</i>
+</dd>
+<dt>
+<i class="nonterminal">d-char</i>:</dt>
+	<dd>any member of the basic source character set except: space, the left parenthesis <code class="sh_cpp">(</code>, the right
+		parenthesis <code class="sh_cpp">)</code>, the backslash <code class="sh_cpp">\</code>, and the control characters representing horizontal
+		tab, vertical tab, form feed, and newline</dd>
+<dt>
+<i class="nonterminal">boolean-literal</i>:</dt>
+	<dd><code class="sh_cpp">false</code></dd>
+	<dd><code class="sh_cpp">true</code></dd>
+<dt>
+<i class="nonterminal">pointer-literal</i>:</dt>
+	<dd><code class="sh_cpp">nullptr</code></dd>
+<dt>
+<i class="nonterminal">user-defined-literal</i>:</dt>
+	<dd><i class="nonterminal">user-defined-integer-literal</i></dd>
+	<dd><i class="nonterminal">user-defined-floating-literal</i></dd>
+	<dd><i class="nonterminal">user-defined-string-literal</i></dd>
+	<dd><i class="nonterminal">user-defined-character-literal</i></dd>
+<dt>
+<i class="nonterminal">user-defined-integer-literal</i>:</dt>
+	<dd>
+<i class="nonterminal">decimal-literal</i> <i class="nonterminal">ud-suffix</i>
+</dd>
+	<dd>
+<i class="nonterminal">octal-literal</i> <i class="nonterminal">ud-suffix</i>
+</dd>
+	<dd>
+<i class="nonterminal">hexadecimal-literal</i> <i class="nonterminal">ud-suffix</i>
+</dd>
+<dt>
+<i class="nonterminal">user-defined-floating-literal</i>:</dt>
+	<dd>
+<i class="nonterminal">fractional-constant</i> <i class="nonterminal">exponent-part</i><sub class="opt">opt</sub> <i class="nonterminal">ud-suffix</i>
+</dd>
+	<dd>
+<i class="nonterminal">digit-sequence</i> <i class="nonterminal">exponent-part</i> <i class="nonterminal">ud-suffix</i>
+</dd>
+<dt>
+<i class="nonterminal">user-defined-string-literal</i>:</dt>
+	<dd>
+<i class="nonterminal">string-literal</i> <i class="nonterminal">ud-suffix</i>
+</dd>
+<dt>
+<i class="nonterminal">user-defined-character-literal</i>:</dt>
+	<dd>
+<i class="nonterminal">character-literal</i> <i class="nonterminal">ud-suffix</i>
+</dd>
+<dt>
+<i class="nonterminal">ud-suffix</i>:</dt>
+	<dd><i class="nonterminal">identifier</i></dd>
+</dl>
+</body>
+</html>
+

@@ -1,0 +1,112 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Qualification conversions</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[conv.qual]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[conv.qual]"></object>4.4 Qualification conversions </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A prvalue of type “pointer to <var>cv1</var> <code class="sh_cpp">T</code>” can be converted to a prvalue of type “pointer to
+<var>cv2</var> <code class="sh_cpp">T</code>” if “<var>cv2</var> <code class="sh_cpp">T</code>” is more cv-qualified than “<var>cv1</var>
+<code class="sh_cpp">T</code>”.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>A prvalue of type “pointer to member of <code class="sh_cpp">X</code> of type <var>cv1</var> <code class="sh_cpp">T</code>” can be converted
+to a prvalue of type “pointer to member of <code class="sh_cpp">X</code> of type <var>cv2</var> <code class="sh_cpp">T</code>” if “<var>cv2</var>
+<code class="sh_cpp">T</code>” is more cv-qualified than “<var>cv1</var> <code class="sh_cpp">T</code>”.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><span class="note">[ <em>Note:</em> Function types (including those used in pointer to member function types) are never cv-qualified
+(<a title="dcl.fct" href="dcl.fct.html">8.3.5</a>). — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>A conversion can add cv-qualifiers at levels other than the first in multi-level pointers, subject to the
+following rules:<sup class="footnote"><a href="#fn56">56</a></sup></p>
+
+<p>Two pointer types <code class="sh_cpp">T1</code> and <code class="sh_cpp">T2</code> are <dfn>similar</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="similar"></object> if there exists a type <code class="sh_cpp">T</code>
+and integer <var>n</var> &gt; 0 such that:</p>
+
+<dl><dd>
+<code class="sh_cpp">T1</code> is <var>cv</var><sub>1,0</sub> pointer to <var>cv</var><sub>1,1</sub> pointer to …
+<var>cv</var><sub>1,<var>n</var>−1</sub> pointer to <var>cv</var><sub>1,<var>n</var></sub> <code class="sh_cpp">T</code>
+</dd></dl>
+
+<p>and</p>
+
+<dl><dd>
+<code class="sh_cpp">T2</code> is <var>cv</var><sub>2,0</sub> pointer to <var>cv</var><sub>2,1</sub> pointer to …
+<var>cv</var><sub>2,<var>n</var>−1</sub> pointer to <var>cv</var><sub>2,<var>n</var></sub> <code class="sh_cpp">T</code>
+</dd></dl>
+
+<p>where each <var>cv</var><sub><var>i</var>,<var>j</var></sub> is <code class="sh_cpp">const</code>, <code class="sh_cpp">volatile</code>,
+<code class="sh_cpp">const volatile</code>, or nothing. The <var>n</var>-tuple of cv-qualifiers after the first in a pointer type,
+e.g., <var>cv</var><sub>1,1</sub>, <var>cv</var><sub>1,2</sub>, …, <var>cv</var><sub>1,<var>n</var></sub> in the pointer
+type <code class="sh_cpp">T1</code>, is called the <dfn>cv-qualification signature</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="cv-qualification signature"></object> of the pointer type. An expression of type
+<code class="sh_cpp">T1</code> can be converted to type <code class="sh_cpp">T2</code> if and only if the following conditions are satisfied:</p>
+<ul>
+<li>the pointer types are similar;</li>
+<li>for every <var>j</var> &gt; 0, if <code class="sh_cpp">const</code> is in <var>cv</var><sub>1,<var>j</var></sub> then
+	<code class="sh_cpp">const</code> is in <var>cv</var><sub>2,<var>j</var></sub>, and similarly for <code class="sh_cpp">volatile</code>;</li>
+<li>if the <var>cv</var><sub>1,<var>j</var></sub> and <var>cv</var><sub>2,<var>j</var></sub> are different, then
+	<code class="sh_cpp">const</code> is in every <var>cv</var><sub>2,<var>k</var></sub> for 0 &lt; <var>k</var> &lt; <var>j</var>.</li>
+</ul>
+
+<div class="note">
+<p>[ <em>Note:</em> if a program could assign a pointer of type <code class="sh_cpp">T**</code> to a pointer of type <code class="sh_cpp">const T**</code> (that
+is, if line <code class="sh_cpp">#1</code> below were allowed), a program could inadvertently modify a <code class="sh_cpp">const</code> object (as it
+is done on line <code class="sh_cpp">#2</code>). For example,</p>
+
+<pre><code class="sh_cpp">int main() {
+  const char c = 'c';
+  char* pc;
+  const char** pcc = &amp;pc;   // #1: not allowed
+  *pcc = &amp;c;
+  *pc = 'C';                // #2: modifies a const object
+}</code></pre>
+<p> — <em>end note</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>A <dfn>multi-level</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="multi-level"></object> pointer to member type, or a <dfn>multi-level mixed</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="multi-level mixed"></object> pointer and pointer to
+member type has the form:</p>
+
+<dl><dd>
+<var>cv</var><sub>0</sub> <var>P</var><sub>0</sub> to <var>cv</var><sub>1</sub> <var>P</var><sub>1</sub> to …
+<var>cv</var><sub><var>n</var>−1</sub> <var>P</var><sub><var>n</var>−1</sub> to <var>cv</var><sub><var>n</var></sub>
+<code class="sh_cpp">T</code>
+</dd></dl>
+
+<p>where <var>P</var><sub><var>i</var></sub> is either a pointer or pointer to member and where <code class="sh_cpp">T</code> is not a
+pointer type or pointer to member type.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>Two multi-level pointer to member types or two multi-level mixed pointer and pointer to member types
+<code class="sh_cpp">T1</code> and <code class="sh_cpp">T2</code> are <dfn>similar</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="similar"></object> if there exists a type <code class="sh_cpp">T</code> and integer
+<var>n</var> &gt; 0 such that:</p>
+
+<dl><dd>
+<code class="sh_cpp">T1</code> is <var>cv</var><sub>1,0</sub> <var>P</var><sub>0</sub> to
+<var>cv</var><sub>1,1</sub> <var>P</var><sub>1</sub> to … <var>cv</var><sub>1,<var>n</var>−1</sub>
+<var>P</var><sub><var>n</var>−1</sub> to <var>cv</var><sub>1,<var>n</var></sub> <code class="sh_cpp">T</code>
+</dd></dl>
+
+<p>and</p>
+
+<dl><dd>
+<code class="sh_cpp">T2</code> is <var>cv</var><sub>2,0</sub> <var>P</var><sub>0</sub> to
+<var>cv</var><sub>2,1</sub> <var>P</var><sub>1</sub> to … <var>cv</var><sub>2,<var>n</var>−1</sub>
+<var>P</var><sub><var>n</var>−1</sub> to <var>cv</var><sub>2,<var>n</var></sub> <code class="sh_cpp">T</code>
+</dd></dl>
+
+<p><a class="anchor" id="p7" href="#p7">7</a>For similar multi-level pointer to member types and similar multi-level mixed pointer and pointer to member
+types, the rules for adding cv-qualifiers are the same as those used for similar pointer types.</p>
+
+
+<div><p class="footnote" id="fn58">58) These rules ensure that const-safety is preserved by the conversion.</p></div>
+</body>
+</html>
+

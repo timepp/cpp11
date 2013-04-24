@@ -1,0 +1,260 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Null-terminated sequence utilities</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[c.strings]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[c.strings]"></object>21.7 Null-terminated sequence utilities </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Tables <a href="c.strings.html#t74">74</a>, <a href="c.strings.html#t75">75</a>, <a href="c.strings.html#t76">76</a>, <a href="c.strings.html#t77">77</a>, <a href="c.strings.html#t78">78</a>, and <a href="c.strings.html#t79">79</a> describe headers <code class="header">&lt;cctype&gt;</code>, <code class="header">&lt;cwctype&gt;</code>, <code class="header">&lt;cstring&gt;</code>,
+<code class="header">&lt;cwchar&gt;</code>, <code class="header">&lt;cstdlib&gt;</code> (character conversions), and <code class="header">&lt;cuchar&gt;</code>,
+respectively.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The contents of these headers shall be the same as the Standard C Library headers <code class="header">&lt;ctype.h&gt;</code>,
+<code class="header">&lt;wctype.h&gt;</code>, <code class="header">&lt;string.h&gt;</code>, <code class="header">&lt;wchar.h&gt;</code>, and <code class="header">&lt;stdlib.h&gt;</code> and the C
+Unicode TR header <code class="header">&lt;uchar.h&gt;</code>, respectively, with the following modifications:</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>The headers shall not define the types <code class="sh_cpp">char16_t</code>, <code class="sh_cpp">char32_t</code>, and <code class="sh_cpp">wchar_t</code>
+(<a title="lex.key" href="lex.key.html">2.12</a>).</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>The function signature <code class="sh_cpp">strchr(const char*, int)</code> shall be replaced by the two declarations:</p>
+
+<pre><code class="sh_cpp">const char* <dfn>strchr</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="strchr"></object>(const char* s, int c);
+      char* strchr(      char* s, int c);</code></pre>
+
+<p>both of which shall have the same behavior as the original declaration.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>The function signature <code class="sh_cpp">strpbrk(const char*, const char*)</code> shall be replaced by the two
+declarations:</p>
+
+<pre><code class="sh_cpp">const char* <dfn>strpbrk</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="strpbrk"></object>(const char* s1, const char* s2);
+      char* strpbrk(      char* s1, const char* s2);</code></pre>
+
+<p>both of which shall have the same behavior as the original declaration.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>The function signature <code class="sh_cpp">strrchr(const char*, int)</code> shall be replaced by the two declarations:</p>
+
+<pre><code class="sh_cpp">const char* <dfn>strrchr</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="strrchr"></object>(const char* s, int c);
+      char* strrchr(      char* s, int c);</code></pre>
+
+<p>both of which shall have the same behavior as the original declaration.</p>
+
+<p><a class="anchor" id="p7" href="#p7">7</a>The function signature <code class="sh_cpp">strstr(const char*, const char*)</code> shall be replaced by the two
+declarations:</p>
+
+<pre><code class="sh_cpp">const char* <dfn>strstr</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="strstr"></object>(const char* s1, const char* s2);
+      char* strstr(      char* s1, const char* s2);</code></pre>
+
+<p>both of which shall have the same behavior as the original declaration.</p>
+
+<p><a class="anchor" id="p8" href="#p8">8</a>The function signature <code class="sh_cpp">memchr(const void*, int, size_t)</code> shall be replaced by the two
+declarations:</p>
+
+<pre><code class="sh_cpp">const void* <dfn>memchr</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="memchr"></object>(const void* s, int c, size_t n);
+      void* memchr(      void* s, int c, size_t n);</code></pre>
+
+<p>both of which shall have the same behavior as the original declaration.</p>
+
+<p><a class="anchor" id="p9" href="#p9">9</a>The function signature <code class="sh_cpp">wcschr(const wchar_t*, wchar_t)</code> shall be replaced by the two
+declarations:</p>
+
+<pre><code class="sh_cpp">const wchar_t* <dfn>wcschr</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="wcschr"></object>(const wchar_t* s, wchar_t c);
+      wchar_t* wcschr(      wchar_t* s, wchar_t c);</code></pre>
+
+<p>both of which shall have the same behavior as the original declaration.</p>
+
+<p><a class="anchor" id="p10" href="#p10">10</a>The function signature <code class="sh_cpp">wcspbrk(const wchar_t*, const wchar_t*)</code> shall be replaced by the two
+declarations:</p>
+
+<pre><code class="sh_cpp">const wchar_t* <dfn>wcspbrk</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="wcspbrk"></object>(const wchar_t* s1, const wchar_t* s2);
+      wchar_t* wcspbrk(      wchar_t* s1, const wchar_t* s2);</code></pre>
+
+<p>both of which shall have the same behavior as the original declaration.</p>
+
+<p><a class="anchor" id="p11" href="#p11">11</a>The function signature <code class="sh_cpp">wcsrchr(const wchar_t*, wchar_t)</code> shall be replaced by the two
+declarations:</p>
+
+<pre><code class="sh_cpp">const wchar_t* <dfn>wcsrchr</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="wcsrchr"></object>(const wchar_t* s, wchar_t c);
+      wchar_t* wcsrchr(      wchar_t* s, wchar_t c);</code></pre>
+
+<p>both of which shall have the same behavior as the original declaration.</p>
+
+<p><a class="anchor" id="p12" href="#p12">12</a>The function signature <code class="sh_cpp">wcsstr(const wchar_t*, const wchar_t*)</code> shall be replaced by the two
+declarations:</p>
+
+<pre><code class="sh_cpp">const wchar_t* <dfn>wcsstr</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="wcsstr"></object>(const wchar_t* s1, const wchar_t* s2);
+      wchar_t* wcsstr(      wchar_t* s1, const wchar_t* s2);</code></pre>
+
+<p>both of which shall have the same behavior as the original declaration.</p>
+
+<p><a class="anchor" id="p13" href="#p13">13</a>The function signature <code class="sh_cpp">wmemchr(const wchar_t*, int, size_t)</code> shall be replaced by the two
+declarations:</p>
+
+<pre><code class="sh_cpp">const wchar_t* <dfn>wmemchr</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="wmemchr"></object>(const wchar_t* s, wchar_t c, size_t n);
+      wchar_t* wmemchr(      wchar_t* s, wchar_t c, size_t n);</code></pre>
+
+<p>both of which shall have the same behavior as the original declaration.</p>
+
+<p><a class="anchor" id="p14" href="#p14">14</a>The functions <code class="sh_cpp"><dfn>strerror</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="strerror"></object></code> and <code class="sh_cpp"><dfn>strtok</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="strtok"></object></code> are not required to avoid
+data races (<a title="res.on.data.races" href="res.on.data.races.html">17.6.5.9</a>).</p>
+
+<p><a class="anchor" id="p15" href="#p15">15</a>Calling the functions listed in Table <a href="c.strings.html#t73">73</a> with an <code class="sh_cpp">mbstate_t*</code> argument of
+<code class="sh_cpp">NULL</code> may introduce a data race (<a title="res.on.data.races" href="res.on.data.races.html">17.6.5.9</a>) with other calls to these functions with an
+<code class="sh_cpp">mbstate_t*</code> argument of <code class="sh_cpp">NULL</code>.</p>
+
+<table id="t73" class="bordered padded">
+<caption>Table 73 — Potential <code class="sh_cpp">mbstate_t</code> data races</caption>
+<tr><td><pre><code class="sh_cpp">mbrlen      mbrtowc     mbsrtowc    mbtowc
+wcrtomb     wcsrtomb    wctomb</code></pre></td></tr>
+</table>
+
+<p><span class="seealso">See also:</span> ISO C 7.3, 7.10.7, 7.10.8, and 7.11. Amendment 1 4.4, 4.5, and 4.6.</p>
+
+<table id="t74" class="header_synopsis">
+<caption>Table 74 — Header <dfn><code class="header">&lt;cctype&gt;</code></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="&lt;cctype&gt;"></object> synopsis</caption>
+<thead><tr>
+<th>Type</th>
+<th>Name(s)</th>
+</tr></thead>
+<tbody>
+<tr>
+<th>Functions:</th>
+<td><pre><code class="sh_cpp">isalnum  isblank  isdigit  isprint  isupper
+tolower  isalpha  isgraph  ispunct  isxdigit
+toupper  iscntrl  islower  isspace</code></pre></td>
+</tr>
+</tbody>
+</table>
+
+<table id="t75" class="header_synopsis">
+<caption>Table 75 — Header <dfn><code class="header">&lt;cwctype&gt;</code></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="&lt;cwctype&gt;"></object> synopsis</caption>
+<thead><tr>
+<th>Type</th>
+<th>Name(s)</th>
+</tr></thead>
+<tbody>
+<tr>
+<th>Macro:</th>
+<td><code class="sh_cpp">WEOF</code></td>
+</tr>
+<tr>
+<th>Types:</th>
+<td><pre><code class="sh_cpp">wctrans_t wctype_t  wint_t</code></pre></td>
+</tr>
+<tr>
+<th>Functions:</th>
+<td><pre><code class="sh_cpp">iswalnum  iswcntrl  iswgraph  iswpunct  iswxdigit towupper
+iswalpha  iswctype  iswlower  iswspace  towctrans wctrans
+iswblank  iswdigit  iswprint  iswupper  towlower  wctype</code></pre></td>
+</tr>
+</tbody>
+</table>
+
+<table id="t76" class="header_synopsis">
+<caption>Table 76 — Header <dfn><code class="header">&lt;cstring&gt;</code></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="&lt;cstring&gt;"></object> synopsis</caption>
+<thead><tr>
+<th>Type</th>
+<th>Name(s)</th>
+</tr></thead>
+<tbody>
+<tr>
+<th>Macro:</th>
+<td><code class="sh_cpp">NULL</code></td>
+</tr>
+<tr>
+<th>Type:</th>
+<td><code class="sh_cpp">size_t</code></td>
+</tr>
+<tr>
+<th>Functions:</th>
+<td><pre><code class="sh_cpp">memchr   strcat   strcspn  strncpy  strtok
+memcmp   strchr   strerror strpbrk  strxfrm
+memcpy   strcmp   strlen   strrchr
+memmove  strcoll  strncat  strspn
+memset   strcpy   strncmp  strstr</code></pre></td>
+</tr>
+</tbody>
+</table>
+
+<table id="t77" class="header_synopsis">
+<caption>Table 77 — Header <dfn><code class="header">&lt;cwchar&gt;</code></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="&lt;cwchar&gt;"></object> synopsis</caption>
+<thead><tr>
+<th>Type</th>
+<th>Name(s)</th>
+</tr></thead>
+<tbody>
+<tr>
+<th>Macros:</th>
+<td><pre><code class="sh_cpp">NULL       WCHAR_MAX  WCHAR_MIN  WEOF</code></pre></td>
+</tr>
+<tr>
+<th>Types:</th>
+<td><pre><code class="sh_cpp">mbstate_t  wint_t     size_t     tm</code></pre></td>
+</tr>
+<tr>
+<th>Functions:</th>
+<td><pre><code class="sh_cpp">btowc      mbrlen     vfwscanf   wcscpy     wcsspn     wcsxfrm
+fgetwc     mbrtowc    vswscanf   wcscspn    wcsstr     wctob
+fgetws     mbsinit    vswprintf  wcsftime   wcstod     wmemchr
+fputwc     mbsrtowcs  vwprintf   wcslen     wcstof     wmemcmp
+fputws     putwc      vwscanf    wcsncat    wcstok     wmemcpy
+fwide      putwchar   wcrtomb    wcsncmp    wcstol     wmemmove
+fwprintf   swprintf   wcscat     wcsncpy    wcstold    wmemset
+fwscanf    swscanf    wcschr     wcspbrk    wcstoll    wprintf
+getwc      ungetwc    wcscmp     wcsrchr    wcstoul    wscanf
+getwchar   vfwprintf  wcscoll    wcsrtombs  wcstoull</code></pre></td>
+</tr>
+</tbody>
+</table>
+
+<table id="t78" class="header_synopsis">
+<caption>Table 78 — Header <dfn><code class="header">&lt;cstdlib&gt;</code></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="&lt;cstdlib&gt;"></object> synopsis</caption>
+<thead><tr>
+<th>Type</th>
+<th>Name(s)</th>
+</tr></thead>
+<tbody>
+<tr>
+<th>Macros:</th>
+<td><code class="sh_cpp">MB_CUR_MAX</code></td>
+</tr>
+<tr>
+<th>Functions:</th>
+<td><pre><code class="sh_cpp">atof      mblen     strtof    strtoul
+atoi      mbtowc    strtol    strtoull
+atol      mbstowcs  strtold   wctomb
+atoll     strtod    strtoll   wcstombs</code></pre></td>
+</tr>
+</tbody>
+</table>
+
+<table id="t79" class="header_synopsis">
+<caption>Table 79 — Header <dfn><code class="header">&lt;cuchar&gt;</code></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="&lt;cuchar&gt;"></object> synopsis</caption>
+<thead><tr>
+<th>Type</th>
+<th>Name(s)</th>
+</tr></thead>
+<tbody>
+<tr>
+<th>Macros:</th>
+<td><pre><code class="sh_cpp">__STDC_UTF_16__ __STDC_UTF_32__</code></pre></td>
+</tr>
+<tr>
+<th>Functions:</th>
+<td><pre><code class="sh_cpp">mbrtoc16        c16rtomb
+mbrtoc32        c32rtomb</code></pre></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>
+

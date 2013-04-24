@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Elaborated type specifiers</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[basic.lookup.elab]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[basic.lookup.elab]"></object>3.4.4 Elaborated type specifiers </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>An <i class="nonterminal">elaborated-type-specifier</i> (<a title="dcl.type.elab" href="dcl.type.elab.html">7.1.6.3</a>) may be used to refer to a previously declared
+<i class="nonterminal">class-name</i> or <i class="nonterminal">enum-name</i> even though the name has been hidden by a non-type declaration
+(<a title="basic.scope.hiding" href="basic.scope.hiding.html">3.3.10</a>).</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>If the <i class="nonterminal">elaborated-type-specifier</i> has no <i class="nonterminal">nested-name-specifier</i>, and unless the
+<i class="nonterminal">elaborated-type-specifier</i> appears in a declaration with the following form:</p>
+
+<dl><dd>
+<i class="nonterminal">class-key</i> <i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub> <i class="nonterminal">identifier</i> <code class="sh_cpp">;</code>
+</dd></dl>
+
+<p>the identifier is looked up according to <a title="basic.lookup.unqual" href="basic.lookup.unqual.html">3.4.1</a> but ignoring any non-type names that have been declared. If
+the <i class="nonterminal">elaborated-type-specifier</i> is introduced by the <code class="sh_cpp">enum</code> keyword and this lookup does not find a
+previously declared <i class="nonterminal">type-name</i>, the <i class="nonterminal">elaborated-type-specifier</i> is ill-formed. If the
+<i class="nonterminal">elaborated-type-specifier</i> is introduced by the <i class="nonterminal">class-key</i> and this lookup does not find a previously
+declared <i class="nonterminal">type-name</i>, or if the <i class="nonterminal">elaborated-type-specifier</i> appears in a declaration with the form:</p>
+
+<dl><dd>
+<i class="nonterminal">class-key</i> <i class="nonterminal">attribute-specifier-seq</i><sub class="opt">opt</sub> <i class="nonterminal">identifier</i> <code class="sh_cpp">;</code>
+</dd></dl>
+
+<p>the <i class="nonterminal">elaborated-type-specifier</i> is a declaration that introduces the <i class="nonterminal">class-name</i> as described in
+<a title="basic.scope.pdecl" href="basic.scope.pdecl.html">3.3.2</a>.</p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>If the <i class="nonterminal">elaborated-type-specifier</i> has a <i class="nonterminal">nested-name-specifier</i>, qualified name lookup is
+performed, as described in <a title="basic.lookup.qual" href="basic.lookup.qual.html">3.4.3</a>, but ignoring any non-type names that have been declared. If the name lookup
+does not find a previously declared <i class="nonterminal">type-name</i>, the <i class="nonterminal">elaborated-type-specifier</i> is ill-formed.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">struct Node {
+  struct Node* Next;            // OK: Refers to Node at global scope
+  struct Data* Data;            // OK: Declares type Data
+                                // at global scope and member Data
+};
+
+struct Data {
+  struct Node* Node;            // OK: Refers to Node at global scope
+  friend struct ::Glob;         // error: Glob is not declared
+                                // cannot introduce a qualified type (<a title="dcl.type.elab" href="dcl.type.elab.html">7.1.6.3</a>)
+  friend struct Glob;           // OK: Refers to (as yet) undeclared Glob
+                                // at global scope.
+  /* … */
+};
+
+struct Base {
+  struct Data;                  // OK: Declares nested Data
+  struct ::Data*     thatData;  // OK: Refers to ::Data
+  struct Base::Data* thisData;  // OK: Refers to nested Data
+  friend class ::Data;          // OK: global Data is a friend
+  friend class Data;            // OK: nested Data is a friend
+  struct Data { /* … */ };      // Defines nested Data
+};
+
+struct   Data;                  // OK: Redeclares Data at global scope
+struct   ::Data;                // error: cannot introduce a qualified type (<a title="dcl.type.elab" href="dcl.type.elab.html">7.1.6.3</a>)
+struct   Base::Data;            // error: cannot introduce a qualified type (<a title="dcl.type.elab" href="dcl.type.elab.html">7.1.6.3</a>)
+struct   Base::Datum;           // error: Datum undefined
+struct   Base::Data* pBase;     // OK: refers to nested Data</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+</body>
+</html>
+

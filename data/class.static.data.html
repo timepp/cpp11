@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Static data members</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[class.static.data]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[class.static.data]"></object>9.4.2 Static data members </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A <code class="sh_cpp">static</code> data member is not part of the subobjects of a class. If a <code class="sh_cpp">static</code> data
+member is declared <code class="sh_cpp">thread_local</code> there is one copy of the member per thread. If a <code class="sh_cpp">static</code> data
+member is not declared <code class="sh_cpp">thread_local</code> there is one copy of the data member that is shared by all the objects
+of the class.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The declaration of a <code class="sh_cpp">static</code> data member in its class definition is not a definition and may be of
+an incomplete type other than cv-qualified <code class="sh_cpp">void</code>. The definition for a <code class="sh_cpp">static</code> data member shall
+appear in a namespace scope enclosing the member’s class definition. In the definition at namespace scope, the name of
+the <code class="sh_cpp">static</code> data member shall be qualified by its class name using the <code class="sh_cpp">::</code> operator. The
+<i class="nonterminal">initializer</i> expression in the definition of a <code class="sh_cpp">static</code> data member is in the scope of its class
+(<a title="basic.scope.class" href="basic.scope.class.html">3.3.7</a>).</p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">class process {
+  static process* run_chain;
+  static process* running;
+};
+
+process* process::running = get_main();
+process* process::run_chain = running;</code></pre>
+
+<p>The <code class="sh_cpp">static</code> data member <code class="sh_cpp">run_chain</code> of class <code class="sh_cpp">process</code> is defined in global scope;
+the notation <code class="sh_cpp">process::run_chain</code> specifies that the member <code class="sh_cpp">run_chain</code> is a member of class
+<code class="sh_cpp">process</code> and in the scope of class <code class="sh_cpp">process</code>. In the <code class="sh_cpp">static</code> data member definition,
+the <i class="nonterminal">initializer</i> expression refers to the <code class="sh_cpp">static</code> data member <code class="sh_cpp">running</code> of class
+<code class="sh_cpp">process</code>. — <em>end example</em> ]</p>
+</div>
+
+<p><span class="note">[ <em>Note:</em> Once the <code class="sh_cpp">static</code> data member has been defined, it exists even if no objects of its class have been
+created. <span class="example">[ <em>Example:</em> in the example above, <code class="sh_cpp">run_chain</code> and <code class="sh_cpp">running</code> exist even if no objects of
+class <code class="sh_cpp">process</code> are created by the program. — <em>end example</em> ]</span> — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>If a non-volatile <code class="sh_cpp">const</code> <code class="sh_cpp">static</code> data member is of integral or enumeration type, its
+declaration in the class definition can specify a <i class="nonterminal">brace-or-equal-initializer</i> in which every
+<i class="nonterminal">initializer-clause</i> that is an <i class="nonterminal">assignment-expression</i> is a constant expression (<a title="expr.const" href="expr.const.html">5.19</a>). A
+<code class="sh_cpp">static</code> data member of literal type can be declared in the class definition with the <code class="sh_cpp">constexpr</code>
+specifier; if so, its declaration shall specify a <i class="nonterminal">brace-or-equal-initializer</i> in which every
+<i class="nonterminal">initializer-clause</i> that is an <i class="nonterminal">assignment-expression</i> is a constant expression. <span class="note">[ <em>Note:</em> In both these
+cases, the member may appear in constant expressions. — <em>end note</em> ]</span> The member shall still be defined in a namespace scope if
+it is odr-used (<a title="basic.def.odr" href="basic.def.odr.html">3.2</a>) in the program and the namespace scope definition shall not contain an
+<i class="nonterminal">initializer</i>.</p>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><span class="note">[ <em>Note:</em> There shall be exactly one definition of a <code class="sh_cpp">static</code> data member that is odr-used
+(<a title="basic.def.odr" href="basic.def.odr.html">3.2</a>) in a program; no diagnostic is required. — <em>end note</em> ]</span> Unnamed classes and classes contained directly or
+indirectly within unnamed classes shall not contain <code class="sh_cpp">static</code> data members.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><code class="sh_cpp">static</code> data members of a class in namespace scope have external linkage (<a title="basic.link" href="basic.link.html">3.5</a>). A local
+class shall not have <code class="sh_cpp">static</code> data members.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a><code class="sh_cpp">static</code> data members are initialized and destroyed exactly like non-local variables
+(<a title="basic.start.init" href="basic.start.init.html">3.6.2</a>, <a title="basic.start.term" href="basic.start.term.html">3.6.3</a>).</p>
+
+<p><a class="anchor" id="p7" href="#p7">7</a>A <code class="sh_cpp">static</code> data member shall not be <code class="sh_cpp">mutable</code> (<a title="dcl.stc" href="dcl.stc.html">7.1.1</a>).</p>
+</body>
+</html>
+

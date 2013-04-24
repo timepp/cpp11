@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>function construct/copy/destroy</title>
+</head>
+<body>
+<h5>
+<dfn class="label">[func.wrap.func.con]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[func.wrap.func.con]"></object>20.8.11.2.1 <code class="sh_cpp">function</code> construct/copy/destroy </h5>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>When any <code class="sh_cpp">function</code> constructor that takes a first argument of type <code class="sh_cpp">allocator_arg_t</code> is
+invoked, the second argument shall have a type that conforms to the requirements for <code class="concept">Allocator</code>
+(<a title="allocator.requirements" href="allocator.requirements.html">17.6.3.5</a>). A copy of the allocator argument is used to allocate memory, if necessary, for the internal data
+structures of the constructed <code class="sh_cpp">function</code> object.</p>
+
+<h6><code class="sh_cpp">explicit <dfn>function</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="function"></object>() noexcept;
+template &lt;class A&gt; <dfn>function</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="function"></object>(allocator_arg_t, const A&amp; a) noexcept;</code></h6>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><em>Postconditions:</em> <code class="sh_cpp">!*this</code>.</p>
+
+<h6><code class="sh_cpp"><dfn>function</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="function"></object>(nullptr_t) noexcept;
+template &lt;class A&gt; <dfn>function</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="function"></object>(allocator_arg_t, const A&amp; a, nullptr_t) noexcept;</code></h6>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Postconditions:</em> <code class="sh_cpp">!*this</code>.</p>
+
+<h6><code class="sh_cpp"><dfn>function</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="function"></object>(const function&amp; f);
+template &lt;class A&gt; <dfn>function</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="function"></object>(allocator_arg_t, const A&amp; a, const function&amp; f);</code></h6>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><em>Postconditions:</em> <code class="sh_cpp">!*this</code> if <code class="sh_cpp">!f</code>; otherwise, <code class="sh_cpp">*this</code> targets a copy of
+<code class="sh_cpp">f.target()</code>.</p>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><em>Throws:</em> shall not throw exceptions if <code class="sh_cpp">f</code>’s target is a callable object passed via
+<code class="sh_cpp">reference_wrapper</code> or a function pointer. Otherwise, may throw <code class="sh_cpp">bad_alloc</code> or any exception
+thrown by the copy constructor of the stored callable object. <span class="note">[ <em>Note:</em> Implementations are encouraged to avoid the use of
+dynamically allocated memory for small callable objects, for example, where <code class="sh_cpp">f</code>’s target is an object holding
+only a pointer or reference to an object and a member function pointer. — <em>end note</em> ]</span></p>
+
+<h6><code class="sh_cpp"><dfn>function</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="function"></object>(function&amp;&amp; f);
+template &lt;class A&gt; <dfn>function</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="function"></object>(allocator_arg_t, const A&amp; a, function&amp;&amp; f);</code></h6>
+
+<p><a class="anchor" id="p6" href="#p6">6</a><em>Effects:</em> If <code class="sh_cpp">!f</code>, <code class="sh_cpp">*this</code> has no target; otherwise, move-constructs the target of
+<code class="sh_cpp">f</code> into the target of <code class="sh_cpp">*this</code>, leaving <code class="sh_cpp">f</code> in a valid state with an unspecified
+value.</p>
+
+<h6><code class="sh_cpp">template &lt;class F&gt; <dfn>function</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="function"></object>(F f);
+template &lt;class F, class A&gt; <dfn>function</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="function"></object>(allocator_arg_t, const A&amp; a, F f);</code></h6>
+
+<p><a class="anchor" id="p7" href="#p7">7</a><em>Requires:</em> <code class="sh_cpp">F</code> shall be <code class="concept">CopyConstructible</code>. <code class="sh_cpp">f</code> shall be
+<code class="concept">Callable</code> (<a title="func.wrap.func" href="func.wrap.func.html">20.8.11.2</a>) for argument types <code class="sh_cpp">ArgTypes</code> and return type
+<code class="sh_cpp">R</code>. The copy constructor and destructor of <code class="sh_cpp">A</code> shall not throw exceptions.</p>
+
+<p><a class="anchor" id="p8" href="#p8">8</a><em>Postconditions:</em> <code class="sh_cpp">!*this</code> if any of the following hold:</p>
+
+<ul>
+<li>
+<code class="sh_cpp">f</code> is a NULL function pointer.</li>
+<li>
+<code class="sh_cpp">f</code> is a NULL pointer to member.</li>
+<li>
+<code class="sh_cpp">F</code> is an instance of the <code class="sh_cpp">function</code> class template, and <code class="sh_cpp">!f</code>
+</li>
+</ul>
+
+<p><a class="anchor" id="p9" href="#p9">9</a>Otherwise, <code class="sh_cpp">*this</code> targets a copy of <code class="sh_cpp">f</code> initialized with <code class="sh_cpp">std::move(f)</code>.
+<span class="note">[ <em>Note:</em> Implementations are encouraged to avoid the use of dynamically allocated memory for small callable objects, for
+example, where <code class="sh_cpp">f</code>’s target is an object holding only a pointer or reference to an object and a member
+function pointer. — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p10" href="#p10">10</a><em>Throws:</em> shall not throw exceptions when <code class="sh_cpp">f</code> is a function pointer or a
+<code class="sh_cpp">reference_wrapper&lt;T&gt;</code> for some <code class="sh_cpp">T</code>. Otherwise, may throw <code class="sh_cpp">bad_alloc</code> or
+any exception thrown by <code class="sh_cpp">F</code>’s copy or move constructor.</p>
+
+<h6><code class="sh_cpp">function&amp; <dfn>operator=</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator="></object>(const function&amp; f);</code></h6>
+
+<p><a class="anchor" id="p11" href="#p11">11</a><em>Effects:</em> <code class="sh_cpp">function(f).swap(*this);</code></p>
+
+<p><a class="anchor" id="p12" href="#p12">12</a><em>Returns:</em> <code class="sh_cpp">*this</code>.</p>
+
+<h6><code class="sh_cpp">function&amp; <dfn>operator=</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator="></object>(function&amp;&amp; f);</code></h6>
+
+<p><a class="anchor" id="p13" href="#p13">13</a><em>Effects:</em> Replaces the target of <code class="sh_cpp">*this</code> with the target of <code class="sh_cpp">f</code>.</p>
+
+<p><a class="anchor" id="p14" href="#p14">14</a><em>Returns:</em> <code class="sh_cpp">*this</code>.</p>
+
+<h6><code class="sh_cpp">function&amp; <dfn>operator=</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator="></object>(nullptr_t);</code></h6>
+
+<p><a class="anchor" id="p15" href="#p15">15</a><em>Effects:</em> If <code class="sh_cpp">*this != NULL</code>, destroys the target of <code class="sh_cpp">this</code>.</p>
+
+<p><a class="anchor" id="p16" href="#p16">16</a><em>Postconditions:</em> <code class="sh_cpp">!(*this)</code>.</p>
+
+<p><a class="anchor" id="p17" href="#p17">17</a><em>Returns:</em> <code class="sh_cpp">*this</code>.</p>
+
+<h6><code class="sh_cpp">template&lt;class F&gt; function&amp; <dfn>operator=</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator="></object>(F&amp;&amp; f);</code></h6>
+
+<p><a class="anchor" id="p18" href="#p18">18</a><em>Effects:</em> <code class="sh_cpp">function(std::forward&lt;F&gt;(f)).swap(*this);</code></p>
+
+<p><a class="anchor" id="p19" href="#p19">19</a><em>Returns:</em> <code class="sh_cpp">*this</code>.</p>
+
+<h6><code class="sh_cpp">template&lt;class F&gt; function&amp; <dfn>operator=</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator="></object>(reference_wrapper&lt;F&gt; f) noexcept;</code></h6>
+
+<p><a class="anchor" id="p20" href="#p20">20</a><em>Effects:</em> <code class="sh_cpp">function(f).swap(*this);</code></p>
+
+<p><a class="anchor" id="p21" href="#p21">21</a><em>Returns:</em> <code class="sh_cpp">*this</code>.</p>
+
+<h6><code class="sh_cpp"><dfn>~function</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="~function"></object>();</code></h6>
+
+<p><a class="anchor" id="p22" href="#p22">22</a><em>Effects:</em> If <code class="sh_cpp">*this != NULL</code>, destroys the target of <code class="sh_cpp">this</code>.</p>
+</body>
+</html>
+

@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Output iterators</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[output.iterators]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[output.iterators]"></object>24.2.4 Output iterators </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A class or a pointer type <code class="sh_cpp">X</code> satisfies the requirements of an output iterator if <code class="sh_cpp">X</code> if
+<code class="sh_cpp">X</code> satisfies the <code class="concept">Iterator</code> requirements (<a title="iterator.iterators" href="iterator.iterators.html">24.2.2</a>) and the expressions in Table <a href="output.iterators.html#t108">108</a> are valid and have the indicated semantics.</p>
+
+<table id="t108" class="requirements">
+<caption>Table 108 — Output iterator requirements (in addition to <code class="concept">Iterator</code>)</caption>
+<thead><tr>
+<th>Expression</th>
+<th>Return type</th>
+<th>Operational semantics</th>
+	<th>Assertion/note<br>pre-/post-condition</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code class="sh_cpp">*r = o</code></td>
+<td>result is not used</td>
+<td></td>
+	<td>
+<p><em>Remark:</em> After this operation <code class="sh_cpp">r</code> is not required to be dereferenceable.</p>
+		<p>post: <code class="sh_cpp">r</code> is incrementable.</p>
+</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">++r</code></td>
+<td><code class="sh_cpp">X&amp;</code></td>
+<td></td>
+	<td>
+<p><code class="sh_cpp">&amp;r == &amp;++r</code>.</p>
+		<p><em>Remark:</em> After this operation <code class="sh_cpp">r</code> is not required to be dereferenceable.</p>
+		<p>post: <code class="sh_cpp">r</code> is incrementable.</p>
+</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">r++</code></td>
+<td>convertible to <code class="sh_cpp">const X&amp;</code>
+</td>
+	<td><code class="sh_cpp">{ X tmp = r; ++r; return tmp; }</code></td>
+	<td>
+<p><em>Remark:</em> After this operation <code class="sh_cpp">r</code> is not required to be dereferenceable.</p>
+		<p>post: <code class="sh_cpp">r</code> is incrementable.</p>
+</td>
+</tr>
+<tr>
+<td><code class="sh_cpp">*r++ = o</code></td>
+<td>result is not used</td>
+<td></td>
+	<td>
+<p><em>Remark:</em> After this operation <code class="sh_cpp">r</code> is not required to be dereferenceable.</p>
+		<p>post: r is incrementable.</p>
+</td>
+</tr>
+</tbody>
+</table>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><span class="note">[ <em>Note:</em> The only valid use of an <code class="sh_cpp">operator*</code> is on the left side of the assignment statement.
+<em>Assignment through the same value of the iterator happens only once.</em> Algorithms on output iterators should
+never attempt to pass through the same iterator twice. They should be <em>single pass</em> algorithms. Equality and
+inequality might not be defined. Algorithms that take output iterators can be used with ostreams as the destination for
+placing data through the <code class="sh_cpp">ostream_iterator</code> class as well as with insert iterators and insert
+pointers. — <em>end note</em> ]</span></p>
+</body>
+</html>
+

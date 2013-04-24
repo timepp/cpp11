@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>treat_as_floating_point</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[time.traits]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[time.traits]"></object>20.11.4 Time-related traits </h3>
+
+<h4>
+<dfn class="label">[time.traits.is_fp]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[time.traits.is_fp]"></object>20.11.4.1 <code class="sh_cpp">treat_as_floating_point</code> </h4>
+
+<h4><code class="sh_cpp">template &lt;class Rep&gt; struct <dfn>treat_as_floating_point</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="treat_as_floating_point"></object>
+  : is_floating_point&lt;Rep&gt; { };</code></h4>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The <code class="sh_cpp">duration</code> template uses the <code class="sh_cpp">treat_as_floating_point</code> trait to help determine if a
+<code class="sh_cpp">duration</code> object can be converted to another <code class="sh_cpp">duration</code> with a different tick period. If
+<code class="sh_cpp">treat_as_floating_point&lt;Rep&gt;::value</code> is true, then implicit conversions are allowed among
+<code class="sh_cpp">duration</code>s. Otherwise, the implicit convertibility depends on the tick <code class="sh_cpp">period</code>s of the
+<code class="sh_cpp">duration</code>s. <span class="note">[ <em>Note:</em> The intention of this trait is to indicate whether a given class behaves like a
+floating-point type, and thus allows division of one value by another with acceptable loss of precision. If
+<code class="sh_cpp">treat_as_floating_point&lt;Rep&gt;::value</code> is <code class="sh_cpp">false</code>, <code class="sh_cpp">Rep</code> will be treated as
+if it behaved like an integral type for the purpose of these conversions. — <em>end note</em> ]</span></p>
+</body>
+</html>
+

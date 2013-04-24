@@ -1,0 +1,10 @@
+#toc ul,
+#index ul { margin-left: 0px; padding-left: 0px }
+#toc li,
+#index li { margin-left: 1em; padding-left: 0px; list-style-type: none; white-space: nowrap; }
+#toc a,
+#index a { text-decoration: none }
+#toc, #index { font-size: smaller }
+#toc .hidden { display: none }
+#toc .collapse, #toc .expand { display: block; float: left; margin-left: -1em; color: rgb(85, 26, 139) }
+#toc .selected { color: WindowText; font-weight: bold }

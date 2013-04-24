@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Stream buffer requirements</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[streambuf.reqts]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[streambuf.reqts]"></object>27.6.2 Stream buffer requirements </h3>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>Stream buffers can impose various constraints on the sequences they control. Some constraints are:</p>
+<ul>
+<li>The controlled input sequence can be not readable.</li>
+<li>The controlled output sequence can be not writable.</li>
+<li>The controlled sequences can be associated with the contents of other representations for character sequences, such
+	as external files.</li>
+<li>The controlled sequences can support operations directly to or from associated sequences.</li>
+<li>The controlled sequences can impose limitations on how the program can read characters from a sequence, write
+	characters to a sequence, put characters back into an input sequence, or alter the stream position.</li>
+</ul>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>Each sequence is characterized by three pointers which, if non-null, all point into the same <code class="sh_cpp">charT</code>
+array object. The array object represents, at any moment, a (sub)sequence of characters from the sequence. Operations
+performed on a sequence alter the values stored in these pointers, perform reads and writes directly to or from
+associated sequences, and alter “the stream position” and conversion state as needed to maintain this subsequence
+relationship. The three pointers are:</p>
+
+<ul>
+<li>the <dfn>beginning pointer</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="beginning pointer"></object>, or lowest element address in the array (called <code class="sh_cpp">xbeg</code> here);</li>
+<li>the <dfn>next pointer</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="next pointer"></object>, or next element address that is a current candidate for reading or writing (called
+	<code class="sh_cpp">xnext</code> here);</li>
+<li>the <dfn>end pointer</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="end pointer"></object>, or first element address beyond the end of the array (called <code class="sh_cpp">xend</code>
+	here).</li>
+</ul>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>The following semantic constraints shall always apply for any set of three pointers for a sequence, using the
+pointer names given immediately above:</p>
+
+<ul>
+<li>If <code class="sh_cpp">xnext</code> is not a null pointer, then <code class="sh_cpp">xbeg</code> and <code class="sh_cpp">xend</code> shall also be non-null
+	pointers into the same <code class="sh_cpp">charT</code> array, as described above; otherwise, <code class="sh_cpp">xbeg</code> and
+	<code class="sh_cpp">xend</code> shall also be null.</li>
+<li>If <code class="sh_cpp">xnext</code> is not a null pointer and <code class="sh_cpp">xnext &lt; xend</code> for an output sequence, then a
+	<dfn>write position</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="write position"></object> is available. In this case, <code class="sh_cpp">*xnext</code> shall be assignable as the next element to
+	write (to put, or to store a character value, into the sequence).</li>
+<li>If <code class="sh_cpp">xnext</code> is not a null pointer and <code class="sh_cpp">xbeg &lt; xnext</code> for an input sequence, then a
+	<dfn>putback position</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="putback position"></object> is available. In this case, <code class="sh_cpp">xnext[-1]</code> shall have a defined value and is the
+	next (preceding) element to store a character that is put back into the input sequence.</li>
+<li>If <code class="sh_cpp">xnext</code> is not a null pointer and <code class="sh_cpp">xnext &lt; xend</code> for an input sequence, then a <dfn>read
+	position</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="read
+	position"></object> is available. In this case, <code class="sh_cpp">*xnext</code> shall have a defined value and is the next element to
+	read (to get, or to obtain a character value, from the sequence).</li>
+</ul>
+</body>
+</html>
+

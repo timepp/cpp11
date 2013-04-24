@@ -1,0 +1,197 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Class template promise</title>
+</head>
+<body>
+<h3>
+<dfn class="label">[futures.promise]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[futures.promise]"></object>30.6.5 Class template <code class="sh_cpp"><dfn>promise</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="promise"></object></code> </h3>
+
+<pre><code class="sh_cpp">namespace std {
+  template &lt;class R&gt;
+  class promise {
+  public:
+    promise();
+    template &lt;class Allocator&gt;
+      promise(allocator_arg_t, const Allocator&amp; a);
+    promise(promise&amp;&amp; rhs) noexcept;
+    promise(const promise&amp; rhs) = delete;
+    ~promise();
+
+    // assignment
+    promise&amp; operator=(promise&amp;&amp; rhs) noexcept;
+    promise&amp; operator=(const promise&amp; rhs) = delete;
+    void swap(promise&amp; other) noexcept;
+
+    // retrieving the result
+    future&lt;R&gt; get_future();
+
+    // setting the result
+    void set_value(see below);
+    void set_exception(exception_ptr p);
+
+    // setting the result with deferred notification
+    void set_value_at_thread_exit(const R&amp; r);
+    void set_value_at_thread_exit(see below);
+    void set_exception_at_thread_exit(exception_ptr p);
+  };
+  template &lt;class R&gt;
+    void swap(promise&lt;R&gt;&amp; x, promise&lt;R&gt;&amp; y) noexcept;
+  template &lt;class R, class Alloc&gt;
+    struct uses_allocator&lt;promise&lt;R&gt;, Alloc&gt;;
+}</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The implementation shall provide the template <code class="sh_cpp">promise</code> and two specializations,
+<code class="sh_cpp">promise&lt;R&amp;&gt;</code> and <code class="sh_cpp">promise&lt;void&gt;</code>. These differ only in the argument type
+of the member function <code class="sh_cpp">set_value</code>, as set out in its description, below.</p>
+
+<p><a class="anchor" id="p2" href="#p2">2</a>The <code class="sh_cpp">set_value</code>, <code class="sh_cpp">set_exception</code>, <code class="sh_cpp">set_value_at_thread_exit</code>, and
+<code class="sh_cpp">set_exception_at_thread_exit</code> member functions behave as though they acquire a single mutex associated with
+the promise object while updating the promise object.</p>
+
+<h4><code class="sh_cpp">template &lt;class R, class Alloc&gt;
+  struct <dfn>uses_allocator&lt;promise&lt;R&gt;, Alloc&gt;</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="uses_allocator&lt;promise&lt;R&gt;, Alloc&gt;"></object>
+    : true_type { };</code></h4>
+
+<p><a class="anchor" id="p3" href="#p3">3</a><em>Requires:</em> <code class="sh_cpp">Alloc</code> shall be an <code class="concept">Allocator</code> (<a title="allocator.requirements" href="allocator.requirements.html">17.6.3.5</a>).</p>
+
+<h4><code class="sh_cpp"><dfn>promise</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="promise"></object>();
+template &lt;class Allocator&gt;
+  <dfn>promise</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="promise"></object>(allocator_arg_t, const Allocator&amp; a);</code></h4>
+
+<p><a class="anchor" id="p4" href="#p4">4</a><em>Effects:</em> constructs a <code class="sh_cpp">promise</code> object and a shared state. The second constructor uses the allocator
+<code class="sh_cpp">a</code> to allocate memory for the shared state.</p>
+
+<h4><code class="sh_cpp"><dfn>promise</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="promise"></object>(promise&amp;&amp; rhs) noexcept;</code></h4>
+
+<p><a class="anchor" id="p5" href="#p5">5</a><em>Effects:</em> constructs a new <code class="sh_cpp">promise</code> object and transfers ownership of the shared state of
+<code class="sh_cpp">rhs</code> (if any) to the newly-constructed object.</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a><em>Postconditions:</em> <code class="sh_cpp">rhs</code> has no shared state.</p>
+
+<h4><code class="sh_cpp"><dfn>~promise</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="~promise"></object>();</code></h4>
+
+<p><a class="anchor" id="p7" href="#p7">7</a><em>Effects:</em> Abandons any shared state (<a title="futures.state" href="futures.state.html">30.6.4</a>).</p>
+
+<h4><code class="sh_cpp">promise&amp; <dfn>operator=</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="operator="></object>(promise&amp;&amp; rhs) noexcept;</code></h4>
+
+<p><a class="anchor" id="p8" href="#p8">8</a><em>Effects:</em> Abandons any associated asynchronous state (<a title="futures.state" href="futures.state.html">30.6.4</a>) and then as if
+<code class="sh_cpp">promise&lt;R&gt;(std::move(rhs)).swap(*this)</code>.</p>
+
+<p><a class="anchor" id="p9" href="#p9">9</a><em>Returns:</em> <code class="sh_cpp">*this</code>.</p>
+
+<h4><code class="sh_cpp">void <dfn>swap</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="swap"></object>(promise&amp; other) noexcept;</code></h4>
+
+<p><a class="anchor" id="p10" href="#p10">10</a><em>Effects:</em> Exchanges the shared state of <code class="sh_cpp">*this</code> and <code class="sh_cpp">other</code>.</p>
+
+<p><a class="anchor" id="p11" href="#p11">11</a><em>Postconditions:</em> <code class="sh_cpp">*this</code> has the shared state (if any) that <code class="sh_cpp">other</code> had prior to the call
+to <code class="sh_cpp">swap</code>. <code class="sh_cpp">other</code> has the shared state (if any) that <code class="sh_cpp">*this</code> had prior to the call to
+<code class="sh_cpp">swap</code>.</p>
+
+<h4><code class="sh_cpp">future&lt;R&gt; <dfn>get_future</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="get_future"></object>();</code></h4>
+
+<p><a class="anchor" id="p12" href="#p12">12</a><em>Returns:</em> A <code class="sh_cpp">future&lt;R&gt;</code> object with the same shared state as
+<code class="sh_cpp">*this</code>.</p>
+
+<p><a class="anchor" id="p13" href="#p13">13</a><em>Throws:</em> <code class="sh_cpp">future_error</code> if <code class="sh_cpp">*this</code> has no shared state or if <code class="sh_cpp">get_future</code> has
+already been called on a <code class="sh_cpp">promise</code> with the same shared state as <code class="sh_cpp">*this</code>.</p>
+
+<p><a class="anchor" id="p14" href="#p14">14</a><em>Error conditions:</em> </p>
+<ul>
+<li>
+<code class="sh_cpp">future_already_retrieved</code> if <code class="sh_cpp">get_future</code> has already been called on a <code class="sh_cpp">promise</code>
+	with the same shared state as <code class="sh_cpp">*this</code>.</li>
+<li>
+<code class="sh_cpp">no_state</code> if <code class="sh_cpp">*this</code> has no shared state.</li>
+</ul>
+
+<h4><code class="sh_cpp">void promise::<dfn>set_value</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="set_value"></object>(const R&amp; r);
+void promise::set_value(R&amp;&amp; r);
+void promise&lt;R&amp;&gt;::set_value(R&amp; r);
+void promise&lt;void&gt;::set_value();</code></h4>
+
+<p><a class="anchor" id="p15" href="#p15">15</a><em>Effects:</em> atomically stores the value <code class="sh_cpp">r</code> in the shared state and makes that state ready
+(<a title="futures.state" href="futures.state.html">30.6.4</a>).</p>
+
+<p><a class="anchor" id="p16" href="#p16">16</a><em>Throws:</em> </p>
+<ul>
+<li>
+<code class="sh_cpp">future_error</code> if its shared state already has a stored value or exception, or</li>
+<li>for the first version, any exception thrown by the copy constructor of <code class="sh_cpp">R</code>, or</li>
+<li>for the second version, any exception thrown by the move constructor of <code class="sh_cpp">R</code>.</li>
+</ul>
+
+<p><a class="anchor" id="p17" href="#p17">17</a><em>Error conditions:</em> </p>
+<ul>
+<li>
+<code class="sh_cpp">promise_already_satisfied</code> if its shared state already has a stored value or exception.</li>
+<li>
+<code class="sh_cpp">no_state</code> if <code class="sh_cpp">*this</code> has no shared state.</li>
+</ul>
+
+<h4><code class="sh_cpp">void <dfn>set_exception</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="set_exception"></object>(exception_ptr p);</code></h4>
+
+<p><a class="anchor" id="p18" href="#p18">18</a><em>Effects:</em> atomically stores the exception pointer <code class="sh_cpp">p</code> in the shared state and makes that state ready
+(<a title="futures.state" href="futures.state.html">30.6.4</a>).</p>
+
+<p><a class="anchor" id="p19" href="#p19">19</a><em>Throws:</em> <code class="sh_cpp">future_error</code> if its shared state already has a stored value or
+exception.</p>
+
+<p><a class="anchor" id="p20" href="#p20">20</a><em>Error conditions:</em> </p>
+<ul>
+<li>
+<code class="sh_cpp">promise_already_satisfied</code> if its shared state already has a stored value or exception.</li>
+<li>
+<code class="sh_cpp">no_state</code> if <code class="sh_cpp">*this</code> has no shared state.</li>
+</ul>
+
+<h4><code class="sh_cpp">void promise::<dfn>set_value_at_thread_exit</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="set_value_at_thread_exit"></object>(const R&amp; r);
+void promise::set_value_at_thread_exit(R&amp;&amp; r);
+void promise&lt;R&amp;&gt;::set_value_at_thread_exit(R&amp; r);
+void promise&lt;void&gt;::set_value_at_thread_exit();</code></h4>
+
+<p><a class="anchor" id="p21" href="#p21">21</a><em>Effects:</em> Stores the value <code class="sh_cpp">r</code> in the shared state without making that state ready immediately.
+Schedules that state to be made ready when the current thread exits, after all objects of thread storage duration
+associated with the current thread have been destroyed.</p>
+
+<p><a class="anchor" id="p22" href="#p22">22</a><em>Throws:</em> <code class="sh_cpp">future_error</code> if an error condition occurs.</p>
+
+<p><a class="anchor" id="p23" href="#p23">23</a><em>Error conditions:</em> </p>
+<ul>
+<li>
+<code class="sh_cpp">promise_already_satisfied</code> if its shared state already has a stored value or exception.</li>
+<li>
+<code class="sh_cpp">no_state</code> if <code class="sh_cpp">*this</code> has no shared state.</li>
+</ul>
+
+<h4><code class="sh_cpp">void promise::<dfn>set_exception_at_thread_exit</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="set_exception_at_thread_exit"></object>(exception_ptr p);</code></h4>
+
+<p><a class="anchor" id="p24" href="#p24">24</a><em>Effects:</em> Stores the exception pointer <code class="sh_cpp">p</code> in the shared state without making that state ready
+immediately. Schedules that state to be made ready when the current thread exits, after all objects of thread storage
+duration associated with the current thread have been destroyed.</p>
+
+<p><a class="anchor" id="p25" href="#p25">25</a><em>Throws:</em> <code class="sh_cpp">future_error</code> if an error condition occurs.</p>
+
+<p><a class="anchor" id="p26" href="#p26">26</a><em>Error conditions:</em> </p>
+<ul>
+<li>
+<code class="sh_cpp">promise_already_satisfied</code> if its shared state already has a stored value or exception.</li>
+<li>
+<code class="sh_cpp">no_state</code> if <code class="sh_cpp">*this</code> has no shared state.</li>
+</ul>
+
+<h4><code class="sh_cpp">template &lt;class R&gt;
+  void <dfn>swap</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="swap"></object>(promise&lt;R&gt;&amp; x, promise&lt;R&gt;&amp; y);</code></h4>
+
+<p><a class="anchor" id="p27" href="#p27">27</a><em>Effects:</em> <code class="sh_cpp">x.swap(y)</code>.</p>
+</body>
+</html>
+

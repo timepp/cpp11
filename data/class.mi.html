@@ -1,0 +1,233 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Multiple base classes</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[class.mi]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[class.mi]"></object>10.1 Multiple base classes </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A class can be derived from any number of base classes. <span class="note">[ <em>Note:</em> The use of more than one direct base class is
+often called multiple inheritance. — <em>end note</em> ]</span></p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">class A { /* … */ };
+class B { /* … */ };
+class C { /* … */ };
+class D : public A, public B, public C { /* … */ };</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p2" href="#p2">2</a><span class="note">[ <em>Note:</em> The order of derivation is not significant except as specified by the semantics of initialization by
+constructor (<a title="class.base.init" href="class.base.init.html">12.6.2</a>), cleanup (<a title="class.dtor" href="class.dtor.html">12.4</a>), and storage layout (<a title="class.mem" href="class.mem.html">9.2</a>,
+<a title="class.access.spec" href="class.access.spec.html">11.1</a>). — <em>end note</em> ]</span></p>
+
+<p><a class="anchor" id="p3" href="#p3">3</a>A class shall not be specified as a direct base class of a derived class more than once. <span class="note">[ <em>Note:</em> A class can be
+an indirect base class more than once and can be a direct and an indirect base class. There are limited things that can
+be done with such a class. The non-static data members and member functions of the direct base class cannot be referred
+to in the scope of the derived class. However, the static members, enumerations and types can be unambiguously referred
+to. — <em>end note</em> ]</span></p>
+
+<div class="example">
+<p>[ <em>Example:</em> </p>
+<pre><code class="sh_cpp">class X { /* … */ };
+class Y : public X, public X { /* … */ };               // ill-formed
+
+class L { public: int next; /* … */ };
+class A : public L { /* … */ };
+class B : public L { /* … */ };
+class C : public A, public B { void f(); /* … */ };     // well-formed
+class D : public A, public L { void f(); /* … */ };     // well-formed</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p4" href="#p4">4</a>A base class specifier that does not contain the keyword <code class="sh_cpp">virtual</code>, specifies a <dfn>non-virtual
+base class</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="non-virtual
+base class"></object>. A base class specifier that contains the keyword <code class="sh_cpp">virtual</code>, specifies a <dfn>virtual base
+class</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="virtual base
+class"></object>. For each distinct occurrence of a non-virtual base class in the class lattice of the most derived class,
+the most derived object (<a title="intro.object" href="intro.object.html">1.8</a>) shall contain a corresponding distinct base class subobject of that type. For
+each distinct base class that is specified virtual, the most derived object shall contain a single base class subobject
+of that type.</p>
+
+<div class="example">
+<p>[ <em>Example:</em> for an object of class type <code class="sh_cpp">C</code>, each distinct occurrence of a (non-virtual) base class
+<code class="sh_cpp">L</code> in the class lattice of <code class="sh_cpp">C</code> corresponds one-to-one with a distinct <code class="sh_cpp">L</code> subobject
+within the object of type <code class="sh_cpp">C</code>. Given the class <code class="sh_cpp">C</code> defined above, an object of class
+<code class="sh_cpp">C</code> will have two subobjects of class <code class="sh_cpp">L</code> as shown below.</p>
+
+<table id="fig3" class="centered figure">
+<caption>Figure 3 — Non-virtual base</caption>
+<tr>
+<td>L</td>
+<td></td>
+<td></td>
+<td></td>
+<td>L</td>
+</tr>
+<tr>
+<td>↑</td>
+<td></td>
+<td></td>
+<td></td>
+<td>↑</td>
+</tr>
+<tr>
+<td>A</td>
+<td></td>
+<td></td>
+<td></td>
+<td>B</td>
+</tr>
+<tr>
+<td></td>
+<td>↖</td>
+<td></td>
+<td>↗</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>C</td>
+<td></td>
+<td></td>
+</tr>
+</table>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>In such lattices, explicit qualification can be used to specify which subobject is meant. The body of function
+<code class="sh_cpp">C::f</code> could refer to the member next of each <code class="sh_cpp">L</code> subobject:</p>
+
+<pre><code class="sh_cpp">void C::f() { A::next = B::next; }  // well-formed</code></pre>
+
+<p>Without the <code class="sh_cpp">A::</code> or <code class="sh_cpp">B::</code> qualifiers, the definition of <code class="sh_cpp">C::f</code> above would be
+ill-formed because of ambiguity (<a title="class.member.lookup" href="class.member.lookup.html">10.2</a>).</p>
+
+<p><a class="anchor" id="p6" href="#p6">6</a>For another example,</p>
+
+<pre><code class="sh_cpp">class V { /* … */ };
+class A : virtual public V { /* … */ };
+class B : virtual public V { /* … */ };
+class C : public A, public B { /* … */ };</code></pre>
+
+<p>for an object <code class="sh_cpp">c</code> of class type <code class="sh_cpp">C</code>, a single subobject of type <code class="sh_cpp">V</code> is shared by
+every base subobject of <code class="sh_cpp">c</code> that has a <code class="sh_cpp">virtual</code> base class of type <code class="sh_cpp">V</code>. Given the
+class <code class="sh_cpp">C</code> defined above, an object of class <code class="sh_cpp">C</code> will have one subobject of class <code class="sh_cpp">V</code>,
+as shown below.</p>
+
+<table id="fig4" class="centered figure">
+<caption>Figure 4 — Virtual base</caption>
+<tr>
+<td></td>
+<td></td>
+<td>V</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>↗</td>
+<td></td>
+<td>↖</td>
+<td></td>
+</tr>
+<tr>
+<td>A</td>
+<td></td>
+<td></td>
+<td></td>
+<td>B</td>
+</tr>
+<tr>
+<td></td>
+<td>↖</td>
+<td></td>
+<td>↗</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>C</td>
+<td></td>
+<td></td>
+</tr>
+</table>
+
+<p><a class="anchor" id="p7" href="#p7">7</a>A class can have both virtual and non-virtual base classes of a given type.</p>
+
+<pre><code class="sh_cpp">class B { /* … */ };
+class X : virtual public B { /* … */ };
+class Y : virtual public B { /* … */ };
+class Z : public B { /* … */ };
+class AA : public X, public Y, public Z { /* … */ };</code></pre>
+
+<p>For an object of class <code class="sh_cpp">AA</code>, all virtual occurrences of base class <code class="sh_cpp">B</code> in the class lattice of
+<code class="sh_cpp">AA</code> correspond to a single <code class="sh_cpp">B</code> subobject within the object of type <code class="sh_cpp">AA</code>, and every
+other occurrence of a (non-virtual) base class <code class="sh_cpp">B</code> in the class lattice of <code class="sh_cpp">AA</code> corresponds
+one-to-one with a distinct <code class="sh_cpp">B</code> subobject within the object of type <code class="sh_cpp">AA</code>. Given the class
+<code class="sh_cpp">AA</code> defined above, class <code class="sh_cpp">AA</code> has two subobjects of class <code class="sh_cpp">B</code>: <code class="sh_cpp">Z</code>’s
+<code class="sh_cpp">B</code> and the virtual <code class="sh_cpp">B</code> shared by <code class="sh_cpp">X</code> and <code class="sh_cpp">Y</code>, as shown below.</p>
+
+<table id="fig5" class="centered figure">
+<caption>Figure 5 — Virtual and non-virtual base</caption>
+<tr>
+<td></td>
+<td></td>
+<td>B</td>
+<td></td>
+<td></td>
+<td></td>
+<td>B</td>
+</tr>
+<tr>
+<td></td>
+<td>↗</td>
+<td></td>
+<td>↖</td>
+<td></td>
+<td></td>
+<td>↑</td>
+</tr>
+<tr>
+<td>X</td>
+<td></td>
+<td></td>
+<td></td>
+<td>Y</td>
+<td></td>
+<td>Z</td>
+</tr>
+<tr>
+<td></td>
+<td>↖</td>
+<td></td>
+<td>↗</td>
+<td></td>
+<td>↗</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>AA</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+<p> — <em>end example</em> ]</p>
+</div>
+</body>
+</html>
+

@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Header &lt;locale&gt; synopsis</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[locale.syn]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[locale.syn]"></object>22.2 Header <dfn><code class="header">&lt;locale&gt;</code></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="&lt;locale&gt;"></object> synopsis </h2>
+
+<pre><code class="sh_cpp">namespace std {
+  // <a title="locale" href="locale.html">22.3.1</a>, locale:
+  class locale;
+  template &lt;class Facet&gt; const Facet&amp; use_facet(const locale&amp;);
+  template &lt;class Facet&gt; bool         has_facet(const locale&amp;) noexcept;
+
+  // <a title="locale.convenience" href="classification.html">22.3.3</a>, convenience interfaces:
+  template &lt;class charT&gt; bool isspace (charT c, const locale&amp; loc);
+  template &lt;class charT&gt; bool isprint (charT c, const locale&amp; loc);
+  template &lt;class charT&gt; bool iscntrl (charT c, const locale&amp; loc);
+  template &lt;class charT&gt; bool isupper (charT c, const locale&amp; loc);
+  template &lt;class charT&gt; bool islower (charT c, const locale&amp; loc);
+  template &lt;class charT&gt; bool isalpha (charT c, const locale&amp; loc);
+  template &lt;class charT&gt; bool isdigit (charT c, const locale&amp; loc);
+  template &lt;class charT&gt; bool ispunct (charT c, const locale&amp; loc);
+  template &lt;class charT&gt; bool isxdigit(charT c, const locale&amp; loc);
+  template &lt;class charT&gt; bool isalnum (charT c, const locale&amp; loc);
+  template &lt;class charT&gt; bool isgraph (charT c, const locale&amp; loc);
+  template &lt;class charT&gt; charT toupper(charT c, const locale&amp; loc);
+  template &lt;class charT&gt; charT tolower(charT c, const locale&amp; loc);
+  template &lt;class Codecvt, class Elem = wchar_t,
+    class Wide_alloc = std::allocator&lt;Elem&gt;,
+    class Byte_alloc = std::allocator&lt;char&gt; &gt; class wstring_convert;
+  template &lt;class Codecvt, class Elem = wchar_t,
+    class Tr = char_traits&lt;Elem&gt;&gt; class wbuffer_convert;
+
+  // <a title="category.ctype" href="category.ctype.html">22.4.1</a>, ctype:
+  class ctype_base;
+  template &lt;class charT&gt; class ctype;
+  template &lt;&gt;            class ctype&lt;char&gt;;     // specialization
+  template &lt;class charT&gt; class ctype_byname;
+  class codecvt_base;
+  template &lt;class internT, class externT, class stateT&gt; class codecvt;
+  template &lt;class internT, class externT, class stateT&gt; class codecvt_byname;
+
+  // <a title="category.numeric" href="category.numeric.html">22.4.2</a>, numeric:
+  template &lt;class charT, class InputIterator = istreambuf_iterator&lt;charT&gt; &gt; class num_get;
+  template &lt;class charT, class OutputIterator = osterambuf_iterator&lt;charT&gt; &gt; class num_put;
+  template &lt;class charT&gt; class numpunct;
+  template &lt;class charT&gt; class numpunct_byname;
+
+  // <a title="category.collate" href="locale.collate.html">22.4.4</a>, collation:
+  template &lt;class charT&gt; class collate;
+  template &lt;class charT&gt; class collate_byname;
+
+  // <a title="category.time" href="category.time.html">22.4.5</a>, date and time:
+  class time_base;
+  template &lt;class charT, class InputIterator = istreambuf_iterator&lt;charT&gt; &gt; class time_get;
+  template &lt;class charT, class InputIterator&gt; = istreambuf_iterator&lt;charT&gt; &gt; class time_get_byname;
+  template &lt;class charT, class OutputIterator&gt; = ostreambuf_iterator&lt;charT&gt; &gt; class time_put;
+  template &lt;class charT, class OutputIterator&gt; = ostreambuf_iterator&lt;charT&gt; &gt; class time_put_byname;
+
+  // <a title="category.monetary" href="category.monetary.html">22.4.6</a>, money:
+  class money_base;
+  template &lt;class charT, class InputIterator = istreambuf_iterator&lt;charT&gt; &gt; &gt; class money_get;
+  template &lt;class charT, class OutputIterator = ostreambuf_iterator&lt;charT&gt; &gt; &gt; class money_put;
+  template &lt;class charT, bool Intl = false&gt; class moneypunct;
+  template &lt;class charT, bool Intl = false&gt; class moneypunct_byname;
+
+  // <a title="category.messages" href="category.messages.html">22.4.7</a>, message retrieval:
+  class messages_base;
+  template &lt;class charT&gt; class messages;
+  template &lt;class charT&gt; class messages_byname;
+}</code></pre>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>The header <code class="header">&lt;locale&gt;</code> defines classes and declares functions that encapsulate and manipulate the
+information peculiar to a locale.<sup class="footnote"><a href="#fn239">239</a></sup></p>
+
+
+<div><p class="footnote" id="fn239">239) In this subclause, the type name <code class="sh_cpp">struct tm</code> is an incomplete type that is defined in
+<code class="header">&lt;ctime&gt;</code>.</p></div>
+</body>
+</html>
+

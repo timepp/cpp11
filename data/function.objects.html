@@ -1,0 +1,238 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="../sh_main.js"></script>
+<script type="text/javascript" src="../sh_cpp.js"></script>
+<link rel="stylesheet" type="text/css" href="../styles.css">
+<link rel="stylesheet" type="text/css" href="../sh_print.css">
+<link rel="stylesheet" type="text/css" href="../toc.css">
+<script type="text/javascript" src="../highlight.js"></script>
+<title>Function objects</title>
+</head>
+<body>
+<h2>
+<dfn class="label">[function.objects]</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="[function.objects]"></object>20.8 Function objects </h2>
+
+<p><a class="anchor" id="p1" href="#p1">1</a>A <dfn>function object type</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="function object type"></object> is an object type (<a title="basic.types" href="basic.types.html">3.9</a>) that can be the type of the
+<i class="nonterminal">postfix-expression</i> in a function call (<a title="expr.call" href="expr.call.html">5.2.2</a>, <a title="over.match.call" href="over.match.call.html">13.3.1.1</a>).<sup class="footnote"><a href="#fn233">233</a></sup> A <dfn>function
+object</dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="function
+object"></object> is an object of a function object type. In the places where one would expect to pass a pointer to a
+function to an algorithmic template (Clause <a title="algorithms" href="algorithms.general.html">25</a>), the interface is specified to accept a function object. This
+not only makes algorithmic templates work with pointers to functions, but also enables them to work with arbitrary
+function objects.</p>
+
+<h3>
+<a class="anchor" id="p2" href="#p2">2</a>Header <dfn><code class="header">&lt;functional&gt;</code></dfn><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e"><param name="Keyword" value="&lt;functional&gt;"></object> synopsis</h3>
+
+<pre><code class="sh_cpp">namespace std {
+  // <a title="depr.base" href="depr.base.html">D.8.1</a>, base (deprecated):
+  template &lt;class Arg, class Result&gt; struct unary_function;
+  template &lt;class Arg1, class Arg2, class Result&gt; struct binary_function;
+
+  // <a title="refwrap" href="refwrap.const.html">20.8.3</a>, reference_wrapper:
+  template &lt;class T&gt; class reference_wrapper;
+
+  template &lt;class T&gt; reference_wrapper&lt;T&gt; ref(T&amp;) noexcept;
+  template &lt;class T&gt; reference_wrapper&lt;const T&gt; cref(const T&amp;) noexcept;
+  template &lt;class T&gt; void ref(const T&amp;&amp;) = delete;
+  template &lt;class T&gt; void cref(const T&amp;&amp;) = delete;
+
+  template &lt;class T&gt; reference_wrapper&lt;T&gt; ref(reference_wrapper&lt;T&gt;) noexcept;
+  template &lt;class T&gt; reference_wrapper&lt;const T&gt; cref(reference_wrapper&lt;T&gt;) noexcept;
+
+  // <a title="arithmetic.operations" href="arithmetic.operations.html">20.8.4</a>, arithmetic operations:
+  template &lt;class T&gt; struct plus;
+  template &lt;class T&gt; struct minus;
+  template &lt;class T&gt; struct multiplies;
+  template &lt;class T&gt; struct divides;
+  template &lt;class T&gt; struct modulus;
+  template &lt;class T&gt; struct negate;
+
+  // <a title="comparisons" href="comparisons.html">20.8.5</a>, comparisons:
+  template &lt;class T&gt; struct equal_to;
+  template &lt;class T&gt; struct not_equal_to;
+  template &lt;class T&gt; struct greater;
+  template &lt;class T&gt; struct less;
+  template &lt;class T&gt; struct greater_equal;
+  template &lt;class T&gt; struct less_equal;
+
+  // <a title="logical.operations" href="logical.operations.html">20.8.6</a>, logical operations:
+  template &lt;class T&gt; struct logical_and;
+  template &lt;class T&gt; struct logical_or;
+  template &lt;class T&gt; struct logical_not;
+
+  // <a title="bitwise.operations" href="bitwise.operations.html">20.8.7</a>, bitwise operations:
+  template &lt;class T&gt; struct bit_and;
+  template &lt;class T&gt; struct bit_or;
+  template &lt;class T&gt; struct bit_xor;
+
+  // <a title="negators" href="negators.html">20.8.8</a>, negators:
+  template &lt;class Predicate&gt; class unary_negate;
+  template &lt;class Predicate&gt;
+    unary_negate&lt;Predicate&gt;  not1(const Predicate&amp;);
+  template &lt;class Predicate&gt; class binary_negate;
+  template &lt;class Predicate&gt;
+    binary_negate&lt;Predicate&gt; not2(const Predicate&amp;);
+
+  // <a title="bind" href="bind.html">20.8.9</a>, bind:
+  template&lt;class T&gt; struct is_bind_expression;
+  template&lt;class T&gt; struct is_placeholder;
+
+  template&lt;class F, class... BoundArgs&gt;
+    unspecified bind(F&amp;&amp;, BoundArgs&amp;&amp;...);
+  template&lt;class R, class F, class... BoundArgs&gt;
+    unspecified bind(F&amp;&amp;, BoundArgs&amp;&amp;...);
+
+  namespace placeholders {
+    // M is the implementation-defined number of placeholders
+    extern <em>unspecified</em> _1;
+    extern <em>unspecified</em> _2;
+                    ⋮
+    extern <em>unspecified</em> _M;
+  }
+
+  // <a title="depr.lib.binders" href="depr.lib.binder.1st.html">D.9</a>, binders (deprecated):
+  template &lt;class Fn&gt; class binder1st;
+  template &lt;class Fn, class T&gt;
+    binder1st&lt;Fn&gt; bind1st(const Fn&amp;, const T&amp;);
+  template &lt;class Fn&gt; class binder2nd;
+  template &lt;class Fn, class T&gt;
+    binder2nd&lt;Fn&gt; bind2nd(const Fn&amp;, const T&amp;);
+
+  // <a title="depr.function.pointer.adaptors" href="depr.function.pointer.adaptors.html">D.8.2.1</a>, adaptors (deprecated):
+  template &lt;class Arg, class Result&gt; class pointer_to_unary_function;
+  template &lt;class Arg, class Result&gt;
+    pointer_to_unary_function&lt;Arg,Result&gt; ptr_fun(Result (*)(Arg));
+  template &lt;class Arg1, class Arg2, class Result&gt;
+    class pointer_to_binary_function;
+  template &lt;class Arg1, class Arg2, class Result&gt;
+    pointer_to_binary_function&lt;Arg1,Arg2,Result&gt;
+      ptr_fun(Result (*)(Arg1,Arg2));
+
+  // <a title="depr.member.pointer.adaptors" href="depr.member.pointer.adaptors.html">D.8.2.2</a>, adaptors (deprecated):
+  template&lt;class S, class T&gt; class mem_fun_t;
+  template&lt;class S, class T, class A&gt; class mem_fun1_t;
+  template&lt;class S, class T&gt;
+      mem_fun_t&lt;S,T&gt; mem_fun(S (T::*f)());
+  template&lt;class S, class T, class A&gt;
+      mem_fun1_t&lt;S,T,A&gt; mem_fun(S (T::*f)(A));
+  template&lt;class S, class T&gt; class mem_fun_ref_t;
+  template&lt;class S, class T, class A&gt; class mem_fun1_ref_t;
+  template&lt;class S, class T&gt;
+      mem_fun_ref_t&lt;S,T&gt; mem_fun_ref(S (T::*f)());
+  template&lt;class S, class T, class A&gt;
+      mem_fun1_ref_t&lt;S,T,A&gt; mem_fun_ref(S (T::*f)(A));
+
+  template &lt;class S, class T&gt; class const_mem_fun_t;
+  template &lt;class S, class T, class A&gt; class const_mem_fun1_t;
+  template &lt;class S, class T&gt;
+    const_mem_fun_t&lt;S,T&gt; mem_fun(S (T::*f)() const);
+  template &lt;class S, class T, class A&gt;
+    const_mem_fun1_t&lt;S,T,A&gt; mem_fun(S (T::*f)(A) const);
+  template &lt;class S, class T&gt; class const_mem_fun_ref_t;
+  template &lt;class S, class T, class A&gt; class const_mem_fun1_ref_t;
+  template &lt;class S, class T&gt;
+    const_mem_fun_ref_t&lt;S,T&gt; mem_fun_ref(S (T::*f)() const);
+  template &lt;class S, class T, class A&gt;
+    const_mem_fun1_ref_t&lt;S,T,A&gt; mem_fun_ref(S (T::*f)(A) const);
+
+  // <a title="func.memfn" href="func.memfn.html">20.8.10</a>, member function adaptors:
+  template&lt;class R, class T&gt; <em>unspecified</em> mem_fn(R T::*) noexcept;
+  template&lt;class R, class T, class... Args&gt;
+    <em>unspecified</em> mem_fn(R (T::*)(Args...)) noexcept;
+  template&lt;class R, class T, class... Args&gt;
+    <em>unspecified</em> mem_fn(R (T::*)(Args...) const) noexcept;
+  template&lt;class R, class T, class... Args&gt;
+    <em>unspecified</em> mem_fn(R (T::*)(Args...) volatile) noexcept;
+  template&lt;class R, class T, class... Args&gt;
+    <em>unspecified</em> mem_fn(R (T::*)(Args...) const volatile) noexcept;
+  template&lt;class R, class T, class... Args&gt;
+    <em>unspecified</em> mem_fn(R (T::*)(Args...) &amp;) noexcept;
+  template&lt;class R, class T, class... Args&gt;
+    <em>unspecified</em> mem_fn(R (T::*)(Args...) const &amp;) noexcept;
+  template&lt;class R, class T, class... Args&gt;
+    <em>unspecified</em> mem_fn(R (T::*)(Args...) volatile &amp;) noexcept;
+  template&lt;class R, class T, class... Args&gt;
+    <em>unspecified</em> mem_fn(R (T::*)(Args...) const volatile &amp;) noexcept;
+  template&lt;class R, class T, class... Args&gt;
+    <em>unspecified</em> mem_fn(R (T::*)(Args...) &amp;&amp;) noexcept;
+  template&lt;class R, class T, class... Args&gt;
+    <em>unspecified</em> mem_fn(R (T::*)(Args...) const &amp;&amp;) noexcept;
+  template&lt;class R, class T, class... Args&gt;
+    <em>unspecified</em> mem_fn(R (T::*)(Args...) volatile &amp;&amp;) noexcept;
+  template&lt;class R, class T, class... Args&gt;
+    <em>unspecified</em> mem_fn(R (T::*)(Args...) const volatile &amp;&amp;) noexcept;
+
+  // <a title="func.wrap" href="func.wrap.html">20.8.11</a> polymorphic function wrappers:
+  class bad_function_call;
+
+  template&lt;class&gt; class function; // undefined
+  template&lt;class R, class... ArgTypes&gt; class function&lt;R(ArgTypes...)&gt;;
+
+  template&lt;class R, class... ArgTypes&gt;
+    void swap(function&lt;R(ArgTypes...)&gt;&amp;, function&lt;R(ArgTypes...)&gt;&amp;);
+
+  template&lt;class R, class... ArgTypes&gt;
+    bool operator==(const function&lt;R(ArgTypes...)&gt;&amp;, nullptr_t);
+  template&lt;class R, class... ArgTypes&gt;
+    bool operator==(nullptr_t, const function&lt;R(ArgTypes...)&gt;&amp;);
+  template&lt;class R, class... ArgTypes&gt;
+    bool operator!=(const function&lt;R(ArgTypes...)&gt;&amp;, nullptr_t);
+  template&lt;class R, class... ArgTypes&gt;
+    bool operator!=(nullptr_t, const function&lt;R(ArgTypes...)&gt;&amp;);
+
+  // <a title="unord.hash" href="unord.hash.html">20.8.12</a>, hash function base template:
+  template &lt;class T&gt; struct hash;
+
+  // Hash function specializations
+  template &lt;&gt; struct hash&lt;bool&gt;;
+  template &lt;&gt; struct hash&lt;char&gt;;
+  template &lt;&gt; struct hash&lt;signed char&gt;;
+  template &lt;&gt; struct hash&lt;unsigned char&gt;;
+  template &lt;&gt; struct hash&lt;char16_t&gt;;
+  template &lt;&gt; struct hash&lt;char32_t&gt;;
+  template &lt;&gt; struct hash&lt;wchar_t&gt;;
+  template &lt;&gt; struct hash&lt;short&gt;;
+  template &lt;&gt; struct hash&lt;unsigned short&gt;;
+  template &lt;&gt; struct hash&lt;int&gt;;
+  template &lt;&gt; struct hash&lt;unsigned int&gt;;
+  template &lt;&gt; struct hash&lt;long&gt;;
+  template &lt;&gt; struct hash&lt;long long&gt;;
+  template &lt;&gt; struct hash&lt;unsigned long&gt;;
+  template &lt;&gt; struct hash&lt;unsigned long long&gt;;
+
+  template &lt;&gt; struct hash&lt;float&gt;;
+  template &lt;&gt; struct hash&lt;double&gt;;
+  template &lt;&gt; struct hash&lt;long double&gt;;
+
+  template&lt;class T&gt; struct hash&lt;T*&gt;;
+}</code></pre>
+
+<div class="example">
+<p><a class="anchor" id="p3" href="#p3">3</a>[ <em>Example:</em> If a C++ program wants to have a by-element addition of two vectors <code class="sh_cpp">a</code> and <code class="sh_cpp">b</code>
+containing <code class="sh_cpp">double</code> and put the result into <code class="sh_cpp">a</code>, it can do:</p>
+
+<pre><code class="sh_cpp">transform(a.begin(), a.end(), b.begin(), a.begin(), plus&lt;double&gt;());</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<div class="example">
+<p><a class="anchor" id="p4" href="#p4">4</a>[ <em>Example:</em> To negate every element of <code class="sh_cpp">a</code>:</p>
+
+<pre><code class="sh_cpp">transform(a.begin(), a.end(), a.begin(), negate&lt;double&gt;());</code></pre>
+<p> — <em>end example</em> ]</p>
+</div>
+
+<p><a class="anchor" id="p5" href="#p5">5</a>To enable adaptors and other components to manipulate function objects that take one or two arguments it is
+required that the function objects correspondingly provide typedefs <code class="sh_cpp">argument_type</code> and
+<code class="sh_cpp">result_type</code> for function objects that take one argument and <code class="sh_cpp">first_argument_type</code>,
+<code class="sh_cpp">second_argument_type</code>, and <code class="sh_cpp">result_type</code> for function objects that take two arguments.</p>
+
+
+<div><p class="footnote" id="fn233">233) Such a type is a function pointer or a class type which has a member <code class="sh_cpp">operator()</code> or a
+class type which has a conversion to a pointer to function.</p></div>
+</body>
+</html>
+

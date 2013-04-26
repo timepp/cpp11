@@ -1,6 +1,6 @@
 code.sh_sourceCode {
   font-style: normal;
-  font-family: "monaco;courier new;monospace";
+  font-family: monospace;
 }
 
 code.sh_sourceCode .sh_keyword {
@@ -12,6 +12,7 @@ code.sh_sourceCode .sh_keyword {
 code.sh_sourceCode .sh_type {
   font-weight: bold;
   font-style: normal;
+  color: #0080ff;
 }
 
 code.sh_sourceCode .sh_string {
@@ -27,11 +28,13 @@ code.sh_sourceCode .sh_specialchar {
 }
 
 code.sh_sourceCode .sh_comment {
-  font-style: italic;
+  font-style: normal;
+  color: #008000;
 }
 
 code.sh_sourceCode .sh_number {
   font-style: normal;
+  color: #ff0080;
 }
 
 code.sh_sourceCode .sh_code.roc {

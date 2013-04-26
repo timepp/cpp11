@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<job id="run">
+<script type="text/javascript" src="tps.js"></script>
+<script type="text/javascript">
+<![CDATA[
+
+function processSingleFile(src_path, dst_path) {
+    WScript.Echo("processing " + src_path);
+	tps.file.CreateRequiredDir(dst_path);
+	var text = tps.file.ReadTextFile(src_path, "UTF-8");
+	var lines = text.split("\n");
+	text = "";
+	var inhead = false;
+	for (var i in lines) {
+		var l = lines[i];
+		if (l.match(/\<title\>/)) {
+			text += l + "\n";
+		}
+		if (l.match(/\<head\>/)) {
+			inhead = true;
+			text += "<head>\n"
+				text += headtext;
+		}
+		if (l.match(/\<\/head\>/)) {
+			inhead = false;
+		}
+		if (!inhead) {
+			text += l + "\n";
+		}
+	}
+	tps.file.WriteTextFile(text, dst_path, "UTF-8");
+}
+
+var scriptdir = tps.sys.GetScriptDir();
+var headtext = tps.file.ReadTextFile(scriptdir + "\\head_template", "UTF-8");
+
+src_dir = WScript.Arguments(0);
+dst_dir = WScript.Arguments(1);
+
+var fl = tps.file.Glob(src_dir).files;
+for (var i in fl) {
+	processSingleFile(src_dir + "\\" + fl[i], dst_dir + "\\" + fl[i]);
+}
+
+]]>
+</script></job>

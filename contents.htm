@@ -1,0 +1,1605 @@
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+</head>
+
+<body>
+
+<ul>
+
+<li><a title="List of Tables" href="data/list_of_tables.html">List of Tables</a></li>
+
+<li><a title="List of Figures" href="data/list_of_figures.html">List of Figures</a></li>
+<li><a href="data/#" class="expand">▽</a><a title="1 General" href="data/intro.scope.html">1 General</a><ul class="visible">
+<li><a title="1.1 Scope" href="data/intro.scope.html">1 Scope</a></li>
+<li><a title="1.2 Normative references" href="data/intro.refs.html">2 Normative references</a></li>
+<li><a title="1.3 Terms and definitions" href="data/intro.defs.html">3 Terms and definitions</a></li>
+<li><a title="1.4 Implementation compliance" href="data/intro.compliance.html">4 Implementation compliance</a></li>
+<li><a title="1.5 Structure of this International Standard" href="data/intro.structure.html">5 Structure of this International Standard</a></li>
+<li><a title="1.6 Syntax notation" href="data/syntax.html">6 Syntax notation</a></li>
+<li><a title="1.7 The C++ memory model" href="data/intro.memory.html">7 The C++ memory model</a></li>
+<li><a title="1.8 The C++ object model" href="data/intro.object.html">8 The C++ object model</a></li>
+<li><a title="1.9 Program execution" href="data/intro.execution.html">9 Program execution</a></li>
+<li><a title="1.10 Multi-threaded executions and data races" href="data/intro.multithread.html">10 Multi-threaded executions and data races</a></li>
+<li><a title="1.11 Acknowledgments" href="data/intro.ack.html">11 Acknowledgments</a></li></ul></li>
+<li><a href="data/#" class="expand">▽</a><a title="2 Lexical conventions" href="data/lex.separate.html">2 Lexical conventions</a><ul class="visible">
+<li><a title="2.1 Separate translation" href="data/lex.separate.html">1 Separate translation</a></li>
+<li><a title="2.2 Phases of translation" href="data/lex.phases.html">2 Phases of translation</a></li>
+<li><a title="2.3 Character sets" href="data/lex.charset.html">3 Character sets</a></li>
+<li><a title="2.4 Trigraph sequences" href="data/lex.trigraph.html">4 Trigraph sequences</a></li>
+<li><a title="2.5 Preprocessing tokens" href="data/lex.pptoken.html">5 Preprocessing tokens</a></li>
+<li><a title="2.6 Alternative tokens" href="data/lex.digraph.html">6 Alternative tokens</a></li>
+<li><a title="2.7 Tokens" href="data/lex.token.html">7 Tokens</a></li>
+<li><a title="2.8 Comments" href="data/lex.comment.html">8 Comments</a></li>
+<li><a title="2.9 Header names" href="data/lex.header.html">9 Header names</a></li>
+<li><a title="2.10 Preprocessing numbers" href="data/lex.ppnumber.html">10 Preprocessing numbers</a></li>
+<li><a title="2.11 Identifiers" href="data/lex.name.html">11 Identifiers</a></li>
+<li><a title="2.12 Keywords" href="data/lex.key.html">12 Keywords</a></li>
+<li><a title="2.13 Operators and punctuators" href="data/lex.operators.html">13 Operators and punctuators</a></li>
+<li><a href="data/#" class="expand">▽</a><a title="2.14 Literals" href="data/lex.literal.kinds.html">14 Literals</a><ul class="visible">
+<li><a title="2.14.1 Kinds of literals" href="data/lex.literal.kinds.html">1 Kinds of literals</a></li>
+<li><a title="2.14.2 Integer literals" href="data/lex.icon.html">2 Integer literals</a></li>
+<li><a title="2.14.3 Character literals" href="data/lex.ccon.html">3 Character literals</a></li>
+<li><a title="2.14.4 Floating literals" href="data/lex.fcon.html">4 Floating literals</a></li>
+<li><a title="2.14.5 String literals" href="data/lex.string.html">5 String literals</a></li>
+<li><a title="2.14.6 Boolean literals" href="data/lex.bool.html">6 Boolean literals</a></li>
+<li><a title="2.14.7 Pointer literals" href="data/lex.nullptr.html">7 Pointer literals</a></li>
+<li><a title="2.14.8 User-defined literals" href="data/lex.ext.html">8 User-defined literals</a></li></ul></li></ul></li>
+<li><a href="data/#" class="expand">▽</a><a title="3 Basic concepts" href="data/basic.html">3 Basic concepts</a><ul class="visible">
+<li><a title="3.1 Declarations and definitions" href="data/basic.def.html">1 Declarations and definitions</a></li>
+<li><a title="3.2 One definition rule" href="data/basic.def.odr.html">2 One definition rule</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="3.3 Scope" href="data/basic.scope.declarative.html">3 Scope</a><ul class=" hidden">
+<li><a title="3.3.1 Declarative regions and scopes" href="data/basic.scope.declarative.html">1 Declarative regions and scopes</a></li>
+<li><a title="3.3.2 Point of declaration" href="data/basic.scope.pdecl.html">2 Point of declaration</a></li>
+<li><a title="3.3.3 Local scope" href="data/basic.scope.local.html">3 Local scope</a></li>
+<li><a title="3.3.4 Function prototype scope" href="data/basic.scope.proto.html">4 Function prototype scope</a></li>
+<li><a title="3.3.5 Function scope" href="data/basic.funscope.html">5 Function scope</a></li>
+<li><a title="3.3.6 Namespace scope" href="data/basic.scope.namespace.html">6 Namespace scope</a></li>
+<li><a title="3.3.7 Class scope" href="data/basic.scope.class.html">7 Class scope</a></li>
+<li><a title="3.3.8 Enumeration scope" href="data/basic.scope.enum.html">8 Enumeration scope</a></li>
+<li><a title="3.3.9 Template parameter scope" href="data/basic.scope.temp.html">9 Template parameter scope</a></li>
+<li><a title="3.3.10 Name hiding" href="data/basic.scope.hiding.html">10 Name hiding</a></li></ul></li>
+<li><a href="data/#" class="expand">▽</a><a title="3.4 Name lookup" href="data/basic.lookup.html">4 Name lookup</a><ul class="visible">
+<li><a title="3.4.1 Unqualified name lookup" href="data/basic.lookup.unqual.html">1 Unqualified name lookup</a></li>
+<li><a title="3.4.2 Argument-dependent name lookup" href="data/basic.lookup.argdep.html">2 Argument-dependent name lookup</a></li>
+<li><a href="data/#" class="expand">▽</a><a title="3.4.3 Qualified name lookup" href="data/basic.lookup.qual.html">3 Qualified name lookup</a><ul class="visible">
+<li><a title="3.4.3.1 Class members" href="data/class.qual.html">1 Class members</a></li>
+<li><a title="3.4.3.2 Namespace members" href="data/namespace.qual.html">2 Namespace members</a></li></ul></li>
+<li><a title="3.4.4 Elaborated type specifiers" href="data/basic.lookup.elab.html">4 Elaborated type specifiers</a></li>
+<li><a title="3.4.5 Class member access" href="data/basic.lookup.classref.html">5 Class member access</a></li>
+<li><a title="3.4.6 Using-directives and namespace aliases" href="data/basic.lookup.udir.html">6 Using-directives and namespace aliases</a></li></ul></li>
+<li><a title="3.5 Program and linkage" href="data/basic.link.html">5 Program and linkage</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="3.6 Start and termination" href="data/basic.start.main.html">6 Start and termination</a><ul class=" hidden">
+<li><a title="3.6.1 Main function" href="data/basic.start.main.html">1 Main function</a></li>
+<li><a title="3.6.2 Initialization of non-local objects" href="data/basic.start.init.html">2 Initialization of non-local objects</a></li>
+<li><a title="3.6.3 Termination" href="data/basic.start.term.html">3 Termination</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="3.7 Storage duration" href="data/basic.stc.html">7 Storage duration</a><ul class=" hidden">
+<li><a title="3.7.1 Static storage duration" href="data/basic.stc.static.html">1 Static storage duration</a></li>
+<li><a title="3.7.2 Thread storage duration" href="data/basic.stc.thread.html">2 Thread storage duration</a></li>
+<li><a title="3.7.3 Automatic storage duration" href="data/basic.stc.auto.html">3 Automatic storage duration</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="3.7.4 Dynamic storage duration" href="data/basic.stc.dynamic.html">4 Dynamic storage duration</a><ul class=" hidden">
+<li><a title="3.7.4.1 Allocation functions" href="data/basic.stc.dynamic.allocation.html">1 Allocation functions</a></li>
+<li><a title="3.7.4.2 Deallocation functions" href="data/basic.stc.dynamic.deallocation.html">2 Deallocation functions</a></li>
+<li><a title="3.7.4.3 Safely-derived pointers" href="data/basic.stc.dynamic.safety.html">3 Safely-derived pointers</a></li></ul></li>
+<li><a title="3.7.5 Duration of subobjects" href="data/basic.stc.inherit.html">5 Duration of subobjects</a></li></ul></li>
+<li><a title="3.8 Object lifetime" href="data/basic.life.html">8 Object lifetime</a></li>
+<li><a href="data/#" class="expand">▽</a><a title="3.9 Types" href="data/basic.types.html">9 Types</a><ul class="visible">
+<li><a title="3.9.1 Fundamental types" href="data/basic.fundamental.html">1 Fundamental types</a></li>
+<li><a title="3.9.2 Compound types" href="data/basic.compound.html">2 Compound types</a></li>
+<li><a title="3.9.3 CV-qualifiers" href="data/basic.type.qualifier.html">3 CV-qualifiers</a></li></ul></li>
+<li><a title="3.10 Lvalues and rvalues" href="data/basic.lval.html">10 Lvalues and rvalues</a></li>
+<li><a title="3.11 Alignment" href="data/basic.align.html">11 Alignment</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="4 Standard conversions" href="data/conv.html">4 Standard conversions</a><ul class=" hidden">
+<li><a title="4.1 Lvalue-to-rvalue conversion" href="data/conv.lval.html">1 Lvalue-to-rvalue conversion</a></li>
+<li><a title="4.2 Array-to-pointer conversion" href="data/conv.array.html">2 Array-to-pointer conversion</a></li>
+<li><a title="4.3 Function-to-pointer conversion" href="data/conv.func.html">3 Function-to-pointer conversion</a></li>
+<li><a title="4.4 Qualification conversions" href="data/conv.qual.html">4 Qualification conversions</a></li>
+<li><a title="4.5 Integral promotions" href="data/conv.prom.html">5 Integral promotions</a></li>
+<li><a title="4.6 Floating point promotion" href="data/conv.fpprom.html">6 Floating point promotion</a></li>
+<li><a title="4.7 Integral conversions" href="data/conv.integral.html">7 Integral conversions</a></li>
+<li><a title="4.8 Floating point conversions" href="data/conv.double.html">8 Floating point conversions</a></li>
+<li><a title="4.9 Floating-integral conversions" href="data/conv.fpint.html">9 Floating-integral conversions</a></li>
+<li><a title="4.10 Pointer conversions" href="data/conv.ptr.html">10 Pointer conversions</a></li>
+<li><a title="4.11 Pointer to member conversions" href="data/conv.mem.html">11 Pointer to member conversions</a></li>
+<li><a title="4.12 Boolean conversions" href="data/conv.bool.html">12 Boolean conversions</a></li>
+<li><a title="4.13 Integer conversion rank" href="data/conv.rank.html">13 Integer conversion rank</a></li></ul></li>
+<li><a href="data/#" class="expand">▽</a><a title="5 Expressions" href="data/expr.html">5 Expressions</a><ul class="visible">
+<li><a href="data/#" class="expand">▽</a><a title="5.1 Primary expressions" href="data/expr.prim.general.html">1 Primary expressions</a><ul class="visible">
+<li><a title="5.1.1 General" href="data/expr.prim.general.html">1 General</a></li>
+<li><a title="5.1.2 Lambda expressions" href="data/expr.prim.lambda.html">2 Lambda expressions</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="5.2 Postfix expressions" href="data/expr.post.html">2 Postfix expressions</a><ul class=" hidden">
+<li><a title="5.2.1 Subscripting" href="data/expr.sub.html">1 Subscripting</a></li>
+<li><a title="5.2.2 Function call" href="data/expr.call.html">2 Function call</a></li>
+<li><a title="5.2.3 Explicit type conversion (functional notation)" href="data/expr.type.conv.html">3 Explicit type conversion (functional notation)</a></li>
+<li><a title="5.2.4 Pseudo destructor call" href="data/expr.pseudo.html">4 Pseudo destructor call</a></li>
+<li><a title="5.2.5 Class member access" href="data/expr.ref.html">5 Class member access</a></li>
+<li><a title="5.2.6 Increment and decrement" href="data/expr.post.incr.html">6 Increment and decrement</a></li>
+<li><a title="5.2.7 Dynamic cast" href="data/expr.dynamic.cast.html">7 Dynamic cast</a></li>
+<li><a title="5.2.8 Type identification" href="data/expr.typeid.html">8 Type identification</a></li>
+<li><a title="5.2.9 Static cast" href="data/expr.static.cast.html">9 Static cast</a></li>
+<li><a title="5.2.10 Reinterpret cast" href="data/expr.reinterpret.cast.html">10 Reinterpret cast</a></li>
+<li><a title="5.2.11 Const cast" href="data/expr.const.cast.html">11 Const cast</a></li></ul></li>
+<li><a href="data/#" class="expand">▽</a><a title="5.3 Unary expressions" href="data/expr.unary.html">3 Unary expressions</a><ul class="visible">
+<li><a title="5.3.1 Unary operators" href="data/expr.unary.op.html">1 Unary operators</a></li>
+<li><a class=" selected" title="5.3.2 Increment and decrement" href="data/expr.pre.incr.html">2 Increment and decrement</a></li>
+<li><a title="5.3.3 Sizeof" href="data/expr.sizeof.html">3 Sizeof</a></li>
+<li><a title="5.3.4 New" href="data/expr.new.html">4 New</a></li>
+<li><a title="5.3.5 Delete" href="data/expr.delete.html">5 Delete</a></li>
+<li><a title="5.3.6 Alignof" href="data/expr.alignof.html">6 Alignof</a></li>
+<li><a title="5.3.7 noexcept operator" href="data/expr.unary.noexcept.html">7 noexcept operator</a></li></ul></li>
+<li><a title="5.4 Explicit type conversion (cast notation)" href="data/expr.cast.html">4 Explicit type conversion (cast notation)</a></li>
+<li><a title="5.5 Pointer-to-member operators" href="data/expr.mptr.oper.html">5 Pointer-to-member operators</a></li>
+<li><a title="5.6 Multiplicative operators" href="data/expr.mul.html">6 Multiplicative operators</a></li>
+<li><a title="5.7 Additive operators" href="data/expr.add.html">7 Additive operators</a></li>
+<li><a title="5.8 Shift operators" href="data/expr.shift.html">8 Shift operators</a></li>
+<li><a title="5.9 Relational operators" href="data/expr.rel.html">9 Relational operators</a></li>
+<li><a title="5.10 Equality operators" href="data/expr.eq.html">10 Equality operators</a></li>
+<li><a title="5.11 Bitwise AND operator" href="data/expr.bit.and.html">11 Bitwise AND operator</a></li>
+<li><a title="5.12 Bitwise exclusive OR operator" href="data/expr.xor.html">12 Bitwise exclusive OR operator</a></li>
+<li><a title="5.13 Bitwise inclusive OR operator" href="data/expr.or.html">13 Bitwise inclusive OR operator</a></li>
+<li><a title="5.14 Logical AND operator" href="data/expr.log.and.html">14 Logical AND operator</a></li>
+<li><a title="5.15 Logical OR operator" href="data/expr.log.or.html">15 Logical OR operator</a></li>
+<li><a title="5.16 Conditional operator" href="data/expr.cond.html">16 Conditional operator</a></li>
+<li><a title="5.17 Assignment and compound assignment operators" href="data/expr.ass.html">17 Assignment and compound assignment operators</a></li>
+<li><a title="5.18 Comma operator" href="data/expr.comma.html">18 Comma operator</a></li>
+<li><a title="5.19 Constant expressions" href="data/expr.const.html">19 Constant expressions</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="6 Statements" href="data/stmt.stmt.html">6 Statements</a><ul class=" hidden">
+<li><a title="6.1 Labeled statement" href="data/stmt.label.html">1 Labeled statement</a></li>
+<li><a title="6.2 Expression statement" href="data/stmt.expr.html">2 Expression statement</a></li>
+<li><a title="6.3 Compound statement or block" href="data/stmt.block.html">3 Compound statement or block</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="6.4 Selection statements" href="data/stmt.select.html">4 Selection statements</a><ul class=" hidden">
+<li><a title="6.4.1 The if statement" href="data/stmt.if.html">1 The if statement</a></li>
+<li><a title="6.4.2 The switch statement" href="data/stmt.switch.html">2 The switch statement</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="6.5 Iteration statements" href="data/stmt.iter.html">5 Iteration statements</a><ul class=" hidden">
+<li><a title="6.5.1 The while statement" href="data/stmt.while.html">1 The while statement</a></li>
+<li><a title="6.5.2 The do statement" href="data/stmt.do.html">2 The do statement</a></li>
+<li><a title="6.5.3 The for statement" href="data/stmt.for.html">3 The for statement</a></li>
+<li><a title="6.5.4 The range-based for statement" href="data/stmt.ranged.html">4 The range-based for statement</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="6.6 Jump statements" href="data/stmt.jump.html">6 Jump statements</a><ul class=" hidden">
+<li><a title="6.6.1 The break statement" href="data/stmt.break.html">1 The break statement</a></li>
+<li><a title="6.6.2 The continue statement" href="data/stmt.cont.html">2 The continue statement</a></li>
+<li><a title="6.6.3 The return statement" href="data/stmt.return.html">3 The return statement</a></li>
+<li><a title="6.6.4 The goto statement" href="data/stmt.goto.html">4 The goto statement</a></li></ul></li>
+<li><a title="6.7 Declaration statement" href="data/stmt.dcl.html">7 Declaration statement</a></li>
+<li><a title="6.8 Ambiguity resolution" href="data/stmt.ambig.html">8 Ambiguity resolution</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="7 Declarations" href="data/dcl.dcl.html">7 Declarations</a><ul class=" hidden">
+<li><a href="data/#" class="expand">▷</a><a title="7.1 Specifiers" href="data/dcl.spec.html">1 Specifiers</a><ul class=" hidden">
+<li><a title="7.1.1 Storage class specifiers" href="data/dcl.stc.html">1 Storage class specifiers</a></li>
+<li><a title="7.1.2 Function specifiers" href="data/dcl.fct.spec.html">2 Function specifiers</a></li>
+<li><a title="7.1.3 The typedef specifier" href="data/dcl.typedef.html">3 The typedef specifier</a></li>
+<li><a title="7.1.4 The friend specifier" href="data/dcl.friend.html">4 The friend specifier</a></li>
+<li><a title="7.1.5 The constexpr specifier" href="data/dcl.constexpr.html">5 The constexpr specifier</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="7.1.6 Type specifiers" href="data/dcl.type.html">6 Type specifiers</a><ul class=" hidden">
+<li><a title="7.1.6.1 The cv-qualifiers" href="data/dcl.type.cv.html">1 The cv-qualifiers</a></li>
+<li><a title="7.1.6.2 Simple type specifiers" href="data/dcl.type.simple.html">2 Simple type specifiers</a></li>
+<li><a title="7.1.6.3 Elaborated type specifiers" href="data/dcl.type.elab.html">3 Elaborated type specifiers</a></li>
+<li><a title="7.1.6.4 auto specifier" href="data/dcl.spec.auto.html">4 auto specifier</a></li></ul></li></ul></li>
+<li><a title="7.2 Enumeration declarations" href="data/dcl.enum.html">2 Enumeration declarations</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="7.3 Namespaces" href="data/basic.namespace.html">3 Namespaces</a><ul class=" hidden">
+<li><a href="data/#" class="expand">▷</a><a title="7.3.1 Namespace definition" href="data/namespace.def.html">1 Namespace definition</a><ul class=" hidden">
+<li><a title="7.3.1.1 Unnamed namespaces" href="data/namespace.unnamed.html">1 Unnamed namespaces</a></li>
+<li><a title="7.3.1.2 Namespace member definitions" href="data/namespace.memdef.html">2 Namespace member definitions</a></li></ul></li>
+<li><a title="7.3.2 Namespace alias" href="data/namespace.alias.html">2 Namespace alias</a></li>
+<li><a title="7.3.3 The using declaration" href="data/namespace.udecl.html">3 The using declaration</a></li>
+<li><a title="7.3.4 Using directive" href="data/namespace.udir.html">4 Using directive</a></li></ul></li>
+<li><a title="7.4 The asm declaration" href="data/dcl.asm.html">4 The asm declaration</a></li>
+<li><a title="7.5 Linkage specifications" href="data/dcl.link.html">5 Linkage specifications</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="7.6 Attributes" href="data/dcl.attr.grammar.html">6 Attributes</a><ul class=" hidden">
+<li><a title="7.6.1 Attribute syntax and semantics" href="data/dcl.attr.grammar.html">1 Attribute syntax and semantics</a></li>
+<li><a title="7.6.2 Alignment specifier" href="data/dcl.align.html">2 Alignment specifier</a></li>
+<li><a title="7.6.3 Noreturn attribute" href="data/dcl.attr.noreturn.html">3 Noreturn attribute</a></li>
+<li><a title="7.6.4 Carries dependency attribute" href="data/dcl.attr.depend.html">4 Carries dependency attribute</a></li></ul></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="8 Declarators" href="data/dcl.decl.html">8 Declarators</a><ul class=" hidden">
+<li><a title="8.1 Type names" href="data/dcl.name.html">1 Type names</a></li>
+<li><a title="8.2 Ambiguity resolution" href="data/dcl.ambig.res.html">2 Ambiguity resolution</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="8.3 Meaning of declarators" href="data/dcl.meaning.html">3 Meaning of declarators</a><ul class=" hidden">
+<li><a title="8.3.1 Pointers" href="data/dcl.ptr.html">1 Pointers</a></li>
+<li><a title="8.3.2 References" href="data/dcl.ref.html">2 References</a></li>
+<li><a title="8.3.3 Pointers to members" href="data/dcl.mptr.html">3 Pointers to members</a></li>
+<li><a title="8.3.4 Arrays" href="data/dcl.array.html">4 Arrays</a></li>
+<li><a title="8.3.5 Functions" href="data/dcl.fct.html">5 Functions</a></li>
+<li><a title="8.3.6 Default arguments" href="data/dcl.fct.default.html">6 Default arguments</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="8.4 Function definitions" href="data/dcl.fct.def.general.html">4 Function definitions</a><ul class=" hidden">
+<li><a title="8.4.1 In general" href="data/dcl.fct.def.general.html">1 In general</a></li>
+<li><a title="8.4.2 Explicitly-defaulted functions" href="data/dcl.fct.def.default.html">2 Explicitly-defaulted functions</a></li>
+<li><a title="8.4.3 Deleted definitions" href="data/dcl.fct.def.delete.html">3 Deleted definitions</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="8.5 Initializers" href="data/dcl.init.html">5 Initializers</a><ul class=" hidden">
+<li><a title="8.5.1 Aggregates" href="data/dcl.init.aggr.html">1 Aggregates</a></li>
+<li><a title="8.5.2 Character arrays" href="data/dcl.init.string.html">2 Character arrays</a></li>
+<li><a title="8.5.3 References" href="data/dcl.init.ref.html">3 References</a></li>
+<li><a title="8.5.4 List-initialization" href="data/dcl.init.list.html">4 List-initialization</a></li></ul></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="9 Classes" href="data/class.html">9 Classes</a><ul class=" hidden">
+<li><a title="9.1 Class names" href="data/class.name.html">1 Class names</a></li>
+<li><a title="9.2 Class members" href="data/class.mem.html">2 Class members</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="9.3 Member functions" href="data/class.mfct.html">3 Member functions</a><ul class=" hidden">
+<li><a title="9.3.1 Nonstatic member functions" href="data/class.mfct.non-static.html">1 Nonstatic member functions</a></li>
+<li><a title="9.3.2 The this pointer" href="data/class.this.html">2 The this pointer</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="9.4 Static members" href="data/class.static.html">4 Static members</a><ul class=" hidden">
+<li><a title="9.4.1 Static member functions" href="data/class.static.mfct.html">1 Static member functions</a></li>
+<li><a title="9.4.2 Static data members" href="data/class.static.data.html">2 Static data members</a></li></ul></li>
+<li><a title="9.5 Unions" href="data/class.union.html">5 Unions</a></li>
+<li><a title="9.6 Bit-fields" href="data/class.bit.html">6 Bit-fields</a></li>
+<li><a title="9.7 Nested class declarations" href="data/class.nest.html">7 Nested class declarations</a></li>
+<li><a title="9.8 Local class declarations" href="data/class.local.html">8 Local class declarations</a></li>
+<li><a title="9.9 Nested type names" href="data/class.nested.type.html">9 Nested type names</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="10 Derived classes" href="data/class.derived.html">10 Derived classes</a><ul class=" hidden">
+<li><a title="10.1 Multiple base classes" href="data/class.mi.html">1 Multiple base classes</a></li>
+<li><a title="10.2 Member name lookup" href="data/class.member.lookup.html">2 Member name lookup</a></li>
+<li><a title="10.3 Virtual functions" href="data/class.virtual.html">3 Virtual functions</a></li>
+<li><a title="10.4 Abstract classes" href="data/class.abstract.html">4 Abstract classes</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="11 Member access control" href="data/class.access.html">11 Member access control</a><ul class=" hidden">
+<li><a title="11.1 Access specifiers" href="data/class.access.spec.html">1 Access specifiers</a></li>
+<li><a title="11.2 Accessibility of base classes and base class members" href="data/class.access.base.html">2 Accessibility of base classes and base class members</a></li>
+<li><a title="11.3 Friends" href="data/class.friend.html">3 Friends</a></li>
+<li><a title="11.4 Protected member access" href="data/class.protected.html">4 Protected member access</a></li>
+<li><a title="11.5 Access to virtual functions" href="data/class.access.virt.html">5 Access to virtual functions</a></li>
+<li><a title="11.6 Multiple access" href="data/class.paths.html">6 Multiple access</a></li>
+<li><a title="11.7 Nested classes" href="data/class.access.nest.html">7 Nested classes</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="12 Special member functions" href="data/special.html">12 Special member functions</a><ul class=" hidden">
+<li><a title="12.1 Constructors" href="data/class.ctor.html">1 Constructors</a></li>
+<li><a title="12.2 Temporary objects" href="data/class.temporary.html">2 Temporary objects</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="12.3 Conversions" href="data/class.conv.html">3 Conversions</a><ul class=" hidden">
+<li><a title="12.3.1 Conversion by constructor" href="data/class.conv.ctor.html">1 Conversion by constructor</a></li>
+<li><a title="12.3.2 Conversion functions" href="data/class.conv.fct.html">2 Conversion functions</a></li></ul></li>
+<li><a title="12.4 Destructors" href="data/class.dtor.html">4 Destructors</a></li>
+<li><a title="12.5 Free store" href="data/class.free.html">5 Free store</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="12.6 Initialization" href="data/class.init.html">6 Initialization</a><ul class=" hidden">
+<li><a title="12.6.1 Explicit initialization" href="data/class.expl.init.html">1 Explicit initialization</a></li>
+<li><a title="12.6.2 Initializing bases and members" href="data/class.base.init.html">2 Initializing bases and members</a></li></ul></li>
+<li><a title="12.7 Construction and destruction" href="data/class.cdtor.html">7 Construction and destruction</a></li>
+<li><a title="12.8 Copying class objects" href="data/class.copy.html">8 Copying class objects</a></li>
+<li><a title="12.9 Inheriting constructors" href="data/class.inhctor.html">9 Inheriting constructors</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="13 Overloading" href="data/over.html">13 Overloading</a><ul class=" hidden">
+<li><a title="13.1 Overloadable declarations" href="data/over.load.html">1 Overloadable declarations</a></li>
+<li><a title="13.2 Declaration matching" href="data/over.dcl.html">2 Declaration matching</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="13.3 Overload resolution" href="data/over.match.html">3 Overload resolution</a><ul class=" hidden">
+<li><a href="data/#" class="expand">▷</a><a title="13.3.1 Candidate functions and argument lists" href="data/over.match.funcs.html">1 Candidate functions and argument lists</a><ul class=" hidden">
+<li><a href="data/#" class="expand">▷</a><a title="13.3.1.1 Function call syntax" href="data/over.match.call.html">1 Function call syntax</a><ul class=" hidden">
+<li><a title="13.3.1.1.1 Call to named function" href="data/over.call.func.html">1 Call to named function</a></li>
+<li><a title="13.3.1.1.2 Call to object of class type" href="data/over.call.object.html">2 Call to object of class type</a></li></ul></li>
+<li><a title="13.3.1.2 Operators in expressions" href="data/over.match.oper.html">2 Operators in expressions</a></li>
+<li><a title="13.3.1.3 Initialization by constructor" href="data/over.match.ctor.html">3 Initialization by constructor</a></li>
+<li><a title="13.3.1.4 Copy-initialization of class by user-defined conversion" href="data/over.match.copy.html">4 Copy-initialization of class by user-defined conversion</a></li>
+<li><a title="13.3.1.5 Initialization by conversion function" href="data/over.match.conv.html">5 Initialization by conversion function</a></li>
+<li><a title="13.3.1.6 Initialization by conversion function for direct reference binding" href="data/over.match.ref.html">6 Initialization by conversion function for direct reference binding</a></li>
+<li><a title="13.3.1.7 Initialization by list-initialization" href="data/over.match.list.html">7 Initialization by list-initialization</a></li></ul></li>
+<li><a title="13.3.2 Viable functions" href="data/over.match.viable.html">2 Viable functions</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="13.3.3 Best viable function" href="data/over.match.best.html">3 Best viable function</a><ul class=" hidden">
+<li><a href="data/#" class="expand">▷</a><a title="13.3.3.1 Implicit conversion sequences" href="data/over.best.ics.html">1 Implicit conversion sequences</a><ul class=" hidden">
+<li><a title="13.3.3.1.1 Standard conversion sequences" href="data/over.ics.scs.html">1 Standard conversion sequences</a></li>
+<li><a title="13.3.3.1.2 User-defined conversion sequences" href="data/over.ics.user.html">2 User-defined conversion sequences</a></li>
+<li><a title="13.3.3.1.3 Ellipsis conversion sequences" href="data/over.ics.ellipsis.html">3 Ellipsis conversion sequences</a></li>
+<li><a title="13.3.3.1.4 Reference binding" href="data/over.ics.ref.html">4 Reference binding</a></li>
+<li><a title="13.3.3.1.5 List-initialization sequence" href="data/over.ics.list.html">5 List-initialization sequence</a></li></ul></li>
+<li><a title="13.3.3.2 Ranking implicit conversion sequences" href="data/over.ics.rank.html">2 Ranking implicit conversion sequences</a></li></ul></li></ul></li>
+<li><a title="13.4 Address of overloaded function" href="data/over.over.html">4 Address of overloaded function</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="13.5 Overloaded operators" href="data/over.oper.html">5 Overloaded operators</a><ul class=" hidden">
+<li><a title="13.5.1 Unary operators" href="data/over.unary.html">1 Unary operators</a></li>
+<li><a title="13.5.2 Binary operators" href="data/over.binary.html">2 Binary operators</a></li>
+<li><a title="13.5.3 Assignment" href="data/over.ass.html">3 Assignment</a></li>
+<li><a title="13.5.4 Function call" href="data/over.call.html">4 Function call</a></li>
+<li><a title="13.5.5 Subscripting" href="data/over.sub.html">5 Subscripting</a></li>
+<li><a title="13.5.6 Class member access" href="data/over.ref.html">6 Class member access</a></li>
+<li><a title="13.5.7 Increment and decrement" href="data/over.inc.html">7 Increment and decrement</a></li>
+<li><a title="13.5.8 User-defined literals" href="data/over.literal.html">8 User-defined literals</a></li></ul></li>
+<li><a title="13.6 Built-in operators" href="data/over.built.html">6 Built-in operators</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="14 Templates" href="data/temp.html">14 Templates</a><ul class=" hidden">
+<li><a title="14.1 Template parameters" href="data/temp.param.html">1 Template parameters</a></li>
+<li><a title="14.2 Names of template specializations" href="data/temp.names.html">2 Names of template specializations</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="14.3 Template arguments" href="data/temp.arg.html">3 Template arguments</a><ul class=" hidden">
+<li><a title="14.3.1 Template type arguments" href="data/temp.arg.type.html">1 Template type arguments</a></li>
+<li><a title="14.3.2 Template non-type arguments" href="data/temp.arg.nontype.html">2 Template non-type arguments</a></li>
+<li><a title="14.3.3 Template template arguments" href="data/temp.arg.template.html">3 Template template arguments</a></li></ul></li>
+<li><a title="14.4 Type equivalence" href="data/temp.type.html">4 Type equivalence</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="14.5 Template declarations" href="data/temp.decls.html">5 Template declarations</a><ul class=" hidden">
+<li><a href="data/#" class="expand">▷</a><a title="14.5.1 Class templates" href="data/temp.class.html">1 Class templates</a><ul class=" hidden">
+<li><a title="14.5.1.1 Member functions of class templates" href="data/temp.mem.func.html">1 Member functions of class templates</a></li>
+<li><a title="14.5.1.2 Member classes of class templates" href="data/temp.mem.class.html">2 Member classes of class templates</a></li>
+<li><a title="14.5.1.3 Static data members of class templates" href="data/temp.static.html">3 Static data members of class templates</a></li>
+<li><a title="14.5.1.4 Enumeration members of class templates" href="data/temp.mem.enum.html">4 Enumeration members of class templates</a></li></ul></li>
+<li><a title="14.5.2 Member templates" href="data/temp.mem.html">2 Member templates</a></li>
+<li><a title="14.5.3 Variadic templates" href="data/temp.variadic.html">3 Variadic templates</a></li>
+<li><a title="14.5.4 Friends" href="data/temp.friend.html">4 Friends</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="14.5.5 Class template partial specializations" href="data/temp.class.spec.html">5 Class template partial specializations</a><ul class=" hidden">
+<li><a title="14.5.5.1 Matching of class template partial specializations" href="data/temp.class.spec.match.html">1 Matching of class template partial specializations</a></li>
+<li><a title="14.5.5.2 Partial ordering of class template specializations" href="data/temp.class.order.html">2 Partial ordering of class template specializations</a></li>
+<li><a title="14.5.5.3 Members of class template specializations" href="data/temp.class.spec.mfunc.html">3 Members of class template specializations</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="14.5.6 Function templates" href="data/temp.fct.html">6 Function templates</a><ul class=" hidden">
+<li><a title="14.5.6.1 Function template overloading" href="data/temp.over.link.html">1 Function template overloading</a></li>
+<li><a title="14.5.6.2 Partial ordering of function templates" href="data/temp.func.order.html">2 Partial ordering of function templates</a></li></ul></li>
+<li><a title="14.5.7 Alias templates" href="data/temp.alias.html">7 Alias templates</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="14.6 Name resolution" href="data/temp.res.html">6 Name resolution</a><ul class=" hidden">
+<li><a title="14.6.1 Locally declared names" href="data/temp.local.html">1 Locally declared names</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="14.6.2 Dependent names" href="data/temp.dep.html">2 Dependent names</a><ul class=" hidden">
+<li><a title="14.6.2.1 Dependent types" href="data/temp.dep.type.html">1 Dependent types</a></li>
+<li><a title="14.6.2.2 Type-dependent expressions" href="data/temp.dep.expr.html">2 Type-dependent expressions</a></li>
+<li><a title="14.6.2.3 Value-dependent expressions" href="data/temp.dep.constexpr.html">3 Value-dependent expressions</a></li>
+<li><a title="14.6.2.4 Dependent template arguments" href="data/temp.dep.temp.html">4 Dependent template arguments</a></li></ul></li>
+<li><a title="14.6.3 Non-dependent names" href="data/temp.nondep.html">3 Non-dependent names</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="14.6.4 Dependent name resolution" href="data/temp.dep.res.html">4 Dependent name resolution</a><ul class=" hidden">
+<li><a title="14.6.4.1 Point of instantiation" href="data/temp.point.html">1 Point of instantiation</a></li>
+<li><a title="14.6.4.2 Candidate functions" href="data/temp.dep.candidate.html">2 Candidate functions</a></li></ul></li>
+<li><a title="14.6.5 Friend names declared within a class template" href="data/temp.inject.html">5 Friend names declared within a class template</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="14.7 Template instantiation and specialization" href="data/temp.spec.html">7 Template instantiation and specialization</a><ul class=" hidden">
+<li><a title="14.7.1 Implicit instantiation" href="data/temp.inst.html">1 Implicit instantiation</a></li>
+<li><a title="14.7.2 Explicit instantiation" href="data/temp.explicit.html">2 Explicit instantiation</a></li>
+<li><a title="14.7.3 Explicit specialization" href="data/temp.expl.spec.html">3 Explicit specialization</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="14.8 Function template specializations" href="data/temp.fct.spec.html">8 Function template specializations</a><ul class=" hidden">
+<li><a title="14.8.1 Explicit template argument specification" href="data/temp.arg.explicit.html">1 Explicit template argument specification</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="14.8.2 Template argument deduction" href="data/temp.deduct.html">2 Template argument deduction</a><ul class=" hidden">
+<li><a title="14.8.2.1 Deducing template arguments from a function call" href="data/temp.deduct.call.html">1 Deducing template arguments from a function call</a></li>
+<li><a title="14.8.2.2 Deducing template arguments taking the address of a function template" href="data/temp.deduct.funcaddr.html">2 Deducing template arguments taking the address of a function template</a></li>
+<li><a title="14.8.2.3 Deducing conversion function template arguments" href="data/temp.deduct.conv.html">3 Deducing conversion function template arguments</a></li>
+<li><a title="14.8.2.4 Deducing template arguments during partial ordering" href="data/temp.deduct.partial.html">4 Deducing template arguments during partial ordering</a></li>
+<li><a title="14.8.2.5 Deducing template arguments from a type" href="data/temp.deduct.type.html">5 Deducing template arguments from a type</a></li>
+<li><a title="14.8.2.5 Deducing template arguments from a function declaration" href="data/temp.deduct.decl.html">5 Deducing template arguments from a function declaration</a></li></ul></li>
+<li><a title="14.8.3 Overload resolution" href="data/temp.over.html">3 Overload resolution</a></li></ul></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="15 Exception handling" href="data/except.html">15 Exception handling</a><ul class=" hidden">
+<li><a title="15.1 Throwing an exception" href="data/except.throw.html">1 Throwing an exception</a></li>
+<li><a title="15.2 Constructors and destructors" href="data/except.ctor.html">2 Constructors and destructors</a></li>
+<li><a title="15.3 Handling an exception" href="data/except.handle.html">3 Handling an exception</a></li>
+<li><a title="15.4 Exception specifications" href="data/except.spec.html">4 Exception specifications</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="15.5 Special functions" href="data/except.special.html">5 Special functions</a><ul class=" hidden">
+<li><a title="15.5.1 The std::terminate() function" href="data/except.terminate.html">1 The std::terminate() function</a></li>
+<li><a title="15.5.2 The std::unexpected() function" href="data/except.unexpected.html">2 The std::unexpected() function</a></li>
+<li><a title="15.5.3 The std::uncaught_exception() function" href="data/except.uncaught.html">3 The std::uncaught_exception() function</a></li></ul></li></ul></li>
+<li><a href="data/#" class="expand">▽</a><a title="16 Preprocessing directives" href="data/cpp.html">16 Preprocessing directives</a><ul class="visible">
+<li><a title="16.1 Conditional inclusion" href="data/cpp.cond.html">1 Conditional inclusion</a></li>
+<li><a title="16.2 Source file inclusion" href="data/cpp.include.html">2 Source file inclusion</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="16.3 Macro replacement" href="data/cpp.replace.html">3 Macro replacement</a><ul class=" hidden">
+<li><a title="16.3.1 Argument substitution" href="data/cpp.subst.html">1 Argument substitution</a></li>
+<li><a title="16.3.2 The # operator" href="data/cpp.stringize.html">2 The # operator</a></li>
+<li><a title="16.3.3 The ## operator" href="data/cpp.concat.html">3 The ## operator</a></li>
+<li><a title="16.3.4 Rescanning and further replacement" href="data/cpp.rescan.html">4 Rescanning and further replacement</a></li>
+<li><a title="16.3.5 Scope of macro definitions" href="data/cpp.scope.html">5 Scope of macro definitions</a></li></ul></li>
+<li><a title="16.4 Line control" href="data/cpp.line.html">4 Line control</a></li>
+<li><a title="16.5 Error directive" href="data/cpp.error.html">5 Error directive</a></li>
+<li><a title="16.6 Pragma directive" href="data/cpp.pragma.html">6 Pragma directive</a></li>
+<li><a title="16.7 Null directive" href="data/cpp.null.html">7 Null directive</a></li>
+<li><a title="16.8 Predefined macro names" href="data/cpp.predefined.html">8 Predefined macro names</a></li>
+<li><a title="16.9 Pragma operator" href="data/cpp.pragma.op.html">9 Pragma operator</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="17 Library introduction" href="data/library.general.html">17 Library introduction</a><ul class=" hidden">
+<li><a title="17.1 General" href="data/library.general.html">1 General</a></li>
+<li><a title="17.2 The C standard library" href="data/library.c.html">2 The C standard library</a></li>
+<li><a title="17.3 Definitions" href="data/definitions.html">3 Definitions</a></li>
+<li><a title="17.4 Additional definitions" href="data/defns.additional.html">4 Additional definitions</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="17.5 Method of description (Informative)" href="data/description.html">5 Method of description (Informative)</a><ul class=" hidden">
+<li><a href="data/#" class="expand">▷</a><a title="17.5.1 Structure of each clause" href="data/structure.elements.html">1 Structure of each clause</a><ul class=" hidden">
+<li><a title="17.5.1.1 Elements" href="data/structure.elements.html">1 Elements</a></li>
+<li><a title="17.5.1.2 Summary" href="data/structure.summary.html">2 Summary</a></li>
+<li><a title="17.5.1.3 Requirements" href="data/structure.requirements.html">3 Requirements</a></li>
+<li><a title="17.5.1.4 Detailed specifications" href="data/structure.specifications.html">4 Detailed specifications</a></li>
+<li><a title="17.5.1.5 C library" href="data/structure.see.also.html">5 C library</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="17.5.2 Other conventions" href="data/conventions.html">2 Other conventions</a><ul class=" hidden">
+<li><a href="data/#" class="expand">▷</a><a title="17.5.2.1 Type descriptions" href="data/type.descriptions.general.html">1 Type descriptions</a><ul class=" hidden">
+<li><a title="17.5.2.1.1 General" href="data/type.descriptions.general.html">1 General</a></li>
+<li><a title="17.5.2.1.2 Enumerated types" href="data/enumerated.types.html">2 Enumerated types</a></li>
+<li><a title="17.5.2.1.3 Bitmask types" href="data/bitmask.types.html">3 Bitmask types</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="17.5.2.1.4 Character sequences" href="data/character.seq.html">4 Character sequences</a><ul class=" hidden">
+<li><a title="17.5.2.1.4.1 Byte strings" href="data/byte.strings.html">1 Byte strings</a></li>
+<li><a title="17.5.2.1.4.2 Multibyte strings" href="data/multibyte.strings.html">2 Multibyte strings</a></li></ul></li></ul></li>
+<li><a title="17.5.2.2 Functions within classes" href="data/functions.within.classes.html">2 Functions within classes</a></li>
+<li><a title="17.5.2.3 Private members" href="data/objects.within.classes.html">3 Private members</a></li></ul></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="17.6 Library-wide requirements" href="data/requirements.html">6 Library-wide requirements</a><ul class=" hidden">
+<li><a href="data/#" class="expand">▷</a><a title="17.6.1 Library contents and organization" href="data/organization.html">1 Library contents and organization</a><ul class=" hidden">
+<li><a title="17.6.1.1 Library contents" href="data/contents.html">1 Library contents</a></li>
+<li><a title="17.6.1.2 Headers" href="data/headers.html">2 Headers</a></li>
+<li><a title="17.6.1.3 Freestanding implementations" href="data/compliance.html">3 Freestanding implementations</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="17.6.2 Using the library" href="data/using.overview.html">2 Using the library</a><ul class=" hidden">
+<li><a title="17.6.2.1 Overview" href="data/using.overview.html">1 Overview</a></li>
+<li><a title="17.6.2.2 Headers" href="data/using.headers.html">2 Headers</a></li>
+<li><a title="17.6.2.3 Linkage" href="data/using.linkage.html">3 Linkage</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="17.6.3 Requirements" href="data/utility.requirements.html">3 Requirements</a><ul class=" hidden">
+<li><a title="17.6.3.1 Template argument requirements" href="data/utility.arg.requirements.html">1 Template argument requirements</a></li>
+<li><a title="17.6.3.2 Swappable requirements" href="data/swappable.requirements.html">2 Swappable requirements</a></li>
+<li><a title="17.6.3.3 NullablePointer requirements" href="data/nullablepointer.requirements.html">3 NullablePointer requirements</a></li>
+<li><a title="17.6.3.4 Hash requirements" href="data/hash.requirements.html">4 Hash requirements</a></li>
+<li><a title="17.6.3.5 Allocator requirements" href="data/allocator.requirements.html">5 Allocator requirements</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="17.6.4 Constraints on programs" href="data/constraints.overview.html">4 Constraints on programs</a><ul class=" hidden">
+<li><a title="17.6.4.1 Overview" href="data/constraints.overview.html">1 Overview</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="17.6.4.2 Namespace use" href="data/namespace.std.html">2 Namespace use</a><ul class=" hidden">
+<li><a title="17.6.4.2.1 Namespace std" href="data/namespace.std.html">1 Namespace std</a></li>
+<li><a title="17.6.4.2.2 Namespace posix" href="data/namespace.posix.html">2 Namespace posix</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="17.6.4.3 Reserved names" href="data/reserved.names.html">3 Reserved names</a><ul class=" hidden">
+<li><a title="17.6.4.3.1 Macro names" href="data/macro.names.html">1 Macro names</a></li>
+<li><a title="17.6.4.3.2 Global names" href="data/global.names.html">2 Global names</a></li>
+<li><a title="17.6.4.3.3 External linkage" href="data/extern.names.html">3 External linkage</a></li>
+<li><a title="17.6.4.3.4 Types" href="data/extern.types.html">4 Types</a></li>
+<li><a title="17.6.4.3.5 User-defined literal suffixes" href="data/usrlit.suffix.html">5 User-defined literal suffixes</a></li></ul></li>
+<li><a title="17.6.4.4 Headers" href="data/alt.headers.html">4 Headers</a></li>
+<li><a title="17.6.4.5 Derived classes" href="data/derived.classes.html">5 Derived classes</a></li>
+<li><a title="17.6.4.6 Replacement functions" href="data/replacement.functions.html">6 Replacement functions</a></li>
+<li><a title="17.6.4.7 Handler functions" href="data/handler.functions.html">7 Handler functions</a></li>
+<li><a title="17.6.4.8 Other functions" href="data/res.on.functions.html">8 Other functions</a></li>
+<li><a title="17.6.4.9 Function arguments" href="data/res.on.arguments.html">9 Function arguments</a></li>
+<li><a title="17.6.4.10 Shared objects and the library" href="data/res.on.objects.html">10 Shared objects and the library</a></li>
+<li><a title="17.6.4.11 Required paragraph" href="data/res.on.required.html">11 Required paragraph</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="17.6.5 Conforming implementations" href="data/conforming.overview.html">5 Conforming implementations</a><ul class=" hidden">
+<li><a title="17.6.5.1 Overview" href="data/conforming.overview.html">1 Overview</a></li>
+<li><a title="17.6.5.2 Headers" href="data/res.on.headers.html">2 Headers</a></li>
+<li><a title="17.6.5.3 Restrictions on macro definitions" href="data/res.on.macro.definitions.html">3 Restrictions on macro definitions</a></li>
+<li><a title="17.6.5.4 Global and non-member functions" href="data/global.functions.html">4 Global and non-member functions</a></li>
+<li><a title="17.6.5.5 Member functions" href="data/member.functions.html">5 Member functions</a></li>
+<li><a title="17.6.5.6 constexpr functions and constructors" href="data/constexpr.functions.html">6 constexpr functions and constructors</a></li>
+<li><a title="17.6.5.7 Requirements for stable algorithms" href="data/algorithm.stable.html">7 Requirements for stable algorithms</a></li>
+<li><a title="17.6.5.8 Reentrancy" href="data/reentrancy.html">8 Reentrancy</a></li>
+<li><a title="17.6.5.9 Data race avoidance" href="data/res.on.data.races.html">9 Data race avoidance</a></li>
+<li><a title="17.6.5.10 Protection within classes" href="data/protection.within.classes.html">10 Protection within classes</a></li>
+<li><a title="17.6.5.11 Derived classes" href="data/derivation.html">11 Derived classes</a></li>
+<li><a title="17.6.5.12 Restrictions on exception handling" href="data/res.on.exception.handling.html">12 Restrictions on exception handling</a></li>
+<li><a title="17.6.5.13 Restrictions on storage of pointers" href="data/res.on.pointer.storage.html">13 Restrictions on storage of pointers</a></li>
+<li><a title="17.6.5.14 Value of error codes" href="data/value.error.codes.html">14 Value of error codes</a></li>
+<li><a title="17.6.5.15 Moved-from state of library types" href="data/lib.types.movedfrom.html">15 Moved-from state of library types</a></li></ul></li></ul></li></ul></li>
+<li><a href="data/#" class="expand">▽</a><a title="18 Language support library" href="data/support.general.html">18 Language support library</a><ul class="visible">
+<li><a title="18.1 General" href="data/support.general.html">1 General</a></li>
+<li><a title="18.2 Types" href="data/support.types.html">2 Types</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="18.3 Implementation properties" href="data/support.limits.general.html">3 Implementation properties</a><ul class=" hidden">
+<li><a title="18.3.1 In general" href="data/support.limits.general.html">1 In general</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="18.3.2 Numeric limits" href="data/limits.numeric.html">2 Numeric limits</a><ul class=" hidden">
+<li><a title="18.3.2.1 Class template numeric_limits" href="data/limits.numeric.html">1 Class template numeric_limits</a></li>
+<li><a title="18.3.2.2 Header <limits> synopsis" href="data/limits.syn.html">2 Header &lt;limits&gt; synopsis</a></li>
+<li><a title="18.3.2.3 Class template numeric_limits" href="data/numeric.limits.html">3 Class template numeric_limits</a></li>
+<li><a title="18.3.2.4 numeric_limits members" href="data/numeric.limits.members.html">4 numeric_limits members</a></li>
+<li><a title="18.3.2.5 Type float_round_style" href="data/round.style.html">5 Type float_round_style</a></li>
+<li><a title="18.3.2.6 Type float_denorm_style" href="data/denorm.style.html">6 Type float_denorm_style</a></li>
+<li><a title="18.3.2.7 numeric_limits specializations" href="data/numeric.special.html">7 numeric_limits specializations</a></li></ul></li>
+<li><a title="18.3.3 C Library" href="data/c.limits.html">3 C Library</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="18.4 Integer types" href="data/cstdint.syn.html">4 Integer types</a><ul class=" hidden">
+<li><a title="18.4.1 Header <cstdint> synopsis" href="data/cstdint.syn.html">1 Header &lt;cstdint&gt; synopsis</a></li></ul></li>
+<li><a title="18.5 Start and termination" href="data/support.start.term.html">5 Start and termination</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="18.6 Dynamic memory management" href="data/support.dynamic.html">6 Dynamic memory management</a><ul class=" hidden">
+<li><a href="data/#" class="expand">▷</a><a title="18.6.1 Storage allocation and deallocation" href="data/new.delete.html">1 Storage allocation and deallocation</a><ul class=" hidden">
+<li><a title="18.6.1.1 Single-object forms" href="data/new.delete.single.html">1 Single-object forms</a></li>
+<li><a title="18.6.1.2 Array forms" href="data/new.delete.array.html">2 Array forms</a></li>
+<li><a title="18.6.1.3 Placement forms" href="data/new.delete.placement.html">3 Placement forms</a></li>
+<li><a title="18.6.1.4 Data races" href="data/new.delete.dataraces.html">4 Data races</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="18.6.2 Storage allocation errors" href="data/bad.alloc.html">2 Storage allocation errors</a><ul class=" hidden">
+<li><a title="18.6.2.1 Class bad_alloc" href="data/bad.alloc.html">1 Class bad_alloc</a></li>
+<li><a title="18.6.2.2 Class bad_array_new_length" href="data/new.badlength.html">2 Class bad_array_new_length</a></li>
+<li><a title="18.6.2.3 Type new_handler" href="data/new.handler.html">3 Type new_handler</a></li>
+<li><a title="18.6.2.4 set_new_handler" href="data/set.new.handler.html">4 set_new_handler</a></li>
+<li><a title="18.6.2.5 get_new_handler" href="data/get.new.handler.html">5 get_new_handler</a></li></ul></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="18.7 Type identification" href="data/support.rtti.html">7 Type identification</a><ul class=" hidden">
+<li><a title="18.7.1 Class type_info" href="data/type.info.html">1 Class type_info</a></li>
+<li><a title="18.7.2 Class bad_cast" href="data/bad.cast.html">2 Class bad_cast</a></li>
+<li><a title="18.7.3 Class bad_typeid" href="data/bad.typeid.html">3 Class bad_typeid</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="18.8 Exception handling" href="data/support.exception.html">8 Exception handling</a><ul class=" hidden">
+<li><a title="18.8.1 Class exception" href="data/exception.html">1 Class exception</a></li>
+<li><a title="18.8.2 Class bad_exception" href="data/bad.exception.html">2 Class bad_exception</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="18.8.3 Abnormal termination" href="data/terminate.handler.html">3 Abnormal termination</a><ul class=" hidden">
+<li><a title="18.8.3.1 Type terminate_handler" href="data/terminate.handler.html">1 Type terminate_handler</a></li>
+<li><a title="18.8.3.2 set_terminate" href="data/set.terminate.html">2 set_terminate</a></li>
+<li><a title="18.8.3.3 get_terminate" href="data/get.terminate.html">3 get_terminate</a></li>
+<li><a title="18.8.3.4 terminate" href="data/terminate.html">4 terminate</a></li></ul></li>
+<li><a title="18.8.4 uncaught_exception" href="data/uncaught.html">4 uncaught_exception</a></li>
+<li><a title="18.8.5 Exception propagation" href="data/propagation.html">5 Exception propagation</a></li>
+<li><a title="18.8.6 nested_exception" href="data/except.nested.html">6 nested_exception</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="18.9 Initializer lists" href="data/support.initlist.html">9 Initializer lists</a><ul class=" hidden">
+<li><a title="18.9.1 Initializer list constructors" href="data/support.initlist.cons.html">1 Initializer list constructors</a></li>
+<li><a title="18.9.2 Initializer list access" href="data/support.initlist.access.html">2 Initializer list access</a></li>
+<li><a title="18.9.3 Initializer list range access" href="data/support.initlist.range.html">3 Initializer list range access</a></li></ul></li>
+<li><a title="18.10 Other runtime support" href="data/support.runtime.html">10 Other runtime support</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="19 Diagnostics library" href="data/diagnostics.general.html">19 Diagnostics library</a><ul class=" hidden">
+<li><a title="19.1 General" href="data/diagnostics.general.html">1 General</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="19.2 Exception classes" href="data/std.exceptions.html">2 Exception classes</a><ul class=" hidden">
+<li><a title="19.2.1 Class logic_error" href="data/logic.error.html">1 Class logic_error</a></li>
+<li><a title="19.2.2 Class domain_error" href="data/domain.error.html">2 Class domain_error</a></li>
+<li><a title="19.2.3 Class invalid_argument" href="data/invalid.argument.html">3 Class invalid_argument</a></li>
+<li><a title="19.2.4 Class length_error" href="data/length.error.html">4 Class length_error</a></li>
+<li><a title="19.2.5 Class out_of_range" href="data/out.of.range.html">5 Class out_of_range</a></li>
+<li><a title="19.2.6 Class runtime_error" href="data/runtime.error.html">6 Class runtime_error</a></li>
+<li><a title="19.2.7 Class range_error" href="data/range.error.html">7 Class range_error</a></li>
+<li><a title="19.2.8 Class overflow_error" href="data/overflow.error.html">8 Class overflow_error</a></li>
+<li><a title="19.2.9 Class underflow_error" href="data/underflow.error.html">9 Class underflow_error</a></li></ul></li>
+<li><a title="19.3 Assertions" href="data/assertions.html">3 Assertions</a></li>
+<li><a title="19.4 Error numbers" href="data/errno.html">4 Error numbers</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="19.5 System error support" href="data/syserr.html">5 System error support</a><ul class=" hidden">
+<li><a href="data/#" class="expand">▷</a><a title="19.5.1 Class error_category" href="data/syserr.errcat.overview.html">1 Class error_category</a><ul class=" hidden">
+<li><a title="19.5.1.1 Class error_category overview" href="data/syserr.errcat.overview.html">1 Class error_category overview</a></li>
+<li><a title="19.5.1.2 Class error_category virtual members" href="data/syserr.errcat.virtuals.html">2 Class error_category virtual members</a></li>
+<li><a title="19.5.1.3 Class error_category non-virtual members" href="data/syserr.errcat.nonvirtuals.html">3 Class error_category non-virtual members</a></li>
+<li><a title="19.5.1.4 Program defined classes derived from error_category" href="data/syserr.errcat.derived.html">4 Program defined classes derived from error_category</a></li>
+<li><a title="19.5.1.5 Error category objects" href="data/syserr.errcat.objects.html">5 Error category objects</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="19.5.2 Class error_code" href="data/syserr.errcode.overview.html">2 Class error_code</a><ul class=" hidden">
+<li><a title="19.5.2.1 Class error_code overview" href="data/syserr.errcode.overview.html">1 Class error_code overview</a></li>
+<li><a title="19.5.2.2 Class error_code constructors" href="data/syserr.errcode.constructors.html">2 Class error_code constructors</a></li>
+<li><a title="19.5.2.3 Class error_code modifiers" href="data/syserr.errcode.modifiers.html">3 Class error_code modifiers</a></li>
+<li><a title="19.5.2.4 Class error_code observers" href="data/syserr.errcode.observers.html">4 Class error_code observers</a></li>
+<li><a title="19.5.2.5 Class error_code non-member functions" href="data/syserr.errcode.nonmembers.html">5 Class error_code non-member functions</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="19.5.3 Class error_condition" href="data/syserr.errcondition.overview.html">3 Class error_condition</a><ul class=" hidden">
+<li><a title="19.5.3.1 Class error_condition overview" href="data/syserr.errcondition.overview.html">1 Class error_condition overview</a></li>
+<li><a title="19.5.3.2 Class error_condition constructors" href="data/syserr.errcondition.constructors.html">2 Class error_condition constructors</a></li>
+<li><a title="19.5.3.3 Class error_condition modifiers" href="data/syserr.errcondition.modifiers.html">3 Class error_condition modifiers</a></li>
+<li><a title="19.5.3.4 Class error_condition observers" href="data/syserr.errcondition.observers.html">4 Class error_condition observers</a></li>
+<li><a title="19.5.3.5 Class error_condition non-member functions" href="data/syserr.errcondition.nonmembers.html">5 Class error_condition non-member functions</a></li></ul></li>
+<li><a title="19.5.4 Comparison operators" href="data/syserr.compare.html">4 Comparison operators</a></li>
+<li><a title="19.5.5 System error hash support" href="data/syserr.hash.html">5 System error hash support</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="19.5.6 Class system_error" href="data/syserr.syserr.overview.html">6 Class system_error</a><ul class=" hidden">
+<li><a title="19.5.6.1 Class system_error overview" href="data/syserr.syserr.overview.html">1 Class system_error overview</a></li>
+<li><a title="19.5.6.2 Class system_error members" href="data/syserr.syserr.members.html">2 Class system_error members</a></li></ul></li></ul></li></ul></li>
+<li><a href="data/#" class="expand">▽</a><a title="20 General utilities library" href="data/utilities.general.html">20 General utilities library</a><ul class="visible">
+<li><a title="20.1 General" href="data/utilities.general.html">1 General</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="20.2 Utility components" href="data/utility.html">2 Utility components</a><ul class=" hidden">
+<li><a title="20.2.1 Operators" href="data/operators.html">1 Operators</a></li>
+<li><a title="20.2.2 swap" href="data/utility.swap.html">2 swap</a></li>
+<li><a title="20.2.3 forward" href="data/forward.html">3 forward</a></li>
+<li><a title="20.2.4 Function template declval" href="data/declval.html">4 Function template declval</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="20.3 Pairs" href="data/pairs.general.html">3 Pairs</a><ul class=" hidden">
+<li><a title="20.3.1 In general" href="data/pairs.general.html">1 In general</a></li>
+<li><a title="20.3.2 Class template pair" href="data/pairs.pair.html">2 Class template pair</a></li>
+<li><a title="20.3.3 Specialized algorithms" href="data/pairs.spec.html">3 Specialized algorithms</a></li>
+<li><a title="20.3.4 Tuple-like access to pair" href="data/pair.astuple.html">4 Tuple-like access to pair</a></li>
+<li><a title="20.3.5 Piecewise construction" href="data/pair.piecewise.html">5 Piecewise construction</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="20.4 Tuples" href="data/tuple.general.html">4 Tuples</a><ul class=" hidden">
+<li><a title="20.4.1 In general" href="data/tuple.general.html">1 In general</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="20.4.2 Class template tuple" href="data/tuple.tuple.html">2 Class template tuple</a><ul class=" hidden">
+<li><a title="20.4.2.1 Construction" href="data/tuple.cnstr.html">1 Construction</a></li>
+<li><a title="20.4.2.2 Assignment" href="data/tuple.assign.html">2 Assignment</a></li>
+<li><a title="20.4.2.3 swap" href="data/tuple.swap.html">3 swap</a></li>
+<li><a title="20.4.2.4 Tuple creation functions" href="data/tuple.creation.html">4 Tuple creation functions</a></li>
+<li><a title="20.4.2.5 Tuple helper classes" href="data/tuple.helper.html">5 Tuple helper classes</a></li>
+<li><a title="20.4.2.6 Element access" href="data/tuple.elem.html">6 Element access</a></li>
+<li><a title="20.4.2.7 Relational operators" href="data/tuple.rel.html">7 Relational operators</a></li>
+<li><a title="20.4.2.8 Tuple traits" href="data/tuple.traits.html">8 Tuple traits</a></li>
+<li><a title="20.4.2.9 Tuple specialized algorithms" href="data/tuple.special.html">9 Tuple specialized algorithms</a></li></ul></li></ul></li>
+<li><a href="data/#" class="expand">▽</a><a title="20.5 Class template bitset" href="data/template.bitset.html">5 Class template bitset</a><ul class="visible">
+<li><a title="20.5.1 bitset constructors" href="data/bitset.cons.html">1 bitset constructors</a></li>
+<li><a title="20.5.2 bitset members" href="data/bitset.members.html">2 bitset members</a></li>
+<li><a title="20.5.3 bitset hash support" href="data/bitset.hash.html">3 bitset hash support</a></li>
+<li><a title="20.5.4 bitset operators" href="data/bitset.operators.html">4 bitset operators</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="20.6 Memory" href="data/memory.general.html">6 Memory</a><ul class=" hidden">
+<li><a title="20.6.1 In general" href="data/memory.general.html">1 In general</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="20.6.3 Pointer traits" href="data/pointer.traits.html">3 Pointer traits</a><ul class=" hidden">
+<li><a title="20.6.3.1 Pointer traits member types" href="data/pointer.traits.types.html">1 Pointer traits member types</a></li>
+<li><a title="20.6.3.2 Pointer traits member functions" href="data/pointer.traits.functions.html">2 Pointer traits member functions</a></li></ul></li>
+<li><a title="20.6.4 Pointer safety" href="data/util.dynamic.safety.html">4 Pointer safety</a></li>
+<li><a title="20.6.5 Align" href="data/ptr.align.html">5 Align</a></li>
+<li><a title="20.6.6 Allocator argument tag" href="data/allocator.tag.html">6 Allocator argument tag</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="20.6.7 uses_allocator" href="data/allocator.uses.trait.html">7 uses_allocator</a><ul class=" hidden">
+<li><a title="20.6.7.1 uses_allocator trait" href="data/allocator.uses.trait.html">1 uses_allocator trait</a></li>
+<li><a title="20.6.7.2 uses-allocator construction" href="data/allocator.uses.construction.html">2 uses-allocator construction</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="20.6.8 Allocator traits" href="data/allocator.traits.html">8 Allocator traits</a><ul class=" hidden">
+<li><a title="20.6.8.1 Allocator traits member types" href="data/allocator.traits.types.html">1 Allocator traits member types</a></li>
+<li><a title="20.6.8.2 Allocator traits static member functions" href="data/allocator.traits.members.html">2 Allocator traits static member functions</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="20.6.9 The default allocator" href="data/default.allocator.html">9 The default allocator</a><ul class=" hidden">
+<li><a title="20.6.9.1 allocator members" href="data/allocator.members.html">1 allocator members</a></li>
+<li><a title="20.6.9.2 allocator globals" href="data/allocator.globals.html">2 allocator globals</a></li></ul></li>
+<li><a title="20.6.10 Raw storage iterator" href="data/storage.iterator.html">10 Raw storage iterator</a></li>
+<li><a title="20.6.11 Temporary buffers" href="data/temporary.buffer.html">11 Temporary buffers</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="20.6.12 Specialized algorithms" href="data/specialized.algorithms.html">12 Specialized algorithms</a><ul class=" hidden">
+<li><a title="20.6.12.1 addressof" href="data/specialized.addressof.html">1 addressof</a></li>
+<li><a title="20.6.12.2 uninitialized_copy" href="data/uninitialized.copy.html">2 uninitialized_copy</a></li>
+<li><a title="20.6.12.3 uninitialized_fill" href="data/uninitialized.fill.html">3 uninitialized_fill</a></li>
+<li><a title="20.6.12.4 uninitialized_fill_n" href="data/uninitialized.fill.n.html">4 uninitialized_fill_n</a></li></ul></li>
+<li><a title="20.6.13 C Library" href="data/c.malloc.html">13 C Library</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="20.7 Smart pointers" href="data/unique.ptr.html">7 Smart pointers</a><ul class=" hidden">
+<li><a href="data/#" class="expand">▷</a><a title="20.7.1 Class template unique_ptr" href="data/unique.ptr.html">1 Class template unique_ptr</a><ul class=" hidden">
+<li><a href="data/#" class="expand">▷</a><a title="20.7.1.1 Default deleters" href="data/unique.ptr.dltr.general.html">1 Default deleters</a><ul class=" hidden">
+<li><a title="20.7.1.1.1 In general" href="data/unique.ptr.dltr.general.html">1 In general</a></li>
+<li><a title="20.7.1.1.2 default_delete" href="data/unique.ptr.dltr.dflt.html">2 default_delete</a></li>
+<li><a title="20.7.1.1.3 default_delete<T[]>" href="data/unique.ptr.dltr.dflt1.html">3 default_delete&lt;T[]&gt;</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="20.7.1.2 unique_ptr for single objects" href="data/unique.ptr.single.html">2 unique_ptr for single objects</a><ul class=" hidden">
+<li><a title="20.7.1.2.1 unique_ptr constructors" href="data/unique.ptr.single.ctor.html">1 unique_ptr constructors</a></li>
+<li><a title="20.7.1.2.2 unique_ptr destructor" href="data/unique.ptr.single.dtor.html">2 unique_ptr destructor</a></li>
+<li><a title="20.7.1.2.3 unique_ptr assignment" href="data/unique.ptr.single.asgn.html">3 unique_ptr assignment</a></li>
+<li><a title="20.7.1.2.4 unique_ptr observers" href="data/unique.ptr.single.observers.html">4 unique_ptr observers</a></li>
+<li><a title="20.7.1.2.5 unique_ptr modifiers" href="data/unique.ptr.single.modifiers.html">5 unique_ptr modifiers</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="20.7.1.3 unique_ptr for array objects with a runtime length" href="data/unique.ptr.runtime.html">3 unique_ptr for array objects with a runtime length</a><ul class=" hidden">
+<li><a title="20.7.1.3.1 unique_ptr constructors" href="data/unique.ptr.runtime.ctor.html">1 unique_ptr constructors</a></li>
+<li><a title="20.7.1.3.2 unique_ptr observers" href="data/unique.ptr.runtime.observers.html">2 unique_ptr observers</a></li>
+<li><a title="20.7.1.3.3 unique_ptr modifiers" href="data/unique.ptr.runtime.modifiers.html">3 unique_ptr modifiers</a></li></ul></li>
+<li><a title="20.7.1.4 unique_ptr specialized algorithms" href="data/unique.ptr.special.html">4 unique_ptr specialized algorithms</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="20.7.2 Shared-ownership pointers" href="data/util.smartptr.weakptr.html">2 Shared-ownership pointers</a><ul class=" hidden">
+<li><a title="20.7.2.1 Class bad_weak_ptr" href="data/util.smartptr.weakptr.html">1 Class bad_weak_ptr</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="20.7.2.2 Class template shared_ptr" href="data/util.smartptr.shared.html">2 Class template shared_ptr</a><ul class=" hidden">
+<li><a title="20.7.2.2.1 shared_ptr constructors" href="data/util.smartptr.shared.const.html">1 shared_ptr constructors</a></li>
+<li><a title="20.7.2.2.2 shared_ptr destructor" href="data/util.smartptr.shared.dest.html">2 shared_ptr destructor</a></li>
+<li><a title="20.7.2.2.3 shared_ptr assignment" href="data/util.smartptr.shared.assign.html">3 shared_ptr assignment</a></li>
+<li><a title="20.7.2.2.4 shared_ptr modifiers" href="data/util.smartptr.shared.mod.html">4 shared_ptr modifiers</a></li>
+<li><a title="20.7.2.2.5 shared_ptr observers" href="data/util.smartptr.shared.obs.html">5 shared_ptr observers</a></li>
+<li><a title="20.7.2.2.6 shared_ptr creation" href="data/util.smartptr.shared.create.html">6 shared_ptr creation</a></li>
+<li><a title="20.7.2.2.7 shared_ptr comparison" href="data/util.smartptr.shared.cmp.html">7 shared_ptr comparison</a></li>
+<li><a title="20.7.2.2.8 shared_ptr specialized algorithms" href="data/util.smartptr.shared.spec.html">8 shared_ptr specialized algorithms</a></li>
+<li><a title="20.7.2.2.9 shared_ptr casts" href="data/util.smartptr.shared.cast.html">9 shared_ptr casts</a></li>
+<li><a title="20.7.2.2.10 get_deleter" href="data/util.smartptr.getdeleter.html">10 get_deleter</a></li>
+<li><a title="20.7.2.2.11 shared_ptr I/O" href="data/util.smartptr.shared.io.html">11 shared_ptr I/O</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="20.7.2.3 Class template weak_ptr" href="data/util.smartptr.weak.html">3 Class template weak_ptr</a><ul class=" hidden">
+<li><a title="20.7.2.3.1 weak_ptr constructors" href="data/util.smartptr.weak.const.html">1 weak_ptr constructors</a></li>
+<li><a title="20.7.2.3.2 weak_ptr destructor" href="data/util.smartptr.weak.dest.html">2 weak_ptr destructor</a></li>
+<li><a title="20.7.2.3.3 weak_ptr assignment" href="data/util.smartptr.weak.assign.html">3 weak_ptr assignment</a></li>
+<li><a title="20.7.2.3.4 weak_ptr modifiers" href="data/util.smartptr.weak.mod.html">4 weak_ptr modifiers</a></li>
+<li><a title="20.7.2.3.5 weak_ptr observers" href="data/util.smartptr.weak.obs.html">5 weak_ptr observers</a></li>
+<li><a title="20.7.2.3.6 weak_ptr specialized algorithms" href="data/util.smartptr.weak.spec.html">6 weak_ptr specialized algorithms</a></li>
+<li><a title="20.7.2.3.7 Class template owner_less" href="data/util.smartptr.ownerless.html">7 Class template owner_less</a></li></ul></li>
+<li><a title="20.7.2.4 Class template enable_shared_from_this" href="data/util.smartptr.enab.html">4 Class template enable_shared_from_this</a></li>
+<li><a title="20.7.2.5 shared_ptr atomic access" href="data/util.smartptr.shared.atomic.html">5 shared_ptr atomic access</a></li>
+<li><a title="20.7.2.6 Hash support" href="data/util.smartptr.hash.html">6 Hash support</a></li></ul></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="20.8 Function objects" href="data/function.objects.html">8 Function objects</a><ul class=" hidden">
+<li><a title="20.8.1 Definitions" href="data/func.def.html">1 Definitions</a></li>
+<li><a title="20.8.2 Requirements" href="data/func.require.html">2 Requirements</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="20.8.3 Class template reference_wrapper" href="data/refwrap.const.html">3 Class template reference_wrapper</a><ul class=" hidden">
+<li><a title="20.8.3.1 reference_wrapper construct" href="data/refwrap.const.html">1 reference_wrapper construct</a></li>
+<li><a title="20.8.3.2 reference_wrapper assignment" href="data/refwrap.assign.html">2 reference_wrapper assignment</a></li>
+<li><a title="20.8.3.3 reference_wrapper access" href="data/refwrap.access.html">3 reference_wrapper access</a></li>
+<li><a title="20.8.3.4 reference_wrapper invocation" href="data/refwrap.invoke.html">4 reference_wrapper invocation</a></li>
+<li><a title="20.8.3.5 reference_wrapper helper functions" href="data/refwrap.helpers.html">5 reference_wrapper helper functions</a></li></ul></li>
+<li><a title="20.8.4 Arithmetic operations" href="data/arithmetic.operations.html">4 Arithmetic operations</a></li>
+<li><a title="20.8.5 Comparisons" href="data/comparisons.html">5 Comparisons</a></li>
+<li><a title="20.8.6 Logical operations" href="data/logical.operations.html">6 Logical operations</a></li>
+<li><a title="20.8.7 Bitwise operations" href="data/bitwise.operations.html">7 Bitwise operations</a></li>
+<li><a title="20.8.8 Negators" href="data/negators.html">8 Negators</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="20.8.9 Function template bind" href="data/bind.html">9 Function template bind</a><ul class=" hidden">
+<li><a href="data/#" class="expand">▷</a><a title="20.8.9.1 Function object binders" href="data/func.bind.html">1 Function object binders</a><ul class=" hidden">
+<li><a title="20.8.9.1.1 Class template is_bind_expression" href="data/func.bind.isbind.html">1 Class template is_bind_expression</a></li>
+<li><a title="20.8.9.1.2 Function template bind" href="data/func.bind.bind.html">2 Function template bind</a></li>
+<li><a title="20.8.9.1.3 Placeholders" href="data/func.bind.place.html">3 Placeholders</a></li></ul></li></ul></li>
+<li><a title="20.8.10 Function template mem_fn" href="data/func.memfn.html">10 Function template mem_fn</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="20.8.11 Polymorphic function wrappers" href="data/func.wrap.html">11 Polymorphic function wrappers</a><ul class=" hidden">
+<li><a href="data/#" class="expand">▷</a><a title="20.8.11.1 Class bad_function_call" href="data/func.wrap.badcall.html">1 Class bad_function_call</a><ul class=" hidden">
+<li><a title="20.8.11.1.1 bad_function_call constructor" href="data/func.wrap.badcall.const.html">1 bad_function_call constructor</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="20.8.11.2 Class template function" href="data/func.wrap.func.html">2 Class template function</a><ul class=" hidden">
+<li><a title="20.8.11.2.1 function construct" href="data/func.wrap.func.con.html">1 function construct</a></li>
+<li><a title="20.8.11.2.2 function modifiers" href="data/func.wrap.func.mod.html">2 function modifiers</a></li>
+<li><a title="20.8.11.2.3 function capacity" href="data/func.wrap.func.cap.html">3 function capacity</a></li>
+<li><a title="20.8.11.2.4 function invocation" href="data/func.wrap.func.inv.html">4 function invocation</a></li>
+<li><a title="20.8.11.2.5 function target access" href="data/func.wrap.func.targ.html">5 function target access</a></li>
+<li><a title="20.8.11.2.6 Null pointer comparison operators" href="data/func.wrap.func.nullptr.html">6 Null pointer comparison operators</a></li>
+<li><a title="20.8.11.2.7 Specialized algorithms" href="data/func.wrap.func.alg.html">7 Specialized algorithms</a></li></ul></li></ul></li>
+<li><a title="20.8.12 Class template hash" href="data/unord.hash.html">12 Class template hash</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="20.9 Metaprogramming and type traits" href="data/meta.html">9 Metaprogramming and type traits</a><ul class=" hidden">
+<li><a title="20.9.1 Requirements" href="data/meta.rqmts.html">1 Requirements</a></li>
+<li><a title="20.9.2 Header <type_traits> synopsis" href="data/meta.type.synop.html">2 Header &lt;type_traits&gt; synopsis</a></li>
+<li><a title="20.9.3 Helper classes" href="data/meta.help.html">3 Helper classes</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="20.9.4 Unary Type Traits" href="data/meta.unary.html">4 Unary Type Traits</a><ul class=" hidden">
+<li><a title="20.9.4.1 Primary Type Categories" href="data/meta.unary.cat.html">1 Primary Type Categories</a></li>
+<li><a title="20.9.4.2 Composite type traits" href="data/meta.unary.comp.html">2 Composite type traits</a></li>
+<li><a title="20.9.4.3 Type properties" href="data/meta.unary.prop.html">3 Type properties</a></li></ul></li>
+<li><a title="20.9.5 Type property queries" href="data/meta.unary.prop.query.html">5 Type property queries</a></li>
+<li><a title="20.9.6 Relationships between types" href="data/meta.rel.html">6 Relationships between types</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="20.9.7 Transformations between types" href="data/meta.trans.html">7 Transformations between types</a><ul class=" hidden">
+<li><a title="20.9.7.1 Const-volatile modifications" href="data/meta.trans.cv.html">1 Const-volatile modifications</a></li>
+<li><a title="20.9.7.2 Reference modifications" href="data/meta.trans.ref.html">2 Reference modifications</a></li>
+<li><a title="20.9.7.3 Sign modifications" href="data/meta.trans.sign.html">3 Sign modifications</a></li>
+<li><a title="20.9.7.4 Array modifications" href="data/meta.trans.arr.html">4 Array modifications</a></li>
+<li><a title="20.9.7.5 Pointer modifications" href="data/meta.trans.ptr.html">5 Pointer modifications</a></li>
+<li><a title="20.9.7.6 Other transformations" href="data/meta.trans.other.html">6 Other transformations</a></li></ul></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="20.10 Compile-time rational arithmetic" href="data/ratio.general.html">10 Compile-time rational arithmetic</a><ul class=" hidden">
+<li><a title="20.10.1 In general" href="data/ratio.general.html">1 In general</a></li>
+<li><a title="20.10.2 Header <ratio> synopsis" href="data/ratio.syn.html">2 Header &lt;ratio&gt; synopsis</a></li>
+<li><a title="20.10.3 Class template ratio" href="data/ratio.ratio.html">3 Class template ratio</a></li>
+<li><a title="20.10.4 Arithmetic on ratios" href="data/ratio.arithmetic.html">4 Arithmetic on ratios</a></li>
+<li><a title="20.10.5 Comparison of ratios" href="data/ratio.comparison.html">5 Comparison of ratios</a></li>
+<li><a title="20.10.6 SI types for ratio" href="data/ratio.si.html">6 SI types for ratio</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="20.11 Time utilities" href="data/time.general.html">11 Time utilities</a><ul class=" hidden">
+<li><a title="20.11.1 In general" href="data/time.general.html">1 In general</a></li>
+<li><a title="20.11.2 Header <chrono> synopsis" href="data/time.syn.html">2 Header &lt;chrono&gt; synopsis</a></li>
+<li><a title="20.11.3 Clock requirements" href="data/time.clock.req.html">3 Clock requirements</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="20.11.4 Time-related traits" href="data/time.traits.is_fp.html">4 Time-related traits</a><ul class=" hidden">
+<li><a title="20.11.4.1 treat_as_floating_point" href="data/time.traits.is_fp.html">1 treat_as_floating_point</a></li>
+<li><a title="20.11.4.2 duration_values" href="data/time.traits.duration_values.html">2 duration_values</a></li>
+<li><a title="20.11.4.3 Specializations of common_type" href="data/time.traits.specializations.html">3 Specializations of common_type</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="20.11.5 Class template duration" href="data/time.duration.html">5 Class template duration</a><ul class=" hidden">
+<li><a title="20.11.5.1 duration constructors" href="data/time.duration.cons.html">1 duration constructors</a></li>
+<li><a title="20.11.5.2 duration observer" href="data/time.duration.observer.html">2 duration observer</a></li>
+<li><a title="20.11.5.3 duration arithmetic" href="data/time.duration.arithmetic.html">3 duration arithmetic</a></li>
+<li><a title="20.11.5.4 duration special values" href="data/time.duration.special.html">4 duration special values</a></li>
+<li><a title="20.11.5.5 duration non-member arithmetic" href="data/time.duration.nonmember.html">5 duration non-member arithmetic</a></li>
+<li><a title="20.11.5.6 duration comparisons" href="data/time.duration.comparisons.html">6 duration comparisons</a></li>
+<li><a title="20.11.5.7 duration_cast" href="data/time.duration.cast.html">7 duration_cast</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="20.11.6 Class template time_point" href="data/time.point.html">6 Class template time_point</a><ul class=" hidden">
+<li><a title="20.11.6.1 time_point constructors" href="data/time.point.cons.html">1 time_point constructors</a></li>
+<li><a title="20.11.6.2 time_point observer" href="data/time.point.observer.html">2 time_point observer</a></li>
+<li><a title="20.11.6.3 time_point arithmetic" href="data/time.point.arithmetic.html">3 time_point arithmetic</a></li>
+<li><a title="20.11.6.4 time_point special values" href="data/time.point.special.html">4 time_point special values</a></li>
+<li><a title="20.11.6.5 time_point non-member arithmetic" href="data/time.point.nonmember.html">5 time_point non-member arithmetic</a></li>
+<li><a title="20.11.6.6 time_point comparisons" href="data/time.point.comparisons.html">6 time_point comparisons</a></li>
+<li><a title="20.11.6.7 time_point_cast" href="data/time.point.cast.html">7 time_point_cast</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="20.11.7 Clocks" href="data/time.clock.html">7 Clocks</a><ul class=" hidden">
+<li><a title="20.11.7.1 Class system_clock" href="data/time.clock.system.html">1 Class system_clock</a></li>
+<li><a title="20.11.7.2 Class monotonic_clock" href="data/time.clock.steady.html">2 Class monotonic_clock</a></li>
+<li><a title="20.11.7.3 Class high_resolution_clock" href="data/time.clock.hires.html">3 Class high_resolution_clock</a></li></ul></li>
+<li><a title="20.11.8 Date and time functions" href="data/date.time.html">8 Date and time functions</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="20.12 Class template scoped_allocator_adaptor" href="data/allocator.adaptor.syn.html">12 Class template scoped_allocator_adaptor</a><ul class=" hidden">
+<li><a title="20.12.1 Header <scoped_allocator> synopsis" href="data/allocator.adaptor.syn.html">1 Header &lt;scoped_allocator&gt; synopsis</a></li>
+<li><a title="20.12.2 Scoped allocator adaptor member types" href="data/allocator.adaptor.types.html">2 Scoped allocator adaptor member types</a></li>
+<li><a title="20.12.3 Scoped allocator adaptor constructors" href="data/allocator.adaptor.cnstr.html">3 Scoped allocator adaptor constructors</a></li>
+<li><a title="20.12.4 Scoped allocator adaptor members" href="data/allocator.adaptor.members.html">4 Scoped allocator adaptor members</a></li>
+<li><a title="20.12.5 Scoped allocator operators" href="data/scoped.adaptor.operators.html">5 Scoped allocator operators</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="20.13 Class type_index" href="data/type.index.synopsis.html">13 Class type_index</a><ul class=" hidden">
+<li><a title="20.13.1 Header <typeindex> synopsis" href="data/type.index.synopsis.html">1 Header &lt;typeindex&gt; synopsis</a></li>
+<li><a title="20.13.2 type_index overview" href="data/type.index.overview.html">2 type_index overview</a></li>
+<li><a title="20.13.3 type_index members" href="data/type.index.members.html">3 type_index members</a></li>
+<li><a title="20.13.4 Template specialization hash<type_index>" href="data/type.index.hash.html">4 Template specialization hash&lt;type_index&gt;</a></li></ul></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="21 Strings library" href="data/strings.general.html">21 Strings library</a><ul class=" hidden">
+<li><a title="21.1 General" href="data/strings.general.html">1 General</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="21.2 Character traits" href="data/char.traits.html">2 Character traits</a><ul class=" hidden">
+<li><a title="21.2.1 Character traits requirements" href="data/char.traits.require.html">1 Character traits requirements</a></li>
+<li><a title="21.2.2 Traits typedefs" href="data/char.traits.typedefs.html">2 Traits typedefs</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="21.2.3 char_traits specializations" href="data/char.traits.specializations.html">3 char_traits specializations</a><ul class=" hidden">
+<li><a title="21.2.3.1 struct char_traits<char>" href="data/char.traits.specializations.char.html">1 struct char_traits&lt;char&gt;</a></li>
+<li><a title="21.2.3.2 struct char_traits<char16_t>" href="data/char.traits.specializations.char16_t.html">2 struct char_traits&lt;char16_t&gt;</a></li>
+<li><a title="21.2.3.3 struct char_traits<char32_t>" href="data/char.traits.specializations.char32_t.html">3 struct char_traits&lt;char32_t&gt;</a></li>
+<li><a title="21.2.3.4 struct char_traits<wchar_t>" href="data/char.traits.specializations.wchar.t.html">4 struct char_traits&lt;wchar_t&gt;</a></li></ul></li></ul></li>
+<li><a title="21.3 String classes" href="data/string.classes.html">3 String classes</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="21.4 Class template basic_string" href="data/string.require.html">4 Class template basic_string</a><ul class=" hidden">
+<li><a title="21.4.1 basic_string general requirements" href="data/string.require.html">1 basic_string general requirements</a></li>
+<li><a title="21.4.2 basic_string constructors and assignment operators" href="data/string.cons.html">2 basic_string constructors and assignment operators</a></li>
+<li><a title="21.4.3 basic_string iterator support" href="data/string.iterators.html">3 basic_string iterator support</a></li>
+<li><a title="21.4.4 basic_string capacity" href="data/string.capacity.html">4 basic_string capacity</a></li>
+<li><a title="21.4.5 basic_string element access" href="data/string.access.html">5 basic_string element access</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="21.4.6 basic_string modifiers" href="data/string.op+=.html">6 basic_string modifiers</a><ul class=" hidden">
+<li><a title="21.4.6.1 basic_string::operator+=" href="data/string.op+=.html">1 basic_string::operator+=</a></li>
+<li><a title="21.4.6.2 basic_string::append" href="data/string.append.html">2 basic_string::append</a></li>
+<li><a title="21.4.6.3 basic_string::assign" href="data/string.assign.html">3 basic_string::assign</a></li>
+<li><a title="21.4.6.4 basic_string::insert" href="data/string.insert.html">4 basic_string::insert</a></li>
+<li><a title="21.4.6.5 basic_string::erase" href="data/string.erase.html">5 basic_string::erase</a></li>
+<li><a title="21.4.6.6 basic_string::replace" href="data/string.replace.html">6 basic_string::replace</a></li>
+<li><a title="21.4.6.7 basic_string::copy" href="data/string.copy.html">7 basic_string::copy</a></li>
+<li><a title="21.4.6.8 basic_string::swap" href="data/string.swap.html">8 basic_string::swap</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="21.4.7 basic_string string operations" href="data/string.accessors.html">7 basic_string string operations</a><ul class=" hidden">
+<li><a title="21.4.7.1 basic_string accessors" href="data/string.accessors.html">1 basic_string accessors</a></li>
+<li><a title="21.4.7.2 basic_string::find" href="data/string.find.html">2 basic_string::find</a></li>
+<li><a title="21.4.7.3 basic_string::rfind" href="data/string.rfind.html">3 basic_string::rfind</a></li>
+<li><a title="21.4.7.4 basic_string::find_first_of" href="data/string.find.first.of.html">4 basic_string::find_first_of</a></li>
+<li><a title="21.4.7.5 basic_string::find_last_of" href="data/string.find.last.of.html">5 basic_string::find_last_of</a></li>
+<li><a title="21.4.7.6 basic_string::find_first_not_of" href="data/string.find.first.not.of.html">6 basic_string::find_first_not_of</a></li>
+<li><a title="21.4.7.7 basic_string::find_last_not_of" href="data/string.find.last.not.of.html">7 basic_string::find_last_not_of</a></li>
+<li><a title="21.4.7.8 basic_string::substr" href="data/string.substr.html">8 basic_string::substr</a></li>
+<li><a title="21.4.7.9 basic_string::compare" href="data/string.compare.html">9 basic_string::compare</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="21.4.8 basic_string non-member functions" href="data/string.op+.html">8 basic_string non-member functions</a><ul class=" hidden">
+<li><a title="21.4.8.1 operator+" href="data/string.op+.html">1 operator+</a></li>
+<li><a title="21.4.8.2 operator==" href="data/string.operator==.html">2 operator==</a></li>
+<li><a title="21.4.8.3 operator!=" href="data/string.op!=.html">3 operator!=</a></li>
+<li><a title="21.4.8.4 operator<" href="data/string.op.lt.html">4 operator&lt;</a></li>
+<li><a title="21.4.8.5 operator>" href="data/string.op.gt.html">5 operator&gt;</a></li>
+<li><a title="21.4.8.6 operator<=" href="data/string.op.le.html">6 operator&lt;=</a></li>
+<li><a title="21.4.8.7 operator>=" href="data/string.op.ge.html">7 operator&gt;=</a></li>
+<li><a title="21.4.8.8 swap" href="data/string.special.html">8 swap</a></li>
+<li><a title="21.4.8.9 Inserters and extractors" href="data/string.io.html">9 Inserters and extractors</a></li></ul></li></ul></li>
+<li><a title="21.5 Numeric conversions" href="data/string.conversions.html">5 Numeric conversions</a></li>
+<li><a title="21.6 Hash support" href="data/basic.string.hash.html">6 Hash support</a></li>
+<li><a title="21.7 Null-terminated sequence utilities" href="data/c.strings.html">7 Null-terminated sequence utilities</a></li></ul></li>
+<li><a href="data/#" class="expand">▽</a><a title="22 Localization library" href="data/localization.general.html">22 Localization library</a><ul class="visible">
+<li><a title="22.1 General" href="data/localization.general.html">1 General</a></li>
+<li><a title="22.2 Header <locale> synopsis" href="data/locale.syn.html">2 Header &lt;locale&gt; synopsis</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="22.3 Locales" href="data/locale.html">3 Locales</a><ul class=" hidden">
+<li><a href="data/#" class="expand">▷</a><a title="22.3.1 Class locale" href="data/locale.html">1 Class locale</a><ul class=" hidden">
+<li><a href="data/#" class="expand">▷</a><a title="22.3.1.1 locale types" href="data/locale.category.html">1 locale types</a><ul class=" hidden">
+<li><a title="22.3.1.1.1 Type locale::category" href="data/locale.category.html">1 Type locale::category</a></li>
+<li><a title="22.3.1.1.2 Class locale::facet" href="data/locale.facet.html">2 Class locale::facet</a></li>
+<li><a title="22.3.1.1.3 Class locale::id" href="data/locale.id.html">3 Class locale::id</a></li></ul></li>
+<li><a title="22.3.1.2 locale constructors and destructor" href="data/locale.cons.html">2 locale constructors and destructor</a></li>
+<li><a title="22.3.1.3 locale members" href="data/locale.members.html">3 locale members</a></li>
+<li><a title="22.3.1.4 locale operators" href="data/locale.operators.html">4 locale operators</a></li>
+<li><a title="22.3.1.5 locale static members" href="data/locale.statics.html">5 locale static members</a></li></ul></li>
+<li><a title="22.3.2 locale globals" href="data/locale.global.templates.html">2 locale globals</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="22.3.3 Convenience interfaces" href="data/classification.html">3 Convenience interfaces</a><ul class=" hidden">
+<li><a title="22.3.3.1 Character classification" href="data/classification.html">1 Character classification</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="22.3.3.2 Conversions" href="data/conversions.character.html">2 Conversions</a><ul class=" hidden">
+<li><a title="22.3.3.2.1 Character conversions" href="data/conversions.character.html">1 Character conversions</a></li>
+<li><a title="22.3.3.2.2 string conversions" href="data/conversions.string.html">2 string conversions</a></li>
+<li><a title="22.3.3.2.3 Buffer conversions" href="data/conversions.buffer.html">3 Buffer conversions</a></li></ul></li></ul></li></ul></li>
+<li><a href="data/#" class="expand">▽</a><a title="22.4 Standard locale categories" href="data/locale.categories.html">4 Standard locale categories</a><ul class="visible">
+<li><a href="data/#" class="expand">▽</a><a title="22.4.1 The ctype category" href="data/category.ctype.html">1 The ctype category</a><ul class="visible">
+<li><a href="data/#" class="expand">▷</a><a title="22.4.1.1 Class template ctype" href="data/locale.ctype.html">1 Class template ctype</a><ul class=" hidden">
+<li><a title="22.4.1.1.1 ctype members" href="data/locale.ctype.members.html">1 ctype members</a></li>
+<li><a title="22.4.1.1.2 ctype virtual functions" href="data/locale.ctype.virtuals.html">2 ctype virtual functions</a></li></ul></li>
+<li><a title="22.4.1.2 Class template ctype_byname" href="data/locale.ctype.byname.html">2 Class template ctype_byname</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="22.4.1.3 ctype specializations" href="data/facet.ctype.special.html">3 ctype specializations</a><ul class=" hidden">
+<li><a title="22.4.1.3.1 ctype<char> destructor" href="data/facet.ctype.char.dtor.html">1 ctype&lt;char&gt; destructor</a></li>
+<li><a title="22.4.1.3.2 ctype<char> members" href="data/facet.ctype.char.members.html">2 ctype&lt;char&gt; members</a></li>
+<li><a title="22.4.1.3.3 ctype<char> static members" href="data/facet.ctype.char.statics.html">3 ctype&lt;char&gt; static members</a></li>
+<li><a title="22.4.1.3.4 ctype<char> virtual functions" href="data/facet.ctype.char.virtuals.html">4 ctype&lt;char&gt; virtual functions</a></li></ul></li>
+<li><a href="data/#" class="expand">▽</a><a title="22.4.1.4 Class template codecvt" href="data/locale.codecvt.html">4 Class template codecvt</a><ul class="visible">
+<li><a title="22.4.1.4.1 codecvt members" href="data/locale.codecvt.members.html">1 codecvt members</a></li>
+<li><a title="22.4.1.4.2 codecvt virtual functions" href="data/locale.codecvt.virtuals.html">2 codecvt virtual functions</a></li></ul></li>
+<li><a title="22.4.1.5 Class template codecvt_byname" href="data/locale.codecvt.byname.html">5 Class template codecvt_byname</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="22.4.2 The numeric category" href="data/category.numeric.html">2 The numeric category</a><ul class=" hidden">
+<li><a href="data/#" class="expand">▷</a><a title="22.4.2.1 Class template num_get" href="data/locale.num.get.html">1 Class template num_get</a><ul class=" hidden">
+<li><a title="22.4.2.1.1 num_get members" href="data/facet.num.get.members.html">1 num_get members</a></li>
+<li><a title="22.4.2.1.2 num_get virtual functions" href="data/facet.num.get.virtuals.html">2 num_get virtual functions</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="22.4.2.2 Class template num_put" href="data/locale.nm.put.html">2 Class template num_put</a><ul class=" hidden">
+<li><a title="22.4.2.2.1 num_put members" href="data/facet.num.put.members.html">1 num_put members</a></li>
+<li><a title="22.4.2.2.2 num_put virtual functions" href="data/facet.num.put.virtuals.html">2 num_put virtual functions</a></li></ul></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="22.4.3 The numeric punctuation facet" href="data/locale.numpunct.html">3 The numeric punctuation facet</a><ul class=" hidden">
+<li><a href="data/#" class="expand">▷</a><a title="22.4.3.1 Class template numpunct" href="data/locale.numpunct.html">1 Class template numpunct</a><ul class=" hidden">
+<li><a title="22.4.3.1.1 numpunct members" href="data/facet.numpunct.members.html">1 numpunct members</a></li>
+<li><a title="22.4.3.1.2 numpunct virtual functions" href="data/facet.numpunct.virtuals.html">2 numpunct virtual functions</a></li></ul></li>
+<li><a title="22.4.3.2 Class template numpunct_byname" href="data/locale.numpunct.byname.html">2 Class template numpunct_byname</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="22.4.4 The collate category" href="data/locale.collate.html">4 The collate category</a><ul class=" hidden">
+<li><a href="data/#" class="expand">▷</a><a title="22.4.4.1 Class template collate" href="data/locale.collate.html">1 Class template collate</a><ul class=" hidden">
+<li><a title="22.4.4.1.1 collate members" href="data/locale.collate.members.html">1 collate members</a></li>
+<li><a title="22.4.4.1.2 collate virtual functions" href="data/locale.collate.virtuals.html">2 collate virtual functions</a></li></ul></li>
+<li><a title="22.4.4.2 Class template collate_byname" href="data/locale.collate.byname.html">2 Class template collate_byname</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="22.4.5 The time category" href="data/category.time.html">5 The time category</a><ul class=" hidden">
+<li><a href="data/#" class="expand">▷</a><a title="22.4.5.1 Class template time_get" href="data/locale.time.get.html">1 Class template time_get</a><ul class=" hidden">
+<li><a title="22.4.5.1.1 time_get members" href="data/locale.time.get.members.html">1 time_get members</a></li>
+<li><a title="22.4.5.1.2 time_get virtual functions" href="data/locale.time.get.virtuals.html">2 time_get virtual functions</a></li></ul></li>
+<li><a title="22.4.5.2 Class template time_get_byname" href="data/locale.time.get.byname.html">2 Class template time_get_byname</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="22.4.5.3 Class template time_put" href="data/locale.time.put.html">3 Class template time_put</a><ul class=" hidden">
+<li><a title="22.4.5.3.1 time_put members" href="data/locale.time.put.members.html">1 time_put members</a></li>
+<li><a title="22.4.5.3.2 time_put virtual functions" href="data/locale.time.put.virtuals.html">2 time_put virtual functions</a></li></ul></li>
+<li><a title="22.4.5.4 Class template time_put_byname" href="data/locale.time.put.byname.html">4 Class template time_put_byname</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="22.4.6 The monetary category" href="data/category.monetary.html">6 The monetary category</a><ul class=" hidden">
+<li><a href="data/#" class="expand">▷</a><a title="22.4.6.1 Class template money_get" href="data/locale.money.get.html">1 Class template money_get</a><ul class=" hidden">
+<li><a title="22.4.6.1.1 money_get members" href="data/locale.money.get.members.html">1 money_get members</a></li>
+<li><a title="22.4.6.1.2 money_get virtual functions" href="data/locale.money.get.virtuals.html">2 money_get virtual functions</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="22.4.6.2 Class template money_put" href="data/locale.money.put.html">2 Class template money_put</a><ul class=" hidden">
+<li><a title="22.4.6.2.1 money_put members" href="data/locale.money.put.members.html">1 money_put members</a></li>
+<li><a title="22.4.6.2.2 money_put virtual functions" href="data/locale.money.put.virtuals.html">2 money_put virtual functions</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="22.4.6.3 Class template moneypunct" href="data/locale.moneypunct.html">3 Class template moneypunct</a><ul class=" hidden">
+<li><a title="22.4.6.3.1 moneypunct members" href="data/locale.moneypunct.members.html">1 moneypunct members</a></li>
+<li><a title="22.4.6.3.2 moneypunct virtual functions" href="data/locale.moneypunct.virtuals.html">2 moneypunct virtual functions</a></li></ul></li>
+<li><a title="22.4.6.4 Class template moneypunct_byname" href="data/locale.moneypunct.byname.html">4 Class template moneypunct_byname</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="22.4.7 The message retrieval category" href="data/category.messages.html">7 The message retrieval category</a><ul class=" hidden">
+<li><a href="data/#" class="expand">▷</a><a title="22.4.7.1 Class template messages" href="data/locale.messages.html">1 Class template messages</a><ul class=" hidden">
+<li><a title="22.4.7.1.1 messages members" href="data/locale.messages.members.html">1 messages members</a></li>
+<li><a title="22.4.7.1.2 messages virtual functions" href="data/locale.messages.virtuals.html">2 messages virtual functions</a></li></ul></li>
+<li><a title="22.4.7.2 Class template messages_byname" href="data/locale.messages.byname.html">2 Class template messages_byname</a></li></ul></li>
+<li><a title="22.4.8 Program-defined facets" href="data/facets.examples.html">8 Program-defined facets</a></li></ul></li>
+<li><a title="22.5 Standard code conversion facets" href="data/locale.stdcvt.html">5 Standard code conversion facets</a></li>
+<li><a title="22.6 C library locales" href="data/c.locales.html">6 C library locales</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="23 Containers library" href="data/containers.general.html">23 Containers library</a><ul class=" hidden">
+<li><a title="23.1 General" href="data/containers.general.html">1 General</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="23.2 Container requirements" href="data/container.requirements.general.html">2 Container requirements</a><ul class=" hidden">
+<li><a title="23.2.1 General container requirements" href="data/container.requirements.general.html">1 General container requirements</a></li>
+<li><a title="23.2.2 Container data races" href="data/container.requirements.dataraces.html">2 Container data races</a></li>
+<li><a title="23.2.3 Sequence containers" href="data/sequence.reqmts.html">3 Sequence containers</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="23.2.4 Associative containers" href="data/associative.reqmts.html">4 Associative containers</a><ul class=" hidden">
+<li><a title="23.2.4.1 Exception safety guarantees" href="data/associative.reqmts.except.html">1 Exception safety guarantees</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="23.2.5 Unordered associative containers" href="data/unord.req.html">5 Unordered associative containers</a><ul class=" hidden">
+<li><a title="23.2.5.1 Exception safety guarantees" href="data/unord.req.except.html">1 Exception safety guarantees</a></li></ul></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="23.3 Sequence containers" href="data/sequences.general.html">3 Sequence containers</a><ul class=" hidden">
+<li><a title="23.3.1 In general" href="data/sequences.general.html">1 In general</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="23.3.2 Class template array" href="data/array.overview.html">2 Class template array</a><ul class=" hidden">
+<li><a title="23.3.2.1 Class template array overview" href="data/array.overview.html">1 Class template array overview</a></li>
+<li><a title="23.3.2.2 array constructors, copy, and assignment" href="data/array.cons.html">2 array constructors, copy, and assignment</a></li>
+<li><a title="23.3.2.3 array specialized algorithms" href="data/array.special.html">3 array specialized algorithms</a></li>
+<li><a title="23.3.2.4 array::size" href="data/array.size.html">4 array::size</a></li>
+<li><a title="23.3.2.5 array::data" href="data/array.data.html">5 array::data</a></li>
+<li><a title="23.3.2.6 array::fill" href="data/array.fill.html">6 array::fill</a></li>
+<li><a title="23.3.2.7 array::swap" href="data/array.swap.html">7 array::swap</a></li>
+<li><a title="23.3.2.8 Zero sized arrays" href="data/array.zero.html">8 Zero sized arrays</a></li>
+<li><a title="23.3.2.9 Tuple interface to class template array" href="data/array.tuple.html">9 Tuple interface to class template array</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="23.3.3 Class template deque" href="data/deque.overview.html">3 Class template deque</a><ul class=" hidden">
+<li><a title="23.3.3.1 Class template deque overview" href="data/deque.overview.html">1 Class template deque overview</a></li>
+<li><a title="23.3.3.2 deque constructors, copy, and assignment" href="data/deque.cons.html">2 deque constructors, copy, and assignment</a></li>
+<li><a title="23.3.3.3 deque capacity" href="data/deque.capacity.html">3 deque capacity</a></li>
+<li><a title="23.3.3.4 deque modifiers" href="data/deque.modifiers.html">4 deque modifiers</a></li>
+<li><a title="23.3.3.5 deque specialized algorithms" href="data/deque.special.html">5 deque specialized algorithms</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="23.3.4 Class template forward_list" href="data/forwardlist.overview.html">4 Class template forward_list</a><ul class=" hidden">
+<li><a title="23.3.4.1 Class template forward_list overview" href="data/forwardlist.overview.html">1 Class template forward_list overview</a></li>
+<li><a title="23.3.4.2 forward_list constructors, copy, assignment" href="data/forwardlist.cons.html">2 forward_list constructors, copy, assignment</a></li>
+<li><a title="23.3.4.3 forward_list iterators" href="data/forwardlist.iter.html">3 forward_list iterators</a></li>
+<li><a title="23.3.4.4 forward_list element access" href="data/forwardlist.access.html">4 forward_list element access</a></li>
+<li><a title="23.3.4.5 forward_list modifiers" href="data/forwardlist.modifiers.html">5 forward_list modifiers</a></li>
+<li><a title="23.3.4.6 forward_list operations" href="data/forwardlist.ops.html">6 forward_list operations</a></li>
+<li><a title="23.3.4.7 forward_list specialized algorithms" href="data/forwardlist.spec.html">7 forward_list specialized algorithms</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="23.3.5 Class template list" href="data/list.overview.html">5 Class template list</a><ul class=" hidden">
+<li><a title="23.3.5.1 Class template list overview" href="data/list.overview.html">1 Class template list overview</a></li>
+<li><a title="23.3.5.2 list constructors, copy, and assignment" href="data/list.cons.html">2 list constructors, copy, and assignment</a></li>
+<li><a title="23.3.5.3 list capacity" href="data/list.capacity.html">3 list capacity</a></li>
+<li><a title="23.3.5.4 list modifiers" href="data/list.modifiers.html">4 list modifiers</a></li>
+<li><a title="23.3.5.5 list operations" href="data/list.ops.html">5 list operations</a></li>
+<li><a title="23.3.5.6 list specialized algorithms" href="data/list.special.html">6 list specialized algorithms</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="23.3.6 Class template vector" href="data/vector.overview.html">6 Class template vector</a><ul class=" hidden">
+<li><a title="23.3.6.1 Class template vector overview" href="data/vector.overview.html">1 Class template vector overview</a></li>
+<li><a title="23.3.6.2 vector constructors, copy, and assignment" href="data/vector.cons.html">2 vector constructors, copy, and assignment</a></li>
+<li><a title="23.3.6.3 vector capacity" href="data/vector.capacity.html">3 vector capacity</a></li>
+<li><a title="23.3.6.4 vector data" href="data/vector.data.html">4 vector data</a></li>
+<li><a title="23.3.6.5 vector modifiers" href="data/vector.modifiers.html">5 vector modifiers</a></li>
+<li><a title="23.3.6.6 vector specialized algorithms" href="data/vector.special.html">6 vector specialized algorithms</a></li></ul></li>
+<li><a title="23.3.7 Class vector<bool>" href="data/vector.bool.html">7 Class vector&lt;bool&gt;</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="23.4 Associative containers" href="data/associative.general.html">4 Associative containers</a><ul class=" hidden">
+<li><a title="23.4.1 In general" href="data/associative.general.html">1 In general</a></li>
+<li><a title="23.4.2 Header <map> synopsis" href="data/associative.map.syn.html">2 Header &lt;map&gt; synopsis</a></li>
+<li><a title="23.4.3 Header <set> synopsis" href="data/associative.set.syn.html">3 Header &lt;set&gt; synopsis</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="23.4.4 Class template map" href="data/map.overview.html">4 Class template map</a><ul class=" hidden">
+<li><a title="23.4.4.1 Class template map overview" href="data/map.overview.html">1 Class template map overview</a></li>
+<li><a title="23.4.4.2 map constructors, copy, and assignment" href="data/map.cons.html">2 map constructors, copy, and assignment</a></li>
+<li><a title="23.4.4.3 map element access" href="data/map.access.html">3 map element access</a></li>
+<li><a title="23.4.4.4 map modifiers" href="data/map.modifiers.html">4 map modifiers</a></li>
+<li><a title="23.4.4.5 map operations" href="data/map.ops.html">5 map operations</a></li>
+<li><a title="23.4.4.6 map specialized algorithms" href="data/map.special.html">6 map specialized algorithms</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="23.4.5 Class template multimap" href="data/multimap.overview.html">5 Class template multimap</a><ul class=" hidden">
+<li><a title="23.4.5.1 Class template multimap overview" href="data/multimap.overview.html">1 Class template multimap overview</a></li>
+<li><a title="23.4.5.2 multimap constructors" href="data/multimap.cons.html">2 multimap constructors</a></li>
+<li><a title="23.4.5.3 multimap modifiers" href="data/multimap.modifiers.html">3 multimap modifiers</a></li>
+<li><a title="23.4.5.4 multimap operations" href="data/multimap.ops.html">4 multimap operations</a></li>
+<li><a title="23.4.5.5 multimap specialized algorithms" href="data/multimap.special.html">5 multimap specialized algorithms</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="23.4.6 Class template set" href="data/set.overview.html">6 Class template set</a><ul class=" hidden">
+<li><a title="23.4.6.1 Class template set overview" href="data/set.overview.html">1 Class template set overview</a></li>
+<li><a title="23.4.6.2 set constructors, copy, and assignment" href="data/set.cons.html">2 set constructors, copy, and assignment</a></li>
+<li><a title="23.4.6.3 set specialized algorithms" href="data/set.special.html">3 set specialized algorithms</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="23.4.7 Class template multiset" href="data/multiset.overview.html">7 Class template multiset</a><ul class=" hidden">
+<li><a title="23.4.7.1 Class template multiset overview" href="data/multiset.overview.html">1 Class template multiset overview</a></li>
+<li><a title="23.4.7.2 multiset constructors" href="data/multiset.cons.html">2 multiset constructors</a></li>
+<li><a title="23.4.7.3 multiset specialized algorithms" href="data/multiset.special.html">3 multiset specialized algorithms</a></li></ul></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="23.5 Unordered associative containers" href="data/unord.general.html">5 Unordered associative containers</a><ul class=" hidden">
+<li><a title="23.5.1 In general" href="data/unord.general.html">1 In general</a></li>
+<li><a title="23.5.2 Header <unordered_map> synopsis" href="data/unord.map.syn.html">2 Header &lt;unordered_map&gt; synopsis</a></li>
+<li><a title="23.5.3 Header <unordered_set> synopsis" href="data/unord.set.syn.html">3 Header &lt;unordered_set&gt; synopsis</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="23.5.4 Class template unordered_map" href="data/unord.map.overview.html">4 Class template unordered_map</a><ul class=" hidden">
+<li><a title="23.5.4.1 Class template unordered_map overview" href="data/unord.map.overview.html">1 Class template unordered_map overview</a></li>
+<li><a title="23.5.4.2 unordered_map constructors" href="data/unord.map.cnstr.html">2 unordered_map constructors</a></li>
+<li><a title="23.5.4.3 unordered_map element access" href="data/unord.map.elem.html">3 unordered_map element access</a></li>
+<li><a title="23.5.4.4 unordered_map modifiers" href="data/unord.map.modifiers.html">4 unordered_map modifiers</a></li>
+<li><a title="23.5.4.5 unordered_map swap" href="data/unord.map.swap.html">5 unordered_map swap</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="23.5.5 Class template unordered_multimap" href="data/unord.multimap.overview.html">5 Class template unordered_multimap</a><ul class=" hidden">
+<li><a title="23.5.5.1 Class template unordered_multimap overview" href="data/unord.multimap.overview.html">1 Class template unordered_multimap overview</a></li>
+<li><a title="23.5.5.2 unordered_multimap constructors" href="data/unord.multimap.cnstr.html">2 unordered_multimap constructors</a></li>
+<li><a title="23.5.5.3 unordered_multimap modifiers" href="data/unord.multimap.modifers.html">3 unordered_multimap modifiers</a></li>
+<li><a title="23.5.5.4 unordered_multimap swap" href="data/unord.multimap.swap.html">4 unordered_multimap swap</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="23.5.6 Class template unordered_set" href="data/unord.set.overview.html">6 Class template unordered_set</a><ul class=" hidden">
+<li><a title="23.5.6.1 Class template unordered_set overview" href="data/unord.set.overview.html">1 Class template unordered_set overview</a></li>
+<li><a title="23.5.6.2 unordered_set constructors" href="data/unord.set.cnstr.html">2 unordered_set constructors</a></li>
+<li><a title="23.5.6.3 unordered_set swap" href="data/unord.set.swap.html">3 unordered_set swap</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="23.5.7 Class template unordered_multiset" href="data/unord.multiset.overview.html">7 Class template unordered_multiset</a><ul class=" hidden">
+<li><a title="23.5.7.1 Class template unordered_multiset overview" href="data/unord.multiset.overview.html">1 Class template unordered_multiset overview</a></li>
+<li><a title="23.5.7.2 unordered_multiset constructors" href="data/unord.multiset.cnstr.html">2 unordered_multiset constructors</a></li>
+<li><a title="23.5.7.3 unordered_multiset swap" href="data/unord.multiset.swap.html">3 unordered_multiset swap</a></li></ul></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="23.6 Container adaptors" href="data/container.adaptors.general.html">6 Container adaptors</a><ul class=" hidden">
+<li><a title="23.6.1 In general" href="data/container.adaptors.general.html">1 In general</a></li>
+<li><a title="23.6.2 Header <queue> synopsis" href="data/queue.syn.html">2 Header &lt;queue&gt; synopsis</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="23.6.3 Class template queue" href="data/queue.defn.html">3 Class template queue</a><ul class=" hidden">
+<li><a title="23.6.3.1 queue definition" href="data/queue.defn.html">1 queue definition</a></li>
+<li><a title="23.6.3.2 queue constructors" href="data/queue.cons.html">2 queue constructors</a></li>
+<li><a title="23.6.3.3 queue constructors with allocators" href="data/queue.cons.alloc.html">3 queue constructors with allocators</a></li>
+<li><a title="23.6.3.4 queue operators" href="data/queue.ops.html">4 queue operators</a></li>
+<li><a title="23.6.3.5 queue specialized algorithms" href="data/queue.special.html">5 queue specialized algorithms</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="23.6.4 Class template priority_queue" href="data/priority.queue.html">4 Class template priority_queue</a><ul class=" hidden">
+<li><a title="23.6.4.1 priority_queue constructors" href="data/priqueue.cons.html">1 priority_queue constructors</a></li>
+<li><a title="23.6.4.2 priority_queue constructors with allocators" href="data/priqueue.cons.alloc.html">2 priority_queue constructors with allocators</a></li>
+<li><a title="23.6.4.3 priority_queue members" href="data/priqueue.members.html">3 priority_queue members</a></li>
+<li><a title="23.6.4.4 priority_queue specialized algorithms" href="data/priqueue.special.html">4 priority_queue specialized algorithms</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="23.6.5 Class template stack" href="data/stack.html">5 Class template stack</a><ul class=" hidden">
+<li><a title="23.6.5.1 Header <stack> synopsis" href="data/stack.syn.html">1 Header &lt;stack&gt; synopsis</a></li>
+<li><a title="23.6.5.2 stack definition" href="data/stack.defn.html">2 stack definition</a></li>
+<li><a title="23.6.5.3 stack constructors" href="data/stack.cons.html">3 stack constructors</a></li>
+<li><a title="23.6.5.4 stack constructors with allocators" href="data/stack.cons.alloc.html">4 stack constructors with allocators</a></li>
+<li><a title="23.6.5.5 stack operators" href="data/stack.ops.html">5 stack operators</a></li>
+<li><a title="23.6.5.6 stack specialized algorithms" href="data/stack.special.html">6 stack specialized algorithms</a></li></ul></li></ul></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="24 Iterators library" href="data/iterators.general.html">24 Iterators library</a><ul class=" hidden">
+<li><a title="24.1 General" href="data/iterators.general.html">1 General</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="24.2 Iterator requirements" href="data/iterator.requirements.general.html">2 Iterator requirements</a><ul class=" hidden">
+<li><a title="24.2.1 In general" href="data/iterator.requirements.general.html">1 In general</a></li>
+<li><a title="24.2.2 Iterator requirements" href="data/iterator.iterators.html">2 Iterator requirements</a></li>
+<li><a title="24.2.3 Input iterators" href="data/input.iterators.html">3 Input iterators</a></li>
+<li><a title="24.2.4 Output iterators" href="data/output.iterators.html">4 Output iterators</a></li>
+<li><a title="24.2.5 Forward iterators" href="data/forward.iterators.html">5 Forward iterators</a></li>
+<li><a title="24.2.6 Bidirectional iterators" href="data/bidirectional.iterators.html">6 Bidirectional iterators</a></li>
+<li><a title="24.2.7 Random access iterators" href="data/random.access.iterators.html">7 Random access iterators</a></li></ul></li>
+<li><a title="24.3 Header <iterator> synopsis" href="data/iterator.synopsis.html">3 Header &lt;iterator&gt; synopsis</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="24.4 Iterator primitives" href="data/iterator.primitives.html">4 Iterator primitives</a><ul class=" hidden">
+<li><a title="24.4.1 Iterator traits" href="data/iterator.traits.html">1 Iterator traits</a></li>
+<li><a title="24.4.2 Basic iterator" href="data/iterator.basic.html">2 Basic iterator</a></li>
+<li><a title="24.4.3 Standard iterator tags" href="data/std.iterator.tags.html">3 Standard iterator tags</a></li>
+<li><a title="24.4.4 Iterator operations" href="data/iterator.operations.html">4 Iterator operations</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="24.5 Iterator adaptors" href="data/reverse.iterators.html">5 Iterator adaptors</a><ul class=" hidden">
+<li><a href="data/#" class="expand">▷</a><a title="24.5.1 Reverse iterators" href="data/reverse.iterators.html">1 Reverse iterators</a><ul class=" hidden">
+<li><a title="24.5.1.1 Class template reverse_iterator" href="data/reverse.iterator.html">1 Class template reverse_iterator</a></li>
+<li><a title="24.5.1.2 reverse_iterator requirements" href="data/reverse.iter.requirements.html">2 reverse_iterator requirements</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="24.5.1.3 reverse_iterator operations" href="data/reverse.iter.cons.html">3 reverse_iterator operations</a><ul class=" hidden">
+<li><a title="24.5.1.3.1 reverse_iterator constructor" href="data/reverse.iter.cons.html">1 reverse_iterator constructor</a></li>
+<li><a title="24.5.1.3.2 reverse_iterator::operator=" href="data/reverse.iter.op=.html">2 reverse_iterator::operator=</a></li>
+<li><a title="24.5.1.3.3 Conversion" href="data/reverse.iter.conv.html">3 Conversion</a></li>
+<li><a title="24.5.1.3.4 operator*" href="data/reverse.iter.op.star.html">4 operator*</a></li>
+<li><a title="24.5.1.3.5 operator->" href="data/reverse.iter.opref.html">5 operator-&gt;</a></li>
+<li><a title="24.5.1.3.6 operator++" href="data/reverse.iter.op++.html">6 operator++</a></li>
+<li><a title="24.5.1.3.7 operator--" href="data/reverse.iter.op--.html">7 operator--</a></li>
+<li><a title="24.5.1.3.8 operator+" href="data/reverse.iter.op+.html">8 operator+</a></li>
+<li><a title="24.5.1.3.9 operator+=" href="data/reverse.iter.op+=.html">9 operator+=</a></li>
+<li><a title="24.5.1.3.10 operator-" href="data/reverse.iter.op-.html">10 operator-</a></li>
+<li><a title="24.5.1.3.11 operator-=" href="data/reverse.iter.op-=.html">11 operator-=</a></li>
+<li><a title="24.5.1.3.12 operator[]" href="data/reverse.iter.opindex.html">12 operator[]</a></li>
+<li><a title="24.5.1.3.13 operator==" href="data/reverse.iter.op==.html">13 operator==</a></li>
+<li><a title="24.5.1.3.14 operator<" href="data/reverse.iter.op.lt.html">14 operator&lt;</a></li>
+<li><a title="24.5.1.3.15 operator!=" href="data/reverse.iter.op!=.html">15 operator!=</a></li>
+<li><a title="24.5.1.3.16 operator>" href="data/reverse.iter.op.gt.html">16 operator&gt;</a></li>
+<li><a title="24.5.1.3.17 operator>=" href="data/reverse.iter.op.ge.html">17 operator&gt;=</a></li>
+<li><a title="24.5.1.3.18 operator<=" href="data/reverse.iter.op.le.html">18 operator&lt;=</a></li>
+<li><a title="24.5.1.3.19 operator-" href="data/reverse.iter.opdiff.html">19 operator-</a></li>
+<li><a title="24.5.1.3.20 operator+" href="data/reverse.iter.opsum.html">20 operator+</a></li></ul></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="24.5.2 Insert iterators" href="data/back.insert.iterator.html">2 Insert iterators</a><ul class=" hidden">
+<li><a title="24.5.2.1 Class template back_insert_iterator" href="data/back.insert.iterator.html">1 Class template back_insert_iterator</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="24.5.2.2 back_insert_iterator operations" href="data/back.insert.iter.cons.html">2 back_insert_iterator operations</a><ul class=" hidden">
+<li><a title="24.5.2.2.1 back_insert_iterator constructor" href="data/back.insert.iter.cons.html">1 back_insert_iterator constructor</a></li>
+<li><a title="24.5.2.2.2 back_insert_iterator::operator=" href="data/back.insert.iter.op=.html">2 back_insert_iterator::operator=</a></li>
+<li><a title="24.5.2.2.3 back_insert_iterator::operator*" href="data/back.insert.iter.op.star.html">3 back_insert_iterator::operator*</a></li>
+<li><a title="24.5.2.2.4 back_insert_iterator::operator++" href="data/back.insert.iter.op++.html">4 back_insert_iterator::operator++</a></li>
+<li><a title="24.5.2.2.5 back_inserter" href="data/back.inserter.html">5 back_inserter</a></li></ul></li>
+<li><a title="24.5.2.3 Class template front_insert_iterator" href="data/front.insert.iterator.html">3 Class template front_insert_iterator</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="24.5.2.4 front_insert_iterator operations" href="data/front.insert.iter.cons.html">4 front_insert_iterator operations</a><ul class=" hidden">
+<li><a title="24.5.2.4.1 front_insert_iterator constructor" href="data/front.insert.iter.cons.html">1 front_insert_iterator constructor</a></li>
+<li><a title="24.5.2.4.2 front_insert_iterator::operator=" href="data/front.insert.iter.op=.html">2 front_insert_iterator::operator=</a></li>
+<li><a title="24.5.2.4.3 front_insert_iterator::operator*" href="data/front.insert.iter.op.star.html">3 front_insert_iterator::operator*</a></li>
+<li><a title="24.5.2.4.4 front_insert_iterator::operator++" href="data/front.insert.iter.op++.html">4 front_insert_iterator::operator++</a></li>
+<li><a title="24.5.2.4.5 front_inserter" href="data/front.inserter.html">5 front_inserter</a></li></ul></li>
+<li><a title="24.5.2.5 Class template insert_iterator" href="data/insert.iterator.html">5 Class template insert_iterator</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="24.5.2.6 insert_iterator operations" href="data/insert.iter.cons.html">6 insert_iterator operations</a><ul class=" hidden">
+<li><a title="24.5.2.6.1 insert_iterator constructor" href="data/insert.iter.cons.html">1 insert_iterator constructor</a></li>
+<li><a title="24.5.2.6.2 insert_iterator::operator=" href="data/insert.iter.op=.html">2 insert_iterator::operator=</a></li>
+<li><a title="24.5.2.6.3 insert_iterator::operator*" href="data/insert.iter.op.star.html">3 insert_iterator::operator*</a></li>
+<li><a title="24.5.2.6.4 insert_iterator::operator++" href="data/insert.iter.op++.html">4 insert_iterator::operator++</a></li>
+<li><a title="24.5.2.6.5 inserter" href="data/inserter.html">5 inserter</a></li></ul></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="24.5.3 Move iterators" href="data/move.iterators.html">3 Move iterators</a><ul class=" hidden">
+<li><a title="24.5.3.1 Class template move_iterator" href="data/move.iterator.html">1 Class template move_iterator</a></li>
+<li><a title="24.5.3.2 move_iterator requirements" href="data/move.iter.requirements.html">2 move_iterator requirements</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="24.5.3.3 move_iterator operations" href="data/move.iter.op.const.html">3 move_iterator operations</a><ul class=" hidden">
+<li><a title="24.5.3.3.1 move_iterator constructors" href="data/move.iter.op.const.html">1 move_iterator constructors</a></li>
+<li><a title="24.5.3.3.2 move_iterator::operator=" href="data/move.iter.op=.html">2 move_iterator::operator=</a></li>
+<li><a title="24.5.3.3.3 move_iterator conversion" href="data/move.iter.op.conv.html">3 move_iterator conversion</a></li>
+<li><a title="24.5.3.3.4 move_iterator::operator*" href="data/move.iter.op.star.html">4 move_iterator::operator*</a></li>
+<li><a title="24.5.3.3.5 move_iterator::operator->" href="data/move.iter.op.ref.html">5 move_iterator::operator-&gt;</a></li>
+<li><a title="24.5.3.3.6 move_iterator::operator++" href="data/move.iter.op.incr.html">6 move_iterator::operator++</a></li>
+<li><a title="24.5.3.3.7 move_iterator::operator--" href="data/move.iter.op.decr.html">7 move_iterator::operator--</a></li>
+<li><a title="24.5.3.3.8 move_iterator::operator+" href="data/move.iter.op.+.html">8 move_iterator::operator+</a></li>
+<li><a title="24.5.3.3.9 move_iterator::operator+=" href="data/move.iter.op.+=.html">9 move_iterator::operator+=</a></li>
+<li><a title="24.5.3.3.10 move_iterator::operator-" href="data/move.iter.op.-.html">10 move_iterator::operator-</a></li>
+<li><a title="24.5.3.3.11 move_iterator::operator-=" href="data/move.iter.op.-=.html">11 move_iterator::operator-=</a></li>
+<li><a title="24.5.3.3.12 move_iterator::operator[]" href="data/move.iter.op.index.html">12 move_iterator::operator[]</a></li>
+<li><a title="24.5.3.3.13 move_iterator comparisons" href="data/move.iter.op.comp.html">13 move_iterator comparisons</a></li>
+<li><a title="24.5.3.3.14 move_iterator non-member functions" href="data/move.iter.nonmember.html">14 move_iterator non-member functions</a></li></ul></li></ul></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="24.6 Stream iterators" href="data/stream.iterators.html">6 Stream iterators</a><ul class=" hidden">
+<li><a href="data/#" class="expand">▷</a><a title="24.6.1 Class template istream_iterator" href="data/istream.iterator.html">1 Class template istream_iterator</a><ul class=" hidden">
+<li><a title="24.6.1.1 istream_iterator constructors and destructor" href="data/istream.iterator.cons.html">1 istream_iterator constructors and destructor</a></li>
+<li><a title="24.6.1.2 istream_iterator operations" href="data/istream.iterator.ops.html">2 istream_iterator operations</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="24.6.2 Class template ostream_iterator" href="data/ostream.iterator.html">2 Class template ostream_iterator</a><ul class=" hidden">
+<li><a title="24.6.2.1 ostream_iterator constructors and destructor" href="data/ostream.iterator.cons.des.html">1 ostream_iterator constructors and destructor</a></li>
+<li><a title="24.6.2.2 ostream_iterator operations" href="data/ostream.iterator.ops.html">2 ostream_iterator operations</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="24.6.3 Class template istreambuf_iterator" href="data/istreambuf.iterator.html">3 Class template istreambuf_iterator</a><ul class=" hidden">
+<li><a title="24.6.3.1 Class template istreambuf_iterator::proxy" href="data/istreambuf.iterator.proxy.html">1 Class template istreambuf_iterator::proxy</a></li>
+<li><a title="24.6.3.2 istreambuf_iterator constructors" href="data/istreambuf.iterator.cons.html">2 istreambuf_iterator constructors</a></li>
+<li><a title="24.6.3.3 istreambuf_iterator::operator*" href="data/istreambuf.iterator.op.star.html">3 istreambuf_iterator::operator*</a></li>
+<li><a title="24.6.3.4 istreambuf_iterator::operator++" href="data/istreambuf.iterator.op++.html">4 istreambuf_iterator::operator++</a></li>
+<li><a title="24.6.3.5 istreambuf_iterator::equal" href="data/istreambuf.iterator.equal.html">5 istreambuf_iterator::equal</a></li>
+<li><a title="24.6.3.6 operator==" href="data/istreambuf.iterator.op==.html">6 operator==</a></li>
+<li><a title="24.6.3.7 operator!=" href="data/istreambuf.iterator.op!=.html">7 operator!=</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="24.6.4 Class template ostreambuf_iterator" href="data/ostreambuf.iterator.html">4 Class template ostreambuf_iterator</a><ul class=" hidden">
+<li><a title="24.6.4.1 ostreambuf_iterator constructors" href="data/ostreambuf.iter.cons.html">1 ostreambuf_iterator constructors</a></li>
+<li><a title="24.6.4.2 ostreambuf_iterator operations" href="data/ostreambuf.iter.ops.html">2 ostreambuf_iterator operations</a></li></ul></li>
+<li><a title="24.6.5 range access" href="data/iterator.range.html">5 range access</a></li></ul></li></ul></li>
+<li><a href="data/#" class="expand">▽</a><a title="25 Algorithms library" href="data/algorithms.general.html">25 Algorithms library</a><ul class="visible">
+<li><a title="25.1 General" href="data/algorithms.general.html">1 General</a></li>
+<li><a href="data/#" class="expand">▽</a><a title="25.2 Non-modifying sequence operations" href="data/alg.all_of.html">2 Non-modifying sequence operations</a><ul class="visible">
+<li><a title="25.2.1 All of" href="data/alg.all_of.html">1 All of</a></li>
+<li><a title="25.2.2 Any of" href="data/alg.any_of.html">2 Any of</a></li>
+<li><a title="25.2.3 None of" href="data/alg.none_of.html">3 None of</a></li>
+<li><a title="25.2.4 For each" href="data/alg.foreach.html">4 For each</a></li>
+<li><a title="25.2.5 Find" href="data/alg.find.html">5 Find</a></li>
+<li><a title="25.2.6 Find end" href="data/alg.find.end.html">6 Find end</a></li>
+<li><a title="25.2.7 Find first" href="data/alg.find.first.of.html">7 Find first</a></li>
+<li><a title="25.2.8 Adjacent find" href="data/alg.adjacent.find.html">8 Adjacent find</a></li>
+<li><a title="25.2.9 Count" href="data/alg.count.html">9 Count</a></li>
+<li><a title="25.2.10 Mismatch" href="data/mismatch.html">10 Mismatch</a></li>
+<li><a title="25.2.11 Equal" href="data/alg.equal.html">11 Equal</a></li>
+<li><a title="25.2.12 Is permutation" href="data/alg.is_permutation.html">12 Is permutation</a></li>
+<li><a title="25.2.13 Search" href="data/alg.search.html">13 Search</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="25.3 Mutating sequence operations" href="data/alg.copy.html">3 Mutating sequence operations</a><ul class=" hidden">
+<li><a title="25.3.1 Copy" href="data/alg.copy.html">1 Copy</a></li>
+<li><a title="25.3.2 Move" href="data/alg.move.html">2 Move</a></li>
+<li><a title="25.3.3 swap" href="data/alg.swap.html">3 swap</a></li>
+<li><a title="25.3.4 Transform" href="data/alg.transform.html">4 Transform</a></li>
+<li><a title="25.3.5 Replace" href="data/alg.replace.html">5 Replace</a></li>
+<li><a title="25.3.6 Fill" href="data/alg.fill.html">6 Fill</a></li>
+<li><a title="25.3.7 Generate" href="data/alg.generate.html">7 Generate</a></li>
+<li><a title="25.3.8 Remove" href="data/alg.remove.html">8 Remove</a></li>
+<li><a title="25.3.9 Unique" href="data/alg.unique.html">9 Unique</a></li>
+<li><a title="25.3.10 Reverse" href="data/alg.reverse.html">10 Reverse</a></li>
+<li><a title="25.3.11 Rotate" href="data/alg.rotate.html">11 Rotate</a></li>
+<li><a title="25.3.12 Random shuffle" href="data/alg.random.shuffle.html">12 Random shuffle</a></li>
+<li><a title="25.3.13 Partitions" href="data/alg.partitions.html">13 Partitions</a></li></ul></li>
+<li><a href="data/#" class="expand">▽</a><a title="25.4 Sorting and related operations" href="data/alg.sorting.html">4 Sorting and related operations</a><ul class="visible">
+<li><a href="data/#" class="expand">▷</a><a title="25.4.1 Sorting" href="data/sort.html">1 Sorting</a><ul class=" hidden">
+<li><a title="25.4.1.1 sort" href="data/sort.html">1 sort</a></li>
+<li><a title="25.4.1.2 stable_sort" href="data/stable.sort.html">2 stable_sort</a></li>
+<li><a title="25.4.1.3 partial_sort" href="data/partial.sort.html">3 partial_sort</a></li>
+<li><a title="25.4.1.4 partial_sort_copy" href="data/partial.sort.copy.html">4 partial_sort_copy</a></li>
+<li><a title="25.4.1.5 is_sorted" href="data/is.sorted.html">5 is_sorted</a></li></ul></li>
+<li><a title="25.4.2 Nth element" href="data/alg.nth.element.html">2 Nth element</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="25.4.3 Binary search" href="data/alg.binary.search.html">3 Binary search</a><ul class=" hidden">
+<li><a title="25.4.3.1 lower_bound" href="data/lower.bound.html">1 lower_bound</a></li>
+<li><a title="25.4.3.2 upper_bound" href="data/upper.bound.html">2 upper_bound</a></li>
+<li><a title="25.4.3.3 equal_range" href="data/equal.range.html">3 equal_range</a></li>
+<li><a title="25.4.3.4 binary_search" href="data/binary.search.html">4 binary_search</a></li></ul></li>
+<li><a title="25.4.4 Merge" href="data/alg.merge.html">4 Merge</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="25.4.5 Set operations on sorted structures" href="data/alg.set.operations.html">5 Set operations on sorted structures</a><ul class=" hidden">
+<li><a title="25.4.5.1 includes" href="data/includes.html">1 includes</a></li>
+<li><a title="25.4.5.2 set_union" href="data/set.union.html">2 set_union</a></li>
+<li><a title="25.4.5.3 set_intersection" href="data/set.intersection.html">3 set_intersection</a></li>
+<li><a title="25.4.5.4 set_difference" href="data/set.difference.html">4 set_difference</a></li>
+<li><a title="25.4.5.5 set_symmetric_difference" href="data/set.symmetric.difference.html">5 set_symmetric_difference</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="25.4.6 Heap operations" href="data/alg.heap.operations.html">6 Heap operations</a><ul class=" hidden">
+<li><a title="25.4.6.1 push_heap" href="data/push.heap.html">1 push_heap</a></li>
+<li><a title="25.4.6.2 pop_heap" href="data/pop.heap.html">2 pop_heap</a></li>
+<li><a title="25.4.6.3 make_heap" href="data/make.heap.html">3 make_heap</a></li>
+<li><a title="25.4.6.4 sort_heap" href="data/sort.heap.html">4 sort_heap</a></li>
+<li><a title="25.4.6.5 is_heap" href="data/is.heap.html">5 is_heap</a></li></ul></li>
+<li><a title="25.4.7 Minimum and maximum" href="data/alg.min.max.html">7 Minimum and maximum</a></li>
+<li><a title="25.4.8 Lexicographical comparison" href="data/alg.lex.comparison.html">8 Lexicographical comparison</a></li>
+<li><a title="25.4.9 Permutation generators" href="data/alg.permutation.generators.html">9 Permutation generators</a></li></ul></li>
+<li><a title="25.5 C library algorithms" href="data/alg.c.library.html">5 C library algorithms</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="26 Numerics library" href="data/numerics.general.html">26 Numerics library</a><ul class=" hidden">
+<li><a title="26.1 General" href="data/numerics.general.html">1 General</a></li>
+<li><a title="26.2 Numeric type requirements" href="data/numeric.requirements.html">2 Numeric type requirements</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="26.3 The floating-point environment" href="data/cfenv.syn.html">3 The floating-point environment</a><ul class=" hidden">
+<li><a title="26.3.1 Header <cfenv> synopsis" href="data/cfenv.syn.html">1 Header &lt;cfenv&gt; synopsis</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="26.4 Complex numbers" href="data/complex.numbers.html">4 Complex numbers</a><ul class=" hidden">
+<li><a title="26.4.1 Header <complex> synopsis" href="data/complex.syn.html">1 Header &lt;complex&gt; synopsis</a></li>
+<li><a title="26.4.2 Class template complex" href="data/complex.html">2 Class template complex</a></li>
+<li><a title="26.4.3 complex specializations" href="data/complex.special.html">3 complex specializations</a></li>
+<li><a title="26.4.4 complex member functions" href="data/complex.members.html">4 complex member functions</a></li>
+<li><a title="26.4.5 complex member operators" href="data/complex.member.ops.html">5 complex member operators</a></li>
+<li><a title="26.4.6 complex non-member operations" href="data/complex.ops.html">6 complex non-member operations</a></li>
+<li><a title="26.4.7 complex value operations" href="data/complex.value.ops.html">7 complex value operations</a></li>
+<li><a title="26.4.8 complex transcendentals" href="data/complex.transcendentals.html">8 complex transcendentals</a></li>
+<li><a title="26.4.9 Additional overloads" href="data/cmplx.over.html">9 Additional overloads</a></li>
+<li><a title="26.4.10 Header <ccomplex>" href="data/ccmplx.html">10 Header &lt;ccomplex&gt;</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="26.5 Random number generation" href="data/rand.req.html">5 Random number generation</a><ul class=" hidden">
+<li><a href="data/#" class="expand">▷</a><a title="26.5.1 Requirements" href="data/rand.req.html">1 Requirements</a><ul class=" hidden">
+<li><a title="26.5.1.1 General requirements" href="data/rand.req.genl.html">1 General requirements</a></li>
+<li><a title="26.5.1.2 Seed sequence requirements" href="data/rand.req.seedseq.html">2 Seed sequence requirements</a></li>
+<li><a title="26.5.1.3 Uniform random number generator requirements" href="data/rand.req.urng.html">3 Uniform random number generator requirements</a></li>
+<li><a title="26.5.1.4 Random number engine requirements" href="data/rand.req.eng.html">4 Random number engine requirements</a></li>
+<li><a title="26.5.1.5 Random number engine adaptor requirements" href="data/rand.req.adapt.html">5 Random number engine adaptor requirements</a></li>
+<li><a title="26.5.1.6 Random number distribution requirements" href="data/rand.req.dist.html">6 Random number distribution requirements</a></li></ul></li>
+<li><a title="26.5.2 Header <random> synopsis" href="data/rand.synopsis.html">2 Header &lt;random&gt; synopsis</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="26.5.3 Random number engine class templates" href="data/rand.eng.lcong.html">3 Random number engine class templates</a><ul class=" hidden">
+<li><a title="26.5.3.1 Class template linear_congruential_engine" href="data/rand.eng.lcong.html">1 Class template linear_congruential_engine</a></li>
+<li><a title="26.5.3.2 Class template mersenne_twister_engine" href="data/rand.eng.mers.html">2 Class template mersenne_twister_engine</a></li>
+<li><a title="26.5.3.3 Class template subtract_with_carry_engine" href="data/rand.eng.sub.html">3 Class template subtract_with_carry_engine</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="26.5.4 Random number engine adaptor class templates" href="data/rand.adapt.general.html">4 Random number engine adaptor class templates</a><ul class=" hidden">
+<li><a title="26.5.4.1 In general" href="data/rand.adapt.general.html">1 In general</a></li>
+<li><a title="26.5.4.2 Class template discard_block_engine" href="data/rand.adapt.disc.html">2 Class template discard_block_engine</a></li>
+<li><a title="26.5.4.3 Class template independent_bits_engine" href="data/rand.adapt.ibits.html">3 Class template independent_bits_engine</a></li>
+<li><a title="26.5.4.4 Class template shuffle_order_engine" href="data/rand.adapt.shuf.html">4 Class template shuffle_order_engine</a></li></ul></li>
+<li><a title="26.5.5 Engines and engine adaptors with predefined parameters" href="data/rand.predef.html">5 Engines and engine adaptors with predefined parameters</a></li>
+<li><a title="26.5.6 Class random_device" href="data/rand.device.html">6 Class random_device</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="26.5.7 Utilities" href="data/rand.util.seedseq.html">7 Utilities</a><ul class=" hidden">
+<li><a title="26.5.7.1 Class seed_seq" href="data/rand.util.seedseq.html">1 Class seed_seq</a></li>
+<li><a title="26.5.7.2 Function template generate_canonical" href="data/rand.util.canonical.html">2 Function template generate_canonical</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="26.5.8 Random number distribution class templates" href="data/rand.dist.general.html">8 Random number distribution class templates</a><ul class=" hidden">
+<li><a title="26.5.8.1 In general" href="data/rand.dist.general.html">1 In general</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="26.5.8.2 Uniform distributions" href="data/rand.dist.uni.int.html">2 Uniform distributions</a><ul class=" hidden">
+<li><a title="26.5.8.2.1 Class template uniform_int_distribution" href="data/rand.dist.uni.int.html">1 Class template uniform_int_distribution</a></li>
+<li><a title="26.5.8.2.2 Class template uniform_real_distribution" href="data/rand.dist.uni.real.html">2 Class template uniform_real_distribution</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="26.5.8.3 Bernoulli distributions" href="data/rand.dist.bern.bernoulli.html">3 Bernoulli distributions</a><ul class=" hidden">
+<li><a title="26.5.8.3.1 Class bernoulli_distribution" href="data/rand.dist.bern.bernoulli.html">1 Class bernoulli_distribution</a></li>
+<li><a title="26.5.8.3.2 Class template binomial_distribution" href="data/rand.dist.bern.bin.html">2 Class template binomial_distribution</a></li>
+<li><a title="26.5.8.3.3 Class template geometric_distribution" href="data/rand.dist.bern.geo.html">3 Class template geometric_distribution</a></li>
+<li><a title="26.5.8.3.4 Class template negative_binomial_distribution" href="data/rand.dist.bern.negbin.html">4 Class template negative_binomial_distribution</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="26.5.8.4 Poisson distributions" href="data/rand.dist.pois.poisson.html">4 Poisson distributions</a><ul class=" hidden">
+<li><a title="26.5.8.4.1 Class template poisson_distribution" href="data/rand.dist.pois.poisson.html">1 Class template poisson_distribution</a></li>
+<li><a title="26.5.8.4.2 Class template exponential_distribution" href="data/rand.dist.pois.exp.html">2 Class template exponential_distribution</a></li>
+<li><a title="26.5.8.4.3 Class template gamma_distribution" href="data/rand.dist.pois.gamma.html">3 Class template gamma_distribution</a></li>
+<li><a title="26.5.8.4.4 Class template weibull_distribution" href="data/rand.dist.pois.weibull.html">4 Class template weibull_distribution</a></li>
+<li><a title="26.5.8.4.5 Class template extreme_value_distribution" href="data/rand.dist.pois.extreme.html">5 Class template extreme_value_distribution</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="26.5.8.5 Normal distributions" href="data/rand.dist.norm.normal.html">5 Normal distributions</a><ul class=" hidden">
+<li><a title="26.5.8.5.1 Class template normal_distribution" href="data/rand.dist.norm.normal.html">1 Class template normal_distribution</a></li>
+<li><a title="26.5.8.5.2 Class template lognormal_distribution" href="data/rand.dist.norm.lognormal.html">2 Class template lognormal_distribution</a></li>
+<li><a title="26.5.8.5.3 Class template chi_squared_distribution" href="data/rand.dist.norm.chisq.html">3 Class template chi_squared_distribution</a></li>
+<li><a title="26.5.8.5.4 Class template cauchy_distribution" href="data/rand.dist.norm.cauchy.html">4 Class template cauchy_distribution</a></li>
+<li><a title="26.5.8.5.5 Class template fisher_f_distribution" href="data/rand.dist.norm.f.html">5 Class template fisher_f_distribution</a></li>
+<li><a title="26.5.8.5.6 Class template student_t_distribution" href="data/rand.dist.norm.t.html">6 Class template student_t_distribution</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="26.5.8.6 Sampling distributions" href="data/rand.dist.samp.discrete.html">6 Sampling distributions</a><ul class=" hidden">
+<li><a title="26.5.8.6.1 Class template discrete_distribution" href="data/rand.dist.samp.discrete.html">1 Class template discrete_distribution</a></li>
+<li><a title="26.5.8.6.2 Class template piecewise_constant_distribution" href="data/rand.dist.samp.pconst.html">2 Class template piecewise_constant_distribution</a></li>
+<li><a title="26.5.8.6.3 Class template piecewise_linear_distribution" href="data/rand.dist.samp.plinear.html">3 Class template piecewise_linear_distribution</a></li></ul></li></ul></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="26.6 Numeric arrays" href="data/valarray.syn.html">6 Numeric arrays</a><ul class=" hidden">
+<li><a title="26.6.1 Header <valarray> synopsis" href="data/valarray.syn.html">1 Header &lt;valarray&gt; synopsis</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="26.6.2 Class template valarray" href="data/template.valarray.overview.html">2 Class template valarray</a><ul class=" hidden">
+<li><a title="26.6.2.1 Class template valarray overview" href="data/template.valarray.overview.html">1 Class template valarray overview</a></li>
+<li><a title="26.6.2.2 valarray constructors" href="data/valarray.cons.html">2 valarray constructors</a></li>
+<li><a title="26.6.2.3 valarray assignment" href="data/valarray.assign.html">3 valarray assignment</a></li>
+<li><a title="26.6.2.4 valarray element access" href="data/valarray.access.html">4 valarray element access</a></li>
+<li><a title="26.6.2.5 valarray subset operations" href="data/valarray.sub.html">5 valarray subset operations</a></li>
+<li><a title="26.6.2.6 valarray unary operators" href="data/valarray.unary.html">6 valarray unary operators</a></li>
+<li><a title="26.6.2.7 valarray computed assignment" href="data/valarray.cassign.html">7 valarray computed assignment</a></li>
+<li><a title="26.6.2.8 valarray member functions" href="data/valarray.members.html">8 valarray member functions</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="26.6.3 valarray non-member operations" href="data/valarray.binary.html">3 valarray non-member operations</a><ul class=" hidden">
+<li><a title="26.6.3.1 valarray binary operators" href="data/valarray.binary.html">1 valarray binary operators</a></li>
+<li><a title="26.6.3.2 valarray logical operators" href="data/valarray.comparison.html">2 valarray logical operators</a></li>
+<li><a title="26.6.3.3 valarray transcendentals" href="data/valarray.transcend.html">3 valarray transcendentals</a></li>
+<li><a title="26.6.3.4 valarray specialized algorithms" href="data/valarray.special.html">4 valarray specialized algorithms</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="26.6.4 Class slice" href="data/class.slice.overview.html">4 Class slice</a><ul class=" hidden">
+<li><a title="26.6.4.1 Class slice overview" href="data/class.slice.overview.html">1 Class slice overview</a></li>
+<li><a title="26.6.4.2 slice constructors" href="data/cons.slice.html">2 slice constructors</a></li>
+<li><a title="26.6.4.3 slice access functions" href="data/slice.access.html">3 slice access functions</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="26.6.5 Class template slice_array" href="data/template.slice.array.overview.html">5 Class template slice_array</a><ul class=" hidden">
+<li><a title="26.6.5.1 Class template slice_array overview" href="data/template.slice.array.overview.html">1 Class template slice_array overview</a></li>
+<li><a title="26.6.5.2 slice_array assignment" href="data/slice.arr.assign.html">2 slice_array assignment</a></li>
+<li><a title="26.6.5.3 slice_array computed assignment" href="data/slice.arr.comp.assign.html">3 slice_array computed assignment</a></li>
+<li><a title="26.6.5.4 slice_array fill function" href="data/slice.arr.fill.html">4 slice_array fill function</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="26.6.6 The gslice class" href="data/class.gslice.overview.html">6 The gslice class</a><ul class=" hidden">
+<li><a title="26.6.6.1 The gslice class overview" href="data/class.gslice.overview.html">1 The gslice class overview</a></li>
+<li><a title="26.6.6.2 gslice constructors" href="data/gslice.cons.html">2 gslice constructors</a></li>
+<li><a title="26.6.6.3 gslice access functions" href="data/gslice.access.html">3 gslice access functions</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="26.6.7 Class template gslice_array" href="data/template.gslice.array.overview.html">7 Class template gslice_array</a><ul class=" hidden">
+<li><a title="26.6.7.1 Class template gslice_array overview" href="data/template.gslice.array.overview.html">1 Class template gslice_array overview</a></li>
+<li><a title="26.6.7.2 gslice_array assignment" href="data/gslice.array.assign.html">2 gslice_array assignment</a></li>
+<li><a title="26.6.7.3 gslice_array computed assignment" href="data/gslice.array.comp.assign.html">3 gslice_array computed assignment</a></li>
+<li><a title="26.6.7.4 gslice_array fill function" href="data/gslice.array.fill.html">4 gslice_array fill function</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="26.6.8 Class template mask_array" href="data/template.mask.array.overview.html">8 Class template mask_array</a><ul class=" hidden">
+<li><a title="26.6.8.1 Class template mask_array overview" href="data/template.mask.array.overview.html">1 Class template mask_array overview</a></li>
+<li><a title="26.6.8.2 mask_array assignment" href="data/mask.array.assign.html">2 mask_array assignment</a></li>
+<li><a title="26.6.8.3 mask_array computed assignment" href="data/mask.array.comp.assign.html">3 mask_array computed assignment</a></li>
+<li><a title="26.6.8.4 mask_array fill function" href="data/mask.array.fill.html">4 mask_array fill function</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="26.6.9 Class template indirect_array" href="data/template.indirect.array.overview.html">9 Class template indirect_array</a><ul class=" hidden">
+<li><a title="26.6.9.1 Class template indirect_array overview" href="data/template.indirect.array.overview.html">1 Class template indirect_array overview</a></li>
+<li><a title="26.6.9.2 indirect_array assignment" href="data/indirect.array.assign.html">2 indirect_array assignment</a></li>
+<li><a title="26.6.9.3 indirect_array computed assignment" href="data/indirect.array.comp.assign.html">3 indirect_array computed assignment</a></li>
+<li><a title="26.6.9.4 indirect_array fill function" href="data/indirect.array.fill.html">4 indirect_array fill function</a></li></ul></li>
+<li><a title="26.6.10 valarray range access" href="data/valarray.range.html">10 valarray range access</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="26.7 Generalized numeric operations" href="data/numeric.ops.overview.html">7 Generalized numeric operations</a><ul class=" hidden">
+<li><a title="26.7.1 Header <numeric> synopsis" href="data/numeric.ops.overview.html">1 Header &lt;numeric&gt; synopsis</a></li>
+<li><a title="26.7.2 Accumulate" href="data/accumulate.html">2 Accumulate</a></li>
+<li><a title="26.7.3 Inner product" href="data/inner.product.html">3 Inner product</a></li>
+<li><a title="26.7.4 Partial sum" href="data/partial.sum.html">4 Partial sum</a></li>
+<li><a title="26.7.5 Adjacent difference" href="data/adjacent.difference.html">5 Adjacent difference</a></li>
+<li><a title="26.7.6 Iota" href="data/numeric.iota.html">6 Iota</a></li></ul></li>
+<li><a title="26.8 C library" href="data/c.math.html">8 C library</a></li></ul></li>
+<li><a href="data/#" class="expand">▽</a><a title="27 Input/output library" href="data/input.output.general.html">27 Input/output library</a><ul class="visible">
+<li><a title="27.1 General" href="data/input.output.general.html">1 General</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="27.2 Iostreams requirements" href="data/iostream.limits.imbue.html">2 Iostreams requirements</a><ul class=" hidden">
+<li><a title="27.2.1 Imbue limitations" href="data/iostream.limits.imbue.html">1 Imbue limitations</a></li>
+<li><a title="27.2.2 Positioning type limitations" href="data/iostreams.limits.pos.html">2 Positioning type limitations</a></li>
+<li><a title="27.2.3 Thread safety" href="data/iostreams.threadsafety.html">3 Thread safety</a></li></ul></li>
+<li><a title="27.3 Forward declarations" href="data/iostream.forward.html">3 Forward declarations</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="27.4 Standard iostream objects" href="data/iostream.objects.overview.html">4 Standard iostream objects</a><ul class=" hidden">
+<li><a title="27.4.1 Overview" href="data/iostream.objects.overview.html">1 Overview</a></li>
+<li><a title="27.4.2 Narrow stream objects" href="data/narrow.stream.objects.html">2 Narrow stream objects</a></li>
+<li><a title="27.4.3 Wide stream objects" href="data/wide.stream.objects.html">3 Wide stream objects</a></li></ul></li>
+<li><a href="data/#" class="expand">▽</a><a title="27.5 Iostreams base classes" href="data/iostreams.base.overview.html">5 Iostreams base classes</a><ul class="visible">
+<li><a title="27.5.1 Overview" href="data/iostreams.base.overview.html">1 Overview</a></li>
+<li><a title="27.5.2 Types" href="data/stream.types.html">2 Types</a></li>
+<li><a href="data/#" class="expand">▽</a><a title="27.5.3 Class ios_base" href="data/ios.base.html">3 Class ios_base</a><ul class="visible">
+<li><a href="data/#" class="expand">▽</a><a title="27.5.3.1 Types" href="data/ios.failure.html">1 Types</a><ul class="visible">
+<li><a title="27.5.3.1.1 Class ios_base::failure" href="data/ios.failure.html">1 Class ios_base::failure</a></li>
+<li><a title="27.5.3.1.2 Type ios_base::fmtflags" href="data/ios.fmtflags.html">2 Type ios_base::fmtflags</a></li>
+<li><a title="27.5.3.1.3 Type ios_base::iostate" href="data/ios.iostate.html">3 Type ios_base::iostate</a></li>
+<li><a title="27.5.3.1.4 Type ios_base::openmode" href="data/ios.openmode.html">4 Type ios_base::openmode</a></li>
+<li><a title="27.5.3.1.5 Type ios_base::seekdir" href="data/ios.seekdir.html">5 Type ios_base::seekdir</a></li>
+<li><a title="27.5.3.1.6 Class ios_base::Init" href="data/ios.Init.html">6 Class ios_base::Init</a></li></ul></li>
+<li><a title="27.5.3.2 ios_base state functions" href="data/fmtflags.state.html">2 ios_base state functions</a></li>
+<li><a title="27.5.3.3 ios_base functions" href="data/ios.base.locales.html">3 ios_base functions</a></li>
+<li><a title="27.5.3.4 ios_base static members" href="data/ios.members.static.html">4 ios_base static members</a></li>
+<li><a title="27.5.3.5 ios_base storage functions" href="data/ios.base.storage.html">5 ios_base storage functions</a></li>
+<li><a title="27.5.3.6 ios_base callbacks" href="data/ios.base.callback.html">6 ios_base callbacks</a></li>
+<li><a title="27.5.3.7 ios_base constructors" href="data/ios.base.cons.html">7 ios_base constructors</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="27.5.4 Class template fpos" href="data/fpos.html">4 Class template fpos</a><ul class=" hidden">
+<li><a title="27.5.4.1 fpos members" href="data/fpos.members.html">1 fpos members</a></li>
+<li><a title="27.5.4.2 fpos requirements" href="data/fpos.operations.html">2 fpos requirements</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="27.5.5 Class template basic_ios" href="data/ios.overview.html">5 Class template basic_ios</a><ul class=" hidden">
+<li><a title="27.5.5.1 Overview" href="data/ios.overview.html">1 Overview</a></li>
+<li><a title="27.5.5.2 basic_ios constructors" href="data/basic.ios.cons.html">2 basic_ios constructors</a></li>
+<li><a title="27.5.5.3 Member functions" href="data/basic.ios.members.html">3 Member functions</a></li>
+<li><a title="27.5.5.4 basic_ios flags functions" href="data/iostate.flags.html">4 basic_ios flags functions</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="27.5.6 ios_base manipulators" href="data/fmtflags.manip.html">6 ios_base manipulators</a><ul class=" hidden">
+<li><a title="27.5.6.1 fmtflags manipulators" href="data/fmtflags.manip.html">1 fmtflags manipulators</a></li>
+<li><a title="27.5.6.2 adjustfield manipulators" href="data/adjustfield.manip.html">2 adjustfield manipulators</a></li>
+<li><a title="27.5.6.3 basefield manipulators" href="data/basefield.manip.html">3 basefield manipulators</a></li>
+<li><a title="27.5.6.4 floatfield manipulators" href="data/floatfield.manip.html">4 floatfield manipulators</a></li>
+<li><a title="27.5.6.5 Error reporting" href="data/error.reporting.html">5 Error reporting</a></li></ul></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="27.6 Stream buffers" href="data/stream.buffers.overview.html">6 Stream buffers</a><ul class=" hidden">
+<li><a title="27.6.1 Overview" href="data/stream.buffers.overview.html">1 Overview</a></li>
+<li><a title="27.6.2 Stream buffer requirements" href="data/streambuf.reqts.html">2 Stream buffer requirements</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="27.6.3 Class template basic_streambuf<charT, traits>" href="data/streambuf.html">3 Class template basic_streambuf&lt;charT, traits&gt;</a><ul class=" hidden">
+<li><a title="27.6.3.1 basic_streambuf constructors" href="data/streambuf.cons.html">1 basic_streambuf constructors</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="27.6.3.2 basic_streambuf public member functions" href="data/streambuf.locales.html">2 basic_streambuf public member functions</a><ul class=" hidden">
+<li><a title="27.6.3.2.1 Locales" href="data/streambuf.locales.html">1 Locales</a></li>
+<li><a title="27.6.3.2.2 Buffer management and positioning" href="data/streambuf.buffer.html">2 Buffer management and positioning</a></li>
+<li><a title="27.6.3.2.3 Get area" href="data/streambuf.pub.get.html">3 Get area</a></li>
+<li><a title="27.6.3.2.4 Putback" href="data/streambuf.pub.pback.html">4 Putback</a></li>
+<li><a title="27.6.3.2.5 Put area" href="data/streambuf.pub.put.html">5 Put area</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="27.6.3.3 basic_streambuf protected member functions" href="data/streambuf.assign.html">3 basic_streambuf protected member functions</a><ul class=" hidden">
+<li><a title="27.6.3.3.1 Assignment" href="data/streambuf.assign.html">1 Assignment</a></li>
+<li><a title="27.6.3.3.2 Get area access" href="data/streambuf.get.area.html">2 Get area access</a></li>
+<li><a title="27.6.3.3.3 Put area access" href="data/streambuf.put.area.html">3 Put area access</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="27.6.3.4 basic_streambuf virtual functions" href="data/streambuf.virt.locales.html">4 basic_streambuf virtual functions</a><ul class=" hidden">
+<li><a title="27.6.3.4.1 Locales" href="data/streambuf.virt.locales.html">1 Locales</a></li>
+<li><a title="27.6.3.4.2 Buffer management and positioning" href="data/streambuf.virt.buffer.html">2 Buffer management and positioning</a></li>
+<li><a title="27.6.3.4.3 Get area" href="data/streambuf.virt.get.html">3 Get area</a></li>
+<li><a title="27.6.3.4.4 Putback" href="data/streambuf.virt.pback.html">4 Putback</a></li>
+<li><a title="27.6.3.4.5 Put area" href="data/streambuf.virt.put.html">5 Put area</a></li></ul></li></ul></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="27.7 Formatting and manipulators" href="data/iostream.format.overview.html">7 Formatting and manipulators</a><ul class=" hidden">
+<li><a title="27.7.1 Overview" href="data/iostream.format.overview.html">1 Overview</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="27.7.2 Input streams" href="data/input.streams.html">2 Input streams</a><ul class=" hidden">
+<li><a href="data/#" class="expand">▷</a><a title="27.7.2.1 Class template basic_istream" href="data/istream.html">1 Class template basic_istream</a><ul class=" hidden">
+<li><a title="27.7.2.1.1 basic_istream constructors" href="data/istream.cons.html">1 basic_istream constructors</a></li>
+<li><a title="27.7.2.1.2 Class basic_istream assign and swap" href="data/istream.assign.html">2 Class basic_istream assign and swap</a></li>
+<li><a title="27.7.2.1.3 Class basic_istream::sentry" href="data/istream.sentry.html">3 Class basic_istream::sentry</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="27.7.2.2 Formatted input functions" href="data/istream.formatted.reqmts.html">2 Formatted input functions</a><ul class=" hidden">
+<li><a title="27.7.2.2.1 Common requirements" href="data/istream.formatted.reqmts.html">1 Common requirements</a></li>
+<li><a title="27.7.2.2.2 Arithmetic extractors" href="data/istream.formatted.arithmetic.html">2 Arithmetic extractors</a></li>
+<li><a title="27.7.2.2.3 basic_istream::operator>>" href="data/istream.extractors.html">3 basic_istream::operator&gt;&gt;</a></li></ul></li>
+<li><a title="27.7.2.3 Unformatted input functions" href="data/istream.unformatted.html">3 Unformatted input functions</a></li>
+<li><a title="27.7.2.4 Standard basic_istream manipulators" href="data/istream.manip.html">4 Standard basic_istream manipulators</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="27.7.2.5 Class template basic_iostream" href="data/iostreamclass.html">5 Class template basic_iostream</a><ul class=" hidden">
+<li><a title="27.7.2.5.1 basic_iostream constructors" href="data/iostream.cons.html">1 basic_iostream constructors</a></li>
+<li><a title="27.7.2.5.2 basic_iostream destructor" href="data/iostream.dest.html">2 basic_iostream destructor</a></li>
+<li><a title="27.7.2.5.3 basic_iostream assign and swap" href="data/iostream.assign.html">3 basic_iostream assign and swap</a></li></ul></li>
+<li><a title="27.7.2.6 Rvalue stream extraction" href="data/istream.rvalue.html">6 Rvalue stream extraction</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="27.7.3 Output streams" href="data/output.streams.html">3 Output streams</a><ul class=" hidden">
+<li><a title="27.7.3.1 Class template basic_ostream" href="data/ostream.html">1 Class template basic_ostream</a></li>
+<li><a title="27.7.3.2 basic_ostream constructors" href="data/ostream.cons.html">2 basic_ostream constructors</a></li>
+<li><a title="27.7.3.3 Class basic_ostream assign and swap" href="data/ostream.assign.html">3 Class basic_ostream assign and swap</a></li>
+<li><a title="27.7.3.4 Class basic_ostream::sentry" href="data/ostream.sentry.html">4 Class basic_ostream::sentry</a></li>
+<li><a title="27.7.3.5 basic_ostream seek members" href="data/ostream.seeks.html">5 basic_ostream seek members</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="27.7.3.6 Formatted output functions" href="data/ostream.formatted.reqmts.html">6 Formatted output functions</a><ul class=" hidden">
+<li><a title="27.7.3.6.1 Common requirements" href="data/ostream.formatted.reqmts.html">1 Common requirements</a></li>
+<li><a title="27.7.3.6.2 Arithmetic inserters" href="data/ostream.inserters.arithmetic.html">2 Arithmetic inserters</a></li>
+<li><a title="27.7.3.6.3 basic_ostream::operator<<" href="data/ostream.inserters.html">3 basic_ostream::operator&lt;&lt;</a></li>
+<li><a title="27.7.3.6.4 Character inserter function templates" href="data/ostream.inserters.character.html">4 Character inserter function templates</a></li></ul></li>
+<li><a title="27.7.3.7 Unformatted output functions" href="data/ostream.unformatted.html">7 Unformatted output functions</a></li>
+<li><a title="27.7.3.8 Standard basic_ostream manipulators" href="data/ostream.manip.html">8 Standard basic_ostream manipulators</a></li>
+<li><a title="27.7.3.9 Rvalue stream insertion" href="data/ostream.rvalue.html">9 Rvalue stream insertion</a></li></ul></li>
+<li><a title="27.7.4 Standard manipulators" href="data/std.manip.html">4 Standard manipulators</a></li>
+<li><a title="27.7.5 Extended manipulators" href="data/ext.manip.html">5 Extended manipulators</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="27.8 String-based streams" href="data/string.streams.overview.html">8 String-based streams</a><ul class=" hidden">
+<li><a title="27.8.1 Overview" href="data/string.streams.overview.html">1 Overview</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="27.8.2 Class template basic_stringbuf" href="data/stringbuf.html">2 Class template basic_stringbuf</a><ul class=" hidden">
+<li><a title="27.8.2.1 basic_stringbuf constructors" href="data/stringbuf.cons.html">1 basic_stringbuf constructors</a></li>
+<li><a title="27.8.2.2 Assign and swap" href="data/stringbuf.assign.html">2 Assign and swap</a></li>
+<li><a title="27.8.2.3 Member functions" href="data/stringbuf.members.html">3 Member functions</a></li>
+<li><a title="27.8.2.4 Overridden virtual functions" href="data/stringbuf.virtuals.html">4 Overridden virtual functions</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="27.8.3 Class template basic_istringstream" href="data/istringstream.html">3 Class template basic_istringstream</a><ul class=" hidden">
+<li><a title="27.8.3.1 basic_istringstream constructors" href="data/istringstream.cons.html">1 basic_istringstream constructors</a></li>
+<li><a title="27.8.3.2 Assign and swap" href="data/istringstream.assign.html">2 Assign and swap</a></li>
+<li><a title="27.8.3.3 Member functions" href="data/istringstream.members.html">3 Member functions</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="27.8.4 Class template basic_ostringstream" href="data/ostringstream.html">4 Class template basic_ostringstream</a><ul class=" hidden">
+<li><a title="27.8.4.1 basic_ostringstream constructors" href="data/ostringstream.cons.html">1 basic_ostringstream constructors</a></li>
+<li><a title="27.8.4.2 Assign and swap" href="data/ostringstream.assign.html">2 Assign and swap</a></li>
+<li><a title="27.8.4.3 Member functions" href="data/ostringstream.members.html">3 Member functions</a></li></ul></li>
+<li><a title="27.8.5 Class template basic_stringstream" href="data/stringstream.html">5 Class template basic_stringstream</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="27.8.6 basic_stringstream constructors" href="data/stringstream.cons.html">6 basic_stringstream constructors</a><ul class=" hidden">
+<li><a title="27.8.6.1 Assign and swap" href="data/stringstream.assign.html">1 Assign and swap</a></li></ul></li>
+<li><a title="27.8.7 Member functions" href="data/stringstream.members.html">7 Member functions</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="27.9 File-based streams" href="data/fstreams.html">9 File-based streams</a><ul class=" hidden">
+<li><a href="data/#" class="expand">▷</a><a title="27.9.1 File streams" href="data/fstreams.html">1 File streams</a><ul class=" hidden">
+<li><a title="27.9.1.1 Class template basic_filebuf" href="data/filebuf.html">1 Class template basic_filebuf</a></li>
+<li><a title="27.9.1.2 basic_filebuf constructors" href="data/filebuf.cons.html">2 basic_filebuf constructors</a></li>
+<li><a title="27.9.1.3 Assign and swap" href="data/filebuf.assign.html">3 Assign and swap</a></li>
+<li><a title="27.9.1.4 Member functions" href="data/filebuf.members.html">4 Member functions</a></li>
+<li><a title="27.9.1.5 Overridden virtual functions" href="data/filebuf.virtuals.html">5 Overridden virtual functions</a></li>
+<li><a title="27.9.1.6 Class template basic_ifstream" href="data/ifstream.html">6 Class template basic_ifstream</a></li>
+<li><a title="27.9.1.7 basic_ifstream constructors" href="data/ifstream.cons.html">7 basic_ifstream constructors</a></li>
+<li><a title="27.9.1.8 Assign and swap" href="data/ifstream.assign.html">8 Assign and swap</a></li>
+<li><a title="27.9.1.9 Member functions" href="data/ifstream.members.html">9 Member functions</a></li>
+<li><a title="27.9.1.10 Class template basic_ofstream" href="data/ofstream.html">10 Class template basic_ofstream</a></li>
+<li><a title="27.9.1.11 basic_ofstream constructors" href="data/ofstream.cons.html">11 basic_ofstream constructors</a></li>
+<li><a title="27.9.1.12 Assign and swap" href="data/ofstream.assign.html">12 Assign and swap</a></li>
+<li><a title="27.9.1.13 Member functions" href="data/ofstream.members.html">13 Member functions</a></li>
+<li><a title="27.9.1.14 Class template basic_fstream" href="data/fstream.html">14 Class template basic_fstream</a></li>
+<li><a title="27.9.1.15 basic_fstream constructors" href="data/fstream.cons.html">15 basic_fstream constructors</a></li>
+<li><a title="27.9.1.16 Assign and swap" href="data/fstream.assign.html">16 Assign and swap</a></li>
+<li><a title="27.9.1.17 Member functions" href="data/fstream.members.html">17 Member functions</a></li></ul></li>
+<li><a title="27.9.2 C library files" href="data/c.files.html">2 C library files</a></li></ul></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="28 Regular expressions library" href="data/re.general.html">28 Regular expressions library</a><ul class=" hidden">
+<li><a title="28.1 General" href="data/re.general.html">1 General</a></li>
+<li><a title="28.2 Definitions" href="data/re.def.html">2 Definitions</a></li>
+<li><a title="28.3 Requirements" href="data/re.req.html">3 Requirements</a></li>
+<li><a title="28.4 Header <regex> synopsis" href="data/re.syn.html">4 Header &lt;regex&gt; synopsis</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="28.5 Namespace std::regex_constants" href="data/re.const.html">5 Namespace std::regex_constants</a><ul class=" hidden">
+<li><a title="28.5.1 Bitmask Type syntax_option_type" href="data/re.synopt.html">1 Bitmask Type syntax_option_type</a></li>
+<li><a title="28.5.2 Bitmask Type regex_constants::match_flag_type" href="data/re.matchflag.html">2 Bitmask Type regex_constants::match_flag_type</a></li>
+<li><a title="28.5.3 Implementation-defined error_type" href="data/re.err.html">3 Implementation-defined error_type</a></li></ul></li>
+<li><a title="28.6 Class regex_error" href="data/re.badexp.html">6 Class regex_error</a></li>
+<li><a title="28.7 Class template regex_traits" href="data/re.traits.html">7 Class template regex_traits</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="28.8 Class template basic_regex" href="data/re.regex.html">8 Class template basic_regex</a><ul class=" hidden">
+<li><a title="28.8.1 basic_regex constants" href="data/re.regex.const.html">1 basic_regex constants</a></li>
+<li><a title="28.8.2 basic_regex constructors" href="data/re.regex.construct.html">2 basic_regex constructors</a></li>
+<li><a title="28.8.3 basic_regex assign" href="data/re.regex.assign.html">3 basic_regex assign</a></li>
+<li><a title="28.8.4 basic_regex constant operations" href="data/re.regex.operations.html">4 basic_regex constant operations</a></li>
+<li><a title="28.8.5 basic_regex locale" href="data/re.regex.locale.html">5 basic_regex locale</a></li>
+<li><a title="28.8.6 basic_regex swap" href="data/re.regex.swap.html">6 basic_regex swap</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="28.8.7 basic_regex non-member functions" href="data/re.regex.nmswap.html">7 basic_regex non-member functions</a><ul class=" hidden">
+<li><a title="28.8.7.1 basic_regex non-member swap" href="data/re.regex.nmswap.html">1 basic_regex non-member swap</a></li></ul></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="28.9 Class template sub_match" href="data/re.submatch.members.html">9 Class template sub_match</a><ul class=" hidden">
+<li><a title="28.9.1 sub_match members" href="data/re.submatch.members.html">1 sub_match members</a></li>
+<li><a title="28.9.2 sub_match non-member operators" href="data/re.submatch.op.html">2 sub_match non-member operators</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="28.10 Class template match_results" href="data/re.results.const.html">10 Class template match_results</a><ul class=" hidden">
+<li><a title="28.10.1 match_results constructors" href="data/re.results.const.html">1 match_results constructors</a></li>
+<li><a title="28.10.2 match_results state" href="data/re.results.state.html">2 match_results state</a></li>
+<li><a title="28.10.3 match_results size" href="data/re.results.size.html">3 match_results size</a></li>
+<li><a title="28.10.4 match_results element access" href="data/re.results.acc.html">4 match_results element access</a></li>
+<li><a title="28.10.5 match_results formatting" href="data/re.results.form.html">5 match_results formatting</a></li>
+<li><a title="28.10.6 match_results allocator" href="data/re.results.all.html">6 match_results allocator</a></li>
+<li><a title="28.10.7 match_results swap" href="data/re.results.swap.html">7 match_results swap</a></li>
+<li><a title="28.10.8 match_results non-member functions" href="data/re.results.nonmember.html">8 match_results non-member functions</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="28.11 Regular expression algorithms" href="data/re.except.html">11 Regular expression algorithms</a><ul class=" hidden">
+<li><a title="28.11.1 exceptions" href="data/re.except.html">1 exceptions</a></li>
+<li><a title="28.11.2 regex_match" href="data/re.alg.match.html">2 regex_match</a></li>
+<li><a title="28.11.3 regex_search" href="data/re.alg.search.html">3 regex_search</a></li>
+<li><a title="28.11.4 regex_replace" href="data/re.alg.replace.html">4 regex_replace</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="28.12 Regular expression iterators" href="data/re.regiter.cnstr.html">12 Regular expression iterators</a><ul class=" hidden">
+<li><a href="data/#" class="expand">▷</a><a title="28.12.1 Class template regex_iterator" href="data/re.regiter.cnstr.html">1 Class template regex_iterator</a><ul class=" hidden">
+<li><a title="28.12.1.1 regex_iterator constructors" href="data/re.regiter.cnstr.html">1 regex_iterator constructors</a></li>
+<li><a title="28.12.1.2 regex_iterator comparisons" href="data/re.regiter.comp.html">2 regex_iterator comparisons</a></li>
+<li><a title="28.12.1.3 regex_iterator dereference" href="data/re.regiter.deref.html">3 regex_iterator dereference</a></li>
+<li><a title="28.12.1.4 regex_iterator increment" href="data/re.regiter.incr.html">4 regex_iterator increment</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="28.12.2 Class template regex_token_iterator" href="data/re.tokiter.cnstr.html">2 Class template regex_token_iterator</a><ul class=" hidden">
+<li><a title="28.12.2.1 regex_token_iterator constructors" href="data/re.tokiter.cnstr.html">1 regex_token_iterator constructors</a></li>
+<li><a title="28.12.2.2 regex_token_iterator comparisons" href="data/re.tokiter.comp.html">2 regex_token_iterator comparisons</a></li>
+<li><a title="28.12.2.3 regex_token_iterator dereference" href="data/re.tokiter.deref.html">3 regex_token_iterator dereference</a></li>
+<li><a title="28.12.2.4 regex_token_iterator increment" href="data/re.tokiter.incr.html">4 regex_token_iterator increment</a></li></ul></li></ul></li>
+<li><a title="28.13 Modified ECMAScript regular expression grammar" href="data/re.grammar.html">13 Modified ECMAScript regular expression grammar</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="29 Atomic operations library" href="data/atomics.general.html">29 Atomic operations library</a><ul class=" hidden">
+<li><a title="29.1 General" href="data/atomics.general.html">1 General</a></li>
+<li><a title="29.2 Header <atomic> synopsis" href="data/atomics.syn.html">2 Header &lt;atomic&gt; synopsis</a></li>
+<li><a title="29.3 Order and consistency" href="data/atomics.order.html">3 Order and consistency</a></li>
+<li><a title="29.4 Lock-free property" href="data/atomics.lockfree.html">4 Lock-free property</a></li>
+<li><a title="29.5 Atomic types" href="data/atomics.types.generic.html">5 Atomic types</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="29.6 Operations on atomic types" href="data/atomics.types.operations.html">6 Operations on atomic types</a><ul class=" hidden">
+<li><a title="29.6.1 General operations on atomic types" href="data/atomics.types.operations.general.html">1 General operations on atomic types</a></li>
+<li><a title="29.6.2 Template operations on atomic types" href="data/atomics.types.operations.templ.html">2 Template operations on atomic types</a></li>
+<li><a title="29.6.3 Arithmetic operations on atomic types" href="data/atomics.types.operations.arith.html">3 Arithmetic operations on atomic types</a></li>
+<li><a title="29.6.4 Operations on atomic pointer types" href="data/atomics.types.operations.pointer.html">4 Operations on atomic pointer types</a></li>
+<li><a title="29.6.5 Requirements for operations on atomic types" href="data/atomics.types.operations.req.html">5 Requirements for operations on atomic types</a></li></ul></li>
+<li><a title="29.7 Flag type and operations" href="data/atomics.flag.html">7 Flag type and operations</a></li>
+<li><a title="29.8 Fences" href="data/atomics.fences.html">8 Fences</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="30 Thread support library" href="data/thread.general.html">30 Thread support library</a><ul class=" hidden">
+<li><a title="30.1 General" href="data/thread.general.html">1 General</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="30.2 Requirements" href="data/thread.req.paramname.html">2 Requirements</a><ul class=" hidden">
+<li><a title="30.2.1 Template parameter names" href="data/thread.req.paramname.html">1 Template parameter names</a></li>
+<li><a title="30.2.2 Exceptions" href="data/thread.req.exception.html">2 Exceptions</a></li>
+<li><a title="30.2.3 Native handles" href="data/thread.req.native.html">3 Native handles</a></li>
+<li><a title="30.2.4 Timing specifications" href="data/thread.req.timing.html">4 Timing specifications</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="30.2.5 Requirements for Lockable types" href="data/thread.req.lockable.general.html">5 Requirements for Lockable types</a><ul class=" hidden">
+<li><a title="30.2.5.1 In general" href="data/thread.req.lockable.general.html">1 In general</a></li>
+<li><a title="30.2.5.2 BasicLockable requirements" href="data/thread.req.lockable.basic.html">2 BasicLockable requirements</a></li>
+<li><a title="30.2.5.3 Lockable requirements" href="data/thread.req.lockable.req.html">3 Lockable requirements</a></li>
+<li><a title="30.2.5.4 TimedLockable requirements" href="data/thread.req.lockable.timed.html">4 TimedLockable requirements</a></li></ul></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="30.3 Threads" href="data/thread.threads.html">3 Threads</a><ul class=" hidden">
+<li><a href="data/#" class="expand">▷</a><a title="30.3.1 Class thread" href="data/thread.thread.class.html">1 Class thread</a><ul class=" hidden">
+<li><a title="30.3.1.1 Class thread::id" href="data/thread.thread.id.html">1 Class thread::id</a></li>
+<li><a title="30.3.1.2 thread constructors" href="data/thread.thread.constr.html">2 thread constructors</a></li>
+<li><a title="30.3.1.3 thread destructor" href="data/thread.thread.destr.html">3 thread destructor</a></li>
+<li><a title="30.3.1.4 thread assignment" href="data/thread.thread.assign.html">4 thread assignment</a></li>
+<li><a title="30.3.1.5 thread members" href="data/thread.thread.member.html">5 thread members</a></li>
+<li><a title="30.3.1.6 thread static members" href="data/thread.thread.static.html">6 thread static members</a></li>
+<li><a title="30.3.1.7 thread specialized algorithms" href="data/thread.thread.algorithm.html">7 thread specialized algorithms</a></li></ul></li>
+<li><a title="30.3.2 Namespace this_thread" href="data/thread.thread.this.html">2 Namespace this_thread</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="30.4 Mutual exclusion" href="data/thread.mutex.html">4 Mutual exclusion</a><ul class=" hidden">
+<li><a href="data/#" class="expand">▷</a><a title="30.4.1 Mutex requirements" href="data/thread.mutex.requirements.general.html">1 Mutex requirements</a><ul class=" hidden">
+<li><a title="30.4.1.1 In general" href="data/thread.mutex.requirements.general.html">1 In general</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="30.4.1.2 Mutex types" href="data/thread.mutex.class.html">2 Mutex types</a><ul class=" hidden">
+<li><a title="30.4.1.2.1 Class mutex" href="data/thread.mutex.class.html">1 Class mutex</a></li>
+<li><a title="30.4.1.2.2 Class recursive_mutex" href="data/thread.mutex.recursive.html">2 Class recursive_mutex</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="30.4.1.3 Timed mutex types" href="data/thread.timedmutex.class.html">3 Timed mutex types</a><ul class=" hidden">
+<li><a title="30.4.1.3.1 Class timed_mutex" href="data/thread.timedmutex.class.html">1 Class timed_mutex</a></li>
+<li><a title="30.4.1.3.2 Class recursive_timed_mutex" href="data/thread.timedmutex.recursive.html">2 Class recursive_timed_mutex</a></li></ul></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="30.4.2 Locks" href="data/thread.lock.guard.html">2 Locks</a><ul class=" hidden">
+<li><a title="30.4.2.1 Class template lock_guard" href="data/thread.lock.guard.html">1 Class template lock_guard</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="30.4.2.2 Class template unique_lock" href="data/thread.lock.unique.html">2 Class template unique_lock</a><ul class=" hidden">
+<li><a title="30.4.2.2.1 unique_lock constructors, destructor, and assignment" href="data/thread.lock.unique.cons.html">1 unique_lock constructors, destructor, and assignment</a></li>
+<li><a title="30.4.2.2.2 unique_lock locking" href="data/thread.lock.unique.locking.html">2 unique_lock locking</a></li>
+<li><a title="30.4.2.2.3 unique_lock modifiers" href="data/thread.lock.unique.mod.html">3 unique_lock modifiers</a></li>
+<li><a title="30.4.2.2.4 unique_lock observers" href="data/thread.lock.unique.obs.html">4 unique_lock observers</a></li></ul></li></ul></li>
+<li><a title="30.4.3 Generic locking algorithms" href="data/thread.lock.algorithm.html">3 Generic locking algorithms</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="30.4.4 Call once" href="data/thread.once.html">4 Call once</a><ul class=" hidden">
+<li><a title="30.4.4.1 Struct once_flag" href="data/thread.once.onceflag.html">1 Struct once_flag</a></li>
+<li><a title="30.4.4.2 Function call_once" href="data/thread.once.callonce.html">2 Function call_once</a></li></ul></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="30.5 Condition variables" href="data/thread.condition.html">5 Condition variables</a><ul class=" hidden">
+<li><a title="30.5.1 Class condition_variable" href="data/thread.condition.condvar.html">1 Class condition_variable</a></li>
+<li><a title="30.5.2 Class condition_variable_any" href="data/thread.condition.condvarany.html">2 Class condition_variable_any</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="30.6 Futures" href="data/futures.overview.html">6 Futures</a><ul class=" hidden">
+<li><a title="30.6.1 Overview" href="data/futures.overview.html">1 Overview</a></li>
+<li><a title="30.6.2 Error handling" href="data/futures.errors.html">2 Error handling</a></li>
+<li><a title="30.6.3 Class future_error" href="data/futures.future_error.html">3 Class future_error</a></li>
+<li><a title="30.6.4 Shared state" href="data/futures.state.html">4 Shared state</a></li>
+<li><a title="30.6.5 Class template promise" href="data/futures.promise.html">5 Class template promise</a></li>
+<li><a title="30.6.6 Class template future" href="data/futures.unique_future.html">6 Class template future</a></li>
+<li><a title="30.6.7 Class template shared_future" href="data/futures.shared_future.html">7 Class template shared_future</a></li>
+<li><a title="30.6.8 Function template async" href="data/futures.async.html">8 Function template async</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="30.6.9 Class template packaged_task" href="data/futures.task.html">9 Class template packaged_task</a><ul class=" hidden">
+<li><a title="30.6.9.1 packaged_task member functions" href="data/futures.task.members.html">1 packaged_task member functions</a></li>
+<li><a title="30.6.9.2 packaged_task globals" href="data/futures.task.nonmembers.html">2 packaged_task globals</a></li></ul></li></ul></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="A Grammar summary" href="data/gram.html">A Grammar summary</a><ul class=" hidden">
+<li><a title="A.1 Keywords" href="data/gram.key.html">1 Keywords</a></li>
+<li><a title="A.2 Lexical conventions" href="data/gram.lex.html">2 Lexical conventions</a></li>
+<li><a title="A.3 Basic concepts" href="data/gram.basic.html">3 Basic concepts</a></li>
+<li><a title="A.4 Expressions" href="data/gram.expr.html">4 Expressions</a></li>
+<li><a title="A.5 Statements" href="data/gram.stmt.html">5 Statements</a></li>
+<li><a title="A.6 Declarations" href="data/gram.dcl.html">6 Declarations</a></li>
+<li><a title="A.7 Declarators" href="data/gram.decl.html">7 Declarators</a></li>
+<li><a title="A.8 Classes" href="data/gram.class.html">8 Classes</a></li>
+<li><a title="A.9 Derived classes" href="data/gram.derived.html">9 Derived classes</a></li>
+<li><a title="A.10 Special member functions" href="data/gram.special.html">10 Special member functions</a></li>
+<li><a title="A.11 Overloading" href="data/gram.over.html">11 Overloading</a></li>
+<li><a title="A.12 Templates" href="data/gram.temp.html">12 Templates</a></li>
+<li><a title="A.13 Exception handling" href="data/gram.except.html">13 Exception handling</a></li>
+<li><a title="A.14 Preprocessing directives" href="data/gram.cpp.html">14 Preprocessing directives</a></li></ul></li>
+<li><a title="B Implementation quantities" href="data/implimits.html">B Implementation quantities</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="C Compatibility" href="data/diff.iso.html">C Compatibility</a><ul class=" hidden">
+<li><a href="data/#" class="expand">▷</a><a title="C.1 C++ and ISO C" href="data/diff.iso.html">1 C++ and ISO C</a><ul class=" hidden">
+<li><a title="C.1.1 Clause 2: lexical conventions" href="data/diff.lex.html">1 Clause 2: lexical conventions</a></li>
+<li><a title="C.1.2 Clause 3: basic concepts" href="data/diff.basic.html">2 Clause 3: basic concepts</a></li>
+<li><a title="C.1.3 Clause 4: standard conversions" href="data/diff.conv.html">3 Clause 4: standard conversions</a></li>
+<li><a title="C.1.4 Clause 5: expressions" href="data/diff.expr.html">4 Clause 5: expressions</a></li>
+<li><a title="C.1.5 Clause 6: statements" href="data/diff.stat.html">5 Clause 6: statements</a></li>
+<li><a title="C.1.6 Clause 7: declarations" href="data/diff.dcl.html">6 Clause 7: declarations</a></li>
+<li><a title="C.1.7 Clause 8: declarators" href="data/diff.decl.html">7 Clause 8: declarators</a></li>
+<li><a title="C.1.8 Clause 9: classes" href="data/diff.class.html">8 Clause 9: classes</a></li>
+<li><a title="C.1.9 Clause 12: special member functions" href="data/diff.special.html">9 Clause 12: special member functions</a></li>
+<li><a title="C.1.10 Clause 16: preprocessing directives" href="data/diff.cpp.html">10 Clause 16: preprocessing directives</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="C.2 C++ and ISO C++ 2003" href="data/diff.cpp03.html">2 C++ and ISO C++ 2003</a><ul class=" hidden">
+<li><a title="C.2.1 Clause 2: lexical conventions" href="data/diff.cpp03.lex.html">1 Clause 2: lexical conventions</a></li>
+<li><a title="C.2.2 Clause 5: expressions" href="data/diff.cpp03.expr.html">2 Clause 5: expressions</a></li>
+<li><a title="C.2.3 Clause 7: declarations" href="data/diff.cpp03.dcl.dcl.html">3 Clause 7: declarations</a></li>
+<li><a title="C.2.4 Clause 8: declarators" href="data/diff.cpp03.dcl.decl.html">4 Clause 8: declarators</a></li>
+<li><a title="C.2.5 Clause 12: special member functions" href="data/diff.cpp03.special.html">5 Clause 12: special member functions</a></li>
+<li><a title="C.2.6 Clause 14: templates" href="data/diff.cpp03.temp.html">6 Clause 14: templates</a></li>
+<li><a title="C.2.7 Clause 17: library introduction" href="data/diff.cpp03.library.html">7 Clause 17: library introduction</a></li>
+<li><a title="C.2.8 Clause 18: language support library" href="data/diff.cpp03.language.support.html">8 Clause 18: language support library</a></li>
+<li><a title="C.2.9 Clause 19: diagnostics library" href="data/diff.cpp03.diagnostics.html">9 Clause 19: diagnostics library</a></li>
+<li><a title="C.2.10 Clause 20: general utilities library" href="data/diff.cpp03.utilities.html">10 Clause 20: general utilities library</a></li>
+<li><a title="C.2.11 Clause 21: strings library" href="data/diff.cpp03.strings.html">11 Clause 21: strings library</a></li>
+<li><a title="C.2.12 Clause 23: containers library" href="data/diff.cpp03.containers.html">12 Clause 23: containers library</a></li>
+<li><a title="C.2.13 Clause 25: algorithms library" href="data/diff.cpp03.algorithms.html">13 Clause 25: algorithms library</a></li>
+<li><a title="C.2.14 Clause 26: numerics library" href="data/diff.cpp03.numerics.html">14 Clause 26: numerics library</a></li>
+<li><a title="C.2.15 Clause 27: Input/output library" href="data/diff.cpp03.input.output.html">15 Clause 27: Input/output library</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="C.3 Standard C library" href="data/diff.library.html">3 Standard C library</a><ul class=" hidden">
+<li><a title="C.3.1 Modifications to headers" href="data/diff.mods.to.headers.html">1 Modifications to headers</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="C.3.2 Modifications to definitions" href="data/diff.char16.html">2 Modifications to definitions</a><ul class=" hidden">
+<li><a title="C.3.2.1 Types char16_t and char32_t" href="data/diff.char16.html">1 Types char16_t and char32_t</a></li>
+<li><a title="C.3.2.2 Type wchar_t" href="data/diff.wchar.t.html">2 Type wchar_t</a></li>
+<li><a title="C.3.2.3 Header <iso646.h>" href="data/diff.header.iso646.h.html">3 Header &lt;iso646.h&gt;</a></li>
+<li><a title="C.3.2.4 Macro NULL" href="data/diff.null.html">4 Macro NULL</a></li></ul></li>
+<li><a title="C.3.3 Modifications to declarations" href="data/diff.mods.to.declarations.html">3 Modifications to declarations</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="C.3.4 Modifications to behavior" href="data/diff.mods.to.behavior.html">4 Modifications to behavior</a><ul class=" hidden">
+<li><a title="C.3.4.1 Macro offsetof(type,member-designator)" href="data/diff.offsetof.html">1 Macro offsetof(type,member-designator)</a></li>
+<li><a title="C.3.4.2 Memory allocation functions" href="data/diff.malloc.html">2 Memory allocation functions</a></li></ul></li></ul></li></ul></li>
+<li><a href="data/#" class="expand">▽</a><a title="D Compatibility features" href="data/depr.html">D Compatibility features</a><ul class="visible">
+<li><a title="D.1 Increment operator with bool operand" href="data/depr.incr.bool.html">1 Increment operator with bool operand</a></li>
+<li><a title="D.2 register keyword" href="data/depr.register.html">2 register keyword</a></li>
+<li><a title="D.3 Implicit declaration of copy functions" href="data/depr.impldec.html">3 Implicit declaration of copy functions</a></li>
+<li><a title="D.4 Dynamic exception specifications" href="data/depr.except.spec.html">4 Dynamic exception specifications</a></li>
+<li><a title="D.5 C standard library headers" href="data/depr.c.headers.html">5 C standard library headers</a></li>
+<li><a title="D.6 Old iostreams members" href="data/depr.ios.members.html">6 Old iostreams members</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="D.7 char* streams" href="data/depr.str.strstreams.html">7 char* streams</a><ul class=" hidden">
+<li><a href="data/#" class="expand">▷</a><a title="D.7.1 Class strstreambuf" href="data/depr.strstreambuf.html">1 Class strstreambuf</a><ul class=" hidden">
+<li><a title="D.7.1.1 strstreambuf constructors" href="data/depr.strstreambuf.cons.html">1 strstreambuf constructors</a></li>
+<li><a title="D.7.1.2 Member functions" href="data/depr.strstreambuf.members.html">2 Member functions</a></li>
+<li><a title="D.7.1.3 strstreambuf overridden virtual functions" href="data/depr.strstreambuf.virtuals.html">3 strstreambuf overridden virtual functions</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="D.7.2 Class istrstream" href="data/depr.istrstream.html">2 Class istrstream</a><ul class=" hidden">
+<li><a title="D.7.2.1 istrstream constructors" href="data/depr.istrstream.cons.html">1 istrstream constructors</a></li>
+<li><a title="D.7.2.2 Member functions" href="data/depr.istrstream.members.html">2 Member functions</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="D.7.3 Class ostrstream" href="data/depr.ostrstream.html">3 Class ostrstream</a><ul class=" hidden">
+<li><a title="D.7.3.1 ostrstream constructors" href="data/depr.ostrstream.cons.html">1 ostrstream constructors</a></li>
+<li><a title="D.7.3.2 Member functions" href="data/depr.ostrstream.members.html">2 Member functions</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="D.7.4 Class strstream" href="data/depr.strstream.html">4 Class strstream</a><ul class=" hidden">
+<li><a title="D.7.4.1 strstream constructors" href="data/depr.strstream.cons.html">1 strstream constructors</a></li>
+<li><a title="D.7.4.2 strstream destructor" href="data/depr.strstream.dest.html">2 strstream destructor</a></li>
+<li><a title="D.7.4.3 strstream operations" href="data/depr.strstream.oper.html">3 strstream operations</a></li></ul></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="D.8 Function objects" href="data/depr.base.html">8 Function objects</a><ul class=" hidden">
+<li><a title="D.8.1 Base" href="data/depr.base.html">1 Base</a></li>
+<li><a href="data/#" class="expand">▷</a><a title="D.8.2 Function adaptors" href="data/depr.adaptors.html">2 Function adaptors</a><ul class=" hidden">
+<li><a title="D.8.2.1 Adaptors for pointers to functions" href="data/depr.function.pointer.adaptors.html">1 Adaptors for pointers to functions</a></li>
+<li><a title="D.8.2.2 Adaptors for pointers to members" href="data/depr.member.pointer.adaptors.html">2 Adaptors for pointers to members</a></li></ul></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="D.9 Binders" href="data/depr.lib.binder.1st.html">9 Binders</a><ul class=" hidden">
+<li><a title="D.9.1 Class template binder1st" href="data/depr.lib.binder.1st.html">1 Class template binder1st</a></li>
+<li><a title="D.9.2 bind1st" href="data/depr.lib.bind.1st.html">2 bind1st</a></li>
+<li><a title="D.9.3 Class template binder2nd" href="data/depr.lib.binder.2nd.html">3 Class template binder2nd</a></li>
+<li><a title="D.9.4 bind2nd" href="data/depr.lib.bind.2nd.html">4 bind2nd</a></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="D.10 auto_ptr" href="data/auto.ptr.cons.html">10 auto_ptr</a><ul class=" hidden">
+<li><a href="data/#" class="expand">▷</a><a title="D.10.1 Class template auto_ptr" href="data/auto.ptr.cons.html">1 Class template auto_ptr</a><ul class=" hidden">
+<li><a title="D.10.1.1 auto_ptr constructors" href="data/auto.ptr.cons.html">1 auto_ptr constructors</a></li>
+<li><a title="D.10.1.2 auto_ptr members" href="data/auto.ptr.members.html">2 auto_ptr members</a></li>
+<li><a title="D.10.1.3 auto_ptr conversions" href="data/auto.ptr.conv.html">3 auto_ptr conversions</a></li></ul></li></ul></li>
+<li><a href="data/#" class="expand">▷</a><a title="D.11 Violating exception-specifications" href="data/unexpected.handler.html">11 Violating exception-specifications</a><ul class=" hidden">
+<li><a title="D.11.1 Type unexpected_handler" href="data/unexpected.handler.html">1 Type unexpected_handler</a></li>
+<li><a title="D.11.2 set_unexpected" href="data/set.unexpected.html">2 set_unexpected</a></li>
+<li><a title="D.11.3 get_unexpected" href="data/get.unexpected.html">3 get_unexpected</a></li>
+<li><a title="D.11.4 unexpected" href="data/unexpected.html">4 unexpected</a></li></ul></li></ul></li>
+<li><a href="data/#" class="expand">▽</a><a title="E Universal character names for identifier characters" href="data/charname.allowed.html">E Universal character names for identifier characters</a><ul class="visible">
+<li><a title="E.1 Ranges of characters allowed" href="data/charname.allowed.html">1 Ranges of characters allowed</a></li>
+<li><a title="E.2 Ranges of characters disallowed initially" href="data/charname.disallowed.html">2 Ranges of characters disallowed initially</a></li></ul></li>
+<li><a title="F Cross references" href="data/xref.html">F Cross references</a></li>
+<li><a title="Index of Grammar Productions" href="data/index_of_grammar_productions.html">Index of Grammar Productions</a></li>
+<li><a title="Index of Library Names" href="data/index_of_library_names.html">Index of Library Names</a></li>
+<li><a title="Index of Implementation Defined Behavior" href="data/index_of_implementation_defined_behavior.html">Index of Implementation Defined Behavior</a></li>
+</ul>
+
+
+
+</body></html>
